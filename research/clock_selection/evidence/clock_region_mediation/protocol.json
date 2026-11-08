@@ -1,0 +1,44 @@
+{
+  "format": "universe24-clock-region-mediation-protocol-v1",
+  "question": "Does the complete retained local clock state determine the later exact carrier and registered raw-C signature when the exterior writer history is held independently fixed?",
+  "claim": "Finite causal mediation by an interaction-written local clock region, tested using new offline initial preparations. The preparation intervention itself is not an operation performed by the board; this study does not establish autonomous trials, preferred-route selection, or quantum measurement.",
+  "parent": {
+    "study": "research/clock_selection/evidence/write_probe_v2",
+    "protocol_sha256": "0eb38141335bb7fac46dd3af283293114175d60896e77747bc0d27858e16a232",
+    "required_independent_audit": true,
+    "anchor": 40,
+    "original_horizon": 88,
+    "phase": 0,
+    "writer_delay": 2,
+    "clock_present": true,
+    "clock_remainder": 0
+  },
+  "board": {"sides": [337, 353], "body_signs": [1, 1, 1], "background": [0, 0, 2]},
+  "family": {"gaps": [36, 38], "exterior_sources": ["01", "11"], "region_sources": ["01", "11"]},
+  "steps": 48,
+  "preparation": "At the original state 40, select exterior E from complete native record 01 or 11 and region R independently from 01 or 11. In a NEW complete initial board, take every triple on the designated seven spatial nodes from R, and every other triple from E. The region is the clock node (c,c+1,c) and its six face neighbors, with all 48 channels: exactly 336 triples. No averaging, addition, projection or loss of remainder data is allowed. All four boards are finalized once with the same fixed +++ tensor. There are no runtime interventions. Save source-record hashes, source anchor-state hashes, complete preparation and split-equivalence checks.",
+  "native_controls": "For E=R, every one of the 49 full recorded states must equal the parent native suffix states 40 through 88, including every counter and remainder.",
+  "initial_hold": "At new states 0 through 4, require a full period-four clock-region orbit, unit norm at the designated center, zero other counter pairs, and zero separate external terms into the full region during the four updates. This is an additional preparation check; no target is changed if it fails.",
+  "incoming": {
+    "offsets": [4, 5, 6, 7],
+    "criterion": "At new t=gap+offset-40, require the same complete 6x3x3/all-48 pristine incoming carrier used in V2. All four preparations contain the probe."
+  },
+  "near_incoming": {
+    "origin_offsets_from_clock": [-6, -5, -4],
+    "criterion": "At new t=16+2+gap+origin_offset-40, compare the complete 6x3x3/all-48 carrier outside the fixed seven clock-region nodes, exactly as in V2. This remains a spatially masked check and does not assert equality of every later donor."
+  },
+  "output": {
+    "start": "T=24+2+gap-40=gap-14",
+    "offsets": [0, 1, 2, 3],
+    "criterion": "At new t=T+k, require the exact full V2 carrier at origin(c+8+k,c,c).",
+    "C_window": "T-3 through T+4 inclusive at fixed outlet(c+8,c,c,0)",
+    "C_expected": [[-3, 2, -1], [1, 1, 1]],
+    "limitation": "Failure of this exact signature means that the specified carrier or signature was not observed. It does not mean all activity disappeared; retain and expose every raw C event."
+  },
+  "predictions": "For both exterior sources, local region 11 should enable exact carrier and C only at gap38; local region 01 should enable them only at gap36. Each output is predicted to follow the retained region, independently of the exterior. The diagonal cases must additionally replay the parent native suffix exactly.",
+  "group_acceptance": "All four source splits, incoming and masked near-incoming checks, initial holds, full inverses and causal-boundary checks pass; both native diagonals replay every full suffix state; exact carrier AND exact raw-C signature each equal the predeclared region prediction in all four preparations. Report carrier-only and C-only agreement separately, even when the conjunction fails. Do not relabel failures as accepted by choosing a later output window.",
+  "causal_margin": "Every initially nonzero counter in the new preparation must be more than48 spatial edges from every periodic boundary, and no active boundary contact may occur during the run.",
+  "budget": {"registered_cases": 16, "max_cpu_seconds": 120, "max_wall_seconds": 300, "max_recorded_bytes": 52428800, "max_seconds_per_record": 60, "max_cells_per_record": 500000},
+  "retention": "Freeze exact executable sources and protocol before capture. Save all 16 complete native recordings, including failed crosses, all raw C events, hashes and resource receipt. Stop on a budget limit and mark remaining cases not run; incomplete groups cannot pass.",
+  "presenter_selection": "All four L337 preparations for gap36 and for gap38, divided into complete four-experiment bundles. Every other complete recording is retained."
+}

@@ -1,0 +1,910 @@
+{
+  "format": "universe24-claim-register-v1",
+  "updated_utc": "2026-11-08T03:36:35Z",
+  "snapshot_status": "All 15 completed native study families and their declared observations are independently audited. No current executed study remains pending. Hypotheses and future targets remain unresolved.",
+  "project": "Universe24",
+  "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+  "baseline_contract": {
+    "model": "universe24-2O-body-013-v1",
+    "boards": 1,
+    "channels_per_node": 48,
+    "spatial_neighbors": 6,
+    "num": 1,
+    "den": 1,
+    "fixed_coupling_before_run": true,
+    "synchronous_prior_snapshot": true,
+    "observers_passive": true,
+    "body_action_exponents": [
+      0,
+      1,
+      3
+    ],
+    "allowed_sign_triples": 8,
+    "channel_remainder_domain": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  "classification_definitions": {
+    "mathematical_proof": "An explicit all-domain algebraic argument; computational checks are separately identified.",
+    "finite_computational_result": "An exact or bounded recorded computation in the stated preparation and observation domain.",
+    "research_hypothesis": "A proposed explanatory principle not established by current model evidence.",
+    "future_target": "An uncompleted operational target or a registered experiment awaiting final independent result."
+  },
+  "outcome_definitions": {
+    "positive": "The precisely scoped statement or registered criterion is supported; not physical validation.",
+    "negative": "The registered criterion failed in its stated domain.",
+    "mixed": "Positive ingredients coexist with failed criteria or material resource qualifications.",
+    "pending": "No final independently verified result is entered."
+  },
+  "identity_policy": "The listed commit identifies the audited checkout baseline, not all historical executions. Frozen per-study protocols, complete preparations, executed source archives and native hashes are the authoritative reproduction identities. Later summaries do not replace withdrawn or failed records.",
+  "physical_validation_claimed": false,
+  "claims": [
+    {
+      "id": "M01",
+      "claim": "Exact Rule3 inverse, locality and retained full-state information",
+      "classification": "mathematical_proof",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "positive",
+      "verification_status": "verified",
+      "exact_scope": "All valid integer states of the fixed baseline: synchronous six-neighbor updates with r in 0..5. The exact inverse reconstructs the entire prior state; a local readout can lose distinctions while the full state retains them.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [],
+      "evidence": [
+        "docs/MODEL.md",
+        "research/clock_selection/algebra.md",
+        "research/clock_selection/forces_algebra.md"
+      ],
+      "limits": "A finite inverse test is not the universal proof; reversibility does not establish quantum measurement or physical time.",
+      "physical_validation_claimed": false
+    },
+    {
+      "id": "M02",
+      "claim": "Algebraic balances and native C labels",
+      "classification": "mathematical_proof",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "positive",
+      "verification_status": "verified",
+      "exact_scope": "The C guard requires nonzero ell and a changed complete triple; its class is u mod 3. C0 implies unchanged r and u = 3 ell, but not unique choice. Local counter-norm change is ell² − 2 a ell. Q is conserved for +++; signed coupling obeys the derived balance and need not conserve Q.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [],
+      "evidence": [
+        "research/clock_selection/click_algebra.md",
+        "research/clock_selection/division_algebra.md",
+        "research/clock_selection/forces_algebra.md"
+      ],
+      "limits": "Q and counter norm are not identified as physical charge or energy. No C class is a runtime approval command.",
+      "physical_validation_claimed": false
+    },
+    {
+      "id": "M03",
+      "claim": "Silent-quarter-turn and closed-orbit obstructions",
+      "classification": "mathematical_proof",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "positive",
+      "verification_status": "verified",
+      "exact_scope": "Four consecutive whole-board zero-quotient updates imply exact period 4. Exact whole-state closure at period p implies all later states repeat. An invertible trajectory cannot merge into a different closed orbit.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [],
+      "evidence": [
+        "research/clock_selection/algebra.md",
+        "research/clock_selection/dynamics.md"
+      ],
+      "limits": "No guarded C is weaker than zero quotient. These obstructions do not exclude exploration with nonzero quotients or local settling with exterior information.",
+      "physical_validation_claimed": false
+    },
+    {
+      "id": "M10",
+      "claim": "Conditional Bell bound and internal event-count constraint",
+      "classification": "mathematical_proof",
+      "candidate": "any-board-with-explicit-local-response-and-setting-independence-assumptions",
+      "outcome": "positive",
+      "verification_status": "verified",
+      "exact_scope": "With frozen binary local outcomes, one setting-independent hidden-variable ensemble, local response functions and every registered trial retained, the CHSH combination has magnitude at most 2. Separately, a positive accumulated event count over a complete state cycle cannot be a single-valued function of the current board state. Both are conditional mathematical constraints, not claims that every proposed observer satisfies their premises.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [],
+      "evidence": [
+        "research/clock_selection/quantum_time_gates.md",
+        "research/clock_selection/evidence/independent_audit/mathematical_review_final_checkpoint.json",
+        "research/clock_selection/evidence/independent_audit/quantum_time_review_supplement.json"
+      ],
+      "limits": "No native Bell experiment or quantum violation is established. C classes require a frozen binary detector map. Incomplete computation is not a physical no-click outcome. Board locality alone does not establish observed Bell locality or a physical clock metric.",
+      "physical_validation_claimed": false
+    },
+    {
+      "id": "M04",
+      "claim": "QuietClock complete isolated family",
+      "classification": "mathematical_proof",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "positive",
+      "verification_status": "verified",
+      "exact_scope": "For all 48 channel labels and all 8 allowed signed tensors, a nonzero single center with 0 < |a| + |b| <= 2 admits the stated six passive halo residues. The complete 336-triple preparation has exact minimal period 4, zero other counters and zero guarded C under its isolated environment.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [],
+      "evidence": [
+        "research/clock_selection/quiet_clock_results.md",
+        "research/clock_selection/quiet_clock.py",
+        "research/clock_selection/route_memory_algebra.md",
+        "research/clock_selection/evidence/independent_audit/quiet_clock_preflight_review.json",
+        "research/clock_selection/evidence/independent_audit/mathematical_review_final_checkpoint.json"
+      ],
+      "limits": "Initial-only Patch factory. Arbitrary drive or shared active halos require a new composition test; this is not activation by a signal.",
+      "physical_validation_claimed": false
+    },
+    {
+      "id": "C01",
+      "claim": "QuietClock native and orientation validation",
+      "classification": "finite_computational_result",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "positive",
+      "verification_status": "verified",
+      "exact_scope": "48 registered native cases: 8 sign families × 3 amplitude orbits × 2 parities, H = 8, L = 5 or 7, with explicit representative channels; 432 states and 384 transitions. The 384 independent outgoing-map cases and 384 producer full-orientation comparisons are static. All 24 parity pairs have identical counters and seven remainder offsets of +1.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [
+        {
+          "path": "research/clock_selection/quiet_clock_protocol.json",
+          "sha256": "a0198c4f4e79c1c1afe6ecd34620ec49615e338152038d9cb8f16610ab04d7af"
+        }
+      ],
+      "evidence": [
+        "research/clock_selection/quiet_clock_results.md",
+        "research/clock_selection/evidence/quiet_clock_v1/result.json",
+        "research/clock_selection/evidence/independent_audit/quiet_clock_v1.json"
+      ],
+      "limits": "Native trajectories cover the registered representative orientations only; all 48 orientations and eight signs have separate algebraic/static coverage. No driven activation is claimed.",
+      "physical_validation_claimed": false,
+      "resource_qualification": "Whole capture/export CPU was 7.643893 seconds; the prior preflight section took 9.009289 seconds but excluded its process startup. Full-session certification against the 60-second CPU cap is explicitly unavailable."
+    },
+    {
+      "id": "C02",
+      "claim": "Parallel input arithmetic and nonexclusive C0 fanout",
+      "classification": "finite_computational_result",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "positive",
+      "verification_status": "verified",
+      "exact_scope": "90 cases, H = 12: one initial donor b = -6..6 on L = 29 and 33, plus all 64 six-donor masks on L = 29. All 1170 states, 1080 transitions, first-step predictions, inverses, Q identities and 13 cross-size trajectories pass. A single b = 3 donor produces six simultaneous first-step C0 events.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [
+        {
+          "path": "research/clock_selection/parallel_division_protocol.json",
+          "sha256": "890abeac74ae4bc164b5cec832901230f2ddcc2c763ddb7d189cc9be459d662d"
+        }
+      ],
+      "evidence": [
+        "research/clock_selection/parallel_division_report.md",
+        "research/clock_selection/evidence/parallel_division_v1/result.json",
+        "research/clock_selection/evidence/independent_audit/parallel_division_v1.json"
+      ],
+      "limits": "The source-count C table is nonmonotonic. This is arithmetic/fanout, not a complexity preference or physical light.",
+      "physical_validation_claimed": false
+    },
+    {
+      "id": "M05",
+      "claim": "Controlled coherent waves, orientation limits and full-board growth bound",
+      "classification": "mathematical_proof",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "positive",
+      "verification_status": "verified",
+      "exact_scope": "In the equal-channel +++ sector, cos(ω) = [cos(kx) + cos(ky) + cos(kz)] / 3. Exact finite-time normalized RMS error is bounded by T(T+1)/(3N), with the declared initial-rounding addition. Quartic anisotropy and a group-speed bound of 1/sqrt(3) follow. Reciprocal full-channel F extends the RMS bound and gives polynomial counter-norm growth on any fixed finite board.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [],
+      "evidence": [
+        "research/clock_selection/coherent_wave_algebra.md",
+        "research/clock_selection/evidence/independent_audit/coherent_wave_math_review.json",
+        "research/clock_selection/evidence/independent_audit/coherent_wave_full_channel_review.json",
+        "research/clock_selection/evidence/independent_audit/mathematical_review_final_checkpoint.json"
+      ],
+      "limits": "The final independent mathematical checkpoint pins and reviews the current derivations. No photon, unique physical light speed, click-timing error bound or physical energy has been derived.",
+      "physical_validation_claimed": false
+    },
+    {
+      "id": "M06",
+      "claim": "Exact integer planar-profile transport",
+      "classification": "mathematical_proof",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "positive",
+      "verification_status": "verified",
+      "exact_scope": "For any integer periodic f(s), where s = x+y+z mod L, all 48 channels with b = f(s), a = f(s+1), r = 2 evolve exactly by s → s−t and return after L updates; the minimal period may divide L.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [],
+      "evidence": [
+        "research/clock_selection/coherent_wave_algebra.md",
+        "research/clock_selection/evidence/independent_audit/mathematical_review_final_checkpoint.json"
+      ],
+      "limits": "Dense planar profiles have nonunique axis translations. Their normal-front speed is 1/sqrt(3); they are not localized moving particles.",
+      "physical_validation_claimed": false
+    },
+    {
+      "id": "C03",
+      "claim": "Sixteen native coherent-wave comparisons",
+      "classification": "finite_computational_result",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "mixed",
+      "verification_status": "verified",
+      "exact_scope": "L = 7 or 9; four separately prepared wave vectors; amplitudes 1000 or 100000; H = 12. All 208 states and 192 transitions independently pass exact rounded-initial RMS inequalities and fixed ideal-mode interval bounds.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [
+        {
+          "path": "research/clock_selection/coherent_wave_protocol.json",
+          "sha256": "c027015b1ecfa2f157ef2f54fb9564c21a507f055d287189f6d215d3447e44f0"
+        }
+      ],
+      "evidence": [
+        "research/clock_selection/coherent_wave_results.md",
+        "research/clock_selection/evidence/coherent_wave_v1/result.json",
+        "research/clock_selection/evidence/independent_audit/coherent_wave_v1_summary.json"
+      ],
+      "limits": "No fitted frequencies or mixed-mode-superposition experiment. Dense periodic preparations, not localized free-space carriers.",
+      "physical_validation_claimed": false,
+      "resource_qualification": "Measured producer CPU of 328.943 seconds exceeded the registered 300-second cap by 28.943 seconds. Scientific checks pass; the resource criterion fails."
+    },
+    {
+      "id": "M07",
+      "claim": "Baseline internal eigenmode and exact finite-H realization",
+      "classification": "mathematical_proof",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "positive",
+      "verification_status": "verified",
+      "exact_scope": "The unchanged +++ spatial-zero-mode channel operator has eight integer quaternion-coordinate coefficient eigenvectors with F0 v = 2v. With b0 = 3^H v, a0 = 3^(H−1) v and r = 2, exact Rule3 follows the specified gapped recurrence through any declared finite H; cos(ω) = 1/3.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [],
+      "evidence": [
+        "research/clock_selection/internal_gap_algebra.md",
+        "research/clock_selection/evidence/independent_audit/internal_channel_eigenvectors.json",
+        "research/clock_selection/evidence/independent_audit/internal_gap_preflight_v2.json"
+      ],
+      "limits": "Initial magnitude grows as 3^H. This is a spatially uniform internal mode, not a fixed-amplitude eternal clock, localized object or physical mass.",
+      "physical_validation_claimed": false
+    },
+    {
+      "id": "C04",
+      "claim": "Twenty exact native internal-mode controls",
+      "classification": "finite_computational_result",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "positive",
+      "verification_status": "verified",
+      "exact_scope": "L = 3 or 5, H = 8 or 12; signed eigenmodes, a stationary uniform counter offset and true remainder-parity controls. All 220 states, 200 transitions, every-triple oracle predictions and 218880 native C0 events are independently verified.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [
+        {
+          "path": "research/clock_selection/internal_gap_protocol.json",
+          "sha256": "ff58a9cae8b106975a662c719af46496260ff8b807d6435f83554f4e3d50a449"
+        }
+      ],
+      "evidence": [
+        "research/clock_selection/internal_gap_results.md",
+        "research/clock_selection/evidence/internal_gap_v1/result.json",
+        "research/clock_selection/evidence/independent_audit/internal_gap_v1_summary.json"
+      ],
+      "limits": "Uniform counter offset changes input/quotient and is not inert; remainder parity is inert here. No C1/C2 and no route-approval meaning.",
+      "physical_validation_claimed": false
+    },
+    {
+      "id": "M08",
+      "claim": "Documented general scalar Rule3 and proposed fixed per-channel extension",
+      "classification": "mathematical_proof",
+      "candidate": "fixed-ratio-proposal-not-implemented",
+      "outcome": "positive",
+      "verification_status": "mathematical_specification_only",
+      "exact_scope": "The research document H1/A2 already specifies divmod(2 num u + r, 6 den); the strict H1a/A2 baseline fixes num = den = 1. The separate heterogeneous candidate attaches fixed positive p_i, q_i to each channel pair with 0 <= r_i < 6 q_i. Its exact inverse, gcd sectors, gain/balance bounds and all-ones equivalence are derived. In the spatially and channel-homogeneous +++ subspace, a fixed uniform ratio 1/2 gives minimal period 6 for every nonzero counter pair (a,b) with a valid spatially/channel-constant remainder. In that same homogeneous subspace, fixed uniform ratio 2/1 admits exponentially growing counter solutions. Neither example is a statement about arbitrary states with uniform coefficients.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [],
+      "evidence": [
+        "research/clock_selection/fixed_ratio_candidate.md",
+        "research/clock_selection/coherent_wave_algebra.md",
+        "research/clock_selection/evidence/independent_audit/mathematical_review_final_checkpoint.json",
+        "research/clock_selection/document_alignment.md",
+        "research/clock_selection/evidence/document_alignment/receipt.json",
+        "research/clock_selection/evidence/document_alignment/excerpts.json",
+        "research/clock_selection/evidence/independent_audit/fixed_ratio_document_alignment_supplement.json"
+      ],
+      "limits": "No heterogeneous variant code or trajectory exists. The scalar coefficient placement is already documented; the fixed heterogeneous 48-channel field is the new proposal. Site-fixed coefficients define a medium, not moving mass. For q = 1, integer p requires a new non-unit row-weight family; the current eight templates exclude it. Effective baseline assembly ratios are separate.",
+      "physical_validation_claimed": false,
+      "source_document": {
+        "url": "https://docs.google.com/document/d/1NDPfeFj9vldgb0RMSSvx2lBSmOo__E-F3t2cZwfjOjI/edit",
+        "sections": [
+          "H1",
+          "H1a",
+          "A2"
+        ],
+        "reported_modified_utc": "2026-11-07T13:47:08.362Z",
+        "checked_date": "2026-11-08",
+        "evidence_scope": "Formula and strict-baseline alignment only. Older document numerical tables are not independently verified in this session.",
+        "fetched_utf8_sha256": "082e024ed6a20956fd486b3a8d3bc0201c90ed1ac4adb9d3e52f3df59126852c",
+        "fetched_utf8_bytes": 145231,
+        "formula_verified_from_readback": true
+      }
+    },
+    {
+      "id": "C05",
+      "claim": "V1 sequential source control fails",
+      "classification": "finite_computational_result",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "negative",
+      "verification_status": "verified",
+      "exact_scope": "68 runs, L = 321, H = 80. Retained counter-off source remainder footprints invalidate probe-only input controls. None of the 16 registered clock-on gates is accepted. All 5220 states and 5152 transitions are independently replayed.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [
+        {
+          "path": "research/clock_selection/protocol_v1.json",
+          "sha256": "1a66353f1400fb3f02869142f41290ab5d534b091be29e6bdd6a7ffc368fa805"
+        }
+      ],
+      "evidence": [
+        "research/clock_selection/write_probe_results.md",
+        "research/clock_selection/evidence/write_probe_v1_run01/result.json",
+        "research/clock_selection/evidence/independent_audit/write_probe_v1_verified.json"
+      ],
+      "limits": "An invalid control is not evidence that conditional propagation is impossible. Original failed protocol and records remain unchanged.",
+      "physical_validation_claimed": false
+    },
+    {
+      "id": "C06",
+      "claim": "V2 finite history-conditioned carrier and C signatures",
+      "classification": "finite_computational_result",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "positive",
+      "verification_status": "verified",
+      "exact_scope": "260 runs, L = 337 or 353, H = 88, with complete absent-source restoration. Controller r = 0, phase 0, delay 2 and gaps 36/38 yield four accepted suppression/enabling groups across both sizes. Complete 336-triple quiet memory is retained over states 32..40. All 22820 states and 22560 transitions are audited.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [
+        {
+          "path": "research/clock_selection/protocol_v2.json",
+          "sha256": "0eb38141335bb7fac46dd3af283293114175d60896e77747bc0d27858e16a232"
+        }
+      ],
+      "evidence": [
+        "research/clock_selection/write_probe_results.md",
+        "research/clock_selection/evidence/write_probe_v2/result.json",
+        "research/clock_selection/evidence/independent_audit/write_probe_v2.json"
+      ],
+      "limits": "Only eight clock-on groups have valid inputs in every control; four pass. Other phases and clock-off comparisons do not prove necessity. The record is finite clock phase, not a permanent click or internally generated probe.",
+      "physical_validation_claimed": false
+    },
+    {
+      "id": "C07",
+      "claim": "Complete local-region causal mediation",
+      "classification": "finite_computational_result",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "positive",
+      "verification_status": "verified",
+      "exact_scope": "16 new initial cross-preparations combine the 336 clock triples and whole exterior from two histories at state 40; L = 337 or 353, gaps 36/38, H = 48. All four geometry groups follow the local-region source independently of the two tested exteriors. All 784 states, 768 transitions and eight native suffix comparisons pass.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [
+        {
+          "path": "research/clock_selection/protocol_mediation.json",
+          "sha256": "8211d2fc55294d8453cc1816f2b2e7475b65864650e60d52f67167ac2b93a4bb"
+        }
+      ],
+      "evidence": [
+        "research/clock_selection/write_probe_results.md",
+        "research/clock_selection/evidence/clock_region_mediation/result.json",
+        "research/clock_selection/evidence/independent_audit/clock_region_mediation.json"
+      ],
+      "limits": "Initial cross-preparations are counterfactual tests, not runtime swapping. Does not establish center-counter-only sufficiency or arbitrary-exterior independence.",
+      "physical_validation_claimed": false
+    },
+    {
+      "id": "C08",
+      "claim": "Where history information remains after local phase-record loss",
+      "classification": "finite_computational_result",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "positive",
+      "verification_status": "verified",
+      "exact_scope": "Passive comparison of already audited L = 337, V2 phase-0, gap-38 histories 01 and 11: state 40 has 31 differing triples, seven inside the clock region. At states 61 and 88, the complete 336-triple regions agree but 48 exterior triples differ: 16 counter pairs and 32 remainder-only differences.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [
+        {
+          "path": "research/clock_selection/protocol_v2.json",
+          "sha256": "0eb38141335bb7fac46dd3af283293114175d60896e77747bc0d27858e16a232"
+        }
+      ],
+      "evidence": [
+        "research/clock_selection/evidence/independent_audit/phase_record_information_location.json",
+        "research/clock_selection/write_probe_results.md"
+      ],
+      "limits": "Zero new trajectories. Exact difference locations are not entropy/bit counts, persistent nondestructive memory or quantum collapse.",
+      "physical_validation_claimed": false
+    },
+    {
+      "id": "C09",
+      "claim": "Internal periodic-guide return and exact closed orbits",
+      "classification": "finite_computational_result",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "mixed",
+      "verification_status": "verified",
+      "exact_scope": "20 runs, L = 48, 50, 52 or 54, H = 2L+40; 2860 states and 2840 transitions. Six genuine returns agree with phase predictions, but no stronger clock-conditioned gate passes because comparator inputs fail. Joint L = 50 and 54 states close exactly after 50 and 54 updates respectively.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [
+        {
+          "path": "research/clock_selection/recurrence_protocol.json",
+          "sha256": "d549d19abb26563271af88184c4d54aad72d975807dc48396112dec941a8644a"
+        }
+      ],
+      "evidence": [
+        "research/clock_selection/recurrence_results.md",
+        "research/clock_selection/evidence/recurrence_v1/result.json",
+        "research/clock_selection/evidence/independent_audit/recurrence_v1.json",
+        "research/clock_selection/evidence/recurrence_period_diagnostic/independent_check.json"
+      ],
+      "limits": "Boundary-dependent recirculation of one prepared carrier. Exact closed full orbits cannot discover a new later full-state decision in those same preparations.",
+      "physical_validation_claimed": false
+    },
+    {
+      "id": "C10",
+      "claim": "Long unresolved return families do not recover the carrier",
+      "classification": "finite_computational_result",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "negative",
+      "verification_status": "verified",
+      "exact_scope": "Eight runs, L = 48 or 52, H = 1576 or 1704; 13128 states and 13120 transitions. All 32 later scheduled outputs are absent in each joint case. No exact +X guide template reappears after loss, and no joint full-state repeat is found within the horizon.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [
+        {
+          "path": "research/clock_selection/recurrence_long_protocol.json",
+          "sha256": "735da2e80a97e778a6629f9d3f0bf07bbca40b9a428fc3d660790a69f44621cd"
+        }
+      ],
+      "evidence": [
+        "research/clock_selection/recurrence_results.md",
+        "research/clock_selection/evidence/recurrence_long_v1_corrected/result.json",
+        "research/clock_selection/evidence/independent_audit/recurrence_long_v1.json"
+      ],
+      "limits": "Absence concerns the fixed template/domain/horizon, not all signals or all future recurrence. Initial zero-record frame-cap failure is retained separately.",
+      "physical_validation_claimed": false
+    },
+    {
+      "id": "C11",
+      "claim": "Prepared period-five composite can change phase",
+      "classification": "finite_computational_result",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "mixed",
+      "verification_status": "verified",
+      "exact_scope": "36 native captures, L = 161 or 193, H = 48. Corrected independent analysis finds two phase-2/delay-7 reconfigurations, zero created composites and zero isolated product pairs; four geometries lose parent identity. All 1764 states and 1728 transitions are audited.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [
+        {
+          "path": "research/clock_selection/structure_protocol_v1.json",
+          "sha256": "49a6ae786de1b4afd67dfae59c8cfaad55d5ed293e8ca1b824b0226ab135e018"
+        }
+      ],
+      "evidence": [
+        "research/clock_selection/structure_results.md",
+        "research/clock_selection/evidence/structure_v1_analysis/result.json",
+        "research/clock_selection/evidence/structure_v1_analysis/independent_verification.json"
+      ],
+      "limits": "Observer variable collision caused provisional product positives that are withdrawn. Identity loss is not dissociation; attraction/repulsion were not tested.",
+      "physical_validation_claimed": false
+    },
+    {
+      "id": "M09",
+      "claim": "Separated-clock controls and passive bridge-halo obstruction",
+      "classification": "mathematical_proof",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "positive",
+      "verification_status": "verified",
+      "exact_scope": "Canonical g0/14 clocks at distances 3 and 4 remain independent with period 4; opposite signs at distance 2 cancel the shared middle input. Equal signs at distance 2 create a first-step counter bridge. Keeping its transverse recipients passive through the fixed early path requires both r <= 3 and r >= 4, which is impossible.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [],
+      "evidence": [
+        "research/clock_selection/structure_formation_algebra.md"
+      ],
+      "limits": "The obstruction excludes that passive halo/path only, not a larger active recurrent body or altered feedback.",
+      "physical_validation_claimed": false
+    },
+    {
+      "id": "C12",
+      "claim": "Cooperative bridge activation fails the finite formation criterion",
+      "classification": "finite_computational_result",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "mixed",
+      "verification_status": "verified",
+      "exact_scope": "48 runs, L = 225 or 257, H = 96, covering 12 geometries. All source controls are eligible. Equal signs at distance 2 activate a bridge and change both cores, but no geometry meets the finite stationary-formation criterion. All 4656 states, 4608 transitions and 2328 centered cross-size state pairs are checked.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [
+        {
+          "path": "research/clock_selection/structure_formation_protocol_v1.json",
+          "sha256": "147a40c82d584990a822f4904c85f543e23f29fdf9ceba0b01870811a4383917"
+        }
+      ],
+      "evidence": [
+        "research/clock_selection/structure_formation_results.md",
+        "research/clock_selection/evidence/structure_formation_v1/result.json",
+        "research/clock_selection/evidence/independent_audit/structure_formation_v1.json"
+      ],
+      "limits": "Late region is not recurrent/isolated. Stationary initial cores do not demonstrate attraction, matter or chemical binding.",
+      "physical_validation_claimed": false
+    },
+    {
+      "id": "C13",
+      "claim": "Orthogonal initial guides compose; six conditional continuations",
+      "classification": "finite_computational_result",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "mixed",
+      "verification_status": "verified",
+      "exact_scope": "64 earlier pure preparations compose. The later 128-run two-outlet study uses L = 369, with a phase-3 L = 385 holdout, H = 88 and isolated controls at H = 12; 11088 states and 10960 transitions are audited. Six sequential carrier-plus-C gates pass. There is no exclusive simultaneous output or exact redirected output; phase 3 yields two outputs.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [
+        {
+          "path": "research/clock_selection/protocol_two_outlet.json",
+          "sha256": "d46fb7bf62815fa2f0c6c66950d0fded0cdd9a86c0ce47bac40e3a06c042545c"
+        }
+      ],
+      "evidence": [
+        "research/clock_selection/two_outlet_results.md",
+        "research/clock_selection/evidence/orthogonal_preflight_v1/result.json",
+        "research/clock_selection/evidence/independent_audit/orthogonal_preflight_v1.json",
+        "research/clock_selection/evidence/two_outlet_v1_retry01/result.json",
+        "research/clock_selection/evidence/independent_audit/two_outlet_v1.json"
+      ],
+      "limits": "Two prepared inputs, not a split single photon. Raw C may remain when the exact carrier signature fails. First interrupted attempt retained separately.",
+      "physical_validation_claimed": false,
+      "resource_qualification": "Measured 574.255 CPU seconds cover capture, observation and record serialization only; the whole-workflow 600-second cap is not certified. Four overlapping prior records match exactly."
+    },
+    {
+      "id": "C14",
+      "claim": "Earlier OR/NO prepared route competition is established finitely",
+      "classification": "finite_computational_result",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "positive",
+      "verification_status": "verified",
+      "exact_scope": "The earlier archived 200-run confirmation at arm lengths 8/10, L = 129/161 and H = 48/56 establishes both isolated paths as functional and mixed OR-only output for registered inputs under both spatial swaps. This session checks retained prior execution identities and selected histories; it does not freshly replay those 200 cases or include them in the 890 completed session recordings. Later bare controls extend the tested window, without permanent cancellation.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [
+        {
+          "path": "research/component_studies/selection_followup_protocol.json",
+          "sha256": "e492f7e475cf87dcca630e4c1518584a694b72fb2d0a26281626dc526b8e2080"
+        }
+      ],
+      "evidence": [
+        "docs/PATH_SELECTION_BLOCK.md",
+        "research/clock_selection/evidence/independent_audit/prior_competition_context.json",
+        "research/component_studies/selection_followup_evidence_v1/result.json",
+        "research/clock_selection/evidence/independent_audit/route_horizon_extension.json"
+      ],
+      "limits": "Earlier archived source identities are authoritative; the current checkout is not asserted as their historical execution commit. Current review does not constitute 200 fresh replays. No input-controlled winner reversal or physical collapse is proved.",
+      "physical_validation_claimed": false
+    },
+    {
+      "id": "C15",
+      "claim": "Registered higher-cooperation preference is refuted in its family",
+      "classification": "finite_computational_result",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "negative",
+      "verification_status": "verified",
+      "exact_scope": "The prior 432-run selection study has 10 eligible, arrival-matched C_pair comparisons: zero higher-score-only results and 10 counterexamples, comprising six lower-score-only outcomes and four cases with both quiet.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [
+        {
+          "path": "research/component_studies/selection_protocol.json",
+          "sha256": "f0e567b851221bf091b685bb2169175e199558dc40f8f2d41fb5e0aab55689ac"
+        }
+      ],
+      "evidence": [
+        "docs/PATH_SELECTION_BLOCK.md",
+        "research/component_studies/selection_evidence_v1/result.json",
+        "research/clock_selection/evidence/independent_audit/prior_competition_context.json"
+      ],
+      "limits": "C_pair is calibrated two-site nonadditivity, not universal physical complexity. This does not disprove every complexity hypothesis.",
+      "physical_validation_claimed": false
+    },
+    {
+      "id": "C16",
+      "claim": "Earlier route-driven receiver responds but loses its record",
+      "classification": "finite_computational_result",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "mixed",
+      "verification_status": "verified",
+      "exact_scope": "16 joined cases, H = 48: the winning receiver first responds at update 12; the proposed r = (0,0) record fails at update 14. There are 19 C-bearing updates containing 29 channel events. The loser equals its null control throughout the registered window.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [
+        {
+          "path": "research/component_studies/selection_receiver_protocol.json",
+          "sha256": "e52133b03f3f8a8f90d72c7a4cb255912ced05b6eb28ddbfd16b90b30e3d6f75"
+        }
+      ],
+      "evidence": [
+        "docs/PATH_SELECTION_BLOCK.md",
+        "research/component_studies/selection_receiver_evidence_v1/result.json",
+        "research/clock_selection/evidence/independent_audit/prior_competition_context.json"
+      ],
+      "limits": "Old archived complete replay is pinned and two mixed histories reread; this session does not claim a fresh replay of all648 older trajectories.",
+      "physical_validation_claimed": false
+    },
+    {
+      "id": "C17",
+      "claim": "Route-to-clock composition activates centers but fails retained memory",
+      "classification": "finite_computational_result",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "mixed",
+      "verification_status": "verified",
+      "exact_scope": "64 runs, L = 289 or 321, H = 80, hold states 64..80; all 5184 states and 5120 transitions are independently audited. Incoming comparisons pass. No active-clock quiet phase write passes in 24 comparisons, and no resting apparatus retains a quiet clock in four comparisons. Resting winners first activate at update 15 via u = -2, ell = -1, C1; resting losers later activate at update 59.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [
+        {
+          "path": "research/clock_selection/route_clock_protocol.json",
+          "sha256": "d0c2883260705631121be1efcd3111581d3db349ceac3d4e8f4bf02718d8a95b"
+        }
+      ],
+      "evidence": [
+        "research/clock_selection/route_clock_results.md",
+        "research/clock_selection/evidence/route_clock_v1/result.json",
+        "research/clock_selection/evidence/independent_audit/route_clock_v1.json",
+        "research/clock_selection/evidence/route_clock_v1/outer_budget.json",
+        "research/clock_selection/evidence/independent_audit/route_horizon_extension.json"
+      ],
+      "limits": "First source-caused activity is not a retained clock or permanent exclusive outcome. Bare losing outlets in these extended controls cease being null at update 60; the older finite competition window remains valid.",
+      "physical_validation_claimed": false
+    },
+    {
+      "id": "C18",
+      "claim": "Direct carrier causes transient activation but no quiet clock",
+      "classification": "finite_computational_result",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "mixed",
+      "verification_status": "verified",
+      "exact_scope": "36 runs, L = 225 or 257, H = 80, hold states 64..80; all 2916 states, 2880 transitions and 36 full rewinds are independently audited. All incoming templates are valid and all 18 source-absent boards are stationary. Six center-r=0 source-on runs first activate at update 16 via u = -1, ell = -1, C2. No registered source-on/off comparison retains a quiet clock: 0/18 pairs and 0/9 settings across both sizes.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [
+        {
+          "path": "research/clock_selection/protocol_activation.json",
+          "sha256": "69888ee350bc2d26904cdbdc48711d1c082f5f4cd216c926c3caa167207eff75"
+        }
+      ],
+      "evidence": [
+        "research/clock_selection/activation_results.md",
+        "research/clock_selection/evidence/activation_v1/result.json",
+        "research/clock_selection/evidence/independent_audit/activation_v1.json",
+        "research/clock_selection/evidence/activation_v1/outer_budget.json",
+        "research/clock_selection/route_memory_algebra.md"
+      ],
+      "limits": "Four transiently activated runs later return to the complete stationary region; the two center-0/halo-4 runs remain driven and nonquiet. Center r = 2 or 4 never activates in this family. This is a bounded preparation failure, not a universal no-clock theorem or a physical light result.",
+      "physical_validation_claimed": false,
+      "previous_pending_id": "P01",
+      "resource_qualification": "Whole dedicated workflow: 67.776 CPU seconds, 67.704 wall seconds and 25284097 bytes before receipt; the 180-second CPU, 300-second wall and 64-MiB caps pass."
+    },
+    {
+      "id": "C19",
+      "claim": "Exploratory larger-region test finds no finite multi-node clock",
+      "classification": "finite_computational_result",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "negative",
+      "verification_status": "verified_post_capture_exploration",
+      "exact_scope": "Passive analysis of the two center-0/halo-4 activation histories tests complete centered cubes of radii 1, 2 and 3, states 32..80 and periods 1..16 with at least three complete periods. All 96 region/period tests fail. All six regions remain active, but none repeats exactly; external terms are nonzero in 48, 42 and 29 of 48 updates for the three radii on both sizes. Independent passive audit reproduces the result.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [
+        {
+          "path": "research/clock_selection/protocol_activation_multinode_analysis.json",
+          "sha256": "a4da64c86fa13e6bd1fc06d26d6f218d4d7822049f75fe0c8efab783b033d3e5"
+        }
+      ],
+      "evidence": [
+        "research/clock_selection/activation_results.md",
+        "research/clock_selection/evidence/activation_multinode_exploration/result.json",
+        "research/clock_selection/evidence/independent_audit/activation_multinode_exploration.json"
+      ],
+      "limits": "This definition was frozen after trajectory capture and before the larger-region analysis, so it is exploratory rather than a new preregistered trajectory study. Zero new evolution updates were performed. Larger regions, longer periods and different preparations remain untested. The original activation criterion was unchanged.",
+      "physical_validation_claimed": false
+    },
+    {
+      "id": "C20",
+      "claim": "Carrier-to-memory chain fails a distinct terminal record",
+      "classification": "finite_computational_result",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "negative",
+      "verification_status": "verified",
+      "exact_scope": "32 runs, L = 393 or 425, H = 120, four receiver phases and all four source masks. All 3872 states, 3840 transitions and 32 full rewinds are independently audited. Every terminal receiver is quiet over states 96..112. No geometry meets the strong terminal-record criterion: 0/8, and no receiver phase passes on both sizes. In every geometry, the complete 336-triple joint11 receiver equals the00 and01 controls throughout the hold.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [
+        {
+          "path": "research/clock_selection/carrier_memory_protocol.json",
+          "sha256": "6309eea6e455a533258d235e884d835bb0759302f455d98659e77b035721c1ce"
+        }
+      ],
+      "evidence": [
+        "research/clock_selection/evidence/carrier_memory_v1/result.json",
+        "research/clock_selection/evidence/independent_audit/carrier_memory_v1.json",
+        "research/clock_selection/evidence/independent_audit/carrier_memory_terminal_aliases.json",
+        "research/clock_selection/evidence/carrier_memory_v1/outer_budget.json",
+        "research/clock_selection/evidence/independent_audit/carrier_memory_preflight_wording_supplement.json"
+      ],
+      "limits": "A quiet receiver and a distinction from writer-only history do not establish a unique terminal detector. Receiver phases 1, 2 and 3 fail the full late carrier-plus-C truth table. Original-phase restoration has not been causally assigned to a specific exterior or local state feature. No autonomous trials, complexity preference or physical light follows.",
+      "physical_validation_claimed": false,
+      "previous_pending_id": "P02",
+      "secondary_positive": "Receiver phase 0 preserves both early and late carrier-plus-C truth tables on both sizes and retains a phase-2 distinction between joint11 and writer-only10. This weaker armed-history record aliases the no-input and probe-only states; it does not pass the primary detector criterion.",
+      "resource_qualification": "Whole workflow: 98.219 CPU seconds, 98.139 wall seconds and 15792964 bytes before receipt. The 240-second CPU, 480-second wall and 96-MiB caps pass."
+    },
+    {
+      "id": "H01",
+      "claim": "Internal preference for greater structured complexity",
+      "classification": "research_hypothesis",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "pending",
+      "verification_status": "verified",
+      "exact_scope": "A philosophical/research hypothesis requiring a predeclared measurable property, alternatives and matched controls. The tested C_pair version is refuted; broader metrics remain separate hypotheses.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [],
+      "evidence": [
+        "docs/RESEARCH_PROPOSAL.md",
+        "research/clock_selection/physics.md",
+        "research/clock_selection/decision_ledger.md",
+        "docs/PATH_SELECTION_BLOCK.md"
+      ],
+      "limits": "No external score may select or delete a runtime path. Periodicity, order, entropy and cooperation are not interchangeable.",
+      "physical_validation_claimed": false
+    },
+    {
+      "id": "H02",
+      "claim": "An invariant observed light/time relation and quantum click interpretation",
+      "classification": "research_hypothesis",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "pending",
+      "verification_status": "verified",
+      "exact_scope": "Proposed relation between reversible board activity, internal transport and recorded clicks. Existing guided speed 1, coherent group-speed bound 1/sqrt(3) and native tick counts have no derived common physical click metric.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [],
+      "evidence": [
+        "research/clock_selection/quantum_time_gates.md",
+        "research/clock_selection/coherent_wave_algebra.md",
+        "research/clock_selection/physics.md",
+        "research/clock_selection/evidence/independent_audit/quantum_time_review_supplement.json"
+      ],
+      "limits": "No physical time arrow, Born law, entanglement, Bell-limit solution or wavefunction collapse is established.",
+      "physical_validation_claimed": false
+    },
+    {
+      "id": "T01",
+      "claim": "Autonomous repeated trials, unique approval and reusable retained result",
+      "classification": "future_target",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "pending",
+      "verification_status": "verified",
+      "exact_scope": "Build one unchanged-rule assembly that supplies its own valid trials, compares a fixed internal property, retains a unique readable result, preserves all rejected-path information and renews a later trial.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [],
+      "evidence": [
+        "research/clock_selection/algebra.md",
+        "research/clock_selection/physics.md",
+        "research/clock_selection/decision_ledger.md",
+        "research/clock_selection/write_probe_results.md"
+      ],
+      "limits": "Prepared gates, preloaded pulse trains and long closed orbits do not establish this complete chain.",
+      "physical_validation_claimed": false
+    },
+    {
+      "id": "T02",
+      "claim": "Transition to experimentally supported physics",
+      "classification": "future_target",
+      "candidate": "baseline-body-013-num1-den1",
+      "outcome": "pending",
+      "verification_status": "verified",
+      "exact_scope": "Separate operational tests are needed for light, matter, mass, electromagnetic/strong/weak/gravitational interactions, quantum measurement and moving apparatus. Effective laws require held-out families and explicit errors.",
+      "checkout_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+      "protocol_identities": [],
+      "evidence": [
+        "research/clock_selection/physics_targets/README.md",
+        "research/clock_selection/physics_targets/mass_families.md",
+        "research/clock_selection/physics_targets/charge_em.md",
+        "research/clock_selection/physics_targets/gravity.md",
+        "research/clock_selection/physics_targets/strong.md",
+        "research/clock_selection/physics_targets/weak.md",
+        "research/clock_selection/physics_targets/electronic_binding.md"
+      ],
+      "limits": "Representations, signed counters, frequency gaps and algebraic Q are not physical particles, charge, mass or forces. No empirical physical validation is claimed.",
+      "physical_validation_claimed": false
+    }
+  ],
+  "document_alignment": {
+    "report": "research/clock_selection/document_alignment.md",
+    "receipt": "research/clock_selection/evidence/document_alignment/receipt.json",
+    "scope": "Read-only comparison with exact live document; no document edit or new trajectory.",
+    "verified_differences": [
+      "General uniform scalar ratios are documented comparisons, not runtime parameters of this engine.",
+      "A6b proposed 512 exponent triples / 4096 labeled signed tensors are not implemented; current body actions remain (0,1,3) with eight sign triples.",
+      "Historical 8192-site scalar-wave numerical table has no matching evidence package found in the bounded repository search and is not verified in this session."
+    ]
+  },
+  "audited_native_session_totals": {
+    "studies": 15,
+    "completed_records": 890,
+    "full_states": 76322,
+    "forward_inverse_transitions": 75432,
+    "claim_counts": [
+      {
+        "claim_id": "C01",
+        "records": 48,
+        "states": 432,
+        "transitions": 384
+      },
+      {
+        "claim_id": "C02",
+        "records": 90,
+        "states": 1170,
+        "transitions": 1080
+      },
+      {
+        "claim_id": "C03",
+        "records": 16,
+        "states": 208,
+        "transitions": 192
+      },
+      {
+        "claim_id": "C04",
+        "records": 20,
+        "states": 220,
+        "transitions": 200
+      },
+      {
+        "claim_id": "C05",
+        "records": 68,
+        "states": 5220,
+        "transitions": 5152
+      },
+      {
+        "claim_id": "C06",
+        "records": 260,
+        "states": 22820,
+        "transitions": 22560
+      },
+      {
+        "claim_id": "C07",
+        "records": 16,
+        "states": 784,
+        "transitions": 768
+      },
+      {
+        "claim_id": "C09",
+        "records": 20,
+        "states": 2860,
+        "transitions": 2840
+      },
+      {
+        "claim_id": "C10",
+        "records": 8,
+        "states": 13128,
+        "transitions": 13120
+      },
+      {
+        "claim_id": "C11",
+        "records": 36,
+        "states": 1764,
+        "transitions": 1728
+      },
+      {
+        "claim_id": "C12",
+        "records": 48,
+        "states": 4656,
+        "transitions": 4608
+      },
+      {
+        "claim_id": "C13",
+        "records": 128,
+        "states": 11088,
+        "transitions": 10960
+      },
+      {
+        "claim_id": "C17",
+        "records": 64,
+        "states": 5184,
+        "transitions": 5120
+      },
+      {
+        "claim_id": "C18",
+        "records": 36,
+        "states": 2916,
+        "transitions": 2880
+      },
+      {
+        "claim_id": "C20",
+        "records": 32,
+        "states": 3872,
+        "transitions": 3840
+      }
+    ],
+    "scope": "Completed unique scientific records in this bounded session. Static initial checks, passive re-analyses, earlier archived648 studies and failed/interrupted duplicate attempts are excluded; their separate limitations remain linked."
+  }
+}

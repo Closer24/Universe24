@@ -1,0 +1,79 @@
+{
+  "format": "universe24-signal-started-clock-protocol-v1",
+  "question": "Can one exact guided signal start a quiet localized counter orbit in an initially motionless, prepared remainder apparatus?",
+  "claim": "Finite activation of a local oscillator by an ordinary signal, if the registered criteria pass. The remainder apparatus is prepared in advance; this is not creation from vacuum, a physical particle, a photon or a thermodynamic time arrow.",
+  "board": {
+    "sides": [
+      225,
+      257
+    ],
+    "body_signs": [
+      1,
+      1,
+      1
+    ],
+    "background": [
+      0,
+      0,
+      2
+    ]
+  },
+  "family": {
+    "center_remainders": [
+      0,
+      2,
+      4
+    ],
+    "other_halo_remainders": [
+      0,
+      2,
+      4
+    ],
+    "source_present": [
+      false,
+      true
+    ],
+    "source_delay": 2
+  },
+  "geometry": "c=L//2. Exact +X guide at y=z=c on primary0/companion14. Center=(c,c+1,c), channel2, initially(a,b)=(0,0). Full336-triple region comprises this node and its six face neighbors. The six outgoing halo recipients are determined by the fixed+++ tensor. Its guide-facing -Y recipient g0 keeps r0, and the untouched companion g14 at the same node keeps r4. The other five outgoing recipients all start at the registered halo remainder. Every other regional triple is background(0,0,2), except the center's registered remainder. Packet origin=(c-18,c,c). No patches may overwrite conflicting assignments.",
+  "preparation": "All336 regional counter pairs are zero initially. Source-on uses the unchanged exact GuidedPacketSource. Source-off removes its complete24-address packet core and transverse halo and restores pristineguide/background only in that footprint. Every outside-footprint triple, including the full apparatus, must be identical within each on/off pair. Initial state and tensor are finalized once; no runtime injection, deletion or phase adjustment.",
+  "steps": 80,
+  "incoming": {
+    "times": [
+      4,
+      5,
+      6,
+      7
+    ],
+    "criterion": "At each time compare the complete6x3x3/all48 exact +X carrier around its expected origin. Every source-on case must match; source-off must not. No coordinates or channels are excluded."
+  },
+  "first_activation": "Find the first update at which designated CENTER counters depart from(0,0); earlier halo activity is reported separately. Immediately before it, center counters must still be zero, the actual signed input sumu from the six native donors must be nonzero, and the center transition must have an existing native arithmetic C event with nonzero quotient. Record all six donor terms, before/after triples and exact C kind/quotient. A local transition with no input contact does not count as signal activation.",
+  "hold": {
+    "start": 64,
+    "through": 80,
+    "criterion": "All336 triples repeat with lag4 through17savedstates. At every hold state only the designated center may have nonzero counters, and it must obey0<|a|+|b|<=2. Its remainder must be constant and even. Every individual external counter contribution into every regional channel must be zero throughout all16updates. Require exact quarter-turn center counters at each update and no center C during the hold. No moving or noisy waveform is relabeled as a quiet oscillator.",
+    "classes": {
+      "unit": "|a|+|b|=1",
+      "axis2": "(|a|,|b|) is(2,0) or(0,2)",
+      "diagonal": "|a|=|b|=1"
+    }
+  },
+  "pair_acceptance": "Complete initial rest and source-footprint equivalence; source-off entire board stationary throughout80updates; valid incoming templates; native first center activation with nonzero input and C; all late quiet-orbit conditions; full-state forward/inverse verification; strict initial causal margin and no active boundary contact. Source-on cases cut short by a resource cap are inconclusive, not negative physical evidence. Report each of nine(center remainder,other halo remainder) geometries on each size, plus which nine geometries agree across both sizes; classify unit/axis2/diagonal separately.",
+  "causal_margin": "Every initially nonzero counter must be more than80 spatial edges from each periodic boundary. Record every active boundary contact separately.",
+  "budget": {
+    "registered_cases": 36,
+    "max_wall_seconds": 300,
+    "max_recorded_bytes": 67108864,
+    "max_seconds_per_record": 20,
+    "max_cells_per_record": 250000,
+    "max_bytes_per_record": 16777216,
+    "stop_new_captures_at_cpu_seconds": 145,
+    "finalization_reserve_seconds": 35,
+    "max_cpu_seconds": 180,
+    "child_cpu_soft_limit": 170,
+    "child_cpu_hard_limit": 175
+  },
+  "accounting": "Use absolute process_time, including imports, preparation, capture, observations and export, and an external whole-process user+system CPU receipt. Check resources before every case. Do not begin a new capture after145CPU seconds, leaving35seconds for finalization. Preserve per-case checkpoints and exceptions; continue after a local record cap only if global limits permit. If a group is incomplete it cannot pass. Total-process180CPU, not only capture CPU, is the declared limit; any overrun is reported.",
+  "retention": "Freeze all exact sources and protocol before capture. Preserve every complete native recording, initial spec, all raw C, every failed or unrun case and source hashes. Full state means all counters and remainders, including implicit background. Optional Presenter serialization stops before the byte limit rather than deleting native evidence.",
+  "presenter_selection": "All18 primary-side225 cases, including all on/off controls, chosen before data. Export complete experiments in small pages through the unchanged Presenter. If the declared artifact budget prevents a page, retain its full recording and report the unexported selection explicitly."
+}

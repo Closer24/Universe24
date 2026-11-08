@@ -1,0 +1,17 @@
+{
+  "all_work_completed": true,
+  "budget_passed": true,
+  "bytes_before_receipt": 9117595,
+  "child_completed_cases": 48,
+  "child_cpu_seconds": 57.222822,
+  "child_status": "completed",
+  "cpu_budget_seconds": 180,
+  "protocol_sha256": "f0340b86b689d681cc37cfd76e9e8617cd4f400ea1cb868fa94d00ff7471f523",
+  "returncode": 0,
+  "scope": "Entire dedicated wrapper process CPU plus child user/system CPU, including imports, preflight, capture, inverses, analysis, compression, export and archive hashing.",
+  "timeout": false,
+  "wall_budget_seconds": 300,
+  "whole_workflow_cpu_seconds": 57.356811871,
+  "whole_workflow_wall_seconds": 57.26925008999933,
+  "wrapper_cpu_seconds_at_receipt": 0.135640792
+}

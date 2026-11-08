@@ -1,0 +1,20 @@
+{
+  "format": "universe24-postcapture-multinode-clock-analysis-v1",
+  "status": "Exploratory analysis registered after the activation trajectories were captured, before inspecting these new cubic regions. It is not an independent prospective validation.",
+  "question": "Does the recorded r_center0/halo4 driven case contain a bounded periodic multi-node region despite failing the original single-center quiet-clock target?",
+  "source_study": "research/clock_selection/evidence/activation_v1",
+  "source_protocol_sha256": "69888ee350bc2d26904cdbdc48711d1c082f5f4cd216c926c3caa167207eff75",
+  "cases": ["activation-L225-rc0-rh4-s1", "activation-L257-rc0-rh4-s1"],
+  "centers": "The original designated clock spatial node(c,c+1,c), c=L//2.",
+  "radii": [1, 2, 3],
+  "regions": "All48 channels at EVERY spatial node within the centered closed cube[-R,R]^3. No channels or interior nodes are omitted. Implicit background triples are included exactly through the native state convention.",
+  "start_state": 32,
+  "end_state": 80,
+  "periods": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
+  "period_criterion": "For every t from32 through80-period, the entire regional state at t+period equals that at t. The48update interval must contain at least3complete periods. Report every qualifying period, not only a convenient one; period1 is a stationary active region, not an oscillating clock.",
+  "activity_criterion": "At EVERY saved state32..80, at least one internal counter pair must be nonzero. This excludes an all-rest fixed region.",
+  "isolation_criterion": "Across each update32->33 through79->80, every individual signed term from an outside donor into any internal regional channel must be zero. Cancellation of nonzero terms is insufficient. Use the fixed native tensor and record counts and the first offending term if present.",
+  "acceptance": "All period, activity and isolation conditions hold. Six regions times16periods yields96 declared tests. Original activation36 predicates and zero-acceptance verdict stay unchanged. Any hit is only a discovery candidate requiring a new frozen validation; no new evolution is authorized.",
+  "budget": {"max_cpu_seconds": 30, "max_recorded_bytes": 1048576, "new_forward_updates": 0, "new_inverse_updates": 0},
+  "retention": "Retain source recording hashes, all96 outcomes including failures, first exact state-mismatch positions, every regional external-term count, activity counts and source/analysis hashes. No outcome-dependent region, period or time-window adjustment."
+}

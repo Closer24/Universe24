@@ -1,0 +1,1197 @@
+{
+  "schema": "universe24-invariant-families-static-algebra-v1",
+  "created_utc": "2026-11-08T04:24:07.456129+00:00",
+  "baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+  "fundamental_rule": "num=den=1; divmod(2u+r,6)",
+  "verification_kind": "Finite static checks using production coupling/group tables; not an independent matrix oracle or substitute for the all-domain proof.",
+  "internal_patterns": [
+    {
+      "signs": [
+        -1,
+        -1,
+        -1
+      ],
+      "body_column": 0,
+      "world_row": 0,
+      "eigenvalue": -2,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        -1,
+        -1
+      ],
+      "body_column": 0,
+      "world_row": 1,
+      "eigenvalue": -2,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        -1,
+        -1
+      ],
+      "body_column": 0,
+      "world_row": 2,
+      "eigenvalue": -2,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        -1,
+        -1
+      ],
+      "body_column": 1,
+      "world_row": 0,
+      "eigenvalue": -4,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        -1,
+        -1
+      ],
+      "body_column": 1,
+      "world_row": 1,
+      "eigenvalue": -4,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        -1,
+        -1
+      ],
+      "body_column": 1,
+      "world_row": 2,
+      "eigenvalue": -4,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        -1,
+        -1
+      ],
+      "body_column": 2,
+      "world_row": 0,
+      "eigenvalue": -4,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        -1,
+        -1
+      ],
+      "body_column": 2,
+      "world_row": 1,
+      "eigenvalue": -4,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        -1,
+        -1
+      ],
+      "body_column": 2,
+      "world_row": 2,
+      "eigenvalue": -4,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        -1,
+        1
+      ],
+      "body_column": 0,
+      "world_row": 0,
+      "eigenvalue": -2,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        -1,
+        1
+      ],
+      "body_column": 0,
+      "world_row": 1,
+      "eigenvalue": -2,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        -1,
+        1
+      ],
+      "body_column": 0,
+      "world_row": 2,
+      "eigenvalue": -2,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        -1,
+        1
+      ],
+      "body_column": 1,
+      "world_row": 0,
+      "eigenvalue": -4,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        -1,
+        1
+      ],
+      "body_column": 1,
+      "world_row": 1,
+      "eigenvalue": -4,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        -1,
+        1
+      ],
+      "body_column": 1,
+      "world_row": 2,
+      "eigenvalue": -4,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        -1,
+        1
+      ],
+      "body_column": 2,
+      "world_row": 0,
+      "eigenvalue": 0,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        -1,
+        1
+      ],
+      "body_column": 2,
+      "world_row": 1,
+      "eigenvalue": 0,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        -1,
+        1
+      ],
+      "body_column": 2,
+      "world_row": 2,
+      "eigenvalue": 0,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        1,
+        -1
+      ],
+      "body_column": 0,
+      "world_row": 0,
+      "eigenvalue": -2,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        1,
+        -1
+      ],
+      "body_column": 0,
+      "world_row": 1,
+      "eigenvalue": -2,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        1,
+        -1
+      ],
+      "body_column": 0,
+      "world_row": 2,
+      "eigenvalue": -2,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        1,
+        -1
+      ],
+      "body_column": 1,
+      "world_row": 0,
+      "eigenvalue": 0,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        1,
+        -1
+      ],
+      "body_column": 1,
+      "world_row": 1,
+      "eigenvalue": 0,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        1,
+        -1
+      ],
+      "body_column": 1,
+      "world_row": 2,
+      "eigenvalue": 0,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        1,
+        -1
+      ],
+      "body_column": 2,
+      "world_row": 0,
+      "eigenvalue": -4,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        1,
+        -1
+      ],
+      "body_column": 2,
+      "world_row": 1,
+      "eigenvalue": -4,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        1,
+        -1
+      ],
+      "body_column": 2,
+      "world_row": 2,
+      "eigenvalue": -4,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        1,
+        1
+      ],
+      "body_column": 0,
+      "world_row": 0,
+      "eigenvalue": -2,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        1,
+        1
+      ],
+      "body_column": 0,
+      "world_row": 1,
+      "eigenvalue": -2,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        1,
+        1
+      ],
+      "body_column": 0,
+      "world_row": 2,
+      "eigenvalue": -2,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        1,
+        1
+      ],
+      "body_column": 1,
+      "world_row": 0,
+      "eigenvalue": 0,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        1,
+        1
+      ],
+      "body_column": 1,
+      "world_row": 1,
+      "eigenvalue": 0,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        1,
+        1
+      ],
+      "body_column": 1,
+      "world_row": 2,
+      "eigenvalue": 0,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        1,
+        1
+      ],
+      "body_column": 2,
+      "world_row": 0,
+      "eigenvalue": 0,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        1,
+        1
+      ],
+      "body_column": 2,
+      "world_row": 1,
+      "eigenvalue": 0,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        -1,
+        1,
+        1
+      ],
+      "body_column": 2,
+      "world_row": 2,
+      "eigenvalue": 0,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        -1,
+        -1
+      ],
+      "body_column": 0,
+      "world_row": 0,
+      "eigenvalue": 2,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        -1,
+        -1
+      ],
+      "body_column": 0,
+      "world_row": 1,
+      "eigenvalue": 2,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        -1,
+        -1
+      ],
+      "body_column": 0,
+      "world_row": 2,
+      "eigenvalue": 2,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        -1,
+        -1
+      ],
+      "body_column": 1,
+      "world_row": 0,
+      "eigenvalue": 0,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        -1,
+        -1
+      ],
+      "body_column": 1,
+      "world_row": 1,
+      "eigenvalue": 0,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        -1,
+        -1
+      ],
+      "body_column": 1,
+      "world_row": 2,
+      "eigenvalue": 0,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        -1,
+        -1
+      ],
+      "body_column": 2,
+      "world_row": 0,
+      "eigenvalue": 0,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        -1,
+        -1
+      ],
+      "body_column": 2,
+      "world_row": 1,
+      "eigenvalue": 0,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        -1,
+        -1
+      ],
+      "body_column": 2,
+      "world_row": 2,
+      "eigenvalue": 0,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        -1,
+        1
+      ],
+      "body_column": 0,
+      "world_row": 0,
+      "eigenvalue": 2,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        -1,
+        1
+      ],
+      "body_column": 0,
+      "world_row": 1,
+      "eigenvalue": 2,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        -1,
+        1
+      ],
+      "body_column": 0,
+      "world_row": 2,
+      "eigenvalue": 2,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        -1,
+        1
+      ],
+      "body_column": 1,
+      "world_row": 0,
+      "eigenvalue": 0,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        -1,
+        1
+      ],
+      "body_column": 1,
+      "world_row": 1,
+      "eigenvalue": 0,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        -1,
+        1
+      ],
+      "body_column": 1,
+      "world_row": 2,
+      "eigenvalue": 0,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        -1,
+        1
+      ],
+      "body_column": 2,
+      "world_row": 0,
+      "eigenvalue": 4,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        -1,
+        1
+      ],
+      "body_column": 2,
+      "world_row": 1,
+      "eigenvalue": 4,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        -1,
+        1
+      ],
+      "body_column": 2,
+      "world_row": 2,
+      "eigenvalue": 4,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        1,
+        -1
+      ],
+      "body_column": 0,
+      "world_row": 0,
+      "eigenvalue": 2,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        1,
+        -1
+      ],
+      "body_column": 0,
+      "world_row": 1,
+      "eigenvalue": 2,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        1,
+        -1
+      ],
+      "body_column": 0,
+      "world_row": 2,
+      "eigenvalue": 2,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        1,
+        -1
+      ],
+      "body_column": 1,
+      "world_row": 0,
+      "eigenvalue": 4,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        1,
+        -1
+      ],
+      "body_column": 1,
+      "world_row": 1,
+      "eigenvalue": 4,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        1,
+        -1
+      ],
+      "body_column": 1,
+      "world_row": 2,
+      "eigenvalue": 4,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        1,
+        -1
+      ],
+      "body_column": 2,
+      "world_row": 0,
+      "eigenvalue": 0,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        1,
+        -1
+      ],
+      "body_column": 2,
+      "world_row": 1,
+      "eigenvalue": 0,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        1,
+        -1
+      ],
+      "body_column": 2,
+      "world_row": 2,
+      "eigenvalue": 0,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        1,
+        1
+      ],
+      "body_column": 0,
+      "world_row": 0,
+      "eigenvalue": 2,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        1,
+        1
+      ],
+      "body_column": 0,
+      "world_row": 1,
+      "eigenvalue": 2,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        1,
+        1
+      ],
+      "body_column": 0,
+      "world_row": 2,
+      "eigenvalue": 2,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        1,
+        1
+      ],
+      "body_column": 1,
+      "world_row": 0,
+      "eigenvalue": 4,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        1,
+        1
+      ],
+      "body_column": 1,
+      "world_row": 1,
+      "eigenvalue": 4,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        1,
+        1
+      ],
+      "body_column": 1,
+      "world_row": 2,
+      "eigenvalue": 4,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        1,
+        1
+      ],
+      "body_column": 2,
+      "world_row": 0,
+      "eigenvalue": 4,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        1,
+        1
+      ],
+      "body_column": 2,
+      "world_row": 1,
+      "eigenvalue": 4,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    },
+    {
+      "signs": [
+        1,
+        1,
+        1
+      ],
+      "body_column": 2,
+      "world_row": 2,
+      "eigenvalue": 4,
+      "counts": {
+        "-1": 8,
+        "0": 32,
+        "1": 8
+      },
+      "all48_equations_pass": true
+    }
+  ],
+  "spatial_patterns": [
+    {
+      "profile": [
+        1,
+        -1,
+        0
+      ],
+      "side": 3,
+      "eigenvalue": 3,
+      "full_address_equations_checked": 1296
+    },
+    {
+      "profile": [
+        1,
+        0,
+        -1,
+        0
+      ],
+      "side": 4,
+      "eigenvalue": 4,
+      "full_address_equations_checked": 3072
+    }
+  ],
+  "sign_conjugacy_checks": 1206,
+  "source_sha256": {
+    "universe24/core/coupling.py": "4d822203dbb75bd5192c4fddcbf8e2ffbab6c46c2a55cb19f101bcecaa4f6489",
+    "universe24/core/group_2o.py": "3f0475445dfc65042651a68036835e375003a86873fc202b8e904fdf470fb055",
+    "universe24/core/rule3.py": "216e2490e7a9f683db1a8918dc46c7aa11213aaf0409a13ddf7f1850f7b88555",
+    "research/clock_selection/invariant_families_algebra.md": "68e4cc51347f30acf0265b51faff05e5c2db351741e27e9427a02ecfee8b4d62"
+  },
+  "new_native_forward_steps": 0,
+  "new_native_inverse_steps": 0,
+  "previous_evidence_modified": false,
+  "passed": true,
+  "checkout_head_at_static_check": "3204576de7c2234b5568ba9efe18859821526247",
+  "baseline_commit_scope": "Original strict-engine baseline; current research checkout includes later documentation and evidence commits. Exact code hashes above identify inspected arithmetic."
+}

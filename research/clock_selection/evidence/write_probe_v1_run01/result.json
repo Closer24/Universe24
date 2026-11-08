@@ -1,0 +1,3294 @@
+{
+  "all_full_state_inverses": true,
+  "carrier_and_C_discriminator_groups": 0,
+  "carrier_discriminator_groups": 0,
+  "cases": [
+    {
+      "assessment": {
+        "pristine_translation": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-pristine-L321-gap32",
+        "phase": 0,
+        "side": 321,
+        "stage": "pristine",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "faa23ab1b03297b6aa42a225ffa1de4cf3beff021e39ea5ed7b045000d5372a7",
+      "frames": 9,
+      "full_state_inverse": true,
+      "id": "write-probe-pristine-L321-gap32-11",
+      "initial_state_sha256": "aba2d44f65e4541b7c41d91312c91c1f256f32d44e379694963e09cf6761a7ed",
+      "record": "records/write-probe-pristine-L321-gap32-11.json.gz",
+      "record_gzip_sha256": "18d10fe5b24d6d68c4f16c3e07deafef37b7e43276f2870511429138414bec8d",
+      "record_sha256": "f6c24f082a21508e5c2333ad640c5469f6d99883063d8f220280b9032ce3e940",
+      "transitions": 8
+    },
+    {
+      "assessment": {
+        "pristine_translation": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-pristine-L321-gap33",
+        "phase": 0,
+        "side": 321,
+        "stage": "pristine",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "8cb0e012210d0723bc3e9a727a0621a6cc478a2a2e84ec288660e96396b38171",
+      "frames": 9,
+      "full_state_inverse": true,
+      "id": "write-probe-pristine-L321-gap33-11",
+      "initial_state_sha256": "eddf898062f51fed1ed221252be75024473d4962f8118ccfb52aa5f6ff1506c8",
+      "record": "records/write-probe-pristine-L321-gap33-11.json.gz",
+      "record_gzip_sha256": "8d64293d6985226a6b297492d22dc35b4531f0f95ae1d255909653172a7017d2",
+      "record_sha256": "fef469bdaa4b4dfb97e2b223b816cbd4d21d2d5df0d91a499fe03493f1c75ee2",
+      "transitions": 8
+    },
+    {
+      "assessment": {
+        "pristine_translation": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-pristine-L321-gap34",
+        "phase": 0,
+        "side": 321,
+        "stage": "pristine",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "82064fff371c4ed253ee2e5ee93cf3f20f1a9134cd4e9122494e7b618290c3a3",
+      "frames": 9,
+      "full_state_inverse": true,
+      "id": "write-probe-pristine-L321-gap34-11",
+      "initial_state_sha256": "81ba891030b052d7d8663def79835ea7e86d495881cda6a8eded606450b0c25d",
+      "record": "records/write-probe-pristine-L321-gap34-11.json.gz",
+      "record_gzip_sha256": "6fa5b0ac35ac294ee6b71e9fc8f3db69419bd4b298dc96e0379d24d98fb2bdde",
+      "record_sha256": "b4ae204af8398c2a976f79f4e21f6b48b73336bff062367b3945b61ff1217ff0",
+      "transitions": 8
+    },
+    {
+      "assessment": {
+        "pristine_translation": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-pristine-L321-gap35",
+        "phase": 0,
+        "side": 321,
+        "stage": "pristine",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "d8eebe1a43cbee116303cdf1a1af35d3d1e93146ac8f5643cf0577ca4161cd2d",
+      "frames": 9,
+      "full_state_inverse": true,
+      "id": "write-probe-pristine-L321-gap35-11",
+      "initial_state_sha256": "f858879ae0f76425dde8bcabff8f62cd3fbd4fdb1b01b3da08f47809957da125",
+      "record": "records/write-probe-pristine-L321-gap35-11.json.gz",
+      "record_gzip_sha256": "7aa1ab32cf581db6275f26184d90d0ed86072b956e967737583a6a0b8cdb5ed3",
+      "record_sha256": "009fff3e854b2af7e5554457439e4083364e2d2d1bfab5b362326ec33274f787",
+      "transitions": 8
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap32",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "fa51aefc26a7456e1ec26771d07a6389938dc2edbf307d7ebd6d8151d8518c6e",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p0-d1-gap32-00",
+      "initial_state_sha256": "fa51aefc26a7456e1ec26771d07a6389938dc2edbf307d7ebd6d8151d8518c6e",
+      "record": "records/write-probe-L321-r0-p0-d1-gap32-00.json.gz",
+      "record_gzip_sha256": "3f405b43b19c841623ec204bc873cec03a2052cc0e4c4946f28f849d7774e277",
+      "record_sha256": "ec57e0d8d2f060a4a1945419b50aeb6eae547f4bcee14b76a98addcbcd42a1b1",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap32",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "9367e8fdf6507e104e59ab6df5bafa7a3ea4f54274d5030c697f0bfe8c15c794",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p0-d1-gap32-10",
+      "initial_state_sha256": "8d2f15494c148af543205a4b957f3739293fa5ad11cd135842379764de61c90e",
+      "record": "records/write-probe-L321-r0-p0-d1-gap32-10.json.gz",
+      "record_gzip_sha256": "996f4e9f62d50b06aa5e083bcce5a7aa259135c7d5d5567a2ab9284d35c61696",
+      "record_sha256": "14cab6e22fb6d0c3d77f9638be6624f2859e0d7c7b02f9edee97ce33bfef86ac",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap32",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "5905a15f6b7363cf5930ecf766d6a2e3be79c27b17bd3dbbed9e7d45afe087ec",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p0-d1-gap32-01",
+      "initial_state_sha256": "2ea89c658a838f667febe4ec0934ea71e062dc5aaf32d7debabb9690c0750f94",
+      "record": "records/write-probe-L321-r0-p0-d1-gap32-01.json.gz",
+      "record_gzip_sha256": "db96769f97ad39dd16da5dcc19ace60b632f2d99a689bf44da6f936baaa27e59",
+      "record_sha256": "23b1d8c0444e3fc53d80a8cddefeb044601ee1cee2586dfd2f3dac06cd88e295",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap32",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "7382699bfee483ee78214ed39e8df4201aec22c31ce1226040cd95a2d3417d87",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p0-d1-gap32-11",
+      "initial_state_sha256": "931c6bf9dab1e56c695e4f26170d9eab9369c5fd033daed07f4da10b4328ef96",
+      "record": "records/write-probe-L321-r0-p0-d1-gap32-11.json.gz",
+      "record_gzip_sha256": "7ec8508a1ff72e51786f3a06d249da55c67c389a34cd3f09f601087b0066946b",
+      "record_sha256": "1965c2702989a1ff0f16a9a10974ca83ca32604b91cf2abceeff34ea363e3f77",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap33",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "bf4607676ac688d368c2c99197bdd9ebd0c4ed77c6a2abda113a42a0db162dce",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p0-d1-gap33-00",
+      "initial_state_sha256": "bf4607676ac688d368c2c99197bdd9ebd0c4ed77c6a2abda113a42a0db162dce",
+      "record": "records/write-probe-L321-r0-p0-d1-gap33-00.json.gz",
+      "record_gzip_sha256": "39203ce3635290614a4722589186355ff42aad94b2ae742a981bd3ef8de5418f",
+      "record_sha256": "5135209f17a8cd78720765a8f69383e750550394989712a787863bd606f9b814",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap33",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "6bb4aacd19856b0125f64e55a02b98d14d81df5be0b64953fd5bad989d5bef41",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p0-d1-gap33-10",
+      "initial_state_sha256": "f4829a376c15d3cc339e8af18ab3216862aceb11cfcbc424819f923f0d99b6dd",
+      "record": "records/write-probe-L321-r0-p0-d1-gap33-10.json.gz",
+      "record_gzip_sha256": "b9c14070e50e180ad27befdd58af94210a58dded9571b93dc8ed2910d80d9aac",
+      "record_sha256": "1655b6759684d598eda25d1e8e6f02d6b6a3fe79da7760a8bfa515cd41d71f47",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap33",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "104c4c4713b49ce9bc9c0c51058ee20900e99fb2c1fbf0cc15f3f66dfbbf8720",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p0-d1-gap33-01",
+      "initial_state_sha256": "fe02a0b00893ae34c362dd8feaa621a1ee4893b2ff987e4befe05e09bfd5a086",
+      "record": "records/write-probe-L321-r0-p0-d1-gap33-01.json.gz",
+      "record_gzip_sha256": "41e30aae502fe84129cca9ceed11c1ac4c646f5a176e2ff87cb231e8da886e07",
+      "record_sha256": "52d611a537a0edef06e211c10c384abae83efbd91ab3baf53d66553d34ee1289",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap33",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "7262acfbe08d5e25761506445772e0142507a4d98a8458e687557ae5a81e9f5e",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p0-d1-gap33-11",
+      "initial_state_sha256": "cb6dd77b087a04c6952142bc7daf85ece9febb4a3908b42c0c01f688fbc45128",
+      "record": "records/write-probe-L321-r0-p0-d1-gap33-11.json.gz",
+      "record_gzip_sha256": "c52c5defac163019290932070acbf73330a8a5a440742c6754947fbd76ea1dae",
+      "record_sha256": "fcacc9ac771f1476e40b22f183cdf6eb5ae9ace5e483def8c629bbd0151a6919",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap34",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "abbef074f8856ae454b4aa19c03cfef6e8a7f7367b197be16c578377e981b614",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p0-d1-gap34-00",
+      "initial_state_sha256": "abbef074f8856ae454b4aa19c03cfef6e8a7f7367b197be16c578377e981b614",
+      "record": "records/write-probe-L321-r0-p0-d1-gap34-00.json.gz",
+      "record_gzip_sha256": "238848c12444cc0f2085a502a3c9da0623bbb6c35a837811ac9fef682dcee037",
+      "record_sha256": "8711051552220237258c793027feacf0cf9af33abb7a3473b6744ddde4a3607b",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap34",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "383d1fbd50bded7dfebf9b73d41011ca186620f2d9f21663ac5c3c61ec49034a",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p0-d1-gap34-10",
+      "initial_state_sha256": "c017fe4a12f44efc851dd1f91d2858484514f087cc35f583033f569cb33f7682",
+      "record": "records/write-probe-L321-r0-p0-d1-gap34-10.json.gz",
+      "record_gzip_sha256": "32d30cb93e15d9942590913ada37086f10384fefa24f5c9a527c656a7dad7a7a",
+      "record_sha256": "ed0daf79083a0ebfc9043bcd460e61c91a9fd97a12e01958ccd5c299f58df6f5",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap34",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "dd01b6344192a1872c2b5fa1bddbba851b5233ed103b7a2878858171d17b8105",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p0-d1-gap34-01",
+      "initial_state_sha256": "4518c79fe0ecfa00ec7cf33906115fa65a84672d46d6faa42db00eb285e10640",
+      "record": "records/write-probe-L321-r0-p0-d1-gap34-01.json.gz",
+      "record_gzip_sha256": "a6cfad160e81a0db28136ef608bac416737af30a2fdb563bfbb84d195f7ced1a",
+      "record_sha256": "ccf4a4330420bb489ee2734a2a4bc8fb311f50430bf225efd127d4880117bd4e",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap34",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "64af0f7411eb2d1f6008369cb8b0ed94479307ba554f3b086fe481197140957f",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p0-d1-gap34-11",
+      "initial_state_sha256": "fe67db8941ad625ff0b60b9feb9672801fd14e528ad3a27ffb8823c49eaf48e8",
+      "record": "records/write-probe-L321-r0-p0-d1-gap34-11.json.gz",
+      "record_gzip_sha256": "7a570f04d1d54a97693748389e46d9b3fd4683605cab79b801be2ba812fd5f05",
+      "record_sha256": "697c2e3577d7f31a72140b058c4259e9ef4dfc95d08abbcb59cb495f8fddf28b",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap35",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "5b8ce9b47d53a28015b1356a08d211a3c6a693b0333f9085d789a5df01bd0fd0",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p0-d1-gap35-00",
+      "initial_state_sha256": "5b8ce9b47d53a28015b1356a08d211a3c6a693b0333f9085d789a5df01bd0fd0",
+      "record": "records/write-probe-L321-r0-p0-d1-gap35-00.json.gz",
+      "record_gzip_sha256": "026c85b096996e77949e83661ac77979bcb5f96fdd2f95ac5703e82d1ab5b70f",
+      "record_sha256": "009a0724d34e402335c0022bc34839a80289d14c09d464aa9267fe4f94ad585d",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap35",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "81a7dab2e647f95d2fefe1bb63061dc301c5619164a995dfc7c1284ad59e8197",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p0-d1-gap35-10",
+      "initial_state_sha256": "fe8e7d8c98a382cdbf0045d4fa95232c36f0055836d32bdb94f3e854d4c897b1",
+      "record": "records/write-probe-L321-r0-p0-d1-gap35-10.json.gz",
+      "record_gzip_sha256": "0237dc20e6f625fc4807b1b9b1a9d082edbabbc2ada4bf288ace3e7ee8341792",
+      "record_sha256": "58c85ef9f6297e861ac9f2d065d0317238a6fb0792fba926a17cf2de1141b9df",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap35",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "312bfeb147cf09f89569c210ae09a8a5c8409c48e5d9a02b6ce30e6fcd348ac1",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p0-d1-gap35-01",
+      "initial_state_sha256": "cfc739acaef0202270a17e9610cf7fb2e4d1afbb3bbd19629a96238c60e378c5",
+      "record": "records/write-probe-L321-r0-p0-d1-gap35-01.json.gz",
+      "record_gzip_sha256": "2649fabb4c354867fd55526addc40f5a4d38c651ef04fa8be5f0fd86ba8e0b07",
+      "record_sha256": "0f15382e69d73a45bc75660a19baeaeeb770427805fa271e769efc586aaf8a7f",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap35",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "8532294a9e7d9808589af24ae9ded49c584bae216b277752657607c4f81731c2",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p0-d1-gap35-11",
+      "initial_state_sha256": "bfafd3383fdcdc573b68f6c10ee0a475f2e7f7f4576e0fe68adf467cfe256c70",
+      "record": "records/write-probe-L321-r0-p0-d1-gap35-11.json.gz",
+      "record_gzip_sha256": "fed6b87acb86f75f38c1062f8e0f91ab1172c31ac3630708677030368918307e",
+      "record_sha256": "8f6900d87feb0e70c5af94161a5128108a04c632642b1e0121d2fa4be29c2cdf",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap32",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "36c0241144458ed362c5696aa57465980498bdfceeaddf34d39f28b6d7d572d8",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p1-d1-gap32-00",
+      "initial_state_sha256": "36c0241144458ed362c5696aa57465980498bdfceeaddf34d39f28b6d7d572d8",
+      "record": "records/write-probe-L321-r0-p1-d1-gap32-00.json.gz",
+      "record_gzip_sha256": "ab220f0a60ea9c026b71661624c9b26c74216a7c9d5ea0a5c5dcf9d0bdc375c4",
+      "record_sha256": "44971cac52922dba4df0c37fe00feadcef34f96e12f7583ad9571ae88974bc90",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap32",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "37a5721bc210d7c282c1bbbcfebdc1570e6d0bc5e006d7ad8727043dcdd0b63d",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p1-d1-gap32-10",
+      "initial_state_sha256": "098a859cfa2a6f6f24f781ecc75af773432bfd301dc18f1f5207fbf380d42361",
+      "record": "records/write-probe-L321-r0-p1-d1-gap32-10.json.gz",
+      "record_gzip_sha256": "3d89e3dc6a84d1f20b3adecb406caf167848db76b8242d63bdf6dfe479ff849e",
+      "record_sha256": "34d6cf016db417b114effa99dd76b3306377d7d6e613d39d68e9ba8e8f493040",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap32",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "018041d6abf0faad23cd2a55dbfc28d402c537f58e4868cb2ef27e4dc3acf64f",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p1-d1-gap32-01",
+      "initial_state_sha256": "a705333ae9dd8cd337de42d1e90e96e52981bbf9a4b28606f43e1299eb949142",
+      "record": "records/write-probe-L321-r0-p1-d1-gap32-01.json.gz",
+      "record_gzip_sha256": "2d1715e3f31b9cd1417f05983d296a2de98d339b03b4a511ed23ab01a5d4f02b",
+      "record_sha256": "272642f733d02511570c333de96c596b845282bc1eb920d40938cb67b8626126",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap32",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "ee8c5477a021cf29e65fbe0fe40c363dae743fae6d4fab6a0fb886a9b93613b9",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p1-d1-gap32-11",
+      "initial_state_sha256": "e924e8c17e75ace3ba1f5c546519e46e5299592678c8bbf54725cc6bd6626b85",
+      "record": "records/write-probe-L321-r0-p1-d1-gap32-11.json.gz",
+      "record_gzip_sha256": "fbb2c08f5d444369023535a06e081e67a31f2ebc0ddcf8046bec9b86567d0472",
+      "record_sha256": "43218e57d3cccfb158bd1d9387f5b134b0e391c226d12152dec45713ac954eba",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap33",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "06eedbe9a67f81c1b5f62db9cd7c1cf80a8b5c478fcfb576dd24c0962abd200d",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p1-d1-gap33-00",
+      "initial_state_sha256": "06eedbe9a67f81c1b5f62db9cd7c1cf80a8b5c478fcfb576dd24c0962abd200d",
+      "record": "records/write-probe-L321-r0-p1-d1-gap33-00.json.gz",
+      "record_gzip_sha256": "fa8aba6d14c0ac0aa14790c6a185360ed4794730363c066a875b8a6c3c3688f9",
+      "record_sha256": "624312065579fb72888836e57a0377bcc661fd6a58375dd97c264438b18cd68d",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap33",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "362dbfc05a0b26eae9a579e175d8ced52eeb5344bcfc66ae756428f55af0a7c9",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p1-d1-gap33-10",
+      "initial_state_sha256": "0f8c7025f7cd6fbeeef55db1f19d38292eefcfc0dbe109944f961abe180b3df0",
+      "record": "records/write-probe-L321-r0-p1-d1-gap33-10.json.gz",
+      "record_gzip_sha256": "0235b769038cb7c4aa00454a1cbbc59fad2e456505fd58bf0305f3d92c48ae47",
+      "record_sha256": "aaf6bc38567b3c1427032f651b72a1ea10997ec2445b5b2d47dfca8158957d02",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap33",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "7eae1a6a449511fdb0f71f70cb535463ad67269819d0351eb61e784b312f9cde",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p1-d1-gap33-01",
+      "initial_state_sha256": "a971771fc07ed3ea2ae5aa1c17fdc8c16993992babc05569912f32e2c68a6829",
+      "record": "records/write-probe-L321-r0-p1-d1-gap33-01.json.gz",
+      "record_gzip_sha256": "62764b64c7e86c1b00ae808f08f0feeb086bc5bf0bb2c643fabdba80461dd806",
+      "record_sha256": "8d3d7cb5cf9625355f7849410152ad883f0f945ba39fc25b91d7f97b79d9c945",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap33",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "eed24766668aa0e908dd3e9bd6e01c405e619b7d55b2fc9371bbf3c6205ec572",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p1-d1-gap33-11",
+      "initial_state_sha256": "39529f36c932bf6fdc048179f0d12ad5dfd170287fb8fc4fa1828c8bc9ee073e",
+      "record": "records/write-probe-L321-r0-p1-d1-gap33-11.json.gz",
+      "record_gzip_sha256": "1e475a3b5177b114f220e89c0744afdc061f88adf231264bd0b48c154034095e",
+      "record_sha256": "6e73df033639e1d0bbaa62d6feeaf5444b56cfd70171013186ea9fac78f528fa",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap34",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "5507c03c434d560a19ce11fbba1a98b003c27224c28d913d8ec48f57ae420a1f",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p1-d1-gap34-00",
+      "initial_state_sha256": "5507c03c434d560a19ce11fbba1a98b003c27224c28d913d8ec48f57ae420a1f",
+      "record": "records/write-probe-L321-r0-p1-d1-gap34-00.json.gz",
+      "record_gzip_sha256": "931acc2868dace6faf5ab76e1b9048a1cf2583376f3bda0f6c32a849f4f9d724",
+      "record_sha256": "b6944f3f81fabcee1e465a0141353e1a5b98b46cb012ce4ec5b5333690fe8f33",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap34",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "b88de24547af4802a54dddb70eaf54c0d2c7eff19230740e7c33e521d60160d6",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p1-d1-gap34-10",
+      "initial_state_sha256": "bb0374071ef0736cac9a6950d214cf9e7c5cfdc90127c606d7862c06c90f1780",
+      "record": "records/write-probe-L321-r0-p1-d1-gap34-10.json.gz",
+      "record_gzip_sha256": "ef4221e81d2b1a6ddd30439da274699d3a8f454d5d8a1412af57dd2e34cae280",
+      "record_sha256": "f7154243cee66a6a18fc0626a3e92225eeba50f650891775d0cb16466bce50d5",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap34",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "2a5325080c54904a178875e65944e702a1309ad4122314bf327560230c7ffc1f",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p1-d1-gap34-01",
+      "initial_state_sha256": "3e13c8dc9781f85d9dc52924c6d50c6168f6924aa78df5124afce772852b4d2c",
+      "record": "records/write-probe-L321-r0-p1-d1-gap34-01.json.gz",
+      "record_gzip_sha256": "3f7c026a2a653ef2f33a9210b4ebe5b971e79d840ad9b81e4facf2603a3f2902",
+      "record_sha256": "e5bc84e7ffb98c078e91085a45e36e45d15f4680a03d5f277ce33542c1d4b2e5",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": true,
+        "complete_hold": true,
+        "exact_output_C_signature": true,
+        "exact_output_carrier": true,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap34",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "2643c73517eecd468d7c7a65f456741533ff03074fc39c2df55893195e855f1d",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p1-d1-gap34-11",
+      "initial_state_sha256": "6545d78da76ed46fe05aefc799d3e250fe1a9d99b23d8cbb49a094431beacf7d",
+      "record": "records/write-probe-L321-r0-p1-d1-gap34-11.json.gz",
+      "record_gzip_sha256": "8d036e72a5ad4333a61685a8e5a15a933da33207cfca8766f9fc5f1d3a38d2b9",
+      "record_sha256": "bee2b690527540dd39849c821b53fb13ea15b4ebcea0f992d171ee42ed3ec0ff",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap35",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "fa58afc75c297d380fddd798ce0f8a72387fa7c548027890bf59ee9da85ad693",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p1-d1-gap35-00",
+      "initial_state_sha256": "fa58afc75c297d380fddd798ce0f8a72387fa7c548027890bf59ee9da85ad693",
+      "record": "records/write-probe-L321-r0-p1-d1-gap35-00.json.gz",
+      "record_gzip_sha256": "6111f2648db9e8d36068c449be2097d3871ed20b5438253f5833f5740eadd22a",
+      "record_sha256": "26e92096d63fb3358da1b6e80fafcf6833855de4b7496b992093e2c875146526",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap35",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "2f64a2068e2cad157f43f7832c121162657818c49525949a5dc9cf84adad2dcd",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p1-d1-gap35-10",
+      "initial_state_sha256": "7ae3a5ecb009bfdaf327af163d59e2c84010a077be513b739d95b19e56be9a8a",
+      "record": "records/write-probe-L321-r0-p1-d1-gap35-10.json.gz",
+      "record_gzip_sha256": "28fcb564cb678c727bc76d27c1f94df01c7ebd3ed7792e79d3d79cbab047346f",
+      "record_sha256": "d5b4e682ec9a3c08f30c962ec3791c02faaa07bf8fee7e78a9e38a35a689b7fd",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap35",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "829bb8e04b6f3a4f814c9ec62391386a1b025a08e911a96d8cf698ab71bd08b3",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p1-d1-gap35-01",
+      "initial_state_sha256": "95320a4b223337f6479e7027efc15f0fdfefebecb2f3188c924bdf5acb802140",
+      "record": "records/write-probe-L321-r0-p1-d1-gap35-01.json.gz",
+      "record_gzip_sha256": "03ae516f3c7ad5b6155b3a5732957862db64a0fe38ecabf777c64696c231ffeb",
+      "record_sha256": "6aed5fd6ecc495972b8e1c65e8a680da1cab4d6a8c6196a441377a16ce5c9f45",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap35",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "441f7fa65adc513ae74795b1269b4fb853583354bea851e27ef92f140f790d38",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p1-d1-gap35-11",
+      "initial_state_sha256": "f8adeb58fe24053cdc53c61e91beeababe6addbb7c7119254f20290b57a5305b",
+      "record": "records/write-probe-L321-r0-p1-d1-gap35-11.json.gz",
+      "record_gzip_sha256": "515796a952916bdee803c696f6aed35d15b8777e47550d809d8d2128449bdb6a",
+      "record_sha256": "52425169631139ef754ab56ba33b9332c54228cd204621358ff9e30cdb6e43a6",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap32",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "8704fdf5d98fcb2033fbf37242a9e9a5dd415104b92d296c00cc9e6cea851ef7",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p2-d1-gap32-00",
+      "initial_state_sha256": "8704fdf5d98fcb2033fbf37242a9e9a5dd415104b92d296c00cc9e6cea851ef7",
+      "record": "records/write-probe-L321-r0-p2-d1-gap32-00.json.gz",
+      "record_gzip_sha256": "ca777000b95b241769b69e59f954e4437cdced2920b00b565c96c2e3a00dfdcd",
+      "record_sha256": "1bf27a5490b11d7294b15d1943d9e6191a180bde53d871eb131562a9483d9703",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap32",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "babee1e52b372fcfa7dbfc293f131b6eb487e65fe963dd22e5f1677fe8cc98dd",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p2-d1-gap32-10",
+      "initial_state_sha256": "4c86a7e26e949eb35e37a7392c08cb3be69c46547c47e8b89139538dbed86df9",
+      "record": "records/write-probe-L321-r0-p2-d1-gap32-10.json.gz",
+      "record_gzip_sha256": "f1067fee86c7cba16bd53b42744275563b3bb5ecb2065cba7d4edb6aac8b491e",
+      "record_sha256": "0a05ec826e1852561f077eff99ebf12a1b742a042175aeea8ff8fb61d0ccbee6",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap32",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "1b29a736fd7b85bb5c0049b84414f46e65ba5a0c60a94d21ebc286a0e9657633",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p2-d1-gap32-01",
+      "initial_state_sha256": "19f9ab5730d7b0d039071937c247dc2d585f80e51e96647538ed508aa95b1cb5",
+      "record": "records/write-probe-L321-r0-p2-d1-gap32-01.json.gz",
+      "record_gzip_sha256": "b4bbfbb52864d713f96db599abec93a7e4e76b16c852d513b8105949202fd0d7",
+      "record_sha256": "0d92ceb80a8c52f8734f0bb6048b084008d8372dc67a2f59be2f735d7e5c27ee",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap32",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "0eafcc0872c5c4a1edd9df5ec783acefec1c90eae384bd47a204c58ad94481b3",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p2-d1-gap32-11",
+      "initial_state_sha256": "b245d12650f50f749eaafac3a967626342040d04a11c585f8b05590c2194134f",
+      "record": "records/write-probe-L321-r0-p2-d1-gap32-11.json.gz",
+      "record_gzip_sha256": "5959fcec5008d2a4fb067eff096851f4a05c890ad33069deac42b14a11acc12d",
+      "record_sha256": "501fba9c63c4b9ff2be8ae4734342723b8bbf1db510054a532fff2c941ba695f",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap33",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "2ecb78323f6d5660807fdce85db664eac4ef2c83d6f87d93faf27cfadaac39b4",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p2-d1-gap33-00",
+      "initial_state_sha256": "2ecb78323f6d5660807fdce85db664eac4ef2c83d6f87d93faf27cfadaac39b4",
+      "record": "records/write-probe-L321-r0-p2-d1-gap33-00.json.gz",
+      "record_gzip_sha256": "3a06c109ddfbccc2638a54d5d2452460261a7c0a0c14910386b62a52f62c456a",
+      "record_sha256": "9e6012e0992358dde44aceff25417dcfa00f973c2ea8ac6fd5a03f86323fe05b",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap33",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "99747f54e03586f119754f7dd46d311fd482f971a7fdec8279033bb238b45ead",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p2-d1-gap33-10",
+      "initial_state_sha256": "91c460b5cb06805841c9c21da25f4e2846ab165a720fa5a3ab58c2654c797ae3",
+      "record": "records/write-probe-L321-r0-p2-d1-gap33-10.json.gz",
+      "record_gzip_sha256": "d0f6cbbcb82de8f451eed80388d8eb496b6662c7b0a891cc5aadc23653502f96",
+      "record_sha256": "4b249b7d06130f0813fc0e00cf2b4ee0fcffdb352137173aad20eef07cb703a0",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap33",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "f0bf880e06fd68884025c8a8df5bfad7f31352f434375cf73dff9bd611930882",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p2-d1-gap33-01",
+      "initial_state_sha256": "93ee8eb8cc8376e15532151dbeba755a1fe9de4b54330570559c1b70568cedab",
+      "record": "records/write-probe-L321-r0-p2-d1-gap33-01.json.gz",
+      "record_gzip_sha256": "1c7d88c655163e871b79435c6f367557bef44631dccd10b9ae1dd84df28c4729",
+      "record_sha256": "e71944deaf1e4bf98025221b657e1fe9b3a51782db7a10d7e7a0e7191cef524c",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap33",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "cdb6727c0ff6e982894bc52cc86aa4f618da1a74aafd159d2eece5206a10d0fc",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p2-d1-gap33-11",
+      "initial_state_sha256": "a3dc412a2eb0caffe3ac61017f3efaaf2fb5070f036496d9ffc91c7fa6ab7a9d",
+      "record": "records/write-probe-L321-r0-p2-d1-gap33-11.json.gz",
+      "record_gzip_sha256": "9662f0a26ce6638905a704b15b9f733a2f20bf9befb4ae6ee5f762de8b82c303",
+      "record_sha256": "5fd0c10d505535d76ddc029fd07473a30efbfa3a3d48ed3b8d134d2a788bf959",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap34",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "6f2c2945d084ad3859bc661afd9d39ca89f7a946468ace2ffcfeef8fd8aea4b1",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p2-d1-gap34-00",
+      "initial_state_sha256": "6f2c2945d084ad3859bc661afd9d39ca89f7a946468ace2ffcfeef8fd8aea4b1",
+      "record": "records/write-probe-L321-r0-p2-d1-gap34-00.json.gz",
+      "record_gzip_sha256": "25f6767d4915de73ee35c0f00f0ea9b5f0a2cebd8d37f821382ac58fad8305e9",
+      "record_sha256": "bf5ac2d921435456adfa9ba7dfaf56166e4fb126a98fa79a4a349b5c738bf929",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap34",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "acaa6dd06aefad1218b1ae954e61208e5f0ce3c398fe57612e54de9211d356a8",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p2-d1-gap34-10",
+      "initial_state_sha256": "f1e841460a1d6f489cacb2e82a18c79b953fde9c97ef4e1a185a0c0dc0c112f6",
+      "record": "records/write-probe-L321-r0-p2-d1-gap34-10.json.gz",
+      "record_gzip_sha256": "877d3e5d351c8b47251d5c4c11ac3f65fc720de75f400e433fc3367e27f3ac77",
+      "record_sha256": "56f98147139a91f9ee2f144c4aeb23a19f7c9468c0f5f0a0b373ed6a6392a075",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap34",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "a61bbd85ef9f349eb1b25ddb66f36258f0dcf39017a1a98be46c5d80698bf672",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p2-d1-gap34-01",
+      "initial_state_sha256": "0817ab9a4a2814241c20ca2773805c2895292c9858b88c0069b951f4ac810154",
+      "record": "records/write-probe-L321-r0-p2-d1-gap34-01.json.gz",
+      "record_gzip_sha256": "e605d144f279a2e8c15aea213a98fd52d0b2771131f4be024994246960f9ee07",
+      "record_sha256": "24af788c6afc26a96c4aefc467ed6dac4eedca67ae9fdb607b307188d4c0584f",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap34",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "38f5cc1208b8246fb2bbdd34aa4104997ab4351c0eafb74a0a05adc17f1b0572",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p2-d1-gap34-11",
+      "initial_state_sha256": "a02e82cce35c2b47c91ea884c879fe9d5cdd3523436686e5b094409f00e01afa",
+      "record": "records/write-probe-L321-r0-p2-d1-gap34-11.json.gz",
+      "record_gzip_sha256": "82364d6014791dda6d14f94f7e29c7fefcc2ea1779cfc16f61a611287f772e28",
+      "record_sha256": "e269d7b8c50925515d9575a5b6148b86c7efa18f97d6c9be0158350038714a3e",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap35",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "73ec8e6b7d5025715ed86bc1298c3c9239fdcfd98a5c47e16cc116810560a53d",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p2-d1-gap35-00",
+      "initial_state_sha256": "73ec8e6b7d5025715ed86bc1298c3c9239fdcfd98a5c47e16cc116810560a53d",
+      "record": "records/write-probe-L321-r0-p2-d1-gap35-00.json.gz",
+      "record_gzip_sha256": "78b9a33ceffac9f71901087097d4e330d67cd64fb6f66ecfb9d0c3c7daa723f9",
+      "record_sha256": "a16152f31b6be31a000fb6104153580e178447e76f3a91295c240dece6e56692",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap35",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "2a1806313a4f385db394881ba69fd10eded20cfa90e148f3d7f3d49596fb7c63",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p2-d1-gap35-10",
+      "initial_state_sha256": "aa6d42133cbdb437214fc009cbf6d650398f48331c3483f99534ba794a3f0d25",
+      "record": "records/write-probe-L321-r0-p2-d1-gap35-10.json.gz",
+      "record_gzip_sha256": "46329258fa748389994682918670c414820656f489e5b0054f7dc9375e052a25",
+      "record_sha256": "1ca618648bf1979a99e2212bb173341c00b092d4cc7a7823ef80bed505aa5ff5",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap35",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "2e3ca07587827100f8033b4c4c3bc5f568423e43446dd9f8005e34eea126d874",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p2-d1-gap35-01",
+      "initial_state_sha256": "277066ea29698a530bdfcf6ca0e811a44c9ac3cc58ae54c71ca2455df803aca6",
+      "record": "records/write-probe-L321-r0-p2-d1-gap35-01.json.gz",
+      "record_gzip_sha256": "50434351288e907c3aeaa9b6868e0125bde1c9ce2f8ea9765ff1f7b419eab8e6",
+      "record_sha256": "ea859527a378407cb744e6c528c01a98dbe15b374749b8bb5d047cda053944c2",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap35",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "edd2b1fafd6ebd04ec4a25bdb5ec09359d79a2e7ec94a9828794113e0defa45d",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p2-d1-gap35-11",
+      "initial_state_sha256": "cbc1d13e75fa10cefcf920acc8743dc027e1c656b2a66eefcea3d592015eb061",
+      "record": "records/write-probe-L321-r0-p2-d1-gap35-11.json.gz",
+      "record_gzip_sha256": "43eb3067586bb37d34c830a7b36f3cfd36c6ac0bdb540a4d7ab060bec2275ef8",
+      "record_sha256": "2a22ac3c5d10ccf65b66d0f142f917df0bf612baa889f93d10855a8be1002ad3",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap32",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "e9f54849edfe23c9b879c7a1144131420f12481a9ffc7bffe150f1e0582e7c45",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p3-d1-gap32-00",
+      "initial_state_sha256": "e9f54849edfe23c9b879c7a1144131420f12481a9ffc7bffe150f1e0582e7c45",
+      "record": "records/write-probe-L321-r0-p3-d1-gap32-00.json.gz",
+      "record_gzip_sha256": "b5e9a671ab0d59b70e0e045a1546cf3c7430e7fc2d8ce6238968c102fef5089d",
+      "record_sha256": "d4a177f30edf2ec9d98f5a80f407d80f2933d20451226c3896181a70ca9acbc0",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap32",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "ae795ee371e555db9a6dee9cef74911a51b60ddd27dd76fae01602dd13bc5ca9",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p3-d1-gap32-10",
+      "initial_state_sha256": "795315f00af80cc9b734d9babc111d8c1239e167f8587b4456da28ec833f8ded",
+      "record": "records/write-probe-L321-r0-p3-d1-gap32-10.json.gz",
+      "record_gzip_sha256": "2e1aedd1a42329448d5e564a01bd408e1322ef219d8dcdaa8b100450bdd5f5ce",
+      "record_sha256": "2649c282dab845695d3d33f78437d65fe27ba24c51676a1ff7f88c65187f3195",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap32",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "340835bdeee553b63632d083c73e3742e4886b7db3730797d2b7d45bbf32b097",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p3-d1-gap32-01",
+      "initial_state_sha256": "1fcdaec3ee7d60e889bc90f98b5de2c12b0aa3da07f243dc8655000528e33ada",
+      "record": "records/write-probe-L321-r0-p3-d1-gap32-01.json.gz",
+      "record_gzip_sha256": "68c9e4189f0ca8bfd6cf42780208109a1ffdf201179f82d9a798d89ad3d6221b",
+      "record_sha256": "78d43864b1f6b0b88284c47560b2322f37c4e17bc8c837e977b214e80b178618",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap32",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "4e9b4b925ae2b3163fbc639d36130ae63173858d75dc001d7891a4ee047d662b",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p3-d1-gap32-11",
+      "initial_state_sha256": "5b377793eb496809e0373919fe760f2ff056bdecf1e7c27862fb247dff4135a5",
+      "record": "records/write-probe-L321-r0-p3-d1-gap32-11.json.gz",
+      "record_gzip_sha256": "9e4ed0affb815a9accea0109281dc8f11e9874c6e1fcb5a4a8bf701c23782b2f",
+      "record_sha256": "eaff5aeb9eb9e65f8b52e3434cfb507481a11efd247f8252592a196e5d4f1765",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap33",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "dcb4fd9bd42fd100b7cf97b0d200e82d05b25cd85ddc7c33b40374b67f925a82",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p3-d1-gap33-00",
+      "initial_state_sha256": "dcb4fd9bd42fd100b7cf97b0d200e82d05b25cd85ddc7c33b40374b67f925a82",
+      "record": "records/write-probe-L321-r0-p3-d1-gap33-00.json.gz",
+      "record_gzip_sha256": "bdaf07e5bce83a7cb7cd92ec89d4c54ec3c503894f0a1e6872ab4dedc6a770e9",
+      "record_sha256": "32723b93729279eca548c004ceb1f91fe512d136080f0f357aeb95b2bf705245",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap33",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "addb23eb9348ed5bddd3d108e1f11efce9c6c6040034bf98f3f2727be8843d0a",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p3-d1-gap33-10",
+      "initial_state_sha256": "2a5d28f8d83dbc7e25f7b33da2429f13b2139524b121d78e9db1dbdb10aaad08",
+      "record": "records/write-probe-L321-r0-p3-d1-gap33-10.json.gz",
+      "record_gzip_sha256": "b7c385470f2b29e77f45360c6241a22f1dbe7dd468d9ed4f1f39cb767a927132",
+      "record_sha256": "69f72a2ba6d95f035fe57e30043bbbbd676793f70011ab8fb151545a0fb70660",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap33",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "fe7660738cb51f4e8dcd282efab9eb2d0ebabf247110119ec5f97677b3f8f7fe",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p3-d1-gap33-01",
+      "initial_state_sha256": "baeebd66f9a6a971eedf57988d791b8df70465455fb9e15b7ee95912fe4a34a9",
+      "record": "records/write-probe-L321-r0-p3-d1-gap33-01.json.gz",
+      "record_gzip_sha256": "370893a9f2720ed28b2edc57e015b7f1171b01df9f5d9b53ff8b9b73b265c9f0",
+      "record_sha256": "4fd509bd1baff5640205377566a095ab84129932ae6d56f4abb361f7f466bde9",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap33",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "3bbc2bfa5651023011cb5b8931f178611fc0126c5378315d998da2c87615d748",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p3-d1-gap33-11",
+      "initial_state_sha256": "ecb7292f1620062de41d9b51e82d4b2b266c253ff8d834cd0411c87b105e9cdf",
+      "record": "records/write-probe-L321-r0-p3-d1-gap33-11.json.gz",
+      "record_gzip_sha256": "4d08b10b6cce4a354560d20c0db0f3bf181797f2d7edbdcf0205426315437e8c",
+      "record_sha256": "a6513b7cf872e994669ac236e8a375354e2e12fc35246406d018d21418c58f73",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap34",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "29a4663fc859879a191164f027895b0ab6dab97ab54c1766a719654c41f1e4b9",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p3-d1-gap34-00",
+      "initial_state_sha256": "29a4663fc859879a191164f027895b0ab6dab97ab54c1766a719654c41f1e4b9",
+      "record": "records/write-probe-L321-r0-p3-d1-gap34-00.json.gz",
+      "record_gzip_sha256": "3f503ec322ce70b0eb750ff830ef1c89aba20eebebf62d92ec348ddae63bdf93",
+      "record_sha256": "9f3af3c8cd04fd668df8bd3e228fed4b41189cdc3ba697e0e4854b541dd75ad3",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap34",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "b13f9993f65269ef0bcb52d84d1d8381bd377fd6b00e492dcafcb3c4cb71e85b",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p3-d1-gap34-10",
+      "initial_state_sha256": "0d133852acf3423ff3c9d6c0735ad60154d0c0ade2301df39f71a6047291e149",
+      "record": "records/write-probe-L321-r0-p3-d1-gap34-10.json.gz",
+      "record_gzip_sha256": "72db4a0403dfd55da7be678d7da85f106764e97fc5496dfe2631b02ae8473124",
+      "record_sha256": "dc9660e14973b2a6464fc8c9d85f590ccf7476e1dd047ffbcb53f8388f4ec45a",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap34",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "e24a962035e649c93f85e49e61c5f68a560db7ff29579d90228a04959d9cb33b",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p3-d1-gap34-01",
+      "initial_state_sha256": "1ec71c199ca2ddac272ef75403bf41f43605f5be3b90546d8c70c693b19ef5f6",
+      "record": "records/write-probe-L321-r0-p3-d1-gap34-01.json.gz",
+      "record_gzip_sha256": "c7bd4074617bcae700581c4ef43b9a5131e03c4293426619bc1c815f16b4a4f6",
+      "record_sha256": "b2e762ad9d9fd743a306b0e224bc5ec1f78c3c1f0a9806a68a19b56d0d0a05c5",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap34",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "b7e56b7d669842493e85f157b115002bc7d4f4078df4c815194436810e645b61",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p3-d1-gap34-11",
+      "initial_state_sha256": "3c9669aa86d768565811e21876054b556b52590c25aa9f7be23a6934c87be4bb",
+      "record": "records/write-probe-L321-r0-p3-d1-gap34-11.json.gz",
+      "record_gzip_sha256": "5b1ff4c8526366625054c80a803b72918c160ace0eab18d950fe330ceba5468a",
+      "record_sha256": "749c30026fe013cebd153cbf1a9ca0aee4104b520b1b8ee464c7d7966bf13184",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap35",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "6ef1ab89679c8af0cb400a31496cd9c6f8a9f91402c5d1fa429d1fb4289e6b88",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p3-d1-gap35-00",
+      "initial_state_sha256": "6ef1ab89679c8af0cb400a31496cd9c6f8a9f91402c5d1fa429d1fb4289e6b88",
+      "record": "records/write-probe-L321-r0-p3-d1-gap35-00.json.gz",
+      "record_gzip_sha256": "b0faf97031c1f0edb848007a85e8c1acb99e0f4778266b783cab2d6c75204264",
+      "record_sha256": "360d3e182ee7a7b34b26707dade79d25b031254c86842b74116d614003ab9a03",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap35",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "7633bbb5bb6756863780fefde99d079263161ef781132a011d886c90d6b9fa5e",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p3-d1-gap35-10",
+      "initial_state_sha256": "cff5cf7d753c8699992e43b0501d89cea715d52f1872973822f7b38517a5dad9",
+      "record": "records/write-probe-L321-r0-p3-d1-gap35-10.json.gz",
+      "record_gzip_sha256": "1a44456cc6ecf3c19979d2ce60edea1e76611e71330005d1f1b0e566d46cf50e",
+      "record_sha256": "afe28daeee644a31cebcc6f0fcce6121657768b00f78e71deeab5cd2c2ba0ba1",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap35",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "99766f44b6b1abaa16683b9e220d6c75de18555067e90a26f6d04915fd0e03cc",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p3-d1-gap35-01",
+      "initial_state_sha256": "921d5f0d9c65411fb506f9002f31d96b20f04cf407e1d9b6511a37ec520a19da",
+      "record": "records/write-probe-L321-r0-p3-d1-gap35-01.json.gz",
+      "record_gzip_sha256": "510d059a45f70a788068e863c058d892a6947c316cbce3fc10ecfaa17e35a899",
+      "record_sha256": "9f25c7512855922030ef7e3b2d648dfdf5c8f31a669beeae184c3943a7f5a2b2",
+      "transitions": 80
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap35",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "final_state_sha256": "c90e81da429106946a3d58479482389c031161e086e9ad247b16b70c5c0451e3",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "write-probe-L321-r0-p3-d1-gap35-11",
+      "initial_state_sha256": "6b66fbf7ec253f404f5b272b585905f9b2839d0388a82feae0bf5b633521ccfe",
+      "record": "records/write-probe-L321-r0-p3-d1-gap35-11.json.gz",
+      "record_gzip_sha256": "6b54a49fba267eab112dd4adc1f24ecbfba84f6ba865c37a1e6356cc6ba79539",
+      "record_sha256": "873aaf0389549cb1f1694e909963eb6135d68fef64435b93d851423d1c7b060f",
+      "transitions": 80
+    }
+  ],
+  "claim": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+  "completed_cases": 68,
+  "cpu_seconds": 83.181535099,
+  "format": "universe24-clock-selection-result-v1",
+  "groups": [
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": true,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "fa51aefc26a7456e1ec26771d07a6389938dc2edbf307d7ebd6d8151d8518c6e",
+        "01": "5905a15f6b7363cf5930ecf766d6a2e3be79c27b17bd3dbbed9e7d45afe087ec",
+        "10": "9367e8fdf6507e104e59ab6df5bafa7a3ea4f54274d5030c697f0bfe8c15c794",
+        "11": "7382699bfee483ee78214ed39e8df4201aec22c31ce1226040cd95a2d3417d87"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap32",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": false,
+      "predicted_probe_only_carrier": false,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": true,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": false,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "bf4607676ac688d368c2c99197bdd9ebd0c4ed77c6a2abda113a42a0db162dce",
+        "01": "104c4c4713b49ce9bc9c0c51058ee20900e99fb2c1fbf0cc15f3f66dfbbf8720",
+        "10": "6bb4aacd19856b0125f64e55a02b98d14d81df5be0b64953fd5bad989d5bef41",
+        "11": "7262acfbe08d5e25761506445772e0142507a4d98a8458e687557ae5a81e9f5e"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap33",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": false,
+      "predicted_probe_only_carrier": true,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": true,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": false,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "abbef074f8856ae454b4aa19c03cfef6e8a7f7367b197be16c578377e981b614",
+        "01": "dd01b6344192a1872c2b5fa1bddbba851b5233ed103b7a2878858171d17b8105",
+        "10": "383d1fbd50bded7dfebf9b73d41011ca186620f2d9f21663ac5c3c61ec49034a",
+        "11": "64af0f7411eb2d1f6008369cb8b0ed94479307ba554f3b086fe481197140957f"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap34",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": true,
+      "predicted_probe_only_carrier": false,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": true,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": true,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "5b8ce9b47d53a28015b1356a08d211a3c6a693b0333f9085d789a5df01bd0fd0",
+        "01": "312bfeb147cf09f89569c210ae09a8a5c8409c48e5d9a02b6ce30e6fcd348ac1",
+        "10": "81a7dab2e647f95d2fefe1bb63061dc301c5619164a995dfc7c1284ad59e8197",
+        "11": "8532294a9e7d9808589af24ae9ded49c584bae216b277752657607c4f81731c2"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap35",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": false,
+      "predicted_probe_only_carrier": false,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": true,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": false,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "36c0241144458ed362c5696aa57465980498bdfceeaddf34d39f28b6d7d572d8",
+        "01": "018041d6abf0faad23cd2a55dbfc28d402c537f58e4868cb2ef27e4dc3acf64f",
+        "10": "37a5721bc210d7c282c1bbbcfebdc1570e6d0bc5e006d7ad8727043dcdd0b63d",
+        "11": "ee8c5477a021cf29e65fbe0fe40c363dae743fae6d4fab6a0fb886a9b93613b9"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap32",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": false,
+      "predicted_probe_only_carrier": true,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": true,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": true,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "06eedbe9a67f81c1b5f62db9cd7c1cf80a8b5c478fcfb576dd24c0962abd200d",
+        "01": "7eae1a6a449511fdb0f71f70cb535463ad67269819d0351eb61e784b312f9cde",
+        "10": "362dbfc05a0b26eae9a579e175d8ced52eeb5344bcfc66ae756428f55af0a7c9",
+        "11": "eed24766668aa0e908dd3e9bd6e01c405e619b7d55b2fc9371bbf3c6205ec572"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap33",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": false,
+      "predicted_probe_only_carrier": false,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": true,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": true,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": true,
+          "complete_hold": true,
+          "exact_output_C_signature": true,
+          "exact_output_carrier": true,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "enabled",
+      "full_final_hashes": {
+        "00": "5507c03c434d560a19ce11fbba1a98b003c27224c28d913d8ec48f57ae420a1f",
+        "01": "2a5325080c54904a178875e65944e702a1309ad4122314bf327560230c7ffc1f",
+        "10": "b88de24547af4802a54dddb70eaf54c0d2c7eff19230740e7c33e521d60160d6",
+        "11": "2643c73517eecd468d7c7a65f456741533ff03074fc39c2df55893195e855f1d"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap34",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": true,
+      "predicted_probe_only_carrier": false,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": true,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": true,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "fa58afc75c297d380fddd798ce0f8a72387fa7c548027890bf59ee9da85ad693",
+        "01": "829bb8e04b6f3a4f814c9ec62391386a1b025a08e911a96d8cf698ab71bd08b3",
+        "10": "2f64a2068e2cad157f43f7832c121162657818c49525949a5dc9cf84adad2dcd",
+        "11": "441f7fa65adc513ae74795b1269b4fb853583354bea851e27ef92f140f790d38"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap35",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": false,
+      "predicted_probe_only_carrier": false,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": true,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": true,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "8704fdf5d98fcb2033fbf37242a9e9a5dd415104b92d296c00cc9e6cea851ef7",
+        "01": "1b29a736fd7b85bb5c0049b84414f46e65ba5a0c60a94d21ebc286a0e9657633",
+        "10": "babee1e52b372fcfa7dbfc293f131b6eb487e65fe963dd22e5f1677fe8cc98dd",
+        "11": "0eafcc0872c5c4a1edd9df5ec783acefec1c90eae384bd47a204c58ad94481b3"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap32",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": false,
+      "predicted_probe_only_carrier": false,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": true,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": true,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "2ecb78323f6d5660807fdce85db664eac4ef2c83d6f87d93faf27cfadaac39b4",
+        "01": "f0bf880e06fd68884025c8a8df5bfad7f31352f434375cf73dff9bd611930882",
+        "10": "99747f54e03586f119754f7dd46d311fd482f971a7fdec8279033bb238b45ead",
+        "11": "cdb6727c0ff6e982894bc52cc86aa4f618da1a74aafd159d2eece5206a10d0fc"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap33",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": false,
+      "predicted_probe_only_carrier": false,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": true,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": false,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "6f2c2945d084ad3859bc661afd9d39ca89f7a946468ace2ffcfeef8fd8aea4b1",
+        "01": "a61bbd85ef9f349eb1b25ddb66f36258f0dcf39017a1a98be46c5d80698bf672",
+        "10": "acaa6dd06aefad1218b1ae954e61208e5f0ce3c398fe57612e54de9211d356a8",
+        "11": "38f5cc1208b8246fb2bbdd34aa4104997ab4351c0eafb74a0a05adc17f1b0572"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap34",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": true,
+      "predicted_probe_only_carrier": false,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": true,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": false,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "73ec8e6b7d5025715ed86bc1298c3c9239fdcfd98a5c47e16cc116810560a53d",
+        "01": "2e3ca07587827100f8033b4c4c3bc5f568423e43446dd9f8005e34eea126d874",
+        "10": "2a1806313a4f385db394881ba69fd10eded20cfa90e148f3d7f3d49596fb7c63",
+        "11": "edd2b1fafd6ebd04ec4a25bdb5ec09359d79a2e7ec94a9828794113e0defa45d"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap35",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": false,
+      "predicted_probe_only_carrier": true,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": true,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": true,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "e9f54849edfe23c9b879c7a1144131420f12481a9ffc7bffe150f1e0582e7c45",
+        "01": "340835bdeee553b63632d083c73e3742e4886b7db3730797d2b7d45bbf32b097",
+        "10": "ae795ee371e555db9a6dee9cef74911a51b60ddd27dd76fae01602dd13bc5ca9",
+        "11": "4e9b4b925ae2b3163fbc639d36130ae63173858d75dc001d7891a4ee047d662b"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap32",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": false,
+      "predicted_probe_only_carrier": false,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": false,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": true,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "dcb4fd9bd42fd100b7cf97b0d200e82d05b25cd85ddc7c33b40374b67f925a82",
+        "01": "fe7660738cb51f4e8dcd282efab9eb2d0ebabf247110119ec5f97677b3f8f7fe",
+        "10": "addb23eb9348ed5bddd3d108e1f11efce9c6c6040034bf98f3f2727be8843d0a",
+        "11": "3bbc2bfa5651023011cb5b8931f178611fc0126c5378315d998da2c87615d748"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap33",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": false,
+      "predicted_probe_only_carrier": false,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": false,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": false,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "29a4663fc859879a191164f027895b0ab6dab97ab54c1766a719654c41f1e4b9",
+        "01": "e24a962035e649c93f85e49e61c5f68a560db7ff29579d90228a04959d9cb33b",
+        "10": "b13f9993f65269ef0bcb52d84d1d8381bd377fd6b00e492dcafcb3c4cb71e85b",
+        "11": "b7e56b7d669842493e85f157b115002bc7d4f4078df4c815194436810e645b61"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap34",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": true,
+      "predicted_probe_only_carrier": true,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": false,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": true,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "6ef1ab89679c8af0cb400a31496cd9c6f8a9f91402c5d1fa429d1fb4289e6b88",
+        "01": "99766f44b6b1abaa16683b9e220d6c75de18555067e90a26f6d04915fd0e03cc",
+        "10": "7633bbb5bb6756863780fefde99d079263161ef781132a011d886c90d6b9fa5e",
+        "11": "c90e81da429106946a3d58479482389c031161e086e9ad247b16b70c5c0451e3"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap35",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": false,
+      "predicted_probe_only_carrier": false,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": false,
+      "writer_only_and_null_output_absent": true
+    }
+  ],
+  "not_run_cases": [],
+  "predictions_matched": 10,
+  "pristine_passes": 4,
+  "raw_C_discriminator_groups": 0,
+  "registered_cases": 68,
+  "source_hashes_unchanged": true,
+  "status": "completed",
+  "stop_reason": null,
+  "wall_seconds": 83.91931654500013
+}

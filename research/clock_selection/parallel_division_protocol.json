@@ -1,0 +1,17 @@
+{
+  "format": "universe24-parallel-division-protocol-v1",
+  "question": "How do a single prepared integer donor and six simultaneously prepared donors produce the native Rule3 remainder and guarded C classes?",
+  "board": {"background": [0,0,2], "body_signs": [1,1,1], "center_channel": 0, "num": 1, "den": 1},
+  "single_donor": {"sides": [29,33], "amplitudes": [-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6], "initial": "Only center channel0 has a=0,b=A,r=2. Every other channel is the declared background.", "first_step_prediction": "Each of the six actual outgoing recipient addresses has u=A and becomes(0,floor((2*A+2)/6),(2*A+2)mod6). Exactly six whole-board guarded C events occur iff that quotient is nonzero; all have class A mod3. The source becomes(A,0,2) with zero quotient."},
+  "six_donors": {"side": 29, "masks": "Integers0..63, bitd selects the actual neighbor supplying center channel0 through directiond.", "initial": "Each selected donor has(0,1,2); all other channels are background. Donor addresses are obtained from the actual fixed reciprocal coupling and verified to send to the target.", "first_step_prediction": "For k=popcount(mask), targetu=k, ell=floor((2*k+2)/6), r_next=(2*k+2)mod6. k0/1:no C; k2:C2; k3:C0; k4:C1; k5:C2; k6:C0. Retain every C elsewhere without an exclusivity criterion."},
+  "horizon": 12,
+  "expected_cases": 90,
+  "observation": "Save all complete states and all native guarded C events after capture. Fixed targets and all source masks are recorded before evolution. No observer changes a state or tensor. No evolved input injection.",
+  "acceptance": "Report first-step predictions, complete inverse checks, exact +++ algebraic Q conservation, and center-translated equality of each single-donor trajectory across both sides. Later behavior is descriptive, not a new success criterion. All failures are retained.",
+  "boundary_policy": "For L29, all initial nonbackground channels lie at Manhattan radius<=1 about center14. H12 causal support is inside radius13 and hence coordinates1..27; L33 has greater margin. Check every saved nonbackground address for radius<=initial_radius+step and no boundary contact. No wrapped propagation or physical isotropy claim.",
+  "Q_definition": "Q=sum over channels of 6*(b-a)+(r-2); exact finite background-relative algebraic charge, not identified with physical charge or energy. Expected initial Q=6*A for a single donor and6*k for a mask.",
+  "budget": {"max_cpu_seconds": 30, "max_wall_seconds": 180, "max_output_bytes": 16777216, "max_seconds_per_record": 10, "max_cells_per_record": 200000},
+  "presenter_ids": ["single-L29-A-3","single-L29-A1","single-L29-A3","six-L29-M0","six-L29-M3","six-L29-M7","six-L29-M15","six-L29-M63"],
+  "retention": "Complete native recordings are losslessly gzip encoded; the byte budget covers all output files. Selected fixed examples are additionally bundled for the unchanged generic Presenter. Retain protocol, producer, exact experiment definitions, hashes, elapsed budgets, not-run cases and every mismatch.",
+  "claim_limits": ["This is a native arithmetic and fanout demonstration, not physical light.","A single b=3 source can yield six simultaneous C0 events, so C0 alone does not select one route.","The center C class is nonmonotonic in source count; source count is not a demonstrated preference for complexity.","No coefficient, coupling, engine, Presenter, click guard or classification is changed."]
+}

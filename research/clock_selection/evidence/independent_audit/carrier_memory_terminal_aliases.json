@@ -1,0 +1,81 @@
+{
+  "groups": [
+    {
+      "all_17_full336_frames_joint_equal_null_and_probe": true,
+      "receiver_phase": 0,
+      "side": 393
+    },
+    {
+      "all_17_full336_frames_joint_equal_null_and_probe": true,
+      "receiver_phase": 1,
+      "side": 393
+    },
+    {
+      "all_17_full336_frames_joint_equal_null_and_probe": true,
+      "receiver_phase": 2,
+      "side": 393
+    },
+    {
+      "all_17_full336_frames_joint_equal_null_and_probe": true,
+      "receiver_phase": 3,
+      "side": 393
+    },
+    {
+      "all_17_full336_frames_joint_equal_null_and_probe": true,
+      "receiver_phase": 0,
+      "side": 425
+    },
+    {
+      "all_17_full336_frames_joint_equal_null_and_probe": true,
+      "receiver_phase": 1,
+      "side": 425
+    },
+    {
+      "all_17_full336_frames_joint_equal_null_and_probe": true,
+      "receiver_phase": 2,
+      "side": 425
+    },
+    {
+      "all_17_full336_frames_joint_equal_null_and_probe": true,
+      "receiver_phase": 3,
+      "side": 425
+    }
+  ],
+  "parent_independent_audit_sha256": "8671960193c15252cef8afdce30ae27ec4efc742db3f47598f8a57bcafb71d2d",
+  "passed": true,
+  "record_sha256": {
+    "carrier-memory-L393-p0-00": "4b33f68df8316f9b7bb0bc6b908b0bdbd5e4f58444dad63150a339a7e07b22fc",
+    "carrier-memory-L393-p0-01": "fb72f7542e90fe8c755d5403d8e1b7e18d1f252e7ba98a92cc4848aafbdb46b1",
+    "carrier-memory-L393-p0-10": "88a879a7642547097d2eb9a1d1814c5199c3eced050550f4d59a04888c7d38c2",
+    "carrier-memory-L393-p0-11": "cf42e59f6a72dd3c727c19b9deaca3e7b65db65f95d5de4eb6af57ecf59fcedb",
+    "carrier-memory-L393-p1-00": "bcff4839a2351d117c1a5c771edb2c7c441e6647dc3876698117cf5e87de03a8",
+    "carrier-memory-L393-p1-01": "7aca5bfc03374522a03fa479ef4411f5afcc1f01da316fa158c200690bd15a4c",
+    "carrier-memory-L393-p1-10": "4b6d7a8b704604984ce8a85af11d6b9fe3ac1e9914c19276a6135fc11c6e9b3d",
+    "carrier-memory-L393-p1-11": "601b81ce30848970333da1a7a4a18d7be98aee923f04e6515822adbd44343f2b",
+    "carrier-memory-L393-p2-00": "a967292f3345624159c9797de83ae45778f0d83abbc342197cd23555bcb52f4a",
+    "carrier-memory-L393-p2-01": "d2091a28a25f8608bfe184d48b93bf45160535ffa9f726d9186fb3212c31a85a",
+    "carrier-memory-L393-p2-10": "d481ede5bf532e182a6cb2b6515b9b0267e580af1dfff0667e34f1d783679f1c",
+    "carrier-memory-L393-p2-11": "41cf85d5a98906ab47799f289ec2ce782403ae5ca9eec3ac8bb340c2d8ad57ba",
+    "carrier-memory-L393-p3-00": "d6fd71509e6df1dda327d68697cb3efcef0a92d584af2ed89f14cef965680568",
+    "carrier-memory-L393-p3-01": "53e331459af19b2970c30b510ffcf43c6b3dd68daa6bb480a5269f5f3343a08f",
+    "carrier-memory-L393-p3-10": "038c8d8fd4978b461c8802f16fefba398f37ee5b627d3a89281a12967f1830f4",
+    "carrier-memory-L393-p3-11": "ed86088aa7e8a5f0730b6ce259e0704469135173cb104a8ab5d30315af8865cc",
+    "carrier-memory-L425-p0-00": "b0628b8f4257db8b9636ce221c6f680993f7bc77e77883576f457799f1abf11e",
+    "carrier-memory-L425-p0-01": "ff295172be72ca2acf97f790cc7f99eb67a95e46e0c84e5354190017dc78ec39",
+    "carrier-memory-L425-p0-10": "27409153f83344a57cc74bdc75bbd8227881198dc1d77c6d72833509a06e8e00",
+    "carrier-memory-L425-p0-11": "865d61924105da2c57cca33c6d88b1b0f3bae962cad99c09752c124555a0f613",
+    "carrier-memory-L425-p1-00": "f3ad7b2677d71e1db1edfdb187350898466703d8e9b66915d68ed7bedff30fc9",
+    "carrier-memory-L425-p1-01": "ba6e8b2c5769b611745a7a1ae0df420801d45272e17521ee5685eaf5f4c773fe",
+    "carrier-memory-L425-p1-10": "fe63b6f707dcb5f407f32114f668a39bd8800ba9316a7e1f4bda3938da6a242e",
+    "carrier-memory-L425-p1-11": "38ab25335f93856add82cef4072430c19f50841d627ab5f5acf69bb9858fd1f1",
+    "carrier-memory-L425-p2-00": "aa3bd4e87db2780078e087818fc966e0a7b6f39203e29024ef4550a369a0ea6d",
+    "carrier-memory-L425-p2-01": "b4064a34651b7064b74544c4efea534d7e8b7d6754d530661ac842462aea1ee9",
+    "carrier-memory-L425-p2-10": "1acfbc186b8f7387e38c9121ce90c70b7dfbec90b71e8e2a1c86421de5fd783a",
+    "carrier-memory-L425-p2-11": "15a27bd236a2b1c8460ff3f1762aa806430a7a63c490e8d6ea4e20e347a3098d",
+    "carrier-memory-L425-p3-00": "79178925a3a22bcb94211fa433d175389abf3f4f8d8e00446ef03890307ce1ae",
+    "carrier-memory-L425-p3-01": "4e3b573dec08d0ab75e0abc9aaf1c40ac17b44c56efb8539783cd087b9c1e9fc",
+    "carrier-memory-L425-p3-10": "4363e6a7c079e00c2fbb34d067f3a78482e84fad18708940b9f7ab81ec63d954",
+    "carrier-memory-L425-p3-11": "a19c9174829292f4b4c7245f7469325fbca7bbed30bf2e0c60487d8f5a22721e"
+  },
+  "scope": "Passive equality check of full336 traces already independently recomputed from native states in the parent audit, states96..112. No new evolution or change to acceptance."
+}

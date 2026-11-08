@@ -1,0 +1,2594 @@
+{
+  "auditor_sha256": "24968295ae490972dd6c1adaa4f50feefe93a0c064494d983f09eaa6d966c760",
+  "corrected_separated_product_groups": 0,
+  "cpu_seconds": 15.590445880999999,
+  "failure": null,
+  "full_rewinds": 36,
+  "full_states": 1764,
+  "groups": [
+    {
+      "clock_only_complete_template": true,
+      "clock_only_period5": true,
+      "counter_masks_commute": true,
+      "eligible_source_comparison": true,
+      "geometry": {
+        "delay": 4,
+        "id": "cluster-L161-p1-d4",
+        "kind": "encounter",
+        "phase": 1,
+        "side": 161
+      },
+      "incoming_controls": {
+        "00": true,
+        "01": true,
+        "10": true,
+        "11": true
+      },
+      "joint_canonical_cluster_retained_in_hold": false,
+      "matched_remainders": true,
+      "motion_attraction_repulsion": "not_tested_no_two_initial_moving_objects",
+      "physical_binding_or_dissociation_established": false,
+      "signal_created_recurrent_region": false,
+      "signal_reconfigured_recurrent_region": false,
+      "source_induced_separated_clock_products": false
+    },
+    {
+      "clock_only_complete_template": true,
+      "clock_only_period5": true,
+      "counter_masks_commute": true,
+      "eligible_source_comparison": true,
+      "geometry": {
+        "delay": 7,
+        "id": "cluster-L161-p1-d7",
+        "kind": "encounter",
+        "phase": 1,
+        "side": 161
+      },
+      "incoming_controls": {
+        "00": true,
+        "01": true,
+        "10": true,
+        "11": true
+      },
+      "joint_canonical_cluster_retained_in_hold": false,
+      "matched_remainders": true,
+      "motion_attraction_repulsion": "not_tested_no_two_initial_moving_objects",
+      "physical_binding_or_dissociation_established": false,
+      "signal_created_recurrent_region": false,
+      "signal_reconfigured_recurrent_region": false,
+      "source_induced_separated_clock_products": false
+    },
+    {
+      "clock_only_complete_template": true,
+      "clock_only_period5": true,
+      "counter_masks_commute": true,
+      "eligible_source_comparison": true,
+      "geometry": {
+        "delay": 4,
+        "id": "cluster-L161-p2-d4",
+        "kind": "encounter",
+        "phase": 2,
+        "side": 161
+      },
+      "incoming_controls": {
+        "00": true,
+        "01": true,
+        "10": true,
+        "11": true
+      },
+      "joint_canonical_cluster_retained_in_hold": true,
+      "matched_remainders": true,
+      "motion_attraction_repulsion": "not_tested_no_two_initial_moving_objects",
+      "physical_binding_or_dissociation_established": false,
+      "signal_created_recurrent_region": false,
+      "signal_reconfigured_recurrent_region": false,
+      "source_induced_separated_clock_products": false
+    },
+    {
+      "clock_only_complete_template": true,
+      "clock_only_period5": true,
+      "counter_masks_commute": true,
+      "eligible_source_comparison": true,
+      "geometry": {
+        "delay": 7,
+        "id": "cluster-L161-p2-d7",
+        "kind": "encounter",
+        "phase": 2,
+        "side": 161
+      },
+      "incoming_controls": {
+        "00": true,
+        "01": true,
+        "10": true,
+        "11": true
+      },
+      "joint_canonical_cluster_retained_in_hold": true,
+      "matched_remainders": true,
+      "motion_attraction_repulsion": "not_tested_no_two_initial_moving_objects",
+      "physical_binding_or_dissociation_established": false,
+      "signal_created_recurrent_region": false,
+      "signal_reconfigured_recurrent_region": true,
+      "source_induced_separated_clock_products": false
+    },
+    {
+      "clock_only_complete_template": true,
+      "clock_only_period5": true,
+      "counter_masks_commute": true,
+      "eligible_source_comparison": true,
+      "geometry": {
+        "delay": 4,
+        "id": "cluster-L193-p1-d4",
+        "kind": "encounter",
+        "phase": 1,
+        "side": 193
+      },
+      "incoming_controls": {
+        "00": true,
+        "01": true,
+        "10": true,
+        "11": true
+      },
+      "joint_canonical_cluster_retained_in_hold": false,
+      "matched_remainders": true,
+      "motion_attraction_repulsion": "not_tested_no_two_initial_moving_objects",
+      "physical_binding_or_dissociation_established": false,
+      "signal_created_recurrent_region": false,
+      "signal_reconfigured_recurrent_region": false,
+      "source_induced_separated_clock_products": false
+    },
+    {
+      "clock_only_complete_template": true,
+      "clock_only_period5": true,
+      "counter_masks_commute": true,
+      "eligible_source_comparison": true,
+      "geometry": {
+        "delay": 7,
+        "id": "cluster-L193-p1-d7",
+        "kind": "encounter",
+        "phase": 1,
+        "side": 193
+      },
+      "incoming_controls": {
+        "00": true,
+        "01": true,
+        "10": true,
+        "11": true
+      },
+      "joint_canonical_cluster_retained_in_hold": false,
+      "matched_remainders": true,
+      "motion_attraction_repulsion": "not_tested_no_two_initial_moving_objects",
+      "physical_binding_or_dissociation_established": false,
+      "signal_created_recurrent_region": false,
+      "signal_reconfigured_recurrent_region": false,
+      "source_induced_separated_clock_products": false
+    },
+    {
+      "clock_only_complete_template": true,
+      "clock_only_period5": true,
+      "counter_masks_commute": true,
+      "eligible_source_comparison": true,
+      "geometry": {
+        "delay": 4,
+        "id": "cluster-L193-p2-d4",
+        "kind": "encounter",
+        "phase": 2,
+        "side": 193
+      },
+      "incoming_controls": {
+        "00": true,
+        "01": true,
+        "10": true,
+        "11": true
+      },
+      "joint_canonical_cluster_retained_in_hold": true,
+      "matched_remainders": true,
+      "motion_attraction_repulsion": "not_tested_no_two_initial_moving_objects",
+      "physical_binding_or_dissociation_established": false,
+      "signal_created_recurrent_region": false,
+      "signal_reconfigured_recurrent_region": false,
+      "source_induced_separated_clock_products": false
+    },
+    {
+      "clock_only_complete_template": true,
+      "clock_only_period5": true,
+      "counter_masks_commute": true,
+      "eligible_source_comparison": true,
+      "geometry": {
+        "delay": 7,
+        "id": "cluster-L193-p2-d7",
+        "kind": "encounter",
+        "phase": 2,
+        "side": 193
+      },
+      "incoming_controls": {
+        "00": true,
+        "01": true,
+        "10": true,
+        "11": true
+      },
+      "joint_canonical_cluster_retained_in_hold": true,
+      "matched_remainders": true,
+      "motion_attraction_repulsion": "not_tested_no_two_initial_moving_objects",
+      "physical_binding_or_dissociation_established": false,
+      "signal_created_recurrent_region": false,
+      "signal_reconfigured_recurrent_region": true,
+      "source_induced_separated_clock_products": false
+    }
+  ],
+  "observer_disagreements": [
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "pristine-L161-d4-10"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "pristine-L161-d7-10"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "pristine-L193-d4-10"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "pristine-L193-d7-10"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L161-p1-d4-00"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L161-p1-d4-10"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs"
+      ],
+      "id": "cluster-L161-p1-d4-01"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L161-p1-d4-11"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L161-p1-d7-00"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L161-p1-d7-10"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs"
+      ],
+      "id": "cluster-L161-p1-d7-01"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L161-p1-d7-11"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L161-p2-d4-00"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L161-p2-d4-10"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs"
+      ],
+      "id": "cluster-L161-p2-d4-01"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs"
+      ],
+      "id": "cluster-L161-p2-d4-11"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L161-p2-d7-00"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L161-p2-d7-10"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs"
+      ],
+      "id": "cluster-L161-p2-d7-01"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs"
+      ],
+      "id": "cluster-L161-p2-d7-11"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L193-p1-d4-00"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L193-p1-d4-10"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs"
+      ],
+      "id": "cluster-L193-p1-d4-01"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L193-p1-d4-11"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L193-p1-d7-00"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L193-p1-d7-10"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs"
+      ],
+      "id": "cluster-L193-p1-d7-01"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L193-p1-d7-11"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L193-p2-d4-00"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L193-p2-d4-10"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs"
+      ],
+      "id": "cluster-L193-p2-d4-01"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs"
+      ],
+      "id": "cluster-L193-p2-d4-11"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L193-p2-d7-00"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L193-p2-d7-10"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs"
+      ],
+      "id": "cluster-L193-p2-d7-01"
+    },
+    {
+      "correct_separated_product_pairs": [],
+      "correct_separated_products_without_parent": false,
+      "fields": [
+        "separated_product_pairs"
+      ],
+      "id": "cluster-L193-p2-d7-11"
+    }
+  ],
+  "passed": true,
+  "protocol_sha256": "49a6ae786de1b4afd67dfae59c8cfaad55d5ed293e8ca1b824b0226ab135e018",
+  "records": [
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 94,
+          "2": 94
+        },
+        "skin": {
+          "0": 0,
+          "1": 2,
+          "2": 2
+        }
+      },
+      "case": {
+        "control": "10",
+        "delay": 4,
+        "id": "pristine-L161-d4",
+        "kind": "pristine",
+        "phase": 1,
+        "side": 161
+      },
+      "final_state_sha256": "d04297682a72de4bbf6d9fa46ddd9051b7bec586c3163fc92121a52b19b30d59",
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "id": "pristine-L161-d4-10",
+      "initial_state_sha256": "5cdc5feb14a690745cb73b9df431397fe02073fdd7cca0aebcc1a9e56e45f2c2",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "447265d32834db879abcd5a6f0ae2c84a02c0cbe2d92fd0e0d561a8bd32dc170",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "173ee41cdd7c796810496e9f6d0d5c584d0fb1f92d2d1b16de72e6ec32eef584",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 96,
+          "2": 96
+        },
+        "whole_board_C_count": 192,
+        "whole_board_C_sha256": "b73fef1cb9f35a1af9a6509c28d4bbd726d149a5dde0af28400a90a3b2377d49",
+        "whole_board_R_change_count": 960,
+        "whole_board_R_sha256": "19200e629d4617c5b65ee3d20ebb267278b971c7ab49728e3a994db3cfa40f89"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 94,
+          "2": 94
+        },
+        "skin": {
+          "0": 0,
+          "1": 2,
+          "2": 2
+        }
+      },
+      "case": {
+        "control": "10",
+        "delay": 7,
+        "id": "pristine-L161-d7",
+        "kind": "pristine",
+        "phase": 1,
+        "side": 161
+      },
+      "final_state_sha256": "0c825b5915d64d9823cf8712f5adf1f87f97572268d6120012f26e4610fda69a",
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "id": "pristine-L161-d7-10",
+      "initial_state_sha256": "2d48eb8aaa40ba750bfc1499ccf4407dba746a5f5af7b3ef2c6ec932a428b59e",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "ba872b05d109ec2a3c45287a88b8d2ce558dd3e16ff4855d5a3ded7fe6116f5a",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "5e96ae65c3e00fd0cf9a19bdbfc231a26bed69b04f83a81283e9f7009a68ea0d",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 96,
+          "2": 96
+        },
+        "whole_board_C_count": 192,
+        "whole_board_C_sha256": "6ab85d5224391c4318efcf0c7280819c83389b7206e023e1660b2301014ccf46",
+        "whole_board_R_change_count": 960,
+        "whole_board_R_sha256": "b93bfccaa26d42c8def8a8cab0337b40c2b05d8c61bd119f587606988cea91d6"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 94,
+          "2": 94
+        },
+        "skin": {
+          "0": 0,
+          "1": 2,
+          "2": 2
+        }
+      },
+      "case": {
+        "control": "10",
+        "delay": 4,
+        "id": "pristine-L193-d4",
+        "kind": "pristine",
+        "phase": 1,
+        "side": 193
+      },
+      "final_state_sha256": "d8a341255e2511f7c8eaa32c0678bfb9107971aa674b4fb22ac6d1ed89771130",
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "id": "pristine-L193-d4-10",
+      "initial_state_sha256": "8309ef451aba7f764538e6f0aeed8b8fe71c93effc04c1a0cd1e467a211dea44",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "09d2f5c5cea421f28caab48b943ee603b0c7b8d56c669f9476f8f80cef69e7fb",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "d2d8294adad92650a578366d6e457f8ebe2e290d956bacfabc3bd649ae4b81be",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 96,
+          "2": 96
+        },
+        "whole_board_C_count": 192,
+        "whole_board_C_sha256": "0c0135964878311e50da36a7e4fae91e57d5df624a1989376cded3d0947e9359",
+        "whole_board_R_change_count": 960,
+        "whole_board_R_sha256": "0aa401a5be82815c81772439f030a4772dcf96a1543f900f9e311387e3164307"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 94,
+          "2": 94
+        },
+        "skin": {
+          "0": 0,
+          "1": 2,
+          "2": 2
+        }
+      },
+      "case": {
+        "control": "10",
+        "delay": 7,
+        "id": "pristine-L193-d7",
+        "kind": "pristine",
+        "phase": 1,
+        "side": 193
+      },
+      "final_state_sha256": "ae8e37ddcd57d29b3622bc40a9cdd593310bca28c84f4e24cd0e4158d451da64",
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "id": "pristine-L193-d7-10",
+      "initial_state_sha256": "a9b8e65b2c7df847aacb9340de751dfb42a15e2f8f9b83848eb76cc9a51b3476",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "111f84a58e1b7d39e7f1145da9a339d36b300f8d43f1827629053fea2f911e70",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "1c482d64d98dc1fa51590edbaa14fd2b325edfef0c645a7e42173f7674f29d05",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 96,
+          "2": 96
+        },
+        "whole_board_C_count": 192,
+        "whole_board_C_sha256": "722028a9b5a3679a3cf10f4229533cf5080e454e72e39c9f965b5192f0695a06",
+        "whole_board_R_change_count": 960,
+        "whole_board_R_sha256": "b01d21a4a9095356e1f173d2e82162d1b4e260bfdaf9779d96544207a5480f16"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "skin": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "00",
+        "delay": 4,
+        "id": "cluster-L161-p1-d4",
+        "kind": "encounter",
+        "phase": 1,
+        "side": 161
+      },
+      "final_state_sha256": "d2ebbd5621f695bb04ffffc4a3421b1f5d52c7175fdf2c784c388244e2cd2f2b",
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "id": "cluster-L161-p1-d4-00",
+      "initial_state_sha256": "d2ebbd5621f695bb04ffffc4a3421b1f5d52c7175fdf2c784c388244e2cd2f2b",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "64b1c9da60583038ef345c2184d16f77a515f74f5ed9a0bda110d6fe4fb97709",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "64b1c9da60583038ef345c2184d16f77a515f74f5ed9a0bda110d6fe4fb97709",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 94,
+          "2": 94
+        },
+        "skin": {
+          "0": 0,
+          "1": 2,
+          "2": 2
+        }
+      },
+      "case": {
+        "control": "10",
+        "delay": 4,
+        "id": "cluster-L161-p1-d4",
+        "kind": "encounter",
+        "phase": 1,
+        "side": 161
+      },
+      "final_state_sha256": "6d2bdc4bd2d122685abd9ed6ad0e1c8994d5bde3e2d2d153a31025ae3ac56ead",
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "id": "cluster-L161-p1-d4-10",
+      "initial_state_sha256": "d92e38822927f4105dc3deabcabfb1101cb71c6a5ca3ba40fdf4165e315cd1b2",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "bac15a9a973a58618cd61065c9a9be52ae2657d6dda9060bcb2cd0a86d4fe353",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "f2c71e245fd165a9219c42ace90c007aac233ebb60782f66cd3351ffe31e9996",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 96,
+          "2": 96
+        },
+        "whole_board_C_count": 192,
+        "whole_board_C_sha256": "b73fef1cb9f35a1af9a6509c28d4bbd726d149a5dde0af28400a90a3b2377d49",
+        "whole_board_R_change_count": 960,
+        "whole_board_R_sha256": "bd2f95ae79689a0932f5c8cc502da50efbe3bacb4b03b3b3139ca3bf2701f686"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 38,
+          "2": 38
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "skin": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "01",
+        "delay": 4,
+        "id": "cluster-L161-p1-d4",
+        "kind": "encounter",
+        "phase": 1,
+        "side": 161
+      },
+      "final_state_sha256": "ee9ac59ad257723d02eae3c222c8aaf14a74b3b10e01ffd0c87f408b3747d063",
+      "hold_periods": [
+        5
+      ],
+      "id": "cluster-L161-p1-d4-01",
+      "initial_state_sha256": "0981088db5e7f8d1d96a9a2f8a27934c132429dacff72ad89aeb5ff63c294e8d",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "4d1cc11fb9f949d68d9e5bf00c0f592e7c7820533d7138020b301066b77e38b2",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "51e1dd41ed293230e27c2944a30400e388b1ca8798eb60772a18667b6f7f2f37",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 38,
+          "2": 38
+        },
+        "whole_board_C_count": 76,
+        "whole_board_C_sha256": "455ea567850aaf26400e53492955ac75a4011561388e6d0eb115e553f5e60eb3",
+        "whole_board_R_change_count": 912,
+        "whole_board_R_sha256": "a662a4d7e97f81ce37811a733ed04adae0f41e53fb7d28323c4393383656acb1"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 47,
+          "2": 47
+        },
+        "exterior": {
+          "0": 0,
+          "1": 270,
+          "2": 270
+        },
+        "skin": {
+          "0": 0,
+          "1": 4,
+          "2": 4
+        }
+      },
+      "case": {
+        "control": "11",
+        "delay": 4,
+        "id": "cluster-L161-p1-d4",
+        "kind": "encounter",
+        "phase": 1,
+        "side": 161
+      },
+      "final_state_sha256": "32ded7f02de384f08fb15139cf8415712ae753a15c020c2b88b36214010d3fa3",
+      "hold_periods": [],
+      "id": "cluster-L161-p1-d4-11",
+      "initial_state_sha256": "b6a5588e122d79550a25e3f65daa39f64c18707628a52c21cf9baf157f5e2f71",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "6db4fbd4d6601556f1c197a10f79683db312e2070db25f361c777e56f1f44dd3",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "8513e7063c105bc154b16d8b21e583ca0712c17ddc58f393b0d3eaa019a12aac",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 321,
+          "2": 321
+        },
+        "whole_board_C_count": 642,
+        "whole_board_C_sha256": "e81a0327618edd8a5dae7c65bb523bcb309e9a6b6d64674f0b6dcf720e80da51",
+        "whole_board_R_change_count": 3650,
+        "whole_board_R_sha256": "4f3431835ab767ee942aaecf02dc8207abe8819eb86bfd91a3eb3d186564d64d"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "skin": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "00",
+        "delay": 7,
+        "id": "cluster-L161-p1-d7",
+        "kind": "encounter",
+        "phase": 1,
+        "side": 161
+      },
+      "final_state_sha256": "ac11c26ca20bc33439623965b3adedbd6efac9ba5c325f33abcb5719bfa8855c",
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "id": "cluster-L161-p1-d7-00",
+      "initial_state_sha256": "ac11c26ca20bc33439623965b3adedbd6efac9ba5c325f33abcb5719bfa8855c",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "d1dc01e4bd623aeafa18503b438185b3f459c3d14a378d08ec01576d64c24f60",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "d1dc01e4bd623aeafa18503b438185b3f459c3d14a378d08ec01576d64c24f60",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 94,
+          "2": 94
+        },
+        "skin": {
+          "0": 0,
+          "1": 2,
+          "2": 2
+        }
+      },
+      "case": {
+        "control": "10",
+        "delay": 7,
+        "id": "cluster-L161-p1-d7",
+        "kind": "encounter",
+        "phase": 1,
+        "side": 161
+      },
+      "final_state_sha256": "6edfc617bc1bf82c72cdaa6f0c2ecdc37488eda2d2556c9b4e5b855e27cf5b1e",
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "id": "cluster-L161-p1-d7-10",
+      "initial_state_sha256": "0a14c151386ab20e8c595edb366db054f0a948a6cde96c4f75f611ae048077f8",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "c5493c5b36bc2400a251608f147dc9da5131896e12df94c5d7f4ea3e0e6499a4",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "9acf6cd414bce558b51aaad4c620366799c0641d2a811b6cbea6c6b37b34fa85",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 96,
+          "2": 96
+        },
+        "whole_board_C_count": 192,
+        "whole_board_C_sha256": "6ab85d5224391c4318efcf0c7280819c83389b7206e023e1660b2301014ccf46",
+        "whole_board_R_change_count": 960,
+        "whole_board_R_sha256": "8d54899164ebdbe4597bb41cb0c8639effdd21e1b9d9eb1f4e16b18f240d8b44"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 38,
+          "2": 38
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "skin": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "01",
+        "delay": 7,
+        "id": "cluster-L161-p1-d7",
+        "kind": "encounter",
+        "phase": 1,
+        "side": 161
+      },
+      "final_state_sha256": "94a2cadb3ff984abf9601e76a68d65d3cfce0293ed822e61d9ccfb64fe331ecf",
+      "hold_periods": [
+        5
+      ],
+      "id": "cluster-L161-p1-d7-01",
+      "initial_state_sha256": "9516efc44c200d8f377e0821c344d45a371cb27c7a0b2d43c9e646dbdcbca700",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "77b8292ac3b4e137a094d7edb7fb3fc57e6c5d373a86fa26eeacc5a35fa245dc",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "794d4fbfa71c499d7ffbc6f6c35a576c3259d276135cbffa241d7106f6a37b54",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 38,
+          "2": 38
+        },
+        "whole_board_C_count": 76,
+        "whole_board_C_sha256": "455ea567850aaf26400e53492955ac75a4011561388e6d0eb115e553f5e60eb3",
+        "whole_board_R_change_count": 912,
+        "whole_board_R_sha256": "a662a4d7e97f81ce37811a733ed04adae0f41e53fb7d28323c4393383656acb1"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 4,
+          "1": 45,
+          "2": 45
+        },
+        "exterior": {
+          "0": 0,
+          "1": 182,
+          "2": 182
+        },
+        "skin": {
+          "0": 0,
+          "1": 4,
+          "2": 4
+        }
+      },
+      "case": {
+        "control": "11",
+        "delay": 7,
+        "id": "cluster-L161-p1-d7",
+        "kind": "encounter",
+        "phase": 1,
+        "side": 161
+      },
+      "final_state_sha256": "9d8440149018d79b60162fe1c042695ff11712817f74d82891323b43e9e7444a",
+      "hold_periods": [],
+      "id": "cluster-L161-p1-d7-11",
+      "initial_state_sha256": "6fd366fb6c6a43f56d0050cf67bbceb41db024122f8173aad5a6651293e98c8f",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "c9c265148c07a75857b87d0f7c6ff32a180265abea3726bebe12b8223d7c13f2",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "7c9765933e36fef4fb5a421b2d6addb70eeecfe6a2781611a1a5ff82edce3c31",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "0": 4,
+          "1": 231,
+          "2": 231
+        },
+        "whole_board_C_count": 466,
+        "whole_board_C_sha256": "507a51370eb85c810366044a48b0f6236550752f3bb8000f3a19785e4b28e471",
+        "whole_board_R_change_count": 2722,
+        "whole_board_R_sha256": "659ff081cb56e655008f5cff66c345d9b35f1681fc7f15032cf87e7d9f6d0f5e"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "skin": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "00",
+        "delay": 4,
+        "id": "cluster-L161-p2-d4",
+        "kind": "encounter",
+        "phase": 2,
+        "side": 161
+      },
+      "final_state_sha256": "d2ebbd5621f695bb04ffffc4a3421b1f5d52c7175fdf2c784c388244e2cd2f2b",
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "id": "cluster-L161-p2-d4-00",
+      "initial_state_sha256": "d2ebbd5621f695bb04ffffc4a3421b1f5d52c7175fdf2c784c388244e2cd2f2b",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "64b1c9da60583038ef345c2184d16f77a515f74f5ed9a0bda110d6fe4fb97709",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "64b1c9da60583038ef345c2184d16f77a515f74f5ed9a0bda110d6fe4fb97709",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 94,
+          "2": 94
+        },
+        "skin": {
+          "0": 0,
+          "1": 2,
+          "2": 2
+        }
+      },
+      "case": {
+        "control": "10",
+        "delay": 4,
+        "id": "cluster-L161-p2-d4",
+        "kind": "encounter",
+        "phase": 2,
+        "side": 161
+      },
+      "final_state_sha256": "6d2bdc4bd2d122685abd9ed6ad0e1c8994d5bde3e2d2d153a31025ae3ac56ead",
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "id": "cluster-L161-p2-d4-10",
+      "initial_state_sha256": "d92e38822927f4105dc3deabcabfb1101cb71c6a5ca3ba40fdf4165e315cd1b2",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "bac15a9a973a58618cd61065c9a9be52ae2657d6dda9060bcb2cd0a86d4fe353",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "f2c71e245fd165a9219c42ace90c007aac233ebb60782f66cd3351ffe31e9996",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 96,
+          "2": 96
+        },
+        "whole_board_C_count": 192,
+        "whole_board_C_sha256": "b73fef1cb9f35a1af9a6509c28d4bbd726d149a5dde0af28400a90a3b2377d49",
+        "whole_board_R_change_count": 960,
+        "whole_board_R_sha256": "bd2f95ae79689a0932f5c8cc502da50efbe3bacb4b03b3b3139ca3bf2701f686"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 38,
+          "2": 38
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "skin": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "01",
+        "delay": 4,
+        "id": "cluster-L161-p2-d4",
+        "kind": "encounter",
+        "phase": 2,
+        "side": 161
+      },
+      "final_state_sha256": "2a1b9d3fbc7b0279c9c3c419db194920bbf5d5f6a4a81a11eb413d8ca94b9573",
+      "hold_periods": [
+        5
+      ],
+      "id": "cluster-L161-p2-d4-01",
+      "initial_state_sha256": "f97864cdbd6f707ea8de83ba3dfeb51be25e86c0c9f71fcc8f482ae3273a94fa",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "40b72ddf0325f95764ce3f773ed6acb964b4970d89c7e7a6f8e31b349087b31e",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "b1c30147a04000f6adefc873cd7b1157d79faa5d61389a42da26915cb143df9c",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 38,
+          "2": 38
+        },
+        "whole_board_C_count": 76,
+        "whole_board_C_sha256": "5212ec34231377d8cdd916f1e870df7ee1e14e9a5f2c4a408fbb557657cda9fa",
+        "whole_board_R_change_count": 936,
+        "whole_board_R_sha256": "0d0cf31165c9639fed969ab1801946881f02a819ba6c62472ebcba66c88feff9"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 38,
+          "2": 38
+        },
+        "exterior": {
+          "0": 0,
+          "1": 90,
+          "2": 90
+        },
+        "skin": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "11",
+        "delay": 4,
+        "id": "cluster-L161-p2-d4",
+        "kind": "encounter",
+        "phase": 2,
+        "side": 161
+      },
+      "final_state_sha256": "0cda4bb0c6367bb688e491c0dd96fd3525d19ec6b943cda76abaaab9ae227e08",
+      "hold_periods": [
+        5
+      ],
+      "id": "cluster-L161-p2-d4-11",
+      "initial_state_sha256": "77a28addd120afc403567a726dc5ab5390c0ccac11ddb2df45171baecaa6e426",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "0e9fff15d7c3b5aca039556dfe45038b66bd19741de53566e0fdbd1f7e664518",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "410091771916861ebfb313db90adb20ed5e7198039fba0fce3fc7fd8d5e67537",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 128,
+          "2": 128
+        },
+        "whole_board_C_count": 256,
+        "whole_board_C_sha256": "67f571d34e03ffcf323385944db749cc67f9190397ab7c3711efa69b88e118e2",
+        "whole_board_R_change_count": 1832,
+        "whole_board_R_sha256": "b50f23e4ee7f5875a3edf721346b2d8121570d022a081b333584de00d26b9d65"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "skin": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "00",
+        "delay": 7,
+        "id": "cluster-L161-p2-d7",
+        "kind": "encounter",
+        "phase": 2,
+        "side": 161
+      },
+      "final_state_sha256": "ac11c26ca20bc33439623965b3adedbd6efac9ba5c325f33abcb5719bfa8855c",
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "id": "cluster-L161-p2-d7-00",
+      "initial_state_sha256": "ac11c26ca20bc33439623965b3adedbd6efac9ba5c325f33abcb5719bfa8855c",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "d1dc01e4bd623aeafa18503b438185b3f459c3d14a378d08ec01576d64c24f60",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "d1dc01e4bd623aeafa18503b438185b3f459c3d14a378d08ec01576d64c24f60",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 94,
+          "2": 94
+        },
+        "skin": {
+          "0": 0,
+          "1": 2,
+          "2": 2
+        }
+      },
+      "case": {
+        "control": "10",
+        "delay": 7,
+        "id": "cluster-L161-p2-d7",
+        "kind": "encounter",
+        "phase": 2,
+        "side": 161
+      },
+      "final_state_sha256": "6edfc617bc1bf82c72cdaa6f0c2ecdc37488eda2d2556c9b4e5b855e27cf5b1e",
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "id": "cluster-L161-p2-d7-10",
+      "initial_state_sha256": "0a14c151386ab20e8c595edb366db054f0a948a6cde96c4f75f611ae048077f8",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "c5493c5b36bc2400a251608f147dc9da5131896e12df94c5d7f4ea3e0e6499a4",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "9acf6cd414bce558b51aaad4c620366799c0641d2a811b6cbea6c6b37b34fa85",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 96,
+          "2": 96
+        },
+        "whole_board_C_count": 192,
+        "whole_board_C_sha256": "6ab85d5224391c4318efcf0c7280819c83389b7206e023e1660b2301014ccf46",
+        "whole_board_R_change_count": 960,
+        "whole_board_R_sha256": "8d54899164ebdbe4597bb41cb0c8639effdd21e1b9d9eb1f4e16b18f240d8b44"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 38,
+          "2": 38
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "skin": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "01",
+        "delay": 7,
+        "id": "cluster-L161-p2-d7",
+        "kind": "encounter",
+        "phase": 2,
+        "side": 161
+      },
+      "final_state_sha256": "1f04552cc4609208127626f9dad689bcdd05621b7eaa26cfae590f948a4cb982",
+      "hold_periods": [
+        5
+      ],
+      "id": "cluster-L161-p2-d7-01",
+      "initial_state_sha256": "1b2783c4a38162cb054615035b344a3cecdef99b73b8d88b83c61794652821d5",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "26020469aee2b2c41d59054836b47111f2a515f4af1abcc52c17bb4ec919b2bd",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "6784a969074f80ffa0fbfe55208ce0df78f802ca452461b639cd5294e070fadf",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 38,
+          "2": 38
+        },
+        "whole_board_C_count": 76,
+        "whole_board_C_sha256": "5212ec34231377d8cdd916f1e870df7ee1e14e9a5f2c4a408fbb557657cda9fa",
+        "whole_board_R_change_count": 936,
+        "whole_board_R_sha256": "0d0cf31165c9639fed969ab1801946881f02a819ba6c62472ebcba66c88feff9"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 38,
+          "2": 38
+        },
+        "exterior": {
+          "0": 0,
+          "1": 290,
+          "2": 290
+        },
+        "skin": {
+          "0": 4,
+          "1": 4,
+          "2": 4
+        }
+      },
+      "case": {
+        "control": "11",
+        "delay": 7,
+        "id": "cluster-L161-p2-d7",
+        "kind": "encounter",
+        "phase": 2,
+        "side": 161
+      },
+      "final_state_sha256": "e37468f9cf90e379506a8c1b271784507be972e25c643d3897269c2fc291b780",
+      "hold_periods": [
+        5
+      ],
+      "id": "cluster-L161-p2-d7-11",
+      "initial_state_sha256": "7803a0f8972f7e76c5ad7a66869fd47fd5f96a3f653753b7e82eaee567544390",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "6f4f92d000bded89763c296fe04c620cc0c431a89a4cc7fd997e1d6a32f0761c",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "c0269db8fc640e4ba4b4e31aefea779b04ec66871924ed57046b6ca41442781b",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "0": 4,
+          "1": 332,
+          "2": 332
+        },
+        "whole_board_C_count": 668,
+        "whole_board_C_sha256": "b48b074590a538341fdadd3283b4b4e09b559479534a5604bf1f8017fa2787bd",
+        "whole_board_R_change_count": 4276,
+        "whole_board_R_sha256": "10e2f8ede1fa629936d021c54813502355aee69dd0687d63207d94b81b6c809c"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "skin": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "00",
+        "delay": 4,
+        "id": "cluster-L193-p1-d4",
+        "kind": "encounter",
+        "phase": 1,
+        "side": 193
+      },
+      "final_state_sha256": "e4f1e85c9f254bf5d07adfebce9969284e8a04a9f4d11ed3b75bf8d30f3cf7de",
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "id": "cluster-L193-p1-d4-00",
+      "initial_state_sha256": "e4f1e85c9f254bf5d07adfebce9969284e8a04a9f4d11ed3b75bf8d30f3cf7de",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "5e43c24052c2810791c76fd40959c30557825debf4b7a7dd4978194f6d5391dd",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "5e43c24052c2810791c76fd40959c30557825debf4b7a7dd4978194f6d5391dd",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 94,
+          "2": 94
+        },
+        "skin": {
+          "0": 0,
+          "1": 2,
+          "2": 2
+        }
+      },
+      "case": {
+        "control": "10",
+        "delay": 4,
+        "id": "cluster-L193-p1-d4",
+        "kind": "encounter",
+        "phase": 1,
+        "side": 193
+      },
+      "final_state_sha256": "68cf7ed82db306c09a4e74e37d854ea26d969a14a66a401463b4d7a2c1610c13",
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "id": "cluster-L193-p1-d4-10",
+      "initial_state_sha256": "8752b0c5b77e532d43f20df97bd7c0b8d24fee257369de97d40a3642c20c3574",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "ddc963990279a6e3f84c229e1032bb8cc1089cb6337a49191000155e95c65435",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "c84dc2c27d42c7d53dd1c7c3a6d33fc7903c2e932235ed8a506e4b90d7c8cdab",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 96,
+          "2": 96
+        },
+        "whole_board_C_count": 192,
+        "whole_board_C_sha256": "0c0135964878311e50da36a7e4fae91e57d5df624a1989376cded3d0947e9359",
+        "whole_board_R_change_count": 960,
+        "whole_board_R_sha256": "bdc42d8cbfe823f57bd9078429ec674d9fa1ba76ec9b5194be5695e388f5fa8b"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 38,
+          "2": 38
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "skin": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "01",
+        "delay": 4,
+        "id": "cluster-L193-p1-d4",
+        "kind": "encounter",
+        "phase": 1,
+        "side": 193
+      },
+      "final_state_sha256": "eebad6d0e95a22f175ca23de8de5c430df86e35271fd4d02c94b76978111f67a",
+      "hold_periods": [
+        5
+      ],
+      "id": "cluster-L193-p1-d4-01",
+      "initial_state_sha256": "6a1e87cc480ab5515719d9f643d24d4b9c63066f7351289f9670fedba8dcb350",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "84da46735d67499c252fce7b49d5a7177a6c7ad4b2ca734a73d1f13df8f52811",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "b3780e7241a3347f7c6d413ac8a5e72a46ef54770487a599957d326779e0a467",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 38,
+          "2": 38
+        },
+        "whole_board_C_count": 76,
+        "whole_board_C_sha256": "070e497c7e696ab10ae9061ef0eaefadb9154b5da9f9d2d0525cbfd7f8b0e50c",
+        "whole_board_R_change_count": 912,
+        "whole_board_R_sha256": "9cd249100f35db6c581bfc0008a239070ac9776f90ced5956788c1be4816d1e4"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 47,
+          "2": 47
+        },
+        "exterior": {
+          "0": 0,
+          "1": 270,
+          "2": 270
+        },
+        "skin": {
+          "0": 0,
+          "1": 4,
+          "2": 4
+        }
+      },
+      "case": {
+        "control": "11",
+        "delay": 4,
+        "id": "cluster-L193-p1-d4",
+        "kind": "encounter",
+        "phase": 1,
+        "side": 193
+      },
+      "final_state_sha256": "8d5e41cd669ab07720e668e20f2b937ff37db3f4eb1aee067a7df1fe4caf82cd",
+      "hold_periods": [],
+      "id": "cluster-L193-p1-d4-11",
+      "initial_state_sha256": "3966388ead1f6e719d55139cfcea617da0cfe961a0c48ebde2be8739bcff7e0a",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "c4ab91e72f6a9d505edd4aac824b1a1cdc0aa59784b36ccc01a8ce2f1637cfee",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "332d976cd512f140ecd1ff10d3bc56b58d209f4633c8058ce6e6807e40da4308",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 321,
+          "2": 321
+        },
+        "whole_board_C_count": 642,
+        "whole_board_C_sha256": "48d69d7f7250ba699b0b444d02e9a6639ae7e6c31ae25d0d9ef498d2a4493a3a",
+        "whole_board_R_change_count": 3650,
+        "whole_board_R_sha256": "13ef0e6e3e05f1343fa44c0d0b4474414aef5950e854cadaa8fd9ee5205f0253"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "skin": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "00",
+        "delay": 7,
+        "id": "cluster-L193-p1-d7",
+        "kind": "encounter",
+        "phase": 1,
+        "side": 193
+      },
+      "final_state_sha256": "4a35bf2e70b0b5e3c334b20d4eee9a44803778871ff7c4afcf9fd757193366b2",
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "id": "cluster-L193-p1-d7-00",
+      "initial_state_sha256": "4a35bf2e70b0b5e3c334b20d4eee9a44803778871ff7c4afcf9fd757193366b2",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "290b59844accfa5b840a524110b4c4e8f4baa8f4edbc4d79d8355c6f4586ab72",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "290b59844accfa5b840a524110b4c4e8f4baa8f4edbc4d79d8355c6f4586ab72",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 94,
+          "2": 94
+        },
+        "skin": {
+          "0": 0,
+          "1": 2,
+          "2": 2
+        }
+      },
+      "case": {
+        "control": "10",
+        "delay": 7,
+        "id": "cluster-L193-p1-d7",
+        "kind": "encounter",
+        "phase": 1,
+        "side": 193
+      },
+      "final_state_sha256": "12424d61ab2ac59341b6ac025b9e418e5f82f1f25f62b343c686bed86e722d1c",
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "id": "cluster-L193-p1-d7-10",
+      "initial_state_sha256": "981f1c1713f14745732204688a9df8b24b3fb600c0a2373aba36f79c052b5330",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "fe27edf8a31becce86001f00c2af8f37d9a717deb4a6e3a4279961d294739d4e",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "a3c62fd49f5ad732217c9f5f3ac454dbbaf93bd62fae899070b0ece2a6577bfe",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 96,
+          "2": 96
+        },
+        "whole_board_C_count": 192,
+        "whole_board_C_sha256": "722028a9b5a3679a3cf10f4229533cf5080e454e72e39c9f965b5192f0695a06",
+        "whole_board_R_change_count": 960,
+        "whole_board_R_sha256": "e18f07671fbd80e9ca58bcb8dfc800936e6f855904bc68a8adcfb9033b267efc"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 38,
+          "2": 38
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "skin": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "01",
+        "delay": 7,
+        "id": "cluster-L193-p1-d7",
+        "kind": "encounter",
+        "phase": 1,
+        "side": 193
+      },
+      "final_state_sha256": "860fa8bbeeceb14a3dd1c70803e35a9271577640998a649fc12a3ba88de62495",
+      "hold_periods": [
+        5
+      ],
+      "id": "cluster-L193-p1-d7-01",
+      "initial_state_sha256": "894a7701b7f101a2926eaff3e5138efda7d4e35b270c1f34a1315353937db362",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "e7f0492287b630e55c5803e58d18e16a6db97de6660b51e742f5e38b189a95da",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "6ec340e1ec2081a5fbf6e48ec82a468cd821565d456fd67931f4e1b75db7b1ed",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 38,
+          "2": 38
+        },
+        "whole_board_C_count": 76,
+        "whole_board_C_sha256": "070e497c7e696ab10ae9061ef0eaefadb9154b5da9f9d2d0525cbfd7f8b0e50c",
+        "whole_board_R_change_count": 912,
+        "whole_board_R_sha256": "9cd249100f35db6c581bfc0008a239070ac9776f90ced5956788c1be4816d1e4"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 4,
+          "1": 45,
+          "2": 45
+        },
+        "exterior": {
+          "0": 0,
+          "1": 182,
+          "2": 182
+        },
+        "skin": {
+          "0": 0,
+          "1": 4,
+          "2": 4
+        }
+      },
+      "case": {
+        "control": "11",
+        "delay": 7,
+        "id": "cluster-L193-p1-d7",
+        "kind": "encounter",
+        "phase": 1,
+        "side": 193
+      },
+      "final_state_sha256": "db752d2380dfe19a7e99342e9af6b6053b6b73084572b93c4929d27c1c24406b",
+      "hold_periods": [],
+      "id": "cluster-L193-p1-d7-11",
+      "initial_state_sha256": "e5f460998362fac264a1a07634df1698d99784f07dc7caadd6f234afcf28226b",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "88b59daae3ba699580550158d773cdb91b015c929e03841eb32c5370a6caad28",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "be19010404e8142b62f905b0251549b0b366880debce2bc7d4013fa7c5f28d91",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "0": 4,
+          "1": 231,
+          "2": 231
+        },
+        "whole_board_C_count": 466,
+        "whole_board_C_sha256": "f5607f9aa72879fd81fa6686863c1f2182bdc63be953a71fe9ea3b63ddb122d1",
+        "whole_board_R_change_count": 2722,
+        "whole_board_R_sha256": "cc68bb59c1501e02b0d922024ee9f072b61ba67c2dcd997ed045ddd767cc07c3"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "skin": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "00",
+        "delay": 4,
+        "id": "cluster-L193-p2-d4",
+        "kind": "encounter",
+        "phase": 2,
+        "side": 193
+      },
+      "final_state_sha256": "e4f1e85c9f254bf5d07adfebce9969284e8a04a9f4d11ed3b75bf8d30f3cf7de",
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "id": "cluster-L193-p2-d4-00",
+      "initial_state_sha256": "e4f1e85c9f254bf5d07adfebce9969284e8a04a9f4d11ed3b75bf8d30f3cf7de",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "5e43c24052c2810791c76fd40959c30557825debf4b7a7dd4978194f6d5391dd",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "5e43c24052c2810791c76fd40959c30557825debf4b7a7dd4978194f6d5391dd",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 94,
+          "2": 94
+        },
+        "skin": {
+          "0": 0,
+          "1": 2,
+          "2": 2
+        }
+      },
+      "case": {
+        "control": "10",
+        "delay": 4,
+        "id": "cluster-L193-p2-d4",
+        "kind": "encounter",
+        "phase": 2,
+        "side": 193
+      },
+      "final_state_sha256": "68cf7ed82db306c09a4e74e37d854ea26d969a14a66a401463b4d7a2c1610c13",
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "id": "cluster-L193-p2-d4-10",
+      "initial_state_sha256": "8752b0c5b77e532d43f20df97bd7c0b8d24fee257369de97d40a3642c20c3574",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "ddc963990279a6e3f84c229e1032bb8cc1089cb6337a49191000155e95c65435",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "c84dc2c27d42c7d53dd1c7c3a6d33fc7903c2e932235ed8a506e4b90d7c8cdab",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 96,
+          "2": 96
+        },
+        "whole_board_C_count": 192,
+        "whole_board_C_sha256": "0c0135964878311e50da36a7e4fae91e57d5df624a1989376cded3d0947e9359",
+        "whole_board_R_change_count": 960,
+        "whole_board_R_sha256": "bdc42d8cbfe823f57bd9078429ec674d9fa1ba76ec9b5194be5695e388f5fa8b"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 38,
+          "2": 38
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "skin": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "01",
+        "delay": 4,
+        "id": "cluster-L193-p2-d4",
+        "kind": "encounter",
+        "phase": 2,
+        "side": 193
+      },
+      "final_state_sha256": "485259956e76b008226ee91524fd34be76573a4bbaf5e1c6c9381e423ab88b96",
+      "hold_periods": [
+        5
+      ],
+      "id": "cluster-L193-p2-d4-01",
+      "initial_state_sha256": "e603de60bf46db1a720c55ab01ad2a7c4ed5587bf29b7fc29b0bd78f10b85017",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "42fb688544d1326fa82aa54ed743204c75501bfb91921784684703089b5ea2f1",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "2647f8b4b6ab615c4e546f4a31d4f443b16d2ff4ce5ea530bdf1f2cc50e0f935",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 38,
+          "2": 38
+        },
+        "whole_board_C_count": 76,
+        "whole_board_C_sha256": "961e536d9098318a12128dbaf95996ec3ae41354d80dceff5c39570c82c94b30",
+        "whole_board_R_change_count": 936,
+        "whole_board_R_sha256": "bdf4dec97f6223a86f5676f8086b7036cef5b6047a9511ac1976e1627a0b87de"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 38,
+          "2": 38
+        },
+        "exterior": {
+          "0": 0,
+          "1": 90,
+          "2": 90
+        },
+        "skin": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "11",
+        "delay": 4,
+        "id": "cluster-L193-p2-d4",
+        "kind": "encounter",
+        "phase": 2,
+        "side": 193
+      },
+      "final_state_sha256": "cfc9c5d63b85c1bc75c00ba7e74d2acd80d92a0084efbd702d4110143f60e0a8",
+      "hold_periods": [
+        5
+      ],
+      "id": "cluster-L193-p2-d4-11",
+      "initial_state_sha256": "0f2ddd675c1664ac4238ecb3818e4e0f7c83970122362dd8e8faf1717f10428d",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "54d1cacd07e1fccaef4e5f440c6d4a0ce54135fe3ef07ee56ede82f9fb3a81f6",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "87bae6b1582deb5974810ac980a32effa4963d7fc1044a5aff4bf0e0d18d5880",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 128,
+          "2": 128
+        },
+        "whole_board_C_count": 256,
+        "whole_board_C_sha256": "e0b82e9269a656ad0e0715ee48b699346c345910809b9a99e384c7d23633c123",
+        "whole_board_R_change_count": 1832,
+        "whole_board_R_sha256": "d104c5ec9ce7d2acd8535923fbe40a5f241e2f66493861613f3d911bea327e3a"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "skin": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "00",
+        "delay": 7,
+        "id": "cluster-L193-p2-d7",
+        "kind": "encounter",
+        "phase": 2,
+        "side": 193
+      },
+      "final_state_sha256": "4a35bf2e70b0b5e3c334b20d4eee9a44803778871ff7c4afcf9fd757193366b2",
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "id": "cluster-L193-p2-d7-00",
+      "initial_state_sha256": "4a35bf2e70b0b5e3c334b20d4eee9a44803778871ff7c4afcf9fd757193366b2",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "290b59844accfa5b840a524110b4c4e8f4baa8f4edbc4d79d8355c6f4586ab72",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "290b59844accfa5b840a524110b4c4e8f4baa8f4edbc4d79d8355c6f4586ab72",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 94,
+          "2": 94
+        },
+        "skin": {
+          "0": 0,
+          "1": 2,
+          "2": 2
+        }
+      },
+      "case": {
+        "control": "10",
+        "delay": 7,
+        "id": "cluster-L193-p2-d7",
+        "kind": "encounter",
+        "phase": 2,
+        "side": 193
+      },
+      "final_state_sha256": "12424d61ab2ac59341b6ac025b9e418e5f82f1f25f62b343c686bed86e722d1c",
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "id": "cluster-L193-p2-d7-10",
+      "initial_state_sha256": "981f1c1713f14745732204688a9df8b24b3fb600c0a2373aba36f79c052b5330",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "fe27edf8a31becce86001f00c2af8f37d9a717deb4a6e3a4279961d294739d4e",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "a3c62fd49f5ad732217c9f5f3ac454dbbaf93bd62fae899070b0ece2a6577bfe",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 96,
+          "2": 96
+        },
+        "whole_board_C_count": 192,
+        "whole_board_C_sha256": "722028a9b5a3679a3cf10f4229533cf5080e454e72e39c9f965b5192f0695a06",
+        "whole_board_R_change_count": 960,
+        "whole_board_R_sha256": "e18f07671fbd80e9ca58bcb8dfc800936e6f855904bc68a8adcfb9033b267efc"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 38,
+          "2": 38
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "skin": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "01",
+        "delay": 7,
+        "id": "cluster-L193-p2-d7",
+        "kind": "encounter",
+        "phase": 2,
+        "side": 193
+      },
+      "final_state_sha256": "47e7095f4c23804a5bce4162d20439311fc9d9ae90227e794ac6a70312453248",
+      "hold_periods": [
+        5
+      ],
+      "id": "cluster-L193-p2-d7-01",
+      "initial_state_sha256": "97246c16967190840c6447ddd0e4ea3054d9ae4851daba45dd02c721a603857a",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "6fa48d4dd12824724a30c9f05901dbc73f487a027a0e6db3f1d2f3794664002b",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "d16d0d0de142a89650372fd12d5ac9c294efc984b897f3e1111b003af9a81ca1",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 38,
+          "2": 38
+        },
+        "whole_board_C_count": 76,
+        "whole_board_C_sha256": "961e536d9098318a12128dbaf95996ec3ae41354d80dceff5c39570c82c94b30",
+        "whole_board_R_change_count": 936,
+        "whole_board_R_sha256": "bdf4dec97f6223a86f5676f8086b7036cef5b6047a9511ac1976e1627a0b87de"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    },
+    {
+      "C_counts": {
+        "core": {
+          "0": 0,
+          "1": 38,
+          "2": 38
+        },
+        "exterior": {
+          "0": 0,
+          "1": 290,
+          "2": 290
+        },
+        "skin": {
+          "0": 4,
+          "1": 4,
+          "2": 4
+        }
+      },
+      "case": {
+        "control": "11",
+        "delay": 7,
+        "id": "cluster-L193-p2-d7",
+        "kind": "encounter",
+        "phase": 2,
+        "side": 193
+      },
+      "final_state_sha256": "1975c25c4140dec2858092848bbf6edbd967a9df7df79a69e14fd20b50772b1b",
+      "hold_periods": [
+        5
+      ],
+      "id": "cluster-L193-p2-d7-11",
+      "initial_state_sha256": "b4056ca1143b9c24f650c16900233f6a8314e6595fbac0a4ada837f08b7bd5ab",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "7e3212c723f4ab161024b9aac416c01953f36ad8c1679fd0311dbf88e9d99454",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "9e2d3b496af72687927f96ebca1111ca3fae6f5e04f6ffb09dcd645dc8c4abca",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "0": 4,
+          "1": 332,
+          "2": 332
+        },
+        "whole_board_C_count": 668,
+        "whole_board_C_sha256": "a28488649d56e3556c9df51c95c00b61938441810088aa84f8d8461825626f45",
+        "whole_board_R_change_count": 4276,
+        "whole_board_R_sha256": "8f3902bd45645425e8cf052c59b990420fdb98fd1e5a449b72d9a8bc554244f2"
+      },
+      "products": [],
+      "separated_product_pairs": []
+    }
+  ],
+  "scope": "Full native dynamics valid; original observer product fields are invalid. Independent fixed-protocol reassessment retained here.",
+  "transitions": 1728
+}

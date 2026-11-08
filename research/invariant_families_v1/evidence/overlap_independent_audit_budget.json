@@ -1,0 +1,14 @@
+{
+  "audit_certificate_sha256": "9d4ed12c7c829c7fe5e2373c3363a71dcdbbbee20f7eb0c598df40935f36e4e7",
+  "audit_share_seconds": 10,
+  "audit_wall_seconds": 3.0832793209992815,
+  "child_audit_cpu_seconds": 3.079624,
+  "dedicated_producer_plus_audit_cpu_seconds": 7.625919099999999,
+  "dedicated_workflow_total_limit_seconds": 30,
+  "passed": true,
+  "producer_receipt_sha256": "bcc0cf4d039bf8630cb883bb7dac588532d915f826c8866a07b7bd543d90cb5c",
+  "returncode": 0,
+  "scope": "Dedicated producer and independent-auditor processes include startup, all work and final child writes. Earlier exploratory/static preflight checks are separate receipts; no native study was rerun.",
+  "whole_audit_cpu_seconds": 3.114972155,
+  "wrapper_sha256": "2dcea45f5cc4ec6d03d4d6e717f8cae3b5bed5982e911d43cb2b52bf8c8976b6"
+}

@@ -1,0 +1,189 @@
+{
+  "format": "universe24-orthogonal-two-outlet-protocol-v1",
+  "question": "Can two independently prepared orthogonal inputs interact with one clock region to produce history-dependent continuation, a newly routed exact carrier, or exactly one surviving registered outlet?",
+  "claim": "A finite two-input, two-outlet dynamical test. Two prepared inputs are not a split of one input. An exact carrier at an outlet is not evidence of a physical photon, a chosen complex route, a persistent detector record or quantum collapse.",
+  "board": {
+    "sides": [
+      369,
+      385
+    ],
+    "body_signs": [
+      1,
+      1,
+      1
+    ],
+    "background": [
+      0,
+      0,
+      2
+    ]
+  },
+  "family": {
+    "primary_side": 369,
+    "phases": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "clock_remainder": 0,
+    "writer_delay": 3,
+    "gaps": [
+      0,
+      34,
+      36
+    ],
+    "controls": [
+      "00",
+      "10",
+      "01",
+      "11"
+    ],
+    "clock_modes": [
+      "on",
+      "counter_off"
+    ],
+    "holdout_side": 385,
+    "holdout_phases": [
+      3
+    ],
+    "holdout_clock_modes": [
+      "on"
+    ],
+    "holdout_reason": "Phase3 is fixed before data because the older single-guide p+delay=2 heuristic gives phase3 for delay3. The crossed interface changes a second halo port, so that heuristic is not a prediction of success or optimality here."
+  },
+  "steps": 88,
+  "geometry": "c=L//2. Clock=(c,c,c), channel2. Writer guide +X uses primary0/companion14 on y=c-1,z=c; writer origin(c-19,c-1,c). Probe guide +Y uses primary15/companion39 on x=c+1,z=c; probe origin(c+1,c-19-gap,c). X outlet=(c+8,c-1,c), primary0; Y outlet=(c+1,c+8,c), primary15. Both guides extend across the periodic cube, but active causal regions must not reach its boundaries.",
+  "preparation": "Use the independently audited crossed-input interface with clock base halo(0,2,2,0,2,2), full phase-advanced halo, guide companion remainders4, and a single fixed +++ tensor. The writer/probe sources use the same exact four-site carrier profile rotated onto their identity-port axes. An absent input restores its entire declared24-address packet core and transverse halo to its pristine guide/background. No outside-input triple may differ between source controls. Counter-off removes only designated center counters and retains the apparatus remainder halo. No state intervention occurs after finalization.",
+  "pristine_crossed": {
+    "side": 369,
+    "gaps": [
+      0,
+      34,
+      36
+    ],
+    "controls": [
+      "00",
+      "10",
+      "01",
+      "11"
+    ],
+    "steps": 88,
+    "preparation": "Both complete guides and the declared source controls, with the entire clock interface absent and pristine guides/background restored throughout its footprint. These16 runs (12 onL369 andfour gap0 controls onL385) traverse the actual crossing and both output windows. They are distinct from the counter-off apparatus controls.",
+    "sides": [
+      369,
+      385
+    ],
+    "holdout_gaps": [
+      0
+    ]
+  },
+  "pristine_isolated": {
+    "side": 369,
+    "cases": [
+      {
+        "axis": "X",
+        "gap": 0
+      },
+      {
+        "axis": "Y",
+        "gap": 0
+      },
+      {
+        "axis": "Y",
+        "gap": 34
+      },
+      {
+        "axis": "Y",
+        "gap": 36
+      }
+    ],
+    "steps": 12,
+    "criterion": "One complete guide and its one packet, with no second guide or clock; every saved full state equals an exact one-cell-per-update translation along its declared axis."
+  },
+  "incoming": {
+    "early_offsets": [
+      4,
+      5,
+      6,
+      7
+    ],
+    "near_origin_offsets": [
+      -8,
+      -7,
+      -6
+    ],
+    "criterion": "For X, compare the exact6x3x3/all48 carrier at times4..7 and11..13. For Y, compare the exact3x6x3/all48 carrier at timesgap+4..7 andgap+11..13. The near boxes end at coordinatec-2, before the perpendicular guide and all seven clock nodes; no channel or node is excluded. Every present input must match at every sample; every absent input must fail that exact template at every sample."
+  },
+  "outputs": {
+    "natural_times": {
+      "writer_epoch": 27,
+      "probe_epoch": "27+gap"
+    },
+    "natural_continuation": "X source alone is tested at X outlet with origin time27. Y source alone is tested at Y outlet with origin time27+gap. Each requires its complete spatial carrier at four consecutive states with the origin advanced by one cell each update.",
+    "latency_offsets": [
+      -4,
+      -3,
+      -2,
+      -1,
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "latency_scope": "At BOTH outlets and BOTH epochs, search only the13 declared origin times natural_epoch+offset. This is a prospectively bounded latency search, not a derived unique redirect delay. At gap0 the two epochs coincide and must be deduplicated. Retain multiple, ambiguous, unmatched and no-exact-output outcomes.",
+    "carrier_offsets": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "C_window": "For each tested carrier origin timeT, fixed outlet primary-channel windowT-3..T+4 inclusive.",
+    "C_expected": [
+      [
+        -3,
+        2,
+        -1
+      ],
+      [
+        1,
+        1,
+        1
+      ]
+    ],
+    "C_derivation": "For either positive-axis carrier the primary fixed-node states atT-4..T+2 are(0,0,0),(0,-1,4),(-1,0,4),(0,1,4),(1,0,4),(0,0,0),(0,0,0). Existing quotient/classification gives onlyC2 ell=-1 atT-3 andC1 ell=+1 atT+1. The same arithmetic applies to g0 andg15. Nonmatching C remains visible and is never erased.",
+    "candidate_identity": "One candidate is the pair(outlet,origin_step). Coincident writer/probe epochs atgap0 are deduplicated before outlet or candidate counts; epoch labels never create another candidate."
+  },
+  "hold": {
+    "start": 32,
+    "through": 40,
+    "applies_to_gaps": [
+      34,
+      36
+    ],
+    "criterion": "For a history-mediated gate, all336 triples on the clock and its six neighboring nodes repeat every4updates throughstates32..40; center norm1, all other counter pairs zero, every separate external term into this region zero. The11 and01 region traces must differ at every hold state. These conditions do not apply to the simultaneous-input exclusivity question."
+  },
+  "group_acceptance": {
+    "common": "Exact absent-source footprint equivalence; valid early and near incoming templates for BOTH inputs in allfour masks; all inverses; no active boundary contact and strict initial causal margin; null00 whole-state period divides4; no null exact carrier in either registered epoch window.",
+    "simultaneous_exclusivity": "Only gap0, clock-on. The pristine crossed-guide calibration must carry both independent inputs to their natural outlets jointly. In the apparatus, source10 alone must have its natural exactX carrier+C, andsource01 alone its natural exactY carrier+C. Joint11 must have exactlyone full carrier candidate in the union of both registered outlet windows, and that candidate must have the exactC signature. Multiple candidates, an additional carrier without matchingC, or failure of either single-input control reject exclusivity. This is two-input outlet exclusivity within registered ports/times, not global elimination of alternatives.",
+    "history_discriminator": "Only gaps34/36, clock-on. Require common checks and the full quiet changed hold for allfour masks; no null or writer-only late carrier. The late two-outlet carrier candidate set in11 must differ from01. Report enabling, suppression, changed latency and X/Y redirection separately. A stricter carrier+C result requires every registered carrier in both compared sets to have its exactC signature. A new lateX carrier with no lateY carrier is called a bounded redirected-output candidate only when01 has its naturalY carrier,11 has validY input and10 has no late carrier; it does not assign a conserved microscopic identity to the packet.",
+    "clock_off": "Counter-off cases are independent comparisons. Report their own input eligibility and output sets; do not reject them merely because they lack a unit clock, and do not infer clock necessity from input-ineligible controls.",
+    "unregistered_channels": "Save complete states and all raw C of kinds0,1,2 throughout the board, including other channels/directions. Failure of a registered template is not proof that all activity or information vanished."
+  },
+  "causal_margin": "Every initial nonzero counter must be more thanH spatial edges from each periodic boundary. Separately report every active boundary contact.",
+  "budget": {
+    "registered_cases": 128,
+    "max_cpu_seconds": 600,
+    "max_wall_seconds": 900,
+    "max_recorded_bytes": 157286400,
+    "max_seconds_per_record": 90,
+    "max_cells_per_record": 500000
+  },
+  "retention": "Archive exact sources/protocol before any capture, save every full native recording and all failed controls. Stop at a resource cap and mark unrun cases; incomplete groups cannot pass. Preserve deterministic full preparations, tensor, seed(null), board size and horizon.",
+  "presenter_selection": "The12 primary-side clock-on phase3 controls across gaps0,34,36, plus thefour pristine crossed-guide gap0 controls; chosen before data. Package only complete experiments without changing native Presenter semantics."
+}

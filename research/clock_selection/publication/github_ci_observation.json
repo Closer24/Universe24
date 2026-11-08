@@ -1,0 +1,349 @@
+{
+  "observed_utc": "2026-11-08T04:21:43.781Z",
+  "head_sha": "88700611ef307cb560f43957fc2dcb8be60c36b6",
+  "tree": "09840e0ffdf158950332e10b05334212ab652378",
+  "pr_url": "https://github.com/Closer24/Universe24/pull/11",
+  "runs": [
+    {
+      "id": 42446183019,
+      "name": "Clockwork evidence and replay",
+      "event": "pull_request",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Closer24/Universe24/actions/runs/42446183019",
+      "jobs": [
+        {
+          "id": 128625487287,
+          "name": "reproduce-and-view",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/Closer24/Universe24/actions/runs/42446183019/job/128625487287",
+          "started_at": "2026-11-08T04:17:13Z",
+          "completed_at": "2026-11-08T04:19:01Z",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Regenerate the frozen scientific test and preserve its failed control",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Reproduce all five bounded studies including negative results",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install the isolated browser-test dependency",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Exercise exact replay controls and capture desktop/mobile evidence",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Preserve results and browser captures",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 42446183048,
+      "name": "Reliability",
+      "event": "pull_request",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Closer24/Universe24/actions/runs/42446183048",
+      "jobs": [
+        {
+          "id": 128625487497,
+          "name": "exact-checks (3.12)",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/Closer24/Universe24/actions/runs/42446183048/job/128625487497",
+          "started_at": "2026-11-08T04:17:13Z",
+          "completed_at": "2026-11-08T04:20:22Z",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install pinned research arithmetic and test solver",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Exact tests and evidence bundle",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Independent rerun of deterministic experiment outputs",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Evidence and failures",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success"
+            }
+          ]
+        },
+        {
+          "id": 128625487586,
+          "name": "exact-checks (3.11)",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/Closer24/Universe24/actions/runs/42446183048/job/128625487586",
+          "started_at": "2026-11-08T04:17:13Z",
+          "completed_at": "2026-11-08T04:20:50Z",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install pinned research arithmetic and test solver",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Exact tests and evidence bundle",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Independent rerun of deterministic experiment outputs",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Evidence and failures",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 42446170648,
+      "name": "Reliability",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Closer24/Universe24/actions/runs/42446170648",
+      "jobs": [
+        {
+          "id": 128625451872,
+          "name": "exact-checks (3.11)",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/Closer24/Universe24/actions/runs/42446170648/job/128625451872",
+          "started_at": "2026-11-08T04:17:03Z",
+          "completed_at": "2026-11-08T04:20:39Z",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install pinned research arithmetic and test solver",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Exact tests and evidence bundle",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Independent rerun of deterministic experiment outputs",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Evidence and failures",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success"
+            }
+          ]
+        },
+        {
+          "id": 128625451880,
+          "name": "exact-checks (3.12)",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/Closer24/Universe24/actions/runs/42446170648/job/128625451880",
+          "started_at": "2026-11-08T04:17:03Z",
+          "completed_at": "2026-11-08T04:20:56Z",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Install pinned research arithmetic and test solver",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Exact tests and evidence bundle",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Independent rerun of deterministic experiment outputs",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Evidence and failures",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "merge_performed": false
+}

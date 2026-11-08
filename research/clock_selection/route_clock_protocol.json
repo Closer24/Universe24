@@ -1,0 +1,129 @@
+{
+  "id": "U24-ROUTE-TO-CLOCK-MEMORY-v1",
+  "question": "Can the actual output of prepared OR/NO route competition write a quiet local clock phase, or activate a clock in a prepared resting apparatus, under unchanged Rule3?",
+  "status": "Prospective protocol; no trajectories before root execution approval.",
+  "baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+  "board": {
+    "body_signs": [
+      1,
+      1,
+      1
+    ],
+    "background": [
+      0,
+      0,
+      2
+    ]
+  },
+  "steps": 80,
+  "family": {
+    "sides": [
+      289,
+      321
+    ],
+    "clock_phases": [
+      1,
+      2
+    ],
+    "mixed_swaps": [
+      [
+        "OR",
+        "NO"
+      ],
+      [
+        "NO",
+        "OR"
+      ]
+    ],
+    "isolated_configurations": [
+      [
+        -1,
+        "OR"
+      ],
+      [
+        -1,
+        "NO"
+      ],
+      [
+        1,
+        "OR"
+      ],
+      [
+        1,
+        "NO"
+      ]
+    ],
+    "source_controls": [
+      false,
+      true
+    ],
+    "primary_cases": 48,
+    "mixed_clock_counter_off_cases": 8,
+    "bare_mixed_cases": 8,
+    "registered_cases": 64,
+    "seed": null
+  },
+  "preparation": {
+    "source": "At c=(L//2,L//2,L//2), one SignalSource has channel 0=(0,1,2), channel 14=(0,-1,2). Source-off removes only those counters.",
+    "routes": "PairedArm length 8 in the registered directions, with patterns at sites 2 and 3 and ordinary O elsewhere. O=(4,0), N=(2,2), R=(0,4). Mixed cases have both arms; isolated cases include only the declared arm. The ordinary outlet is at c+(8*direction,0,0).",
+    "clock": "Place a ShieldedOrbit one site in +Y from each included outlet, center channel 2, base(a,b)=(0,1), center remainder 0, six base halo remainders 2, complete initial phase 1 or2. The patch explicitly assigns all 336 triples. Both phases have halo recipient remainder 4; their center counters differ.",
+    "contact": "Create a new immutable initial patch from the full orbit template and set its otherwise untouched local contact channel(0,-1,0,14) to(0,0,0). Its contact channel 0 is already(0,0,4). This matches the ordinary arm outlet exactly. No shared assignment may be overwritten or added; native immutable composition must reject any conflict.",
+    "counter_off": "The mixed clock-off cases remove only the initial center counters of both clock patches and retain every remainder. Phases1 and2 give identical counter-off boards, so use phase 1 once. Bare mixed controls remove the entire clock patches; these are separate apparatus controls, not matched remainder ablations.",
+    "static_preflight": "All64 native immutable assemblies must succeed. Check declared sources and contacts, disjoint complete clock regions, source-on/off remainder equality, clock-counter-off remainder equality, identical off preparations for phases1/2, and strict initial active-counter boundary margin greater than 80. Assembly checks do not establish dynamic functionality."
+  },
+  "readouts": {
+    "route_window": [
+      1,
+      32
+    ],
+    "upstream_window": [
+      0,
+      10
+    ],
+    "contact_input_updates": [
+      1,
+      48
+    ],
+    "hold_states": [
+      64,
+      80
+    ],
+    "upstream": "At arm site 6, retain every triple on all 48 channels at every state. For each mixed joined apparatus compare the full upstream trace through state 10 with its matching newly captured bare mixed source control. This is an early compatibility gate; later feedback is retained and not required to match the bare apparatus. An incompatible early trace makes the original-route composition comparison ineligible, not an engine error.",
+    "bare_route_validity": "Across states 1..32 in each source-on/off bare mixed pair, the OR outlet must have source-caused nonzero counters on at least one of48 channels; the NO outlet's entire48-triple trace must equal its null control. Record each outlet's full trace and all actual inputs. This is the prepared route-discrimination contract, not a measured complexity preference.",
+    "isolated_input_validity": "Each joined isolated source-on route must show a source-caused nonzero counter at its site 6 during states 1..32 and a nonzero actual outlet-channel 0 input term into the clock center during updates 1..48. Compare with its matched source-off control. No compact-packet shape or old receiver waveform is assumed.",
+    "mixed_input_validity": "Require valid bare competition and the early upstream gate. At the OR clock center require at least one source-caused nonzero contact input during updates 1..48. The clock-only null must follow its complete canonical 336-triple isolated orbit throughout 0..80. Retain all later feedback and loser influences for the separate hold criterion.",
+    "clock_region": "All48 channels at each clock center and its six face-neighbor sites,336 triples. All region boundaries are fixed before capture.",
+    "quiet_common": "Over states 64..80, the entire 336-triple region repeats with lag 4. Only its designated center channel 2 may have nonzero counters. The center has a constant remainder and follows the exact quarter-turn (a,b)->(b,-a). Its actual input sum and quotient are zero for updates 65..80, and every individual external signed input term entering any region channel is zero at those updates. Cancellation is not isolation.",
+    "primary_phase_memory": "The clock begins active. Require quiet_common, center remainder exactly 0, and unit center a^2+b^2=1 at every hold state. Its ordered counter pair must differ from the matched canonical source-off clock at every hold state, giving a fixed nonzero relative phase. In mixed cases the NO clock's entire 336-triple hold trace must equal its source-off trace.",
+    "first_activation": "For each clock-off source-on center, record its first nonzero counter state, complete before/after triples, update, all six input terms, input sum, quotient and nativeC event if present. Initially a=b=0; the first nonzero state must have new a=0 and new b=ell!=0 with a genuine guarded C event and nonzero input. Verify the matched all-counter-off board is stationary. This is a passive consistency check, not a click operation.",
+    "secondary_activation": "Use only the eight already registered mixed clock-counter-off cases. The source-on OR region must satisfy quiet_common, retain a constant center remainder in {0,2,4}, and have 0<|a|+|b|<=2 throughout the hold. Report the actual retained remainder. Even parity follows from the initial center remainder 0. The source-off region must remain counter-zero throughout 0..80 and the NO region must match its null throughout the hold. Report unit activation (a^2+b^2=1), axis-two activation (one counter zero, the other magnitude two), and diagonal activation (|a|=|b|=1) separately. This is activation of a prepared remainder apparatus, not spontaneous creation. Never broaden primary_phase_memory with these secondary classes.",
+    "all_events": "Retain every full-board C0/C1/C2 event, quotient, address, update and its actual six signed input terms. Also retain the center's six inputs at every update and every nonzero external term entering each complete clock region. No class is assigned selection or approval semantics.",
+    "full_state": "Retain all complete native states, outside information, tensor fingerprint, full preparations and source hashes. Verify every one-step inverse and the complete 80-step rewind. Report active boundary hits.",
+    "center_departure_timing": "Record the first complete center-triple departure from the matched source-off trajectory and the first source-caused nonzero contact input. The contact input must occur no later than that center departure for route-driven eligibility. Record the first full-region departure separately: halo contact changes may correctly precede center input. Preserve all six center terms to expose any earlier unintended donor.",
+    "null_canonical": "Each active source-off clock must match the entire analytic 336-triple orbit at every state, including the declared contact companion channel-14 remainder-zero modification. Do not compare with the unmodified stock orbit patch."
+  },
+  "acceptance": {
+    "per_case": "Report initial compatibility, null protection, incoming-route eligibility, quietness, unit phase write, loser retention and each activation class separately. Failures remain explicit.",
+    "primary_family": "At least one common preregistered phase from {1,2} must satisfy primary_phase_memory for all four isolated pattern/direction cases and both mixed swaps, at both sizes, with every required incoming/null gate passing. Report individual successes even if this full composition contract fails.",
+    "secondary_family": "A broad activation result requires secondary_activation in both mixed swaps and both sizes, with bare-route and early-upstream eligibility. Separately state whether all four are unit, axis-two, diagonal or a declared mixture. Do not infer a reusable detector, later probe response or autonomous approval from activation alone.",
+    "limits": "A finite pass demonstrates a prepared route-to-clock interface. It does not establish physical light, a general photon, autonomous route search, higher-complexity preference, unique-outcome approval, quantum collapse or a physical time arrow. No outcome changes the board evolution."
+  },
+  "budget": {
+    "max_cpu_seconds": 300,
+    "max_wall_seconds": 600,
+    "max_sparse_channels_per_state": 20000,
+    "max_cumulative_native_rows_per_record": 1620000,
+    "max_seconds_per_record": 30,
+    "max_recorded_bytes": 67108864,
+    "stop": "Write each completed native record immediately. Preserve any partial-case failure receipt and all earlier records. Budget exhaustion is inconclusive. Do not shorten the hold, truncate frames or discard negative cases.",
+    "accounting": "The 300 CPU-second limit covers the entire dedicated CLI workflow: interpreter startup and imports, static preflight, native capture and inversion, passive analysis, compression, Presenter export, and final archive hashing. A parent wrapper records its own CPU plus child user/system CPU with resource.getrusage; inner phase timings are diagnostic only.",
+    "max_observer_cpu_seconds_per_record": 15,
+    "reserve_cpu_seconds_before_case": 60,
+    "child_cpu_soft_limit": 285,
+    "child_cpu_hard_limit": 290,
+    "enforcement": "Launch only through route_clock_budget.py. Before every new case reserve 60 CPU seconds for at most30 seconds of native capture,15 seconds of passive observation and15 seconds of finalization. The child also has CPU limits285/290 seconds; its soft-limit handler attempts a clean inconclusive receipt. A parent600-second wall timeout retains prior evidence. The final outer receipt reports actual whole-workflow CPU and budget status, including failures.",
+    "native_checkpoint": "Immediately after a complete native capture, save a separate immutable compressed native checkpoint and hash before passive observation. Save each completed observation record separately. List every not-run case and every captured-but-not-observed case explicitly. Never overwrite an earlier record."
+  },
+  "budget_rationale": "Old 48-step joined receiver traces grew to 224 stored triples for mixed OR/NO and 734 for isolated NO, with counter magnitudes at most 7 in the latter. This does not justify H128 growth under the present budget. H80 and a fixed16-update hold are registered before new trajectories; no later extrapolation is substituted for data.",
+  "presenter": "L=289 phase 1 primary mixed OR/NO and NO/OR, each source on/off (four recordings), plus matching mixed clock-off source on/off (four recordings): eight complete examples, unchanged generic Presenter."
+}

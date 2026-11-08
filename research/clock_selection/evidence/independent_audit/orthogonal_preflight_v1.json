@@ -1,0 +1,269 @@
+{
+  "auditor_sha256": "ede83fc7dd4fa0be2ca2772018fb778461dd5f67e1f8889c9af2e072d1cc9fff",
+  "checks": [
+    {
+      "full_initial_equal": true,
+      "id": "L129-r0-p0-00"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r0-p0-10"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r0-p0-01"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r0-p0-11"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r0-p1-00"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r0-p1-10"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r0-p1-01"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r0-p1-11"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r0-p2-00"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r0-p2-10"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r0-p2-01"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r0-p2-11"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r0-p3-00"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r0-p3-10"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r0-p3-01"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r0-p3-11"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r4-p0-00"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r4-p0-10"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r4-p0-01"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r4-p0-11"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r4-p1-00"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r4-p1-10"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r4-p1-01"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r4-p1-11"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r4-p2-00"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r4-p2-10"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r4-p2-01"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r4-p2-11"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r4-p3-00"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r4-p3-10"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r4-p3-01"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L129-r4-p3-11"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r0-p0-00"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r0-p0-10"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r0-p0-01"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r0-p0-11"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r0-p1-00"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r0-p1-10"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r0-p1-01"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r0-p1-11"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r0-p2-00"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r0-p2-10"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r0-p2-01"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r0-p2-11"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r0-p3-00"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r0-p3-10"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r0-p3-01"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r0-p3-11"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r4-p0-00"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r4-p0-10"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r4-p0-01"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r4-p0-11"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r4-p1-00"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r4-p1-10"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r4-p1-01"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r4-p1-11"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r4-p2-00"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r4-p2-10"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r4-p2-01"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r4-p2-11"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r4-p3-00"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r4-p3-10"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r4-p3-01"
+    },
+    {
+      "full_initial_equal": true,
+      "id": "L161-r4-p3-11"
+    }
+  ],
+  "claim_limit": "Independent complete initial-data equivalence and source masks only; no functional evolution tested.",
+  "complete_preparations": 64,
+  "cpu_seconds": 1.364102919,
+  "format": "universe24-crossed-input-preflight-independent-v1",
+  "passed": true,
+  "producer_sha256": "bf99f5e7e41e4216cfedb2ec919ac5c36a6e6f481669cc621c816e86de2009f7",
+  "protocol_sha256": "a0c9bdc42c9697600b792b6ac419215e026d9ae2bf27015ac8233ad487180cb0",
+  "trajectories": 0
+}

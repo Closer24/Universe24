@@ -1,0 +1,22 @@
+{
+  "format": "universe24-clock-recurrence-protocol-v1",
+  "question": "Can one prepared carrier return on a periodic guide and interrogate its previously changed clock without a second supplied packet?",
+  "claim": "Finite periodic return and conditioned response, not autonomous invention, preferred-path selection, physical light or boundary-independent propagation.",
+  "board": {"body_signs": [1,1,1], "background": [0,0,2]},
+  "discovery_sides": [48,50], "holdout_sides": [52,54],
+  "controls": ["00","10","01","11"],
+  "geometry": "c=L//2. Complete +X guide at y=z=c; packet origin(c-16,c,c); clock(c,c+1,c),channel2,p2,r0; outlet(c+8,c,c),channel0. Four packet/clock counter masks retain identical full remainders. Separate pristine runs omit the entire clock/halo defect. A counter-off ghost footprint is an explicit ablation, never an absent complete packet.",
+  "horizon": "2*L+40", "cycles": [0,1,2],
+  "incoming_offsets": [4,5,6,7], "outgoing_offsets": [24,25,26,27],
+  "carrier_template": "All48 channels in the periodic6x3x3 box dx=-1..4,dy=dz=-1..1 around(c-16+t mod L,c,c), including remainders.",
+  "continuous_return": "For n=1,2 require the complete carrier at EVERY state24+(n-1)*L through7+n*L; endpoint matches alone do not establish transport.",
+  "hold_offsets": [32,40],
+  "hold_predicate": "All336 triples repeat at lag4, only channel2 at center may have nonzero counters, norm1/r0, each external term zero and centeru=ell=0 over eightupdates.",
+  "C_signature": {"address":"(c+8,c,c,0)","window_offsets":[21,28],"expected":[[21,2,-1],[25,1,1]],"meaning":"Exact free carrier C2 then C1; preserve all other events. This is not a unique photon click."},
+  "predictions": "Joint first output succeeds. Conditional on genuine continuous return and complete prior hold, phase ansatz predicts later enabling forLmod4=2,suppression forLmod4=0. Failed eligibility is not a successful decision; no retiming or new output definition.",
+  "acceptance": "Report pristine whole-state translation, all source masks, full input/output templates, every C, holds, inverses and continuous return separately. A genuine returned trial needs first input+output plus continuous transport into that trial. Clock-conditioned recurrence additionally requires valid controls, prior full hold and differing output versuspacket-only. Preserve packet-only input validity separately; invalid comparator input cannot establish a gate.",
+  "boundary_policy": "Wrapping is the intended path. Retain every active boundary contact. No pre-wrap or infinite-board claim.",
+  "budget": {"registered_cases":20,"max_cpu_seconds":600,"max_wall_seconds":900,"max_recorded_bytes":104857600,"max_seconds_per_record":60,"max_cells_per_record":500000},
+  "presenter_selection": {"sides":[50,54],"controls":["00","10","01","11"],"pristine":false},
+  "retention": "All complete records including failures, exact source snapshot, seedNone, tensor, environment and not-run cases. Never accept partial control groups; report resource overruns. No reinjection or runtime observer feedback."
+}

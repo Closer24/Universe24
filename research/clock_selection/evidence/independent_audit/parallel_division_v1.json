@@ -1,0 +1,3898 @@
+{
+  "auditor_sha256": "dede02ba8ceea0953bfc4a3608a16294a305a0670e5a097d2e61c24ea1148a33",
+  "cpu_seconds": 1.791770181,
+  "cross_size_comparisons": [
+    {
+      "amplitude": -6,
+      "complete": true,
+      "equal": true
+    },
+    {
+      "amplitude": -5,
+      "complete": true,
+      "equal": true
+    },
+    {
+      "amplitude": -4,
+      "complete": true,
+      "equal": true
+    },
+    {
+      "amplitude": -3,
+      "complete": true,
+      "equal": true
+    },
+    {
+      "amplitude": -2,
+      "complete": true,
+      "equal": true
+    },
+    {
+      "amplitude": -1,
+      "complete": true,
+      "equal": true
+    },
+    {
+      "amplitude": 0,
+      "complete": true,
+      "equal": true
+    },
+    {
+      "amplitude": 1,
+      "complete": true,
+      "equal": true
+    },
+    {
+      "amplitude": 2,
+      "complete": true,
+      "equal": true
+    },
+    {
+      "amplitude": 3,
+      "complete": true,
+      "equal": true
+    },
+    {
+      "amplitude": 4,
+      "complete": true,
+      "equal": true
+    },
+    {
+      "amplitude": 5,
+      "complete": true,
+      "equal": true
+    },
+    {
+      "amplitude": 6,
+      "complete": true,
+      "equal": true
+    }
+  ],
+  "failure": null,
+  "full_rewinds": 90,
+  "full_states": 1170,
+  "passed": true,
+  "protocol_sha256": "890abeac74ae4bc164b5cec832901230f2ddcc2c763ddb7d189cc9be459d662d",
+  "records": [
+    {
+      "case": {
+        "amplitude": -6,
+        "family": "single",
+        "id": "single-L29-A-6",
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true,
+        "source_quarter_turn": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": -2,
+        "r_next": 2,
+        "u": -6
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "3b936f5bcce58c98ead479687370f0eec504c41a086a21f974de4a43eacb712f",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "a67f9f5182abe632870a240c0c4b29bd4d4a846c8a217cd8bebd086480488d61",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 94,
+          "1": 53,
+          "2": 63
+        },
+        "whole_board_C_count": 210,
+        "whole_board_C_sha256": "e78d0262e00d00a60b22b2cc1a87bf50c671b9bf7e53a3d081eff5ed53938b5f",
+        "whole_board_R_change_count": 942,
+        "whole_board_R_sha256": "2a07d588569b0eb40036b199e04fdb6e601812a6a9e783e410d06940e8432e2c"
+      }
+    },
+    {
+      "case": {
+        "amplitude": -5,
+        "family": "single",
+        "id": "single-L29-A-5",
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true,
+        "source_quarter_turn": true
+      },
+      "first_step_prediction": {
+        "C_kind": 1,
+        "ell": -2,
+        "r_next": 4,
+        "u": -5
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "510265960f64ba0814f3d76d5ce3871681ca260bc3a7033625df5827708136cf",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "dddacefbe1806f8bd8ef61647a7104a3819a64827b2363ac481ab13afff61ace",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 61,
+          "1": 79,
+          "2": 60
+        },
+        "whole_board_C_count": 200,
+        "whole_board_C_sha256": "d708531256786d6f2da6c36352895977944e19604cf431e6d5126296d82dd887",
+        "whole_board_R_change_count": 949,
+        "whole_board_R_sha256": "126c964e61ce630cbe837c8e1e618c825bdb397761cad68ab0e3f7d294a843b6"
+      }
+    },
+    {
+      "case": {
+        "amplitude": -4,
+        "family": "single",
+        "id": "single-L29-A-4",
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true,
+        "source_quarter_turn": true
+      },
+      "first_step_prediction": {
+        "C_kind": 2,
+        "ell": -1,
+        "r_next": 0,
+        "u": -4
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "b532ab188a2ade84db581f136cbccb38001b747278037dfe0827109cb79adddd",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "95f68109138b98c77344715200ad9a7beac53c11a8a044cec8f104f705d9b554",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 5,
+          "1": 6,
+          "2": 12
+        },
+        "whole_board_C_count": 23,
+        "whole_board_C_sha256": "f9587391ceb22679168d389dc9b492605848ffee03a9eabe0ffb86c5fc273800",
+        "whole_board_R_change_count": 180,
+        "whole_board_R_sha256": "7c1b51cb1b161b05e0ed3bd6ad185374caf7ffc189151ccf90329f4f67ed2ae1"
+      }
+    },
+    {
+      "case": {
+        "amplitude": -3,
+        "family": "single",
+        "id": "single-L29-A-3",
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true,
+        "source_quarter_turn": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": -1,
+        "r_next": 2,
+        "u": -3
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "04fd5897e5dcdf7e87f78517a686aa5aa4cc68adb10c85c53cf2c3fefec5eb49",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "04fd5897e5dcdf7e87f78517a686aa5aa4cc68adb10c85c53cf2c3fefec5eb49",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 16,
+          "1": 6,
+          "2": 6
+        },
+        "whole_board_C_count": 28,
+        "whole_board_C_sha256": "40d500e64c4d50f4b5db7d8bcb6ff26278d9c9369f850e7f272a4098f4a71a0e",
+        "whole_board_R_change_count": 144,
+        "whole_board_R_sha256": "12c54a3f86619a2300c52a97fc89c214e70085b0495a73bc0d4f8447073dd39a"
+      }
+    },
+    {
+      "case": {
+        "amplitude": -2,
+        "family": "single",
+        "id": "single-L29-A-2",
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true,
+        "source_quarter_turn": true
+      },
+      "first_step_prediction": {
+        "C_kind": 1,
+        "ell": -1,
+        "r_next": 4,
+        "u": -2
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "91be202755a28a02d034458b8eeaf97e746d71a7075ffc1f5905a9d1ea8b1f22",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "91be202755a28a02d034458b8eeaf97e746d71a7075ffc1f5905a9d1ea8b1f22",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 4,
+          "1": 12,
+          "2": 12
+        },
+        "whole_board_C_count": 28,
+        "whole_board_C_sha256": "849c2d2b56e4ec635b0d5c9163412b4b1bb9d246d3abf18316441d76af7f3df2",
+        "whole_board_R_change_count": 144,
+        "whole_board_R_sha256": "e1f39105724b3227bc450a7b426ef148bfe34c4d982aa9fee5a2a4be732f98f6"
+      }
+    },
+    {
+      "case": {
+        "amplitude": -1,
+        "family": "single",
+        "id": "single-L29-A-1",
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true,
+        "source_quarter_turn": true
+      },
+      "first_step_prediction": {
+        "C_kind": null,
+        "ell": 0,
+        "r_next": 0,
+        "u": -1
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "da8b4ab36b198825a3c65e8ad73e074d3bbd52006b13a56a8c03b24e149857d0",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "da8b4ab36b198825a3c65e8ad73e074d3bbd52006b13a56a8c03b24e149857d0",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 36,
+        "whole_board_R_sha256": "d28cd41a7ec6799f25cc648ee421043547bc4b95c9cfc0b92d9558f5d9c72472"
+      }
+    },
+    {
+      "case": {
+        "amplitude": 0,
+        "family": "single",
+        "id": "single-L29-A0",
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true,
+        "source_quarter_turn": true
+      },
+      "first_step_prediction": {
+        "C_kind": null,
+        "ell": 0,
+        "r_next": 2,
+        "u": 0
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "4b7102a8406af862bcf8ae8046ff286ec11b1640e2414e129f65a015ac0e6a90",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "4b7102a8406af862bcf8ae8046ff286ec11b1640e2414e129f65a015ac0e6a90",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      }
+    },
+    {
+      "case": {
+        "amplitude": 1,
+        "family": "single",
+        "id": "single-L29-A1",
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true,
+        "source_quarter_turn": true
+      },
+      "first_step_prediction": {
+        "C_kind": null,
+        "ell": 0,
+        "r_next": 4,
+        "u": 1
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "bf204b889446697e3f6709e7a576ddec221de478670b4d26aaca6ce5dfe7f0a6",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "bf204b889446697e3f6709e7a576ddec221de478670b4d26aaca6ce5dfe7f0a6",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 36,
+        "whole_board_R_sha256": "c54e0ff1c60ca5aa1e269d1dd3faddf03b263b4c1a46ba1db62b2cb816804530"
+      }
+    },
+    {
+      "case": {
+        "amplitude": 2,
+        "family": "single",
+        "id": "single-L29-A2",
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true,
+        "source_quarter_turn": true
+      },
+      "first_step_prediction": {
+        "C_kind": 2,
+        "ell": 1,
+        "r_next": 0,
+        "u": 2
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "811bae97bab9f53c5bb7b3b382f97320c92654cc28dda13ae5fdd85da01e514c",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "811bae97bab9f53c5bb7b3b382f97320c92654cc28dda13ae5fdd85da01e514c",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 4,
+          "1": 12,
+          "2": 12
+        },
+        "whole_board_C_count": 28,
+        "whole_board_C_sha256": "c36b51dc7e4475a8ae0b0ebb1a8adea01b7a785955bd17e48db2818d7aa12769",
+        "whole_board_R_change_count": 144,
+        "whole_board_R_sha256": "e62f4d51d8ca4f180f79dae68cd54b6522ad4135717a6b9cc873a0d36d432b30"
+      }
+    },
+    {
+      "case": {
+        "amplitude": 3,
+        "family": "single",
+        "id": "single-L29-A3",
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true,
+        "source_quarter_turn": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": 1,
+        "r_next": 2,
+        "u": 3
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "22da4b61340fe52c55052e9d0e30e5d396871fa3b7ddff99820f9330d07b6365",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "22da4b61340fe52c55052e9d0e30e5d396871fa3b7ddff99820f9330d07b6365",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 16,
+          "1": 6,
+          "2": 6
+        },
+        "whole_board_C_count": 28,
+        "whole_board_C_sha256": "d267f1cb69ad5c247835a6d5c432dd4b8b1784e6cddb7adedc78040a175cda67",
+        "whole_board_R_change_count": 144,
+        "whole_board_R_sha256": "43192d9d1d7e64569c2f63d1cd9f8025533d45e345c19653d5246698b51286be"
+      }
+    },
+    {
+      "case": {
+        "amplitude": 4,
+        "family": "single",
+        "id": "single-L29-A4",
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true,
+        "source_quarter_turn": true
+      },
+      "first_step_prediction": {
+        "C_kind": 1,
+        "ell": 1,
+        "r_next": 4,
+        "u": 4
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "b0b0e730711e3c60924aa924aad988375a0b253553b1394da11021103a52ad16",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "41b91fb79f9aa9425aab2b9083cd5c6194e9f71e0fcbc4aef179898453819942",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 5,
+          "1": 12,
+          "2": 6
+        },
+        "whole_board_C_count": 23,
+        "whole_board_C_sha256": "78a118f826288757f0fe1adbc2ac54c91d60788982965146c2450825898a6422",
+        "whole_board_R_change_count": 180,
+        "whole_board_R_sha256": "169ff446ccef30d3e4c92bef38763f58f4a53e68517e1e3ce586fe58432c9e79"
+      }
+    },
+    {
+      "case": {
+        "amplitude": 5,
+        "family": "single",
+        "id": "single-L29-A5",
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true,
+        "source_quarter_turn": true
+      },
+      "first_step_prediction": {
+        "C_kind": 2,
+        "ell": 2,
+        "r_next": 0,
+        "u": 5
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "778fbe03defa3df4b36919e858e65fa104141c2d61b4c2977a3b67707c38a7ef",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "9423a51ea3e442e4851eb8c1c9aa41a253a4ea47790613a31bc3b9f55daa0e64",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 61,
+          "1": 60,
+          "2": 79
+        },
+        "whole_board_C_count": 200,
+        "whole_board_C_sha256": "8b4cd7afd3c9599fca13224fd70a5681173756566474ef19b6184162f64f9d81",
+        "whole_board_R_change_count": 949,
+        "whole_board_R_sha256": "7f9c8392019c30bce721ce8a90b8d673dd1539f0d2276ea126aa28ea323452a3"
+      }
+    },
+    {
+      "case": {
+        "amplitude": 6,
+        "family": "single",
+        "id": "single-L29-A6",
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true,
+        "source_quarter_turn": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": 2,
+        "r_next": 2,
+        "u": 6
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "d5a7732e15db8c9c112138402a1396cee6cfdc6dd3231382e6dfc585ff8fb8a5",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "2f8fe23cad055328cfb0e1508b45d9920c008b020c8b69e3d7f958bcc39c9391",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 94,
+          "1": 63,
+          "2": 53
+        },
+        "whole_board_C_count": 210,
+        "whole_board_C_sha256": "1fc29d5edb0b11ec5e3edcdf473c3d458a9c5c53c7e11875b98b9a6311efbf01",
+        "whole_board_R_change_count": 942,
+        "whole_board_R_sha256": "2832c8231d71da21daaa250818081043981be9c15bb362ff77180707d7bc56d6"
+      }
+    },
+    {
+      "case": {
+        "amplitude": -6,
+        "family": "single",
+        "id": "single-L33-A-6",
+        "side": 33
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true,
+        "source_quarter_turn": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": -2,
+        "r_next": 2,
+        "u": -6
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "7a02e068b4bf0aa785293b21d73b0ff976a6f8058d90595b35b398f1fb83169e",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "479b8260f9121cf7714808ef10a728e46687e07acc0bd5098d4861068c76281f",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 94,
+          "1": 53,
+          "2": 63
+        },
+        "whole_board_C_count": 210,
+        "whole_board_C_sha256": "044900a0cac09fde80f949481a0ab6ee43aec282ef4f1fa6b4c2f1418a95bb17",
+        "whole_board_R_change_count": 942,
+        "whole_board_R_sha256": "1111808af9433540b38ecc6b836ec31f9fd64f869b49ea296c9b48ce26937f22"
+      }
+    },
+    {
+      "case": {
+        "amplitude": -5,
+        "family": "single",
+        "id": "single-L33-A-5",
+        "side": 33
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true,
+        "source_quarter_turn": true
+      },
+      "first_step_prediction": {
+        "C_kind": 1,
+        "ell": -2,
+        "r_next": 4,
+        "u": -5
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "edc1fd73761c39bd3e6e8eb042e0995cfac7238ecaa05baf8ff6d874dbac3a8f",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "2c50884a1ac77b3ad9eadd83ce6cb5b9cf574cc1cc0503192d94745ed340ad80",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 61,
+          "1": 79,
+          "2": 60
+        },
+        "whole_board_C_count": 200,
+        "whole_board_C_sha256": "b2a6041b5f1b3cbab9a67b73b87b9ed554a3285808b6bce5077013e70125291b",
+        "whole_board_R_change_count": 949,
+        "whole_board_R_sha256": "6fcb732efc673ef7e5c35a85433ea541bb6073abd6c9275a8a2a4940fa7d4915"
+      }
+    },
+    {
+      "case": {
+        "amplitude": -4,
+        "family": "single",
+        "id": "single-L33-A-4",
+        "side": 33
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true,
+        "source_quarter_turn": true
+      },
+      "first_step_prediction": {
+        "C_kind": 2,
+        "ell": -1,
+        "r_next": 0,
+        "u": -4
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "eda7fd7e2e395ebd2090838fe9d134d7f1259aa08ad8b613bfee24dce81c4a4b",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "ab1850aea4c3af8793c34e38ac83f7dbe5b3a8755ce700aca540a7be5c59aaf5",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 5,
+          "1": 6,
+          "2": 12
+        },
+        "whole_board_C_count": 23,
+        "whole_board_C_sha256": "9b4783d0afe4a6dca9b0970b24fff7ea757d78b5e05b983934ed2be48cdf5e7e",
+        "whole_board_R_change_count": 180,
+        "whole_board_R_sha256": "89350dcb023a127c5a9a5fad60e9d00ba95166112511e5dfdc550dbd30e9bb5c"
+      }
+    },
+    {
+      "case": {
+        "amplitude": -3,
+        "family": "single",
+        "id": "single-L33-A-3",
+        "side": 33
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true,
+        "source_quarter_turn": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": -1,
+        "r_next": 2,
+        "u": -3
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "67bc9b6767167467c33d0245730e6136f9c4546f0868c12081134865482e014e",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "67bc9b6767167467c33d0245730e6136f9c4546f0868c12081134865482e014e",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 16,
+          "1": 6,
+          "2": 6
+        },
+        "whole_board_C_count": 28,
+        "whole_board_C_sha256": "0a1f8c4a768a8690bc644eb49ee8f6c03ac3b633b2427d322c0f787c6b343a24",
+        "whole_board_R_change_count": 144,
+        "whole_board_R_sha256": "f2f1560b80b3e0b2c72fee5aecf3a0e0c630c4ef0b331a526a99f085b1fec6cd"
+      }
+    },
+    {
+      "case": {
+        "amplitude": -2,
+        "family": "single",
+        "id": "single-L33-A-2",
+        "side": 33
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true,
+        "source_quarter_turn": true
+      },
+      "first_step_prediction": {
+        "C_kind": 1,
+        "ell": -1,
+        "r_next": 4,
+        "u": -2
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "ed6993cf6071633e57718d4b992e125e4ca23dbe8d4b4d80e9f63bead45b23cd",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "ed6993cf6071633e57718d4b992e125e4ca23dbe8d4b4d80e9f63bead45b23cd",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 4,
+          "1": 12,
+          "2": 12
+        },
+        "whole_board_C_count": 28,
+        "whole_board_C_sha256": "9fb0f22add81dc4259ccc4158d382324f430e5e10173ccd738cd415e9a120ec3",
+        "whole_board_R_change_count": 144,
+        "whole_board_R_sha256": "c97bb260aef5a132c25d3e732a86d6779b0aa7c09a404ee9eda7d5e233abf8ca"
+      }
+    },
+    {
+      "case": {
+        "amplitude": -1,
+        "family": "single",
+        "id": "single-L33-A-1",
+        "side": 33
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true,
+        "source_quarter_turn": true
+      },
+      "first_step_prediction": {
+        "C_kind": null,
+        "ell": 0,
+        "r_next": 0,
+        "u": -1
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "5e13e9f5d7cb8bcc8cccd8c197d0499d96e37f033b92495fd5fb5915a74baa6c",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "5e13e9f5d7cb8bcc8cccd8c197d0499d96e37f033b92495fd5fb5915a74baa6c",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 36,
+        "whole_board_R_sha256": "649d881dfa70959db83c94b65ce331f4e0820571a823d20ad173a2ebe265ae27"
+      }
+    },
+    {
+      "case": {
+        "amplitude": 0,
+        "family": "single",
+        "id": "single-L33-A0",
+        "side": 33
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true,
+        "source_quarter_turn": true
+      },
+      "first_step_prediction": {
+        "C_kind": null,
+        "ell": 0,
+        "r_next": 2,
+        "u": 0
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "c4f7673057882ba66c046ac35386ff696c81beb93f25010036e7aec810fb73a2",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "c4f7673057882ba66c046ac35386ff696c81beb93f25010036e7aec810fb73a2",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      }
+    },
+    {
+      "case": {
+        "amplitude": 1,
+        "family": "single",
+        "id": "single-L33-A1",
+        "side": 33
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true,
+        "source_quarter_turn": true
+      },
+      "first_step_prediction": {
+        "C_kind": null,
+        "ell": 0,
+        "r_next": 4,
+        "u": 1
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "c0d556bbe9dbac0bc16d7cffcd9bd41d47521ccca869fffec14a44286693c4e8",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "c0d556bbe9dbac0bc16d7cffcd9bd41d47521ccca869fffec14a44286693c4e8",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 36,
+        "whole_board_R_sha256": "8232fba3ced89f2721146e179eb81055c2086944db14340ff52612b11bbdafd1"
+      }
+    },
+    {
+      "case": {
+        "amplitude": 2,
+        "family": "single",
+        "id": "single-L33-A2",
+        "side": 33
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true,
+        "source_quarter_turn": true
+      },
+      "first_step_prediction": {
+        "C_kind": 2,
+        "ell": 1,
+        "r_next": 0,
+        "u": 2
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "473fa3bc80a6473d91255da16177c9456f155c8dab7c915796106c61aec4185e",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "473fa3bc80a6473d91255da16177c9456f155c8dab7c915796106c61aec4185e",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 4,
+          "1": 12,
+          "2": 12
+        },
+        "whole_board_C_count": 28,
+        "whole_board_C_sha256": "31788f4e4ca690c6a46b9300041547e32e5ff7ccaeb701fa33c71114ecd4c83f",
+        "whole_board_R_change_count": 144,
+        "whole_board_R_sha256": "6cf26d9f5454b707c9dd6b9b59a80689b47439b1ba7661bce211caf68dacc945"
+      }
+    },
+    {
+      "case": {
+        "amplitude": 3,
+        "family": "single",
+        "id": "single-L33-A3",
+        "side": 33
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true,
+        "source_quarter_turn": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": 1,
+        "r_next": 2,
+        "u": 3
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "3c0010ca8399d16483527c895a0e601ab05ac41ee8f223ba91dd3aa0d2b9b892",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "3c0010ca8399d16483527c895a0e601ab05ac41ee8f223ba91dd3aa0d2b9b892",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 16,
+          "1": 6,
+          "2": 6
+        },
+        "whole_board_C_count": 28,
+        "whole_board_C_sha256": "2077329f69f88a172e767500aee18e7218f42dc6e15685b98576512b8b92e272",
+        "whole_board_R_change_count": 144,
+        "whole_board_R_sha256": "4944d415e467ccaaca3254b11809b5bf5c920689a0b7fcfac549b77e8041faea"
+      }
+    },
+    {
+      "case": {
+        "amplitude": 4,
+        "family": "single",
+        "id": "single-L33-A4",
+        "side": 33
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true,
+        "source_quarter_turn": true
+      },
+      "first_step_prediction": {
+        "C_kind": 1,
+        "ell": 1,
+        "r_next": 4,
+        "u": 4
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "7e65aaa4684cdf4160cc39944d4ce51cf9a09172fbbb7bacb08847947a70ea00",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "79505862000614937f81143c6478e6081d11a9b10e4b25766d788ebf7929a953",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 5,
+          "1": 12,
+          "2": 6
+        },
+        "whole_board_C_count": 23,
+        "whole_board_C_sha256": "70ed9acd6d922cdd7a246b425d7fa2dcb49562257bc7c0f5237a83b1894fe76f",
+        "whole_board_R_change_count": 180,
+        "whole_board_R_sha256": "ac61bac7ab81b9489e83893410f91407995282c5fb75dad3fd86d5be3a39ebec"
+      }
+    },
+    {
+      "case": {
+        "amplitude": 5,
+        "family": "single",
+        "id": "single-L33-A5",
+        "side": 33
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true,
+        "source_quarter_turn": true
+      },
+      "first_step_prediction": {
+        "C_kind": 2,
+        "ell": 2,
+        "r_next": 0,
+        "u": 5
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "39ff7894f592259cac0d1bbead15c4f968f9230575c6454ea6667f0840622c93",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "ea7f7e26f262f95b209d7b67a9692b4f65eb5f3b26f510f4436eaea13bbbcfda",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 61,
+          "1": 60,
+          "2": 79
+        },
+        "whole_board_C_count": 200,
+        "whole_board_C_sha256": "986b752e47a7ba38a074bbd4bf9f04b4e069c11c14d803aec628c2f0919b5b9b",
+        "whole_board_R_change_count": 949,
+        "whole_board_R_sha256": "dde601b2fcbb48cc73871511965b433ccb13db1b6299ee12d4b4e5edb38773c1"
+      }
+    },
+    {
+      "case": {
+        "amplitude": 6,
+        "family": "single",
+        "id": "single-L33-A6",
+        "side": 33
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true,
+        "source_quarter_turn": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": 2,
+        "r_next": 2,
+        "u": 6
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "5bf773ae2b63c6ddab28ec5086ea1a453efe90d49240d1367cac67833cf6ae5a",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "3c2f60d85aa420db5b28f5da6791ccaf9c947b535fec12b3786b2a96bb2f74e8",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 94,
+          "1": 63,
+          "2": 53
+        },
+        "whole_board_C_count": 210,
+        "whole_board_C_sha256": "87f64805e3d954545ced3477578e197f6773ad37cc0d2f6a6b89196f0fc03287",
+        "whole_board_R_change_count": 942,
+        "whole_board_R_sha256": "d64929467427ec0d6820f4c679c4cc9b0a4399b92df126666c9dd8d8bec10996"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M0",
+        "mask": 0,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": null,
+        "ell": 0,
+        "r_next": 2,
+        "u": 0
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "4b7102a8406af862bcf8ae8046ff286ec11b1640e2414e129f65a015ac0e6a90",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "4b7102a8406af862bcf8ae8046ff286ec11b1640e2414e129f65a015ac0e6a90",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M1",
+        "mask": 1,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": null,
+        "ell": 0,
+        "r_next": 4,
+        "u": 1
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "cc50776867869ab4f794ce3e5ae6b696b9c15dd0b72fcc754fa6d369c63b2892",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "cc50776867869ab4f794ce3e5ae6b696b9c15dd0b72fcc754fa6d369c63b2892",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 36,
+        "whole_board_R_sha256": "fcc37556ce06a5e1790e3e007cd137e95f1dc5afb12bc5096beb660db95fa3f9"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M2",
+        "mask": 2,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": null,
+        "ell": 0,
+        "r_next": 4,
+        "u": 1
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "3b108ad56dbeac3a145269f0e5ce7293612be7f03478df2a01822d1a578af201",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "3b108ad56dbeac3a145269f0e5ce7293612be7f03478df2a01822d1a578af201",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 36,
+        "whole_board_R_sha256": "e231ef2a6c33f1a253dbca476502d15c36db85f1586d117cb33f4d779232135a"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M3",
+        "mask": 3,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 2,
+        "ell": 1,
+        "r_next": 0,
+        "u": 2
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "22b3c15343ba431d95198f52ce9d96b267a76dd093f63f3765695e9cb181c89b",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "b0c8c0c79f1e64ff06c1ca16d2590f1462cb419f0ea754b0873424542e2e2a09",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "7c5744da5957822d28c2a008f4461844a125a3d04cb039b4c5b88ad033b9b653",
+        "whole_board_R_change_count": 146,
+        "whole_board_R_sha256": "6d1f6a79b59806053dfb3b8faebe6e8e6e0f0ad2c2c7bf1452207cae084a15fb"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M4",
+        "mask": 4,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": null,
+        "ell": 0,
+        "r_next": 4,
+        "u": 1
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "b0402a4ef0f91edd189efca4a8cadf91e979616fd7be026acd2c083fa89b19dd",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "b0402a4ef0f91edd189efca4a8cadf91e979616fd7be026acd2c083fa89b19dd",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 36,
+        "whole_board_R_sha256": "dc4c4551b933f5ac1ab7f894ac0447ea009d7c827e1b7c5a81fb42a44600875b"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M5",
+        "mask": 5,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 2,
+        "ell": 1,
+        "r_next": 0,
+        "u": 2
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "298d1024a1b0eebaab48d73723c34e7631e43e6b2710acac3e15cb834464768f",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "e05c4e6198718747327c73d0fc5d926d0777bc347dc15a3a72dad4ba03674763",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "7c5744da5957822d28c2a008f4461844a125a3d04cb039b4c5b88ad033b9b653",
+        "whole_board_R_change_count": 146,
+        "whole_board_R_sha256": "9d3a44c72103490cd34d721ca833eab504bdc4d7ab69e397096edcc20de55a84"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M6",
+        "mask": 6,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 2,
+        "ell": 1,
+        "r_next": 0,
+        "u": 2
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "f5632d8491de31501a77e96439eb6aa04148a260b374a8fb7cbcb8c34a6504c0",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "e836245aa2de4b1858781261ee233efbe963e590ee7037af7fb99849b13c34c7",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "7c5744da5957822d28c2a008f4461844a125a3d04cb039b4c5b88ad033b9b653",
+        "whole_board_R_change_count": 146,
+        "whole_board_R_sha256": "6ef1714c57b7f0619c311dfc40c67c07cc0757d90a255cf3c759489f2a5c75e8"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M7",
+        "mask": 7,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": 1,
+        "r_next": 2,
+        "u": 3
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "26762a096292590f7d6ad63fdf3825f8be4f4434b1cdd9201aaae1f519f8e735",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "f5124d777ffc87e73b732c365ac9f5a409a04329163d7f0adf7abc559287ef6c",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 12,
+          "1": 12
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "3e87a033bba424c00a0dcd12d4935750b51b9bed60576af4e15ae7e227482206",
+        "whole_board_R_change_count": 150,
+        "whole_board_R_sha256": "bdf29c6a87a419eb3ec257d80fd39d883215cbdfa8f655770782a4f39723a906"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M8",
+        "mask": 8,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": null,
+        "ell": 0,
+        "r_next": 4,
+        "u": 1
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "f6317d2eb564645c124de18867944875219982d1e5274da8f79757cfe16ac867",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "f6317d2eb564645c124de18867944875219982d1e5274da8f79757cfe16ac867",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 36,
+        "whole_board_R_sha256": "cb942dd1454016b899060b6142483dcf6cfdea6a901548c7caec5c7fda69c74b"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M9",
+        "mask": 9,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 2,
+        "ell": 1,
+        "r_next": 0,
+        "u": 2
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "aa0832cda59a27cb8a3199105359005e2f3fb2b28c24f9495e22550cd9f4e63d",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "298c535585468f9a0eaa8c7e00bcb46cc9a70885a5e3db6986e610e543ab457b",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "7c5744da5957822d28c2a008f4461844a125a3d04cb039b4c5b88ad033b9b653",
+        "whole_board_R_change_count": 146,
+        "whole_board_R_sha256": "00d9225e3dad23f5bc28687693b048a1b19bd84d33057b43d4ed1306c7f74001"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M10",
+        "mask": 10,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 2,
+        "ell": 1,
+        "r_next": 0,
+        "u": 2
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "3a9ef07a185ff0e92ee2a2b2ed969d57b0e69c079da65fd78af48336f1115342",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "8082fc301b617d2fea9c252b6f64d48b1f21f97fe1ce3f0cd38d5c69a5590afe",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "7c5744da5957822d28c2a008f4461844a125a3d04cb039b4c5b88ad033b9b653",
+        "whole_board_R_change_count": 146,
+        "whole_board_R_sha256": "45d22651e13c989cda6ac535fb607026d19e40214348a8c3fb348ee90d805a56"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M11",
+        "mask": 11,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": 1,
+        "r_next": 2,
+        "u": 3
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "92a9a5d1217061394bf390e0ac2f27408dcfb517483f73b00fca8c17197656ad",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "46b4979dfe951c5baafe7ecb0d64ccaba58dc34f281dbae0080fed6074cee564",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 12,
+          "1": 12
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "3e87a033bba424c00a0dcd12d4935750b51b9bed60576af4e15ae7e227482206",
+        "whole_board_R_change_count": 150,
+        "whole_board_R_sha256": "a4059496b02578b57aa5ef946d30aa1ec8d6f46ab74108e3e3e25c5516e22826"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M12",
+        "mask": 12,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 2,
+        "ell": 1,
+        "r_next": 0,
+        "u": 2
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "2ab006d457f1d5331983207d80b9cb0452adfd92dcbaea3716324bee061c4789",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "59b7d8d12767c9311d66948220a2f16cf1c2db8591b328d0d055c1d72001ebf5",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "7c5744da5957822d28c2a008f4461844a125a3d04cb039b4c5b88ad033b9b653",
+        "whole_board_R_change_count": 146,
+        "whole_board_R_sha256": "3bd793f033330edc865fdfd1bf48d777c1e28694e60fba984c64cba550e14745"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M13",
+        "mask": 13,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": 1,
+        "r_next": 2,
+        "u": 3
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "cbaa28c04fe54adf7ca20d77aff7e156a1e4c314f315b0ffd1c27f7f499353be",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "298552a08f3ba263710a957088877ccc79198f363b81787df87bd3dcaf2f57c1",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 12,
+          "1": 12
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "3e87a033bba424c00a0dcd12d4935750b51b9bed60576af4e15ae7e227482206",
+        "whole_board_R_change_count": 150,
+        "whole_board_R_sha256": "8e1614427e5221bb66e3eee11da02cbdb551d42e80ae8b058261c0764928fd8a"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M14",
+        "mask": 14,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": 1,
+        "r_next": 2,
+        "u": 3
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "fdbd0dfbacd06010b748c193d4a9f7d16175aa3f9e78fd4c7ccd3e8adb4c6252",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "de62093e5dc611c7168ea8fd635fc90d19b3a5d31aad143709cc58c7c258abea",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 12,
+          "1": 12
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "3e87a033bba424c00a0dcd12d4935750b51b9bed60576af4e15ae7e227482206",
+        "whole_board_R_change_count": 150,
+        "whole_board_R_sha256": "79c3fa7ac874d59f237081a36997bafafec2693979651313d2c613f7062ceee0"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M15",
+        "mask": 15,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 1,
+        "ell": 1,
+        "r_next": 4,
+        "u": 4
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "f387a2aafc8e4d7e90a2d4dcff7e41cd84cfce7dbbeaff61310d6020651c3c56",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "477981105c301dec33d30ba58a1c13bab9e6baf5a008b2621012762d9679d70e",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "39ba58de825281390519577b026d23c97a7cc06fd34b18835ad4b35835f3cdcb",
+        "whole_board_R_change_count": 166,
+        "whole_board_R_sha256": "ee943165c56fd5994f3d981b858745aab53c3fbe50c7f2470177338693fde149"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M16",
+        "mask": 16,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": null,
+        "ell": 0,
+        "r_next": 4,
+        "u": 1
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "bcef0cae1681b3bbf105ea7ed25d34f1ee78b6dc0ff7a6d4888442085b6a7cf1",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "bcef0cae1681b3bbf105ea7ed25d34f1ee78b6dc0ff7a6d4888442085b6a7cf1",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 36,
+        "whole_board_R_sha256": "bc6f7ede841dea3518d818bcb758713498e73cd6b6c8966773f179d7f6670e35"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M17",
+        "mask": 17,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 2,
+        "ell": 1,
+        "r_next": 0,
+        "u": 2
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "b5a20596058894283a4a5765de08213feab64fd2ac8141a89b72e8864aece06b",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "3a8723d29faaec4904413b1788305a0a8556eaf2cf8a73bb56ccfaf01383fe66",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "7c5744da5957822d28c2a008f4461844a125a3d04cb039b4c5b88ad033b9b653",
+        "whole_board_R_change_count": 146,
+        "whole_board_R_sha256": "415c3753571e32a41546b070ec8ea9453b9f17d3aa9a3f848143b0af59061ed2"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M18",
+        "mask": 18,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 2,
+        "ell": 1,
+        "r_next": 0,
+        "u": 2
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "00c9bd244268f387db09b20bf801ae30d835da54b3998abb079f3e0ee5e8874b",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "a2c52b68712d0424f5e719d29adf7634ab2f7b3c32c80cc2ac9b552e020acae9",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "7c5744da5957822d28c2a008f4461844a125a3d04cb039b4c5b88ad033b9b653",
+        "whole_board_R_change_count": 146,
+        "whole_board_R_sha256": "2ef4568d03e4f3354ce55476f06e257c84e9e67be7bc238bc60a95c17a085976"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M19",
+        "mask": 19,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": 1,
+        "r_next": 2,
+        "u": 3
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "840210c173e1710e815c56c29c589c6afded690190f7ba8aaa2ade1af7e8a0e1",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "c479766747717d2a01f2a5d19404807bbd6ec09283dffbe817d30bc31d625d74",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 12,
+          "1": 12
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "3e87a033bba424c00a0dcd12d4935750b51b9bed60576af4e15ae7e227482206",
+        "whole_board_R_change_count": 150,
+        "whole_board_R_sha256": "09ba299372152c8855cfbb99b737023eafd029ec1155d8bc9b4be8c78fe91907"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M20",
+        "mask": 20,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 2,
+        "ell": 1,
+        "r_next": 0,
+        "u": 2
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "e57cc469a9aeff158b49d6a2dc9dbfaff1cb20b8c8f4b41523731e77b15fb3f2",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "25bc59d5b2ff7b8f1e3a2183dd934d2a16a8522d5ef9765493f5d1229637ae5f",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "7c5744da5957822d28c2a008f4461844a125a3d04cb039b4c5b88ad033b9b653",
+        "whole_board_R_change_count": 146,
+        "whole_board_R_sha256": "b04d757357c8d87a865eb52df7cda37cdac6201bf5cde3e88470c4a46696fe81"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M21",
+        "mask": 21,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": 1,
+        "r_next": 2,
+        "u": 3
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "fe545d802823aa705b23264a26e091aba95838f758148551826ca8ca8e17865e",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "a3816aa9abd7565a4a6e5914fea4255bc6e21c4a7e3e3a37b075d30ed4390b92",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 12,
+          "1": 12
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "3e87a033bba424c00a0dcd12d4935750b51b9bed60576af4e15ae7e227482206",
+        "whole_board_R_change_count": 150,
+        "whole_board_R_sha256": "39d2b7737b849a08abe45b16f69bd9254280251f32f80258fdd4b2235c8341e0"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M22",
+        "mask": 22,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": 1,
+        "r_next": 2,
+        "u": 3
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "a35d9781ac021cc1316e584107970aadecefce4debdb2f3beb6da13dd643da67",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "96e99a700e286e89a2985d9b355fcaf493efc6984ca1c12bf7cf1577a39c5d35",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 12,
+          "1": 12
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "3e87a033bba424c00a0dcd12d4935750b51b9bed60576af4e15ae7e227482206",
+        "whole_board_R_change_count": 150,
+        "whole_board_R_sha256": "ff38c9395bbee5d0230a53dd722a6cfd832890d63d4b52a8a7d07465d920dbe3"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M23",
+        "mask": 23,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 1,
+        "ell": 1,
+        "r_next": 4,
+        "u": 4
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "df879b73e7608270aa092346e65c592099f49197b3f0fd3413cc7c75cfaf6a7c",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "ffc4df5fbda464a360ac0332d81a5424180f255f5b4842acce15cee940fef5a4",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "39ba58de825281390519577b026d23c97a7cc06fd34b18835ad4b35835f3cdcb",
+        "whole_board_R_change_count": 166,
+        "whole_board_R_sha256": "25a91d4eb02787a1027df3a181ac3f5a30cbfc3be6bb6863e32ab9c86c06b56e"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M24",
+        "mask": 24,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 2,
+        "ell": 1,
+        "r_next": 0,
+        "u": 2
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "aad4f47a55de0940ac29b6427aa4e8158bbae3ddd3c67144a8e7289f4b688c0f",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "c0bdf35902f255a2d1fc088947fc0d5802bc0c64575f717bc7cf1e0f3003876a",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "7c5744da5957822d28c2a008f4461844a125a3d04cb039b4c5b88ad033b9b653",
+        "whole_board_R_change_count": 146,
+        "whole_board_R_sha256": "a2de18d53f8c3cb9fa36bf458e2a861be985686c6d90b8e49d99886bc2c77e52"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M25",
+        "mask": 25,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": 1,
+        "r_next": 2,
+        "u": 3
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "fa718c77d782e23c4ac674b23e97d362839129f1ee7880a011b737f00a6b5e5b",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "0d1e3061b9dfa7cacee0b74ed4381247783c9df6370659fa8a477974c7d33848",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 12,
+          "1": 12
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "3e87a033bba424c00a0dcd12d4935750b51b9bed60576af4e15ae7e227482206",
+        "whole_board_R_change_count": 150,
+        "whole_board_R_sha256": "2df6d7ac148abca7458d629ce7b1e976a941da3d8c2c4d352c21230a42a85cf8"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M26",
+        "mask": 26,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": 1,
+        "r_next": 2,
+        "u": 3
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "71e600dc3196f7c719149e00d5485cc942f2852d5bc60d58495b91299345f30b",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "19ba57ba9c7aa2cf0e7f4724e6bbd9185baf46578d1229d37d6e90cdf1347b68",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 12,
+          "1": 12
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "3e87a033bba424c00a0dcd12d4935750b51b9bed60576af4e15ae7e227482206",
+        "whole_board_R_change_count": 150,
+        "whole_board_R_sha256": "e211f3a52bd6cb139978367f43a9baf45f565af48ee9975b69c9500ad5d242cb"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M27",
+        "mask": 27,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 1,
+        "ell": 1,
+        "r_next": 4,
+        "u": 4
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "ee13b6bd6bdaacb02d3879838b3815095b056de719336bba178bc096cfb58b17",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "2bf5369229078bccb2504d8600d5e6e278c4d11420c0701bdef64caeb781e3a5",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "39ba58de825281390519577b026d23c97a7cc06fd34b18835ad4b35835f3cdcb",
+        "whole_board_R_change_count": 166,
+        "whole_board_R_sha256": "3cae67612e5108ca5f588aebb5111f5d9ed0262c74159edba7492f227cab25ea"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M28",
+        "mask": 28,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": 1,
+        "r_next": 2,
+        "u": 3
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "0b2aebe2634d8471b63ebac0e015521b3f7f2bec81871ac9ac4dadc69b3fe5b7",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "17c8b54198923b358473e5385327d966c128d9b96a339baeed769db3e1e4e11e",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 12,
+          "1": 12
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "3e87a033bba424c00a0dcd12d4935750b51b9bed60576af4e15ae7e227482206",
+        "whole_board_R_change_count": 150,
+        "whole_board_R_sha256": "7c4e3192476dbc5199b33c109a5a4add39376aeaf504bada02f11922700157de"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M29",
+        "mask": 29,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 1,
+        "ell": 1,
+        "r_next": 4,
+        "u": 4
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "dc1e86240488ae382998792740712feac306a45db66880faea287e7278136496",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "9e7b0ce2962f63a2618b86c185743b3b411f8e00691e98c294993654a780a4c5",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "39ba58de825281390519577b026d23c97a7cc06fd34b18835ad4b35835f3cdcb",
+        "whole_board_R_change_count": 166,
+        "whole_board_R_sha256": "0aa159d4bde2cc797cf1acb4236ce5db238f1cc3226564db54ea6fb050898883"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M30",
+        "mask": 30,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 1,
+        "ell": 1,
+        "r_next": 4,
+        "u": 4
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "2cdd01e2a6ccf8d58de414e2c3b6c30f0beae0368662e9ae452d7c65d077bfc0",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "05d06aa408d39439052fdd893c167dc9c7c34ee4b43040eb5298722ddb5ff29b",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "39ba58de825281390519577b026d23c97a7cc06fd34b18835ad4b35835f3cdcb",
+        "whole_board_R_change_count": 166,
+        "whole_board_R_sha256": "9abff7dd5906a5cbb1e3a1c956e669799781c8b9c41ff2a59b3f331576db58ac"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M31",
+        "mask": 31,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 2,
+        "ell": 2,
+        "r_next": 0,
+        "u": 5
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "cce60cf50915346cd14a3e08b46512a14ff074ead5e26d56326e43a525bfa103",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "cce60cf50915346cd14a3e08b46512a14ff074ead5e26d56326e43a525bfa103",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "1": 14,
+          "2": 14
+        },
+        "whole_board_C_count": 28,
+        "whole_board_C_sha256": "89b3638764a4699eec56bb6e6f200116941dc28df7f6e97e40d6caa02bccb8ce",
+        "whole_board_R_change_count": 150,
+        "whole_board_R_sha256": "c1757d3036b03e6e792f4f223ecf8d42cb9a07b88172d4c5f0705a6d6a64b2e1"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M32",
+        "mask": 32,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": null,
+        "ell": 0,
+        "r_next": 4,
+        "u": 1
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "6245474e3a93801bd20bb3b9915413eb96dde57ed87fbd300949f8154ad26127",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "6245474e3a93801bd20bb3b9915413eb96dde57ed87fbd300949f8154ad26127",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 36,
+        "whole_board_R_sha256": "1de3c71fc8b4be09b92a4cbb52ac0728c1ed5908346b3ad6a583742ffb4a99a6"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M33",
+        "mask": 33,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 2,
+        "ell": 1,
+        "r_next": 0,
+        "u": 2
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "0a87c853b8f4e133160426fd81e2b26f8eff30cc3e8d19cdb00e436424858b72",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "b36d83bd3b13986d07f7109e5a4843bc5c077adcfc99ca58d942351f250c3e9d",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "7c5744da5957822d28c2a008f4461844a125a3d04cb039b4c5b88ad033b9b653",
+        "whole_board_R_change_count": 146,
+        "whole_board_R_sha256": "c15579fa6e3277df7a7fd64e31a37bc84dac624dfb34f6d2fdb31570a77e07db"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M34",
+        "mask": 34,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 2,
+        "ell": 1,
+        "r_next": 0,
+        "u": 2
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "6a37dc11d306422154cfba2f1ecaece2ee14536710e709ca8dd25c2814ba0a33",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "a3b9d0a8c8e7d60d81dc52d3d93e29aa238e1fa5dddcad9347fea2f91f122d79",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "7c5744da5957822d28c2a008f4461844a125a3d04cb039b4c5b88ad033b9b653",
+        "whole_board_R_change_count": 146,
+        "whole_board_R_sha256": "fa933b16d4074ffdb629323ec2a5f9bb05a6e3a085ef7df9d765f7c587c27844"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M35",
+        "mask": 35,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": 1,
+        "r_next": 2,
+        "u": 3
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "896cb0657ad6ca30b6d4e44b10b9ba7c1606aae5594722a1a86967c1e86400eb",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "9d35883874fa645c1f72e986c86b71e2b714be9452e2eddd650b33483965a95c",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 12,
+          "1": 12
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "3e87a033bba424c00a0dcd12d4935750b51b9bed60576af4e15ae7e227482206",
+        "whole_board_R_change_count": 150,
+        "whole_board_R_sha256": "2e2029b620907d451dd93af5170231efc6b8ba2906c8bd69907cf07f67a67b96"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M36",
+        "mask": 36,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 2,
+        "ell": 1,
+        "r_next": 0,
+        "u": 2
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "763751e2303b412f01e8be3204cf9ab763ab2c7ab581b647cf5b8d94d8325520",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "dd688fbd3bcdaae7f91d03179fbb3646fefb3062a1067c870b0ae47f4569ca66",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "7c5744da5957822d28c2a008f4461844a125a3d04cb039b4c5b88ad033b9b653",
+        "whole_board_R_change_count": 146,
+        "whole_board_R_sha256": "77f3c80807689024f2ce6e5c35fdd6fe4ca0f5895e48bd7d6da871a94a560e33"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M37",
+        "mask": 37,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": 1,
+        "r_next": 2,
+        "u": 3
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "608c898b1a03a0e86b44463bf8e28b27996eca5703b1db08346ad806d669d619",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "d89927926097d3c4fb8398a0450429a1344cbd66fd19282a9188a02a4ebc2c3e",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 12,
+          "1": 12
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "3e87a033bba424c00a0dcd12d4935750b51b9bed60576af4e15ae7e227482206",
+        "whole_board_R_change_count": 150,
+        "whole_board_R_sha256": "e591fc1db70ac6f26b23661d578f6e5723f5f77510166f900f027c04c51ed58b"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M38",
+        "mask": 38,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": 1,
+        "r_next": 2,
+        "u": 3
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "e29dba0613c105beed76f717f8cb0fef488b356a397a8d2758865450a6f8a82f",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "d7620dc9686f33707d4db7f380a5ac30a54a135b7274cef1ff45199258b0ab4e",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 12,
+          "1": 12
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "3e87a033bba424c00a0dcd12d4935750b51b9bed60576af4e15ae7e227482206",
+        "whole_board_R_change_count": 150,
+        "whole_board_R_sha256": "ae7f7db604e8bad7d2b3ec3478b18feab24986fc5fdb2d916d1d68443ea55a4b"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M39",
+        "mask": 39,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 1,
+        "ell": 1,
+        "r_next": 4,
+        "u": 4
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "814f59d075e07d1824e42bfce3c4c0f9646b34bef7affa841287a4b8359babb2",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "b9c6ef955a911cfadaed913689c2ee0339d549deae4c71f6981322369fb6b7f7",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "39ba58de825281390519577b026d23c97a7cc06fd34b18835ad4b35835f3cdcb",
+        "whole_board_R_change_count": 166,
+        "whole_board_R_sha256": "8f99f2df138ebab639491b190016bbf0bacf0ce62d8bcb938a2477cea217dbf0"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M40",
+        "mask": 40,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 2,
+        "ell": 1,
+        "r_next": 0,
+        "u": 2
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "0051dc7f8ba4d08e2fe9fb5de22ec42cf966896d4f7fe8a1d5c80d663f06751a",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "61ac7148e355ce7da95fe9ff876aa86745411924e17c015476216e344015a151",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "7c5744da5957822d28c2a008f4461844a125a3d04cb039b4c5b88ad033b9b653",
+        "whole_board_R_change_count": 146,
+        "whole_board_R_sha256": "756a0a83286df58678bb931db3d17dbde8bc3b2dc2c7850df386792fd2013df6"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M41",
+        "mask": 41,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": 1,
+        "r_next": 2,
+        "u": 3
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "efc12b48105ecf297d82396e72f3cb798ad5fa641e04d03a9bf7a63baed54ef5",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "17feee536262b05e4eeb5d7c45cb90adcff926b98183c2e3ecc9dbb2dee46e76",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 12,
+          "1": 12
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "3e87a033bba424c00a0dcd12d4935750b51b9bed60576af4e15ae7e227482206",
+        "whole_board_R_change_count": 150,
+        "whole_board_R_sha256": "21b84f45b2d4b0050a53c6aa76f8092f8566f16c975660111988b409ff1b282b"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M42",
+        "mask": 42,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": 1,
+        "r_next": 2,
+        "u": 3
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "d0d2c18df7c87d16c34faa8bc0db2abe83fdcdf4ab1fcb2e6694c068f6e97b56",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "a7569aeafb1c349a2249ff03282a199955964a9ac833deb9660424b6c9de8211",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 12,
+          "1": 12
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "3e87a033bba424c00a0dcd12d4935750b51b9bed60576af4e15ae7e227482206",
+        "whole_board_R_change_count": 150,
+        "whole_board_R_sha256": "fe4d316172977abd8e08d1f25877352c890ab2b4b866945721a61a93052940de"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M43",
+        "mask": 43,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 1,
+        "ell": 1,
+        "r_next": 4,
+        "u": 4
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "d34697314e659dbb25c3a595250fb127d2f55f0b1d9e5c1875ef19b32e1342e5",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "6997c9596b9f859e77c72da9661106b368e3ee21aa556c130faffb5bb1f226c3",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "39ba58de825281390519577b026d23c97a7cc06fd34b18835ad4b35835f3cdcb",
+        "whole_board_R_change_count": 166,
+        "whole_board_R_sha256": "c38c4393be344136d131dd73ce089594d1269f328c03d1755155402cb4693904"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M44",
+        "mask": 44,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": 1,
+        "r_next": 2,
+        "u": 3
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "79634eeb97cc7999baf25c8f6a73fb40e851e7c19cc61b8879d85953e3a3c413",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "eca403e2ba6d970fa4d3ed66cd2ffc70c1ca60ee021395999899aeb69d8f1845",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 12,
+          "1": 12
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "3e87a033bba424c00a0dcd12d4935750b51b9bed60576af4e15ae7e227482206",
+        "whole_board_R_change_count": 150,
+        "whole_board_R_sha256": "439559196894d55c197764bea2f18ae17870cab1eba357cb4fb38f650d4133f2"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M45",
+        "mask": 45,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 1,
+        "ell": 1,
+        "r_next": 4,
+        "u": 4
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "0b8da7f390ab892b1ed0f2d938c715c760a90219aa479c1b9cc48f2088e137f4",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "fed4f33e1c51cc97ef9bd7f01f52dea9cc1d9ed184f64d9d65fe0d49bc32dd78",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "39ba58de825281390519577b026d23c97a7cc06fd34b18835ad4b35835f3cdcb",
+        "whole_board_R_change_count": 166,
+        "whole_board_R_sha256": "6f05fa74c7af029f8a5d039df5974eb2c8cfe870e155dbd6215acc5bce772845"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M46",
+        "mask": 46,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 1,
+        "ell": 1,
+        "r_next": 4,
+        "u": 4
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "6c2b5d7fa8ada025b0c91b93995a6ee74d8850343eb9cc8ce2dcb54c054031d1",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "69d7d32f6c7bd5cc0dec4a8c070f17ee9db115e483d677c1f84051753432d8c5",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "39ba58de825281390519577b026d23c97a7cc06fd34b18835ad4b35835f3cdcb",
+        "whole_board_R_change_count": 166,
+        "whole_board_R_sha256": "399ad343f7d39739e3a97ab3c42e1995224a8d20e97d0bdf7834fe60c59b4aaa"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M47",
+        "mask": 47,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 2,
+        "ell": 2,
+        "r_next": 0,
+        "u": 5
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "b11601ebaa1a5151a0412540e83f172af9538dd7213e16975fc7b3d7cd37e35f",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "b11601ebaa1a5151a0412540e83f172af9538dd7213e16975fc7b3d7cd37e35f",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "1": 14,
+          "2": 14
+        },
+        "whole_board_C_count": 28,
+        "whole_board_C_sha256": "89b3638764a4699eec56bb6e6f200116941dc28df7f6e97e40d6caa02bccb8ce",
+        "whole_board_R_change_count": 150,
+        "whole_board_R_sha256": "4f5df253ed64940f472740193e4c6133a49221f8356c7b0cfc7b4b81f9422103"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M48",
+        "mask": 48,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 2,
+        "ell": 1,
+        "r_next": 0,
+        "u": 2
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "78951bc6947b408f9c8bb9e8e975dc9e9aa130aa7c0f1887c02172b1690d7032",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "9f3ec6114e00e4ed0a27bbb31b4614baccfcb295fb452fda1c45e6da265edad5",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "7c5744da5957822d28c2a008f4461844a125a3d04cb039b4c5b88ad033b9b653",
+        "whole_board_R_change_count": 146,
+        "whole_board_R_sha256": "9b57ab34799aa4b7cbc9736e03d2667ece6df025f2ed6cbe23b8294e45eec311"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M49",
+        "mask": 49,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": 1,
+        "r_next": 2,
+        "u": 3
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "216b7bff86098bc57b191e9e3e28ba6c35a43ea350539a62dcaf7c6c8b0c4107",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "f109c5b371e625afa1c73d5200cee15797099f5128114d52104f81abd3bd3c0c",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 12,
+          "1": 12
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "3e87a033bba424c00a0dcd12d4935750b51b9bed60576af4e15ae7e227482206",
+        "whole_board_R_change_count": 150,
+        "whole_board_R_sha256": "4b98418c7e079fa62f8e5cad7f2204db1a6ab8814d8daf898df48433e08a056b"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M50",
+        "mask": 50,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": 1,
+        "r_next": 2,
+        "u": 3
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "008292972d43ca3bad7b02bc5bc1f71db45d102e19d7e13c627e01f4edd96b57",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "a86d357d4eaac4a91f37e7d70fdbdbe1301ab9d9d8668a253acb95aa34eeb938",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 12,
+          "1": 12
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "3e87a033bba424c00a0dcd12d4935750b51b9bed60576af4e15ae7e227482206",
+        "whole_board_R_change_count": 150,
+        "whole_board_R_sha256": "d0d171150163ffcec26be5afcf8d001e17ddd3f85965817afdc4b31602785d25"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M51",
+        "mask": 51,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 1,
+        "ell": 1,
+        "r_next": 4,
+        "u": 4
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "71cb258dec463204f6eab46851fff6030123a33a67644d9fbba7eac4fee0d42a",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "da5e10c1da53921c6a6eafc5bc9e31cf964ee75c0e5eb8fe9286be9ce7102d5b",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "39ba58de825281390519577b026d23c97a7cc06fd34b18835ad4b35835f3cdcb",
+        "whole_board_R_change_count": 166,
+        "whole_board_R_sha256": "a6318e689344272f1bb732fe22b7ce3a9274ff3675872685c6f5c6758252362f"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M52",
+        "mask": 52,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": 1,
+        "r_next": 2,
+        "u": 3
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "28b4c9f0bc258449c7be81aab008a427c2228e5e106a2e555b0c07376ce203a0",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "fef5d94b00ab1b6663df958f4ba4fa52a25c695dc9b0019e8bdd8c21a8d67a72",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 12,
+          "1": 12
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "3e87a033bba424c00a0dcd12d4935750b51b9bed60576af4e15ae7e227482206",
+        "whole_board_R_change_count": 150,
+        "whole_board_R_sha256": "69a94ce695506de6443f9cc94b3a968e67a142307657b4fcfc6eeebad605ae13"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M53",
+        "mask": 53,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 1,
+        "ell": 1,
+        "r_next": 4,
+        "u": 4
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "02d18bf661908ac82b891d153fee229e676abd5fc087fa490642b9d390d15841",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "3b336bfe01ebfe195a50efdf65c045d573a237c9670180b5de7074fbf96013c2",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "39ba58de825281390519577b026d23c97a7cc06fd34b18835ad4b35835f3cdcb",
+        "whole_board_R_change_count": 166,
+        "whole_board_R_sha256": "e7db4a05c9898c411f3d0f2945ea2ec9e1edfda6f1bc346212a770d66ccd5fc3"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M54",
+        "mask": 54,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 1,
+        "ell": 1,
+        "r_next": 4,
+        "u": 4
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "373a9cb26d37f255ddfea603a17010a2be548cde31898e1b832c4aa49d1c967b",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "674844b46c85ad29b59f46d603925e6154f578dc2554d4dfa6f6bd24d2cf1344",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "39ba58de825281390519577b026d23c97a7cc06fd34b18835ad4b35835f3cdcb",
+        "whole_board_R_change_count": 166,
+        "whole_board_R_sha256": "b095c7ae892296eb8f78a82ae0cfca3c1ea4d443bb40547e77c3adfdddb3a6a3"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M55",
+        "mask": 55,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 2,
+        "ell": 2,
+        "r_next": 0,
+        "u": 5
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "0da6a3a085e1dea17b00d0307a780125eee2b6c7177b806e588f9ae5ea871486",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "0da6a3a085e1dea17b00d0307a780125eee2b6c7177b806e588f9ae5ea871486",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "1": 14,
+          "2": 14
+        },
+        "whole_board_C_count": 28,
+        "whole_board_C_sha256": "89b3638764a4699eec56bb6e6f200116941dc28df7f6e97e40d6caa02bccb8ce",
+        "whole_board_R_change_count": 150,
+        "whole_board_R_sha256": "0896916320c7b3768494b068feab5e929e216527729ce37b31c5b747b24160e7"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M56",
+        "mask": 56,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": 1,
+        "r_next": 2,
+        "u": 3
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "5c031c338a64958f9fe62c44886fc860935ba2391c0bbc80086f733b05eaae6b",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "329a1873982b7244002cf9cfd03046c0b4f3fdc3ccf7f3ff1e435a5f5de42f68",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 12,
+          "1": 12
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "3e87a033bba424c00a0dcd12d4935750b51b9bed60576af4e15ae7e227482206",
+        "whole_board_R_change_count": 150,
+        "whole_board_R_sha256": "2f0a3a4ad58a908af41664ec76777f88e093e46ae7820e83ac22471448154bf9"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M57",
+        "mask": 57,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 1,
+        "ell": 1,
+        "r_next": 4,
+        "u": 4
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "0681d9728d898d0ec4dfdc21eba6e0fceb9e63e58f78f0aeb8fc64a7596e331b",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "7421f299abff21e3b9b71fc2dc9e79155cce2800e66b152a50cd94ae24a02c2f",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "39ba58de825281390519577b026d23c97a7cc06fd34b18835ad4b35835f3cdcb",
+        "whole_board_R_change_count": 166,
+        "whole_board_R_sha256": "90b433a152b68abcb55d2a760757aeb46efd410028f0b58f4b11d407a8f368bb"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M58",
+        "mask": 58,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 1,
+        "ell": 1,
+        "r_next": 4,
+        "u": 4
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "39ca007db690a84c472998a93d21d27a1c9570840c4109b73dcc42af49159cb6",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "ca712a5d9691bc137debb3f34735e9b3ad530af07a6a6fb5825b97940b82dad7",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "39ba58de825281390519577b026d23c97a7cc06fd34b18835ad4b35835f3cdcb",
+        "whole_board_R_change_count": 166,
+        "whole_board_R_sha256": "7e484933f1d3244efd41534a47fab9b61133f5c5834466f6b03753dbdb294c78"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M59",
+        "mask": 59,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 2,
+        "ell": 2,
+        "r_next": 0,
+        "u": 5
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "786c5b25adae2ae58f3b3debfbad1cbdc003cd350a8973770ae20e1c788e3834",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "786c5b25adae2ae58f3b3debfbad1cbdc003cd350a8973770ae20e1c788e3834",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "1": 14,
+          "2": 14
+        },
+        "whole_board_C_count": 28,
+        "whole_board_C_sha256": "89b3638764a4699eec56bb6e6f200116941dc28df7f6e97e40d6caa02bccb8ce",
+        "whole_board_R_change_count": 150,
+        "whole_board_R_sha256": "6777702c6b365c77ffbc9fadfdff5156a0d342c57897da632ea66db5f5477e39"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M60",
+        "mask": 60,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 1,
+        "ell": 1,
+        "r_next": 4,
+        "u": 4
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "9328cdb53057e4da2bd2c73a8219ac43add96c1b4c5cbf182cd937188f2dc383",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "3702965ff1ff1318eb210f9609a5953cb553b668e5a7162c6cbe8d57a805fcd5",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 6,
+          "1": 15,
+          "2": 3
+        },
+        "whole_board_C_count": 24,
+        "whole_board_C_sha256": "39ba58de825281390519577b026d23c97a7cc06fd34b18835ad4b35835f3cdcb",
+        "whole_board_R_change_count": 166,
+        "whole_board_R_sha256": "f29e7a3ecf8ad7f4896823e59d5758a80e82a250038142eb4596546e91fab18e"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M61",
+        "mask": 61,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 2,
+        "ell": 2,
+        "r_next": 0,
+        "u": 5
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "6a2751167f5fe03f30aad48ca2ad7084b564a62f723498cd32a25565e89e12b8",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "6a2751167f5fe03f30aad48ca2ad7084b564a62f723498cd32a25565e89e12b8",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "1": 14,
+          "2": 14
+        },
+        "whole_board_C_count": 28,
+        "whole_board_C_sha256": "89b3638764a4699eec56bb6e6f200116941dc28df7f6e97e40d6caa02bccb8ce",
+        "whole_board_R_change_count": 150,
+        "whole_board_R_sha256": "e94c07e60074da719f69d03f42d1833738aa4f58957034078cecd8b3ef2cd8f6"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M62",
+        "mask": 62,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 2,
+        "ell": 2,
+        "r_next": 0,
+        "u": 5
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "7de44511d10bcf58f3ae7d47aeeff4f1e1a50397554037e04c4a95d135a92c4e",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "7de44511d10bcf58f3ae7d47aeeff4f1e1a50397554037e04c4a95d135a92c4e",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "1": 14,
+          "2": 14
+        },
+        "whole_board_C_count": 28,
+        "whole_board_C_sha256": "89b3638764a4699eec56bb6e6f200116941dc28df7f6e97e40d6caa02bccb8ce",
+        "whole_board_R_change_count": 150,
+        "whole_board_R_sha256": "fbc3e018ff28e695e6cf9e01b87bff059c067f3a34e46d9ffe15810145972cfc"
+      }
+    },
+    {
+      "case": {
+        "family": "six",
+        "id": "six-L29-M63",
+        "mask": 63,
+        "side": 29
+      },
+      "checks": {
+        "Q_conserved": true,
+        "causal_support_bound": true,
+        "first_step_C_exact": true,
+        "first_step_target_exact": true,
+        "full_inverse": true,
+        "initial_Q_exact": true,
+        "no_boundary_contact": true
+      },
+      "first_step_prediction": {
+        "C_kind": 0,
+        "ell": 2,
+        "r_next": 2,
+        "u": 6
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "8536754452c6583e69ccfccadc12d0096ce8492d0b2c8bbf9acbbc144c820b90",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "8536754452c6583e69ccfccadc12d0096ce8492d0b2c8bbf9acbbc144c820b90",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 4,
+          "1": 12,
+          "2": 12
+        },
+        "whole_board_C_count": 28,
+        "whole_board_C_sha256": "04b794d12fa91231e00dde07c1f79cef9badcf78ea2c9f315ad26b1474697936",
+        "whole_board_R_change_count": 144,
+        "whole_board_R_sha256": "c94d9c94f170aa6793fdf3782eef55a33ceb2d9b35db71f8c88f4e3e4078547c"
+      }
+    }
+  ],
+  "scope": "Finite arithmetic fanout and parallel-sum demonstration; no physical photon or route preference inferred.",
+  "transitions": 1080
+}

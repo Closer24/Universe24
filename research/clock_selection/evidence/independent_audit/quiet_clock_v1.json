@@ -1,0 +1,4755 @@
+{
+  "auditor_sha256": "d6fa64b89645d23df553aca79a016b4f7ba116ee1b4f699df27fe57b908a9938",
+  "cpu_seconds": 2.155924746,
+  "failure": null,
+  "full_rewinds": 48,
+  "parity_comparisons": [
+    {
+      "orbit_index": 0,
+      "same_counter_trace": true,
+      "seven_remainders_offset1": true,
+      "sign_index": 0
+    },
+    {
+      "orbit_index": 1,
+      "same_counter_trace": true,
+      "seven_remainders_offset1": true,
+      "sign_index": 0
+    },
+    {
+      "orbit_index": 2,
+      "same_counter_trace": true,
+      "seven_remainders_offset1": true,
+      "sign_index": 0
+    },
+    {
+      "orbit_index": 0,
+      "same_counter_trace": true,
+      "seven_remainders_offset1": true,
+      "sign_index": 1
+    },
+    {
+      "orbit_index": 1,
+      "same_counter_trace": true,
+      "seven_remainders_offset1": true,
+      "sign_index": 1
+    },
+    {
+      "orbit_index": 2,
+      "same_counter_trace": true,
+      "seven_remainders_offset1": true,
+      "sign_index": 1
+    },
+    {
+      "orbit_index": 0,
+      "same_counter_trace": true,
+      "seven_remainders_offset1": true,
+      "sign_index": 2
+    },
+    {
+      "orbit_index": 1,
+      "same_counter_trace": true,
+      "seven_remainders_offset1": true,
+      "sign_index": 2
+    },
+    {
+      "orbit_index": 2,
+      "same_counter_trace": true,
+      "seven_remainders_offset1": true,
+      "sign_index": 2
+    },
+    {
+      "orbit_index": 0,
+      "same_counter_trace": true,
+      "seven_remainders_offset1": true,
+      "sign_index": 3
+    },
+    {
+      "orbit_index": 1,
+      "same_counter_trace": true,
+      "seven_remainders_offset1": true,
+      "sign_index": 3
+    },
+    {
+      "orbit_index": 2,
+      "same_counter_trace": true,
+      "seven_remainders_offset1": true,
+      "sign_index": 3
+    },
+    {
+      "orbit_index": 0,
+      "same_counter_trace": true,
+      "seven_remainders_offset1": true,
+      "sign_index": 4
+    },
+    {
+      "orbit_index": 1,
+      "same_counter_trace": true,
+      "seven_remainders_offset1": true,
+      "sign_index": 4
+    },
+    {
+      "orbit_index": 2,
+      "same_counter_trace": true,
+      "seven_remainders_offset1": true,
+      "sign_index": 4
+    },
+    {
+      "orbit_index": 0,
+      "same_counter_trace": true,
+      "seven_remainders_offset1": true,
+      "sign_index": 5
+    },
+    {
+      "orbit_index": 1,
+      "same_counter_trace": true,
+      "seven_remainders_offset1": true,
+      "sign_index": 5
+    },
+    {
+      "orbit_index": 2,
+      "same_counter_trace": true,
+      "seven_remainders_offset1": true,
+      "sign_index": 5
+    },
+    {
+      "orbit_index": 0,
+      "same_counter_trace": true,
+      "seven_remainders_offset1": true,
+      "sign_index": 6
+    },
+    {
+      "orbit_index": 1,
+      "same_counter_trace": true,
+      "seven_remainders_offset1": true,
+      "sign_index": 6
+    },
+    {
+      "orbit_index": 2,
+      "same_counter_trace": true,
+      "seven_remainders_offset1": true,
+      "sign_index": 6
+    },
+    {
+      "orbit_index": 0,
+      "same_counter_trace": true,
+      "seven_remainders_offset1": true,
+      "sign_index": 7
+    },
+    {
+      "orbit_index": 1,
+      "same_counter_trace": true,
+      "seven_remainders_offset1": true,
+      "sign_index": 7
+    },
+    {
+      "orbit_index": 2,
+      "same_counter_trace": true,
+      "seven_remainders_offset1": true,
+      "sign_index": 7
+    }
+  ],
+  "passed": true,
+  "protocol_sha256": "a0198c4f4e79c1c1afe6ecd34620ec49615e338152038d9cb8f16610ab04d7af",
+  "records": [
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 1,
+          "channel": 0,
+          "id": "quiet-s0-o0-p0",
+          "orbit_index": 0,
+          "parity": 0,
+          "r": 2,
+          "side": 5,
+          "sign_index": 0,
+          "signs": [
+            -1,
+            -1,
+            -1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            1,
+            0,
+            2
+          ],
+          [
+            0,
+            -1,
+            2
+          ],
+          [
+            -1,
+            0,
+            2
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            1,
+            0,
+            2
+          ],
+          [
+            0,
+            -1,
+            2
+          ],
+          [
+            -1,
+            0,
+            2
+          ],
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s0-o0-p0",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "c9bfef9b94312ce6448bcd67dd1b2a6373ec16ed47a55cfac485f02fa7a42bd2",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "c9bfef9b94312ce6448bcd67dd1b2a6373ec16ed47a55cfac485f02fa7a42bd2",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "702a1395fb6860650259afa7eec8bc0cc66ab27fc5fa7a1f7f151bf7ab8c0267"
+      },
+      "record_sha256": "b67de7dbfe35583d0a55eaeb119b9c90128e2e204c7a1a4b1bbf285c99453d7a"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 1,
+          "channel": 0,
+          "id": "quiet-s0-o0-p1",
+          "orbit_index": 0,
+          "parity": 1,
+          "r": 3,
+          "side": 5,
+          "sign_index": 0,
+          "signs": [
+            -1,
+            -1,
+            -1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            1,
+            0,
+            3
+          ],
+          [
+            0,
+            -1,
+            3
+          ],
+          [
+            -1,
+            0,
+            3
+          ],
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            1,
+            0,
+            3
+          ],
+          [
+            0,
+            -1,
+            3
+          ],
+          [
+            -1,
+            0,
+            3
+          ],
+          [
+            0,
+            1,
+            3
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s0-o0-p1",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "73e9a3a4ec89af18a1721fc946a87cde7099c43cda54f4f67b904c4c18158505",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "73e9a3a4ec89af18a1721fc946a87cde7099c43cda54f4f67b904c4c18158505",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "5f68f6a27f6dcb7de72b8e02cf5c6c2a8d9c5676de7aa351ece53c183fea837a"
+      },
+      "record_sha256": "0d1700e025084ba86654616ff6af41eb7ac40a7775b2412647184cda5a9f4421"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 2,
+          "channel": 1,
+          "id": "quiet-s0-o1-p0",
+          "orbit_index": 1,
+          "parity": 0,
+          "r": 2,
+          "side": 5,
+          "sign_index": 0,
+          "signs": [
+            -1,
+            -1,
+            -1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            2,
+            0,
+            2
+          ],
+          [
+            0,
+            -2,
+            2
+          ],
+          [
+            -2,
+            0,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            2,
+            0,
+            2
+          ],
+          [
+            0,
+            -2,
+            2
+          ],
+          [
+            -2,
+            0,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s0-o1-p0",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "68ed14a83d091a799b26df0d1eb2a24aaa0c8cc39f2bc7f6649b3e148bfd855c",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "68ed14a83d091a799b26df0d1eb2a24aaa0c8cc39f2bc7f6649b3e148bfd855c",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "4d133d4f5998ab2d1284492faaaa94438b8747da5f8d01b51f5c4941160f51e1"
+      },
+      "record_sha256": "9bacea3a3e2818c5bdd86f6349a22c0df8e3e6bbcbb9bb08e3d5d7ce3b881fa5"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 2,
+          "channel": 1,
+          "id": "quiet-s0-o1-p1",
+          "orbit_index": 1,
+          "parity": 1,
+          "r": 3,
+          "side": 5,
+          "sign_index": 0,
+          "signs": [
+            -1,
+            -1,
+            -1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            2,
+            0,
+            3
+          ],
+          [
+            0,
+            -2,
+            3
+          ],
+          [
+            -2,
+            0,
+            3
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            2,
+            0,
+            3
+          ],
+          [
+            0,
+            -2,
+            3
+          ],
+          [
+            -2,
+            0,
+            3
+          ],
+          [
+            0,
+            2,
+            3
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s0-o1-p1",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "19246b1628e845ecd5c87ea11b6c7168abd30092d9f4b42b20c1f51fa00588d0",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "19246b1628e845ecd5c87ea11b6c7168abd30092d9f4b42b20c1f51fa00588d0",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "d31e902074ef33aef2c3473a4800c5d4aa112250ab1ca21ebf38aa3858e841ff"
+      },
+      "record_sha256": "a191e08587c3c7d4f69501cc97f0fea23b7843192e858dedd5917e856eb7de1d"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 1,
+          "b": 1,
+          "channel": 2,
+          "id": "quiet-s0-o2-p0",
+          "orbit_index": 2,
+          "parity": 0,
+          "r": 2,
+          "side": 5,
+          "sign_index": 0,
+          "signs": [
+            -1,
+            -1,
+            -1
+          ]
+        },
+        "center_trace": [
+          [
+            1,
+            1,
+            2
+          ],
+          [
+            1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            1,
+            2
+          ],
+          [
+            1,
+            1,
+            2
+          ],
+          [
+            1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            1,
+            2
+          ],
+          [
+            1,
+            1,
+            2
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s0-o2-p0",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "5b9e13d3c7d4a501c3078475bcdd1a887ac80b89dd3b97d0a7ce983a7687c7e0",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "5b9e13d3c7d4a501c3078475bcdd1a887ac80b89dd3b97d0a7ce983a7687c7e0",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 48,
+        "whole_board_R_sha256": "a85c9c37111bd736d4de16cd5e955ef93e8f7766b4dd5afde7124d7b6310978c"
+      },
+      "record_sha256": "728aba908d02984c19bfaa8dd2969318ee1d288055560497b90fb75578742529"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 1,
+          "b": 1,
+          "channel": 2,
+          "id": "quiet-s0-o2-p1",
+          "orbit_index": 2,
+          "parity": 1,
+          "r": 3,
+          "side": 5,
+          "sign_index": 0,
+          "signs": [
+            -1,
+            -1,
+            -1
+          ]
+        },
+        "center_trace": [
+          [
+            1,
+            1,
+            3
+          ],
+          [
+            1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            1,
+            3
+          ],
+          [
+            1,
+            1,
+            3
+          ],
+          [
+            1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            1,
+            3
+          ],
+          [
+            1,
+            1,
+            3
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s0-o2-p1",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "38bec85349add63d6d4878291f992245da8a519f4bd39818237f7df8385af4d8",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "38bec85349add63d6d4878291f992245da8a519f4bd39818237f7df8385af4d8",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 48,
+        "whole_board_R_sha256": "741e620acbb031859dce30140ae82b89a16807073d679546cb6e3dc6c84c5c2e"
+      },
+      "record_sha256": "331423723c240d4677a3b53ef0a31ae65bf29ae8a7e52115ea3fd768ae768543"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 1,
+          "channel": 6,
+          "id": "quiet-s1-o0-p0",
+          "orbit_index": 0,
+          "parity": 0,
+          "r": 2,
+          "side": 7,
+          "sign_index": 1,
+          "signs": [
+            -1,
+            -1,
+            1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            1,
+            0,
+            2
+          ],
+          [
+            0,
+            -1,
+            2
+          ],
+          [
+            -1,
+            0,
+            2
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            1,
+            0,
+            2
+          ],
+          [
+            0,
+            -1,
+            2
+          ],
+          [
+            -1,
+            0,
+            2
+          ],
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s1-o0-p0",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "b8f428e7aab3b29724d8ff54e0f82ce8957898d7277776c2490d37826dd24d70",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "b8f428e7aab3b29724d8ff54e0f82ce8957898d7277776c2490d37826dd24d70",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "4ea1be57efe43ba4f4e3818de08ad555dd72966819bbb6b3e6a0f924cd6c6361"
+      },
+      "record_sha256": "10cbc077bdf8e5b26d6dccbc2df8b24e34b981f0ffba7e7378642a4f430c7b50"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 1,
+          "channel": 6,
+          "id": "quiet-s1-o0-p1",
+          "orbit_index": 0,
+          "parity": 1,
+          "r": 3,
+          "side": 7,
+          "sign_index": 1,
+          "signs": [
+            -1,
+            -1,
+            1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            1,
+            0,
+            3
+          ],
+          [
+            0,
+            -1,
+            3
+          ],
+          [
+            -1,
+            0,
+            3
+          ],
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            1,
+            0,
+            3
+          ],
+          [
+            0,
+            -1,
+            3
+          ],
+          [
+            -1,
+            0,
+            3
+          ],
+          [
+            0,
+            1,
+            3
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s1-o0-p1",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "69113129208fb11d00e55b6473e340319abad2e110499f8e14569ca5ab234ad0",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "69113129208fb11d00e55b6473e340319abad2e110499f8e14569ca5ab234ad0",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "0f3e22344889b14fb5a597423cf3e4c0e8e10c295ad6ca1c17ab3d82f34d9b2f"
+      },
+      "record_sha256": "360644f58d3ade146d732adc093b7aaf8d3e4935ead61d96ca1d454706823166"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 2,
+          "channel": 7,
+          "id": "quiet-s1-o1-p0",
+          "orbit_index": 1,
+          "parity": 0,
+          "r": 2,
+          "side": 7,
+          "sign_index": 1,
+          "signs": [
+            -1,
+            -1,
+            1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            2,
+            0,
+            2
+          ],
+          [
+            0,
+            -2,
+            2
+          ],
+          [
+            -2,
+            0,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            2,
+            0,
+            2
+          ],
+          [
+            0,
+            -2,
+            2
+          ],
+          [
+            -2,
+            0,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s1-o1-p0",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "4e45537ae87908a2290771c7bd9a09840f1047dd4c740d6f252209a36bbf3c07",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "4e45537ae87908a2290771c7bd9a09840f1047dd4c740d6f252209a36bbf3c07",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "409bf7c16f90bd15cbefa556a076115ce6ad74373a5f4ff1576177325ea069c6"
+      },
+      "record_sha256": "69a13043ec0253a3930303687a0ff23e8371e10b72924932544f1192a91bf8f5"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 2,
+          "channel": 7,
+          "id": "quiet-s1-o1-p1",
+          "orbit_index": 1,
+          "parity": 1,
+          "r": 3,
+          "side": 7,
+          "sign_index": 1,
+          "signs": [
+            -1,
+            -1,
+            1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            2,
+            0,
+            3
+          ],
+          [
+            0,
+            -2,
+            3
+          ],
+          [
+            -2,
+            0,
+            3
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            2,
+            0,
+            3
+          ],
+          [
+            0,
+            -2,
+            3
+          ],
+          [
+            -2,
+            0,
+            3
+          ],
+          [
+            0,
+            2,
+            3
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s1-o1-p1",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "5c840b4042e1e2513dc01b2e1c11b078e0b0b70f37c1b34743c3183c1b8c89c1",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "5c840b4042e1e2513dc01b2e1c11b078e0b0b70f37c1b34743c3183c1b8c89c1",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "85154d43ee532fa23718da2fafe729b4cfc87322414472e146fcd04dfeb767c8"
+      },
+      "record_sha256": "009d87d319b23c402475aa138994860d97799e8264e5da57b70d445d5043dc6e"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 1,
+          "b": 1,
+          "channel": 8,
+          "id": "quiet-s1-o2-p0",
+          "orbit_index": 2,
+          "parity": 0,
+          "r": 2,
+          "side": 7,
+          "sign_index": 1,
+          "signs": [
+            -1,
+            -1,
+            1
+          ]
+        },
+        "center_trace": [
+          [
+            1,
+            1,
+            2
+          ],
+          [
+            1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            1,
+            2
+          ],
+          [
+            1,
+            1,
+            2
+          ],
+          [
+            1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            1,
+            2
+          ],
+          [
+            1,
+            1,
+            2
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s1-o2-p0",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "62154e89925f2e2514f130fdfe110fbaf9f053cb74010fbe84da63965386515c",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "62154e89925f2e2514f130fdfe110fbaf9f053cb74010fbe84da63965386515c",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 48,
+        "whole_board_R_sha256": "581b5e6b78bdb6a1eb641b59f042568cce834c698d4815c139ae1f3ce1b91f56"
+      },
+      "record_sha256": "58368d0b3bf8b9dbe22fca86b700f0b01d39fa0787449e6cf911512a959944f3"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 1,
+          "b": 1,
+          "channel": 8,
+          "id": "quiet-s1-o2-p1",
+          "orbit_index": 2,
+          "parity": 1,
+          "r": 3,
+          "side": 7,
+          "sign_index": 1,
+          "signs": [
+            -1,
+            -1,
+            1
+          ]
+        },
+        "center_trace": [
+          [
+            1,
+            1,
+            3
+          ],
+          [
+            1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            1,
+            3
+          ],
+          [
+            1,
+            1,
+            3
+          ],
+          [
+            1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            1,
+            3
+          ],
+          [
+            1,
+            1,
+            3
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s1-o2-p1",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "81524f051f758a42679b18241d6368dad81f541e0073114feeb2f1ec4c0fabf1",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "81524f051f758a42679b18241d6368dad81f541e0073114feeb2f1ec4c0fabf1",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 48,
+        "whole_board_R_sha256": "f00d27c6df2fe6db2d70ae26af26e27c66ea6b9aaad70fd0c4f0327f10c74c02"
+      },
+      "record_sha256": "bc6a5ad0845c29020a22f2c60eaa8a87c980913dbcea88a4a300477dd1ea3c3f"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 1,
+          "channel": 12,
+          "id": "quiet-s2-o0-p0",
+          "orbit_index": 0,
+          "parity": 0,
+          "r": 2,
+          "side": 5,
+          "sign_index": 2,
+          "signs": [
+            -1,
+            1,
+            -1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            1,
+            0,
+            2
+          ],
+          [
+            0,
+            -1,
+            2
+          ],
+          [
+            -1,
+            0,
+            2
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            1,
+            0,
+            2
+          ],
+          [
+            0,
+            -1,
+            2
+          ],
+          [
+            -1,
+            0,
+            2
+          ],
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s2-o0-p0",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "1be2128eaddd4dddda21aba5223c37328d377e015364f0b5244ba2d7d02d8054",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "1be2128eaddd4dddda21aba5223c37328d377e015364f0b5244ba2d7d02d8054",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "e2faa34f5d5ed75e7a81ce08c0c804b4b41e2e6d681324101cf93c5f0e184283"
+      },
+      "record_sha256": "de7ad37ea2ea8286b0f5e2b9d807f08410e1a0662f9b874f895d9894a2b8770a"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 1,
+          "channel": 12,
+          "id": "quiet-s2-o0-p1",
+          "orbit_index": 0,
+          "parity": 1,
+          "r": 3,
+          "side": 5,
+          "sign_index": 2,
+          "signs": [
+            -1,
+            1,
+            -1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            1,
+            0,
+            3
+          ],
+          [
+            0,
+            -1,
+            3
+          ],
+          [
+            -1,
+            0,
+            3
+          ],
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            1,
+            0,
+            3
+          ],
+          [
+            0,
+            -1,
+            3
+          ],
+          [
+            -1,
+            0,
+            3
+          ],
+          [
+            0,
+            1,
+            3
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s2-o0-p1",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "7797709eada94bf9ca047430168ca1be40f752867a108f16d41cff6cb440d511",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "7797709eada94bf9ca047430168ca1be40f752867a108f16d41cff6cb440d511",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "9c2062fca40f23ee784e2ba759abc97d0254813abe89693d1833c51373af3e2f"
+      },
+      "record_sha256": "f0548e96c7f16a244e25b52966f2c868b8ff799fe4e1bd35062a7873256d8ddb"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 2,
+          "channel": 13,
+          "id": "quiet-s2-o1-p0",
+          "orbit_index": 1,
+          "parity": 0,
+          "r": 2,
+          "side": 5,
+          "sign_index": 2,
+          "signs": [
+            -1,
+            1,
+            -1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            2,
+            0,
+            2
+          ],
+          [
+            0,
+            -2,
+            2
+          ],
+          [
+            -2,
+            0,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            2,
+            0,
+            2
+          ],
+          [
+            0,
+            -2,
+            2
+          ],
+          [
+            -2,
+            0,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s2-o1-p0",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "690825f7c61257f0a39558babcf80f798b79ae5211d6229ed8b3e8b0ac818841",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "690825f7c61257f0a39558babcf80f798b79ae5211d6229ed8b3e8b0ac818841",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "ca14b921f167b1573119b7b3b78769a174ebc7c23338afb7516e568b0b769517"
+      },
+      "record_sha256": "e350870df3b671b4847264a498640f3491c03ab2a13316de91dffcad142f2e89"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 2,
+          "channel": 13,
+          "id": "quiet-s2-o1-p1",
+          "orbit_index": 1,
+          "parity": 1,
+          "r": 3,
+          "side": 5,
+          "sign_index": 2,
+          "signs": [
+            -1,
+            1,
+            -1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            2,
+            0,
+            3
+          ],
+          [
+            0,
+            -2,
+            3
+          ],
+          [
+            -2,
+            0,
+            3
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            2,
+            0,
+            3
+          ],
+          [
+            0,
+            -2,
+            3
+          ],
+          [
+            -2,
+            0,
+            3
+          ],
+          [
+            0,
+            2,
+            3
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s2-o1-p1",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "db640ac30cbeaef8c9fbf8d78907b762da86090d0f1f525ec33d0d352bda6c9a",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "db640ac30cbeaef8c9fbf8d78907b762da86090d0f1f525ec33d0d352bda6c9a",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "50fd32c93cc03779029425e2146a9145279be7c8248d9d8625f8b11d8ab1020d"
+      },
+      "record_sha256": "6289ce410185d4ceb476b5803d7082c64cee7acecf423418f8f902818c5ad652"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 1,
+          "b": 1,
+          "channel": 14,
+          "id": "quiet-s2-o2-p0",
+          "orbit_index": 2,
+          "parity": 0,
+          "r": 2,
+          "side": 5,
+          "sign_index": 2,
+          "signs": [
+            -1,
+            1,
+            -1
+          ]
+        },
+        "center_trace": [
+          [
+            1,
+            1,
+            2
+          ],
+          [
+            1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            1,
+            2
+          ],
+          [
+            1,
+            1,
+            2
+          ],
+          [
+            1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            1,
+            2
+          ],
+          [
+            1,
+            1,
+            2
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s2-o2-p0",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "b016ce60484e071a192ced86bc4d6401fafdda0d90733ae18ab131f8371789ef",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "b016ce60484e071a192ced86bc4d6401fafdda0d90733ae18ab131f8371789ef",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 48,
+        "whole_board_R_sha256": "6b4483ff2aa6f3e155e21c59cdaf45c7b106e22a3fd0bc427e13a6a8d495a805"
+      },
+      "record_sha256": "73075545a7ee8410d3311ecadb043c623cf4203095455fd5258e16c93d786873"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 1,
+          "b": 1,
+          "channel": 14,
+          "id": "quiet-s2-o2-p1",
+          "orbit_index": 2,
+          "parity": 1,
+          "r": 3,
+          "side": 5,
+          "sign_index": 2,
+          "signs": [
+            -1,
+            1,
+            -1
+          ]
+        },
+        "center_trace": [
+          [
+            1,
+            1,
+            3
+          ],
+          [
+            1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            1,
+            3
+          ],
+          [
+            1,
+            1,
+            3
+          ],
+          [
+            1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            1,
+            3
+          ],
+          [
+            1,
+            1,
+            3
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s2-o2-p1",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "477da49e7b5312516bf7b1f6135b0fba45d3cf809eacbc2e2f1ae7bedd9e69b2",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "477da49e7b5312516bf7b1f6135b0fba45d3cf809eacbc2e2f1ae7bedd9e69b2",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 48,
+        "whole_board_R_sha256": "8c91a3a8caaff6ae530c8bebe6b9149001d266d2587b45cab1c5e72d3f63df09"
+      },
+      "record_sha256": "6182dea9091d6c74201b80655b8b288377dac9877dbf22eeddc4498b52a6d507"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 1,
+          "channel": 18,
+          "id": "quiet-s3-o0-p0",
+          "orbit_index": 0,
+          "parity": 0,
+          "r": 2,
+          "side": 7,
+          "sign_index": 3,
+          "signs": [
+            -1,
+            1,
+            1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            1,
+            0,
+            2
+          ],
+          [
+            0,
+            -1,
+            2
+          ],
+          [
+            -1,
+            0,
+            2
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            1,
+            0,
+            2
+          ],
+          [
+            0,
+            -1,
+            2
+          ],
+          [
+            -1,
+            0,
+            2
+          ],
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s3-o0-p0",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "2f254eceec36399e4635c2fc57bc07a49b9f938650233800ad6167739a381825",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "2f254eceec36399e4635c2fc57bc07a49b9f938650233800ad6167739a381825",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "d728cc22c543d45db6f66a5071a0767737b45c9677a019e53fc286dfe079530a"
+      },
+      "record_sha256": "494c23fe07095f0ad7952d89d9300db23c92ae7c3c0daa9978ea35d01a9f91a2"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 1,
+          "channel": 18,
+          "id": "quiet-s3-o0-p1",
+          "orbit_index": 0,
+          "parity": 1,
+          "r": 3,
+          "side": 7,
+          "sign_index": 3,
+          "signs": [
+            -1,
+            1,
+            1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            1,
+            0,
+            3
+          ],
+          [
+            0,
+            -1,
+            3
+          ],
+          [
+            -1,
+            0,
+            3
+          ],
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            1,
+            0,
+            3
+          ],
+          [
+            0,
+            -1,
+            3
+          ],
+          [
+            -1,
+            0,
+            3
+          ],
+          [
+            0,
+            1,
+            3
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s3-o0-p1",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "e9c09b1377c07c9e88e768f871c8e81b6c716693174b5465d8d20c080ddbd1d7",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "e9c09b1377c07c9e88e768f871c8e81b6c716693174b5465d8d20c080ddbd1d7",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "ad29bd0cc8749085611d7b69322d89205859a6149e3b9a26f317edb2e66f45b2"
+      },
+      "record_sha256": "d9804cd0e4849c3a3cac7e789c9c2c1fecd398652e19fe34d2f6f9d40fbae2f7"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 2,
+          "channel": 19,
+          "id": "quiet-s3-o1-p0",
+          "orbit_index": 1,
+          "parity": 0,
+          "r": 2,
+          "side": 7,
+          "sign_index": 3,
+          "signs": [
+            -1,
+            1,
+            1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            2,
+            0,
+            2
+          ],
+          [
+            0,
+            -2,
+            2
+          ],
+          [
+            -2,
+            0,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            2,
+            0,
+            2
+          ],
+          [
+            0,
+            -2,
+            2
+          ],
+          [
+            -2,
+            0,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s3-o1-p0",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "2e132e8036d799538d702b667bf830b30d58fa81a46c6aa74450c73493f6ad51",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "2e132e8036d799538d702b667bf830b30d58fa81a46c6aa74450c73493f6ad51",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "5cbaf708acda657e8607676137d04e06381c19189e2b7b5d04ac1036ceca2817"
+      },
+      "record_sha256": "d7c066687973da9fdf6ba903e0ddbf8379ed9c655967b3662f0c6c6ffd20c928"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 2,
+          "channel": 19,
+          "id": "quiet-s3-o1-p1",
+          "orbit_index": 1,
+          "parity": 1,
+          "r": 3,
+          "side": 7,
+          "sign_index": 3,
+          "signs": [
+            -1,
+            1,
+            1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            2,
+            0,
+            3
+          ],
+          [
+            0,
+            -2,
+            3
+          ],
+          [
+            -2,
+            0,
+            3
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            2,
+            0,
+            3
+          ],
+          [
+            0,
+            -2,
+            3
+          ],
+          [
+            -2,
+            0,
+            3
+          ],
+          [
+            0,
+            2,
+            3
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s3-o1-p1",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "7d8727fca9c625cb680a22a8d91ab3ca8fd1f5c33034796bbfb1e7475fc2f283",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "7d8727fca9c625cb680a22a8d91ab3ca8fd1f5c33034796bbfb1e7475fc2f283",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "c057929b25c2993a4e9306e6cc70d2df48f223e80a9da41179421b897c6ff124"
+      },
+      "record_sha256": "2b1130fe01459ddf49dca4cc36c1cafdbc120ac0064fe161b04049359631d8d0"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 1,
+          "b": 1,
+          "channel": 20,
+          "id": "quiet-s3-o2-p0",
+          "orbit_index": 2,
+          "parity": 0,
+          "r": 2,
+          "side": 7,
+          "sign_index": 3,
+          "signs": [
+            -1,
+            1,
+            1
+          ]
+        },
+        "center_trace": [
+          [
+            1,
+            1,
+            2
+          ],
+          [
+            1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            1,
+            2
+          ],
+          [
+            1,
+            1,
+            2
+          ],
+          [
+            1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            1,
+            2
+          ],
+          [
+            1,
+            1,
+            2
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s3-o2-p0",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "832d25ef269c8e597d5c7a0bc0952c87a2f93079ef603890ef37b224679fed1c",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "832d25ef269c8e597d5c7a0bc0952c87a2f93079ef603890ef37b224679fed1c",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 48,
+        "whole_board_R_sha256": "75960bbbf58c2df4ee5e02fae856adfa30aba7ea035a1cc6fa99110bfb369a1e"
+      },
+      "record_sha256": "5892378bfd3f80051accdb2369b540f357cae53cad4659458d566dc97cbfbd3f"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 1,
+          "b": 1,
+          "channel": 20,
+          "id": "quiet-s3-o2-p1",
+          "orbit_index": 2,
+          "parity": 1,
+          "r": 3,
+          "side": 7,
+          "sign_index": 3,
+          "signs": [
+            -1,
+            1,
+            1
+          ]
+        },
+        "center_trace": [
+          [
+            1,
+            1,
+            3
+          ],
+          [
+            1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            1,
+            3
+          ],
+          [
+            1,
+            1,
+            3
+          ],
+          [
+            1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            1,
+            3
+          ],
+          [
+            1,
+            1,
+            3
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s3-o2-p1",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "e13c4db7a92a39c6fc29b766187ca925dad1fdb2e489af9c1f1eb23d358cb193",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "e13c4db7a92a39c6fc29b766187ca925dad1fdb2e489af9c1f1eb23d358cb193",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 48,
+        "whole_board_R_sha256": "7527eaf09baed92ccb7fffd298b2bbeecea3b5d5aea6845955724de0e80fc5ad"
+      },
+      "record_sha256": "36fe677fd97dd67d337a6d6a0789917d71a9729346bc54d97abe5c4abec43580"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 1,
+          "channel": 24,
+          "id": "quiet-s4-o0-p0",
+          "orbit_index": 0,
+          "parity": 0,
+          "r": 2,
+          "side": 5,
+          "sign_index": 4,
+          "signs": [
+            1,
+            -1,
+            -1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            1,
+            0,
+            2
+          ],
+          [
+            0,
+            -1,
+            2
+          ],
+          [
+            -1,
+            0,
+            2
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            1,
+            0,
+            2
+          ],
+          [
+            0,
+            -1,
+            2
+          ],
+          [
+            -1,
+            0,
+            2
+          ],
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s4-o0-p0",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "fe708b8abff6da56d1ca8ca8dd71652cc1f421f241f44813f05aa48b15b99092",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "fe708b8abff6da56d1ca8ca8dd71652cc1f421f241f44813f05aa48b15b99092",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "512c3ee06031c8ebfa8838fbb4d560e65c23d00f6ccf83735f0ee42eb4fe3097"
+      },
+      "record_sha256": "ad9d5ff2af5474534cb14977d8f0b2222bcb9077b064950f7752a61df8a24525"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 1,
+          "channel": 24,
+          "id": "quiet-s4-o0-p1",
+          "orbit_index": 0,
+          "parity": 1,
+          "r": 3,
+          "side": 5,
+          "sign_index": 4,
+          "signs": [
+            1,
+            -1,
+            -1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            1,
+            0,
+            3
+          ],
+          [
+            0,
+            -1,
+            3
+          ],
+          [
+            -1,
+            0,
+            3
+          ],
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            1,
+            0,
+            3
+          ],
+          [
+            0,
+            -1,
+            3
+          ],
+          [
+            -1,
+            0,
+            3
+          ],
+          [
+            0,
+            1,
+            3
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s4-o0-p1",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "0954128d8d7c9702a5fda5bf606525937d2c98621baf4a931bef57201eca0d6d",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "0954128d8d7c9702a5fda5bf606525937d2c98621baf4a931bef57201eca0d6d",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "2a07e3c00f4e393497063912b2f8bc142e3dc6b1dc26d73d4dc654d80642dc0d"
+      },
+      "record_sha256": "affadaf994a6a917d3ad65cbeac3de503a6083941e9c70e6a3a1c0063f4edffd"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 2,
+          "channel": 25,
+          "id": "quiet-s4-o1-p0",
+          "orbit_index": 1,
+          "parity": 0,
+          "r": 2,
+          "side": 5,
+          "sign_index": 4,
+          "signs": [
+            1,
+            -1,
+            -1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            2,
+            0,
+            2
+          ],
+          [
+            0,
+            -2,
+            2
+          ],
+          [
+            -2,
+            0,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            2,
+            0,
+            2
+          ],
+          [
+            0,
+            -2,
+            2
+          ],
+          [
+            -2,
+            0,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s4-o1-p0",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "8e14d5e64ef062fcc5d89684d15845b3ee7a7a0b2800c0d981dff0358ebc2a5b",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "8e14d5e64ef062fcc5d89684d15845b3ee7a7a0b2800c0d981dff0358ebc2a5b",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "45382c76f3389e9eb3d66ceb6a21af9d3d52bdbcf96e52c5ddc546d2538cffd0"
+      },
+      "record_sha256": "8b3772635494be226059d7a638696250a91dc2888839bc40fba023cc64c01497"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 2,
+          "channel": 25,
+          "id": "quiet-s4-o1-p1",
+          "orbit_index": 1,
+          "parity": 1,
+          "r": 3,
+          "side": 5,
+          "sign_index": 4,
+          "signs": [
+            1,
+            -1,
+            -1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            2,
+            0,
+            3
+          ],
+          [
+            0,
+            -2,
+            3
+          ],
+          [
+            -2,
+            0,
+            3
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            2,
+            0,
+            3
+          ],
+          [
+            0,
+            -2,
+            3
+          ],
+          [
+            -2,
+            0,
+            3
+          ],
+          [
+            0,
+            2,
+            3
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s4-o1-p1",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "331e4e5c8ba117c0853f5cbdd9a4c49afe2ab5b11500d238293f1295ea102c67",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "331e4e5c8ba117c0853f5cbdd9a4c49afe2ab5b11500d238293f1295ea102c67",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "6368fb1e328b93755aa1b4ac1d63e65ab182694aa4b8a7308b46f31dc9fce6e5"
+      },
+      "record_sha256": "9c03cb9f907bcefca36809f9c5222d96ea1ced517922f5d406b5cad14edb39a2"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 1,
+          "b": 1,
+          "channel": 26,
+          "id": "quiet-s4-o2-p0",
+          "orbit_index": 2,
+          "parity": 0,
+          "r": 2,
+          "side": 5,
+          "sign_index": 4,
+          "signs": [
+            1,
+            -1,
+            -1
+          ]
+        },
+        "center_trace": [
+          [
+            1,
+            1,
+            2
+          ],
+          [
+            1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            1,
+            2
+          ],
+          [
+            1,
+            1,
+            2
+          ],
+          [
+            1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            1,
+            2
+          ],
+          [
+            1,
+            1,
+            2
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s4-o2-p0",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "79f01e89b307c5837b6ec58b08454c440646f539c95ba4c00fe081a03f46b791",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "79f01e89b307c5837b6ec58b08454c440646f539c95ba4c00fe081a03f46b791",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 48,
+        "whole_board_R_sha256": "4ed2a04abc6bba3c8df736fbe04f6cbf6fcaa4d77d2d46716bcbb8cb7d4bbaed"
+      },
+      "record_sha256": "e3c9671da9c635a01275daf0b9ab3778915ae6547a020e952c804aade2768211"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 1,
+          "b": 1,
+          "channel": 26,
+          "id": "quiet-s4-o2-p1",
+          "orbit_index": 2,
+          "parity": 1,
+          "r": 3,
+          "side": 5,
+          "sign_index": 4,
+          "signs": [
+            1,
+            -1,
+            -1
+          ]
+        },
+        "center_trace": [
+          [
+            1,
+            1,
+            3
+          ],
+          [
+            1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            1,
+            3
+          ],
+          [
+            1,
+            1,
+            3
+          ],
+          [
+            1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            1,
+            3
+          ],
+          [
+            1,
+            1,
+            3
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s4-o2-p1",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "b7eb2a6b545f02a79e7d0cb64f28ee2752260662a942333f0d599220c6f12c2d",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "b7eb2a6b545f02a79e7d0cb64f28ee2752260662a942333f0d599220c6f12c2d",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 48,
+        "whole_board_R_sha256": "a49185f1031a9b27611459270c1076d18ab0aa5d5cb2c8ac565063a3fbce422f"
+      },
+      "record_sha256": "db0a900b49daacd65fc63df1206d47c6becf60d56f8af6daa737fa69dba7a4d3"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 1,
+          "channel": 30,
+          "id": "quiet-s5-o0-p0",
+          "orbit_index": 0,
+          "parity": 0,
+          "r": 2,
+          "side": 7,
+          "sign_index": 5,
+          "signs": [
+            1,
+            -1,
+            1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            1,
+            0,
+            2
+          ],
+          [
+            0,
+            -1,
+            2
+          ],
+          [
+            -1,
+            0,
+            2
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            1,
+            0,
+            2
+          ],
+          [
+            0,
+            -1,
+            2
+          ],
+          [
+            -1,
+            0,
+            2
+          ],
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s5-o0-p0",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "04cb7945415eea8b3eb4877f79a94e2d8ad09751a018f8c22f6aed8dc5cc8457",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "04cb7945415eea8b3eb4877f79a94e2d8ad09751a018f8c22f6aed8dc5cc8457",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "6697b919d63fdf9d9675833042850c110ce787c0437ecbe9be64d6196cfacf30"
+      },
+      "record_sha256": "7edfcada768e7f1f8f2add3776d7d4f932b1060393a84b5b4059920db26eb1e3"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 1,
+          "channel": 30,
+          "id": "quiet-s5-o0-p1",
+          "orbit_index": 0,
+          "parity": 1,
+          "r": 3,
+          "side": 7,
+          "sign_index": 5,
+          "signs": [
+            1,
+            -1,
+            1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            1,
+            0,
+            3
+          ],
+          [
+            0,
+            -1,
+            3
+          ],
+          [
+            -1,
+            0,
+            3
+          ],
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            1,
+            0,
+            3
+          ],
+          [
+            0,
+            -1,
+            3
+          ],
+          [
+            -1,
+            0,
+            3
+          ],
+          [
+            0,
+            1,
+            3
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s5-o0-p1",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "98441a4b5ae1b081f351644dad8854e8c9081819e543b9988254289d235d5a64",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "98441a4b5ae1b081f351644dad8854e8c9081819e543b9988254289d235d5a64",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "e05ddc250a99559cb054843e1e0dc55d188a5f95d81e9bb03a9dc7beeaef16f4"
+      },
+      "record_sha256": "d566458ab44837326662f81dc125fd48394111f6211b42401a1351081821f18b"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 2,
+          "channel": 31,
+          "id": "quiet-s5-o1-p0",
+          "orbit_index": 1,
+          "parity": 0,
+          "r": 2,
+          "side": 7,
+          "sign_index": 5,
+          "signs": [
+            1,
+            -1,
+            1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            2,
+            0,
+            2
+          ],
+          [
+            0,
+            -2,
+            2
+          ],
+          [
+            -2,
+            0,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            2,
+            0,
+            2
+          ],
+          [
+            0,
+            -2,
+            2
+          ],
+          [
+            -2,
+            0,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s5-o1-p0",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "575daa9e90cb69e4b977ef838127fd6bbdfff5ff8b4d152c9c8c30513237df37",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "575daa9e90cb69e4b977ef838127fd6bbdfff5ff8b4d152c9c8c30513237df37",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "a6a14b0f076efe0f69ed3f2d9c99686adecafd3d1ea9d189240c599a766bd8e8"
+      },
+      "record_sha256": "4b0afe4e47cb39840e41e5170033183c43e83e19e8de0047a503aedc64f61454"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 2,
+          "channel": 31,
+          "id": "quiet-s5-o1-p1",
+          "orbit_index": 1,
+          "parity": 1,
+          "r": 3,
+          "side": 7,
+          "sign_index": 5,
+          "signs": [
+            1,
+            -1,
+            1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            2,
+            0,
+            3
+          ],
+          [
+            0,
+            -2,
+            3
+          ],
+          [
+            -2,
+            0,
+            3
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            2,
+            0,
+            3
+          ],
+          [
+            0,
+            -2,
+            3
+          ],
+          [
+            -2,
+            0,
+            3
+          ],
+          [
+            0,
+            2,
+            3
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s5-o1-p1",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "58ee23e9c3e5b1c23c4063d2871da04aa5a2cf27472a563c7f5fa1e66ca81c8d",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "58ee23e9c3e5b1c23c4063d2871da04aa5a2cf27472a563c7f5fa1e66ca81c8d",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "4b06b1ef8ac6dc1d1e4f07a1221c2c18ec4c0cf3b4eb8e70beb0e94a844f6a8f"
+      },
+      "record_sha256": "d667707f7e76fe71659ac47df34740c7e602e32345894bfc88663dbeb8657a47"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 1,
+          "b": 1,
+          "channel": 32,
+          "id": "quiet-s5-o2-p0",
+          "orbit_index": 2,
+          "parity": 0,
+          "r": 2,
+          "side": 7,
+          "sign_index": 5,
+          "signs": [
+            1,
+            -1,
+            1
+          ]
+        },
+        "center_trace": [
+          [
+            1,
+            1,
+            2
+          ],
+          [
+            1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            1,
+            2
+          ],
+          [
+            1,
+            1,
+            2
+          ],
+          [
+            1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            1,
+            2
+          ],
+          [
+            1,
+            1,
+            2
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s5-o2-p0",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "376aa8a27f316368623818c3538df229ff52f6eee89d71857ca069cefba1754a",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "376aa8a27f316368623818c3538df229ff52f6eee89d71857ca069cefba1754a",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 48,
+        "whole_board_R_sha256": "6864bf84ac0ce6f2547dad228871816c912228b37260de01a931157812a29879"
+      },
+      "record_sha256": "aa27c9d0c318ab9e7447ab4cbad21a05b678dda81c1b34825c9038f745680b43"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 1,
+          "b": 1,
+          "channel": 32,
+          "id": "quiet-s5-o2-p1",
+          "orbit_index": 2,
+          "parity": 1,
+          "r": 3,
+          "side": 7,
+          "sign_index": 5,
+          "signs": [
+            1,
+            -1,
+            1
+          ]
+        },
+        "center_trace": [
+          [
+            1,
+            1,
+            3
+          ],
+          [
+            1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            1,
+            3
+          ],
+          [
+            1,
+            1,
+            3
+          ],
+          [
+            1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            1,
+            3
+          ],
+          [
+            1,
+            1,
+            3
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s5-o2-p1",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "af8470631cb4ce56c51fd5d7bdf34ce0789dee67e34a7b5ce243d64960eae7ac",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "af8470631cb4ce56c51fd5d7bdf34ce0789dee67e34a7b5ce243d64960eae7ac",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 48,
+        "whole_board_R_sha256": "065b730660cfd96494dd5fb34fd7216132463894bf98924abe475d692fbd0184"
+      },
+      "record_sha256": "8eb9fc30f8f7b09795e7979593b4cc609877ed12d5468127d3558119f86abf04"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 1,
+          "channel": 36,
+          "id": "quiet-s6-o0-p0",
+          "orbit_index": 0,
+          "parity": 0,
+          "r": 2,
+          "side": 5,
+          "sign_index": 6,
+          "signs": [
+            1,
+            1,
+            -1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            1,
+            0,
+            2
+          ],
+          [
+            0,
+            -1,
+            2
+          ],
+          [
+            -1,
+            0,
+            2
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            1,
+            0,
+            2
+          ],
+          [
+            0,
+            -1,
+            2
+          ],
+          [
+            -1,
+            0,
+            2
+          ],
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s6-o0-p0",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "2530db2c8920e83799efdce52e0717d9dfbd4bd19290c05b3e749aea164c37b9",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "2530db2c8920e83799efdce52e0717d9dfbd4bd19290c05b3e749aea164c37b9",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "e4844a6ddba550e0dd65a7ef4d95f3a102c235299063c34a1673afb05e913b9e"
+      },
+      "record_sha256": "b4027be3f0703c2d5a429a43e1ab4859398922c535d52995f8f6302c463a150e"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 1,
+          "channel": 36,
+          "id": "quiet-s6-o0-p1",
+          "orbit_index": 0,
+          "parity": 1,
+          "r": 3,
+          "side": 5,
+          "sign_index": 6,
+          "signs": [
+            1,
+            1,
+            -1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            1,
+            0,
+            3
+          ],
+          [
+            0,
+            -1,
+            3
+          ],
+          [
+            -1,
+            0,
+            3
+          ],
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            1,
+            0,
+            3
+          ],
+          [
+            0,
+            -1,
+            3
+          ],
+          [
+            -1,
+            0,
+            3
+          ],
+          [
+            0,
+            1,
+            3
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s6-o0-p1",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "e0e04bc2939a34ff459081bc7771c5999c3844410fa590dd8b7145b958cb5dcf",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "e0e04bc2939a34ff459081bc7771c5999c3844410fa590dd8b7145b958cb5dcf",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "4fd799ad3183b4b4613ed34efacbd7b4c2c9cbf24c3257f171722bb349f81f6e"
+      },
+      "record_sha256": "6c36b4c5c0c856b7e8d462a6421ea792fff760ded7e74f08f32bfc4791282cc3"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 2,
+          "channel": 37,
+          "id": "quiet-s6-o1-p0",
+          "orbit_index": 1,
+          "parity": 0,
+          "r": 2,
+          "side": 5,
+          "sign_index": 6,
+          "signs": [
+            1,
+            1,
+            -1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            2,
+            0,
+            2
+          ],
+          [
+            0,
+            -2,
+            2
+          ],
+          [
+            -2,
+            0,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            2,
+            0,
+            2
+          ],
+          [
+            0,
+            -2,
+            2
+          ],
+          [
+            -2,
+            0,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s6-o1-p0",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "28265cf7680c173fd8742e7397b911926fe35b5425a3662daf84c27f0a804a1c",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "28265cf7680c173fd8742e7397b911926fe35b5425a3662daf84c27f0a804a1c",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "612c20e979c25697ecc4ec2059e2469a6592ecbd3ef59682ba0440b3f9fc6611"
+      },
+      "record_sha256": "df9c3ae5ab35eda3d79aa2f030e42e4af41ff7a7e5010866462021178d8cb6ac"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 2,
+          "channel": 37,
+          "id": "quiet-s6-o1-p1",
+          "orbit_index": 1,
+          "parity": 1,
+          "r": 3,
+          "side": 5,
+          "sign_index": 6,
+          "signs": [
+            1,
+            1,
+            -1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            2,
+            0,
+            3
+          ],
+          [
+            0,
+            -2,
+            3
+          ],
+          [
+            -2,
+            0,
+            3
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            2,
+            0,
+            3
+          ],
+          [
+            0,
+            -2,
+            3
+          ],
+          [
+            -2,
+            0,
+            3
+          ],
+          [
+            0,
+            2,
+            3
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s6-o1-p1",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "4e5529764cf054d37ca758a7cf7492bfe25dba8c97bcd59c35f66870468bbb77",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "4e5529764cf054d37ca758a7cf7492bfe25dba8c97bcd59c35f66870468bbb77",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "fc9a6e4c6b6bd3cff0d9e60ea60008ddfc8717fded644fff3e4f71334564abd3"
+      },
+      "record_sha256": "908641c12c44fb4a17d0beadb80c1599d134374ea18a5f0f8d51a094c35ce4c6"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 1,
+          "b": 1,
+          "channel": 38,
+          "id": "quiet-s6-o2-p0",
+          "orbit_index": 2,
+          "parity": 0,
+          "r": 2,
+          "side": 5,
+          "sign_index": 6,
+          "signs": [
+            1,
+            1,
+            -1
+          ]
+        },
+        "center_trace": [
+          [
+            1,
+            1,
+            2
+          ],
+          [
+            1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            1,
+            2
+          ],
+          [
+            1,
+            1,
+            2
+          ],
+          [
+            1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            1,
+            2
+          ],
+          [
+            1,
+            1,
+            2
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s6-o2-p0",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "ad86d9f0a6dbd8e0b89fe7fa75917725ffa83178d2626d00538245c5155a585b",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "ad86d9f0a6dbd8e0b89fe7fa75917725ffa83178d2626d00538245c5155a585b",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 48,
+        "whole_board_R_sha256": "50ed32907fdb668393003a031816227684bd0492958f8e59411be9f2c7261a46"
+      },
+      "record_sha256": "36fa765d1f6a2d243502605369d2491548f021d0221ed775cf050cd19cdcae39"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 1,
+          "b": 1,
+          "channel": 38,
+          "id": "quiet-s6-o2-p1",
+          "orbit_index": 2,
+          "parity": 1,
+          "r": 3,
+          "side": 5,
+          "sign_index": 6,
+          "signs": [
+            1,
+            1,
+            -1
+          ]
+        },
+        "center_trace": [
+          [
+            1,
+            1,
+            3
+          ],
+          [
+            1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            1,
+            3
+          ],
+          [
+            1,
+            1,
+            3
+          ],
+          [
+            1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            1,
+            3
+          ],
+          [
+            1,
+            1,
+            3
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s6-o2-p1",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "ee3dbad9d12661a6091e7e9a55c52483899dfb46a81226a6dc6148e22b771dd8",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "ee3dbad9d12661a6091e7e9a55c52483899dfb46a81226a6dc6148e22b771dd8",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 48,
+        "whole_board_R_sha256": "1f743a7591b9295234be5621fa3e441a9fd1e38bd385611caf44808eddf30269"
+      },
+      "record_sha256": "a71b48c1609abb0600edd7da6ede33bbdf297dace4abb0c758dab90ceab8c28e"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 1,
+          "channel": 42,
+          "id": "quiet-s7-o0-p0",
+          "orbit_index": 0,
+          "parity": 0,
+          "r": 2,
+          "side": 7,
+          "sign_index": 7,
+          "signs": [
+            1,
+            1,
+            1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            1,
+            0,
+            2
+          ],
+          [
+            0,
+            -1,
+            2
+          ],
+          [
+            -1,
+            0,
+            2
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            1,
+            0,
+            2
+          ],
+          [
+            0,
+            -1,
+            2
+          ],
+          [
+            -1,
+            0,
+            2
+          ],
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s7-o0-p0",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "f1013cf34d1771b175438541fb8c7afe11807a3dc24d3ea61d0a012421c5e59c",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "f1013cf34d1771b175438541fb8c7afe11807a3dc24d3ea61d0a012421c5e59c",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "335b83c474346c61912a94a62aec44055d4fdde229e2a09d1b9da3917fe3e283"
+      },
+      "record_sha256": "1e28b6ca11dbe83cffb68054497ac47488ef3f78d35fc6926ca28effd9a5a9cb"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 1,
+          "channel": 42,
+          "id": "quiet-s7-o0-p1",
+          "orbit_index": 0,
+          "parity": 1,
+          "r": 3,
+          "side": 7,
+          "sign_index": 7,
+          "signs": [
+            1,
+            1,
+            1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            1,
+            0,
+            3
+          ],
+          [
+            0,
+            -1,
+            3
+          ],
+          [
+            -1,
+            0,
+            3
+          ],
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            1,
+            0,
+            3
+          ],
+          [
+            0,
+            -1,
+            3
+          ],
+          [
+            -1,
+            0,
+            3
+          ],
+          [
+            0,
+            1,
+            3
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s7-o0-p1",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "eeb8e41fecf4c83202d063934c9e4e861c176753aa222d31d8699bf83eaee9e4",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "eeb8e41fecf4c83202d063934c9e4e861c176753aa222d31d8699bf83eaee9e4",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "4f63847407bf92f947fb62057b7d2107427661be9824a89cf04378b6f2f00250"
+      },
+      "record_sha256": "0fb2f1133535c806063e5a161d5d44a33115154311555bcebd6ac6cf455530fe"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 2,
+          "channel": 43,
+          "id": "quiet-s7-o1-p0",
+          "orbit_index": 1,
+          "parity": 0,
+          "r": 2,
+          "side": 7,
+          "sign_index": 7,
+          "signs": [
+            1,
+            1,
+            1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            2,
+            0,
+            2
+          ],
+          [
+            0,
+            -2,
+            2
+          ],
+          [
+            -2,
+            0,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            2,
+            0,
+            2
+          ],
+          [
+            0,
+            -2,
+            2
+          ],
+          [
+            -2,
+            0,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s7-o1-p0",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "36b3d8fd4fff4f796030cc2628dac84bcc9d61115bc7344d2aae6d830a3cf82f",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "36b3d8fd4fff4f796030cc2628dac84bcc9d61115bc7344d2aae6d830a3cf82f",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "f648f9ab4060995b5cbfbbdb6c49a12df47d2700c735fcac3f576d84fca58400"
+      },
+      "record_sha256": "788d50aca1f72c490187f9b6fd64035dff8323045c1ccb5be63040ea317cf0b5"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 0,
+          "b": 2,
+          "channel": 43,
+          "id": "quiet-s7-o1-p1",
+          "orbit_index": 1,
+          "parity": 1,
+          "r": 3,
+          "side": 7,
+          "sign_index": 7,
+          "signs": [
+            1,
+            1,
+            1
+          ]
+        },
+        "center_trace": [
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            2,
+            0,
+            3
+          ],
+          [
+            0,
+            -2,
+            3
+          ],
+          [
+            -2,
+            0,
+            3
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            2,
+            0,
+            3
+          ],
+          [
+            0,
+            -2,
+            3
+          ],
+          [
+            -2,
+            0,
+            3
+          ],
+          [
+            0,
+            2,
+            3
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s7-o1-p1",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "8a6fa56db8ffc28eeec612c449a129a5335db0b5e55ea7b086d05e6ad4bda288",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "8a6fa56db8ffc28eeec612c449a129a5335db0b5e55ea7b086d05e6ad4bda288",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 24,
+        "whole_board_R_sha256": "c8485a4627f852535e046aa0114a6eddecb7bb2972a3599ba5c60c2adb70c5d3"
+      },
+      "record_sha256": "87fe3ea15fce7290b3f07a34d8d3da3282582a970c28126b836e90df58779f8e"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 1,
+          "b": 1,
+          "channel": 44,
+          "id": "quiet-s7-o2-p0",
+          "orbit_index": 2,
+          "parity": 0,
+          "r": 2,
+          "side": 7,
+          "sign_index": 7,
+          "signs": [
+            1,
+            1,
+            1
+          ]
+        },
+        "center_trace": [
+          [
+            1,
+            1,
+            2
+          ],
+          [
+            1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            1,
+            2
+          ],
+          [
+            1,
+            1,
+            2
+          ],
+          [
+            1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            1,
+            2
+          ],
+          [
+            1,
+            1,
+            2
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s7-o2-p0",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "67543a5ab2c2e3a221c9ca93e5998fc78ba8e9c2301241f6661af2a68c642c37",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "67543a5ab2c2e3a221c9ca93e5998fc78ba8e9c2301241f6661af2a68c642c37",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 48,
+        "whole_board_R_sha256": "9a8a20bb042e01e131dd688a02bb8b2b4a6ba9b1da58f3dcaded432b7efbb1a4"
+      },
+      "record_sha256": "435e043e7a285ec4ae6be548747c7c32f392e82c585284965c7fc0ee41bba2b7"
+    },
+    {
+      "analysis": {
+        "all_checks": true,
+        "all_world_C": [],
+        "case": {
+          "a": 1,
+          "b": 1,
+          "channel": 44,
+          "id": "quiet-s7-o2-p1",
+          "orbit_index": 2,
+          "parity": 1,
+          "r": 3,
+          "side": 7,
+          "sign_index": 7,
+          "signs": [
+            1,
+            1,
+            1
+          ]
+        },
+        "center_trace": [
+          [
+            1,
+            1,
+            3
+          ],
+          [
+            1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            1,
+            3
+          ],
+          [
+            1,
+            1,
+            3
+          ],
+          [
+            1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            -1,
+            3
+          ],
+          [
+            -1,
+            1,
+            3
+          ],
+          [
+            1,
+            1,
+            3
+          ]
+        ],
+        "checks": {
+          "full_analytic_state": true,
+          "full_inverse": true,
+          "minimal_period4": true,
+          "no_guarded_C": true,
+          "no_nonbackground_boundary_contact": true,
+          "only_center_counters": true
+        }
+      },
+      "id": "quiet-s7-o2-p1",
+      "integrity": {
+        "boundary_counter_hit_count": 0,
+        "final_state_sha256": "e4942bd9e32f86895084788e98f30a7edb950d2576145988b082f6ea71b0a139",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "e4942bd9e32f86895084788e98f30a7edb950d2576145988b082f6ea71b0a139",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 48,
+        "whole_board_R_sha256": "f2202816d524b010951510b518761ef04f7963c7b21d5e6ebc707554858fe483"
+      },
+      "record_sha256": "3fd645d1d864ca2d76446d1d7bc40a934727238a746efc9d3ebd494f9bb838dd"
+    }
+  ],
+  "scope": "Prepared isolated clocks, not light-triggered activation, interaction robustness, physical time/mass or autonomous choice. Arbitrary external drive and overlapping active sources are outside the theorem. Composer must reject conflicting full-state assignments.",
+  "source_sha256": {
+    "research/components/__init__.py": "bc3c504533e052ea7dfee41483df25ee7ecc3bd30aba70fb52ed2d6f245afd4a",
+    "research/components/compose.py": "463f960fe44533310e98528d3f85b611101fa661c70ce18beed3ac72885ed496",
+    "research/components/recipes.py": "99a199109782b9115e06c67517a948d904a2659ffbeedadc92bb0606d653a0bc",
+    "research/components/spec.py": "1bb4bb06eaddebd0bb0d0287a6fc846900396b6fbcd00ec61cd28917f8e778d4",
+    "research/experiments/run.py": "2a9361b777f4eff1192cc5911d7521e3a6c81342e9e119dabff9d6e5941e679d",
+    "research/presenter/export.py": "2168f532626c13170ca0791e7d896dac96c638ad6f2b704ee7e359d4ef6681cc",
+    "research/reference/algebra.py": "f6c225663a545887f1992041de97e9bd1e1e6a4f3b186c9a77ad79f27df290e9",
+    "research/reference/evolution.py": "3ce71d8ded70426cce01fa5e280c20b23b0d26152176d7a6a6856ba10758e4aa",
+    "universe24/__init__.py": "fdce7c34f1c57d4601ddb445b0c46889418630cc175551b3cddcb56f0e8393b7",
+    "universe24/__main__.py": "157a90dd1a31ded840ac00e991d31c187b3e1c8ba72de3048deddb0b2ffc425e",
+    "universe24/core/__init__.py": "54b4904eead9518f5c5b7a40681c709eb45f1a9ea6588e0bce69338d17ac144f",
+    "universe24/core/coupling.py": "4d822203dbb75bd5192c4fddcbf8e2ffbab6c46c2a55cb19f101bcecaa4f6489",
+    "universe24/core/engine.py": "4ee34937e2d82d68aa3414dd0fbe71f4e01cc075753c7a638d10667afceaa938",
+    "universe24/core/group_2o.py": "3f0475445dfc65042651a68036835e375003a86873fc202b8e904fdf470fb055",
+    "universe24/core/rule3.py": "216e2490e7a9f683db1a8918dc46c7aa11213aaf0409a13ddf7f1850f7b88555",
+    "universe24/core/state.py": "6581559406158af6febe1f5763901915e4e6287ee9ebabe34a3db9186b8c45f0",
+    "universe24/experiments/__init__.py": "073f5497951a49f85e4ef6d348dade004167959fe7f023c4837e4e24dbae7e22",
+    "universe24/experiments/config.py": "8ce7828a3a2d677e0234d76fcb91dd493f216892f0e57182c246b36ef6efb926",
+    "universe24/observation/__init__.py": "86f59ebf4ecd61b9a5fa8071b93b0ebdb89ec489268b9d09c30130981f3678cb",
+    "universe24/observation/clicks.py": "cd14589241086d0b00adae1819ae8e230ad1b1a221714d84a6bf698e2424cced",
+    "universe24/observation/diagnostics.py": "ea4ab16b615333bbb2f1293fd4dd45c99c29dac5cf9206cc3b3245ed6a73b6c3"
+  },
+  "states": 432,
+  "timing_receipt": {
+    "complete_preflight_process_CPU_measured": false,
+    "exit_status": 0,
+    "limitation": "Prior preparation timer excluded its process startup; preserve that unmeasured contribution.",
+    "max_rss_kib": 23580,
+    "measurement": "External parent process waited for the complete capture/export Python process; cumulative child CPU",
+    "prior_preflight_cpu_seconds": 9.009288964000001,
+    "system_cpu_seconds": 0.48046,
+    "total_cpu_seconds": 7.643893,
+    "user_cpu_seconds": 7.163433,
+    "wall_seconds": 7.676073044000077,
+    "whole_session_budget_certified": false
+  },
+  "transitions": 384
+}

@@ -1,0 +1,556 @@
+{
+  "auditor_sha256": "b4e473e05c423825ec4301360a5068dcf10b087ec7f2c3716c19e96dc94cd6a7",
+  "complete_certificate": {
+    "decoded_bytes": 467546178,
+    "decoded_sha256": "d99a5502d1671a3840f9a401420b86e9607f747b2fc7b3e477eb19f665ffb77f",
+    "gzip_sha256": "3e883256b40a0c941e9fdd47e99dc10dc2126d84946020bfd75d048915618b7a",
+    "path": "research/clock_selection/evidence/independent_audit/coherent_wave_v1.json.gz"
+  },
+  "cpu_budget_seconds": 900,
+  "cpu_seconds": 204.665816838,
+  "dependency_manifest_sha256": "b5b93508be2f413a316a76f8492985cac2877d6a22f7c558e4fdbd70bc8d3ae4",
+  "failure": null,
+  "full_rewinds": 16,
+  "interval_oracle": "Independent120-digit direct phase cosine, versus producer80-digit recurrence; exact integer RMS bound checked separately.",
+  "passed": true,
+  "producer_budget_receipt": {
+    "byte_overrun": 0,
+    "bytes": 83484377,
+    "cpu_overrun": 28.943493579999995,
+    "wall_overrun": 0
+  },
+  "producer_cpu_seconds": 328.94349358,
+  "producer_resource_contract_passed": false,
+  "protocol_sha256": "c027015b1ecfa2f157ef2f54fb9564c21a507f055d287189f6d215d3447e44f0",
+  "records": [
+    {
+      "all_independent_interval_bounds_verified": true,
+      "all_integer_bounds_verified": true,
+      "id": "coherent-L7-n100-N1000",
+      "integrity": {
+        "boundary_counter_hit_count": 136032,
+        "final_state_sha256": "c3ae22f1dd8abe798efff42ccb4328624f3496404e1db5ee047ac1f2b29cdef1",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "48635075d71299692f7b4f9fa18074848ec2b68e7670377bb0ec13ca827e7035",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 68208,
+          "1": 68208,
+          "2": 61152
+        },
+        "whole_board_C_count": 197568,
+        "whole_board_C_sha256": "fc357f3da79bd3b2c0507b51aa5a17b134543fe6f5d0d3f21bae58a6aea8c42e",
+        "whole_board_R_change_count": 129360,
+        "whole_board_R_sha256": "27f0b65e9a752143090e558b944c1110dab32beee3a1d856f25a5fa1eb6788cb"
+      },
+      "raw_C_counts": {
+        "0": 68208,
+        "1": 68208,
+        "2": 61152
+      },
+      "record_sha256": "cd6e6691c11ec0481a58356de07c9b0187bb8d0a747c142db8288d1ee78863e2"
+    },
+    {
+      "all_independent_interval_bounds_verified": true,
+      "all_integer_bounds_verified": true,
+      "id": "coherent-L7-n100-N100000",
+      "integrity": {
+        "boundary_counter_hit_count": 136032,
+        "final_state_sha256": "c69befadf5a767e884730a30be09dacc93714e2fac69723dd20cdbcc202fd9b1",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "039f48d2825f30b2c1fcb1ef96b0b99cab51506ddf82f1822c8868516dfd83b8",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 63504,
+          "1": 63504,
+          "2": 70560
+        },
+        "whole_board_C_count": 197568,
+        "whole_board_C_sha256": "a34d1495f77c7641ab14507aed102dfdd7e060a6b7094a81f23d621c64fb5cbb",
+        "whole_board_R_change_count": 134064,
+        "whole_board_R_sha256": "64d021a334db03624e20474005b24743d76fbf1e81fa0d5727d0b82703f7fa1b"
+      },
+      "raw_C_counts": {
+        "0": 63504,
+        "1": 63504,
+        "2": 70560
+      },
+      "record_sha256": "0a6cbe987b997196dfd5a2fd04dd0a735f3f4b5541048dc91c08d79310aee433"
+    },
+    {
+      "all_independent_interval_bounds_verified": true,
+      "all_integer_bounds_verified": true,
+      "id": "coherent-L7-n110-N1000",
+      "integrity": {
+        "boundary_counter_hit_count": 136032,
+        "final_state_sha256": "40b5dd32a4420315c67d6afb84eb69f4c5716640ff8707c642995de7bb09c9de",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "4c32f47c0174afeed5891554e77acd9cc53d2f10af0a27deea3c75312dabe5e8",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 61152,
+          "1": 68208,
+          "2": 68208
+        },
+        "whole_board_C_count": 197568,
+        "whole_board_C_sha256": "63d3dc3f1952a8553aff1ff50029016a084387c887c3149f54c4053db8afaa0f",
+        "whole_board_R_change_count": 136416,
+        "whole_board_R_sha256": "e59e98f4dc6a3f8d5283fa316ebc2394a356e24850686c4d3c731caa2084c5a4"
+      },
+      "raw_C_counts": {
+        "0": 61152,
+        "1": 68208,
+        "2": 68208
+      },
+      "record_sha256": "d0b4cdcbda29927543ba35642525e08c4bfc88613dd1f1a42c2f3afdff5b9cf1"
+    },
+    {
+      "all_independent_interval_bounds_verified": true,
+      "all_integer_bounds_verified": true,
+      "id": "coherent-L7-n110-N100000",
+      "integrity": {
+        "boundary_counter_hit_count": 136032,
+        "final_state_sha256": "f11b4736be4f96e09d508f6db1ed1bf0990a6b5817ba2e3eb537072198aa3570",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "ee70a24f65f09c02e667cdb5128e438cca65f344287dce5f50966e35400df232",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 75264,
+          "1": 47040,
+          "2": 75264
+        },
+        "whole_board_C_count": 197568,
+        "whole_board_C_sha256": "2ed2a1fcd119f9e2f9ee99386a40788acc6d90fd631553f0916353fb7a5014e6",
+        "whole_board_R_change_count": 122304,
+        "whole_board_R_sha256": "d67d0616c40c4c493f5df9d8a9881bf1e0c22610b456bca2c5ee772199281821"
+      },
+      "raw_C_counts": {
+        "0": 75264,
+        "1": 47040,
+        "2": 75264
+      },
+      "record_sha256": "63c5ec74a50d1851ec71833f9d453b2468cbb1fe97acaa4ab292b448d3e46e6e"
+    },
+    {
+      "all_independent_interval_bounds_verified": true,
+      "all_integer_bounds_verified": true,
+      "id": "coherent-L7-n111-N1000",
+      "integrity": {
+        "boundary_counter_hit_count": 136032,
+        "final_state_sha256": "2d3c905af12ab68e5e51e1b1794f1f96a8929983dfab71662f9c13d4f15788aa",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "b2b1ddd820e7a911e4fc36d2cc159b6536f900797c2af1502213bf6663b38255",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 197568
+        },
+        "whole_board_C_count": 197568,
+        "whole_board_C_sha256": "acac45b74a86c71ebae6e0010df24a3a1026fbda7fbe580a61a95621a6db9415",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "raw_C_counts": {
+        "0": 197568,
+        "1": 0,
+        "2": 0
+      },
+      "record_sha256": "44121f26ae52092dfb648d2fd8b3f34dcfdea73ac78b2b6f24d1ff357fbf9ff0"
+    },
+    {
+      "all_independent_interval_bounds_verified": true,
+      "all_integer_bounds_verified": true,
+      "id": "coherent-L7-n111-N100000",
+      "integrity": {
+        "boundary_counter_hit_count": 136032,
+        "final_state_sha256": "26ef77a1dcd78a0885eb7631215277b92e5199928d324487e96549a78c0a19a6",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "fd5b930bc8102c5fc4af7f434bb3bfb7235f1305894ea3120558bd218733e5e4",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 197568
+        },
+        "whole_board_C_count": 197568,
+        "whole_board_C_sha256": "ed414d3ed590d32c1ad4c029d3c670e1ab66049e6c0344a006ed613c39645086",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "raw_C_counts": {
+        "0": 197568,
+        "1": 0,
+        "2": 0
+      },
+      "record_sha256": "04b7674dd1f035cff3c530a39b207b60ba2f47ca46e4781d2b835b18a8e3b5e6"
+    },
+    {
+      "all_independent_interval_bounds_verified": true,
+      "all_integer_bounds_verified": true,
+      "id": "coherent-L7-n200-N1000",
+      "integrity": {
+        "boundary_counter_hit_count": 136032,
+        "final_state_sha256": "86847ef69c9a43f740ad3f96f382523396a3ef9dd0e7d370a66c7ff94ff51d88",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "76bc0f347c30a27ef33f6ccf2650ae1bc00dcb2be212886da92aa1a129d11602",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 82320,
+          "1": 61152,
+          "2": 54096
+        },
+        "whole_board_C_count": 197568,
+        "whole_board_C_sha256": "b0701af04c50c6e353698233e83fa6a9b8ff8e6c312946f6146034e766bee6b7",
+        "whole_board_R_change_count": 115248,
+        "whole_board_R_sha256": "09acfa20310a3c05382b69ae7dfde8b2f2a61f6115f3fddefc148ba60de2c1bb"
+      },
+      "raw_C_counts": {
+        "0": 82320,
+        "1": 61152,
+        "2": 54096
+      },
+      "record_sha256": "65b581a293d7bd52a51a5c3f3a595143fd82b2f48ee1ffc233430e7958923724"
+    },
+    {
+      "all_independent_interval_bounds_verified": true,
+      "all_integer_bounds_verified": true,
+      "id": "coherent-L7-n200-N100000",
+      "integrity": {
+        "boundary_counter_hit_count": 136032,
+        "final_state_sha256": "d7937c87ec47fc92536de63872824fe5a2f39a333ce8409368ff79eed1d031a5",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "b4607bd96034adbbc2f32d6a705446547fd9ea14d49297c4a2525ab94489a9dd",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 63504,
+          "1": 70560,
+          "2": 63504
+        },
+        "whole_board_C_count": 197568,
+        "whole_board_C_sha256": "ce893c5834ca17d9d4818a7b24b6712a7f530ec00e7617e8f4572e8087bfa869",
+        "whole_board_R_change_count": 134064,
+        "whole_board_R_sha256": "afc8bfda8f69b9307249095b86ba30902ba0f48af02a8d481c7828edcf633667"
+      },
+      "raw_C_counts": {
+        "0": 63504,
+        "1": 70560,
+        "2": 63504
+      },
+      "record_sha256": "e5274aa19df5097998681106f45c1718fe2f95dce05fbc29b8b2da9fc18ce6b2"
+    },
+    {
+      "all_independent_interval_bounds_verified": true,
+      "all_integer_bounds_verified": true,
+      "id": "coherent-L9-n100-N1000",
+      "integrity": {
+        "boundary_counter_hit_count": 240864,
+        "final_state_sha256": "46d534ad7d7cb7b79aa97c16180211cde1d7d1974846a156b4e0abda5930cf15",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "6b9e7e165b37b02fa9bf750d6deb52dc05b1bc626e6c2b5883b30e5a4491da64",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 151632,
+          "1": 116640,
+          "2": 151632
+        },
+        "whole_board_C_count": 419904,
+        "whole_board_C_sha256": "3a39827e2e04001b4ee16e05e58bc47633d3a46b8609004eaf466e39b0d57a2c",
+        "whole_board_R_change_count": 268272,
+        "whole_board_R_sha256": "742ea60cbbd2442970c54a7b1a699ee9f6577e7088f74356efa47f5e1c714890"
+      },
+      "raw_C_counts": {
+        "0": 151632,
+        "1": 116640,
+        "2": 151632
+      },
+      "record_sha256": "0a0c158aaa9c32bc6be92214ca6c953c2ab0be85923210d7e8589086734b1402"
+    },
+    {
+      "all_independent_interval_bounds_verified": true,
+      "all_integer_bounds_verified": true,
+      "id": "coherent-L9-n100-N100000",
+      "integrity": {
+        "boundary_counter_hit_count": 240864,
+        "final_state_sha256": "0ff80354256a7b6b7abbf4f15eaea2477e4e805af8c0979b645a101c27a58902",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "09bfb62510d8409e817e6b19589eff4035b4cb44a2856bff2dbf7eab5fc86a0a",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 112752,
+          "1": 182736,
+          "2": 124416
+        },
+        "whole_board_C_count": 419904,
+        "whole_board_C_sha256": "20598d24b4b199837c27509095aa7d3757c14db367f75101ba877c651d5c9897",
+        "whole_board_R_change_count": 307152,
+        "whole_board_R_sha256": "6c26115743915e5c02940b48bb005b98a6a3a6fd88147ab8f3f2477229ae41e5"
+      },
+      "raw_C_counts": {
+        "0": 112752,
+        "1": 182736,
+        "2": 124416
+      },
+      "record_sha256": "3b59b65141d3d10502d51254ca0a4176a5e4cf5a0e33f04f822dda971b94e95f"
+    },
+    {
+      "all_independent_interval_bounds_verified": true,
+      "all_integer_bounds_verified": true,
+      "id": "coherent-L9-n110-N1000",
+      "integrity": {
+        "boundary_counter_hit_count": 240864,
+        "final_state_sha256": "bf2658e1640f4565f4cbd65bb2844ae2b1dba467ff4cbb4f08c56d24e1bca97a",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "3f5ff983ab403c06e758c521f0994c6d9917b5708b5196b8405ed9888f6b8c72",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 128304,
+          "1": 174960,
+          "2": 116640
+        },
+        "whole_board_C_count": 419904,
+        "whole_board_C_sha256": "ac25b157d4ef53cac42b94a918ac22bc5c32a445633beb3ec09010283eef08d6",
+        "whole_board_R_change_count": 291600,
+        "whole_board_R_sha256": "59e6d7cc5083e60633aa09b5859253efc5e61868ff0e3213763f9a96c588576f"
+      },
+      "raw_C_counts": {
+        "0": 128304,
+        "1": 174960,
+        "2": 116640
+      },
+      "record_sha256": "b008dc2e4659f58a6b83250405daaba59094320410297390994e4c76b539d2ea"
+    },
+    {
+      "all_independent_interval_bounds_verified": true,
+      "all_integer_bounds_verified": true,
+      "id": "coherent-L9-n110-N100000",
+      "integrity": {
+        "boundary_counter_hit_count": 240864,
+        "final_state_sha256": "5ecab5df7523b9464a696ec74e09c70d67dd699dcb2ac7d6111248d33dc19e83",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "70b1f95f2e2527884f0e885484843d6297c38823f19117e676a22b0336979889",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 128304,
+          "1": 151632,
+          "2": 139968
+        },
+        "whole_board_C_count": 419904,
+        "whole_board_C_sha256": "104ffc6eed733cdbd7cbcad9064c17ab986a19d38a7d8c12e4fd86e7d1eeac25",
+        "whole_board_R_change_count": 291600,
+        "whole_board_R_sha256": "62277c8e8dfd2384459463e7e6be6019db0eeb882a7fc3aef994286a60c554eb"
+      },
+      "raw_C_counts": {
+        "0": 128304,
+        "1": 151632,
+        "2": 139968
+      },
+      "record_sha256": "9b3f121bc3f5146ccc165b4b99ddfb4092138bdd4d79f9a3790e8f36bd086434"
+    },
+    {
+      "all_independent_interval_bounds_verified": true,
+      "all_integer_bounds_verified": true,
+      "id": "coherent-L9-n111-N1000",
+      "integrity": {
+        "boundary_counter_hit_count": 240864,
+        "final_state_sha256": "86d161f5dc0117007ed4377093887bd7757b510cf02e6fa645ec70f2b79019bc",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "48243978b436c950a45162d6f47513627f906e0d7c8732d7266ca90ea2e8b5ca",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 419904
+        },
+        "whole_board_C_count": 419904,
+        "whole_board_C_sha256": "eb3339ac58f102ae13a67208ee292052abf68efe02f823c6ba8f7b888f29feba",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "raw_C_counts": {
+        "0": 419904,
+        "1": 0,
+        "2": 0
+      },
+      "record_sha256": "a3c64f0b1106db2f1be8ceefdf75e8ba3274623b3efb0af2fa7dfe00dbd1b5a7"
+    },
+    {
+      "all_independent_interval_bounds_verified": true,
+      "all_integer_bounds_verified": true,
+      "id": "coherent-L9-n111-N100000",
+      "integrity": {
+        "boundary_counter_hit_count": 240864,
+        "final_state_sha256": "fe3bd138383e4fb37718323e515624eaafbac8a5a93bef0fbf7076d9a5e428dd",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "2a557ec35b28db1caa5042c2813ae2fe26e96c00eec5687be4a5df09c9afa087",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 419904
+        },
+        "whole_board_C_count": 419904,
+        "whole_board_C_sha256": "4e1b035694db82ad51b3844eef4ac0b35dbb4e8a56e631ba71cb4f0a06d9e2ab",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "raw_C_counts": {
+        "0": 419904,
+        "1": 0,
+        "2": 0
+      },
+      "record_sha256": "bcc331ce084f372c6dbd1812854fc03443b856f41d8218c49ef4e8b1002bf255"
+    },
+    {
+      "all_independent_interval_bounds_verified": true,
+      "all_integer_bounds_verified": true,
+      "id": "coherent-L9-n200-N1000",
+      "integrity": {
+        "boundary_counter_hit_count": 240864,
+        "final_state_sha256": "a3be78965d990e2e3b642b88a16879a96d53720f5a7a4fcb764245c6aae81e2c",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "fb9514dab186e783a5d2421c6e98e13805c5ac7cff840e580c32c1a8601f393a",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 186624,
+          "1": 116640,
+          "2": 116640
+        },
+        "whole_board_C_count": 419904,
+        "whole_board_C_sha256": "937c9d6e5d25bd7e7e71633c4715b6feb7a33076623dc24f2db0c93e66e2ef47",
+        "whole_board_R_change_count": 233280,
+        "whole_board_R_sha256": "e362718eec5bc9d836c807836eea1d71a98a70cae150c98c717b541615af662f"
+      },
+      "raw_C_counts": {
+        "0": 186624,
+        "1": 116640,
+        "2": 116640
+      },
+      "record_sha256": "5b6fd3a98e9d83c6407ba6d9148b2d4299a04f129d121c578e6f79728ed2d836"
+    },
+    {
+      "all_independent_interval_bounds_verified": true,
+      "all_integer_bounds_verified": true,
+      "id": "coherent-L9-n200-N100000",
+      "integrity": {
+        "boundary_counter_hit_count": 240864,
+        "final_state_sha256": "2b387bd345f052bff12ffd6a3d5d9a0afd78f12ebccfe3eff5d5e454854861b1",
+        "forward_transitions": 12,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "792aa9baec3929474ec217dc80e8e1ec475f0ec02876c23bbdb5346c213d016d",
+        "inverse_transitions": 12,
+        "observations": {},
+        "passed": true,
+        "states": 13,
+        "whole_board_C_by_kind": {
+          "0": 143856,
+          "1": 120528,
+          "2": 155520
+        },
+        "whole_board_C_count": 419904,
+        "whole_board_C_sha256": "fc9cd0f53e082c62c45e614558e58def37feb2fad56f520c5b93551905370da6",
+        "whole_board_R_change_count": 276048,
+        "whole_board_R_sha256": "cdeb2f2be1f070bfae3dbbaa32c9546cd7ead07c3047700c553c334e1879066a"
+      },
+      "raw_C_counts": {
+        "0": 143856,
+        "1": 120528,
+        "2": 155520
+      },
+      "record_sha256": "79c5bbba9a150ee9b161f6651c076f24f70e83ed4235203dbe6262708c54a4c5"
+    }
+  ],
+  "scope": "A narrow exact coherent invariant sector and controlled finite-time linear-wave comparison. No physical photon, mass, Lorentz symmetry, free-space localized signal, persistent click detector, isotropy at arbitrary wavelength or robustness to channel-asymmetric perturbations is established. The whole periodic cube is deliberately occupied.",
+  "source_sha256": {
+    "research/clock_selection/__init__.py": "089715841c81363d09ffc7897abe46d3e9e400cbd95f537d14764cf9e2692e9b",
+    "research/clock_selection/coherent_wave.py": "a18c8acd9edb29b55f9c6bf7b7cad7cd0b1aac06f11af981f861436fcdecc136",
+    "research/clock_selection/coherent_wave_protocol.json": "c027015b1ecfa2f157ef2f54fb9564c21a507f055d287189f6d215d3447e44f0",
+    "research/clock_selection/provenance.py": "a892a7ed196dd77f256bf6dccfc90e5c07f3439ff579fad2319f887148457438",
+    "research/clock_selection/recurrence.py": "46808156c2432bac85e3e952c300310c110501f416fb8aac678f156498b0ac13",
+    "research/clock_selection/recurrence_protocol.json": "d549d19abb26563271af88184c4d54aad72d975807dc48396112dec941a8644a",
+    "research/components/__init__.py": "bc3c504533e052ea7dfee41483df25ee7ecc3bd30aba70fb52ed2d6f245afd4a",
+    "research/components/compose.py": "463f960fe44533310e98528d3f85b611101fa661c70ce18beed3ac72885ed496",
+    "research/components/recipes.py": "99a199109782b9115e06c67517a948d904a2659ffbeedadc92bb0606d653a0bc",
+    "research/components/spec.py": "1bb4bb06eaddebd0bb0d0287a6fc846900396b6fbcd00ec61cd28917f8e778d4",
+    "research/experiments/__init__.py": "1a31c776b2e99bbc5cd5abb4cfa75d72a46305546b947eb315dd5209ed0949f6",
+    "research/experiments/collection.py": "d00821114fe81aa5bfe611fdd3be5a90fb635fe5d4cd38c131d29952a899a8f8",
+    "research/experiments/compatibility.py": "4f22d87e9962b0be35f74a1735b71d40a24b2c545820a11c5bc0aa1c5e71abe8",
+    "research/experiments/interfaces.py": "507cbf34499f655d4726aeee8f795801fd837853d929e78ec105a45adacf246a",
+    "research/experiments/materialize_evidence.py": "b2dc2c886ef5fe3cdaf5145bc64139ca1d46a7c21b057dafc60381294e0eb206",
+    "research/experiments/run.py": "2a9361b777f4eff1192cc5911d7521e3a6c81342e9e119dabff9d6e5941e679d",
+    "research/presenter/build.py": "0845fecd843702d1e2387a0955a4fb9a92b195e2bcab390c957171a4a2528ad8",
+    "research/presenter/demo.py": "5ffbaf1036d39574dfc7ae3d981632cd9c290d35e01b162098d510bcb2c90585",
+    "research/presenter/export.py": "2168f532626c13170ca0791e7d896dac96c638ad6f2b704ee7e359d4ef6681cc",
+    "research/staged_blocks/__init__.py": "33b384bdb83f95690d9b22863a830365d12cdac73254774cbcf9a68c105f6216",
+    "research/staged_blocks/interaction_protocol.json": "0bf67cf858fb75dc2c44be9d9f96ccd2c3538c8a088cd4fe210079b26b477d1d",
+    "research/staged_blocks/interactions.py": "fcf83fd2cfcc65b95caeff5c2278f275432398c67f4c3d8f245f8bf0606fb2f8",
+    "universe24/__init__.py": "fdce7c34f1c57d4601ddb445b0c46889418630cc175551b3cddcb56f0e8393b7",
+    "universe24/__main__.py": "157a90dd1a31ded840ac00e991d31c187b3e1c8ba72de3048deddb0b2ffc425e",
+    "universe24/core/__init__.py": "54b4904eead9518f5c5b7a40681c709eb45f1a9ea6588e0bce69338d17ac144f",
+    "universe24/core/coupling.py": "4d822203dbb75bd5192c4fddcbf8e2ffbab6c46c2a55cb19f101bcecaa4f6489",
+    "universe24/core/engine.py": "4ee34937e2d82d68aa3414dd0fbe71f4e01cc075753c7a638d10667afceaa938",
+    "universe24/core/group_2o.py": "3f0475445dfc65042651a68036835e375003a86873fc202b8e904fdf470fb055",
+    "universe24/core/rule3.py": "216e2490e7a9f683db1a8918dc46c7aa11213aaf0409a13ddf7f1850f7b88555",
+    "universe24/core/state.py": "6581559406158af6febe1f5763901915e4e6287ee9ebabe34a3db9186b8c45f0",
+    "universe24/experiments/__init__.py": "073f5497951a49f85e4ef6d348dade004167959fe7f023c4837e4e24dbae7e22",
+    "universe24/experiments/config.py": "8ce7828a3a2d677e0234d76fcb91dd493f216892f0e57182c246b36ef6efb926",
+    "universe24/observation/__init__.py": "86f59ebf4ecd61b9a5fa8071b93b0ebdb89ec489268b9d09c30130981f3678cb",
+    "universe24/observation/clicks.py": "cd14589241086d0b00adae1819ae8e230ad1b1a221714d84a6bf698e2424cced",
+    "universe24/observation/diagnostics.py": "ea4ab16b615333bbb2f1293fd4dd45c99c29dac5cf9206cc3b3245ed6a73b6c3"
+  },
+  "states": 208,
+  "summary_scope": "Lossless complete certificate retained separately; this summary omits exhaustive periodic-boundary addresses and interval endpoints only.",
+  "transitions": 192
+}

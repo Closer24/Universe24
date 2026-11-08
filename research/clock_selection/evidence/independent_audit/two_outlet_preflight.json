@@ -1,0 +1,1679 @@
+{
+  "auditor_sha256": "fffc6a2e158471c6fc9690269fb630ac201479e4f8181363a5f22edc850eb060",
+  "complete_preparations": 128,
+  "new_trajectories": 0,
+  "passed": true,
+  "producer_sha256": "33d48f3fe11768eea00cdc91b21684dfc3be1b29cb623d980671d977796b653e",
+  "protocol_sha256": "d46fb7bf62815fa2f0c6c66950d0fded0cdd9a86c0ce47bac40e3a06c042545c",
+  "records": [
+    {
+      "case": {
+        "axis": "X",
+        "clock_mode": "bare",
+        "control": "10",
+        "gap": 0,
+        "id": "orthogonal-isolated-X-gap0",
+        "phase": 0,
+        "side": 369,
+        "stage": "isolated"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "aec87baa8bf2b8461bba20e157a46209ae3415b1b76c6d7f818d3663f468e023"
+    },
+    {
+      "case": {
+        "axis": "Y",
+        "clock_mode": "bare",
+        "control": "01",
+        "gap": 0,
+        "id": "orthogonal-isolated-Y-gap0",
+        "phase": 0,
+        "side": 369,
+        "stage": "isolated"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "5c3742a5608114769e849215c6911cbdf4339a5b3803b3ebd22efe436080d06b"
+    },
+    {
+      "case": {
+        "axis": "Y",
+        "clock_mode": "bare",
+        "control": "01",
+        "gap": 34,
+        "id": "orthogonal-isolated-Y-gap34",
+        "phase": 0,
+        "side": 369,
+        "stage": "isolated"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "b5567d73b6099d5f4b036b4d9d93000ea735b6f5331e9243aab5f45d49b4b89d"
+    },
+    {
+      "case": {
+        "axis": "Y",
+        "clock_mode": "bare",
+        "control": "01",
+        "gap": 36,
+        "id": "orthogonal-isolated-Y-gap36",
+        "phase": 0,
+        "side": 369,
+        "stage": "isolated"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "4e15f3e1c4ee2be99edaed680056dc1a2d9577cdbb46b665b505ad404a489df4"
+    },
+    {
+      "case": {
+        "clock_mode": "bare",
+        "control": "00",
+        "gap": 0,
+        "id": "orthogonal-L369-bare-gap0",
+        "phase": 0,
+        "side": 369,
+        "stage": "crossed"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "eaf7062c6e427c4a8223e5929476ea37d8e7fd64baa5dd20fd45b7b1a318ba0e"
+    },
+    {
+      "case": {
+        "clock_mode": "bare",
+        "control": "10",
+        "gap": 0,
+        "id": "orthogonal-L369-bare-gap0",
+        "phase": 0,
+        "side": 369,
+        "stage": "crossed"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "213ad8b95610997fb846db68d61666a46d40ab09355368f0d3a3f82f9493ff13"
+    },
+    {
+      "case": {
+        "clock_mode": "bare",
+        "control": "01",
+        "gap": 0,
+        "id": "orthogonal-L369-bare-gap0",
+        "phase": 0,
+        "side": 369,
+        "stage": "crossed"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "88a574f705f6c228564c0a1296801c107f8514403c9cd15e1561ce1642200183"
+    },
+    {
+      "case": {
+        "clock_mode": "bare",
+        "control": "11",
+        "gap": 0,
+        "id": "orthogonal-L369-bare-gap0",
+        "phase": 0,
+        "side": 369,
+        "stage": "crossed"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "9de26c1ab40bd46e896e19cef210237ccfb3c5f649218658266a9b7924a67b77"
+    },
+    {
+      "case": {
+        "clock_mode": "bare",
+        "control": "00",
+        "gap": 34,
+        "id": "orthogonal-L369-bare-gap34",
+        "phase": 0,
+        "side": 369,
+        "stage": "crossed"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "eaf7062c6e427c4a8223e5929476ea37d8e7fd64baa5dd20fd45b7b1a318ba0e"
+    },
+    {
+      "case": {
+        "clock_mode": "bare",
+        "control": "10",
+        "gap": 34,
+        "id": "orthogonal-L369-bare-gap34",
+        "phase": 0,
+        "side": 369,
+        "stage": "crossed"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "213ad8b95610997fb846db68d61666a46d40ab09355368f0d3a3f82f9493ff13"
+    },
+    {
+      "case": {
+        "clock_mode": "bare",
+        "control": "01",
+        "gap": 34,
+        "id": "orthogonal-L369-bare-gap34",
+        "phase": 0,
+        "side": 369,
+        "stage": "crossed"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "87f257837222653a69cb776103208c01a28a470e21e3a7a006a46c36c93f9df5"
+    },
+    {
+      "case": {
+        "clock_mode": "bare",
+        "control": "11",
+        "gap": 34,
+        "id": "orthogonal-L369-bare-gap34",
+        "phase": 0,
+        "side": 369,
+        "stage": "crossed"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "3d430d506c5ee8eb29bdc76ee2d664f9a3220f78a004b4eb6f0ac8ff69cadb92"
+    },
+    {
+      "case": {
+        "clock_mode": "bare",
+        "control": "00",
+        "gap": 36,
+        "id": "orthogonal-L369-bare-gap36",
+        "phase": 0,
+        "side": 369,
+        "stage": "crossed"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "eaf7062c6e427c4a8223e5929476ea37d8e7fd64baa5dd20fd45b7b1a318ba0e"
+    },
+    {
+      "case": {
+        "clock_mode": "bare",
+        "control": "10",
+        "gap": 36,
+        "id": "orthogonal-L369-bare-gap36",
+        "phase": 0,
+        "side": 369,
+        "stage": "crossed"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "213ad8b95610997fb846db68d61666a46d40ab09355368f0d3a3f82f9493ff13"
+    },
+    {
+      "case": {
+        "clock_mode": "bare",
+        "control": "01",
+        "gap": 36,
+        "id": "orthogonal-L369-bare-gap36",
+        "phase": 0,
+        "side": 369,
+        "stage": "crossed"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "a04f08f04aae944a56d163d659cb6fdcaeca06383397abf1499ace6b7a1f482e"
+    },
+    {
+      "case": {
+        "clock_mode": "bare",
+        "control": "11",
+        "gap": 36,
+        "id": "orthogonal-L369-bare-gap36",
+        "phase": 0,
+        "side": 369,
+        "stage": "crossed"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "ccea85a55c06fa78abd057a5a931c2fb0fad8ca0dd6fa6e229e3dbca16144eb3"
+    },
+    {
+      "case": {
+        "clock_mode": "bare",
+        "control": "00",
+        "gap": 0,
+        "id": "orthogonal-L385-bare-gap0",
+        "phase": 0,
+        "side": 385,
+        "stage": "crossed"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "31e7fb41a02afa65a1c0feaeaceb1d695081c1bb1f51629e795fdb4f71ddf685"
+    },
+    {
+      "case": {
+        "clock_mode": "bare",
+        "control": "10",
+        "gap": 0,
+        "id": "orthogonal-L385-bare-gap0",
+        "phase": 0,
+        "side": 385,
+        "stage": "crossed"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "7db4d3cf199fc9c2c16232702336f466fa781d2c31217b5c7005733d7ff89cb2"
+    },
+    {
+      "case": {
+        "clock_mode": "bare",
+        "control": "01",
+        "gap": 0,
+        "id": "orthogonal-L385-bare-gap0",
+        "phase": 0,
+        "side": 385,
+        "stage": "crossed"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "dd232009280d623215249c0b0a2cbdf51e5ffb5dd9b1ca13d174d48acb21b913"
+    },
+    {
+      "case": {
+        "clock_mode": "bare",
+        "control": "11",
+        "gap": 0,
+        "id": "orthogonal-L385-bare-gap0",
+        "phase": 0,
+        "side": 385,
+        "stage": "crossed"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "e93654b82effa2e484501caab6d6aaeb45dc527ecf8f0dca58372a3e02956f8d"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "00",
+        "gap": 0,
+        "id": "orthogonal-L369-p0-on-gap0",
+        "phase": 0,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "d46f7848be77c288ae9b83e8f794a8ca54ae3d534f011630e3c1c29057b7ad1b"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "10",
+        "gap": 0,
+        "id": "orthogonal-L369-p0-on-gap0",
+        "phase": 0,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "387e812144b823df32306ee708efc466077e7ed5c24fa2da6fd5af55f0277b26"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "01",
+        "gap": 0,
+        "id": "orthogonal-L369-p0-on-gap0",
+        "phase": 0,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "d9bdd63489ea379edba2185107076afcf3893f39fab54a2286c74e02d8232f81"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "11",
+        "gap": 0,
+        "id": "orthogonal-L369-p0-on-gap0",
+        "phase": 0,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "282e8558281c65c2df6cb86cbbc9497394c945adf045ec3af5db07937cc23e74"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "00",
+        "gap": 0,
+        "id": "orthogonal-L369-p0-counter_off-gap0",
+        "phase": 0,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "3bed635ef355157edbb75ea7d1229a9d052afe2da15857c8c3c3714fec177ca2"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "10",
+        "gap": 0,
+        "id": "orthogonal-L369-p0-counter_off-gap0",
+        "phase": 0,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "3496fd1c49ce1a31dd427adb001068db55ac8996e88dd23d093e58a7bb0fc9af"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "01",
+        "gap": 0,
+        "id": "orthogonal-L369-p0-counter_off-gap0",
+        "phase": 0,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "27d2a83f580fdbc8cd82f7831b8804d2842d7483716536e798d7edb95ecaae1d"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "11",
+        "gap": 0,
+        "id": "orthogonal-L369-p0-counter_off-gap0",
+        "phase": 0,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "8a06d0f0b4de65a5df320a028f0d72f62a670609e0e4ecd9eac57e8ae3411769"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "00",
+        "gap": 34,
+        "id": "orthogonal-L369-p0-on-gap34",
+        "phase": 0,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "d46f7848be77c288ae9b83e8f794a8ca54ae3d534f011630e3c1c29057b7ad1b"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "10",
+        "gap": 34,
+        "id": "orthogonal-L369-p0-on-gap34",
+        "phase": 0,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "387e812144b823df32306ee708efc466077e7ed5c24fa2da6fd5af55f0277b26"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "01",
+        "gap": 34,
+        "id": "orthogonal-L369-p0-on-gap34",
+        "phase": 0,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "67956ddf96dcc316dda2eae7bad26ef61a9308defe3d1408ecd57019a62b1b05"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "11",
+        "gap": 34,
+        "id": "orthogonal-L369-p0-on-gap34",
+        "phase": 0,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "43ad029e7a9cb0a671ab5e04c37c73e007085beb332e45ff0344940b2903495f"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "00",
+        "gap": 34,
+        "id": "orthogonal-L369-p0-counter_off-gap34",
+        "phase": 0,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "3bed635ef355157edbb75ea7d1229a9d052afe2da15857c8c3c3714fec177ca2"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "10",
+        "gap": 34,
+        "id": "orthogonal-L369-p0-counter_off-gap34",
+        "phase": 0,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "3496fd1c49ce1a31dd427adb001068db55ac8996e88dd23d093e58a7bb0fc9af"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "01",
+        "gap": 34,
+        "id": "orthogonal-L369-p0-counter_off-gap34",
+        "phase": 0,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "73e1bfcd7a62fb276bd7d2ce3c22da052b4efa44cb346c12bb24fca35482f5c8"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "11",
+        "gap": 34,
+        "id": "orthogonal-L369-p0-counter_off-gap34",
+        "phase": 0,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "0e3984417be0bdff0bb154c43bb0f2c38961b8b3acc7a2255c7ea48017721d62"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "00",
+        "gap": 36,
+        "id": "orthogonal-L369-p0-on-gap36",
+        "phase": 0,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "d46f7848be77c288ae9b83e8f794a8ca54ae3d534f011630e3c1c29057b7ad1b"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "10",
+        "gap": 36,
+        "id": "orthogonal-L369-p0-on-gap36",
+        "phase": 0,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "387e812144b823df32306ee708efc466077e7ed5c24fa2da6fd5af55f0277b26"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "01",
+        "gap": 36,
+        "id": "orthogonal-L369-p0-on-gap36",
+        "phase": 0,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "f198cff213755aa9d2db735e155e48b6ccabb430b166289baa8d305c9ebe6c7b"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "11",
+        "gap": 36,
+        "id": "orthogonal-L369-p0-on-gap36",
+        "phase": 0,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "adb743aab20aa3d0430fc3cdf2f05d4b564ace3570e61fbf87e7ac2b9cac78ec"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "00",
+        "gap": 36,
+        "id": "orthogonal-L369-p0-counter_off-gap36",
+        "phase": 0,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "3bed635ef355157edbb75ea7d1229a9d052afe2da15857c8c3c3714fec177ca2"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "10",
+        "gap": 36,
+        "id": "orthogonal-L369-p0-counter_off-gap36",
+        "phase": 0,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "3496fd1c49ce1a31dd427adb001068db55ac8996e88dd23d093e58a7bb0fc9af"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "01",
+        "gap": 36,
+        "id": "orthogonal-L369-p0-counter_off-gap36",
+        "phase": 0,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "873118faccb91d97c0d90ad1d565ab5ba94069a89bdf18e1429d4f23ad7ecd98"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "11",
+        "gap": 36,
+        "id": "orthogonal-L369-p0-counter_off-gap36",
+        "phase": 0,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "3711efe0f8de75faf6391cc4ec7a89da1b770c582fbaa1c6fd44d69e7587016a"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "00",
+        "gap": 0,
+        "id": "orthogonal-L369-p1-on-gap0",
+        "phase": 1,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "70eaa27862404d95a5cbcade94eaab2381cb4708c8e3d00a608c31cd3c378845"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "10",
+        "gap": 0,
+        "id": "orthogonal-L369-p1-on-gap0",
+        "phase": 1,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "4ab3a002b29e1ab8c9c3037fab38ca984df721053cefaa4be4cac583649de342"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "01",
+        "gap": 0,
+        "id": "orthogonal-L369-p1-on-gap0",
+        "phase": 1,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "c2ac6b9f8eb49bc4084fc2be0beadc8713a1de6b6088c38f3e93bb6894459c31"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "11",
+        "gap": 0,
+        "id": "orthogonal-L369-p1-on-gap0",
+        "phase": 1,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "54763c56d0acc65b1cc58cbbcab164218afe3259fd19456c70d21235fe8819b0"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "00",
+        "gap": 0,
+        "id": "orthogonal-L369-p1-counter_off-gap0",
+        "phase": 1,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "3b07edd0701da698e1b2be62442a08cac34d1ea05bef8b812298089fd466e3df"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "10",
+        "gap": 0,
+        "id": "orthogonal-L369-p1-counter_off-gap0",
+        "phase": 1,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "ba42bf3bef19748e2f46155b3ec077f5653dd9d3ce65089906d419bab66a8541"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "01",
+        "gap": 0,
+        "id": "orthogonal-L369-p1-counter_off-gap0",
+        "phase": 1,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "7d200ef668aba6586f7d456b0677fc5102701d689af951189d66cf8ff4d637ab"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "11",
+        "gap": 0,
+        "id": "orthogonal-L369-p1-counter_off-gap0",
+        "phase": 1,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "3556693336cfd9f25bf9f4d284df2fdf0a2b0f71a9207b6d50346226cdf819a1"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "00",
+        "gap": 34,
+        "id": "orthogonal-L369-p1-on-gap34",
+        "phase": 1,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "70eaa27862404d95a5cbcade94eaab2381cb4708c8e3d00a608c31cd3c378845"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "10",
+        "gap": 34,
+        "id": "orthogonal-L369-p1-on-gap34",
+        "phase": 1,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "4ab3a002b29e1ab8c9c3037fab38ca984df721053cefaa4be4cac583649de342"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "01",
+        "gap": 34,
+        "id": "orthogonal-L369-p1-on-gap34",
+        "phase": 1,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "849ad9be887975956fb3cda6f396d894e5b667f0c775b58912d7cc594fd8a486"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "11",
+        "gap": 34,
+        "id": "orthogonal-L369-p1-on-gap34",
+        "phase": 1,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "76314bcbcc467e48a3123df9f77447981ce1c726230860dc6ceb12c12a8a8463"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "00",
+        "gap": 34,
+        "id": "orthogonal-L369-p1-counter_off-gap34",
+        "phase": 1,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "3b07edd0701da698e1b2be62442a08cac34d1ea05bef8b812298089fd466e3df"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "10",
+        "gap": 34,
+        "id": "orthogonal-L369-p1-counter_off-gap34",
+        "phase": 1,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "ba42bf3bef19748e2f46155b3ec077f5653dd9d3ce65089906d419bab66a8541"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "01",
+        "gap": 34,
+        "id": "orthogonal-L369-p1-counter_off-gap34",
+        "phase": 1,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "05d71551425e74fcdc3870b89b6346d4e1002846e516b6f3bfa96140936881cd"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "11",
+        "gap": 34,
+        "id": "orthogonal-L369-p1-counter_off-gap34",
+        "phase": 1,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "fa142f7547729a2d1b182ad7ad538ab0d8862603b9810a6219cfe17d72181f05"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "00",
+        "gap": 36,
+        "id": "orthogonal-L369-p1-on-gap36",
+        "phase": 1,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "70eaa27862404d95a5cbcade94eaab2381cb4708c8e3d00a608c31cd3c378845"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "10",
+        "gap": 36,
+        "id": "orthogonal-L369-p1-on-gap36",
+        "phase": 1,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "4ab3a002b29e1ab8c9c3037fab38ca984df721053cefaa4be4cac583649de342"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "01",
+        "gap": 36,
+        "id": "orthogonal-L369-p1-on-gap36",
+        "phase": 1,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "e4877c3d8cc5bf49ea6be72127dc4bfd6f522ec0f73414c574b5bfa17f9e3d6e"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "11",
+        "gap": 36,
+        "id": "orthogonal-L369-p1-on-gap36",
+        "phase": 1,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "ba95d092505589b0df9990717d86b612703e641b214bf33efdfe07efd63e44b3"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "00",
+        "gap": 36,
+        "id": "orthogonal-L369-p1-counter_off-gap36",
+        "phase": 1,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "3b07edd0701da698e1b2be62442a08cac34d1ea05bef8b812298089fd466e3df"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "10",
+        "gap": 36,
+        "id": "orthogonal-L369-p1-counter_off-gap36",
+        "phase": 1,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "ba42bf3bef19748e2f46155b3ec077f5653dd9d3ce65089906d419bab66a8541"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "01",
+        "gap": 36,
+        "id": "orthogonal-L369-p1-counter_off-gap36",
+        "phase": 1,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "73af22a9456ea0964cafc632b71da028b2f80b0006ef0284658e1244290fcbfd"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "11",
+        "gap": 36,
+        "id": "orthogonal-L369-p1-counter_off-gap36",
+        "phase": 1,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "f833e766971acd2cb6dcd80dc2278c5394949d4c16c91ff46f2dffb8c4ebf89e"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "00",
+        "gap": 0,
+        "id": "orthogonal-L369-p2-on-gap0",
+        "phase": 2,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "b109dc9905592fcaebed7c90ed375adbed97d75708cd4f34b1a95f8d1b9396c0"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "10",
+        "gap": 0,
+        "id": "orthogonal-L369-p2-on-gap0",
+        "phase": 2,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "8346ca8de251635ff7ec92a246f112689cea956cba26bc7181871d7a395c40c5"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "01",
+        "gap": 0,
+        "id": "orthogonal-L369-p2-on-gap0",
+        "phase": 2,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "5b32e9807584c03ad79e8924e32d8bf5205a94323883c16706c530603c0c9e61"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "11",
+        "gap": 0,
+        "id": "orthogonal-L369-p2-on-gap0",
+        "phase": 2,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "2611de571a686ada97f744e3858494642a460e6cb9f2986656696918fed3865b"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "00",
+        "gap": 0,
+        "id": "orthogonal-L369-p2-counter_off-gap0",
+        "phase": 2,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "3b07edd0701da698e1b2be62442a08cac34d1ea05bef8b812298089fd466e3df"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "10",
+        "gap": 0,
+        "id": "orthogonal-L369-p2-counter_off-gap0",
+        "phase": 2,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "ba42bf3bef19748e2f46155b3ec077f5653dd9d3ce65089906d419bab66a8541"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "01",
+        "gap": 0,
+        "id": "orthogonal-L369-p2-counter_off-gap0",
+        "phase": 2,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "7d200ef668aba6586f7d456b0677fc5102701d689af951189d66cf8ff4d637ab"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "11",
+        "gap": 0,
+        "id": "orthogonal-L369-p2-counter_off-gap0",
+        "phase": 2,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "3556693336cfd9f25bf9f4d284df2fdf0a2b0f71a9207b6d50346226cdf819a1"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "00",
+        "gap": 34,
+        "id": "orthogonal-L369-p2-on-gap34",
+        "phase": 2,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "b109dc9905592fcaebed7c90ed375adbed97d75708cd4f34b1a95f8d1b9396c0"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "10",
+        "gap": 34,
+        "id": "orthogonal-L369-p2-on-gap34",
+        "phase": 2,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "8346ca8de251635ff7ec92a246f112689cea956cba26bc7181871d7a395c40c5"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "01",
+        "gap": 34,
+        "id": "orthogonal-L369-p2-on-gap34",
+        "phase": 2,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "efa1c6ec225caf286ecf11b548cc5450cde5e4f2ec823a4d197790f6d8de3be2"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "11",
+        "gap": 34,
+        "id": "orthogonal-L369-p2-on-gap34",
+        "phase": 2,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "d6fad798b8f6cc475f7f43562791fc262c5e81f6610867fc193ac0e59aa681e3"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "00",
+        "gap": 34,
+        "id": "orthogonal-L369-p2-counter_off-gap34",
+        "phase": 2,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "3b07edd0701da698e1b2be62442a08cac34d1ea05bef8b812298089fd466e3df"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "10",
+        "gap": 34,
+        "id": "orthogonal-L369-p2-counter_off-gap34",
+        "phase": 2,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "ba42bf3bef19748e2f46155b3ec077f5653dd9d3ce65089906d419bab66a8541"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "01",
+        "gap": 34,
+        "id": "orthogonal-L369-p2-counter_off-gap34",
+        "phase": 2,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "05d71551425e74fcdc3870b89b6346d4e1002846e516b6f3bfa96140936881cd"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "11",
+        "gap": 34,
+        "id": "orthogonal-L369-p2-counter_off-gap34",
+        "phase": 2,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "fa142f7547729a2d1b182ad7ad538ab0d8862603b9810a6219cfe17d72181f05"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "00",
+        "gap": 36,
+        "id": "orthogonal-L369-p2-on-gap36",
+        "phase": 2,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "b109dc9905592fcaebed7c90ed375adbed97d75708cd4f34b1a95f8d1b9396c0"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "10",
+        "gap": 36,
+        "id": "orthogonal-L369-p2-on-gap36",
+        "phase": 2,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "8346ca8de251635ff7ec92a246f112689cea956cba26bc7181871d7a395c40c5"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "01",
+        "gap": 36,
+        "id": "orthogonal-L369-p2-on-gap36",
+        "phase": 2,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "010c25a61e80ab57521577ea48dd375fd4d2bf98b1f2bd160e217bf5f4bec1f7"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "11",
+        "gap": 36,
+        "id": "orthogonal-L369-p2-on-gap36",
+        "phase": 2,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "0d095e23d7b7b298649b6e6f54e83a8794ce512ff43518b0325837ae899760a6"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "00",
+        "gap": 36,
+        "id": "orthogonal-L369-p2-counter_off-gap36",
+        "phase": 2,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "3b07edd0701da698e1b2be62442a08cac34d1ea05bef8b812298089fd466e3df"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "10",
+        "gap": 36,
+        "id": "orthogonal-L369-p2-counter_off-gap36",
+        "phase": 2,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "ba42bf3bef19748e2f46155b3ec077f5653dd9d3ce65089906d419bab66a8541"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "01",
+        "gap": 36,
+        "id": "orthogonal-L369-p2-counter_off-gap36",
+        "phase": 2,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "73af22a9456ea0964cafc632b71da028b2f80b0006ef0284658e1244290fcbfd"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "11",
+        "gap": 36,
+        "id": "orthogonal-L369-p2-counter_off-gap36",
+        "phase": 2,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "f833e766971acd2cb6dcd80dc2278c5394949d4c16c91ff46f2dffb8c4ebf89e"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "00",
+        "gap": 0,
+        "id": "orthogonal-L369-p3-on-gap0",
+        "phase": 3,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "4162342dfafa53d4185aa54a90b261a27dc6902a0a2127b0dff933778ce9a0ef"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "10",
+        "gap": 0,
+        "id": "orthogonal-L369-p3-on-gap0",
+        "phase": 3,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "95c71e87e4d43a4bb646d6feef9222e5db071c01fce07408a0e89a437a3ea505"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "01",
+        "gap": 0,
+        "id": "orthogonal-L369-p3-on-gap0",
+        "phase": 3,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "f013d02e43d1de8b12db25e8273d8da01558a15b66da03372827e81aab168a46"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "11",
+        "gap": 0,
+        "id": "orthogonal-L369-p3-on-gap0",
+        "phase": 3,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "e6021e7365d648c7e5e36bf14843197e99ecf08f8b5c05d68344f1d98a960f48"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "00",
+        "gap": 0,
+        "id": "orthogonal-L369-p3-counter_off-gap0",
+        "phase": 3,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "3bed635ef355157edbb75ea7d1229a9d052afe2da15857c8c3c3714fec177ca2"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "10",
+        "gap": 0,
+        "id": "orthogonal-L369-p3-counter_off-gap0",
+        "phase": 3,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "3496fd1c49ce1a31dd427adb001068db55ac8996e88dd23d093e58a7bb0fc9af"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "01",
+        "gap": 0,
+        "id": "orthogonal-L369-p3-counter_off-gap0",
+        "phase": 3,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "27d2a83f580fdbc8cd82f7831b8804d2842d7483716536e798d7edb95ecaae1d"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "11",
+        "gap": 0,
+        "id": "orthogonal-L369-p3-counter_off-gap0",
+        "phase": 3,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "8a06d0f0b4de65a5df320a028f0d72f62a670609e0e4ecd9eac57e8ae3411769"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "00",
+        "gap": 34,
+        "id": "orthogonal-L369-p3-on-gap34",
+        "phase": 3,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "4162342dfafa53d4185aa54a90b261a27dc6902a0a2127b0dff933778ce9a0ef"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "10",
+        "gap": 34,
+        "id": "orthogonal-L369-p3-on-gap34",
+        "phase": 3,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "95c71e87e4d43a4bb646d6feef9222e5db071c01fce07408a0e89a437a3ea505"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "01",
+        "gap": 34,
+        "id": "orthogonal-L369-p3-on-gap34",
+        "phase": 3,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "2caa0247923d29cd783d4d18fef5e038acceb9041cf370d3cf88a1db36893ae3"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "11",
+        "gap": 34,
+        "id": "orthogonal-L369-p3-on-gap34",
+        "phase": 3,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "3d153dbeb9248438b0acb8633383319e24461339fcd7353832efe7856190b4ce"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "00",
+        "gap": 34,
+        "id": "orthogonal-L369-p3-counter_off-gap34",
+        "phase": 3,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "3bed635ef355157edbb75ea7d1229a9d052afe2da15857c8c3c3714fec177ca2"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "10",
+        "gap": 34,
+        "id": "orthogonal-L369-p3-counter_off-gap34",
+        "phase": 3,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "3496fd1c49ce1a31dd427adb001068db55ac8996e88dd23d093e58a7bb0fc9af"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "01",
+        "gap": 34,
+        "id": "orthogonal-L369-p3-counter_off-gap34",
+        "phase": 3,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "73e1bfcd7a62fb276bd7d2ce3c22da052b4efa44cb346c12bb24fca35482f5c8"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "11",
+        "gap": 34,
+        "id": "orthogonal-L369-p3-counter_off-gap34",
+        "phase": 3,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "0e3984417be0bdff0bb154c43bb0f2c38961b8b3acc7a2255c7ea48017721d62"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "00",
+        "gap": 36,
+        "id": "orthogonal-L369-p3-on-gap36",
+        "phase": 3,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "4162342dfafa53d4185aa54a90b261a27dc6902a0a2127b0dff933778ce9a0ef"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "10",
+        "gap": 36,
+        "id": "orthogonal-L369-p3-on-gap36",
+        "phase": 3,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "95c71e87e4d43a4bb646d6feef9222e5db071c01fce07408a0e89a437a3ea505"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "01",
+        "gap": 36,
+        "id": "orthogonal-L369-p3-on-gap36",
+        "phase": 3,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "c30d494687ff61a8f9a9ab02b1b83f9e0e85fe47d6fa21759f1cdd2a62c4ceb1"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "11",
+        "gap": 36,
+        "id": "orthogonal-L369-p3-on-gap36",
+        "phase": 3,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "bc1b3f2c74e2b0731e07873d8a66a51afc804934200acedd5c1dd97c067cd8da"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "00",
+        "gap": 36,
+        "id": "orthogonal-L369-p3-counter_off-gap36",
+        "phase": 3,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "3bed635ef355157edbb75ea7d1229a9d052afe2da15857c8c3c3714fec177ca2"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "10",
+        "gap": 36,
+        "id": "orthogonal-L369-p3-counter_off-gap36",
+        "phase": 3,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "3496fd1c49ce1a31dd427adb001068db55ac8996e88dd23d093e58a7bb0fc9af"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "01",
+        "gap": 36,
+        "id": "orthogonal-L369-p3-counter_off-gap36",
+        "phase": 3,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "873118faccb91d97c0d90ad1d565ab5ba94069a89bdf18e1429d4f23ad7ecd98"
+    },
+    {
+      "case": {
+        "clock_mode": "counter_off",
+        "control": "11",
+        "gap": 36,
+        "id": "orthogonal-L369-p3-counter_off-gap36",
+        "phase": 3,
+        "side": 369,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "3711efe0f8de75faf6391cc4ec7a89da1b770c582fbaa1c6fd44d69e7587016a"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "00",
+        "gap": 0,
+        "id": "orthogonal-L385-p3-on-gap0",
+        "phase": 3,
+        "side": 385,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "d209196b5948703047df1a6ab8433f2e4bb3b5a3b7549ca24fc1a24d28b53b46"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "10",
+        "gap": 0,
+        "id": "orthogonal-L385-p3-on-gap0",
+        "phase": 3,
+        "side": 385,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "135ec5ec74addc3d21c1103ec8a0b748c3958d5d922f12bf7d91d90b534b1947"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "01",
+        "gap": 0,
+        "id": "orthogonal-L385-p3-on-gap0",
+        "phase": 3,
+        "side": 385,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "c7f03e601b5a4249d1b53c4200338d3a5322ccf9c0511f62f4d5b0b63eb22319"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "11",
+        "gap": 0,
+        "id": "orthogonal-L385-p3-on-gap0",
+        "phase": 3,
+        "side": 385,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "b40bfea8a9208a2b3d6472276b645bdbc9317a40ac52a3eb678104f6c5a585ca"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "00",
+        "gap": 34,
+        "id": "orthogonal-L385-p3-on-gap34",
+        "phase": 3,
+        "side": 385,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "d209196b5948703047df1a6ab8433f2e4bb3b5a3b7549ca24fc1a24d28b53b46"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "10",
+        "gap": 34,
+        "id": "orthogonal-L385-p3-on-gap34",
+        "phase": 3,
+        "side": 385,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "135ec5ec74addc3d21c1103ec8a0b748c3958d5d922f12bf7d91d90b534b1947"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "01",
+        "gap": 34,
+        "id": "orthogonal-L385-p3-on-gap34",
+        "phase": 3,
+        "side": 385,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "0395b7ab1ab2e852b176e7332230b1663c713c6430b34916db324de4074d11d7"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "11",
+        "gap": 34,
+        "id": "orthogonal-L385-p3-on-gap34",
+        "phase": 3,
+        "side": 385,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "45592007df55d873f6552d17fd0be117dea50a573e17306883b56743dba8d3a4"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "00",
+        "gap": 36,
+        "id": "orthogonal-L385-p3-on-gap36",
+        "phase": 3,
+        "side": 385,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "d209196b5948703047df1a6ab8433f2e4bb3b5a3b7549ca24fc1a24d28b53b46"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "10",
+        "gap": 36,
+        "id": "orthogonal-L385-p3-on-gap36",
+        "phase": 3,
+        "side": 385,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "135ec5ec74addc3d21c1103ec8a0b748c3958d5d922f12bf7d91d90b534b1947"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "01",
+        "gap": 36,
+        "id": "orthogonal-L385-p3-on-gap36",
+        "phase": 3,
+        "side": 385,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "926aa7e597c57e684ac4f057be275081eef71c9f4fe4cf8b5ea03862e52103a3"
+    },
+    {
+      "case": {
+        "clock_mode": "on",
+        "control": "11",
+        "gap": 36,
+        "id": "orthogonal-L385-p3-on-gap36",
+        "phase": 3,
+        "side": 385,
+        "stage": "encounter"
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "fb8a2f29eedbb1c2616fb1b5249096bcf015bd426fb3a460fae446f9d9b5570b"
+    }
+  ],
+  "scope": "Independent exact-matrix initial reconstruction; no functional evolution claim."
+}

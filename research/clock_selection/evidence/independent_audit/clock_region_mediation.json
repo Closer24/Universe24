@@ -1,0 +1,1191 @@
+{
+  "accepted_groups": 4,
+  "auditor_sha256": "36e6b7255f15ebaf031cdb20f0f701f793f91630da3137e6069ce529fabffb6f",
+  "cpu_seconds": 13.68070617,
+  "failure": null,
+  "full_rewinds": 16,
+  "full_states": 784,
+  "groups": [
+    {
+      "C_follows_region_all_exteriors": true,
+      "accepted_clock_region_mediation": true,
+      "all_full_state_inverses": true,
+      "carrier_follows_region_all_exteriors": true,
+      "cases": {
+        "01/01": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": true,
+          "exact_output_carrier": true,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": true,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": true,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        },
+        "01/11": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": null,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": false,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        },
+        "11/01": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": true,
+          "exact_output_carrier": true,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": null,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": true,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        },
+        "11/11": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": true,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": false,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "complete_control_group": true,
+      "eligible": true,
+      "gap": 36,
+      "native_suffix_controls_pass": true,
+      "side": 337
+    },
+    {
+      "C_follows_region_all_exteriors": true,
+      "accepted_clock_region_mediation": true,
+      "all_full_state_inverses": true,
+      "carrier_follows_region_all_exteriors": true,
+      "cases": {
+        "01/01": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": true,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": false,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        },
+        "01/11": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": true,
+          "exact_output_carrier": true,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": null,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": true,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        },
+        "11/01": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": null,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": false,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        },
+        "11/11": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": true,
+          "exact_output_carrier": true,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": true,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": true,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "complete_control_group": true,
+      "eligible": true,
+      "gap": 38,
+      "native_suffix_controls_pass": true,
+      "side": 337
+    },
+    {
+      "C_follows_region_all_exteriors": true,
+      "accepted_clock_region_mediation": true,
+      "all_full_state_inverses": true,
+      "carrier_follows_region_all_exteriors": true,
+      "cases": {
+        "01/01": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": true,
+          "exact_output_carrier": true,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": true,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": true,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        },
+        "01/11": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": null,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": false,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        },
+        "11/01": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": true,
+          "exact_output_carrier": true,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": null,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": true,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        },
+        "11/11": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": true,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": false,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "complete_control_group": true,
+      "eligible": true,
+      "gap": 36,
+      "native_suffix_controls_pass": true,
+      "side": 353
+    },
+    {
+      "C_follows_region_all_exteriors": true,
+      "accepted_clock_region_mediation": true,
+      "all_full_state_inverses": true,
+      "carrier_follows_region_all_exteriors": true,
+      "cases": {
+        "01/01": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": true,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": false,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        },
+        "01/11": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": true,
+          "exact_output_carrier": true,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": null,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": true,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        },
+        "11/01": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": null,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": false,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        },
+        "11/11": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": true,
+          "exact_output_carrier": true,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": true,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": true,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "complete_control_group": true,
+      "eligible": true,
+      "gap": 38,
+      "native_suffix_controls_pass": true,
+      "side": 353
+    }
+  ],
+  "helper_sha256": "c7716ebcaa0aa8cf54068b6c00c58945a0b4273417d68996dfd03aa9b4c802eb",
+  "parent_audit_sha256": "8b303f68e6663c7d14582204b280c2079d7a1ab3a038a6c978d2fbb6900d16c2",
+  "passed": true,
+  "protocol_sha256": "8211d2fc55294d8453cc1816f2b2e7475b65864650e60d52f67167ac2b93a4bb",
+  "records": [
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": true,
+        "exact_output_carrier": true,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": true,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": true,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "01",
+        "gap": 36,
+        "id": "mediation-L337-gap36-E01-R01",
+        "region_source": "01",
+        "side": 337
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "8bb8d036acbc32e9294e37c3080d5b867f5cc5c3242a93173d48dbcbfcfba610",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "5229dd731ee454399fd0f40eedbaf21886449bfa8df74bf20fc4bfdf3cd8e969",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 97,
+          "2": 97
+        },
+        "whole_board_C_count": 194,
+        "whole_board_C_sha256": "acb852346c3fa5f4147f8b951c77d5912d21ebaafe88318768519fa4567692f3",
+        "whole_board_R_change_count": 1096,
+        "whole_board_R_sha256": "b1f02718c2a700f7531fee5b7063a3c9e29df42d3fb3ebf4c92624d73b8e1459"
+      },
+      "source_records": {
+        "01": {
+          "anchor_state_sha256": "a5b5e12aa68cb7a7d4e1c1e9428ee353a42f610f16640ab27137bdde2daf03dc",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L337-r0-p0-d2-gap36-clock1-01.json.gz",
+          "record_gzip_sha256": "271e36f0aa1c099b4bceaad07d235c87f7e4c680cd52c088cb1bfb63681f7cf6",
+          "record_sha256": "d6a98e985beded04af9fa68f93f5ac421257c0afaeaeb1887d9b2a874526d7ba"
+        },
+        "11": {
+          "anchor_state_sha256": "725077cbe6abecee3530eca8f83688cf61b70aff68cb9d3049c7098e82cfac2f",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L337-r0-p0-d2-gap36-clock1-11.json.gz",
+          "record_gzip_sha256": "df7a37c0d40290ffe1bdc0bd2c6d4e66119fae1e7af2e054ebe904278de5f953",
+          "record_sha256": "15fda1c967b6bcf57b7e3a9be27416ac94d39408b620582d8ce106fcd0d0a229"
+        }
+      }
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": null,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": false,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "01",
+        "gap": 36,
+        "id": "mediation-L337-gap36-E01-R11",
+        "region_source": "11",
+        "side": 337
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "6d3ef2cc0d31af8b7484ef392259307c0820ef938370bbfa113899ddb826a0fa",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "d98760e66aaf8de3d170d3ec44961c93bc475dbc74d25ee6320a9fa4221c1a9a",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 93,
+          "2": 93
+        },
+        "whole_board_C_count": 186,
+        "whole_board_C_sha256": "07e8d0f03cca5d03b597094b365c03a189eed076f3f2247fe7af5bf24305b800",
+        "whole_board_R_change_count": 1072,
+        "whole_board_R_sha256": "67978182a60782fe7370414b7131f4b853b1cdc31b7a0bce356e5a354e14b4a3"
+      },
+      "source_records": {
+        "01": {
+          "anchor_state_sha256": "a5b5e12aa68cb7a7d4e1c1e9428ee353a42f610f16640ab27137bdde2daf03dc",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L337-r0-p0-d2-gap36-clock1-01.json.gz",
+          "record_gzip_sha256": "271e36f0aa1c099b4bceaad07d235c87f7e4c680cd52c088cb1bfb63681f7cf6",
+          "record_sha256": "d6a98e985beded04af9fa68f93f5ac421257c0afaeaeb1887d9b2a874526d7ba"
+        },
+        "11": {
+          "anchor_state_sha256": "725077cbe6abecee3530eca8f83688cf61b70aff68cb9d3049c7098e82cfac2f",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L337-r0-p0-d2-gap36-clock1-11.json.gz",
+          "record_gzip_sha256": "df7a37c0d40290ffe1bdc0bd2c6d4e66119fae1e7af2e054ebe904278de5f953",
+          "record_sha256": "15fda1c967b6bcf57b7e3a9be27416ac94d39408b620582d8ce106fcd0d0a229"
+        }
+      }
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": true,
+        "exact_output_carrier": true,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": null,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": true,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "11",
+        "gap": 36,
+        "id": "mediation-L337-gap36-E11-R01",
+        "region_source": "01",
+        "side": 337
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "5529dff2e0217708f055261da2533b84311287829fff4e7c0e4d3c08120f8fae",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "b78e4ff5dd353163c38ee23039dd858b9a03af31453df1c5c8a1cb18d702a9a8",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 193,
+          "2": 193
+        },
+        "whole_board_C_count": 386,
+        "whole_board_C_sha256": "c987ec8199ffb56cde1d82af8eebae094c0a0716a10a37c6e759934207ec3967",
+        "whole_board_R_change_count": 2056,
+        "whole_board_R_sha256": "d9127172021891b40156e40f6f6732f182d0831f31df0d587650919bcd825f7d"
+      },
+      "source_records": {
+        "01": {
+          "anchor_state_sha256": "a5b5e12aa68cb7a7d4e1c1e9428ee353a42f610f16640ab27137bdde2daf03dc",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L337-r0-p0-d2-gap36-clock1-01.json.gz",
+          "record_gzip_sha256": "271e36f0aa1c099b4bceaad07d235c87f7e4c680cd52c088cb1bfb63681f7cf6",
+          "record_sha256": "d6a98e985beded04af9fa68f93f5ac421257c0afaeaeb1887d9b2a874526d7ba"
+        },
+        "11": {
+          "anchor_state_sha256": "725077cbe6abecee3530eca8f83688cf61b70aff68cb9d3049c7098e82cfac2f",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L337-r0-p0-d2-gap36-clock1-11.json.gz",
+          "record_gzip_sha256": "df7a37c0d40290ffe1bdc0bd2c6d4e66119fae1e7af2e054ebe904278de5f953",
+          "record_sha256": "15fda1c967b6bcf57b7e3a9be27416ac94d39408b620582d8ce106fcd0d0a229"
+        }
+      }
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": true,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": false,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "11",
+        "gap": 36,
+        "id": "mediation-L337-gap36-E11-R11",
+        "region_source": "11",
+        "side": 337
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "a0b3661a16342c3966dd16186ec5343257b25ff9eb9258c1411fa9c2f881ad50",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "e33c4674fd7db3bbd2e260d7958ebf3165671bc37bd764dcebdaf0ae7e368f0f",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 189,
+          "2": 189
+        },
+        "whole_board_C_count": 378,
+        "whole_board_C_sha256": "a42751ef54691b9cf86fc84df6ee952fc478a7cc118c95bc484e06373ed6b54d",
+        "whole_board_R_change_count": 2032,
+        "whole_board_R_sha256": "bbdeb74d6155c6553ca7cea4635c003f56a87daf7d24fe6f2443430531261d0b"
+      },
+      "source_records": {
+        "01": {
+          "anchor_state_sha256": "a5b5e12aa68cb7a7d4e1c1e9428ee353a42f610f16640ab27137bdde2daf03dc",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L337-r0-p0-d2-gap36-clock1-01.json.gz",
+          "record_gzip_sha256": "271e36f0aa1c099b4bceaad07d235c87f7e4c680cd52c088cb1bfb63681f7cf6",
+          "record_sha256": "d6a98e985beded04af9fa68f93f5ac421257c0afaeaeb1887d9b2a874526d7ba"
+        },
+        "11": {
+          "anchor_state_sha256": "725077cbe6abecee3530eca8f83688cf61b70aff68cb9d3049c7098e82cfac2f",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L337-r0-p0-d2-gap36-clock1-11.json.gz",
+          "record_gzip_sha256": "df7a37c0d40290ffe1bdc0bd2c6d4e66119fae1e7af2e054ebe904278de5f953",
+          "record_sha256": "15fda1c967b6bcf57b7e3a9be27416ac94d39408b620582d8ce106fcd0d0a229"
+        }
+      }
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": true,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": false,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "01",
+        "gap": 38,
+        "id": "mediation-L337-gap38-E01-R01",
+        "region_source": "01",
+        "side": 337
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "d90e350ed87dddf5d29efc3dae7b5bccf88ce643891fcbab9041af7aa383f50d",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "7273371befe03e19e52c81dedfaa771199f0c5570ee0efa56c0b9c83ed39aaef",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 93,
+          "2": 93
+        },
+        "whole_board_C_count": 186,
+        "whole_board_C_sha256": "8577bb42293518cf94a2671cec1f688d14e580f459e80663ce8d83b2a034d199",
+        "whole_board_R_change_count": 1072,
+        "whole_board_R_sha256": "0bcdf47c46b5533bdc0682e2e46ca7d98e4c7383922c83995a900991bdcd63de"
+      },
+      "source_records": {
+        "01": {
+          "anchor_state_sha256": "3955f8e9bf60d7c35a0e5bdef881a5bdc1aff2242149d71334a2ab6ec66f86b9",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L337-r0-p0-d2-gap38-clock1-01.json.gz",
+          "record_gzip_sha256": "25df9d1d755f9556df66f2ed5ed23b8470ae353a000e4ca94b76b9e632a63818",
+          "record_sha256": "26e44ef868add1c22622001088c5ed0caf4540f90261882e594bf97f6fb16307"
+        },
+        "11": {
+          "anchor_state_sha256": "9f9eaece9a047d09604198ddd7cd4afcf87973e69fae721bc489e804533bfdbe",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L337-r0-p0-d2-gap38-clock1-11.json.gz",
+          "record_gzip_sha256": "e9783bc5f96d6affa8ae1791c54f8f2e4e95eaf0c2c9fe70ea8879fa7148a024",
+          "record_sha256": "58c35d5559f691adea6506711973aa0f0bf53d621eb1d978ba1efdfebf28d1c0"
+        }
+      }
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": true,
+        "exact_output_carrier": true,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": null,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": true,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "01",
+        "gap": 38,
+        "id": "mediation-L337-gap38-E01-R11",
+        "region_source": "11",
+        "side": 337
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "e1446a6d41367bad33f9a5d337d51524558e0ec8f13308ae37d0f84d224eb720",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "86f2d2bd89192f27452289e33b413c1803edf6077df2c0c08033929bfb698854",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 97,
+          "2": 97
+        },
+        "whole_board_C_count": 194,
+        "whole_board_C_sha256": "cc9bfcce7509d6c25613a66cf75806d8f663b45763e89afe62e82b415978fe1a",
+        "whole_board_R_change_count": 1096,
+        "whole_board_R_sha256": "1f97f2de3937f0f498d164a3d0584a68fc9aa811409e22911700666d7bd37502"
+      },
+      "source_records": {
+        "01": {
+          "anchor_state_sha256": "3955f8e9bf60d7c35a0e5bdef881a5bdc1aff2242149d71334a2ab6ec66f86b9",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L337-r0-p0-d2-gap38-clock1-01.json.gz",
+          "record_gzip_sha256": "25df9d1d755f9556df66f2ed5ed23b8470ae353a000e4ca94b76b9e632a63818",
+          "record_sha256": "26e44ef868add1c22622001088c5ed0caf4540f90261882e594bf97f6fb16307"
+        },
+        "11": {
+          "anchor_state_sha256": "9f9eaece9a047d09604198ddd7cd4afcf87973e69fae721bc489e804533bfdbe",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L337-r0-p0-d2-gap38-clock1-11.json.gz",
+          "record_gzip_sha256": "e9783bc5f96d6affa8ae1791c54f8f2e4e95eaf0c2c9fe70ea8879fa7148a024",
+          "record_sha256": "58c35d5559f691adea6506711973aa0f0bf53d621eb1d978ba1efdfebf28d1c0"
+        }
+      }
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": null,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": false,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "11",
+        "gap": 38,
+        "id": "mediation-L337-gap38-E11-R01",
+        "region_source": "01",
+        "side": 337
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "1b379cce21658669471d90a59fb277b9f8389f77c5108291fac9a48e348ec15a",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "7a373d9fa9d7232802a2fc821203217a4a80cc366c3deb4ea26c3794390dd970",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 189,
+          "2": 189
+        },
+        "whole_board_C_count": 378,
+        "whole_board_C_sha256": "676d8916ce481fa1221658323fc3df131d42495dbacb6d9591d7023fb5475639",
+        "whole_board_R_change_count": 2032,
+        "whole_board_R_sha256": "d996210fabf6f8631ed6f0aa681a61420a2ec3928bc00a80ebc2d56cd5c2bbef"
+      },
+      "source_records": {
+        "01": {
+          "anchor_state_sha256": "3955f8e9bf60d7c35a0e5bdef881a5bdc1aff2242149d71334a2ab6ec66f86b9",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L337-r0-p0-d2-gap38-clock1-01.json.gz",
+          "record_gzip_sha256": "25df9d1d755f9556df66f2ed5ed23b8470ae353a000e4ca94b76b9e632a63818",
+          "record_sha256": "26e44ef868add1c22622001088c5ed0caf4540f90261882e594bf97f6fb16307"
+        },
+        "11": {
+          "anchor_state_sha256": "9f9eaece9a047d09604198ddd7cd4afcf87973e69fae721bc489e804533bfdbe",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L337-r0-p0-d2-gap38-clock1-11.json.gz",
+          "record_gzip_sha256": "e9783bc5f96d6affa8ae1791c54f8f2e4e95eaf0c2c9fe70ea8879fa7148a024",
+          "record_sha256": "58c35d5559f691adea6506711973aa0f0bf53d621eb1d978ba1efdfebf28d1c0"
+        }
+      }
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": true,
+        "exact_output_carrier": true,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": true,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": true,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "11",
+        "gap": 38,
+        "id": "mediation-L337-gap38-E11-R11",
+        "region_source": "11",
+        "side": 337
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "b1feddc2c2276aacf581a2399026c6b877e37444363bd7ad2e8f993025f36405",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "478a07fc357dc4a4698c2f39c04cf69109d6b68c54fa5b34f3770abbdfe1d117",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 193,
+          "2": 193
+        },
+        "whole_board_C_count": 386,
+        "whole_board_C_sha256": "295434351955b035e347d34a6f0f111b798a3fa7bc06ab87d32abd508b1a0811",
+        "whole_board_R_change_count": 2056,
+        "whole_board_R_sha256": "a1cb329527efcb1242372dc21e21885fc5d76ce39119144adcd6408f504c53c3"
+      },
+      "source_records": {
+        "01": {
+          "anchor_state_sha256": "3955f8e9bf60d7c35a0e5bdef881a5bdc1aff2242149d71334a2ab6ec66f86b9",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L337-r0-p0-d2-gap38-clock1-01.json.gz",
+          "record_gzip_sha256": "25df9d1d755f9556df66f2ed5ed23b8470ae353a000e4ca94b76b9e632a63818",
+          "record_sha256": "26e44ef868add1c22622001088c5ed0caf4540f90261882e594bf97f6fb16307"
+        },
+        "11": {
+          "anchor_state_sha256": "9f9eaece9a047d09604198ddd7cd4afcf87973e69fae721bc489e804533bfdbe",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L337-r0-p0-d2-gap38-clock1-11.json.gz",
+          "record_gzip_sha256": "e9783bc5f96d6affa8ae1791c54f8f2e4e95eaf0c2c9fe70ea8879fa7148a024",
+          "record_sha256": "58c35d5559f691adea6506711973aa0f0bf53d621eb1d978ba1efdfebf28d1c0"
+        }
+      }
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": true,
+        "exact_output_carrier": true,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": true,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": true,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "01",
+        "gap": 36,
+        "id": "mediation-L353-gap36-E01-R01",
+        "region_source": "01",
+        "side": 353
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "91b5b0a41a539e4745e4691a5a0d33f618b154c5beaf51c82e34647ece088da5",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "2b7d4807352dcc4f2e5d5cb28fa1e5d10ad35cda73ccd30a3e2c87c2e18d9bcb",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 97,
+          "2": 97
+        },
+        "whole_board_C_count": 194,
+        "whole_board_C_sha256": "9e03824d3d11a77ca4aed734391252859b5d6b5d8dad173693cdbb08128a8013",
+        "whole_board_R_change_count": 1096,
+        "whole_board_R_sha256": "b6e8f02f720d4b08d4feac78330fc0908956530a9d03a228ad02a6d75aed96a3"
+      },
+      "source_records": {
+        "01": {
+          "anchor_state_sha256": "20828cab1586988fbb46ddd91c79c0520ecb42b22f8a05cf59ec5a9279c1c0cd",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L353-r0-p0-d2-gap36-clock1-01.json.gz",
+          "record_gzip_sha256": "a38518ca2194590e551d654b44208d47a47a15140f5730faf5361af69b7a10fa",
+          "record_sha256": "4057201108af1a956aacfb59faf0691794f8b5132df55315a4bb5212eadfc345"
+        },
+        "11": {
+          "anchor_state_sha256": "c3c291fc42ce9e7ba42dd8e2cf6c7c6dde1f3be5b5377baebf3690074e7caaa5",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L353-r0-p0-d2-gap36-clock1-11.json.gz",
+          "record_gzip_sha256": "0946c5abceb8369fbb97a83c1392a006e7ef76b087ea45c0e5c249731050a3b1",
+          "record_sha256": "22b276830a6ce1f348fa661468103e71bab0bf47b035e7592a9bd84682ec5261"
+        }
+      }
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": null,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": false,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "01",
+        "gap": 36,
+        "id": "mediation-L353-gap36-E01-R11",
+        "region_source": "11",
+        "side": 353
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "752aa716ab71b123f1c828d310a893ca4693349ed00677a8bbee170b298ae99f",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "dc96001dd858eba6a5d7fe62ffd5242d427c08495107cfa11f7af18c67097adc",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 93,
+          "2": 93
+        },
+        "whole_board_C_count": 186,
+        "whole_board_C_sha256": "162d944df1a3921c3800f5c49949c3ed1cd8cad45c8a25f162d6e503663429a0",
+        "whole_board_R_change_count": 1072,
+        "whole_board_R_sha256": "bfa62e94f2991c480d8b3a9a5675929a544bd96d18c2bc8eb4679d218bb9df83"
+      },
+      "source_records": {
+        "01": {
+          "anchor_state_sha256": "20828cab1586988fbb46ddd91c79c0520ecb42b22f8a05cf59ec5a9279c1c0cd",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L353-r0-p0-d2-gap36-clock1-01.json.gz",
+          "record_gzip_sha256": "a38518ca2194590e551d654b44208d47a47a15140f5730faf5361af69b7a10fa",
+          "record_sha256": "4057201108af1a956aacfb59faf0691794f8b5132df55315a4bb5212eadfc345"
+        },
+        "11": {
+          "anchor_state_sha256": "c3c291fc42ce9e7ba42dd8e2cf6c7c6dde1f3be5b5377baebf3690074e7caaa5",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L353-r0-p0-d2-gap36-clock1-11.json.gz",
+          "record_gzip_sha256": "0946c5abceb8369fbb97a83c1392a006e7ef76b087ea45c0e5c249731050a3b1",
+          "record_sha256": "22b276830a6ce1f348fa661468103e71bab0bf47b035e7592a9bd84682ec5261"
+        }
+      }
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": true,
+        "exact_output_carrier": true,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": null,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": true,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "11",
+        "gap": 36,
+        "id": "mediation-L353-gap36-E11-R01",
+        "region_source": "01",
+        "side": 353
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "6b04650b02d1b08724a06b3e8680f863694b0b6fb840ac4dd0fd10a788573eea",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "5bb6f315f12285d5cf21d301219c936f9786a36d7224ab5d6b4d4cfa335b2483",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 193,
+          "2": 193
+        },
+        "whole_board_C_count": 386,
+        "whole_board_C_sha256": "0f95a456308d79e840a1aced6dac4480adc405c193c03e62ff05ce8d1beef1f6",
+        "whole_board_R_change_count": 2056,
+        "whole_board_R_sha256": "831d264c9d4d8d69b87ef52a3bc73f78814aeee4637dbe77756548b8a017ab78"
+      },
+      "source_records": {
+        "01": {
+          "anchor_state_sha256": "20828cab1586988fbb46ddd91c79c0520ecb42b22f8a05cf59ec5a9279c1c0cd",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L353-r0-p0-d2-gap36-clock1-01.json.gz",
+          "record_gzip_sha256": "a38518ca2194590e551d654b44208d47a47a15140f5730faf5361af69b7a10fa",
+          "record_sha256": "4057201108af1a956aacfb59faf0691794f8b5132df55315a4bb5212eadfc345"
+        },
+        "11": {
+          "anchor_state_sha256": "c3c291fc42ce9e7ba42dd8e2cf6c7c6dde1f3be5b5377baebf3690074e7caaa5",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L353-r0-p0-d2-gap36-clock1-11.json.gz",
+          "record_gzip_sha256": "0946c5abceb8369fbb97a83c1392a006e7ef76b087ea45c0e5c249731050a3b1",
+          "record_sha256": "22b276830a6ce1f348fa661468103e71bab0bf47b035e7592a9bd84682ec5261"
+        }
+      }
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": true,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": false,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "11",
+        "gap": 36,
+        "id": "mediation-L353-gap36-E11-R11",
+        "region_source": "11",
+        "side": 353
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "637f7482645d3e7a82fc806ce8b011b0fbb09241a77ab2c0013bef3d84df4f77",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "efca05b13199c528e5fb8f27982a2addaf2a998573aed40a612074dcb7f4fc90",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 189,
+          "2": 189
+        },
+        "whole_board_C_count": 378,
+        "whole_board_C_sha256": "cbb5366c6f1d82d0e783d50b1e88196ce70e3664a688be032b9d42a58d75b820",
+        "whole_board_R_change_count": 2032,
+        "whole_board_R_sha256": "0e14ccf40063e5a8ab2feebdcb418d3cacf8deaf31f64554fea523d43b4a1000"
+      },
+      "source_records": {
+        "01": {
+          "anchor_state_sha256": "20828cab1586988fbb46ddd91c79c0520ecb42b22f8a05cf59ec5a9279c1c0cd",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L353-r0-p0-d2-gap36-clock1-01.json.gz",
+          "record_gzip_sha256": "a38518ca2194590e551d654b44208d47a47a15140f5730faf5361af69b7a10fa",
+          "record_sha256": "4057201108af1a956aacfb59faf0691794f8b5132df55315a4bb5212eadfc345"
+        },
+        "11": {
+          "anchor_state_sha256": "c3c291fc42ce9e7ba42dd8e2cf6c7c6dde1f3be5b5377baebf3690074e7caaa5",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L353-r0-p0-d2-gap36-clock1-11.json.gz",
+          "record_gzip_sha256": "0946c5abceb8369fbb97a83c1392a006e7ef76b087ea45c0e5c249731050a3b1",
+          "record_sha256": "22b276830a6ce1f348fa661468103e71bab0bf47b035e7592a9bd84682ec5261"
+        }
+      }
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": true,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": false,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "01",
+        "gap": 38,
+        "id": "mediation-L353-gap38-E01-R01",
+        "region_source": "01",
+        "side": 353
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "b6c2656512c5a0f6deb671f735ec3792360c5d4bbc01c1c524f90760f36429ae",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "03e44a70d7eca4d99b2637e5f9785c46f65a84328e687b5e82baa701a978e123",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 93,
+          "2": 93
+        },
+        "whole_board_C_count": 186,
+        "whole_board_C_sha256": "de14d1e7879e2049a3147925ebf8e4975ba597c1482ba0074a7abe07aa2fe14f",
+        "whole_board_R_change_count": 1072,
+        "whole_board_R_sha256": "41dc53ae5810be0f64fa3627c487de1362a5922cd64dd3b5fb43a443691e8d56"
+      },
+      "source_records": {
+        "01": {
+          "anchor_state_sha256": "459c152fb73e9f9642aa575f9280a1ff006f9dfa2cc77497435d981e8efa428f",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L353-r0-p0-d2-gap38-clock1-01.json.gz",
+          "record_gzip_sha256": "15fb727d5e1cf131c05ab468396b0ef230b19744eb414f54a83c23e100803ab4",
+          "record_sha256": "03b145d39d43cbb1b98076d7aa31e4aee46294e25ae38d4e8a3ae29f5d2dc063"
+        },
+        "11": {
+          "anchor_state_sha256": "0908355f6368f44ae56edfbc62699218e06cb9ce88721ea809405c04efe69537",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L353-r0-p0-d2-gap38-clock1-11.json.gz",
+          "record_gzip_sha256": "ff7514eaadb0bebcb1080ea980c0528721b7143f40c320d3b807e554e9dc6cbe",
+          "record_sha256": "1ad1b8a6d75ef2004298461c493b22bbfbf80b771d547567dbd1a9e48a09cec3"
+        }
+      }
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": true,
+        "exact_output_carrier": true,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": null,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": true,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "01",
+        "gap": 38,
+        "id": "mediation-L353-gap38-E01-R11",
+        "region_source": "11",
+        "side": 353
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "c6427c93356fd68cde00406f15fb5885832056db321e95a996a8e993b1872351",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "80f4b6e55049c5ea401684260f4293fc825e6d5622f9f2e6ce66c891e37b0118",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 97,
+          "2": 97
+        },
+        "whole_board_C_count": 194,
+        "whole_board_C_sha256": "c5480b09036d04c18eda604f5930712c4497bf3d8557d8b1394e3a202399ed11",
+        "whole_board_R_change_count": 1096,
+        "whole_board_R_sha256": "9c537129f96a68e08c641adb958036ce95d4ae79d279b507136ff2d84ca0508a"
+      },
+      "source_records": {
+        "01": {
+          "anchor_state_sha256": "459c152fb73e9f9642aa575f9280a1ff006f9dfa2cc77497435d981e8efa428f",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L353-r0-p0-d2-gap38-clock1-01.json.gz",
+          "record_gzip_sha256": "15fb727d5e1cf131c05ab468396b0ef230b19744eb414f54a83c23e100803ab4",
+          "record_sha256": "03b145d39d43cbb1b98076d7aa31e4aee46294e25ae38d4e8a3ae29f5d2dc063"
+        },
+        "11": {
+          "anchor_state_sha256": "0908355f6368f44ae56edfbc62699218e06cb9ce88721ea809405c04efe69537",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L353-r0-p0-d2-gap38-clock1-11.json.gz",
+          "record_gzip_sha256": "ff7514eaadb0bebcb1080ea980c0528721b7143f40c320d3b807e554e9dc6cbe",
+          "record_sha256": "1ad1b8a6d75ef2004298461c493b22bbfbf80b771d547567dbd1a9e48a09cec3"
+        }
+      }
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": null,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": false,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "11",
+        "gap": 38,
+        "id": "mediation-L353-gap38-E11-R01",
+        "region_source": "01",
+        "side": 353
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "f6dcbb063829db19d46426dc9e318fa7c12a047b95c0d5adcbecdc99304a264e",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "4adf20e8a7bccc0f929603c35b09deeac4c0414a5825f95f6a2328411e55870c",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 189,
+          "2": 189
+        },
+        "whole_board_C_count": 378,
+        "whole_board_C_sha256": "3736566fd0e32b70b8f631ac18cfc56e6fa9ae128a6101d4b8439b39981bac43",
+        "whole_board_R_change_count": 2032,
+        "whole_board_R_sha256": "e31bf9150e0fe4e02587d353eaa0fc06ec2c837dc7b8b8675b3dc10dd3aff8e5"
+      },
+      "source_records": {
+        "01": {
+          "anchor_state_sha256": "459c152fb73e9f9642aa575f9280a1ff006f9dfa2cc77497435d981e8efa428f",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L353-r0-p0-d2-gap38-clock1-01.json.gz",
+          "record_gzip_sha256": "15fb727d5e1cf131c05ab468396b0ef230b19744eb414f54a83c23e100803ab4",
+          "record_sha256": "03b145d39d43cbb1b98076d7aa31e4aee46294e25ae38d4e8a3ae29f5d2dc063"
+        },
+        "11": {
+          "anchor_state_sha256": "0908355f6368f44ae56edfbc62699218e06cb9ce88721ea809405c04efe69537",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L353-r0-p0-d2-gap38-clock1-11.json.gz",
+          "record_gzip_sha256": "ff7514eaadb0bebcb1080ea980c0528721b7143f40c320d3b807e554e9dc6cbe",
+          "record_sha256": "1ad1b8a6d75ef2004298461c493b22bbfbf80b771d547567dbd1a9e48a09cec3"
+        }
+      }
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": true,
+        "exact_output_carrier": true,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": true,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": true,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "11",
+        "gap": 38,
+        "id": "mediation-L353-gap38-E11-R11",
+        "region_source": "11",
+        "side": 353
+      },
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "64bd2f7f26641638f33e0f5874db26d344ca195e940b49cf0d1904ba17fded70",
+        "forward_transitions": 48,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "2ef6e529fab5fbddfe514607d59562bbabb87af33e0d6a22a75d58d8498d9bae",
+        "inverse_transitions": 48,
+        "observations": {},
+        "passed": true,
+        "states": 49,
+        "whole_board_C_by_kind": {
+          "1": 193,
+          "2": 193
+        },
+        "whole_board_C_count": 386,
+        "whole_board_C_sha256": "7b1ea0e224229f509e28fb112ab878da2341dd14af24513fb116b7a095be7d30",
+        "whole_board_R_change_count": 2056,
+        "whole_board_R_sha256": "998a636c415bb8a67cae1117045f3abb62dd190f9cd4aef86ba36441c6937d69"
+      },
+      "source_records": {
+        "01": {
+          "anchor_state_sha256": "459c152fb73e9f9642aa575f9280a1ff006f9dfa2cc77497435d981e8efa428f",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L353-r0-p0-d2-gap38-clock1-01.json.gz",
+          "record_gzip_sha256": "15fb727d5e1cf131c05ab468396b0ef230b19744eb414f54a83c23e100803ab4",
+          "record_sha256": "03b145d39d43cbb1b98076d7aa31e4aee46294e25ae38d4e8a3ae29f5d2dc063"
+        },
+        "11": {
+          "anchor_state_sha256": "0908355f6368f44ae56edfbc62699218e06cb9ce88721ea809405c04efe69537",
+          "record": "research/clock_selection/evidence/write_probe_v2/records/write-probe-L353-r0-p0-d2-gap38-clock1-11.json.gz",
+          "record_gzip_sha256": "ff7514eaadb0bebcb1080ea980c0528721b7143f40c320d3b807e554e9dc6cbe",
+          "record_sha256": "1ad1b8a6d75ef2004298461c493b22bbfbf80b771d547567dbd1a9e48a09cec3"
+        }
+      }
+    }
+  ],
+  "scope": "Finite causal mediation by an interaction-written local clock region, tested using new offline initial preparations. The preparation intervention itself is not an operation performed by the board; this study does not establish autonomous trials, preferred-route selection, or quantum measurement.",
+  "sources_unchanged": true,
+  "transitions": 768
+}

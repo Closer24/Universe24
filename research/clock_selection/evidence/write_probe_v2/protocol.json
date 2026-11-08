@@ -1,0 +1,127 @@
+{
+  "format": "universe24-clock-selection-protocol-v2",
+  "question": "Does a writer-conditioned probe gate persist when absent inputs are complete absent packets rather than stationary remainder ghosts, on new sizes and timings?",
+  "claim": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+  "board": {
+    "sides": [
+      337,
+      353
+    ],
+    "body_signs": [
+      1,
+      1,
+      1
+    ],
+    "background": [
+      0,
+      0,
+      2
+    ]
+  },
+  "steps": 88,
+  "family": {
+    "clock_remainders": [
+      0
+    ],
+    "clock_phases": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "writer_delays": [
+      2
+    ],
+    "gaps": [
+      36,
+      37,
+      38,
+      39
+    ],
+    "controls": [
+      "00",
+      "10",
+      "01",
+      "11"
+    ],
+    "clock_present": [
+      true,
+      false
+    ]
+  },
+  "geometry": "c=L//2; guide y=z=c; clock(c,c+1,c),channel2; writer origin(c-16-writer_delay,c,c); probe origin writer_x-gap; outlet(c+8,c,c),channel0.",
+  "preparation": "An absent writer/probe removes its entire declared initial GuidedPacketSource core and transverse halo and restores pristine(0,4) guide/background2 only within that24-address footprint. Present-source patch is unchanged. All apparatus, other input and outside-footprint triples remain identical. Clock-off separately removes only the designated center clock counters and preserves its remainder/halo. Fixedtensor and runtime unchanged. This NEW control protocol preserves V1counter-onlyfailure as a separate result.",
+  "pristine": {
+    "gaps": [
+      36,
+      37,
+      38,
+      39
+    ],
+    "steps": 8,
+    "side": 337,
+    "writer_delay": 2,
+    "control": "11",
+    "criterion": "Whole pristine two-packet state translates+X exactly; no clockorclockdefect."
+  },
+  "hold": {
+    "start": 32,
+    "through": 40,
+    "criterion": "All336 triples at center and face-neighbor nodes repeat after4 updates; center counter norm1, all other335counterpairs zero; every separate external input term zero and centeru=ell=0 during8updates. Compare joint to probe-only retained full region at every hold state."
+  },
+  "incoming": {
+    "offsets": [
+      4,
+      5,
+      6,
+      7
+    ],
+    "criterion": "At t=gap+offset, compare complete6x3x3/all48 carrier around native probe origin+time. Probe-present01/11 mustmatch; probe-absent00/10 mustnotmatch."
+  },
+  "output": {
+    "start": "T=24+writer_delay+gap",
+    "offsets": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "criterion": "At t=T+k require exact6x3x3/all48 +X carrier at(c+8+k,c,c).",
+    "C_window": "T-3 through T+4 inclusive at fixed(c+8,c,c,0)",
+    "C_expected": [
+      [
+        -3,
+        2,
+        -1
+      ],
+      [
+        1,
+        1,
+        1
+      ]
+    ],
+    "C_derivation": "Exact free packet fixed-node statesT-4..T+2:(0,0,0),(0,-1,4),(-1,0,4),(0,1,4),(1,0,4),(0,0,0),(0,0,0). Quotient is after.b+before.a; only -1 atT-3 and+1 atT+1 satisfy existing C guard. Frozen before all new trajectories."
+  },
+  "predictions": "Clock-present writer resets effective phase=-writer_delay mod4=2. Joint exactcarrier predicted iff gapmod4=2; probe-only iff initialphase+writer_delay+gapmod4=2. Phase2 initiallyaligned is a negativechanged-memorycontrol. Clock-absent groups have no carrier prediction and are assessed separately. Predictions never replace measured inputeligibility.",
+  "group_acceptance": "Independent full-input footprint equivalence; pristine absent-input backgrounds withinexactsourcefootprints; clockon/off counter-only difference; clock-only00 fullperiod4. All upstream and near-input contracts, strictcausal margin/noboundarycontacts. Clock-present: complete336hold32..40 and changedfullregion11vs01, no latewriter-only/nullcarrier, and differing exactoutput11vs01. Report enabling and suppressing separately; stricterrawCsignaturediscriminator separate. Clock-off lacksunitclockhold and is only a separatecomparison, never rejectedmerely for that. No result alone provesexclusive causalmediation by clock rather than residualexternalwaves.",
+  "causal_margin": "Every initially nonzero counter must be more thanH spatialedges from each periodic boundary; separately report every active boundary contact.",
+  "budget": {
+    "registered_cases": 260,
+    "max_cpu_seconds": 600,
+    "max_wall_seconds": 900,
+    "max_recorded_bytes": 157286400,
+    "max_seconds_per_record": 90,
+    "max_cells_per_record": 500000
+  },
+  "retention": "Save every complete native recording including failures and all raw C. Stop on resource limit, mark remaining cases not run and never accept incomplete control groups. Preserve executable source snapshot and hashes. CPU or byte overrun is reported explicitly; no outcome is rewritten. Preserve source-mask-equivalence certificate beforealltrajectories and separate originalV1evidence.",
+  "presenter_selection": "Allfour masks forL337,p0,gap36 andgap38,clockpresent; chosenprospectively. Missingcasesremainmissing; allnegativecasesretained.",
+  "next_stage": "Only after independent audit: vary gap,delay,r,size under a separately frozen confirmation; then investigate repeated or competing attempts. This protocol alone does not fulfill autonomous preferred-path selection.",
+  "near_incoming": {
+    "origin_offsets_from_clock": [
+      -6,
+      -5,
+      -4
+    ],
+    "criterion": "Complete6x3x3/all48 incoming packet comparison outside the predeclared seven clock-region spatialnodes, which contain the prepared controllerhalo. At t=gap+writer_delay+10,+11,+12 respectively. Compare all other triples, includingremainders. This is a near-encounter spatialinputcheck, not equality of all later controllerdonors."
+  }
+}

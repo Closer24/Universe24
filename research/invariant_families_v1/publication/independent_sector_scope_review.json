@@ -1,0 +1,50 @@
+{
+  "base_commit": "4f23f7a949e02aeb875b4b22e62488fb1d8c1007",
+  "created_utc": "2026-11-08T05:08:40.153408+00:00",
+  "external_google_doc_update_claimed": false,
+  "format": "universe24-exact-sector-documentation-review-v1",
+  "mathematical_review": {
+    "limits": "Does not exclude local, approximate or coarse formation with distinguishing information elsewhere. This is an M11 scope corollary, not a new experiment or claim-register entry.",
+    "scalar_inverse": "r=(R-2*lambda*A) mod 6; ell=(2*lambda*A+r-R)/6; (a,b)=(ell-B,A).",
+    "scope": "For a fixed nonzero ternary eigenpattern and fixed valid zero-address remainder background, the scalar recurrence is bijective and its injective full-state embedding intertwines with bijective W. Consequently W(M)=M=W^-1(M), including the union over permitted fixed backgrounds. No outside full-board state can enter at any finite update."
+  },
+  "minimal_google_doc_status_only": true,
+  "new_public_links_checked": true,
+  "passed": true,
+  "paths": [
+    {
+      "path": "README.md",
+      "sha256": "26378882dac86dfc0296f30424350ccc482dabc9453f3357a357aaee153068b8"
+    },
+    {
+      "path": "docs/CLOCK_SELECTION.md",
+      "sha256": "bae73f0de10106d420950b52fd2e6ce70cb17b51b47e17fef0ab88e510449733"
+    },
+    {
+      "path": "research/clock_selection/invariant_families_integration.md",
+      "sha256": "f31468cdd326cca5703bbc3e965425ae6eb13798f00e9ac2ea4a6a25820bdb07"
+    },
+    {
+      "path": "research/clock_selection/invariant_sector_limit.md",
+      "sha256": "486341e6637304202e4c16ff1de1c2fff11cfb212bae0a1e31751173f10d86d9"
+    },
+    {
+      "path": "research/invariant_families_v1/README.md",
+      "sha256": "bd69427acf712b2bace8615123be5f2e558476b970e694fcb54bbbdba73aa726"
+    },
+    {
+      "path": "research/invariant_families_v1/publication/google_doc_appendix_draft.txt",
+      "sha256": "990bf2263bba1bd91bfba57477b73ffce74d524542a9984f51f735c34ca61c23"
+    },
+    {
+      "path": "research/invariant_families_v1/publication/google_doc_appendix_read_receipt.json",
+      "sha256": "74aebaaa14811ff6d6f43c0bc9237452b1104349ea0774d4726572c3de9ffdde"
+    }
+  ],
+  "ready_for_authorized_docs_publication": true,
+  "reviewed_index_tree_before_receipt": "0141f8ac91ad06b01982891deb18b39b989beb6a",
+  "scientific_code_evidence_protocols_original_proofs_claim_registers_unchanged": true,
+  "test_scope": "No repeat required for this seven-path documentation-only change. Earlier source/evidence validation and CI refer to their recorded base trees.",
+  "tests_or_native_replays_performed": false,
+  "unchanged_existing_git_paths": 3773
+}

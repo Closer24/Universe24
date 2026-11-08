@@ -1,0 +1,11 @@
+{
+  "format": "universe24-preserved-prefix-diagnostic-v1",
+  "path": "research/clock_selection/evidence/independent_audit/.coherent_wave_v1.json.xj3pN7",
+  "bytes": 111411200,
+  "sha256": "76b6703f6b5c22ef7511da7f037d38363d2da33b56731c5b00ccee821bb1c84a",
+  "complete_path": "research/clock_selection/evidence/independent_audit/coherent_wave_v1.json",
+  "complete_sha256": "d99a5502d1671a3840f9a401420b86e9607f747b2fc7b3e477eb19f665ffb77f",
+  "exact_prefix": true,
+  "origin": "Unverified; independent auditor reports it was not created by the audit or gzip commands.",
+  "scope": "Preserved local partial copy; no separate scientific verdict or failed replay is inferred. The complete certificate remains authoritative."
+}

@@ -1,0 +1,2 @@
+# Preserve checksum-locked archive bytes on every checkout platform.
+*.bin binary

@@ -1,0 +1,918 @@
+{
+  "auditor_sha256": "df4139b55bc613f47ea81295b6f2c6039d87513e51b2ebb5e44ec37c8cb42015",
+  "cases": [
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L393-p0-00",
+        "phase": 0,
+        "receiver_phase": 0,
+        "side": 393,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "2cbb3c539cec159fa2f9c30bcfd118a06da9c33485084dbc9831a0e33a8e383d"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L393-p0-10",
+        "phase": 0,
+        "receiver_phase": 0,
+        "side": 393,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "dcc2375b5e91e0296c39813d536a60f8ea727dcba20de3f7cc6325ea03d23ec4"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L393-p0-01",
+        "phase": 0,
+        "receiver_phase": 0,
+        "side": 393,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "2ef3ba27ecd46e8b3fbc35add08535897b985645c7dc14a69ad6d8c4e743a461"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L393-p0-11",
+        "phase": 0,
+        "receiver_phase": 0,
+        "side": 393,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "5c2684358a36cbed6ab1c61811913cedd24ee999c7fdf7fdcafd0601e62381f1"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L393-p1-00",
+        "phase": 0,
+        "receiver_phase": 1,
+        "side": 393,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "e8c9793b92d993eec09b952849ef2fda63f142843519f40dcf86854bafd01de5"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L393-p1-10",
+        "phase": 0,
+        "receiver_phase": 1,
+        "side": 393,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "e516d39f2e3fa955592163ae1a8eb7c103dff137ff15d65750fc6528421e2ead"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L393-p1-01",
+        "phase": 0,
+        "receiver_phase": 1,
+        "side": 393,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "baa72f8b543810825202bb893a27778153214c294e6adf4dcd2f5c307381966e"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L393-p1-11",
+        "phase": 0,
+        "receiver_phase": 1,
+        "side": 393,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "f687e0d8d809a8800551be0cc0eae2793b75c0f51efd2f2af7f990ac20051e8b"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L393-p2-00",
+        "phase": 0,
+        "receiver_phase": 2,
+        "side": 393,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "a44bd942e8334d387a8de464a81d9fd0e0a2df868f0306e380d12eb0a23ae2cf"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L393-p2-10",
+        "phase": 0,
+        "receiver_phase": 2,
+        "side": 393,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "77b1cfee653bd71dc988de99d114ac6a2f820dd6e5896f893163b5ab3962a23b"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L393-p2-01",
+        "phase": 0,
+        "receiver_phase": 2,
+        "side": 393,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "6e6b2d3c98d75c9e5fa199541932dadd9309cfb695aad194ec35beb2937bbe13"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L393-p2-11",
+        "phase": 0,
+        "receiver_phase": 2,
+        "side": 393,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "68892617d06cde4b823055af2d2b108574127e8912be6e1ce8331df8290bf864"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L393-p3-00",
+        "phase": 0,
+        "receiver_phase": 3,
+        "side": 393,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "ba4b099df0995599c1985cea177add83a8d72986334935355f41472f3f15b0fb"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L393-p3-10",
+        "phase": 0,
+        "receiver_phase": 3,
+        "side": 393,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "aebd314d795df39fc44a1b184a7a67f815c7e0c910ddf30856b5b931dcef964a"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L393-p3-01",
+        "phase": 0,
+        "receiver_phase": 3,
+        "side": 393,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "2bb8e14dd40f144a83142f26f7db5a68de63135fda9d204ab52336a2ddb8b5e1"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L393-p3-11",
+        "phase": 0,
+        "receiver_phase": 3,
+        "side": 393,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "7d58e1e24ae0a0c6d6195c83f66bcdc8816c1534a069554b7e1e416c7423d3ea"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L425-p0-00",
+        "phase": 0,
+        "receiver_phase": 0,
+        "side": 425,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "1143562b01bf3aa8f8f633013f2d7dc7a33e7eabf7fd951c0e2168faa83b4f3a"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L425-p0-10",
+        "phase": 0,
+        "receiver_phase": 0,
+        "side": 425,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "3a55b23e19c87dc075201ef6d00f462177825c60921b8ac86a5353d161026828"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L425-p0-01",
+        "phase": 0,
+        "receiver_phase": 0,
+        "side": 425,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "d522e8ea5b1cd57426bc0a64791eece029216ec7ea07ea240fa16739aa3ff4ca"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L425-p0-11",
+        "phase": 0,
+        "receiver_phase": 0,
+        "side": 425,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "5c8adadcbb740fea15d2dd2d5f78b177b8784ea5dbadd8bc0f288be3e16e37ce"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L425-p1-00",
+        "phase": 0,
+        "receiver_phase": 1,
+        "side": 425,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "5fffda334a8bb86ec1bcc9d943a3e166c9af3e81b77a93a2aa3dcee409dee64d"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L425-p1-10",
+        "phase": 0,
+        "receiver_phase": 1,
+        "side": 425,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "bf3d6f58c0c476bdbd272c547e7a366db2abede0e9dff2ce26f866fdb712fd19"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L425-p1-01",
+        "phase": 0,
+        "receiver_phase": 1,
+        "side": 425,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "032474d629e9385b4f61d41cffa357746cd7232bd67e898ca764e5c3ca1efa89"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L425-p1-11",
+        "phase": 0,
+        "receiver_phase": 1,
+        "side": 425,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "f9ac083212bf4e0fb1b4f7e859257f0a4e37f5318dcd74c171f371066a463083"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L425-p2-00",
+        "phase": 0,
+        "receiver_phase": 2,
+        "side": 425,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "784f37f4904baa1fbc54e142b96bae2bbd302668d0c9abfe08f62500fa3fda5f"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L425-p2-10",
+        "phase": 0,
+        "receiver_phase": 2,
+        "side": 425,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "fdd66989ebf820a03b0d44997b73b79d7cd2d050eeb383e0be7ffa4931472a05"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L425-p2-01",
+        "phase": 0,
+        "receiver_phase": 2,
+        "side": 425,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "52253375b5b14bfa6a98a148e0c9968e8b1adb557d43a854bda034776b10e4cc"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L425-p2-11",
+        "phase": 0,
+        "receiver_phase": 2,
+        "side": 425,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "7e1c59f0e107abca645a896fcf8562b9128036ec570990613fdddcb86bfb6f07"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L425-p3-00",
+        "phase": 0,
+        "receiver_phase": 3,
+        "side": 425,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "2a10451b0984ec46fe7aa9cf3a0e05a7458ae64f7487c47086c44ed9075a05a6"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L425-p3-10",
+        "phase": 0,
+        "receiver_phase": 3,
+        "side": 425,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "708519df3bcfe900ba6f69f7cb34c9bfadd1e8701f3fd9198af013db487db5a3"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L425-p3-01",
+        "phase": 0,
+        "receiver_phase": 3,
+        "side": 425,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "066eee556016c5605bf03ba1afee3e69318681b7d47b22aefc70c34d73295f5c"
+    },
+    {
+      "case": {
+        "clock_present": true,
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 38,
+        "guide_target_channel": 0,
+        "id": "carrier-memory-L425-p3-11",
+        "phase": 0,
+        "receiver_phase": 3,
+        "side": 425,
+        "stage": "encounter",
+        "writer_delay": 2
+      },
+      "complete_initial_equal": true,
+      "initial_sha256": "d719b563c5edb2fd9af6f78e3ac9467c2c588819372827b05b7e1819f5d25d84"
+    }
+  ],
+  "groups": [
+    {
+      "complete_interfaces_compatible": true,
+      "footprint_checks": [
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "0",
+          "outside_footprint_equal": true,
+          "source": "writer"
+        },
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "1",
+          "outside_footprint_equal": true,
+          "source": "writer"
+        },
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "0",
+          "outside_footprint_equal": true,
+          "source": "probe"
+        },
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "1",
+          "outside_footprint_equal": true,
+          "source": "probe"
+        }
+      ],
+      "initial_active_margins": [
+        176,
+        176,
+        140,
+        140
+      ],
+      "receiver_phase": 0,
+      "side": 393
+    },
+    {
+      "complete_interfaces_compatible": true,
+      "footprint_checks": [
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "0",
+          "outside_footprint_equal": true,
+          "source": "writer"
+        },
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "1",
+          "outside_footprint_equal": true,
+          "source": "writer"
+        },
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "0",
+          "outside_footprint_equal": true,
+          "source": "probe"
+        },
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "1",
+          "outside_footprint_equal": true,
+          "source": "probe"
+        }
+      ],
+      "initial_active_margins": [
+        176,
+        176,
+        140,
+        140
+      ],
+      "receiver_phase": 1,
+      "side": 393
+    },
+    {
+      "complete_interfaces_compatible": true,
+      "footprint_checks": [
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "0",
+          "outside_footprint_equal": true,
+          "source": "writer"
+        },
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "1",
+          "outside_footprint_equal": true,
+          "source": "writer"
+        },
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "0",
+          "outside_footprint_equal": true,
+          "source": "probe"
+        },
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "1",
+          "outside_footprint_equal": true,
+          "source": "probe"
+        }
+      ],
+      "initial_active_margins": [
+        176,
+        176,
+        140,
+        140
+      ],
+      "receiver_phase": 2,
+      "side": 393
+    },
+    {
+      "complete_interfaces_compatible": true,
+      "footprint_checks": [
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "0",
+          "outside_footprint_equal": true,
+          "source": "writer"
+        },
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "1",
+          "outside_footprint_equal": true,
+          "source": "writer"
+        },
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "0",
+          "outside_footprint_equal": true,
+          "source": "probe"
+        },
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "1",
+          "outside_footprint_equal": true,
+          "source": "probe"
+        }
+      ],
+      "initial_active_margins": [
+        176,
+        176,
+        140,
+        140
+      ],
+      "receiver_phase": 3,
+      "side": 393
+    },
+    {
+      "complete_interfaces_compatible": true,
+      "footprint_checks": [
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "0",
+          "outside_footprint_equal": true,
+          "source": "writer"
+        },
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "1",
+          "outside_footprint_equal": true,
+          "source": "writer"
+        },
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "0",
+          "outside_footprint_equal": true,
+          "source": "probe"
+        },
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "1",
+          "outside_footprint_equal": true,
+          "source": "probe"
+        }
+      ],
+      "initial_active_margins": [
+        192,
+        192,
+        156,
+        156
+      ],
+      "receiver_phase": 0,
+      "side": 425
+    },
+    {
+      "complete_interfaces_compatible": true,
+      "footprint_checks": [
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "0",
+          "outside_footprint_equal": true,
+          "source": "writer"
+        },
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "1",
+          "outside_footprint_equal": true,
+          "source": "writer"
+        },
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "0",
+          "outside_footprint_equal": true,
+          "source": "probe"
+        },
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "1",
+          "outside_footprint_equal": true,
+          "source": "probe"
+        }
+      ],
+      "initial_active_margins": [
+        192,
+        192,
+        156,
+        156
+      ],
+      "receiver_phase": 1,
+      "side": 425
+    },
+    {
+      "complete_interfaces_compatible": true,
+      "footprint_checks": [
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "0",
+          "outside_footprint_equal": true,
+          "source": "writer"
+        },
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "1",
+          "outside_footprint_equal": true,
+          "source": "writer"
+        },
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "0",
+          "outside_footprint_equal": true,
+          "source": "probe"
+        },
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "1",
+          "outside_footprint_equal": true,
+          "source": "probe"
+        }
+      ],
+      "initial_active_margins": [
+        192,
+        192,
+        156,
+        156
+      ],
+      "receiver_phase": 2,
+      "side": 425
+    },
+    {
+      "complete_interfaces_compatible": true,
+      "footprint_checks": [
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "0",
+          "outside_footprint_equal": true,
+          "source": "writer"
+        },
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "1",
+          "outside_footprint_equal": true,
+          "source": "writer"
+        },
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "0",
+          "outside_footprint_equal": true,
+          "source": "probe"
+        },
+        {
+          "absent_footprint_pristine": true,
+          "changed_addresses": 24,
+          "other": "1",
+          "outside_footprint_equal": true,
+          "source": "probe"
+        }
+      ],
+      "initial_active_margins": [
+        192,
+        192,
+        156,
+        156
+      ],
+      "receiver_phase": 3,
+      "side": 425
+    }
+  ],
+  "new_native_trajectories": 0,
+  "passed": true,
+  "producer_sha256": "899cc00bb1bd1b9b8b3e891555a164139b9086cb0b21eefbdf18787320ea6c18",
+  "protocol_sha256": "9c69e4c30e337e1bee1554415106112f137145d199303c44a16ee57467efc8e4",
+  "readout_review": "Complete unmasked input/outlet boxes and fixedC windows; terminal336 region must differ from each00/10/01 with a nonzero fixed phase, all masks quiet. Weaker11-vs10 result cannot promote primary failure.",
+  "timing_review": "Whole-wrapper240CPU accounting; native checkpoint now precedes decoding/observation; exact source archive retained. Native runtime outcomes remain untested in this preflight.",
+  "wrapper_sha256": "fa02185c1c424dd687a920238a7df89c4a336c6ce4c05133c28e27aa6a2495d5"
+}
