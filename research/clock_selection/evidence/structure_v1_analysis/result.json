@@ -1,0 +1,807 @@
+{
+  "all_full_rewinds_from_original_capture": true,
+  "cases": [
+    {
+      "id": "pristine-L161-d4-10",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/pristine-L161-d4-10.json.gz",
+      "native_record_sha256": "9067aa5d40fcdaa98812147720110261e26869771d3fc725af90347b2d195f63",
+      "observations": "observations/pristine-L161-d4-10.json.gz",
+      "observations_sha256": "2a620ac8d1fc958c83b523f6841c532ec7e102be301347170dac7fdb54ad26f7"
+    },
+    {
+      "id": "pristine-L161-d7-10",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/pristine-L161-d7-10.json.gz",
+      "native_record_sha256": "08af9a955415c8bbc2862348d95f0152a759bb44c42077d8afabc745a2c35bba",
+      "observations": "observations/pristine-L161-d7-10.json.gz",
+      "observations_sha256": "dc05937dbd3978d5cc17091d91d58b1fc8db54befd4132744030fc84fee57a97"
+    },
+    {
+      "id": "pristine-L193-d4-10",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/pristine-L193-d4-10.json.gz",
+      "native_record_sha256": "853592d156e62fd83851707e41bbb95457571b487b4c829471fbae74a0f74306",
+      "observations": "observations/pristine-L193-d4-10.json.gz",
+      "observations_sha256": "b53289349df0a1369d1e010a0bc60df1ee7127f033970e729d766cd24a77d720"
+    },
+    {
+      "id": "pristine-L193-d7-10",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/pristine-L193-d7-10.json.gz",
+      "native_record_sha256": "54d9bf0e8b924bbbd450204dd69f6f5e134404f1282a2a4de52aaf871ee08fc1",
+      "observations": "observations/pristine-L193-d7-10.json.gz",
+      "observations_sha256": "69d1f109dc8ab36de4e93c1f37b4dda6541e4de8746ba56cb3618a047a22f331"
+    },
+    {
+      "id": "cluster-L161-p1-d4-00",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L161-p1-d4-00.json.gz",
+      "native_record_sha256": "79d90748852c2a8c8ae3da65ea61d221febb19e69fd615f3db489e30f8fe0c6b",
+      "observations": "observations/cluster-L161-p1-d4-00.json.gz",
+      "observations_sha256": "0ae64e7dce33d8f96be2160fcef670f2421186c5e51ecfbb81af6f4708d3ac5f"
+    },
+    {
+      "id": "cluster-L161-p1-d4-10",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L161-p1-d4-10.json.gz",
+      "native_record_sha256": "7869ec9ad54662f6d54a94998689125aac307c2a5e6e931b4de688aec07a88f3",
+      "observations": "observations/cluster-L161-p1-d4-10.json.gz",
+      "observations_sha256": "092ff14ae6a02c0fbd10329e21033485e221750b5e21c462db778ec019770083"
+    },
+    {
+      "id": "cluster-L161-p1-d4-01",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L161-p1-d4-01.json.gz",
+      "native_record_sha256": "57090546f56a023cdec8c70a355fe16d4dc1fdcfe4e9e156f9762fc6e52c6264",
+      "observations": "observations/cluster-L161-p1-d4-01.json.gz",
+      "observations_sha256": "a7b12a8e5c72bedbe8e88c20cf7ecfe7df93bf94c08c0c0b6f6b0bdbdaff5f48"
+    },
+    {
+      "id": "cluster-L161-p1-d4-11",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L161-p1-d4-11.json.gz",
+      "native_record_sha256": "5d97ab26e08445e4d675e249066fe978c06dd4db2de9b2ce9a0aadb370a45d82",
+      "observations": "observations/cluster-L161-p1-d4-11.json.gz",
+      "observations_sha256": "838bfd2c8cee96848c7150741096e1f7c72543c30a243b02dc2477d32286ba80"
+    },
+    {
+      "id": "cluster-L161-p1-d7-00",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L161-p1-d7-00.json.gz",
+      "native_record_sha256": "c004c1afb7b2e41ce3b5f5cff38797d05b0bfed9121d09d1d36686824f8db381",
+      "observations": "observations/cluster-L161-p1-d7-00.json.gz",
+      "observations_sha256": "138dea62ec4d31ce2648ea133eed00256542fe4d89465bce2d3b5aff98a6268e"
+    },
+    {
+      "id": "cluster-L161-p1-d7-10",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L161-p1-d7-10.json.gz",
+      "native_record_sha256": "5029ac79b4e3b88c4ff01509180e679a3e80b1f660862aa12931d671ec8df5b6",
+      "observations": "observations/cluster-L161-p1-d7-10.json.gz",
+      "observations_sha256": "bb9d12a3836593bb8e21830af90cd1df08bfd30567d0dfedd0378b2a5e054322"
+    },
+    {
+      "id": "cluster-L161-p1-d7-01",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L161-p1-d7-01.json.gz",
+      "native_record_sha256": "9a9c2441514c4c5a1a43e708778d4fa6b76f643c29d2440f4a53c3cc44db8d0c",
+      "observations": "observations/cluster-L161-p1-d7-01.json.gz",
+      "observations_sha256": "133a12299c66bbca3b43538bd1d1109b1d155076626bfa8e97fafd2f6c4c518e"
+    },
+    {
+      "id": "cluster-L161-p1-d7-11",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L161-p1-d7-11.json.gz",
+      "native_record_sha256": "c9649c297e4b656d9c2407778fae8cff30908b08eeedd611e3289260e31ffca5",
+      "observations": "observations/cluster-L161-p1-d7-11.json.gz",
+      "observations_sha256": "eab0cdd5c5d90e6c4a1cb293b9d7f24c495ad688a33d82c9ba07b4cb1dbb2523"
+    },
+    {
+      "id": "cluster-L161-p2-d4-00",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L161-p2-d4-00.json.gz",
+      "native_record_sha256": "8bf43728fafb39f7a36c99ea3fa93469f40bf3c7ce80bc410a9f84667c7bc50c",
+      "observations": "observations/cluster-L161-p2-d4-00.json.gz",
+      "observations_sha256": "27e35477b13d7997df60e554746185442ec6e7b9e886507f253c37d95184bc81"
+    },
+    {
+      "id": "cluster-L161-p2-d4-10",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L161-p2-d4-10.json.gz",
+      "native_record_sha256": "031f81e53c0f658d18bf58f92d71cb8c514c77e2ba638bcef3581a937b9a3d01",
+      "observations": "observations/cluster-L161-p2-d4-10.json.gz",
+      "observations_sha256": "ae3d1527e7c11186c96f447818749982cc8ada871dcdea12a7d110a2146fbba4"
+    },
+    {
+      "id": "cluster-L161-p2-d4-01",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L161-p2-d4-01.json.gz",
+      "native_record_sha256": "14c6df66ef80e7114a207745cc3125a735815bd3ab75fd24a8b7daa9cfaaac14",
+      "observations": "observations/cluster-L161-p2-d4-01.json.gz",
+      "observations_sha256": "eac65c0b553ffdd701dde56197ff44e76cb2466f72dbd18d455e3106a700edf7"
+    },
+    {
+      "id": "cluster-L161-p2-d4-11",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L161-p2-d4-11.json.gz",
+      "native_record_sha256": "18c40fb4cc019a83c6e9b96a2480659cfc8e32d9bb61d2e73c5a885f0d442a03",
+      "observations": "observations/cluster-L161-p2-d4-11.json.gz",
+      "observations_sha256": "3545ce7b104e8e04b14d22e976ec748130a531530b5496ed5e2f9e867f1b1ab6"
+    },
+    {
+      "id": "cluster-L161-p2-d7-00",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L161-p2-d7-00.json.gz",
+      "native_record_sha256": "55fe03c9b571d14ea394f5b28f44e67e3195bcc98001aa540bfc784af0b795d1",
+      "observations": "observations/cluster-L161-p2-d7-00.json.gz",
+      "observations_sha256": "446acd703157a5d7143b3c30cb8549706cbfcd534739b39af3454053c0345c2b"
+    },
+    {
+      "id": "cluster-L161-p2-d7-10",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L161-p2-d7-10.json.gz",
+      "native_record_sha256": "5be71d68be2a0df3bfc7823b3ac2d7f9c4f35443eba6b645047df1a286195c47",
+      "observations": "observations/cluster-L161-p2-d7-10.json.gz",
+      "observations_sha256": "e97cef1a01e9da7ce56ecdadac39722015586a9763246739357d1d3ee55317dd"
+    },
+    {
+      "id": "cluster-L161-p2-d7-01",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L161-p2-d7-01.json.gz",
+      "native_record_sha256": "324396d12c5fe73913e183559707f5fb743673510359bffb938b5e4da28836cb",
+      "observations": "observations/cluster-L161-p2-d7-01.json.gz",
+      "observations_sha256": "99675049678b3f76ed07860e0b158b4663e497acd2aba754299b96cbd726932f"
+    },
+    {
+      "id": "cluster-L161-p2-d7-11",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L161-p2-d7-11.json.gz",
+      "native_record_sha256": "10890ea3bf851caa83eaae8cfb422ae830fb65f6140b64a01d4a7f5d7615e61c",
+      "observations": "observations/cluster-L161-p2-d7-11.json.gz",
+      "observations_sha256": "51aa86d2acf04d8642315c660e413597d4d600a0624eb733828d164e66fbf11d"
+    },
+    {
+      "id": "cluster-L193-p1-d4-00",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L193-p1-d4-00.json.gz",
+      "native_record_sha256": "f5716b705b740619c2f8c33f2c38871703ec4debca495f828e2c736d772473ea",
+      "observations": "observations/cluster-L193-p1-d4-00.json.gz",
+      "observations_sha256": "0847b8d6a7b5709a903ae0a843ac8115cf7a6b94810d684c8be74985c75605dd"
+    },
+    {
+      "id": "cluster-L193-p1-d4-10",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L193-p1-d4-10.json.gz",
+      "native_record_sha256": "237d0e767cf056cc28409cf6813cf142786affdb9928894e81e844c6a879b5a8",
+      "observations": "observations/cluster-L193-p1-d4-10.json.gz",
+      "observations_sha256": "85f71bf2643a50048a9cef7d1d8ad73fb08852fba21e83c91a94d03df56b7539"
+    },
+    {
+      "id": "cluster-L193-p1-d4-01",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L193-p1-d4-01.json.gz",
+      "native_record_sha256": "eec26f84604cddd979b2ff51a400bd9b21c7d0f46ee351d71802ebc53d9658fa",
+      "observations": "observations/cluster-L193-p1-d4-01.json.gz",
+      "observations_sha256": "99d4b0faa16f936ae0fdf2144b14293dd85d8a4208a70488179085ac27872978"
+    },
+    {
+      "id": "cluster-L193-p1-d4-11",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L193-p1-d4-11.json.gz",
+      "native_record_sha256": "f37776dbc1228eb979d62efe672c20b08dde2b3fb0e7f0bc4eafedc4fc2cebb8",
+      "observations": "observations/cluster-L193-p1-d4-11.json.gz",
+      "observations_sha256": "83ccb96c80b6a4f61c5da5cf2cf2142043ada1c229b4cd941ed576684299f72b"
+    },
+    {
+      "id": "cluster-L193-p1-d7-00",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L193-p1-d7-00.json.gz",
+      "native_record_sha256": "874d744ae5ae267b2f0372905f113501893e072f99a2f2158483a25c17dc0d5e",
+      "observations": "observations/cluster-L193-p1-d7-00.json.gz",
+      "observations_sha256": "fe817bdae582780709d0ca0099c206ab4d39b9b108a40498c26b7fe6ccb575f4"
+    },
+    {
+      "id": "cluster-L193-p1-d7-10",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L193-p1-d7-10.json.gz",
+      "native_record_sha256": "4355ac981006ed42d79b9f4de6ea4f913369730f192752b4cefdbb3be9a018bf",
+      "observations": "observations/cluster-L193-p1-d7-10.json.gz",
+      "observations_sha256": "38c14950e8a6e67e9cb5d1c4bb42b011110ee5367421209598c8e902e546cc55"
+    },
+    {
+      "id": "cluster-L193-p1-d7-01",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L193-p1-d7-01.json.gz",
+      "native_record_sha256": "2fde8275d65559440436f002faf2804296993f9dc6b91c676147e83c93579a68",
+      "observations": "observations/cluster-L193-p1-d7-01.json.gz",
+      "observations_sha256": "dadd53e5f3762328327a22dba2ce25d1d0edf747b8f913fc95330163e8993c1b"
+    },
+    {
+      "id": "cluster-L193-p1-d7-11",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L193-p1-d7-11.json.gz",
+      "native_record_sha256": "8d32c1d8365c2cd31dc9c90c96aa2c9b50528771cd9e1b04800a5e13edb6a607",
+      "observations": "observations/cluster-L193-p1-d7-11.json.gz",
+      "observations_sha256": "290ff5c7fcae29b9ce6d006744e49c0fd63bbce6c5a0f2bb113d1feeb0db4242"
+    },
+    {
+      "id": "cluster-L193-p2-d4-00",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L193-p2-d4-00.json.gz",
+      "native_record_sha256": "9a48a8df4330939e8d6a3b19392a97fb93a145b7754898b7f2ba316c1e78c3de",
+      "observations": "observations/cluster-L193-p2-d4-00.json.gz",
+      "observations_sha256": "89ae3ca1fd2d643e6391b8d9abe955f0ce4c32df66d1f480989c5f72347d3cf6"
+    },
+    {
+      "id": "cluster-L193-p2-d4-10",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L193-p2-d4-10.json.gz",
+      "native_record_sha256": "8995f588e1f6795b0a38c15f2134c21c4c5c030997f07544f15a3a923598d253",
+      "observations": "observations/cluster-L193-p2-d4-10.json.gz",
+      "observations_sha256": "fbf143fe4acbbef71d76dda3ee781471a71b49c319ea22eeb2cb683824f7fa47"
+    },
+    {
+      "id": "cluster-L193-p2-d4-01",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L193-p2-d4-01.json.gz",
+      "native_record_sha256": "8a29c56880a550d7134d4fdca5fc4fc1cca0449fa98eda01c27ad308a8e62f62",
+      "observations": "observations/cluster-L193-p2-d4-01.json.gz",
+      "observations_sha256": "0e83fa88d6bdb6e89116e3cfd0f8e742e759af8aebf33b82f1d144dfa42cc5b2"
+    },
+    {
+      "id": "cluster-L193-p2-d4-11",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L193-p2-d4-11.json.gz",
+      "native_record_sha256": "a23d7ee98f040552b37a29b168c09691e04fcee1c695749fe204ee9652467a8c",
+      "observations": "observations/cluster-L193-p2-d4-11.json.gz",
+      "observations_sha256": "c6043dc97ccb53f3073b83fa595c1887d6e3b2dbd68eae0c699525fa093a3291"
+    },
+    {
+      "id": "cluster-L193-p2-d7-00",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L193-p2-d7-00.json.gz",
+      "native_record_sha256": "10152732442c2a8056fa70b9f3e0d043926ad5330bdf7bd5496c142160bf47a1",
+      "observations": "observations/cluster-L193-p2-d7-00.json.gz",
+      "observations_sha256": "d3e07af36602bf912725fc1ed176644fdc1abe8ca06fa66492550c69c44a2a4a"
+    },
+    {
+      "id": "cluster-L193-p2-d7-10",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L193-p2-d7-10.json.gz",
+      "native_record_sha256": "e2cbfb1752f1a5ce75f9c8d6ce935f374f4f094d15086cf166928d8b82c1f1c3",
+      "observations": "observations/cluster-L193-p2-d7-10.json.gz",
+      "observations_sha256": "2a281aa929bc59cc39958da90bfc05b6313c8c9ff0b259057d0f5966b194778e"
+    },
+    {
+      "id": "cluster-L193-p2-d7-01",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L193-p2-d7-01.json.gz",
+      "native_record_sha256": "c0c716dd410b9ec99cfca58a9cea314df238838f3d7d1c922831def5edced4b4",
+      "observations": "observations/cluster-L193-p2-d7-01.json.gz",
+      "observations_sha256": "19e21edf7f07b4f42bda0377fabbd1a02db5e0f90e434cc9ada89b6c7714a98c"
+    },
+    {
+      "id": "cluster-L193-p2-d7-11",
+      "native_record": "research/clock_selection/evidence/structure_v1_corrected/records/cluster-L193-p2-d7-11.json.gz",
+      "native_record_sha256": "e543a1bf47cbccca4d9731bd6f9a582a6f16b03f62de3e3cdcd246ce575a0f4c",
+      "observations": "observations/cluster-L193-p2-d7-11.json.gz",
+      "observations_sha256": "4c3487649f15a2258784acc875d4d5b7d2d2eaaa50d7c7c4855fe2b9bd428ca3"
+    }
+  ],
+  "complete_states_reanalyzed": 1764,
+  "completed_cases": 36,
+  "corrected_fields": [
+    {
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "pristine-L161-d4-10",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "pristine-L161-d7-10",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "pristine-L193-d4-10",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "pristine-L193-d7-10",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L161-p1-d4-00",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L161-p1-d4-10",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs"
+      ],
+      "id": "cluster-L161-p1-d4-01",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L161-p1-d4-11",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L161-p1-d7-00",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L161-p1-d7-10",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs"
+      ],
+      "id": "cluster-L161-p1-d7-01",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L161-p1-d7-11",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L161-p2-d4-00",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L161-p2-d4-10",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs"
+      ],
+      "id": "cluster-L161-p2-d4-01",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs"
+      ],
+      "id": "cluster-L161-p2-d4-11",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L161-p2-d7-00",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L161-p2-d7-10",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs"
+      ],
+      "id": "cluster-L161-p2-d7-01",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs"
+      ],
+      "id": "cluster-L161-p2-d7-11",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L193-p1-d4-00",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L193-p1-d4-10",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs"
+      ],
+      "id": "cluster-L193-p1-d4-01",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L193-p1-d4-11",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L193-p1-d7-00",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L193-p1-d7-10",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs"
+      ],
+      "id": "cluster-L193-p1-d7-01",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L193-p1-d7-11",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L193-p2-d4-00",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L193-p2-d4-10",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs"
+      ],
+      "id": "cluster-L193-p2-d4-01",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs"
+      ],
+      "id": "cluster-L193-p2-d4-11",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L193-p2-d7-00",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs",
+        "separated_products_without_parent"
+      ],
+      "id": "cluster-L193-p2-d7-10",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs"
+      ],
+      "id": "cluster-L193-p2-d7-01",
+      "new_product_count": 0,
+      "old_product_count": 0
+    },
+    {
+      "fields": [
+        "separated_product_pairs"
+      ],
+      "id": "cluster-L193-p2-d7-11",
+      "new_product_count": 0,
+      "old_product_count": 0
+    }
+  ],
+  "cpu_seconds": 20.467936724,
+  "groups": [
+    {
+      "incoming_valid": true,
+      "pristine": true
+    },
+    {
+      "incoming_valid": true,
+      "pristine": true
+    },
+    {
+      "incoming_valid": true,
+      "pristine": true
+    },
+    {
+      "incoming_valid": true,
+      "pristine": true
+    },
+    {
+      "clock_only_complete_template": true,
+      "clock_only_period5": true,
+      "counter_masks_commute": true,
+      "eligible_source_comparison": true,
+      "geometry": {
+        "delay": 4,
+        "id": "cluster-L161-p1-d4",
+        "kind": "encounter",
+        "phase": 1,
+        "side": 161
+      },
+      "incoming_controls": {
+        "00": true,
+        "01": true,
+        "10": true,
+        "11": true
+      },
+      "joint_canonical_cluster_retained_in_hold": false,
+      "matched_remainders": true,
+      "motion_attraction_repulsion": "not_tested_no_two_initial_moving_objects",
+      "physical_binding_or_dissociation_established": false,
+      "signal_created_recurrent_region": false,
+      "signal_reconfigured_recurrent_region": false,
+      "source_induced_separated_clock_products": false
+    },
+    {
+      "clock_only_complete_template": true,
+      "clock_only_period5": true,
+      "counter_masks_commute": true,
+      "eligible_source_comparison": true,
+      "geometry": {
+        "delay": 7,
+        "id": "cluster-L161-p1-d7",
+        "kind": "encounter",
+        "phase": 1,
+        "side": 161
+      },
+      "incoming_controls": {
+        "00": true,
+        "01": true,
+        "10": true,
+        "11": true
+      },
+      "joint_canonical_cluster_retained_in_hold": false,
+      "matched_remainders": true,
+      "motion_attraction_repulsion": "not_tested_no_two_initial_moving_objects",
+      "physical_binding_or_dissociation_established": false,
+      "signal_created_recurrent_region": false,
+      "signal_reconfigured_recurrent_region": false,
+      "source_induced_separated_clock_products": false
+    },
+    {
+      "clock_only_complete_template": true,
+      "clock_only_period5": true,
+      "counter_masks_commute": true,
+      "eligible_source_comparison": true,
+      "geometry": {
+        "delay": 4,
+        "id": "cluster-L161-p2-d4",
+        "kind": "encounter",
+        "phase": 2,
+        "side": 161
+      },
+      "incoming_controls": {
+        "00": true,
+        "01": true,
+        "10": true,
+        "11": true
+      },
+      "joint_canonical_cluster_retained_in_hold": true,
+      "matched_remainders": true,
+      "motion_attraction_repulsion": "not_tested_no_two_initial_moving_objects",
+      "physical_binding_or_dissociation_established": false,
+      "signal_created_recurrent_region": false,
+      "signal_reconfigured_recurrent_region": false,
+      "source_induced_separated_clock_products": false
+    },
+    {
+      "clock_only_complete_template": true,
+      "clock_only_period5": true,
+      "counter_masks_commute": true,
+      "eligible_source_comparison": true,
+      "geometry": {
+        "delay": 7,
+        "id": "cluster-L161-p2-d7",
+        "kind": "encounter",
+        "phase": 2,
+        "side": 161
+      },
+      "incoming_controls": {
+        "00": true,
+        "01": true,
+        "10": true,
+        "11": true
+      },
+      "joint_canonical_cluster_retained_in_hold": true,
+      "matched_remainders": true,
+      "motion_attraction_repulsion": "not_tested_no_two_initial_moving_objects",
+      "physical_binding_or_dissociation_established": false,
+      "signal_created_recurrent_region": false,
+      "signal_reconfigured_recurrent_region": true,
+      "source_induced_separated_clock_products": false
+    },
+    {
+      "clock_only_complete_template": true,
+      "clock_only_period5": true,
+      "counter_masks_commute": true,
+      "eligible_source_comparison": true,
+      "geometry": {
+        "delay": 4,
+        "id": "cluster-L193-p1-d4",
+        "kind": "encounter",
+        "phase": 1,
+        "side": 193
+      },
+      "incoming_controls": {
+        "00": true,
+        "01": true,
+        "10": true,
+        "11": true
+      },
+      "joint_canonical_cluster_retained_in_hold": false,
+      "matched_remainders": true,
+      "motion_attraction_repulsion": "not_tested_no_two_initial_moving_objects",
+      "physical_binding_or_dissociation_established": false,
+      "signal_created_recurrent_region": false,
+      "signal_reconfigured_recurrent_region": false,
+      "source_induced_separated_clock_products": false
+    },
+    {
+      "clock_only_complete_template": true,
+      "clock_only_period5": true,
+      "counter_masks_commute": true,
+      "eligible_source_comparison": true,
+      "geometry": {
+        "delay": 7,
+        "id": "cluster-L193-p1-d7",
+        "kind": "encounter",
+        "phase": 1,
+        "side": 193
+      },
+      "incoming_controls": {
+        "00": true,
+        "01": true,
+        "10": true,
+        "11": true
+      },
+      "joint_canonical_cluster_retained_in_hold": false,
+      "matched_remainders": true,
+      "motion_attraction_repulsion": "not_tested_no_two_initial_moving_objects",
+      "physical_binding_or_dissociation_established": false,
+      "signal_created_recurrent_region": false,
+      "signal_reconfigured_recurrent_region": false,
+      "source_induced_separated_clock_products": false
+    },
+    {
+      "clock_only_complete_template": true,
+      "clock_only_period5": true,
+      "counter_masks_commute": true,
+      "eligible_source_comparison": true,
+      "geometry": {
+        "delay": 4,
+        "id": "cluster-L193-p2-d4",
+        "kind": "encounter",
+        "phase": 2,
+        "side": 193
+      },
+      "incoming_controls": {
+        "00": true,
+        "01": true,
+        "10": true,
+        "11": true
+      },
+      "joint_canonical_cluster_retained_in_hold": true,
+      "matched_remainders": true,
+      "motion_attraction_repulsion": "not_tested_no_two_initial_moving_objects",
+      "physical_binding_or_dissociation_established": false,
+      "signal_created_recurrent_region": false,
+      "signal_reconfigured_recurrent_region": false,
+      "source_induced_separated_clock_products": false
+    },
+    {
+      "clock_only_complete_template": true,
+      "clock_only_period5": true,
+      "counter_masks_commute": true,
+      "eligible_source_comparison": true,
+      "geometry": {
+        "delay": 7,
+        "id": "cluster-L193-p2-d7",
+        "kind": "encounter",
+        "phase": 2,
+        "side": 193
+      },
+      "incoming_controls": {
+        "00": true,
+        "01": true,
+        "10": true,
+        "11": true
+      },
+      "joint_canonical_cluster_retained_in_hold": true,
+      "matched_remainders": true,
+      "motion_attraction_repulsion": "not_tested_no_two_initial_moving_objects",
+      "physical_binding_or_dissociation_established": false,
+      "signal_created_recurrent_region": false,
+      "signal_reconfigured_recurrent_region": true,
+      "source_induced_separated_clock_products": false
+    }
+  ],
+  "native_records_unchanged": true,
+  "new_trajectories": 0,
+  "presenter_native_bundle_unchanged": true,
+  "protocol_sha256": "49a6ae786de1b4afd67dfae59c8cfaad55d5ed293e8ca1b824b0226ab135e018",
+  "scope": "Passive corrected observations; zero new physics trajectories. Original false assessments preserved.",
+  "status": "completed",
+  "wall_seconds": 20.494011823000164
+}

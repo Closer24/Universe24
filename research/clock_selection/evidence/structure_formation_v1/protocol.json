@@ -1,0 +1,64 @@
+{
+  "id": "U24-CLOCK-SELECTION-STRUCTURE-FORMATION-v1",
+  "question": "Can two initially complete isolated clock preparations create a new counter-active bridge and settle into a localized recurrent stationary composite under unchanged Rule3?",
+  "baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+  "status": "Proposal only. Initial assembly may be checked; trajectories require root execution approval.",
+  "board": {"background": [0, 0, 2], "body_signs": [1, 1, 1]},
+  "steps": 96,
+  "family": {
+    "sides": [225, 257],
+    "distances": [2, 3, 4],
+    "second_counter_signs": [1, -1],
+    "controls": ["00", "10", "01", "11"],
+    "registered_cases": 48,
+    "seed": null
+  },
+  "preparation": {
+    "positions": "Let c=floor(L/2). A=(c-floor(d/2),c,c); B=A+(d,0,0). No wrap is requested.",
+    "first_clock": "At A, channel0=(1,1,0), channel14=(-1,-1,4). Every other triple in its seven-node radius-one region equals (0,0,2).",
+    "second_clock": "At B, channel0=(s,s,0), channel14=(-s,-s,4), with s=+1 or -1. Every other triple in its seven-node radius-one region equals (0,0,2). These are complete isolated phases 0 and 2, respectively, of the same canonical four-step orbit.",
+    "composition": "Use two immutable native Patch placements and finalize once. Explicitly assign every triple in both full seven-node regions. Equal shared assignments are permitted; conflicting assignments are rejected. No overwrites or addition of complete states. d=1 is excluded because it is not two initially valid isolated templates.",
+    "masks": "Bits remove only the corresponding initial pair of nonzero core counters. All initial remainders, tensor, positions, target region and observation rules are identical across 00/10/01/11. Source locations never alias.",
+    "static_checks": "Before evolution verify both complete templates in 11, active complete templates in each singleton, all remainder equality across masks, commuting counter masks, exactly one common halo node for d2 and none for d3/4, and active boundary margin greater than96. Assembly proves compatibility only, not runtime independence."
+  },
+  "initial_identity": {
+    "canonical_core_channel0": [[1,1,0],[1,-1,0],[-1,-1,0],[-1,1,0]],
+    "canonical_core_channel14": "Counter negative of channel0, remainder4.",
+    "channel0_recipient_halo_remainders": [2,4,2,0],
+    "channel14_recipient_halo_remainders": [2,0,2,4],
+    "other_triples": "Every unassigned triple in the complete seven-node template is (0,0,2). Recipient channels are determined from actual fixed port maps, with an independent algebra check.",
+    "tracking": "Compare all336 triples at both original centers to every registered phase at every state. Report matches, ambiguity and loss. Do not relocate a failed template or substitute an activity centroid. This study does not claim moving object identities."
+  },
+  "readouts": {
+    "target_region": "All48 triples on the union of radius-one neighborhoods of EVERY site of the closed A-to-B straight X segment: 17,22,27 spatial nodes for d2,3,4. This includes the transverse halo of an emergent intermediate bridge.",
+    "bridge_nodes": "The d-1 strictly intermediate sites on the A-to-B segment. A bridge event is any nonzero a or b on any of their48 channels; record all native values and first occurrence.",
+    "hold_states": [64,96],
+    "periods": [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
+    "periodicity": "Exact equality of every target triple at t and t+p for all admissible t in the hold. Report every matching registered period and the smallest. At p16 the hold includes two complete periods plus the repeated endpoint.",
+    "isolation": "Every individual signed external incoming counter term entering any target channel is zero during updates65 through96. Also retain nonzero incoming terms at all earlier updates. Cancellation of terms is not isolation.",
+    "singleton_validity": "Each singleton must preserve the expected complete isolated336-triple phase at its active center at every state0..96; the other source counters remain zero. Both singleton bridge counter traces must remain zero for0..96. Failures make the corresponding formation comparison ineligible.",
+    "joint_causal_interaction": "For each original center separately, compare its complete48 counter pairs in11 with its active singleton control at equal native times. Require a joint difference at both centers during the hold. Report full target triple differences separately; do not call a shared halo remainder difference alone newly formed coupling.",
+    "new_bridge": "A bridge is initially counter-inactive and becomes active in11, while both singleton controls and00 have zero bridge counters throughout0..96. For a persistent recurrent bridge, at least one bridge counter is nonzero in the first matching period block beginning at64; exact recurrence then repeats it within the fixed hold.",
+    "formation": "Eligible initial and singleton controls AND an exact nonzero target period1..16 inhold64..96 AND individual-term isolation AND a new recurrent bridge AND the registered joint causal interaction at both original centers. Name a positive a finite stationary composite formed from two initially complete clock preparations; not attraction, matter, chemical binding or permanent stability.",
+    "failed_identity": "Report separately whether original isolated clock templates survive, disappear transiently, or are absent during thehold. Identity loss alone does not satisfy formation or dissociation.",
+    "full_state": "Retain every complete native state, including outside-target radiation and remainders, full state hashes, one-step and full rewind checks, and active boundary-hit diagnostics. No clipping or discarded trajectories.",
+    "raw_C": "Retain every C0/C1/C2 event with quotient, address, native update, allsix signed previous-state input terms and u. Regions are fixed endpointcore nodes, intermediatebridge nodes, remainingtargethalo, andexterior. No event class is assigned approval, cancellation, selection or binding semantics."
+  },
+  "predictions_before_execution": {
+    "d2_same_sign": "The shared middle channel0 has u=2,r=2 at the firstupdate, hence ell=1 and triple(0,1,0); channel14 receivesu=-2 and becomes(0,-1,4). This predicts immediate bridge creation, not late recurrence or formation. Only this family member is a candidate for the registered nonlinear formation outcome.",
+    "d2_opposite_sign": "Shared middle inputs cancel at every step of the exact four-step core cycle. Shared middle remains(0,0,2); no counter bridge. The whole prepared state has period4. Individual full halo templates can differ from isolatedtemplates because their shared remainders cancel; report that distinction.",
+    "d3_d4": "Disjoint complete radius-one halos with zero halo quotients preserve each isolated four-step orbit; no bridge counters and no core coupling, for both sign choices. These are exact negative controls conditional on the verified fixed ports.",
+    "historical_evidence": "The existing40-step structure_results.json already reports interaction for same-sign d2, no whole-state returnthrough12, and no core interaction for d3/d6. The new question is finite full-region recurrent formation with exact controls, not discovery of the already recorded d2 interaction."
+  },
+  "budget": {
+    "max_cpu_seconds": 300,
+    "max_wall_seconds": 600,
+    "max_sparse_channels_per_state": 20000,
+    "max_cumulative_native_rows_per_record": 1940000,
+    "max_seconds_per_record": 45,
+    "max_recorded_bytes": 67108864,
+    "stop": "Stop cleanly before a new group if its budget cannot be reserved. Preserve all completed records and any partial-case failure receipt. A budget stop is inconclusive. Never discard frames or alter criteria to fit a limit."
+  },
+  "presenter": "Allfour controls for d2,same-sign,L225 plus d2opposite and d3same joint controls: six complete recordings, with all raw state retained. No new display or engine behavior.",
+  "acceptance": "Report static compatibility, source-control eligibility, exact negative-control agreement, bridge activation, full-region recurrence, isolation, causal interaction and complete formation conjunction separately. Positive and negative findings are equally retained. Independent replay must precede publication of a formation claim."
+}

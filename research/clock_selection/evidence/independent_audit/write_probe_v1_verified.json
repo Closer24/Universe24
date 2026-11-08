@@ -1,0 +1,4055 @@
+{
+  "cpu_budget_seconds": 600.0,
+  "cpu_seconds": 60.66270428,
+  "execution_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+  "failure": null,
+  "format": "universe24-clock-selection-independent-audit-v1",
+  "full_rewinds": 68,
+  "full_states": 5220,
+  "groups": [
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": true,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "fa51aefc26a7456e1ec26771d07a6389938dc2edbf307d7ebd6d8151d8518c6e",
+        "01": "5905a15f6b7363cf5930ecf766d6a2e3be79c27b17bd3dbbed9e7d45afe087ec",
+        "10": "9367e8fdf6507e104e59ab6df5bafa7a3ea4f54274d5030c697f0bfe8c15c794",
+        "11": "7382699bfee483ee78214ed39e8df4201aec22c31ce1226040cd95a2d3417d87"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap32",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": false,
+      "predicted_probe_only_carrier": false,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": true,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": false,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "bf4607676ac688d368c2c99197bdd9ebd0c4ed77c6a2abda113a42a0db162dce",
+        "01": "104c4c4713b49ce9bc9c0c51058ee20900e99fb2c1fbf0cc15f3f66dfbbf8720",
+        "10": "6bb4aacd19856b0125f64e55a02b98d14d81df5be0b64953fd5bad989d5bef41",
+        "11": "7262acfbe08d5e25761506445772e0142507a4d98a8458e687557ae5a81e9f5e"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap33",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": false,
+      "predicted_probe_only_carrier": true,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": true,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": false,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "abbef074f8856ae454b4aa19c03cfef6e8a7f7367b197be16c578377e981b614",
+        "01": "dd01b6344192a1872c2b5fa1bddbba851b5233ed103b7a2878858171d17b8105",
+        "10": "383d1fbd50bded7dfebf9b73d41011ca186620f2d9f21663ac5c3c61ec49034a",
+        "11": "64af0f7411eb2d1f6008369cb8b0ed94479307ba554f3b086fe481197140957f"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap34",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": true,
+      "predicted_probe_only_carrier": false,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": true,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": true,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "5b8ce9b47d53a28015b1356a08d211a3c6a693b0333f9085d789a5df01bd0fd0",
+        "01": "312bfeb147cf09f89569c210ae09a8a5c8409c48e5d9a02b6ce30e6fcd348ac1",
+        "10": "81a7dab2e647f95d2fefe1bb63061dc301c5619164a995dfc7c1284ad59e8197",
+        "11": "8532294a9e7d9808589af24ae9ded49c584bae216b277752657607c4f81731c2"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap35",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": false,
+      "predicted_probe_only_carrier": false,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": true,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": false,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "36c0241144458ed362c5696aa57465980498bdfceeaddf34d39f28b6d7d572d8",
+        "01": "018041d6abf0faad23cd2a55dbfc28d402c537f58e4868cb2ef27e4dc3acf64f",
+        "10": "37a5721bc210d7c282c1bbbcfebdc1570e6d0bc5e006d7ad8727043dcdd0b63d",
+        "11": "ee8c5477a021cf29e65fbe0fe40c363dae743fae6d4fab6a0fb886a9b93613b9"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap32",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": false,
+      "predicted_probe_only_carrier": true,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": true,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": true,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "06eedbe9a67f81c1b5f62db9cd7c1cf80a8b5c478fcfb576dd24c0962abd200d",
+        "01": "7eae1a6a449511fdb0f71f70cb535463ad67269819d0351eb61e784b312f9cde",
+        "10": "362dbfc05a0b26eae9a579e175d8ced52eeb5344bcfc66ae756428f55af0a7c9",
+        "11": "eed24766668aa0e908dd3e9bd6e01c405e619b7d55b2fc9371bbf3c6205ec572"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap33",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": false,
+      "predicted_probe_only_carrier": false,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": true,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": true,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": true,
+          "complete_hold": true,
+          "exact_output_C_signature": true,
+          "exact_output_carrier": true,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "enabled",
+      "full_final_hashes": {
+        "00": "5507c03c434d560a19ce11fbba1a98b003c27224c28d913d8ec48f57ae420a1f",
+        "01": "2a5325080c54904a178875e65944e702a1309ad4122314bf327560230c7ffc1f",
+        "10": "b88de24547af4802a54dddb70eaf54c0d2c7eff19230740e7c33e521d60160d6",
+        "11": "2643c73517eecd468d7c7a65f456741533ff03074fc39c2df55893195e855f1d"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap34",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": true,
+      "predicted_probe_only_carrier": false,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": true,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": true,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "fa58afc75c297d380fddd798ce0f8a72387fa7c548027890bf59ee9da85ad693",
+        "01": "829bb8e04b6f3a4f814c9ec62391386a1b025a08e911a96d8cf698ab71bd08b3",
+        "10": "2f64a2068e2cad157f43f7832c121162657818c49525949a5dc9cf84adad2dcd",
+        "11": "441f7fa65adc513ae74795b1269b4fb853583354bea851e27ef92f140f790d38"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap35",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": false,
+      "predicted_probe_only_carrier": false,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": true,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": true,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "8704fdf5d98fcb2033fbf37242a9e9a5dd415104b92d296c00cc9e6cea851ef7",
+        "01": "1b29a736fd7b85bb5c0049b84414f46e65ba5a0c60a94d21ebc286a0e9657633",
+        "10": "babee1e52b372fcfa7dbfc293f131b6eb487e65fe963dd22e5f1677fe8cc98dd",
+        "11": "0eafcc0872c5c4a1edd9df5ec783acefec1c90eae384bd47a204c58ad94481b3"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap32",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": false,
+      "predicted_probe_only_carrier": false,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": true,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": true,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "2ecb78323f6d5660807fdce85db664eac4ef2c83d6f87d93faf27cfadaac39b4",
+        "01": "f0bf880e06fd68884025c8a8df5bfad7f31352f434375cf73dff9bd611930882",
+        "10": "99747f54e03586f119754f7dd46d311fd482f971a7fdec8279033bb238b45ead",
+        "11": "cdb6727c0ff6e982894bc52cc86aa4f618da1a74aafd159d2eece5206a10d0fc"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap33",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": false,
+      "predicted_probe_only_carrier": false,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": true,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": false,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "6f2c2945d084ad3859bc661afd9d39ca89f7a946468ace2ffcfeef8fd8aea4b1",
+        "01": "a61bbd85ef9f349eb1b25ddb66f36258f0dcf39017a1a98be46c5d80698bf672",
+        "10": "acaa6dd06aefad1218b1ae954e61208e5f0ce3c398fe57612e54de9211d356a8",
+        "11": "38f5cc1208b8246fb2bbdd34aa4104997ab4351c0eafb74a0a05adc17f1b0572"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap34",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": true,
+      "predicted_probe_only_carrier": false,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": true,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": false,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "73ec8e6b7d5025715ed86bc1298c3c9239fdcfd98a5c47e16cc116810560a53d",
+        "01": "2e3ca07587827100f8033b4c4c3bc5f568423e43446dd9f8005e34eea126d874",
+        "10": "2a1806313a4f385db394881ba69fd10eded20cfa90e148f3d7f3d49596fb7c63",
+        "11": "edd2b1fafd6ebd04ec4a25bdb5ec09359d79a2e7ec94a9828794113e0defa45d"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap35",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": false,
+      "predicted_probe_only_carrier": true,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": true,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": true,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "e9f54849edfe23c9b879c7a1144131420f12481a9ffc7bffe150f1e0582e7c45",
+        "01": "340835bdeee553b63632d083c73e3742e4886b7db3730797d2b7d45bbf32b097",
+        "10": "ae795ee371e555db9a6dee9cef74911a51b60ddd27dd76fae01602dd13bc5ca9",
+        "11": "4e9b4b925ae2b3163fbc639d36130ae63173858d75dc001d7891a4ee047d662b"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap32",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": false,
+      "predicted_probe_only_carrier": false,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": false,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": true,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "dcb4fd9bd42fd100b7cf97b0d200e82d05b25cd85ddc7c33b40374b67f925a82",
+        "01": "fe7660738cb51f4e8dcd282efab9eb2d0ebabf247110119ec5f97677b3f8f7fe",
+        "10": "addb23eb9348ed5bddd3d108e1f11efce9c6c6040034bf98f3f2727be8843d0a",
+        "11": "3bbc2bfa5651023011cb5b8931f178611fc0126c5378315d998da2c87615d748"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap33",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": false,
+      "predicted_probe_only_carrier": false,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": false,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": false,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "29a4663fc859879a191164f027895b0ab6dab97ab54c1766a719654c41f1e4b9",
+        "01": "e24a962035e649c93f85e49e61c5f68a560db7ff29579d90228a04959d9cb33b",
+        "10": "b13f9993f65269ef0bcb52d84d1d8381bd377fd6b00e492dcafcb3c4cb71e85b",
+        "11": "b7e56b7d669842493e85f157b115002bc7d4f4078df4c815194436810e645b61"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap34",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": true,
+      "predicted_probe_only_carrier": true,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": false,
+      "writer_only_and_null_output_absent": true
+    },
+    {
+      "all_input_hold_boundary_contracts": false,
+      "carrier_and_C_discriminator": false,
+      "carrier_discriminator": false,
+      "carrier_prediction_matches": true,
+      "cases": {
+        "00": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "01": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "10": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        },
+        "11": {
+          "carrier_plus_C": false,
+          "complete_hold": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": false,
+          "no_active_boundary_contact": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "claim_limit": "A bounded history-dependent conditional probe output, not autonomous trial generation, an internally generated probe, complexity preference or physical light.",
+      "clock_only_complete_period4": true,
+      "direction": "suppressed",
+      "full_final_hashes": {
+        "00": "6ef1ab89679c8af0cb400a31496cd9c6f8a9f91402c5d1fa429d1fb4289e6b88",
+        "01": "99766f44b6b1abaa16683b9e220d6c75de18555067e90a26f6d04915fd0e03cc",
+        "10": "7633bbb5bb6756863780fefde99d079263161ef781132a011d886c90d6b9fa5e",
+        "11": "c90e81da429106946a3d58479482389c031161e086e9ad247b16b70c5c0451e3"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap35",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "matched_initial_remainders": true,
+      "predicted_joint_carrier": false,
+      "predicted_probe_only_carrier": false,
+      "raw_C_discriminator": false,
+      "retained_full_region_differs": false,
+      "writer_only_and_null_output_absent": true
+    }
+  ],
+  "independent_auditor_sha256": "db72cdd87b718ed6efc2232e12d22c067a4d6b230998b9baa1fc40bf228228d3",
+  "passed": true,
+  "peak_resident_bytes": 97673216,
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.39",
+  "protocol_sha256": "1a66353f1400fb3f02869142f41290ab5d534b091be29e6bdd6a7ffc368fa805",
+  "python": "3.12.14",
+  "records": [
+    {
+      "assessment": {
+        "pristine_translation": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-pristine-L321-gap32",
+        "phase": 0,
+        "side": 321,
+        "stage": "pristine",
+        "writer_delay": 1
+      },
+      "id": "write-probe-pristine-L321-gap32-11",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "424e737b82617f9367e5de8862ea29f6c4c3e1b2594743ba903ffe8a4d2496e6",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "1f32ca66d4b1b3a425273c6736fed73b79dd2b76fe917d3b407a477e0434fe9a",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {
+          "1": 32,
+          "2": 32
+        },
+        "whole_board_C_count": 64,
+        "whole_board_C_sha256": "57fce4be437760fd88daf12cb387ad1ae31be8e8a8b15684167703389525441e",
+        "whole_board_R_change_count": 320,
+        "whole_board_R_sha256": "66671d4b58278f2c7964c63f45f0abd920b3813ebd038e3503142152a1e14ea6"
+      }
+    },
+    {
+      "assessment": {
+        "pristine_translation": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-pristine-L321-gap33",
+        "phase": 0,
+        "side": 321,
+        "stage": "pristine",
+        "writer_delay": 1
+      },
+      "id": "write-probe-pristine-L321-gap33-11",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "afdd0af4c10453da5c6fa8922f84654173655062166599497a212b9679b54690",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "9ce7ab1f3c8eba3a0ab8b83ed1c82816656bcc632e78dd46bab084c27cb313a6",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {
+          "1": 32,
+          "2": 32
+        },
+        "whole_board_C_count": 64,
+        "whole_board_C_sha256": "3cf532cd29783db68be666c8c8b31a5d110ff09b2d3c1b201655c1f2ef58731e",
+        "whole_board_R_change_count": 320,
+        "whole_board_R_sha256": "22b1bdd2dc30955a7c833632be07074db2010220cdf77fe31a8285a3361da788"
+      }
+    },
+    {
+      "assessment": {
+        "pristine_translation": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-pristine-L321-gap34",
+        "phase": 0,
+        "side": 321,
+        "stage": "pristine",
+        "writer_delay": 1
+      },
+      "id": "write-probe-pristine-L321-gap34-11",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "ca66fc94dc3def8cc1b795d7c2eee6c03dde7aae066751da47ca86752053643e",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "4751ca8cd9de67c71d232a7c686d368f8f029d978869dee4c3f1b75614b86c8b",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {
+          "1": 32,
+          "2": 32
+        },
+        "whole_board_C_count": 64,
+        "whole_board_C_sha256": "d8f1fcc7b9c3871211eb6817aa478540bcdb79cea03464fcf5ef912f4505d8ae",
+        "whole_board_R_change_count": 320,
+        "whole_board_R_sha256": "84a4610093742ba7f4fd9d1dbeaa60e0c8007818d8230a73cafd5b2a5c97710c"
+      }
+    },
+    {
+      "assessment": {
+        "pristine_translation": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-pristine-L321-gap35",
+        "phase": 0,
+        "side": 321,
+        "stage": "pristine",
+        "writer_delay": 1
+      },
+      "id": "write-probe-pristine-L321-gap35-11",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "0cf2f6c90140883d3fd19ff77638f62b3e64631aca7c905478011d968c2169c4",
+        "forward_transitions": 8,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "cbce63d5fa00bad94fd57091222ce2d7ac3f9cfe1146293d22f4d533a1f3505d",
+        "inverse_transitions": 8,
+        "observations": {},
+        "passed": true,
+        "states": 9,
+        "whole_board_C_by_kind": {
+          "1": 32,
+          "2": 32
+        },
+        "whole_board_C_count": 64,
+        "whole_board_C_sha256": "c2eafd119a7cb8fd1e38152b783fe8fcf5299761e0918aeb16407b086313a574",
+        "whole_board_R_change_count": 320,
+        "whole_board_R_sha256": "3b717d6394723b623cc206e9eb2d780d1e6db812802e8372496ffbf895811987"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap32",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p0-d1-gap32-00",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "e1236e8d8db0b2b8862e29d6bc0c445168e9b64322918bcff9e2fbc0fa1cc977",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "e1236e8d8db0b2b8862e29d6bc0c445168e9b64322918bcff9e2fbc0fa1cc977",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 240,
+        "whole_board_R_sha256": "6ce03066caefa9104429785eb84849c2dbcc263253eaefcae4bdbe55ee1a9c57"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap32",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p0-d1-gap32-10",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "bffb4fb73b4038f028934812ec8b69b6ee6ae5dd5a58b1fb483eb8f6caffc47c",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "ee9869757b08f4daf6b0a35b5aea80429ee31f2dcff631213fd5fec9d6f27876",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "0": 28,
+          "1": 396,
+          "2": 397
+        },
+        "whole_board_C_count": 821,
+        "whole_board_C_sha256": "fbbde6a76c2608621901334f78fb3687ab291fb8417c54225f83cdaa71ca56dd",
+        "whole_board_R_change_count": 3652,
+        "whole_board_R_sha256": "31e05c9462846777b16966aaffa5b3c3c3b4baf8582064e75b17221d844c9ef0"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap32",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p0-d1-gap32-01",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "252f385c8c6abbc0daa459edc4f7a519cf4501b7c471237128c1db6fe574e5ca",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "83e3b2db52b9acf0e416fad5db0f3930533ccf74ef380b17b6a0e5d3822b507c",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "0": 379,
+          "1": 1355,
+          "2": 1452
+        },
+        "whole_board_C_count": 3186,
+        "whole_board_C_sha256": "721d3ad1af4f09a3e6206cea34fc2e3303acafe685accf8d11234a77363872c3",
+        "whole_board_R_change_count": 16042,
+        "whole_board_R_sha256": "c090275cc499bb6b7404558312f3400321aff25b01e2665b16517caef6d47fd4"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap32",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p0-d1-gap32-11",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "e13a2623b9dc5b8a5aedffd8ecea1955295ba28f63aef25b5e20e18d9c46425f",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "ceb22e15ccfc4fda23034dba9d08d091552c09ad17704431cf5a02aa21490db0",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "1": 576,
+          "2": 578
+        },
+        "whole_board_C_count": 1154,
+        "whole_board_C_sha256": "8fe8cbe92e79be3b88d900f4b73c144644ea5348e05daf3ccb137617fca27ffc",
+        "whole_board_R_change_count": 4725,
+        "whole_board_R_sha256": "0e88d620d56e91f2b50ecc97ad00945a79106e7012023fd09e3d3aedad1ff7b7"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap33",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p0-d1-gap33-00",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "304d97aafca66ef8250d2434b83208e9dc97d2f1534c029852e688ee2f251ea4",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "304d97aafca66ef8250d2434b83208e9dc97d2f1534c029852e688ee2f251ea4",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 240,
+        "whole_board_R_sha256": "6ce03066caefa9104429785eb84849c2dbcc263253eaefcae4bdbe55ee1a9c57"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap33",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p0-d1-gap33-10",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "17f944dcc05a79b02f9100e6382a2c0777182d957e4b70a2f4c9e50e9e881276",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "5e012d15a15ce29841d4481c4babca2e39ab180c3e9e2e0567619a143d8f1ff0",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "0": 26,
+          "1": 389,
+          "2": 393
+        },
+        "whole_board_C_count": 808,
+        "whole_board_C_sha256": "e09bae1bd0b814ffff721eb142a4c8dca2e65d3880496ab59b12ea123f6e7791",
+        "whole_board_R_change_count": 3540,
+        "whole_board_R_sha256": "5323624241a2d1cfc80ae30796a2ca0ae33851b38d9e86aa5b2092251968fe82"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap33",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p0-d1-gap33-01",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "c7781b808cb3695fc9bcd326d5ee7d832ef3aaf88d2a4a66b90f3f4dd39b73f8",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "9781897306e67913df303d28a6858b467e46c25df1d1acd97050bc395a5b95e2",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "0": 362,
+          "1": 1132,
+          "2": 1133
+        },
+        "whole_board_C_count": 2627,
+        "whole_board_C_sha256": "ac51aa2933952d12fd8940907d8cfacb03428f7248387e7838673a3c2547a6f4",
+        "whole_board_R_change_count": 13282,
+        "whole_board_R_sha256": "ae60f1ff228ea984b943b71368ffec5c6a79f4ecaefc3fefeb9be6a2846ed166"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap33",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p0-d1-gap33-11",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "08f02a5c266d8bee38782ef7de56e7f8d6b56ab10623b269ec3f75d938a8e523",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "d65b5c43515b4e538f2acd7addfa492913f634672efd3f87932c18b904422245",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "1": 615,
+          "2": 619
+        },
+        "whole_board_C_count": 1234,
+        "whole_board_C_sha256": "e5642a058100a39b625e3b1e5e2818c9f4802e600409df5489c2cc288c867969",
+        "whole_board_R_change_count": 4810,
+        "whole_board_R_sha256": "de37d363ef7a2430566c8f56081c6712be63f8c1e120e2081fa872f03137d15a"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap34",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p0-d1-gap34-00",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "36788437dc45ec97b38e9616e7862cf1e036204d0a5458a633fd09dd69c1170f",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "36788437dc45ec97b38e9616e7862cf1e036204d0a5458a633fd09dd69c1170f",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 240,
+        "whole_board_R_sha256": "6ce03066caefa9104429785eb84849c2dbcc263253eaefcae4bdbe55ee1a9c57"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap34",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p0-d1-gap34-10",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "6026861c4bd3d9cb648edf1f203ba5c290c9d136bbf8e47fd754cc1827135d9f",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "2a2459e6b1017cc7afa60577a335a9cccb8f161890988877e4f519c8f150646a",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "0": 25,
+          "1": 380,
+          "2": 390
+        },
+        "whole_board_C_count": 795,
+        "whole_board_C_sha256": "8d0a22b223e6cd1d7937e1dd2425e9cff0ec8a1425de5e7bfe8c69b7f28ff508",
+        "whole_board_R_change_count": 3426,
+        "whole_board_R_sha256": "f62a0b2b758b6d56cf792984f0341a935b841f9c93f09d3a24ec83400791231f"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap34",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p0-d1-gap34-01",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "1691c475a02fe8c50f3ab27337e092880cddc2e9664a4cdc1b715954a1d23260",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "ac1e4d73e1d9f2db03f0849a9b4e995cf6b20fd6b0841b3a92bb0f2e35d4e265",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "0": 262,
+          "1": 1299,
+          "2": 1249
+        },
+        "whole_board_C_count": 2810,
+        "whole_board_C_sha256": "f04aec579c2e3f58cd04e7e6416a9159a53090df5bd6a2b7c643352eeda4f633",
+        "whole_board_R_change_count": 14691,
+        "whole_board_R_sha256": "3af6e40b9e6229bafe24abb1f3818be47a6211ddcce4bdd20fe96d41bbab041c"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap34",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p0-d1-gap34-11",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "0bac6327f11fc22801b78a66f90bc7af30af8b07f29db8ace1335b89ef14d877",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "39314e08473547a891d2486f12f231ddc1358aa522925872aece3dc65d4e24b2",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "1": 588,
+          "2": 590
+        },
+        "whole_board_C_count": 1178,
+        "whole_board_C_sha256": "0ede88fbcadab07b793e841872c1380efb99baef517bbdbb392889157b5125d4",
+        "whole_board_R_change_count": 4785,
+        "whole_board_R_sha256": "f0b9c258a4c4646ba3cc6cea7c195f802bba043a11d2eab9040d753d0a88b918"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap35",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p0-d1-gap35-00",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "e6a8af263aa45d9507313f98de5a88038e94ee6c503715d835c56c009fdd46a9",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "e6a8af263aa45d9507313f98de5a88038e94ee6c503715d835c56c009fdd46a9",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 240,
+        "whole_board_R_sha256": "6ce03066caefa9104429785eb84849c2dbcc263253eaefcae4bdbe55ee1a9c57"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap35",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p0-d1-gap35-10",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "8fa56d6e8ed1125323d47b84943a31f9725ae75012c39fadd9048b9390f6c6bf",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "be6703eb8ef57ea5154bd40f0b3abc514d2daefe4fc6d6d196779c45fac0d7e8",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "0": 19,
+          "1": 377,
+          "2": 381
+        },
+        "whole_board_C_count": 777,
+        "whole_board_C_sha256": "05c3d2f38df7137f12687925b500ce7b55b7314b31717092a5c07aac2b253f3f",
+        "whole_board_R_change_count": 3333,
+        "whole_board_R_sha256": "b63caf84de1908c72794acab04fbc827de22fcd6412b2319d5b8d4fb01fff915"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap35",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p0-d1-gap35-01",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "ad0146a870e06d30312cf8a7192a2236c4a7b039393ccff8c4966631c2105e6a",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "e9e401bf35af218c458f51bfd0563f5c183a60758717c5dedf9441b575eff957",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "0": 181,
+          "1": 927,
+          "2": 968
+        },
+        "whole_board_C_count": 2076,
+        "whole_board_C_sha256": "1028ab5676de958afec3b78be3acce63130ef7ca57425c2ba94b58d9330c6f32",
+        "whole_board_R_change_count": 10979,
+        "whole_board_R_sha256": "4a8f887ba189809cda836076d2051dc0bbb6d8116a8908edc61c6882f8a38ed0"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p0-d1-gap35",
+        "phase": 0,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p0-d1-gap35-11",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "8665a42efe113f3401a5b83b8efe53b3f5c8c26070a4c6a0eee10bc1b613a75a",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "7f44739566de2003cd4f9f79b2f03762047cc190c8b3bbd7feefa18d5b35c392",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "1": 618,
+          "2": 622
+        },
+        "whole_board_C_count": 1240,
+        "whole_board_C_sha256": "41a37955da5b37f33a0356cd19ce4965409f004b5fece90db5d225eae3e40b26",
+        "whole_board_R_change_count": 4830,
+        "whole_board_R_sha256": "6b14e495d70bf1cb8349b61048ac5eab2e314e245ecc1605e93eb361637a7845"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap32",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p1-d1-gap32-00",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "8dc3979e6e31598810d0591b1ae82a70c2548172dfca456552d17750802db94c",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "8dc3979e6e31598810d0591b1ae82a70c2548172dfca456552d17750802db94c",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 240,
+        "whole_board_R_sha256": "82067829fb90913148a75374839244d9ec647ffb1da960314672fc19af8e92dc"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap32",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p1-d1-gap32-10",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "885f5c921519d457d8c0ccf33bd26d7285ba11545a796747b20e9f9d55d9ef9c",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "01581ccd305936cbdf6ed943467e2bbd14d58b60cd018469a49b408b376b8254",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "1": 161,
+          "2": 161
+        },
+        "whole_board_C_count": 322,
+        "whole_board_C_sha256": "d2b93778624fa1af0573d6b50ee78353f6182a66f805f8920035219c836686e5",
+        "whole_board_R_change_count": 1832,
+        "whole_board_R_sha256": "914c242749349dcc004ff8952d8a607fe6f86e2627c408e65ea1673d9124e908"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap32",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p1-d1-gap32-01",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "5ad4ae7c1082891dd6c8cf603c852b8cf63e82030aeceb08f5eb28b5b5d0d1a4",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "d1acf7322050b12a805a3446740417039771d2f4af94738d709fcb91a46396a2",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "0": 398,
+          "1": 1188,
+          "2": 1178
+        },
+        "whole_board_C_count": 2764,
+        "whole_board_C_sha256": "875dc7e821a2113ceed9aee5334faac89b710a9a101c7b658fbf2ed6bb4b7a6d",
+        "whole_board_R_change_count": 13904,
+        "whole_board_R_sha256": "c757dde3d86b69ac4b50e6ead4a80e162d4a831e184bf501b32276a9c3459bf4"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap32",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p1-d1-gap32-11",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "b339d2f870fe9320315f4b9cceb7796a530960ae1e5e0196c43186428fe1c22d",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "82f029c608c10cb8cd8ed63dadaa49017c04f747cea16fd9ec56137c47558f5e",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "1": 318,
+          "2": 318
+        },
+        "whole_board_C_count": 636,
+        "whole_board_C_sha256": "c844a50a6c2b5fa52b107bd27ef482aa6db635971e57f3128a4d0e5e6fa56ef7",
+        "whole_board_R_change_count": 3400,
+        "whole_board_R_sha256": "80fe016caa7e350d6d9ea796df0d26ad82732a3276ae0830502bd8b24f93dce0"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap33",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p1-d1-gap33-00",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "f7550c568912589f6d21fd48ff591d467c956ee163940a72515df2e6534c2933",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "f7550c568912589f6d21fd48ff591d467c956ee163940a72515df2e6534c2933",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 240,
+        "whole_board_R_sha256": "82067829fb90913148a75374839244d9ec647ffb1da960314672fc19af8e92dc"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap33",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p1-d1-gap33-10",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "076e7967151ee841b787ce5f30ea60c58bf475e62b59b62e16512a5e67cc9642",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "7b8335863be123937c21c0c63a7664d001ee7ae3e3bfdd4fb91290628b259f61",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "1": 161,
+          "2": 161
+        },
+        "whole_board_C_count": 322,
+        "whole_board_C_sha256": "d2b93778624fa1af0573d6b50ee78353f6182a66f805f8920035219c836686e5",
+        "whole_board_R_change_count": 1832,
+        "whole_board_R_sha256": "914c242749349dcc004ff8952d8a607fe6f86e2627c408e65ea1673d9124e908"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap33",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p1-d1-gap33-01",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "f78362c4e7687dbbce5bd79681e46026c1691a02965575fc9702364ea25dbc3c",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "4f1223aaa56824b115e4b2c11e4bd307fd846a4c5e1c3ee63d27d3a1dbfc9a79",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "0": 288,
+          "1": 1378,
+          "2": 1320
+        },
+        "whole_board_C_count": 2986,
+        "whole_board_C_sha256": "de5a6775420b840a31635c920e8a89da5882213d20007bfa5ce16a8947b2d60a",
+        "whole_board_R_change_count": 15493,
+        "whole_board_R_sha256": "9b1d909815729a91d0c81b0c0ffecd35b26cea1aa8db7ddbe21f2052b19d2186"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap33",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p1-d1-gap33-11",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "07fe5aba554f7668548f5f0832494e3562381b288d6cfa000e0ffe1bf2ef6e05",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "65460eba9cb384d18d0a7f9efc545500a7712f1496a6cb9d17fc42cd481f02bd",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "1": 411,
+          "2": 413
+        },
+        "whole_board_C_count": 824,
+        "whole_board_C_sha256": "08d391b46f84602c78848345325489b13e252bca099c9b0d5de18561ef8e6b9d",
+        "whole_board_R_change_count": 3843,
+        "whole_board_R_sha256": "5aa5dffa383ced8293a1f9ee9b873a54576c8c7c558b32f0f6144a99769ddd82"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap34",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p1-d1-gap34-00",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "60be391e3c8d359de33a1db0f48a2cd899aec611c0572543bab2607632347520",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "60be391e3c8d359de33a1db0f48a2cd899aec611c0572543bab2607632347520",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 240,
+        "whole_board_R_sha256": "82067829fb90913148a75374839244d9ec647ffb1da960314672fc19af8e92dc"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap34",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p1-d1-gap34-10",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "271ddd1c86d754a3250446b2432959e29b420e7987ece7b997dbcc45540848c3",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "37007a4f9b0a5ce1174a3a7697df4d0823bc0e955f871fd7933a340c30e11dec",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "1": 161,
+          "2": 161
+        },
+        "whole_board_C_count": 322,
+        "whole_board_C_sha256": "d2b93778624fa1af0573d6b50ee78353f6182a66f805f8920035219c836686e5",
+        "whole_board_R_change_count": 1832,
+        "whole_board_R_sha256": "914c242749349dcc004ff8952d8a607fe6f86e2627c408e65ea1673d9124e908"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap34",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p1-d1-gap34-01",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "370b0777b357a5a7d14f61a2faeee1404963dd0ae4985bb31d9997d500637c76",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "b4bfd8c4bbd42555db4c33f0db3a1acf7a30bec90897c3471db3e010a7760e2c",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "0": 192,
+          "1": 962,
+          "2": 999
+        },
+        "whole_board_C_count": 2153,
+        "whole_board_C_sha256": "29dc9784e6ab0eba1975faf0e98fcc39d32f99ca95ed288c09d87cdc9138bcca",
+        "whole_board_R_change_count": 11380,
+        "whole_board_R_sha256": "f1917aa81a01043221e97a2b7557fe671cba9bdc0fd0695578611f7bd5995de0"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": true,
+        "complete_hold": true,
+        "exact_output_C_signature": true,
+        "exact_output_carrier": true,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap34",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p1-d1-gap34-11",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "c8d16c0198c5cd32e24fb8dd290e60df97d297fb466fcb5ff6c98d1cbec7b33b",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "06d31ee39a33ebbc0492d7f1b86c878c1c5fd8ece7d514db7a8af23129b3e4b6",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "1": 322,
+          "2": 322
+        },
+        "whole_board_C_count": 644,
+        "whole_board_C_sha256": "e5a678c7d211f803658dbf9fbc5aa2b3a349f6ea366a5c06046459b192018993",
+        "whole_board_R_change_count": 3424,
+        "whole_board_R_sha256": "527fd2a0b5841bad8de002b618dbd6a1faaa88d0e24fe2de15f02f3687d411ec"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap35",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p1-d1-gap35-00",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "c711303857168bdbe51316bd16f9da1231136fabedcf4ed3d902640c04c19afe",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "c711303857168bdbe51316bd16f9da1231136fabedcf4ed3d902640c04c19afe",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 240,
+        "whole_board_R_sha256": "82067829fb90913148a75374839244d9ec647ffb1da960314672fc19af8e92dc"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap35",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p1-d1-gap35-10",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "df9554240ea0cfe295afaad19d85fed5b28732199ca87e42da8a87f21d3eae4f",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "1bbaf27ae0092b5fc5b4584352a7d33158e6098732326735d73e412e1188fde0",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "1": 161,
+          "2": 161
+        },
+        "whole_board_C_count": 322,
+        "whole_board_C_sha256": "d2b93778624fa1af0573d6b50ee78353f6182a66f805f8920035219c836686e5",
+        "whole_board_R_change_count": 1832,
+        "whole_board_R_sha256": "914c242749349dcc004ff8952d8a607fe6f86e2627c408e65ea1673d9124e908"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap35",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p1-d1-gap35-01",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "27c1bcb8f22dfbe93e7022672b518e870827659eab9b11d5e295c19159102833",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "34d9a5418c47de8e199c645e57256468162144b94d496df4bdf7030a1cd07a95",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "0": 296,
+          "1": 1160,
+          "2": 1241
+        },
+        "whole_board_C_count": 2697,
+        "whole_board_C_sha256": "d05e0bf953408536ddca247cb88869fa1a36e018bee2ad46ee20b9f0f63a02a4",
+        "whole_board_R_change_count": 13561,
+        "whole_board_R_sha256": "74229dd60ab3c13fcc110bba2e908052500b0b429a83813cf4352bb0b6a0056e"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p1-d1-gap35",
+        "phase": 1,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p1-d1-gap35-11",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "9bdb99756b7e80ac440350d6cb40c6c4aac31afd41b0962e69b423df04114af3",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "82ebc35bf2648e76b5466837aa995b452a90cee41bb22c2b12ac684559b5fcb7",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "1": 404,
+          "2": 406
+        },
+        "whole_board_C_count": 810,
+        "whole_board_C_sha256": "4e23742f82cc8c6341db528ce84adbac98bc945fcb77f0285cc3e252c2335378",
+        "whole_board_R_change_count": 3821,
+        "whole_board_R_sha256": "7e983ea225e43d6db0fd64852f8d21cf436dc6c61f904a81143be6186a4ca640"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap32",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p2-d1-gap32-00",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "89f9d414d35a46bbb5513971e3b121a39be6b551380401a42946022cf8987da4",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "89f9d414d35a46bbb5513971e3b121a39be6b551380401a42946022cf8987da4",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 240,
+        "whole_board_R_sha256": "ec9b2ff73a249e1317b774b599b1cfbc22b1e908fe610fe77ebec5e78eeefc04"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap32",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p2-d1-gap32-10",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "fae66751057872070ef37fa9d3a0e2975b4627b77c3132d45dffe39c84266dd8",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "d9917290b994d084eac928f63891a2cfcbc71c68002516c7960cf8bf030e896e",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "0": 26,
+          "1": 388,
+          "2": 392
+        },
+        "whole_board_C_count": 806,
+        "whole_board_C_sha256": "eb97ba4c80aa3f3c75dc122ee417b92d431426e5893eed047e0f147136115090",
+        "whole_board_R_change_count": 3546,
+        "whole_board_R_sha256": "cc65d6c32447fb198f76d7a54f5fd96d1aa0680a8ac1f6577848380dad16cabb"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap32",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p2-d1-gap32-01",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "c5f97af44f2926b73ef2cb91fe81d41e7a36f1e4323f6dbed0c80fd688b20959",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "b6f15296f8fdaa6061bf61e27316a1658e79f3bdb8874d7ac16da0967a067e85",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "0": 310,
+          "1": 1442,
+          "2": 1399
+        },
+        "whole_board_C_count": 3151,
+        "whole_board_C_sha256": "633cbccb2ffeb8e9794cf12792f54d2f8294bcd8ebcf815a0ebbc642bbb5f6af",
+        "whole_board_R_change_count": 16364,
+        "whole_board_R_sha256": "d0f4ccb814bde7879fea55f06bd56b0e8542d7de76c90adcb5396c732e0c42f9"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap32",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p2-d1-gap32-11",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "a0a52d8a282768bee2316478f194f174409825cfbd04819d504468cc915358a1",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "b5029f38fbd4552fd8fdad2e541553234034942d766f29986de96ddfe7f1c9cb",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "1": 606,
+          "2": 610
+        },
+        "whole_board_C_count": 1216,
+        "whole_board_C_sha256": "27ffd602e760459de188ed666c447c9a68a57da76642f44bfc5c48bcb8f22d07",
+        "whole_board_R_change_count": 4792,
+        "whole_board_R_sha256": "dfc449a97a1da4b53376e52601adb6e6519edfab180634713730a14b5506863a"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap33",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p2-d1-gap33-00",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "ec6f4a62ec7f7be4ebd07f1e5cb6464d69429e03b4cd369f3819ae1e7f5b7da9",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "ec6f4a62ec7f7be4ebd07f1e5cb6464d69429e03b4cd369f3819ae1e7f5b7da9",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 240,
+        "whole_board_R_sha256": "ec9b2ff73a249e1317b774b599b1cfbc22b1e908fe610fe77ebec5e78eeefc04"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap33",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p2-d1-gap33-10",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "6d655a024f9c56ff438ae5c06e7a596df53e49e0f919132cd49dd2dab2e6ad4b",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "0c9f400053de510f297c7b04b629dbe40834e52b7683e1417fc9b55f32effc06",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "0": 25,
+          "1": 379,
+          "2": 389
+        },
+        "whole_board_C_count": 793,
+        "whole_board_C_sha256": "f0de0e4a0f73e5713ed9a7aac369eeacd4c53b93fa7fd317f4fd9e3f9d42877e",
+        "whole_board_R_change_count": 3432,
+        "whole_board_R_sha256": "b192e5a6e65ce1b65800c3a4851fad1caf76b6737844e4f29852946138d02aed"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap33",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p2-d1-gap33-01",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "fde6de5e7a502dc85f803d668845b686fd619f14874c80c50e15c41db8b45181",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "66ba62631245753595499150c966f4660d54f34ab0127749f88ccbe26ba51ffd",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "0": 202,
+          "1": 990,
+          "2": 1025
+        },
+        "whole_board_C_count": 2217,
+        "whole_board_C_sha256": "ef5bee3fca9e695e79e8406b0398d040f79dbe7b479fe728ae351ef2035362ff",
+        "whole_board_R_change_count": 11787,
+        "whole_board_R_sha256": "5df48b94f38e81fb98943b613cc6c83641ed417984ff72345efd95c0df3207e1"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap33",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p2-d1-gap33-11",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "a748ad7c762a59bf64bba703331d14d2f577f0819e67932d1407b32bdf60c62e",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "e269714614c2756fbeb12c7a16bdf581ae7d79f6875d0cff8229aec23ab6b778",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "1": 609,
+          "2": 609
+        },
+        "whole_board_C_count": 1218,
+        "whole_board_C_sha256": "37fb0f79e0d2e55194243e6a1f08cf0d60c304aa82e921e6ad00d97fd5276998",
+        "whole_board_R_change_count": 4812,
+        "whole_board_R_sha256": "8158c8268a0251c950b50ddefd6e5537a1e02d204e6f7fee9cdcbb5ee8e09dfb"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap34",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p2-d1-gap34-00",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "ca13240910b0742126cbe1d6404558aa62b98fcd405e6baf4fbd56ca8dc9eb99",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "ca13240910b0742126cbe1d6404558aa62b98fcd405e6baf4fbd56ca8dc9eb99",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 240,
+        "whole_board_R_sha256": "ec9b2ff73a249e1317b774b599b1cfbc22b1e908fe610fe77ebec5e78eeefc04"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap34",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p2-d1-gap34-10",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "b13c4408bcbe876185afe68160a1424315d02f49a5f936006e05ad97e72b3a06",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "819ccea219688181992c81b2bb104360cdfa629f312fa2a8d2af52880b10ac2f",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "0": 19,
+          "1": 376,
+          "2": 380
+        },
+        "whole_board_C_count": 775,
+        "whole_board_C_sha256": "c4d1d873a29bbd3cfee8fe25d5142d01376fab43ab6066cadfd461275be21be8",
+        "whole_board_R_change_count": 3339,
+        "whole_board_R_sha256": "b745ad895130219dc564be3ab70efbc629c64f6db91fc7cbd7925b4f57f2a46d"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap34",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p2-d1-gap34-01",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "5eb1983b50ac9818f7591ee11a75317edc3e6c2c17281a12e90941658685d694",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "a88e1ffd8cb3cbb3e9b695cede028ef2b6f0ff621c1e995806df06efef405a9f",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "0": 323,
+          "1": 1217,
+          "2": 1304
+        },
+        "whole_board_C_count": 2844,
+        "whole_board_C_sha256": "e4325b986ab001241cb557553857878e46cb673350a6c571541c97b941637eb2",
+        "whole_board_R_change_count": 14386,
+        "whole_board_R_sha256": "43da4e30c8e438599db1867fa10b03a9b61d82f9aa75536e2f8ded23f910a442"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap34",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p2-d1-gap34-11",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "d9e486619d2cad967b2c81091c5ce35e893b1f500b687ac58c990c8086b6146d",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "835ee494f80bde8dc977609448680d5c9f525e11e133998e967a63581edff73b",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "1": 626,
+          "2": 630
+        },
+        "whole_board_C_count": 1256,
+        "whole_board_C_sha256": "75018e995e7cfe072a3de634c9c0c253e4cad101fde9ffac9d357f65d4b5eb86",
+        "whole_board_R_change_count": 4858,
+        "whole_board_R_sha256": "770c4b9b8b5a9b38b57d1cb489870e0645cae68e7c96f5f89d8806b8d4443370"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap35",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p2-d1-gap35-00",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "5fc234c2f24a259f20fe586fc653df843ef6b342dec5e7d9898d476a35eda15d",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "5fc234c2f24a259f20fe586fc653df843ef6b342dec5e7d9898d476a35eda15d",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 240,
+        "whole_board_R_sha256": "ec9b2ff73a249e1317b774b599b1cfbc22b1e908fe610fe77ebec5e78eeefc04"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap35",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p2-d1-gap35-10",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "db764fea2a92e08206e5d5f1a6eb02e6d29e86b55ca3cfc321702b9a7b41e87f",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "08d238699bbb8e8e3b5824b5662bfaea07c937dc8c49bce519571a063f4038df",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "0": 14,
+          "1": 373,
+          "2": 376
+        },
+        "whole_board_C_count": 763,
+        "whole_board_C_sha256": "ed3199a0c150f72f8cd44b840cfb195fa7aed6d4f432559da6878fb53358dd4d",
+        "whole_board_R_change_count": 3274,
+        "whole_board_R_sha256": "536fc2c0f55831a32fa4ba9a3cdce2281a3d3be7c807cc422207cc6dcaf1ab51"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap35",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p2-d1-gap35-01",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "7b80fbb89383b4023823584b37d4e4af9fae649bdbe4187f7a2c18a54e2ecd51",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "1a80e7f1b057ae3dc297138cd99c8f20709dd83c9138a605419b3976a214af15",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "0": 294,
+          "1": 1039,
+          "2": 1047
+        },
+        "whole_board_C_count": 2380,
+        "whole_board_C_sha256": "4ee6ad5d951c076ec4e5c2bc763e7d48bddd25eab516dc2b17dbedf84d960c47",
+        "whole_board_R_change_count": 12065,
+        "whole_board_R_sha256": "17e0cb83b5143c30958d60523cec7da1cba384e4a6b5af9ae2fd242f0172cd2e"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p2-d1-gap35",
+        "phase": 2,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p2-d1-gap35-11",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "d672d1c1ce1ef94f6da898b9e4ddb916521cb96b48e54d64cfabba0cbc33209d",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "10724b2cca1c84bfbf71dfc71c5a4eb68ced318a9183e0d674766662e02c4a8b",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "1": 604,
+          "2": 604
+        },
+        "whole_board_C_count": 1208,
+        "whole_board_C_sha256": "aa7abfd8074fe28407bcf748a77b6e5df2e3e547595612ea7eccb5b1b0871062",
+        "whole_board_R_change_count": 4784,
+        "whole_board_R_sha256": "51f3f740c8d6d47c4681fd65789933156105fbb5e13f85b82ec47c2149acfeac"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap32",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p3-d1-gap32-00",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "0e27085797597883de38c91e218cd08b244d3497a534e4cd4005968df3e1dfe1",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "0e27085797597883de38c91e218cd08b244d3497a534e4cd4005968df3e1dfe1",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 240,
+        "whole_board_R_sha256": "c2a5361d84508c25f8e646d79e0487cb39fa90d51eb221742427ba57db6fc2c1"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap32",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p3-d1-gap32-10",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "cea242b92629c125c1cc5476f57b1bfcfb900422a8356cddd93bd65038fabc1b",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "d297e3af571bbd67062acd41bd1cbdedcd047e57c48a5d771cf17bb496bdc7c3",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "0": 18,
+          "1": 220,
+          "2": 190
+        },
+        "whole_board_C_count": 428,
+        "whole_board_C_sha256": "722760b7956c3b30148d8cdafb716f3b09a82d29b1c7ee5043f4477d866b5f44",
+        "whole_board_R_change_count": 2393,
+        "whole_board_R_sha256": "cc3608f415ee408ca87c86abe01fe1004c65f902d8ad3e2c9c27bfc706bacf5a"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap32",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p3-d1-gap32-01",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "3e432b6bfa80c890a0a8cb5ec338cd4142b41713f8b4c44341bff79662337416",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "91d6fc8dbec682e8300962a3a148feb5d17291e4661ff71350d7282c2f37a65d",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "0": 207,
+          "1": 1023,
+          "2": 1067
+        },
+        "whole_board_C_count": 2297,
+        "whole_board_C_sha256": "c080257c5498f1d43130370202b2e13635d90398781b026b345ea365f9d9578c",
+        "whole_board_R_change_count": 12172,
+        "whole_board_R_sha256": "0c6b3504221d7d4e766933ef5fc0b48ecdc2754826e52edb5ba11870e7b827a9"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 32,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap32",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p3-d1-gap32-11",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "d376bc9767b2dd693028ecc19ed1ce9f682fc3a1f5bdc7d3b93dbffe4357ab39",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "1dc0682f4debaa5d6d79e400e4802ddb0c12e5415b4764a9155c4209c1df25cc",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "1": 306,
+          "2": 306
+        },
+        "whole_board_C_count": 612,
+        "whole_board_C_sha256": "d9978bed7174b886adfc0d6937cd5c15ddd7f86b830be1647f868318e5003977",
+        "whole_board_R_change_count": 3296,
+        "whole_board_R_sha256": "0814156bd243f0a435d97773db7c34d4b63269bb99e67d516a620fd92a9e8055"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap33",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p3-d1-gap33-00",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "d249f9323855e92d2694a1e68e66aa614626a8fcba89b1e22b04762d5602c266",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "d249f9323855e92d2694a1e68e66aa614626a8fcba89b1e22b04762d5602c266",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 240,
+        "whole_board_R_sha256": "c2a5361d84508c25f8e646d79e0487cb39fa90d51eb221742427ba57db6fc2c1"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap33",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p3-d1-gap33-10",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "271a7e5b7ff3eae1c891dfb49bb2e5bd81e1f4dd2deebeb8ab6ac37d7fe804f0",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "6c4fc84a0496d68e3fb91a9f8922b35042da003a09c4e82c0007e8cfe39584c9",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "0": 17,
+          "1": 212,
+          "2": 183
+        },
+        "whole_board_C_count": 412,
+        "whole_board_C_sha256": "3c8e356cf78f8c530e28b849f6fa03e2dfc52a4a69232888eca49e4955d4f5ec",
+        "whole_board_R_change_count": 2321,
+        "whole_board_R_sha256": "9909206ab9677ca04e30fb349c7ece7ea162d136544cc9176ac0334556267a75"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap33",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p3-d1-gap33-01",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "f55acf636e211bc2a224e7aa5d2e54f939d7bdc440ba392dad8653b5d1d27409",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "b70b9ae25e719b8b78bc73a9fa47be9f2fc1fd6ce0791237eb87e41da6e1378e",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "0": 348,
+          "1": 1278,
+          "2": 1375
+        },
+        "whole_board_C_count": 3001,
+        "whole_board_C_sha256": "07d94e13f414f6fe00ad6f126ec8501b32a1578fc8cb2ca5d0b10dc285141cef",
+        "whole_board_R_change_count": 15181,
+        "whole_board_R_sha256": "8891705525cacf364a9435ca72e11033ab848c3f167120f9f7376238086fbcee"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 33,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap33",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p3-d1-gap33-11",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "c13f69b550c00d3627e302e2b917dc1ab94d7c2b067efe8f259f6fb7775d9b31",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "302b50f672e33a8dca8c534dbda5ad45222f23d0830c5e1c1110e1e3db8ab49f",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "1": 387,
+          "2": 389
+        },
+        "whole_board_C_count": 776,
+        "whole_board_C_sha256": "1483f9af38309645976cbd475b7053d2f6768520d66997d26b7f0cab3b85bbaa",
+        "whole_board_R_change_count": 3715,
+        "whole_board_R_sha256": "335bff5862cb2e8ed486038a411cf0a78bd4c38131cc6b0da692d457c6244f69"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap34",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p3-d1-gap34-00",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "bbcb50881418a52562d565ca3aaac0d60899c698e4b8876991fb8f302257fbc2",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "bbcb50881418a52562d565ca3aaac0d60899c698e4b8876991fb8f302257fbc2",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 240,
+        "whole_board_R_sha256": "c2a5361d84508c25f8e646d79e0487cb39fa90d51eb221742427ba57db6fc2c1"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap34",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p3-d1-gap34-10",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "8aba3c659c89fc2cc615da73d2f938a190030e29f3a8f830549eb5492e2c6d83",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "4c49b0ac1140647009162fb1c0787ec98b389feef31e5debfcef2b35c36ce6cd",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "0": 13,
+          "1": 208,
+          "2": 179
+        },
+        "whole_board_C_count": 400,
+        "whole_board_C_sha256": "0d11c75ffe05da3f3a402123cf46175d465288ba42f002b5c25d64b57db2bc0e",
+        "whole_board_R_change_count": 2256,
+        "whole_board_R_sha256": "5035668a977324d6c4620316262fd3ea8dc4c07f8aee8fa6ed739991709963b8"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap34",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p3-d1-gap34-01",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "76ef5ef2a6301e2d5ef3fc9c5d18c8b017916ef6fce02a431d70f3fce4ad4625",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "056953352f5b3d58ed06b3ab4845ea67e212f3efcbd4b236a7a852998d3fbf92",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "0": 335,
+          "1": 1089,
+          "2": 1086
+        },
+        "whole_board_C_count": 2510,
+        "whole_board_C_sha256": "64113987ebea6cbd90236f9f63d120d3d3d399a50b79be7044fab87ea63e4d58",
+        "whole_board_R_change_count": 12649,
+        "whole_board_R_sha256": "4222502a9ccbb3aca82b1c0a2f0a86f57bc6a5c1c11949970e1c30ca45034f5b"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 34,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap34",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p3-d1-gap34-11",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "0e2312a1d338c8a29aa8d391007e5b37048091ebc45edd47e5333245bb509b71",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "2c87b019f3dc4dc34406f8c06e9741c29569195b6e2f540fe00fa385bbb5224e",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "1": 310,
+          "2": 310
+        },
+        "whole_board_C_count": 620,
+        "whole_board_C_sha256": "b413c3c1916bd78b1b4b6b8c9a5ce4bd145a8ec00b3ce2514e5a46186a827b6a",
+        "whole_board_R_change_count": 3320,
+        "whole_board_R_sha256": "130fbd26b5806d374565079ffd55f0e60026017ba68d8a0860fb811468a292ee"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap35",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p3-d1-gap35-00",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "7102e50f24a912f07250512aebd08c684bcac6f62fcd43cbe18d129b23e012ae",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "7102e50f24a912f07250512aebd08c684bcac6f62fcd43cbe18d129b23e012ae",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 240,
+        "whole_board_R_sha256": "c2a5361d84508c25f8e646d79e0487cb39fa90d51eb221742427ba57db6fc2c1"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap35",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p3-d1-gap35-10",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "ab1033ba45f50f5d755d0a1bfd3485c574c9709a6f45949cfef48e8fab392116",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "413ecf71d7fccdfaa2ac23bbcf7ecf5f6afc549d2f0f5cbdc252fc7a1ab26257",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "0": 8,
+          "1": 204,
+          "2": 176
+        },
+        "whole_board_C_count": 388,
+        "whole_board_C_sha256": "3dab89a2ce74d5b659f54915ad91951da5db573e3b80764a5e7e08833b634c55",
+        "whole_board_R_change_count": 2193,
+        "whole_board_R_sha256": "a49d97793f103794aeaba3087fb557beb84f312771a18b65fe193386feaa1da9"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap35",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p3-d1-gap35-01",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "22e849fb391f3add16dc4374d103e816dd2a1197f8a10ab3f078827c5326664e",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "b0ddab088937027e3bf2e1f790232ffa81f52597fba986d647583db50569e858",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "0": 247,
+          "1": 1225,
+          "2": 1182
+        },
+        "whole_board_C_count": 2654,
+        "whole_board_C_sha256": "ff51b693828f1458340d42e430123167bcd7bbe478168b38407de1bac098a1ff",
+        "whole_board_R_change_count": 13834,
+        "whole_board_R_sha256": "3781d292b2e337d0de0688e46c32a7d7b2fad182927a25fa656b08512d3e4fdb"
+      }
+    },
+    {
+      "assessment": {
+        "carrier_plus_C": false,
+        "complete_hold": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": false,
+        "no_active_boundary_contact": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "gap": 35,
+        "guide_target_channel": 0,
+        "id": "write-probe-L321-r0-p3-d1-gap35",
+        "phase": 3,
+        "side": 321,
+        "stage": "encounter",
+        "writer_delay": 1
+      },
+      "id": "write-probe-L321-r0-p3-d1-gap35-11",
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "15cea703133bc9f4e833d6f7b82d1682187c6d2f67527f7c252cf4f910290844",
+        "forward_transitions": 80,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "e0e412db51dbe067253cc665743f8f89d9f1e6eec0cc001d8ed814135f5362d2",
+        "inverse_transitions": 80,
+        "observations": {},
+        "passed": true,
+        "states": 81,
+        "whole_board_C_by_kind": {
+          "1": 380,
+          "2": 382
+        },
+        "whole_board_C_count": 762,
+        "whole_board_C_sha256": "4ba129e77ee5805a6bbc609025f086f10654813cd12467b01e90ea032e102a3f",
+        "whole_board_R_change_count": 3693,
+        "whole_board_R_sha256": "898a369ca545982e18a1bb349b028bc1f08fccfdcc65cb3d8262ebfc1fba13ba"
+      }
+    }
+  ],
+  "scope": "Independent exact-state replay, original frozen predicates, control masks and result correspondence; scientific success is separate.",
+  "source_sha256": {
+    "research/clock_selection/__init__.py": "089715841c81363d09ffc7897abe46d3e9e400cbd95f537d14764cf9e2692e9b",
+    "research/clock_selection/protocol_v1.json": "1a66353f1400fb3f02869142f41290ab5d534b091be29e6bdd6a7ffc368fa805",
+    "research/clock_selection/provenance.py": "a892a7ed196dd77f256bf6dccfc90e5c07f3439ff579fad2319f887148457438",
+    "research/clock_selection/search.py": "485eb0cb381f83bfbb9b5f73c2b932643c1220cef9170ca38b97327e8117495c",
+    "research/components/__init__.py": "bc3c504533e052ea7dfee41483df25ee7ecc3bd30aba70fb52ed2d6f245afd4a",
+    "research/components/compose.py": "463f960fe44533310e98528d3f85b611101fa661c70ce18beed3ac72885ed496",
+    "research/components/recipes.py": "99a199109782b9115e06c67517a948d904a2659ffbeedadc92bb0606d653a0bc",
+    "research/components/spec.py": "1bb4bb06eaddebd0bb0d0287a6fc846900396b6fbcd00ec61cd28917f8e778d4",
+    "research/experiments/__init__.py": "1a31c776b2e99bbc5cd5abb4cfa75d72a46305546b947eb315dd5209ed0949f6",
+    "research/experiments/run.py": "2a9361b777f4eff1192cc5911d7521e3a6c81342e9e119dabff9d6e5941e679d",
+    "research/presenter/build.py": "0845fecd843702d1e2387a0955a4fb9a92b195e2bcab390c957171a4a2528ad8",
+    "research/presenter/demo.py": "5ffbaf1036d39574dfc7ae3d981632cd9c290d35e01b162098d510bcb2c90585",
+    "research/presenter/export.py": "2168f532626c13170ca0791e7d896dac96c638ad6f2b704ee7e359d4ef6681cc",
+    "research/staged_blocks/__init__.py": "33b384bdb83f95690d9b22863a830365d12cdac73254774cbcf9a68c105f6216",
+    "research/staged_blocks/interaction_protocol.json": "0bf67cf858fb75dc2c44be9d9f96ccd2c3538c8a088cd4fe210079b26b477d1d",
+    "research/staged_blocks/interactions.py": "fcf83fd2cfcc65b95caeff5c2278f275432398c67f4c3d8f245f8bf0606fb2f8",
+    "universe24/__init__.py": "fdce7c34f1c57d4601ddb445b0c46889418630cc175551b3cddcb56f0e8393b7",
+    "universe24/__main__.py": "157a90dd1a31ded840ac00e991d31c187b3e1c8ba72de3048deddb0b2ffc425e",
+    "universe24/core/__init__.py": "54b4904eead9518f5c5b7a40681c709eb45f1a9ea6588e0bce69338d17ac144f",
+    "universe24/core/coupling.py": "4d822203dbb75bd5192c4fddcbf8e2ffbab6c46c2a55cb19f101bcecaa4f6489",
+    "universe24/core/engine.py": "4ee34937e2d82d68aa3414dd0fbe71f4e01cc075753c7a638d10667afceaa938",
+    "universe24/core/group_2o.py": "3f0475445dfc65042651a68036835e375003a86873fc202b8e904fdf470fb055",
+    "universe24/core/rule3.py": "216e2490e7a9f683db1a8918dc46c7aa11213aaf0409a13ddf7f1850f7b88555",
+    "universe24/core/state.py": "6581559406158af6febe1f5763901915e4e6287ee9ebabe34a3db9186b8c45f0",
+    "universe24/experiments/__init__.py": "073f5497951a49f85e4ef6d348dade004167959fe7f023c4837e4e24dbae7e22",
+    "universe24/experiments/config.py": "8ce7828a3a2d677e0234d76fcb91dd493f216892f0e57182c246b36ef6efb926",
+    "universe24/observation/__init__.py": "86f59ebf4ecd61b9a5fa8071b93b0ebdb89ec489268b9d09c30130981f3678cb",
+    "universe24/observation/clicks.py": "cd14589241086d0b00adae1819ae8e230ad1b1a221714d84a6bf698e2424cced",
+    "universe24/observation/diagnostics.py": "ea4ab16b615333bbb2f1293fd4dd45c99c29dac5cf9206cc3b3245ed6a73b6c3"
+  },
+  "sources_unchanged": true,
+  "studies": [],
+  "transitions": 5152,
+  "wall_seconds": 60.69415873200023
+}

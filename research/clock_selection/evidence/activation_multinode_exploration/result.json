@@ -1,0 +1,3601 @@
+{
+  "analysis_sha256": "7024847ea574a7d1106156e95f1f2c42b35ec9ad7ecbc76e4a5d5e2ff0c1d988",
+  "cpu_seconds": 1.564801224,
+  "discovery_candidates": 0,
+  "new_evolution_updates": 0,
+  "original_activation_verdict_unchanged": true,
+  "post_capture_exploratory": true,
+  "protocol_sha256": "a4da64c86fa13e6bd1fc06d26d6f218d4d7822049f75fe0c8efab783b033d3e5",
+  "regions": [
+    {
+      "active_every_state": true,
+      "center": [
+        112,
+        113,
+        112
+      ],
+      "complete_nodes": 27,
+      "complete_triples": 1296,
+      "external_nonzero_term_counts": [
+        7,
+        4,
+        7,
+        4,
+        7,
+        4,
+        7,
+        4,
+        7,
+        4,
+        7,
+        2,
+        7,
+        2,
+        7,
+        2,
+        7,
+        2,
+        1,
+        2,
+        6,
+        8,
+        5,
+        6,
+        13,
+        10,
+        13,
+        22,
+        14,
+        18,
+        16,
+        28,
+        18,
+        32,
+        28,
+        34,
+        24,
+        32,
+        32,
+        38,
+        46,
+        42,
+        46,
+        46,
+        38,
+        58,
+        50,
+        58
+      ],
+      "first_external_term": {
+        "source": [
+          110,
+          112,
+          111,
+          28
+        ],
+        "target": [
+          111,
+          112,
+          111,
+          22
+        ],
+        "term": 2,
+        "update": 33
+      },
+      "id": "activation-L225-rc0-rh4-s1-R1",
+      "isolated_all_updates": false,
+      "nonzero_counter_counts": [
+        17,
+        12,
+        12,
+        12,
+        11,
+        11,
+        12,
+        12,
+        12,
+        17,
+        17,
+        11,
+        10,
+        10,
+        11,
+        11,
+        11,
+        11,
+        9,
+        9,
+        30,
+        34,
+        33,
+        33,
+        41,
+        44,
+        44,
+        54,
+        56,
+        69,
+        71,
+        72,
+        72,
+        77,
+        81,
+        81,
+        79,
+        89,
+        95,
+        89,
+        88,
+        86,
+        85,
+        89,
+        85,
+        87,
+        101,
+        116,
+        121
+      ],
+      "radius": 1,
+      "source_case": "activation-L225-rc0-rh4-s1"
+    },
+    {
+      "active_every_state": true,
+      "center": [
+        112,
+        113,
+        112
+      ],
+      "complete_nodes": 125,
+      "complete_triples": 6000,
+      "external_nonzero_term_counts": [
+        2,
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        2,
+        3,
+        2,
+        3,
+        0,
+        3,
+        2,
+        5,
+        10,
+        5,
+        8,
+        5,
+        8,
+        5,
+        12,
+        8,
+        12,
+        12,
+        10,
+        14,
+        16,
+        14
+      ],
+      "first_external_term": {
+        "source": [
+          109,
+          112,
+          112,
+          0
+        ],
+        "target": [
+          110,
+          112,
+          112,
+          0
+        ],
+        "term": 1,
+        "update": 33
+      },
+      "id": "activation-L225-rc0-rh4-s1-R2",
+      "isolated_all_updates": false,
+      "nonzero_counter_counts": [
+        30,
+        25,
+        25,
+        25,
+        24,
+        24,
+        25,
+        25,
+        25,
+        30,
+        30,
+        22,
+        21,
+        21,
+        22,
+        22,
+        22,
+        22,
+        12,
+        12,
+        38,
+        48,
+        46,
+        44,
+        60,
+        67,
+        67,
+        89,
+        92,
+        101,
+        105,
+        116,
+        118,
+        127,
+        145,
+        149,
+        143,
+        151,
+        165,
+        165,
+        184,
+        190,
+        189,
+        203,
+        191,
+        209,
+        237,
+        254,
+        251
+      ],
+      "radius": 2,
+      "source_case": "activation-L225-rc0-rh4-s1"
+    },
+    {
+      "active_every_state": true,
+      "center": [
+        112,
+        113,
+        112
+      ],
+      "complete_nodes": 343,
+      "complete_triples": 16464,
+      "external_nonzero_term_counts": [
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        2
+      ],
+      "first_external_term": {
+        "source": [
+          108,
+          111,
+          112,
+          45
+        ],
+        "target": [
+          109,
+          111,
+          112,
+          18
+        ],
+        "term": -1,
+        "update": 33
+      },
+      "id": "activation-L225-rc0-rh4-s1-R3",
+      "isolated_all_updates": false,
+      "nonzero_counter_counts": [
+        40,
+        35,
+        35,
+        35,
+        34,
+        34,
+        35,
+        35,
+        35,
+        40,
+        40,
+        32,
+        31,
+        31,
+        32,
+        32,
+        32,
+        32,
+        22,
+        14,
+        40,
+        50,
+        48,
+        46,
+        60,
+        67,
+        69,
+        94,
+        97,
+        106,
+        108,
+        119,
+        123,
+        134,
+        160,
+        164,
+        156,
+        164,
+        178,
+        178,
+        201,
+        210,
+        209,
+        227,
+        213,
+        233,
+        267,
+        284,
+        283
+      ],
+      "radius": 3,
+      "source_case": "activation-L225-rc0-rh4-s1"
+    },
+    {
+      "active_every_state": true,
+      "center": [
+        128,
+        129,
+        128
+      ],
+      "complete_nodes": 27,
+      "complete_triples": 1296,
+      "external_nonzero_term_counts": [
+        7,
+        4,
+        7,
+        4,
+        7,
+        4,
+        7,
+        4,
+        7,
+        4,
+        7,
+        2,
+        7,
+        2,
+        7,
+        2,
+        7,
+        2,
+        1,
+        2,
+        6,
+        8,
+        5,
+        6,
+        13,
+        10,
+        13,
+        22,
+        14,
+        18,
+        16,
+        28,
+        18,
+        32,
+        28,
+        34,
+        24,
+        32,
+        32,
+        38,
+        46,
+        42,
+        46,
+        46,
+        38,
+        58,
+        50,
+        58
+      ],
+      "first_external_term": {
+        "source": [
+          126,
+          128,
+          127,
+          28
+        ],
+        "target": [
+          127,
+          128,
+          127,
+          22
+        ],
+        "term": 2,
+        "update": 33
+      },
+      "id": "activation-L257-rc0-rh4-s1-R1",
+      "isolated_all_updates": false,
+      "nonzero_counter_counts": [
+        17,
+        12,
+        12,
+        12,
+        11,
+        11,
+        12,
+        12,
+        12,
+        17,
+        17,
+        11,
+        10,
+        10,
+        11,
+        11,
+        11,
+        11,
+        9,
+        9,
+        30,
+        34,
+        33,
+        33,
+        41,
+        44,
+        44,
+        54,
+        56,
+        69,
+        71,
+        72,
+        72,
+        77,
+        81,
+        81,
+        79,
+        89,
+        95,
+        89,
+        88,
+        86,
+        85,
+        89,
+        85,
+        87,
+        101,
+        116,
+        121
+      ],
+      "radius": 1,
+      "source_case": "activation-L257-rc0-rh4-s1"
+    },
+    {
+      "active_every_state": true,
+      "center": [
+        128,
+        129,
+        128
+      ],
+      "complete_nodes": 125,
+      "complete_triples": 6000,
+      "external_nonzero_term_counts": [
+        2,
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        2,
+        3,
+        2,
+        3,
+        0,
+        3,
+        2,
+        5,
+        10,
+        5,
+        8,
+        5,
+        8,
+        5,
+        12,
+        8,
+        12,
+        12,
+        10,
+        14,
+        16,
+        14
+      ],
+      "first_external_term": {
+        "source": [
+          125,
+          128,
+          128,
+          0
+        ],
+        "target": [
+          126,
+          128,
+          128,
+          0
+        ],
+        "term": 1,
+        "update": 33
+      },
+      "id": "activation-L257-rc0-rh4-s1-R2",
+      "isolated_all_updates": false,
+      "nonzero_counter_counts": [
+        30,
+        25,
+        25,
+        25,
+        24,
+        24,
+        25,
+        25,
+        25,
+        30,
+        30,
+        22,
+        21,
+        21,
+        22,
+        22,
+        22,
+        22,
+        12,
+        12,
+        38,
+        48,
+        46,
+        44,
+        60,
+        67,
+        67,
+        89,
+        92,
+        101,
+        105,
+        116,
+        118,
+        127,
+        145,
+        149,
+        143,
+        151,
+        165,
+        165,
+        184,
+        190,
+        189,
+        203,
+        191,
+        209,
+        237,
+        254,
+        251
+      ],
+      "radius": 2,
+      "source_case": "activation-L257-rc0-rh4-s1"
+    },
+    {
+      "active_every_state": true,
+      "center": [
+        128,
+        129,
+        128
+      ],
+      "complete_nodes": 343,
+      "complete_triples": 16464,
+      "external_nonzero_term_counts": [
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        8,
+        2,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        2
+      ],
+      "first_external_term": {
+        "source": [
+          124,
+          127,
+          128,
+          45
+        ],
+        "target": [
+          125,
+          127,
+          128,
+          18
+        ],
+        "term": -1,
+        "update": 33
+      },
+      "id": "activation-L257-rc0-rh4-s1-R3",
+      "isolated_all_updates": false,
+      "nonzero_counter_counts": [
+        40,
+        35,
+        35,
+        35,
+        34,
+        34,
+        35,
+        35,
+        35,
+        40,
+        40,
+        32,
+        31,
+        31,
+        32,
+        32,
+        32,
+        32,
+        22,
+        14,
+        40,
+        50,
+        48,
+        46,
+        60,
+        67,
+        69,
+        94,
+        97,
+        106,
+        108,
+        119,
+        123,
+        134,
+        160,
+        164,
+        156,
+        164,
+        178,
+        178,
+        201,
+        210,
+        209,
+        227,
+        213,
+        233,
+        267,
+        284,
+        283
+      ],
+      "radius": 3,
+      "source_case": "activation-L257-rc0-rh4-s1"
+    }
+  ],
+  "registered_before_new_region_inspection": true,
+  "scope": "Post-capture discovery scan only; any hit requires a separately frozen validation.",
+  "source_records": [
+    {
+      "id": "activation-L225-rc0-rh4-s1",
+      "record": "research/clock_selection/evidence/activation_v1/records/activation-L225-rc0-rh4-s1.json.gz",
+      "record_gzip_sha256": "fecd1288114c351a9ad4b57da87c1a1949f4d74df0c82887ac5bc6b8950e04ee",
+      "record_sha256": "e1c1e6f490514b5c7cd92e2299e6a9061b0c02d86089748bcbb0ac8ad727a394"
+    },
+    {
+      "id": "activation-L257-rc0-rh4-s1",
+      "record": "research/clock_selection/evidence/activation_v1/records/activation-L257-rc0-rh4-s1.json.gz",
+      "record_gzip_sha256": "fc57587a30ea9816d966b1215ca85e1fb7e58c2c105eade500e2a1e91693311a",
+      "record_sha256": "11e108742d92e8de483133a1691653380f26209e0267290db6569971c4de2705"
+    }
+  ],
+  "status": "completed",
+  "test_count": 96,
+  "tests": [
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          111,
+          112,
+          111,
+          20
+        ],
+        "after": [
+          0,
+          0,
+          0
+        ],
+        "before": [
+          0,
+          0,
+          4
+        ],
+        "compared_state": 33,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 1,
+      "region": "activation-L225-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          111,
+          112,
+          111,
+          20
+        ],
+        "after": [
+          0,
+          0,
+          0
+        ],
+        "before": [
+          0,
+          0,
+          4
+        ],
+        "compared_state": 34,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 2,
+      "region": "activation-L225-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          111,
+          112,
+          111,
+          22
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 35,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 3,
+      "region": "activation-L225-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          111,
+          112,
+          111,
+          22
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 36,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 4,
+      "region": "activation-L225-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          111,
+          112,
+          111,
+          20
+        ],
+        "after": [
+          0,
+          0,
+          0
+        ],
+        "before": [
+          0,
+          0,
+          4
+        ],
+        "compared_state": 37,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 5,
+      "region": "activation-L225-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          111,
+          112,
+          111,
+          20
+        ],
+        "after": [
+          0,
+          0,
+          0
+        ],
+        "before": [
+          0,
+          0,
+          4
+        ],
+        "compared_state": 38,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 6,
+      "region": "activation-L225-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          111,
+          112,
+          111,
+          22
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 39,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 7,
+      "region": "activation-L225-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          111,
+          112,
+          111,
+          22
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 40,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 8,
+      "region": "activation-L225-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          111,
+          112,
+          111,
+          20
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          4
+        ],
+        "compared_state": 41,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 9,
+      "region": "activation-L225-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          111,
+          112,
+          111,
+          20
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          4
+        ],
+        "compared_state": 42,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 10,
+      "region": "activation-L225-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          111,
+          112,
+          111,
+          20
+        ],
+        "after": [
+          0,
+          0,
+          0
+        ],
+        "before": [
+          0,
+          0,
+          4
+        ],
+        "compared_state": 43,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 11,
+      "region": "activation-L225-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          111,
+          112,
+          111,
+          20
+        ],
+        "after": [
+          0,
+          0,
+          0
+        ],
+        "before": [
+          0,
+          0,
+          4
+        ],
+        "compared_state": 44,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 12,
+      "region": "activation-L225-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          111,
+          112,
+          111,
+          22
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 45,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 13,
+      "region": "activation-L225-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          111,
+          112,
+          111,
+          22
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 46,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 14,
+      "region": "activation-L225-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          111,
+          112,
+          111,
+          20
+        ],
+        "after": [
+          0,
+          0,
+          0
+        ],
+        "before": [
+          0,
+          0,
+          4
+        ],
+        "compared_state": 47,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 15,
+      "region": "activation-L225-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          111,
+          112,
+          111,
+          20
+        ],
+        "after": [
+          0,
+          0,
+          0
+        ],
+        "before": [
+          0,
+          0,
+          4
+        ],
+        "compared_state": 48,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 16,
+      "region": "activation-L225-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          110,
+          111,
+          111,
+          28
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 33,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 1,
+      "region": "activation-L225-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          110,
+          111,
+          111,
+          28
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 34,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 2,
+      "region": "activation-L225-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          110,
+          111,
+          111,
+          28
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 35,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 3,
+      "region": "activation-L225-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          110,
+          111,
+          111,
+          28
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 36,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 4,
+      "region": "activation-L225-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          110,
+          111,
+          112,
+          18
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 37,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 5,
+      "region": "activation-L225-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          110,
+          111,
+          112,
+          45
+        ],
+        "after": [
+          0,
+          2,
+          2
+        ],
+        "before": [
+          0,
+          2,
+          0
+        ],
+        "compared_state": 38,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 6,
+      "region": "activation-L225-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          110,
+          111,
+          111,
+          28
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 39,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 7,
+      "region": "activation-L225-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          110,
+          111,
+          111,
+          28
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 40,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 8,
+      "region": "activation-L225-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          110,
+          111,
+          112,
+          18
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 41,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 9,
+      "region": "activation-L225-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          110,
+          111,
+          112,
+          19
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          4
+        ],
+        "compared_state": 42,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 10,
+      "region": "activation-L225-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          110,
+          111,
+          111,
+          28
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 43,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 11,
+      "region": "activation-L225-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          110,
+          111,
+          111,
+          28
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 44,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 12,
+      "region": "activation-L225-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          110,
+          111,
+          111,
+          28
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 45,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 13,
+      "region": "activation-L225-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          110,
+          111,
+          111,
+          28
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 46,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 14,
+      "region": "activation-L225-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          110,
+          111,
+          112,
+          18
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 47,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 15,
+      "region": "activation-L225-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          110,
+          111,
+          112,
+          19
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          4
+        ],
+        "compared_state": 48,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 16,
+      "region": "activation-L225-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          109,
+          111,
+          112,
+          18
+        ],
+        "after": [
+          0,
+          0,
+          0
+        ],
+        "before": [
+          0,
+          0,
+          2
+        ],
+        "compared_state": 33,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 1,
+      "region": "activation-L225-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          109,
+          110,
+          112,
+          36
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 34,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 2,
+      "region": "activation-L225-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          109,
+          110,
+          112,
+          36
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 35,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 3,
+      "region": "activation-L225-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          109,
+          110,
+          112,
+          36
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 36,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 4,
+      "region": "activation-L225-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          109,
+          110,
+          112,
+          36
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 37,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 5,
+      "region": "activation-L225-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          109,
+          112,
+          112,
+          0
+        ],
+        "after": [
+          0,
+          2,
+          0
+        ],
+        "before": [
+          0,
+          1,
+          4
+        ],
+        "compared_state": 38,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 6,
+      "region": "activation-L225-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          109,
+          111,
+          112,
+          18
+        ],
+        "after": [
+          0,
+          0,
+          0
+        ],
+        "before": [
+          0,
+          0,
+          2
+        ],
+        "compared_state": 39,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 7,
+      "region": "activation-L225-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          109,
+          110,
+          112,
+          36
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 40,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 8,
+      "region": "activation-L225-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          109,
+          110,
+          112,
+          36
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 41,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 9,
+      "region": "activation-L225-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          109,
+          111,
+          112,
+          18
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          2
+        ],
+        "compared_state": 42,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 10,
+      "region": "activation-L225-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          109,
+          111,
+          112,
+          18
+        ],
+        "after": [
+          0,
+          0,
+          0
+        ],
+        "before": [
+          0,
+          0,
+          2
+        ],
+        "compared_state": 43,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 11,
+      "region": "activation-L225-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          109,
+          110,
+          112,
+          36
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 44,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 12,
+      "region": "activation-L225-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          109,
+          110,
+          112,
+          36
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 45,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 13,
+      "region": "activation-L225-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          109,
+          110,
+          112,
+          36
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 46,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 14,
+      "region": "activation-L225-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          109,
+          110,
+          112,
+          36
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 47,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 15,
+      "region": "activation-L225-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          109,
+          111,
+          112,
+          18
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          2
+        ],
+        "compared_state": 48,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 16,
+      "region": "activation-L225-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          127,
+          128,
+          127,
+          20
+        ],
+        "after": [
+          0,
+          0,
+          0
+        ],
+        "before": [
+          0,
+          0,
+          4
+        ],
+        "compared_state": 33,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 1,
+      "region": "activation-L257-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          127,
+          128,
+          127,
+          20
+        ],
+        "after": [
+          0,
+          0,
+          0
+        ],
+        "before": [
+          0,
+          0,
+          4
+        ],
+        "compared_state": 34,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 2,
+      "region": "activation-L257-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          127,
+          128,
+          127,
+          22
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 35,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 3,
+      "region": "activation-L257-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          127,
+          128,
+          127,
+          22
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 36,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 4,
+      "region": "activation-L257-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          127,
+          128,
+          127,
+          20
+        ],
+        "after": [
+          0,
+          0,
+          0
+        ],
+        "before": [
+          0,
+          0,
+          4
+        ],
+        "compared_state": 37,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 5,
+      "region": "activation-L257-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          127,
+          128,
+          127,
+          20
+        ],
+        "after": [
+          0,
+          0,
+          0
+        ],
+        "before": [
+          0,
+          0,
+          4
+        ],
+        "compared_state": 38,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 6,
+      "region": "activation-L257-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          127,
+          128,
+          127,
+          22
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 39,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 7,
+      "region": "activation-L257-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          127,
+          128,
+          127,
+          22
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 40,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 8,
+      "region": "activation-L257-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          127,
+          128,
+          127,
+          20
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          4
+        ],
+        "compared_state": 41,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 9,
+      "region": "activation-L257-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          127,
+          128,
+          127,
+          20
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          4
+        ],
+        "compared_state": 42,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 10,
+      "region": "activation-L257-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          127,
+          128,
+          127,
+          20
+        ],
+        "after": [
+          0,
+          0,
+          0
+        ],
+        "before": [
+          0,
+          0,
+          4
+        ],
+        "compared_state": 43,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 11,
+      "region": "activation-L257-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          127,
+          128,
+          127,
+          20
+        ],
+        "after": [
+          0,
+          0,
+          0
+        ],
+        "before": [
+          0,
+          0,
+          4
+        ],
+        "compared_state": 44,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 12,
+      "region": "activation-L257-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          127,
+          128,
+          127,
+          22
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 45,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 13,
+      "region": "activation-L257-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          127,
+          128,
+          127,
+          22
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 46,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 14,
+      "region": "activation-L257-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          127,
+          128,
+          127,
+          20
+        ],
+        "after": [
+          0,
+          0,
+          0
+        ],
+        "before": [
+          0,
+          0,
+          4
+        ],
+        "compared_state": 47,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 15,
+      "region": "activation-L257-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          127,
+          128,
+          127,
+          20
+        ],
+        "after": [
+          0,
+          0,
+          0
+        ],
+        "before": [
+          0,
+          0,
+          4
+        ],
+        "compared_state": 48,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 16,
+      "region": "activation-L257-rc0-rh4-s1-R1"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          126,
+          127,
+          127,
+          28
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 33,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 1,
+      "region": "activation-L257-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          126,
+          127,
+          127,
+          28
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 34,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 2,
+      "region": "activation-L257-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          126,
+          127,
+          127,
+          28
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 35,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 3,
+      "region": "activation-L257-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          126,
+          127,
+          127,
+          28
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 36,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 4,
+      "region": "activation-L257-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          126,
+          127,
+          128,
+          18
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 37,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 5,
+      "region": "activation-L257-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          126,
+          127,
+          128,
+          45
+        ],
+        "after": [
+          0,
+          2,
+          2
+        ],
+        "before": [
+          0,
+          2,
+          0
+        ],
+        "compared_state": 38,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 6,
+      "region": "activation-L257-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          126,
+          127,
+          127,
+          28
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 39,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 7,
+      "region": "activation-L257-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          126,
+          127,
+          127,
+          28
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 40,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 8,
+      "region": "activation-L257-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          126,
+          127,
+          128,
+          18
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 41,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 9,
+      "region": "activation-L257-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          126,
+          127,
+          128,
+          19
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          4
+        ],
+        "compared_state": 42,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 10,
+      "region": "activation-L257-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          126,
+          127,
+          127,
+          28
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 43,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 11,
+      "region": "activation-L257-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          126,
+          127,
+          127,
+          28
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 44,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 12,
+      "region": "activation-L257-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          126,
+          127,
+          127,
+          28
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 45,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 13,
+      "region": "activation-L257-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          126,
+          127,
+          127,
+          28
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 46,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 14,
+      "region": "activation-L257-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          126,
+          127,
+          128,
+          18
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 47,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 15,
+      "region": "activation-L257-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          126,
+          127,
+          128,
+          19
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          4
+        ],
+        "compared_state": 48,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 16,
+      "region": "activation-L257-rc0-rh4-s1-R2"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          125,
+          127,
+          128,
+          18
+        ],
+        "after": [
+          0,
+          0,
+          0
+        ],
+        "before": [
+          0,
+          0,
+          2
+        ],
+        "compared_state": 33,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 1,
+      "region": "activation-L257-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          125,
+          126,
+          128,
+          36
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 34,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 2,
+      "region": "activation-L257-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          125,
+          126,
+          128,
+          36
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 35,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 3,
+      "region": "activation-L257-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          125,
+          126,
+          128,
+          36
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 36,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 4,
+      "region": "activation-L257-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          125,
+          126,
+          128,
+          36
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 37,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 5,
+      "region": "activation-L257-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          125,
+          128,
+          128,
+          0
+        ],
+        "after": [
+          0,
+          2,
+          0
+        ],
+        "before": [
+          0,
+          1,
+          4
+        ],
+        "compared_state": 38,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 6,
+      "region": "activation-L257-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          125,
+          127,
+          128,
+          18
+        ],
+        "after": [
+          0,
+          0,
+          0
+        ],
+        "before": [
+          0,
+          0,
+          2
+        ],
+        "compared_state": 39,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 7,
+      "region": "activation-L257-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          125,
+          126,
+          128,
+          36
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 40,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 8,
+      "region": "activation-L257-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          125,
+          126,
+          128,
+          36
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 41,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 9,
+      "region": "activation-L257-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          125,
+          127,
+          128,
+          18
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          2
+        ],
+        "compared_state": 42,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 10,
+      "region": "activation-L257-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          125,
+          127,
+          128,
+          18
+        ],
+        "after": [
+          0,
+          0,
+          0
+        ],
+        "before": [
+          0,
+          0,
+          2
+        ],
+        "compared_state": 43,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 11,
+      "region": "activation-L257-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          125,
+          126,
+          128,
+          36
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 44,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 12,
+      "region": "activation-L257-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          125,
+          126,
+          128,
+          36
+        ],
+        "after": [
+          0,
+          0,
+          2
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 45,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 13,
+      "region": "activation-L257-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          125,
+          126,
+          128,
+          36
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 46,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 14,
+      "region": "activation-L257-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          125,
+          126,
+          128,
+          36
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          0
+        ],
+        "compared_state": 47,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 15,
+      "region": "activation-L257-rc0-rh4-s1-R3"
+    },
+    {
+      "active_every_state": true,
+      "at_least_three_periods": true,
+      "discovery_candidate": false,
+      "first_mismatch": {
+        "address": [
+          125,
+          127,
+          128,
+          18
+        ],
+        "after": [
+          0,
+          0,
+          4
+        ],
+        "before": [
+          0,
+          0,
+          2
+        ],
+        "compared_state": 48,
+        "state": 32
+      },
+      "full_region_periodic": false,
+      "isolated_all_updates": false,
+      "period": 16,
+      "region": "activation-L257-rc0-rh4-s1-R3"
+    }
+  ]
+}

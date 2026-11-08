@@ -1,0 +1,1826 @@
+{
+  "accepted_pairs": 0,
+  "all_full_state_inverses": true,
+  "captured_but_unobserved_ids": [],
+  "cases": [
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": true
+      },
+      "case": {
+        "center_remainder": 0,
+        "halo_remainder": 0,
+        "id": "activation-L225-rc0-rh0-s0",
+        "side": 225,
+        "source_present": false
+      },
+      "final_state_sha256": "2cdddccb56ec413406078f81ed30167b0cc9af9446935a7d1a713e3945673296",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L225-rc0-rh0-s0",
+      "initial_state_sha256": "2cdddccb56ec413406078f81ed30167b0cc9af9446935a7d1a713e3945673296",
+      "native_capture": "native_captures/activation-L225-rc0-rh0-s0.json.gz",
+      "native_capture_sha256": "fe5af2c065784369854b2c887ca3bbb54d10f1dc8d438ec401651bb842ff459d",
+      "record": "records/activation-L225-rc0-rh0-s0.json.gz",
+      "record_gzip_sha256": "d7729852757686c590b9e9b1166e413beec87855d684d6a1ad670a3ecfd1a809",
+      "record_sha256": "55ffb96ffe279a0e4af21110a5678e935f7b64701bda5429a2adcaaef1076801"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": true,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": false
+      },
+      "case": {
+        "center_remainder": 0,
+        "halo_remainder": 0,
+        "id": "activation-L225-rc0-rh0-s1",
+        "side": 225,
+        "source_present": true
+      },
+      "final_state_sha256": "ecca71a6ee99d315a18f8651ec5b6acffd2b1e59da3632db46335eaf69779b0c",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L225-rc0-rh0-s1",
+      "initial_state_sha256": "baef8bb027dad7570e8536aa506b957187a71a3f632daac12a86ad9746a1c7ef",
+      "native_capture": "native_captures/activation-L225-rc0-rh0-s1.json.gz",
+      "native_capture_sha256": "87fa813f388f16f3e5622616754845e8e93b0c8cd05f2db5240383c9b0752576",
+      "record": "records/activation-L225-rc0-rh0-s1.json.gz",
+      "record_gzip_sha256": "c9d0d01a2281a9c075b47428dfda01f363779e89f3a3158daa12626f12ef85b9",
+      "record_sha256": "19c7c2c4b04805d086424d20b58f4464286f18a089beea9d5e337bfb9e8dca01"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": true
+      },
+      "case": {
+        "center_remainder": 0,
+        "halo_remainder": 2,
+        "id": "activation-L225-rc0-rh2-s0",
+        "side": 225,
+        "source_present": false
+      },
+      "final_state_sha256": "3814420dbc9808b9c6864490b058dc147eca782f3ca437ed29feead9e02c68ed",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L225-rc0-rh2-s0",
+      "initial_state_sha256": "3814420dbc9808b9c6864490b058dc147eca782f3ca437ed29feead9e02c68ed",
+      "native_capture": "native_captures/activation-L225-rc0-rh2-s0.json.gz",
+      "native_capture_sha256": "50bebdafecc78c7cd78914deaa4c05cee1b566d1292b44c73b4c6a9c5e0d2930",
+      "record": "records/activation-L225-rc0-rh2-s0.json.gz",
+      "record_gzip_sha256": "4ba34b9e163cede33f01aed236c360e857ac72f70ac3b4a3357c61b38c016bb1",
+      "record_sha256": "f20fb159000518a7df69c77c2e5ff092d93567a130bba6797eb510810262fdee"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": true,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": false
+      },
+      "case": {
+        "center_remainder": 0,
+        "halo_remainder": 2,
+        "id": "activation-L225-rc0-rh2-s1",
+        "side": 225,
+        "source_present": true
+      },
+      "final_state_sha256": "a3462157cae8fdbdefc5470d6dd63ead2a173abb98f2fe30183e465644dda371",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L225-rc0-rh2-s1",
+      "initial_state_sha256": "1037465f5afbc482000ac00d184ce7c1cbe8b4a6e0c3d46d44769e55306f5839",
+      "native_capture": "native_captures/activation-L225-rc0-rh2-s1.json.gz",
+      "native_capture_sha256": "7b386e7a7af44b2f5d3a6b250ebfca7bd04782c5674cc6d717c3db392185f5cf",
+      "record": "records/activation-L225-rc0-rh2-s1.json.gz",
+      "record_gzip_sha256": "f9f484ce633a4388b926de8e7a38b3c88e695a09bae2d751c80922fc7cbed9c4",
+      "record_sha256": "11a91b38482375db480ddeba5a4e9c6066433748acad949e6d0dbe29db472787"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": true
+      },
+      "case": {
+        "center_remainder": 0,
+        "halo_remainder": 4,
+        "id": "activation-L225-rc0-rh4-s0",
+        "side": 225,
+        "source_present": false
+      },
+      "final_state_sha256": "8aee70d459e7037ca126b7b4e9dcc21981a5a5f725df8171b243c0b9254734e8",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L225-rc0-rh4-s0",
+      "initial_state_sha256": "8aee70d459e7037ca126b7b4e9dcc21981a5a5f725df8171b243c0b9254734e8",
+      "native_capture": "native_captures/activation-L225-rc0-rh4-s0.json.gz",
+      "native_capture_sha256": "2bc67e89d59554840a94e7916e946a987720728e2bb23e5e2aa713101e9a3d37",
+      "record": "records/activation-L225-rc0-rh4-s0.json.gz",
+      "record_gzip_sha256": "da53fdec1004b711251eec58941ffbe78bd0f0c37606dd619160c675311aa68c",
+      "record_sha256": "fbdc7e164d250bec80a7617cc9474dd656cae9c078217135c788b3be760305dc"
+    },
+    {
+      "assessment": {
+        "clock_class": "axis2",
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": true,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": false
+      },
+      "case": {
+        "center_remainder": 0,
+        "halo_remainder": 4,
+        "id": "activation-L225-rc0-rh4-s1",
+        "side": 225,
+        "source_present": true
+      },
+      "final_state_sha256": "56c56ffb98e5dc61cb4b060ca776de662283a8a36f8c18d16409a0c6518612cf",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L225-rc0-rh4-s1",
+      "initial_state_sha256": "6c109d859ac38458f5c8f6649bf5251fa92f8eb18b384dd27ca30bda09a50559",
+      "native_capture": "native_captures/activation-L225-rc0-rh4-s1.json.gz",
+      "native_capture_sha256": "74b179cde47605545844de74a9095a52ffe4e85daac5e66d396b89e4459b543c",
+      "record": "records/activation-L225-rc0-rh4-s1.json.gz",
+      "record_gzip_sha256": "fecd1288114c351a9ad4b57da87c1a1949f4d74df0c82887ac5bc6b8950e04ee",
+      "record_sha256": "e1c1e6f490514b5c7cd92e2299e6a9061b0c02d86089748bcbb0ac8ad727a394"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": true
+      },
+      "case": {
+        "center_remainder": 2,
+        "halo_remainder": 0,
+        "id": "activation-L225-rc2-rh0-s0",
+        "side": 225,
+        "source_present": false
+      },
+      "final_state_sha256": "3a8aedd0ebd81723c04468bb107422da4b17ca0c8ba4bac4c448de95be3d0560",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L225-rc2-rh0-s0",
+      "initial_state_sha256": "3a8aedd0ebd81723c04468bb107422da4b17ca0c8ba4bac4c448de95be3d0560",
+      "native_capture": "native_captures/activation-L225-rc2-rh0-s0.json.gz",
+      "native_capture_sha256": "3b2d3d38facdd0422e5de850f38bde8785f4e484db0aa8576205ddd39f53fc37",
+      "record": "records/activation-L225-rc2-rh0-s0.json.gz",
+      "record_gzip_sha256": "42be7996d2584b81639cdeaa69815561b2057b8f38b3f67ea719f5e785525772",
+      "record_sha256": "799c87cef3e8351f4845be5fb736d0c4e7ca79e787b4d898c0ac0e3798e048ff"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": false
+      },
+      "case": {
+        "center_remainder": 2,
+        "halo_remainder": 0,
+        "id": "activation-L225-rc2-rh0-s1",
+        "side": 225,
+        "source_present": true
+      },
+      "final_state_sha256": "c893d53c6462c0278a36d139ed3eda7567c231f7afb3aa5cab63af6f16bc789f",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L225-rc2-rh0-s1",
+      "initial_state_sha256": "a7e6a605e2886e39212dcf53d2cd929d4131ee676fe85629bc296219479c3a27",
+      "native_capture": "native_captures/activation-L225-rc2-rh0-s1.json.gz",
+      "native_capture_sha256": "b9279e3ab016f8c33dcb031245ecf0cac914fa9a50c5c4057669cabea97652ac",
+      "record": "records/activation-L225-rc2-rh0-s1.json.gz",
+      "record_gzip_sha256": "58f65977c2cb01ff4f2a7141d60a16a2fccbe05a3e3b16b9eb580c72c3f97699",
+      "record_sha256": "65eb8d6c2d33dc554f1484aecabb9dc9d40738c249562a6c0c069e43fe078dcc"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": true
+      },
+      "case": {
+        "center_remainder": 2,
+        "halo_remainder": 2,
+        "id": "activation-L225-rc2-rh2-s0",
+        "side": 225,
+        "source_present": false
+      },
+      "final_state_sha256": "66eebd533cf6b85f8b06bfd50646ef6dee26d8e4be812d2616154f81c16f0159",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L225-rc2-rh2-s0",
+      "initial_state_sha256": "66eebd533cf6b85f8b06bfd50646ef6dee26d8e4be812d2616154f81c16f0159",
+      "native_capture": "native_captures/activation-L225-rc2-rh2-s0.json.gz",
+      "native_capture_sha256": "b910585ba9702c7466944892945c205e7da012dc58d19135f259b008a34afc15",
+      "record": "records/activation-L225-rc2-rh2-s0.json.gz",
+      "record_gzip_sha256": "89c02818046a1086787ce9b3b1babd4911b2ce80a55785753467441c10da0e47",
+      "record_sha256": "dde64f2657c50cf6469805a3a42eb40250cddf941cb3ea32d8be7fb673fa83af"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": false
+      },
+      "case": {
+        "center_remainder": 2,
+        "halo_remainder": 2,
+        "id": "activation-L225-rc2-rh2-s1",
+        "side": 225,
+        "source_present": true
+      },
+      "final_state_sha256": "93896bb84896c34063d71eddfee9dfaea1abe0df68d16ca47238f1deca535584",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L225-rc2-rh2-s1",
+      "initial_state_sha256": "b315ad7e2e2f30720fc05505f60ab4fd8f5f607da95627633703385a3a1a20ad",
+      "native_capture": "native_captures/activation-L225-rc2-rh2-s1.json.gz",
+      "native_capture_sha256": "67c8bb2935c3ff5738a9f20e98ca0a54268475716b5ebd9ee7c19a351bca125c",
+      "record": "records/activation-L225-rc2-rh2-s1.json.gz",
+      "record_gzip_sha256": "20fa4ca15055315ceb1da8927a515f79cdbd369dc8f224bc0616c1ffce447747",
+      "record_sha256": "5fd057b76be857cde8a7ca292977c8efc7eaba2c7e3924f0a0861585dfb153fe"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": true
+      },
+      "case": {
+        "center_remainder": 2,
+        "halo_remainder": 4,
+        "id": "activation-L225-rc2-rh4-s0",
+        "side": 225,
+        "source_present": false
+      },
+      "final_state_sha256": "ecc5cede302d4f072e2bbf5b937d5a00b8213665dd6092c7a518198434194ac3",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L225-rc2-rh4-s0",
+      "initial_state_sha256": "ecc5cede302d4f072e2bbf5b937d5a00b8213665dd6092c7a518198434194ac3",
+      "native_capture": "native_captures/activation-L225-rc2-rh4-s0.json.gz",
+      "native_capture_sha256": "0f5d452741b7309897f3584e00dc5984d5b5889e4068caa863e004fe7ee3b92d",
+      "record": "records/activation-L225-rc2-rh4-s0.json.gz",
+      "record_gzip_sha256": "67f07dac1caf4aa37756468b2e024da5f65f21cd39ea3f4fe38aababe6ff291b",
+      "record_sha256": "ff5dc6b72d53599999cbbcf45cf9765c0e2258173c93664cb14faadf2674a69f"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": false
+      },
+      "case": {
+        "center_remainder": 2,
+        "halo_remainder": 4,
+        "id": "activation-L225-rc2-rh4-s1",
+        "side": 225,
+        "source_present": true
+      },
+      "final_state_sha256": "39984ca7cde8c21651a4371227f01af934154ad2c092606eb944ce24ee6487c9",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L225-rc2-rh4-s1",
+      "initial_state_sha256": "77a1238502845e6de49007f4f8ac0cfcc00a6cc2a1a3ffd5706f0c85bdca0e8b",
+      "native_capture": "native_captures/activation-L225-rc2-rh4-s1.json.gz",
+      "native_capture_sha256": "245e02817421197b35a1d74c1e8b78e29e8bd0249aab0f67ffbb9d9e0c5c0876",
+      "record": "records/activation-L225-rc2-rh4-s1.json.gz",
+      "record_gzip_sha256": "4dfae8840e4e74622e6d986ae5193426f833602da0ef42011a25f3a842a75285",
+      "record_sha256": "22febf80ece7d6494c1779d070180d361a96bcc31bd26e985e90158dc8e647a7"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": true
+      },
+      "case": {
+        "center_remainder": 4,
+        "halo_remainder": 0,
+        "id": "activation-L225-rc4-rh0-s0",
+        "side": 225,
+        "source_present": false
+      },
+      "final_state_sha256": "0c47114e5725ad667b48e6e178e50ad7068a197447e30b03811f640f68fdd30f",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L225-rc4-rh0-s0",
+      "initial_state_sha256": "0c47114e5725ad667b48e6e178e50ad7068a197447e30b03811f640f68fdd30f",
+      "native_capture": "native_captures/activation-L225-rc4-rh0-s0.json.gz",
+      "native_capture_sha256": "a68b3bcf8376cf75926fe45955c749570e38345768cab97610a5ff23157a7c82",
+      "record": "records/activation-L225-rc4-rh0-s0.json.gz",
+      "record_gzip_sha256": "b7feb752aa3730830f6c5b576257ca1e022151a85ce8caa61942256e35eab631",
+      "record_sha256": "640fc26954e0e85bac0dec35042b45358f85fadb15b48a3f1d45f401a1cdbe76"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": false
+      },
+      "case": {
+        "center_remainder": 4,
+        "halo_remainder": 0,
+        "id": "activation-L225-rc4-rh0-s1",
+        "side": 225,
+        "source_present": true
+      },
+      "final_state_sha256": "1c5ec3d8a5cefd3463308c617862432a7931e9121139590d5335a20d051a65ff",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L225-rc4-rh0-s1",
+      "initial_state_sha256": "7f92425cd0271660f2dc4dd130bc0363e035e2ee780bdbf9801167c4fa51354c",
+      "native_capture": "native_captures/activation-L225-rc4-rh0-s1.json.gz",
+      "native_capture_sha256": "e80ea0094b0e51e42b52932c607f95f6497c21621d92e5b33620d6466ef84cca",
+      "record": "records/activation-L225-rc4-rh0-s1.json.gz",
+      "record_gzip_sha256": "a87484c30d78cd5a7cdb195e2a6c4459a998b49ea59e2c77dfea23b9bfd81fec",
+      "record_sha256": "60908900f8567ac3d48b621a279055d95520989d17da4e27e493a075b91613a2"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": true
+      },
+      "case": {
+        "center_remainder": 4,
+        "halo_remainder": 2,
+        "id": "activation-L225-rc4-rh2-s0",
+        "side": 225,
+        "source_present": false
+      },
+      "final_state_sha256": "f3651dcc18f3b120327e2fc43e09860b9289f039a36eefaabd23e405ea278081",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L225-rc4-rh2-s0",
+      "initial_state_sha256": "f3651dcc18f3b120327e2fc43e09860b9289f039a36eefaabd23e405ea278081",
+      "native_capture": "native_captures/activation-L225-rc4-rh2-s0.json.gz",
+      "native_capture_sha256": "94a936b9aefdec225393c49cb6a93710fbd45a9f5eb2cf1ef15ece968334b594",
+      "record": "records/activation-L225-rc4-rh2-s0.json.gz",
+      "record_gzip_sha256": "b6becb04b97ecceacd4260dbc3919639aaf1827a4708f17847ac192e1f3301fd",
+      "record_sha256": "9ce084b2505f74403193ae26557423963af3f885534c85db39038470b5281663"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": false
+      },
+      "case": {
+        "center_remainder": 4,
+        "halo_remainder": 2,
+        "id": "activation-L225-rc4-rh2-s1",
+        "side": 225,
+        "source_present": true
+      },
+      "final_state_sha256": "e96f5ba4ef6af2592c6ad8d5dee5c965d4b8b2400ccfbf3fb4d4ce703154e0d8",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L225-rc4-rh2-s1",
+      "initial_state_sha256": "0806c19f2a936198b3df6fdab4ecaf9ba850becf345411cb9ecd96308896ce8f",
+      "native_capture": "native_captures/activation-L225-rc4-rh2-s1.json.gz",
+      "native_capture_sha256": "283e1a95cbba7f11f4ac26c8c59b16d112000c41d4c964d43d8f95f7811e7738",
+      "record": "records/activation-L225-rc4-rh2-s1.json.gz",
+      "record_gzip_sha256": "b3af171d81c1afba8f363c6b32679feb61bf33ee04d5ea685d9d546b499ea142",
+      "record_sha256": "27f7b7b50a6b6d4d994f97e978db8645d6e48ef116a783e6963c5ccfe967a08e"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": true
+      },
+      "case": {
+        "center_remainder": 4,
+        "halo_remainder": 4,
+        "id": "activation-L225-rc4-rh4-s0",
+        "side": 225,
+        "source_present": false
+      },
+      "final_state_sha256": "1c373a4f32c669d458bf8e9f769b5032392dddf804aee98bfb3a42c4c151fbc4",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L225-rc4-rh4-s0",
+      "initial_state_sha256": "1c373a4f32c669d458bf8e9f769b5032392dddf804aee98bfb3a42c4c151fbc4",
+      "native_capture": "native_captures/activation-L225-rc4-rh4-s0.json.gz",
+      "native_capture_sha256": "66dafea3a3c2c2246e3ea082ef8224a554dbfaf0e9f63cdb40d17972da12f0f6",
+      "record": "records/activation-L225-rc4-rh4-s0.json.gz",
+      "record_gzip_sha256": "b62315a65d633e7a5bf32da20f230be6366d1a4f35953f284a3ddaeef05ddd0e",
+      "record_sha256": "28243de80bb91d77bca7c12d8262f975d84ef3ca2bad072d1b3d856ba464f8bf"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": false
+      },
+      "case": {
+        "center_remainder": 4,
+        "halo_remainder": 4,
+        "id": "activation-L225-rc4-rh4-s1",
+        "side": 225,
+        "source_present": true
+      },
+      "final_state_sha256": "b287fee738d44215f5c1de3a1915e112702fe5b797f2d9c013f8acea2ba41785",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L225-rc4-rh4-s1",
+      "initial_state_sha256": "cad4bf8e7c8dece3c68bcf42fea2ba2ace690e88dcaba9f05efdc5d1b810f50c",
+      "native_capture": "native_captures/activation-L225-rc4-rh4-s1.json.gz",
+      "native_capture_sha256": "168e1ff6aa9364e067c51d1516c9af969f3369cddaa07fa3a94da23da1af25c0",
+      "record": "records/activation-L225-rc4-rh4-s1.json.gz",
+      "record_gzip_sha256": "c7a1b9f55f0df6f03147a4b5ea2a2bf444f0b18a077c6298a177c15bc9a7203e",
+      "record_sha256": "a6b77f8bce148f95a0dd514f180d58fa69b3ba6ffe0b2b88528508c73ddd66db"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": true
+      },
+      "case": {
+        "center_remainder": 0,
+        "halo_remainder": 0,
+        "id": "activation-L257-rc0-rh0-s0",
+        "side": 257,
+        "source_present": false
+      },
+      "final_state_sha256": "3c6f5691315655408b89f6da7e6096d4839aa58b1682f996c8b1476d7afdd953",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L257-rc0-rh0-s0",
+      "initial_state_sha256": "3c6f5691315655408b89f6da7e6096d4839aa58b1682f996c8b1476d7afdd953",
+      "native_capture": "native_captures/activation-L257-rc0-rh0-s0.json.gz",
+      "native_capture_sha256": "7ea8b830cd31163aac6df735f7e0f2a6f969c0675262dd9e44361e7197cdb216",
+      "record": "records/activation-L257-rc0-rh0-s0.json.gz",
+      "record_gzip_sha256": "11a1dee85901d536fcf8e70563b216c1c8df19282bdf8560d0ab824cec366a1a",
+      "record_sha256": "14e391d4c3ebbe695199b036436c8c5642804f08b2bc9eb6504c26e91cf3d377"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": true,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": false
+      },
+      "case": {
+        "center_remainder": 0,
+        "halo_remainder": 0,
+        "id": "activation-L257-rc0-rh0-s1",
+        "side": 257,
+        "source_present": true
+      },
+      "final_state_sha256": "f8f91ebf1121414d0008090a8da83677e2163ebb3ba478aadb0603675e8e57b9",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L257-rc0-rh0-s1",
+      "initial_state_sha256": "f6ba92707dd1a27ec2e929105ed14c175bbd4b35e2ae9059f842902370f6fbdc",
+      "native_capture": "native_captures/activation-L257-rc0-rh0-s1.json.gz",
+      "native_capture_sha256": "fd4e428acc84ca7be90d70ee1b43b4b311378e028105193063a37a6e2c9e321f",
+      "record": "records/activation-L257-rc0-rh0-s1.json.gz",
+      "record_gzip_sha256": "d51ccd9db5f6a01f591c177e733da6f75d17d3415a22573ab37f5b7929dc947b",
+      "record_sha256": "ea83ab9089710bd72152ff42a9c570d95395ab4d18c40d2f1457b0c97223afd2"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": true
+      },
+      "case": {
+        "center_remainder": 0,
+        "halo_remainder": 2,
+        "id": "activation-L257-rc0-rh2-s0",
+        "side": 257,
+        "source_present": false
+      },
+      "final_state_sha256": "4ea64179d59de91a73e14001f1003f56cd14eb61c38e6f657eb99e2f21590337",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L257-rc0-rh2-s0",
+      "initial_state_sha256": "4ea64179d59de91a73e14001f1003f56cd14eb61c38e6f657eb99e2f21590337",
+      "native_capture": "native_captures/activation-L257-rc0-rh2-s0.json.gz",
+      "native_capture_sha256": "901cdadc0bddc51f0b2567d0b8b1ddc982929078142eccc4c45144731d95b7f5",
+      "record": "records/activation-L257-rc0-rh2-s0.json.gz",
+      "record_gzip_sha256": "ccdb6c4459754f64e12c608f46f34d00e45588602a7b5c9b597a9190bb42f713",
+      "record_sha256": "91090a6aa8972dd4ca56b40a827c4567fdfc5499189bdaf7ffb93e5e625f00b4"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": true,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": false
+      },
+      "case": {
+        "center_remainder": 0,
+        "halo_remainder": 2,
+        "id": "activation-L257-rc0-rh2-s1",
+        "side": 257,
+        "source_present": true
+      },
+      "final_state_sha256": "7b52f7381a943bf3405f69a9cfd833a0c47ff79976d30019d5c4ecab1658df1e",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L257-rc0-rh2-s1",
+      "initial_state_sha256": "4018c481f36a8c61dd8407ab4abb08a3975073aa029f8b65a21b8546a9203919",
+      "native_capture": "native_captures/activation-L257-rc0-rh2-s1.json.gz",
+      "native_capture_sha256": "c3ace604941751e514b43d3d2ed28c5179c8a424b351beb2352dc17611e861b2",
+      "record": "records/activation-L257-rc0-rh2-s1.json.gz",
+      "record_gzip_sha256": "4853a3d6868091fcf92c5041b803ed97e07e86ef26ba2a9269116dbf61aafd41",
+      "record_sha256": "10e19cfd3ce6e21824061681bb769d065b4d1df221b6249273794ec563290302"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": true
+      },
+      "case": {
+        "center_remainder": 0,
+        "halo_remainder": 4,
+        "id": "activation-L257-rc0-rh4-s0",
+        "side": 257,
+        "source_present": false
+      },
+      "final_state_sha256": "12a8fccfe74529b1d250132cbddbfa80d3d4df2ca651bfeff0ea6f644de97a0d",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L257-rc0-rh4-s0",
+      "initial_state_sha256": "12a8fccfe74529b1d250132cbddbfa80d3d4df2ca651bfeff0ea6f644de97a0d",
+      "native_capture": "native_captures/activation-L257-rc0-rh4-s0.json.gz",
+      "native_capture_sha256": "a4d3ed48fa5ca698619b892efcf7eabc2fd8e5949c6dda09c096bb579b722d59",
+      "record": "records/activation-L257-rc0-rh4-s0.json.gz",
+      "record_gzip_sha256": "b445f5b1aff15b159bcb09da5110c74152c0441ae90e960469c1aa50b5352532",
+      "record_sha256": "dff61fee9a47aaaa52dad243d6d40b3c0ad08a8237a82d4e9dff507864da0b46"
+    },
+    {
+      "assessment": {
+        "clock_class": "axis2",
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": true,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": false
+      },
+      "case": {
+        "center_remainder": 0,
+        "halo_remainder": 4,
+        "id": "activation-L257-rc0-rh4-s1",
+        "side": 257,
+        "source_present": true
+      },
+      "final_state_sha256": "bd0c01221be704a6b734a66b82c2c63cbe31c586ded483a5612916a3ea57c5ae",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L257-rc0-rh4-s1",
+      "initial_state_sha256": "65dd76c4ce40c2d06b8f51c7959432578c111289fa411cc24d740462d1adab61",
+      "native_capture": "native_captures/activation-L257-rc0-rh4-s1.json.gz",
+      "native_capture_sha256": "4349697d4c08d86733ba669a87ae4bdb3f2208008efe8f9c4bf14fa066c0f466",
+      "record": "records/activation-L257-rc0-rh4-s1.json.gz",
+      "record_gzip_sha256": "fc57587a30ea9816d966b1215ca85e1fb7e58c2c105eade500e2a1e91693311a",
+      "record_sha256": "11e108742d92e8de483133a1691653380f26209e0267290db6569971c4de2705"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": true
+      },
+      "case": {
+        "center_remainder": 2,
+        "halo_remainder": 0,
+        "id": "activation-L257-rc2-rh0-s0",
+        "side": 257,
+        "source_present": false
+      },
+      "final_state_sha256": "7934c90002d8b1301e747b00846baab452dee1660da57610512fe4f3f7af0f16",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L257-rc2-rh0-s0",
+      "initial_state_sha256": "7934c90002d8b1301e747b00846baab452dee1660da57610512fe4f3f7af0f16",
+      "native_capture": "native_captures/activation-L257-rc2-rh0-s0.json.gz",
+      "native_capture_sha256": "37493eccf65dfe3060dc64b36b625a0a0ffae20a68057a7ed48afa229ecd33e7",
+      "record": "records/activation-L257-rc2-rh0-s0.json.gz",
+      "record_gzip_sha256": "cbe1972d03cccc04572dcf8964ec012e9c7ff3fe968161c1b10e165beab03ac6",
+      "record_sha256": "590104a6b165e0d0eaf7d199667e452b540e9b6abfdf6fe4c163325a066847e6"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": false
+      },
+      "case": {
+        "center_remainder": 2,
+        "halo_remainder": 0,
+        "id": "activation-L257-rc2-rh0-s1",
+        "side": 257,
+        "source_present": true
+      },
+      "final_state_sha256": "72dc301619a36c272571987260a2ee4eacc767ff43b54b7fec3ca4363c1df2ef",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L257-rc2-rh0-s1",
+      "initial_state_sha256": "bdab438983ed4431c7fdc17632b06a40773f094279bb74f76082c9b157c93bd4",
+      "native_capture": "native_captures/activation-L257-rc2-rh0-s1.json.gz",
+      "native_capture_sha256": "9e4274cd17f000682e03fd8bb7af03d645ce8f0c9d1358c4192edb667ee3e39b",
+      "record": "records/activation-L257-rc2-rh0-s1.json.gz",
+      "record_gzip_sha256": "4a238971fb73a7f0c10d6ca0f0c658d387667f1c8e4db6c5e95c6f3ce91f2521",
+      "record_sha256": "620d6ae9fee81ad7b2484afc88e8cd6954ff47746a6b4ae4e990874b0cdca3a2"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": true
+      },
+      "case": {
+        "center_remainder": 2,
+        "halo_remainder": 2,
+        "id": "activation-L257-rc2-rh2-s0",
+        "side": 257,
+        "source_present": false
+      },
+      "final_state_sha256": "3d9d3a6e8bd2e39e981e0a19cf6dc4e5dab1bcc91cb8f57729e813cb1351f801",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L257-rc2-rh2-s0",
+      "initial_state_sha256": "3d9d3a6e8bd2e39e981e0a19cf6dc4e5dab1bcc91cb8f57729e813cb1351f801",
+      "native_capture": "native_captures/activation-L257-rc2-rh2-s0.json.gz",
+      "native_capture_sha256": "4d4bb8964cfb74e7f0ad2413bfaf9aa6bbc8e29fca348de90da536c0b46ccbf3",
+      "record": "records/activation-L257-rc2-rh2-s0.json.gz",
+      "record_gzip_sha256": "14c6176508907a37854a0f7d272d934608624bdf93a96b38b374fa947a9c8566",
+      "record_sha256": "8561973187c66ddefe5312052bd34a71c9653bd7d4638c3e3aa94bc09ef6cc68"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": false
+      },
+      "case": {
+        "center_remainder": 2,
+        "halo_remainder": 2,
+        "id": "activation-L257-rc2-rh2-s1",
+        "side": 257,
+        "source_present": true
+      },
+      "final_state_sha256": "a1a26b7d6045a6edb7117ef309a6f785300d070d239cd3b20b3a2c361cbf9906",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L257-rc2-rh2-s1",
+      "initial_state_sha256": "f4fafeb8e8610e20f477d760ae770571ddc3f154acc8a9e07024f94bae0bcdcf",
+      "native_capture": "native_captures/activation-L257-rc2-rh2-s1.json.gz",
+      "native_capture_sha256": "ebd7184a499abbb32fce523b810721dfb1d6e8f0b0af438c86674a79ccdc25f5",
+      "record": "records/activation-L257-rc2-rh2-s1.json.gz",
+      "record_gzip_sha256": "681fb6dcf25652175c002eeebf423c9e614dd2845488fb58604c65e268477063",
+      "record_sha256": "aacb062d644dde754737710cce1427814dda9d026e0c6c9f3e77f088a79fc2d5"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": true
+      },
+      "case": {
+        "center_remainder": 2,
+        "halo_remainder": 4,
+        "id": "activation-L257-rc2-rh4-s0",
+        "side": 257,
+        "source_present": false
+      },
+      "final_state_sha256": "f422b01b0667dd9449453081054a1544f0204ff601c10aa024be0ff0947a5719",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L257-rc2-rh4-s0",
+      "initial_state_sha256": "f422b01b0667dd9449453081054a1544f0204ff601c10aa024be0ff0947a5719",
+      "native_capture": "native_captures/activation-L257-rc2-rh4-s0.json.gz",
+      "native_capture_sha256": "9fcb86c7e59f7163394585bcfbfe494c4fad3a83663d01fe6593d26890c42f92",
+      "record": "records/activation-L257-rc2-rh4-s0.json.gz",
+      "record_gzip_sha256": "9be9fab1594b9c45bff747e7e34504f6627d3e83fcd18a221786b62619ebb3c6",
+      "record_sha256": "9b90f65e224f300f055cd2347ca170aa64730163202c8dcec19828284d77298a"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": false
+      },
+      "case": {
+        "center_remainder": 2,
+        "halo_remainder": 4,
+        "id": "activation-L257-rc2-rh4-s1",
+        "side": 257,
+        "source_present": true
+      },
+      "final_state_sha256": "df16400cf49aa28664517f89b0492aa399267d3cd11897e28d0a9afa243f055a",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L257-rc2-rh4-s1",
+      "initial_state_sha256": "6c3d395cfa2f6fc23e372e3f2d87b796e780683260337133669a098ef3ec85a4",
+      "native_capture": "native_captures/activation-L257-rc2-rh4-s1.json.gz",
+      "native_capture_sha256": "84edae3fa2f5521f971bfbfa7db78652d880c3e43887104a907948ef29b230fd",
+      "record": "records/activation-L257-rc2-rh4-s1.json.gz",
+      "record_gzip_sha256": "74c2e647e8c0add08278a9a288d51b0566b27d75bc74e9c18f7622b72bfaf431",
+      "record_sha256": "c4709956ead1850141d69d6231aedf56b8cca3055e79a1a6d6d21322a3ab281d"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": true
+      },
+      "case": {
+        "center_remainder": 4,
+        "halo_remainder": 0,
+        "id": "activation-L257-rc4-rh0-s0",
+        "side": 257,
+        "source_present": false
+      },
+      "final_state_sha256": "7d938054d9b840f364cfe5490b74cd541823cfc82b08f3a610bd37e455d9e2af",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L257-rc4-rh0-s0",
+      "initial_state_sha256": "7d938054d9b840f364cfe5490b74cd541823cfc82b08f3a610bd37e455d9e2af",
+      "native_capture": "native_captures/activation-L257-rc4-rh0-s0.json.gz",
+      "native_capture_sha256": "220bc565fbbcd9d268863607e376e2a46fcdb5b303c8ed8562ae7ee3015f1c05",
+      "record": "records/activation-L257-rc4-rh0-s0.json.gz",
+      "record_gzip_sha256": "efe061646536f1c291df93de10138c11b3cf76959f5857c98a32a8b5aa7d8b49",
+      "record_sha256": "bf3e5f9204120566122f54a01074dc2aba112bedaf0a15f4dcfaf14b42eb5b80"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": false
+      },
+      "case": {
+        "center_remainder": 4,
+        "halo_remainder": 0,
+        "id": "activation-L257-rc4-rh0-s1",
+        "side": 257,
+        "source_present": true
+      },
+      "final_state_sha256": "012120b6041adbfc22812fe6808958dfade1119091bb851dd58490a522ce943d",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L257-rc4-rh0-s1",
+      "initial_state_sha256": "fbc687abc2b9fcf9ac782ce9f7629e03b6cb26afd80bf7fef3bcc03c7c17373b",
+      "native_capture": "native_captures/activation-L257-rc4-rh0-s1.json.gz",
+      "native_capture_sha256": "4c679d73b9325e393f2c244d13a8978d3771c552f107940967e555117d7a32c1",
+      "record": "records/activation-L257-rc4-rh0-s1.json.gz",
+      "record_gzip_sha256": "97e395164fd851ccf77c1acede000c2b1dbec49cea05dcd8b2078078cd55c003",
+      "record_sha256": "f9cc5ed50e2c305c98641a191e1abca19862346b6266718add4a5982498e2ef3"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": true
+      },
+      "case": {
+        "center_remainder": 4,
+        "halo_remainder": 2,
+        "id": "activation-L257-rc4-rh2-s0",
+        "side": 257,
+        "source_present": false
+      },
+      "final_state_sha256": "c446a93a7625c5281de55275ea54ecc30ab28953cd86b5332f21e22d42cdd6a6",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L257-rc4-rh2-s0",
+      "initial_state_sha256": "c446a93a7625c5281de55275ea54ecc30ab28953cd86b5332f21e22d42cdd6a6",
+      "native_capture": "native_captures/activation-L257-rc4-rh2-s0.json.gz",
+      "native_capture_sha256": "29d2a97f04f5287b26aeed6bdf8eeb4467e0d91e39478044eaeaa6b689e5cb77",
+      "record": "records/activation-L257-rc4-rh2-s0.json.gz",
+      "record_gzip_sha256": "40efd1b82a2958b4d7b6406dd3b05fa9e57449efda5cf8daa9318179d5074278",
+      "record_sha256": "7510ee70302550ba9d75a520c614bd09fad35cb15550fc619a75a46f93aea4a8"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": false
+      },
+      "case": {
+        "center_remainder": 4,
+        "halo_remainder": 2,
+        "id": "activation-L257-rc4-rh2-s1",
+        "side": 257,
+        "source_present": true
+      },
+      "final_state_sha256": "32a0f982b9c8af8d32942c1f23e1eff60f06e3fbbe09a43392fe78f4d880eb4a",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L257-rc4-rh2-s1",
+      "initial_state_sha256": "a39c97e8614e98543cd592472d15b4cec33a7db39bcdde6de3ac76bfe2106cc2",
+      "native_capture": "native_captures/activation-L257-rc4-rh2-s1.json.gz",
+      "native_capture_sha256": "16b99b2593e1127da67b3bfec32aaed1cc9b14a24353ed93f3a54b112323773b",
+      "record": "records/activation-L257-rc4-rh2-s1.json.gz",
+      "record_gzip_sha256": "e1d96896e752a41334a0babe43ee4511c78939627348f6e95a740f0d5b462e02",
+      "record_sha256": "7e1d071aa0e93301abd53d213ba310483afeb87351f4b7eeefdfa764a75c1a0e"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": true
+      },
+      "case": {
+        "center_remainder": 4,
+        "halo_remainder": 4,
+        "id": "activation-L257-rc4-rh4-s0",
+        "side": 257,
+        "source_present": false
+      },
+      "final_state_sha256": "7a1c761f8a1cae6556920540c8cee427c38149ae8a85632deb26207ef7e3adda",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L257-rc4-rh4-s0",
+      "initial_state_sha256": "7a1c761f8a1cae6556920540c8cee427c38149ae8a85632deb26207ef7e3adda",
+      "native_capture": "native_captures/activation-L257-rc4-rh4-s0.json.gz",
+      "native_capture_sha256": "15b0513556f8c1c04854a6eed0c8275b0e96dd9840f6105f6aff62208657e956",
+      "record": "records/activation-L257-rc4-rh4-s0.json.gz",
+      "record_gzip_sha256": "11b241f70feed37be613d4e5cd51888cbb2b777c96f2cf1bb33ebb5f8791b3fa",
+      "record_sha256": "bd6ed3ce9e18a028740c0c4b8c9c627a5d5fa6d2ef31bd5246d46e9e4e965f22"
+    },
+    {
+      "assessment": {
+        "clock_class": null,
+        "incoming_contract": true,
+        "initial_region_at_rest": true,
+        "native_contact_activation": false,
+        "no_active_boundary_contact": true,
+        "quiet_clock_hold": false,
+        "strict_initial_causal_margin": true,
+        "whole_board_stationary": false
+      },
+      "case": {
+        "center_remainder": 4,
+        "halo_remainder": 4,
+        "id": "activation-L257-rc4-rh4-s1",
+        "side": 257,
+        "source_present": true
+      },
+      "final_state_sha256": "c0a42aea2bf0d1b09a93085236d93f8a6fb7d44ca224800e7c933f12c134b1e2",
+      "frames": 81,
+      "full_state_inverse": true,
+      "id": "activation-L257-rc4-rh4-s1",
+      "initial_state_sha256": "45f66192706292fac2c488320b57923c94ffc056bf482597bd63ff395b51a94e",
+      "native_capture": "native_captures/activation-L257-rc4-rh4-s1.json.gz",
+      "native_capture_sha256": "623029de483f2abc5805d0a297ba329be777c2f16e3f72466c54eae91344759e",
+      "record": "records/activation-L257-rc4-rh4-s1.json.gz",
+      "record_gzip_sha256": "0882556355aab8d5b30699b5009dc683779d6fc2f1f64b80ff95bd2c8c55eefd",
+      "record_sha256": "aaad83a1316453299d32ea878aa6be0846833acd493b7bc78419271b6217a524"
+    }
+  ],
+  "claim": "Finite activation of a local oscillator by an ordinary signal, if the registered criteria pass. The remainder apparatus is prepared in advance; this is not creation from vacuum, a physical particle, a photon or a thermodynamic time arrow.",
+  "classes": {
+    "axis2": 0,
+    "diagonal": 0,
+    "unit": 0
+  },
+  "completed_cases": 36,
+  "cpu_seconds_through_export": 67.023474472,
+  "failed_cases": [],
+  "not_run_cases": [],
+  "pairs": [
+    {
+      "accepted_signal_started_clock": false,
+      "cases": {
+        "0": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": true
+        },
+        "1": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": true,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": false
+        }
+      },
+      "clock_class": null,
+      "common_eligible": true,
+      "complete_pair": true,
+      "geometry": {
+        "center_remainder": 0,
+        "halo_remainder": 0,
+        "side": 225
+      },
+      "initial_preparation_checks": {
+        "all336_initial_counter_pairs_zero": true,
+        "changed_addresses": 24,
+        "outside_source_footprint_equal": true,
+        "source_absent_pristine": true
+      }
+    },
+    {
+      "accepted_signal_started_clock": false,
+      "cases": {
+        "0": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": true
+        },
+        "1": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": true,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": false
+        }
+      },
+      "clock_class": null,
+      "common_eligible": true,
+      "complete_pair": true,
+      "geometry": {
+        "center_remainder": 0,
+        "halo_remainder": 2,
+        "side": 225
+      },
+      "initial_preparation_checks": {
+        "all336_initial_counter_pairs_zero": true,
+        "changed_addresses": 24,
+        "outside_source_footprint_equal": true,
+        "source_absent_pristine": true
+      }
+    },
+    {
+      "accepted_signal_started_clock": false,
+      "cases": {
+        "0": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": true
+        },
+        "1": {
+          "clock_class": "axis2",
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": true,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": false
+        }
+      },
+      "clock_class": null,
+      "common_eligible": true,
+      "complete_pair": true,
+      "geometry": {
+        "center_remainder": 0,
+        "halo_remainder": 4,
+        "side": 225
+      },
+      "initial_preparation_checks": {
+        "all336_initial_counter_pairs_zero": true,
+        "changed_addresses": 24,
+        "outside_source_footprint_equal": true,
+        "source_absent_pristine": true
+      }
+    },
+    {
+      "accepted_signal_started_clock": false,
+      "cases": {
+        "0": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": true
+        },
+        "1": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": false
+        }
+      },
+      "clock_class": null,
+      "common_eligible": true,
+      "complete_pair": true,
+      "geometry": {
+        "center_remainder": 2,
+        "halo_remainder": 0,
+        "side": 225
+      },
+      "initial_preparation_checks": {
+        "all336_initial_counter_pairs_zero": true,
+        "changed_addresses": 24,
+        "outside_source_footprint_equal": true,
+        "source_absent_pristine": true
+      }
+    },
+    {
+      "accepted_signal_started_clock": false,
+      "cases": {
+        "0": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": true
+        },
+        "1": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": false
+        }
+      },
+      "clock_class": null,
+      "common_eligible": true,
+      "complete_pair": true,
+      "geometry": {
+        "center_remainder": 2,
+        "halo_remainder": 2,
+        "side": 225
+      },
+      "initial_preparation_checks": {
+        "all336_initial_counter_pairs_zero": true,
+        "changed_addresses": 24,
+        "outside_source_footprint_equal": true,
+        "source_absent_pristine": true
+      }
+    },
+    {
+      "accepted_signal_started_clock": false,
+      "cases": {
+        "0": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": true
+        },
+        "1": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": false
+        }
+      },
+      "clock_class": null,
+      "common_eligible": true,
+      "complete_pair": true,
+      "geometry": {
+        "center_remainder": 2,
+        "halo_remainder": 4,
+        "side": 225
+      },
+      "initial_preparation_checks": {
+        "all336_initial_counter_pairs_zero": true,
+        "changed_addresses": 24,
+        "outside_source_footprint_equal": true,
+        "source_absent_pristine": true
+      }
+    },
+    {
+      "accepted_signal_started_clock": false,
+      "cases": {
+        "0": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": true
+        },
+        "1": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": false
+        }
+      },
+      "clock_class": null,
+      "common_eligible": true,
+      "complete_pair": true,
+      "geometry": {
+        "center_remainder": 4,
+        "halo_remainder": 0,
+        "side": 225
+      },
+      "initial_preparation_checks": {
+        "all336_initial_counter_pairs_zero": true,
+        "changed_addresses": 24,
+        "outside_source_footprint_equal": true,
+        "source_absent_pristine": true
+      }
+    },
+    {
+      "accepted_signal_started_clock": false,
+      "cases": {
+        "0": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": true
+        },
+        "1": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": false
+        }
+      },
+      "clock_class": null,
+      "common_eligible": true,
+      "complete_pair": true,
+      "geometry": {
+        "center_remainder": 4,
+        "halo_remainder": 2,
+        "side": 225
+      },
+      "initial_preparation_checks": {
+        "all336_initial_counter_pairs_zero": true,
+        "changed_addresses": 24,
+        "outside_source_footprint_equal": true,
+        "source_absent_pristine": true
+      }
+    },
+    {
+      "accepted_signal_started_clock": false,
+      "cases": {
+        "0": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": true
+        },
+        "1": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": false
+        }
+      },
+      "clock_class": null,
+      "common_eligible": true,
+      "complete_pair": true,
+      "geometry": {
+        "center_remainder": 4,
+        "halo_remainder": 4,
+        "side": 225
+      },
+      "initial_preparation_checks": {
+        "all336_initial_counter_pairs_zero": true,
+        "changed_addresses": 24,
+        "outside_source_footprint_equal": true,
+        "source_absent_pristine": true
+      }
+    },
+    {
+      "accepted_signal_started_clock": false,
+      "cases": {
+        "0": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": true
+        },
+        "1": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": true,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": false
+        }
+      },
+      "clock_class": null,
+      "common_eligible": true,
+      "complete_pair": true,
+      "geometry": {
+        "center_remainder": 0,
+        "halo_remainder": 0,
+        "side": 257
+      },
+      "initial_preparation_checks": {
+        "all336_initial_counter_pairs_zero": true,
+        "changed_addresses": 24,
+        "outside_source_footprint_equal": true,
+        "source_absent_pristine": true
+      }
+    },
+    {
+      "accepted_signal_started_clock": false,
+      "cases": {
+        "0": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": true
+        },
+        "1": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": true,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": false
+        }
+      },
+      "clock_class": null,
+      "common_eligible": true,
+      "complete_pair": true,
+      "geometry": {
+        "center_remainder": 0,
+        "halo_remainder": 2,
+        "side": 257
+      },
+      "initial_preparation_checks": {
+        "all336_initial_counter_pairs_zero": true,
+        "changed_addresses": 24,
+        "outside_source_footprint_equal": true,
+        "source_absent_pristine": true
+      }
+    },
+    {
+      "accepted_signal_started_clock": false,
+      "cases": {
+        "0": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": true
+        },
+        "1": {
+          "clock_class": "axis2",
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": true,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": false
+        }
+      },
+      "clock_class": null,
+      "common_eligible": true,
+      "complete_pair": true,
+      "geometry": {
+        "center_remainder": 0,
+        "halo_remainder": 4,
+        "side": 257
+      },
+      "initial_preparation_checks": {
+        "all336_initial_counter_pairs_zero": true,
+        "changed_addresses": 24,
+        "outside_source_footprint_equal": true,
+        "source_absent_pristine": true
+      }
+    },
+    {
+      "accepted_signal_started_clock": false,
+      "cases": {
+        "0": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": true
+        },
+        "1": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": false
+        }
+      },
+      "clock_class": null,
+      "common_eligible": true,
+      "complete_pair": true,
+      "geometry": {
+        "center_remainder": 2,
+        "halo_remainder": 0,
+        "side": 257
+      },
+      "initial_preparation_checks": {
+        "all336_initial_counter_pairs_zero": true,
+        "changed_addresses": 24,
+        "outside_source_footprint_equal": true,
+        "source_absent_pristine": true
+      }
+    },
+    {
+      "accepted_signal_started_clock": false,
+      "cases": {
+        "0": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": true
+        },
+        "1": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": false
+        }
+      },
+      "clock_class": null,
+      "common_eligible": true,
+      "complete_pair": true,
+      "geometry": {
+        "center_remainder": 2,
+        "halo_remainder": 2,
+        "side": 257
+      },
+      "initial_preparation_checks": {
+        "all336_initial_counter_pairs_zero": true,
+        "changed_addresses": 24,
+        "outside_source_footprint_equal": true,
+        "source_absent_pristine": true
+      }
+    },
+    {
+      "accepted_signal_started_clock": false,
+      "cases": {
+        "0": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": true
+        },
+        "1": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": false
+        }
+      },
+      "clock_class": null,
+      "common_eligible": true,
+      "complete_pair": true,
+      "geometry": {
+        "center_remainder": 2,
+        "halo_remainder": 4,
+        "side": 257
+      },
+      "initial_preparation_checks": {
+        "all336_initial_counter_pairs_zero": true,
+        "changed_addresses": 24,
+        "outside_source_footprint_equal": true,
+        "source_absent_pristine": true
+      }
+    },
+    {
+      "accepted_signal_started_clock": false,
+      "cases": {
+        "0": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": true
+        },
+        "1": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": false
+        }
+      },
+      "clock_class": null,
+      "common_eligible": true,
+      "complete_pair": true,
+      "geometry": {
+        "center_remainder": 4,
+        "halo_remainder": 0,
+        "side": 257
+      },
+      "initial_preparation_checks": {
+        "all336_initial_counter_pairs_zero": true,
+        "changed_addresses": 24,
+        "outside_source_footprint_equal": true,
+        "source_absent_pristine": true
+      }
+    },
+    {
+      "accepted_signal_started_clock": false,
+      "cases": {
+        "0": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": true
+        },
+        "1": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": false
+        }
+      },
+      "clock_class": null,
+      "common_eligible": true,
+      "complete_pair": true,
+      "geometry": {
+        "center_remainder": 4,
+        "halo_remainder": 2,
+        "side": 257
+      },
+      "initial_preparation_checks": {
+        "all336_initial_counter_pairs_zero": true,
+        "changed_addresses": 24,
+        "outside_source_footprint_equal": true,
+        "source_absent_pristine": true
+      }
+    },
+    {
+      "accepted_signal_started_clock": false,
+      "cases": {
+        "0": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": true
+        },
+        "1": {
+          "clock_class": null,
+          "incoming_contract": true,
+          "initial_region_at_rest": true,
+          "native_contact_activation": false,
+          "no_active_boundary_contact": true,
+          "quiet_clock_hold": false,
+          "strict_initial_causal_margin": true,
+          "whole_board_stationary": false
+        }
+      },
+      "clock_class": null,
+      "common_eligible": true,
+      "complete_pair": true,
+      "geometry": {
+        "center_remainder": 4,
+        "halo_remainder": 4,
+        "side": 257
+      },
+      "initial_preparation_checks": {
+        "all336_initial_counter_pairs_zero": true,
+        "changed_addresses": 24,
+        "outside_source_footprint_equal": true,
+        "source_absent_pristine": true
+      }
+    }
+  ],
+  "registered_cases": 36,
+  "replicated_geometries": [
+    {
+      "accepted_on_both_sizes": false,
+      "center_remainder": 0,
+      "class": null,
+      "halo_remainder": 0
+    },
+    {
+      "accepted_on_both_sizes": false,
+      "center_remainder": 0,
+      "class": null,
+      "halo_remainder": 2
+    },
+    {
+      "accepted_on_both_sizes": false,
+      "center_remainder": 0,
+      "class": null,
+      "halo_remainder": 4
+    },
+    {
+      "accepted_on_both_sizes": false,
+      "center_remainder": 2,
+      "class": null,
+      "halo_remainder": 0
+    },
+    {
+      "accepted_on_both_sizes": false,
+      "center_remainder": 2,
+      "class": null,
+      "halo_remainder": 2
+    },
+    {
+      "accepted_on_both_sizes": false,
+      "center_remainder": 2,
+      "class": null,
+      "halo_remainder": 4
+    },
+    {
+      "accepted_on_both_sizes": false,
+      "center_remainder": 4,
+      "class": null,
+      "halo_remainder": 0
+    },
+    {
+      "accepted_on_both_sizes": false,
+      "center_remainder": 4,
+      "class": null,
+      "halo_remainder": 2
+    },
+    {
+      "accepted_on_both_sizes": false,
+      "center_remainder": 4,
+      "class": null,
+      "halo_remainder": 4
+    }
+  ],
+  "source_hashes_unchanged": true,
+  "status": "completed",
+  "stop_reason": null,
+  "wall_seconds_through_export": 67.506211463
+}

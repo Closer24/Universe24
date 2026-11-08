@@ -1,0 +1,10 @@
+{
+  "independent_matrix_recipient_cases": 384,
+  "independently_reconstructed_complete_initials": 48,
+  "new_trajectories": 0,
+  "passed": true,
+  "producer_sha256": "4c800a4730805f746e309dcdc89f88306a69645c8d2ce834b1e633852b844237",
+  "protocol_sha256": "a0198c4f4e79c1c1afe6ecd34620ec49615e338152038d9cb8f16610ab04d7af",
+  "rotation_scope": "Producer384 complete orientation comparisons inspected; independent direct initial construction verified for48 registered dynamic cases, not a second independent rotation implementation.",
+  "scope": "Factory/source contract reviewed; isolated exact-quarter-turn theorem only, no activation or composition claim."
+}

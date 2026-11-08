@@ -8,6 +8,8 @@ This repository provides the **MIT-licensed reference engine for one specific ma
 
 **Start here:** [Run and compose building blocks](#run-and-compose-building-blocks) · [Component API](docs/COMPONENTS.md) · [Results and limits](docs/COMPONENT_RESULTS.md) · [Independent review](docs/COMPONENT_REVIEW.md) · [Full research proposal](https://docs.google.com/document/d/1NDPfeFj9vldgb0RMSSvx2lBSmOo__E-F3t2cZwfjOjI/edit) · [Mathematical model](docs/MODEL.md) · [The Presenter](docs/PRESENTER.md) · [Contributor rules](AGENTS.md)
 
+**Clock-mediated research:** [Building blocks and run commands](docs/CLOCK_SELECTION.md) · [Protocols, verified results and recordings](research/clock_selection/README.md) · [Hypotheses and decisions](research/clock_selection/decision_ledger.md) · [Physical targets](research/clock_selection/physics_targets/README.md). This research separates signal-written phase and conditional probe response from internally generated approval, complexity preference and physical interpretation. The full-state negative controls and corrected observer failures remain part of its evidence.
+
 ## The research question — beyond this code
 
 The premise being tested is that **space, time, waves, matter and observed measurement events might be emergent behaviors of exact integer states**, rather than separately programmed kinds of objects. Each elementary node would obey the **same local law**; different initial patterns and interactions would produce different large-scale phenomena.

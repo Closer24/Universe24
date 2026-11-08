@@ -1,0 +1,109 @@
+{
+  "format": "universe24-research-presentation-collection-v1",
+  "studies": [
+    {
+      "title": "Writer, memory and later probe",
+      "description": "An earlier prepared carrier writes a retained clock phase. The same later probe is suppressed or transmitted in four accepted groups across two board sizes.",
+      "scope": "History-dependent output; no unique preferred route or internally generated approval has been established.",
+      "package": "evidence/presenter_v2",
+      "report": "write_probe_results.md",
+      "audit": "evidence/independent_audit/write_probe_v2.json"
+    },
+    {
+      "title": "Where the retained influence resides",
+      "description": "Separately prepared region/exterior crosses isolate the seven-node clock region that predicts the later carrier response.",
+      "scope": "Each cross is a new initial preparation. No running board is edited.",
+      "package": "evidence/presenter_mediation",
+      "report": "write_probe_results.md",
+      "audit": "evidence/independent_audit/clock_region_mediation.json"
+    },
+    {
+      "title": "A carrier returns to its clock",
+      "description": "One initially prepared carrier revisits the clock through the periodic guide. Complete continuing examples close their entire board orbit after 50 or 54 updates.",
+      "scope": "Finite returned carriers and exact recurrence; periodic wrapping is intentional.",
+      "package": "evidence/presenter_recurrence_v1",
+      "report": "recurrence_results.md",
+      "audit": "evidence/independent_audit/recurrence_v1.json"
+    },
+    {
+      "title": "Thirty-two return opportunities",
+      "description": "The unresolved L48/L52 preparations are followed through 1,576 or 1,704 updates. The registered joint carrier does not reappear after loss.",
+      "scope": "All complete controls are retained across four pages. Missing the declared template does not mean all microscopic activity vanished.",
+      "package": "evidence/presenter_recurrence_long",
+      "report": "recurrence_results.md",
+      "audit": "evidence/independent_audit/recurrence_long_v1.json"
+    },
+    {
+      "title": "Signal-driven paired clocks",
+      "description": "An incoming carrier can change the phase of a prepared stationary period-five clock pair. Core and outer-halo events are recorded separately.",
+      "scope": "Zero registered separated-product pairs. The corrected analysis withdraws the earlier observer positives. Four delay-seven display examples were added after analysis.",
+      "package": "evidence/presenter_structure",
+      "report": "structure_results.md",
+      "audit": "evidence/independent_audit/structure_v1.json"
+    },
+    {
+      "title": "Six inputs and division with remainder",
+      "description": "Compare prepared donor amplitudes and simultaneous unit inputs. The unchanged arithmetic produces different quotients, retained remainders and all three guarded C classes.",
+      "scope": "Arithmetic fanout and local thresholds, not a conserved division of light or a route-selection rule.",
+      "package": "evidence/presenter_parallel_division",
+      "report": "division_algebra.md",
+      "audit": "evidence/independent_audit/parallel_division_v1.json"
+    },
+    {
+      "title": "A control that failed",
+      "description": "The original writer-removal preparation retained a remainder defect. The probe-only input failed, so no conditional gate was accepted in that study.",
+      "scope": "Eight prospectively selected failed-target controls remain visible; later studies do not rewrite this result.",
+      "package": "evidence/presenter_v1",
+      "report": "write_probe_results.md",
+      "audit": "evidence/independent_audit/write_probe_v1_verified.json"
+    },
+    {
+      "title": "Prepared quiet clocks",
+      "description": "The new initial-only QuietClock factory exposes complete compatible clock and halo ports across all eight sign tensors. Forty-eight registered cases match the exact isolated period-four formula.",
+      "scope": "Six fixed +++ examples cover three amplitudes and two parities. This is an initially prepared clock, not signal activation; whole-session CPU certification is unavailable.",
+      "package": "evidence/presenter_quiet_clock",
+      "report": "quiet_clock_results.md",
+      "audit": "evidence/independent_audit/quiet_clock_v1.json"
+    },
+    {
+      "title": "Two clocks interact without forming a bound product",
+      "description": "Equal-phase clocks separated by two sites create a counter bridge and affect each other. More separated or opposite-phase controls retain their isolated behavior.",
+      "scope": "Zero of twelve geometries meet the registered late formation/isolation contract. The bridge is not a force or binding result.",
+      "package": "evidence/presenter_formation",
+      "report": "structure_formation_results.md",
+      "audit": "evidence/independent_audit/structure_formation_v1.json"
+    },
+    {
+      "title": "Internal phase comparison",
+      "description": "A registered internal channel pattern follows a distinct exact finite integer oracle in the unchanged baseline engine.",
+      "scope": "The observed comparison branch is not physical mass. The amplitude-dependent horizon and all controls remain explicit.",
+      "package": "evidence/presenter_internal_gap",
+      "report": "internal_gap_results.md",
+      "audit": "evidence/independent_audit/internal_gap_v1_summary.json"
+    },
+    {
+      "title": "The full cube carries a coherent wave",
+      "description": "Dense full-engine periodic cubes preserve channel coherence and satisfy the declared exact and interval comparison bounds across sixteen wave preparations.",
+      "scope": "Independent replay passes all mathematical predicates. Producer resource acceptance FAIL_CPU: 328.943 seconds against a 300-second limit. These extended sheets are not localized photons.",
+      "package": "evidence/presenter_coherent_waves",
+      "report": "coherent_wave_results.md",
+      "audit": "evidence/independent_audit/coherent_wave_v1_summary.json"
+    },
+    {
+      "title": "Two orthogonal routes and a clock",
+      "description": "Six sequential history-conditioned gates enable or suppress the exact Y carrier. Separate simultaneous inputs give zero or two accepted carriers, never one.",
+      "scope": "No unique redirection or approval. Raw C can occur without an accepted output carrier; whole-workflow CPU acceptance remains unverified.",
+      "package": "evidence/presenter_two_outlet",
+      "report": "two_outlet_results.md",
+      "audit": "evidence/independent_audit/two_outlet_v1.json"
+    },
+    {
+      "title": "Prepared routes contact active or resting clocks",
+      "description": "The early OR winner activates a resting center with a native C1 event at update15. The nominal losing side activates later, at update59.",
+      "scope": "All64 records independently pass integrity, but zero of24 active-clock and zero of4 resting-apparatus comparisons retain the registered quiet memory. The bare route result remains valid in its own window.",
+      "package": "evidence/presenter_route_clock",
+      "report": "route_clock_results.md",
+      "audit": "evidence/independent_audit/route_clock_v1.json"
+    }
+  ]
+}

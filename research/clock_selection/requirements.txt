@@ -1,0 +1,2 @@
+# Optional research arithmetic; the engine's core dependencies remain empty.
+mpmath==1.3.0

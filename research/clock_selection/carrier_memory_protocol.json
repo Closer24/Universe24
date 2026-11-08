@@ -1,0 +1,148 @@
+{
+  "format": "universe24-carrier-memory-protocol-v1",
+  "question": "Can an already demonstrated conditional carrier write a distinct, quiet terminal clock record after an earlier writer has also crossed the receiver?",
+  "claim": "A finite prepared two-clock conditional-carrier and terminal-record composition. This is not autonomous trial generation, activation from rest, unique physical routing, complexity preference or physical light.",
+  "board": {
+    "background": [
+      0,
+      0,
+      2
+    ],
+    "body_signs": [
+      1,
+      1,
+      1
+    ]
+  },
+  "steps": 120,
+  "family": {
+    "sides": [
+      393,
+      425
+    ],
+    "receiver_phases": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "controls": [
+      "00",
+      "10",
+      "01",
+      "11"
+    ],
+    "registered_cases": 32,
+    "controller_phase": 0,
+    "writer_delay": 2,
+    "gap": 38
+  },
+  "geometry": "c=L//2. The fixed +X guide lies at y=z=c. Writer origin is c-18, probe origin c-56. Controller is (c,c+1,c), channel2. Receiver is (c+20,c+1,c), channel2. Both clocks have initial remainder0 and are already rotating.",
+  "preparation": "Reuse the exact full-input V2 preparation with its fixed controller. Remove the initial guide assignments at receiver contact channels0/14 into an explicit socket, then immutably compose the entire336-triple ClockGuideInterface at the receiver. Conflicting assignments are rejected. An absent packet removes its complete24-address footprint and restores the pristine guide/background, exactly as V2. No runtime intervention.",
+  "input": {
+    "source_packet_offsets": [
+      4,
+      5,
+      6,
+      7
+    ],
+    "criterion": "Writer full6x3x3/all48 boxes at times4..7; probe at42..45. Presence must agree with its source bit. These boxes are upstream of the controller and need no excluded nodes."
+  },
+  "epochs": {
+    "early": {
+      "carrier_times": [
+        28,
+        29,
+        30,
+        31
+      ],
+      "carrier_origin_offsets": [
+        10,
+        11,
+        12,
+        13
+      ],
+      "C_window": [
+        27,
+        34
+      ],
+      "C_expected": [
+        [
+          27,
+          2,
+          -1
+        ],
+        [
+          31,
+          1,
+          1
+        ]
+      ]
+    },
+    "late": {
+      "carrier_times": [
+        66,
+        67,
+        68,
+        69
+      ],
+      "carrier_origin_offsets": [
+        10,
+        11,
+        12,
+        13
+      ],
+      "C_window": [
+        65,
+        72
+      ],
+      "C_expected": [
+        [
+          65,
+          2,
+          -1
+        ],
+        [
+          69,
+          1,
+          1
+        ]
+      ]
+    }
+  },
+  "epoch_contract": "Every carrier box is the complete unmasked6x3x3/all48 translated packet and ends at most at c+17, before the receiver left halo at c+19. All raw C at fixed(c+12,c,c,0) in each declared inclusive window are retained and compared exactly, with no class filtering. Early carrier expected for10/11; late carrier expected only for11. The previous gate is a prediction, not an assumed fact after composition. For a predicted absent epoch, every registered carrier frame must fail the exact packet match and the entire fixed-port raw C list must be empty. This additional clean-input requirement is stronger than absence of the two-event signature; other observed C therefore produces an explicit failed criterion, never a filtered silent outcome.",
+  "readouts": {
+    "controller_hold": [
+      32,
+      40
+    ],
+    "receiver_pre_late_hold": [
+      52,
+      60
+    ],
+    "receiver_terminal_hold": [
+      96,
+      112
+    ]
+  },
+  "quiet_definition": "For the specified inclusive state interval, all336 triples repeat with lag4; only center channel2 has nonzero counters, center has exact unit norm and remainder0, exact quarter-turn counter evolution, zero total input and quotient at every intervening update, and every individual external input term entering any of the seven region nodes is zero. No canceled external terms qualify as isolation.",
+  "canonical_null": "Both complete336 clock interfaces in00 must equal their declared full prepared phase+t orbit for all121 recorded states. Whole00 board must repeat with period4. The untouched guide companion remainder4 is included.",
+  "primary_acceptance": "All four masks are complete and pass immutable footprint equality, initial boundary margin, no active boundary contact, source input presence, both clock null orbits and both early/late carrier-plus-C truth tables. Every mask has a quiet terminal receiver. Joint11 full336 receiver state must differ from each00,10,01 at every terminal-hold state, with a fixed nonzero relative center phase against each. The same registered receiver phase must pass on both sizes. This is stronger than11 versus writer-only. A record aliasing the initial/null phase fails.",
+  "secondary_readouts": "Report controller hold, pre-late receiver hold, all center/region departures and actual six donor terms, early and late encounters, all raw C, and terminal11 versus10 separately. A weaker writer-armed comparison is not a terminal detector and never promotes a failed primary result. Early reflected waves and later feedback remain in the native state.",
+  "prediction": "Before capture: phase2 is the strongest conditional AND-record candidate. Under the old isolated-interface phase-writing ansatz, early writer would leave receiver phase2 and late probe would leave phase0. Thus00/10/01 may retain2 and11 may become0. The incoming waveforms, complete halo and feedback tests must decide; all four phases are registered.",
+  "budget": {
+    "max_cpu_seconds": 240,
+    "max_wall_seconds": 480,
+    "max_recorded_bytes": 100663296,
+    "child_cpu_soft_limit": 225,
+    "child_cpu_hard_limit": 230,
+    "reserve_cpu_seconds_before_case": 50,
+    "max_observer_cpu_seconds_per_record": 15,
+    "max_seconds_per_record": 30,
+    "max_sparse_channels_per_state": 20000,
+    "max_cumulative_native_rows_per_record": 2420000
+  },
+  "budget_scope": "Whole dedicated CLI process: wrapper CPU plus child user/system CPU, including imports, preflight, assembly, capture, inverses, passive observation, compression, export and archive hashing. Stop before a new case when fewer than50CPU seconds remain. Preserve native checkpoints before observing. Unrun or unobserved cases are inconclusive; incomplete groups cannot pass.",
+  "retention": "Freeze executable source hashes and protocol before the first update. Save every complete native recording, every raw C with quotient and six signed donor terms, failed criteria, full rewind checks and exact archive hashes. No truncation or posthoc observer changes.",
+  "presenter_selection": "All four masks for L393 receiver phase2, regardless of result, as complete native recordings."
+}

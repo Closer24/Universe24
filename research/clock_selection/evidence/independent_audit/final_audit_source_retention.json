@@ -1,0 +1,56 @@
+{
+  "files": [
+    {
+      "retained": "research/clock_selection/evidence/independent_audit/executed_audit_quiet_clock.py",
+      "sha256": "d6fa64b89645d23df553aca79a016b4f7ba116ee1b4f699df27fe57b908a9938",
+      "source": "research/clock_selection/audit_quiet_clock.py"
+    },
+    {
+      "retained": "research/clock_selection/evidence/independent_audit/executed_audit_route_clock_preflight.py",
+      "sha256": "3e6b8638b9d78c53bae220898b4b756b0492fd4e0fe3826ee310fa5ca0a42ac5",
+      "source": "research/clock_selection/audit_route_clock_preflight.py"
+    },
+    {
+      "retained": "research/clock_selection/evidence/independent_audit/executed_audit_route_clock.py",
+      "sha256": "30670df077287ba3d133c19c32895a2bcd64dc919e2f8576ff9bd7f261c74006",
+      "source": "research/clock_selection/audit_route_clock.py"
+    },
+    {
+      "retained": "research/clock_selection/evidence/independent_audit/executed_audit_route_horizon.py",
+      "sha256": "0557727ccdfcfc81870888f4ad347dc38bff53a429e13361e281d3893862be3d",
+      "source": "research/clock_selection/audit_route_horizon.py"
+    },
+    {
+      "retained": "research/clock_selection/evidence/independent_audit/executed_audit_activation_preflight.py",
+      "sha256": "affb68441717138debcdfb837752cccafc2eb5586e7246f35ae065af609c3c30",
+      "source": "research/clock_selection/audit_activation_preflight.py"
+    },
+    {
+      "retained": "research/clock_selection/evidence/independent_audit/executed_audit_activation.py",
+      "sha256": "9c0d566398abad241df1c290e0a632ed7bc1021741ac96db9032ad12b47e0748",
+      "source": "research/clock_selection/audit_activation.py"
+    },
+    {
+      "retained": "research/clock_selection/evidence/independent_audit/executed_audit_carrier_memory_preflight.py",
+      "sha256": "df4139b55bc613f47ea81295b6f2c6039d87513e51b2ebb5e44ec37c8cb42015",
+      "source": "research/clock_selection/audit_carrier_memory_preflight.py"
+    },
+    {
+      "retained": "research/clock_selection/evidence/independent_audit/executed_audit_carrier_memory.py",
+      "sha256": "5c176aee94e58209cb7be8014da9c0cf892f801caffeb754ffd43b3cefa40e3d",
+      "source": "research/clock_selection/audit_carrier_memory.py"
+    },
+    {
+      "retained": "research/clock_selection/evidence/independent_audit/executed_audit_multinode.py",
+      "sha256": "0c75fc84e31e0b8e9b9388d518c3e26fed48803097a41579f087e046e759b173",
+      "source": "research/clock_selection/audit_multinode.py"
+    },
+    {
+      "retained": "research/clock_selection/evidence/independent_audit/executed_audit_information_location.py",
+      "sha256": "6068a33af7af17682c03a5130dca168aa0b76294c30155b1195bca2488a22327",
+      "source": "research/clock_selection/audit_information_location.py"
+    }
+  ],
+  "passed": true,
+  "scope": "Exact currently executed independent auditor/helper source snapshots; scientific certificates pin their own executed versions. No native or producer source changed."
+}

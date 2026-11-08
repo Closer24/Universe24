@@ -1,0 +1,35 @@
+[
+  {
+    "experiment": "carrier-memory-L393-p0-11",
+    "name": "carrier-pauses-restarts-clock",
+    "caption": "Postanalysis illustration of a complete native trajectory: C2 stops the terminal clock at74; C1 restarts it at76. The terminal joint state aliases null/probe; no approval is computed.",
+    "source_record": "research/clock_selection/evidence/carrier_memory_v1/records/carrier-memory-L393-p0-11.json.gz",
+    "source_record_sha256": "cf42e59f6a72dd3c727c19b9deaca3e7b65db65f95d5de4eb6af57ecf59fcedb",
+    "panels": [
+      {
+        "port": "apparatus.clock",
+        "index": 0,
+        "label": "Upstream prepared controller",
+        "address": [
+          196,
+          197,
+          196,
+          2
+        ],
+        "show_inputs": true
+      },
+      {
+        "port": "receiver.center",
+        "index": 0,
+        "label": "Terminal clock: finite phase rewrite",
+        "address": [
+          216,
+          197,
+          196,
+          2
+        ],
+        "show_inputs": true
+      }
+    ]
+  }
+]

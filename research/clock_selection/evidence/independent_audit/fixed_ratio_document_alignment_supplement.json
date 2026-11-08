@@ -1,0 +1,13 @@
+{
+  "alignment_receipt_sha256": "38e0229571bd20e2c610ea92320acddbfb690e03888c5281aa6b00a89d0c2e87",
+  "alignment_report_sha256": "f2205889ab5b84b2b873ee0ade804738915fc8154f16c19b72c54ea08efa753d",
+  "exact_excerpt_checks": 12,
+  "new_evolution_updates": 0,
+  "new_google_doc_mutations": 0,
+  "note": "research/clock_selection/fixed_ratio_candidate.md",
+  "note_sha256": "5f6001618bd8ef49db5044ee975e67f5c52df3d161b4c01c0e0b732abca56abc",
+  "passed": true,
+  "review": "Read exact H1/H1a/A2/A11 and axial-family excerpts, verified against complete supplied connector-readable text bytes and line anchors. The general normalized scalar formula is already documented. Strict implemented baseline remains 1/1; heterogeneous per-channel coefficients are a separate unimplemented proposal. No candidate equations or proofs changed relative to the mathematical checkpoint. Historical scalar table remains unverified here.",
+  "source_identity_limit": "Verification is of the supplied read-only connector snapshot and its exact excerpts, not a second connector fetch, native Google Docs revision or formatting identity.",
+  "source_readable_text_sha256": "082e024ed6a20956fd486b3a8d3bc0201c90ed1ac4adb9d3e52f3df59126852c"
+}

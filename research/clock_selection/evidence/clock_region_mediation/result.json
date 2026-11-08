@@ -1,0 +1,758 @@
+{
+  "accepted_groups": 4,
+  "all_full_state_inverses": true,
+  "cases": [
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": true,
+        "exact_output_carrier": true,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": true,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": true,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "01",
+        "gap": 36,
+        "id": "mediation-L337-gap36-E01-R01",
+        "region_source": "01",
+        "side": 337
+      },
+      "frames": 49,
+      "full_state_inverse": true,
+      "id": "mediation-L337-gap36-E01-R01",
+      "record": "records/mediation-L337-gap36-E01-R01.json.gz",
+      "record_gzip_sha256": "1e582158ab48884183cd5a255cf778efbf5cf70fbe41aa38a41b4deeb51a74a1",
+      "record_sha256": "84d8c4bbce2713ce95f30bed12e0f35fa91177001d3a7b04efb76d2687b3e1e9"
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": null,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": false,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "01",
+        "gap": 36,
+        "id": "mediation-L337-gap36-E01-R11",
+        "region_source": "11",
+        "side": 337
+      },
+      "frames": 49,
+      "full_state_inverse": true,
+      "id": "mediation-L337-gap36-E01-R11",
+      "record": "records/mediation-L337-gap36-E01-R11.json.gz",
+      "record_gzip_sha256": "c5d57cfcd7faa5fb2f2d60d76128162078d53c62d29e4745b3d93b87c3e2d866",
+      "record_sha256": "aa6c23d5b7e3169e0e6bd75d092e2d02f75586490e6afd84cb66e4cedab78a68"
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": true,
+        "exact_output_carrier": true,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": null,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": true,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "11",
+        "gap": 36,
+        "id": "mediation-L337-gap36-E11-R01",
+        "region_source": "01",
+        "side": 337
+      },
+      "frames": 49,
+      "full_state_inverse": true,
+      "id": "mediation-L337-gap36-E11-R01",
+      "record": "records/mediation-L337-gap36-E11-R01.json.gz",
+      "record_gzip_sha256": "e08915aa3791185a75d7b61b2d9ffe9e1eef46cd6dd3adaec1b29f75ac33623f",
+      "record_sha256": "65d2319b906554cda295de369c43289bee3a2d06b18aeb809e448a043837b18c"
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": true,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": false,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "11",
+        "gap": 36,
+        "id": "mediation-L337-gap36-E11-R11",
+        "region_source": "11",
+        "side": 337
+      },
+      "frames": 49,
+      "full_state_inverse": true,
+      "id": "mediation-L337-gap36-E11-R11",
+      "record": "records/mediation-L337-gap36-E11-R11.json.gz",
+      "record_gzip_sha256": "87e18d8b03bb69cb5880608602901573640a3ad5b876d5a21a7da87208f22051",
+      "record_sha256": "a18efa0c4112d3879d70d454d75a00b13e2ce262fd0297aba70cc5b2f8644375"
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": true,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": false,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "01",
+        "gap": 38,
+        "id": "mediation-L337-gap38-E01-R01",
+        "region_source": "01",
+        "side": 337
+      },
+      "frames": 49,
+      "full_state_inverse": true,
+      "id": "mediation-L337-gap38-E01-R01",
+      "record": "records/mediation-L337-gap38-E01-R01.json.gz",
+      "record_gzip_sha256": "332b3b8117fccf2d6beda036ece9e8667138b57bdeea86b00948c8172fb418e3",
+      "record_sha256": "b43b26944630fc16f8b9faabebebbbbc34e9d3f9a1cca94bfd0733cabd038e64"
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": true,
+        "exact_output_carrier": true,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": null,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": true,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "01",
+        "gap": 38,
+        "id": "mediation-L337-gap38-E01-R11",
+        "region_source": "11",
+        "side": 337
+      },
+      "frames": 49,
+      "full_state_inverse": true,
+      "id": "mediation-L337-gap38-E01-R11",
+      "record": "records/mediation-L337-gap38-E01-R11.json.gz",
+      "record_gzip_sha256": "3a01bdeac8d77a1acf301c776c39a3b48a44d840dc1fdff6927bba5fa22cf382",
+      "record_sha256": "87fccbdfd86bdc225d35ea13c24f83e544ad40f0536d9786003fefbe94c64e0f"
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": null,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": false,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "11",
+        "gap": 38,
+        "id": "mediation-L337-gap38-E11-R01",
+        "region_source": "01",
+        "side": 337
+      },
+      "frames": 49,
+      "full_state_inverse": true,
+      "id": "mediation-L337-gap38-E11-R01",
+      "record": "records/mediation-L337-gap38-E11-R01.json.gz",
+      "record_gzip_sha256": "a118a25c9ab9f646f06742a4d9a71d69b3d636f411dc96ebe070318a5d6479b6",
+      "record_sha256": "17e01ae7d4ad25de23b453f1bc87de0d3cfc20ab628c95cfbdcf10cca1a94629"
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": true,
+        "exact_output_carrier": true,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": true,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": true,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "11",
+        "gap": 38,
+        "id": "mediation-L337-gap38-E11-R11",
+        "region_source": "11",
+        "side": 337
+      },
+      "frames": 49,
+      "full_state_inverse": true,
+      "id": "mediation-L337-gap38-E11-R11",
+      "record": "records/mediation-L337-gap38-E11-R11.json.gz",
+      "record_gzip_sha256": "b8deb20eb67cd78f39c59a0a1ed7a2206e3f99bde45ef14ad2c5bc8fb0fa103d",
+      "record_sha256": "3068f46b9383ae574d666197ae93c90a4bb1ea370d47e8d1a43576515748915a"
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": true,
+        "exact_output_carrier": true,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": true,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": true,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "01",
+        "gap": 36,
+        "id": "mediation-L353-gap36-E01-R01",
+        "region_source": "01",
+        "side": 353
+      },
+      "frames": 49,
+      "full_state_inverse": true,
+      "id": "mediation-L353-gap36-E01-R01",
+      "record": "records/mediation-L353-gap36-E01-R01.json.gz",
+      "record_gzip_sha256": "0ed9a44000e4a3725cf4b179a58bf57ad45ec87d829aa98a2681f37b1b1cf4ea",
+      "record_sha256": "73da9cd0e84403fc0453385ee6c2a2ceec62fa11a4db711b06be6212f4e35af1"
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": null,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": false,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "01",
+        "gap": 36,
+        "id": "mediation-L353-gap36-E01-R11",
+        "region_source": "11",
+        "side": 353
+      },
+      "frames": 49,
+      "full_state_inverse": true,
+      "id": "mediation-L353-gap36-E01-R11",
+      "record": "records/mediation-L353-gap36-E01-R11.json.gz",
+      "record_gzip_sha256": "69383a7a29bb400207d547610baebc46e094ed2865258fe6e1f0455485a53fc1",
+      "record_sha256": "426fed8b23bf9f0bcb8f83e67b170df41233543b03e6cde4e4de0d0d31b743cc"
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": true,
+        "exact_output_carrier": true,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": null,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": true,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "11",
+        "gap": 36,
+        "id": "mediation-L353-gap36-E11-R01",
+        "region_source": "01",
+        "side": 353
+      },
+      "frames": 49,
+      "full_state_inverse": true,
+      "id": "mediation-L353-gap36-E11-R01",
+      "record": "records/mediation-L353-gap36-E11-R01.json.gz",
+      "record_gzip_sha256": "501637fc8f66fc882c644cbddda8b29261e6e4a2232e2ab7ce560fa88ee2c549",
+      "record_sha256": "97a259eed6327d3fa6ad7e265bced38ed90c658bf5e56dc4695fa168bdf63e56"
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": true,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": false,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "11",
+        "gap": 36,
+        "id": "mediation-L353-gap36-E11-R11",
+        "region_source": "11",
+        "side": 353
+      },
+      "frames": 49,
+      "full_state_inverse": true,
+      "id": "mediation-L353-gap36-E11-R11",
+      "record": "records/mediation-L353-gap36-E11-R11.json.gz",
+      "record_gzip_sha256": "973a590acc3a9d4ff1135542ee92686802e968bb416958750a759d5448053371",
+      "record_sha256": "b95612241cda86727e7a1182a02c9bde32f47b6365d46ba23d091bdc5c921cc0"
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": true,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": false,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "01",
+        "gap": 38,
+        "id": "mediation-L353-gap38-E01-R01",
+        "region_source": "01",
+        "side": 353
+      },
+      "frames": 49,
+      "full_state_inverse": true,
+      "id": "mediation-L353-gap38-E01-R01",
+      "record": "records/mediation-L353-gap38-E01-R01.json.gz",
+      "record_gzip_sha256": "825009193af2ef0257a773f6f10ae1572a03b335dbe9bf091dd2cd146773fa22",
+      "record_sha256": "3f64e1aef82e3380263dffa98e58445fc7798d7548d0356ca46116f2c0cbf1e8"
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": true,
+        "exact_output_carrier": true,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": null,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": true,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "01",
+        "gap": 38,
+        "id": "mediation-L353-gap38-E01-R11",
+        "region_source": "11",
+        "side": 353
+      },
+      "frames": 49,
+      "full_state_inverse": true,
+      "id": "mediation-L353-gap38-E01-R11",
+      "record": "records/mediation-L353-gap38-E01-R11.json.gz",
+      "record_gzip_sha256": "9ceb299c182d927ad362fd02985458f521878fcbec1775284565026e2df95c97",
+      "record_sha256": "ac2803e4860eb5c395e1e4d73a288a3da737f218ea523bb907a5886ae7e7c86f"
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": false,
+        "exact_output_carrier": false,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": null,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": false,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "11",
+        "gap": 38,
+        "id": "mediation-L353-gap38-E11-R01",
+        "region_source": "01",
+        "side": 353
+      },
+      "frames": 49,
+      "full_state_inverse": true,
+      "id": "mediation-L353-gap38-E11-R01",
+      "record": "records/mediation-L353-gap38-E11-R01.json.gz",
+      "record_gzip_sha256": "fad11fc67a0a54a85813e7fdc07c6ad0e6fb17c82697819a433cdbf03814d3fd",
+      "record_sha256": "2dc275197b005881556218d8fa6649967c190253f57f7ae7f110f64e9e3373a9"
+    },
+    {
+      "assessment": {
+        "C_follows_region": true,
+        "carrier_follows_region": true,
+        "exact_output_C_signature": true,
+        "exact_output_carrier": true,
+        "incoming_contract": true,
+        "initial_hold": true,
+        "native_suffix_equal": true,
+        "near_incoming_contract": true,
+        "no_active_boundary_contact": true,
+        "predicted_output": true,
+        "split_equivalence": true,
+        "strict_initial_causal_margin": true
+      },
+      "case": {
+        "exterior_source": "11",
+        "gap": 38,
+        "id": "mediation-L353-gap38-E11-R11",
+        "region_source": "11",
+        "side": 353
+      },
+      "frames": 49,
+      "full_state_inverse": true,
+      "id": "mediation-L353-gap38-E11-R11",
+      "record": "records/mediation-L353-gap38-E11-R11.json.gz",
+      "record_gzip_sha256": "803384860821b716af62d8859ad2dc5c4a47ceb446bda233d162d06546c27a8b",
+      "record_sha256": "cc455590a47f5e65fbd9d2f27085cf7732325d757fdfc656f4aee37b3cfdcfb7"
+    }
+  ],
+  "claim": "Finite causal mediation by an interaction-written local clock region, tested using new offline initial preparations. The preparation intervention itself is not an operation performed by the board; this study does not establish autonomous trials, preferred-route selection, or quantum measurement.",
+  "completed_cases": 16,
+  "cpu_seconds": 18.296622591000002,
+  "format": "universe24-clock-region-mediation-result-v1",
+  "groups": [
+    {
+      "C_follows_region_all_exteriors": true,
+      "accepted_clock_region_mediation": true,
+      "all_full_state_inverses": true,
+      "carrier_follows_region_all_exteriors": true,
+      "cases": {
+        "01/01": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": true,
+          "exact_output_carrier": true,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": true,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": true,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        },
+        "01/11": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": null,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": false,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        },
+        "11/01": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": true,
+          "exact_output_carrier": true,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": null,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": true,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        },
+        "11/11": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": true,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": false,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "complete_control_group": true,
+      "eligible": true,
+      "gap": 36,
+      "native_suffix_controls_pass": true,
+      "side": 337
+    },
+    {
+      "C_follows_region_all_exteriors": true,
+      "accepted_clock_region_mediation": true,
+      "all_full_state_inverses": true,
+      "carrier_follows_region_all_exteriors": true,
+      "cases": {
+        "01/01": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": true,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": false,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        },
+        "01/11": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": true,
+          "exact_output_carrier": true,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": null,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": true,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        },
+        "11/01": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": null,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": false,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        },
+        "11/11": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": true,
+          "exact_output_carrier": true,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": true,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": true,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "complete_control_group": true,
+      "eligible": true,
+      "gap": 38,
+      "native_suffix_controls_pass": true,
+      "side": 337
+    },
+    {
+      "C_follows_region_all_exteriors": true,
+      "accepted_clock_region_mediation": true,
+      "all_full_state_inverses": true,
+      "carrier_follows_region_all_exteriors": true,
+      "cases": {
+        "01/01": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": true,
+          "exact_output_carrier": true,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": true,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": true,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        },
+        "01/11": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": null,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": false,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        },
+        "11/01": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": true,
+          "exact_output_carrier": true,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": null,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": true,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        },
+        "11/11": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": true,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": false,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "complete_control_group": true,
+      "eligible": true,
+      "gap": 36,
+      "native_suffix_controls_pass": true,
+      "side": 353
+    },
+    {
+      "C_follows_region_all_exteriors": true,
+      "accepted_clock_region_mediation": true,
+      "all_full_state_inverses": true,
+      "carrier_follows_region_all_exteriors": true,
+      "cases": {
+        "01/01": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": true,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": false,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        },
+        "01/11": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": true,
+          "exact_output_carrier": true,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": null,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": true,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        },
+        "11/01": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": false,
+          "exact_output_carrier": false,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": null,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": false,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        },
+        "11/11": {
+          "C_follows_region": true,
+          "carrier_follows_region": true,
+          "exact_output_C_signature": true,
+          "exact_output_carrier": true,
+          "incoming_contract": true,
+          "initial_hold": true,
+          "native_suffix_equal": true,
+          "near_incoming_contract": true,
+          "no_active_boundary_contact": true,
+          "predicted_output": true,
+          "split_equivalence": true,
+          "strict_initial_causal_margin": true
+        }
+      },
+      "complete_control_group": true,
+      "eligible": true,
+      "gap": 38,
+      "native_suffix_controls_pass": true,
+      "side": 353
+    }
+  ],
+  "not_run_cases": [],
+  "registered_cases": 16,
+  "source_hashes_unchanged": true,
+  "status": "completed",
+  "stop_reason": null,
+  "wall_seconds": 18.500738403000014
+}

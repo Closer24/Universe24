@@ -1,0 +1,91 @@
+{
+  "argument": "For supported sideL>=3 each row has six distinct spatial donor addresses. Reciprocal equal signed weights implyF=F^T. Each directional block is a signed permutation, giving absolute row/column sums6 and ||F/6||2<=1. Spectral Chebyshev bounds and identical remainder forcing then apply in complete-address RMS.",
+  "independent_matrix_coupling_checks": [
+    {
+      "passed": true,
+      "reciprocal_edges": 288,
+      "signed_permutations": 6,
+      "signs": [
+        -1,
+        -1,
+        -1
+      ]
+    },
+    {
+      "passed": true,
+      "reciprocal_edges": 288,
+      "signed_permutations": 6,
+      "signs": [
+        -1,
+        -1,
+        1
+      ]
+    },
+    {
+      "passed": true,
+      "reciprocal_edges": 288,
+      "signed_permutations": 6,
+      "signs": [
+        -1,
+        1,
+        -1
+      ]
+    },
+    {
+      "passed": true,
+      "reciprocal_edges": 288,
+      "signed_permutations": 6,
+      "signs": [
+        -1,
+        1,
+        1
+      ]
+    },
+    {
+      "passed": true,
+      "reciprocal_edges": 288,
+      "signed_permutations": 6,
+      "signs": [
+        1,
+        -1,
+        -1
+      ]
+    },
+    {
+      "passed": true,
+      "reciprocal_edges": 288,
+      "signed_permutations": 6,
+      "signs": [
+        1,
+        -1,
+        1
+      ]
+    },
+    {
+      "passed": true,
+      "reciprocal_edges": 288,
+      "signed_permutations": 6,
+      "signs": [
+        1,
+        1,
+        -1
+      ]
+    },
+    {
+      "passed": true,
+      "reciprocal_edges": 288,
+      "signed_permutations": 6,
+      "signs": [
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "new_trajectories": 0,
+  "prior_review": "coherent_wave_math_review.json",
+  "reviewed_source": "research/clock_selection/coherent_wave_algebra.md",
+  "reviewed_source_sha256": "376cda68b06925d20ed010d22fffa15b9d92933ec1f3b4ada30b883ce642efec",
+  "scope": "Extension of the same Chebyshev RMS error theorem to the full48L^3 channel-address space for uniform0<alpha<=1. Scalar Fourier cosine dispersion still requires the coherent+++sector.",
+  "status": "mathematical_review_plus_finite_algebra_check"
+}

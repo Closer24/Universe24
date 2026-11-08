@@ -1,0 +1,2 @@
+# Optional historical symbolic-synthesis tests; not needed by the native engine.
+z3-solver==4.15.4.0

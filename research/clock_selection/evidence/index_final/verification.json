@@ -1,0 +1,706 @@
+{
+  "format": "universe24-clock-final-evidence-identity-v1",
+  "index": {
+    "path": "research/clock_selection/evidence/index_final/index.json",
+    "bytes": 143267,
+    "sha256": "4231d7a78e1c594bacd3490d025c7ca8c13cf589298d06981434f7357c07b916"
+  },
+  "verification": {
+    "files_verified": 922,
+    "scientific_acceptance": "Not evaluated"
+  },
+  "registered_studies": 15,
+  "complete_study_records": 890,
+  "complete_states": 76322,
+  "forward_transitions_independently_inverted": 75432,
+  "full_rewinds": 890,
+  "counts_source": "independent_review.md plus independent_review_addendum.md; identity verification is not a new scientific audit",
+  "partial_duplicate_attempt_records": [
+    {
+      "path": "research/clock_selection/evidence/structure_v1/records/cluster-L161-p1-d4-00.json.gz",
+      "bytes": 24132,
+      "sha256": "76400bb8a0551c2026d4d4f6c02335dcc32b839687a1ef62c13d3946430b4562"
+    },
+    {
+      "path": "research/clock_selection/evidence/structure_v1/records/cluster-L161-p1-d4-01.json.gz",
+      "bytes": 28767,
+      "sha256": "fb744582795470d8492eb2e48331ef9ad83499fb8f332d91ad734183433995f9"
+    },
+    {
+      "path": "research/clock_selection/evidence/structure_v1/records/cluster-L161-p1-d4-10.json.gz",
+      "bytes": 33615,
+      "sha256": "b8c137a33f547bd09254d117e9bbf61b47826e285f6026d79f577bb5add719eb"
+    },
+    {
+      "path": "research/clock_selection/evidence/structure_v1/records/cluster-L161-p1-d4-11.json.gz",
+      "bytes": 45488,
+      "sha256": "11f538595c1090e007571ba1cd6cfc58ab12404384af8cebdad2a9784d53ad47"
+    },
+    {
+      "path": "research/clock_selection/evidence/structure_v1/records/cluster-L161-p1-d7-00.json.gz",
+      "bytes": 24143,
+      "sha256": "459f855083c334cd5cd8ef1333cb234c4ba952da46a97fde0f4198b14ac7d618"
+    },
+    {
+      "path": "research/clock_selection/evidence/structure_v1/records/cluster-L161-p1-d7-01.json.gz",
+      "bytes": 28768,
+      "sha256": "d9feb044bb2665fa5b74b74c989a4be380a92724825a30d645534313df0f5ebf"
+    },
+    {
+      "path": "research/clock_selection/evidence/structure_v1/records/cluster-L161-p1-d7-10.json.gz",
+      "bytes": 33628,
+      "sha256": "a6bf5340af129a4da64641c7f18199f4b8eb253e8a890c25706f7dec8c90094e"
+    },
+    {
+      "path": "research/clock_selection/evidence/structure_v1/records/cluster-L161-p1-d7-11.json.gz",
+      "bytes": 42264,
+      "sha256": "6d3836cab5168dbdb052aa26cca9cfc6f888c452590e5519fec76b1c6382de52"
+    },
+    {
+      "path": "research/clock_selection/evidence/structure_v1/records/cluster-L161-p2-d4-00.json.gz",
+      "bytes": 24130,
+      "sha256": "ae3bf021759bb19fa216fd4bf900bc80be9d4bf79dd879188d639b6b5a2c02e2"
+    },
+    {
+      "path": "research/clock_selection/evidence/structure_v1/records/cluster-L161-p2-d4-01.json.gz",
+      "bytes": 28744,
+      "sha256": "2c779273c165ea86d2c89e5a04ad050ab71951bdad2bca34cbdfad6bac306f33"
+    },
+    {
+      "path": "research/clock_selection/evidence/structure_v1/records/cluster-L161-p2-d4-10.json.gz",
+      "bytes": 33614,
+      "sha256": "0a3760bc1f05b941dc915d7ced898e35347f9466bfc89fe85b21e9157060faa3"
+    },
+    {
+      "path": "research/clock_selection/evidence/structure_v1/records/cluster-L161-p2-d4-11.json.gz",
+      "bytes": 35398,
+      "sha256": "9c6e222149f3ea8bc16ac1e6f75b1049bcfe6a441364f2f0d66cc80758afd99c"
+    },
+    {
+      "path": "research/clock_selection/evidence/structure_v1/records/cluster-L161-p2-d7-00.json.gz",
+      "bytes": 24140,
+      "sha256": "6cbe61a972649a028dcded443d73e95f933a1ae83c87e59e481c7dca62ff3c24"
+    },
+    {
+      "path": "research/clock_selection/evidence/structure_v1/records/cluster-L161-p2-d7-01.json.gz",
+      "bytes": 28745,
+      "sha256": "5942a21c31c1e661573aaa1ca00ddc8615ef2d7776a18f7f62cb903b4db72c6c"
+    },
+    {
+      "path": "research/clock_selection/evidence/structure_v1/records/cluster-L161-p2-d7-10.json.gz",
+      "bytes": 33625,
+      "sha256": "0d60f035101f315ee8e8b3c9910d6990acd3a953626fe00b070259882e27321d"
+    },
+    {
+      "path": "research/clock_selection/evidence/structure_v1/records/cluster-L161-p2-d7-11.json.gz",
+      "bytes": 47477,
+      "sha256": "8e567bf8fe69bd4d411570ec28ccad0c0a245b7a522fae63edaebf1f6adb94b2"
+    },
+    {
+      "path": "research/clock_selection/evidence/structure_v1/records/pristine-L161-d4-10.json.gz",
+      "bytes": 27362,
+      "sha256": "b51d76ba46b98e1e0a70925aeff25b15149608a6770cb357f3577b604ff7ec3f"
+    },
+    {
+      "path": "research/clock_selection/evidence/structure_v1/records/pristine-L161-d7-10.json.gz",
+      "bytes": 27395,
+      "sha256": "372c4656be2ec6ac900b279bb481d4e33e43b018f9a3c40197b05949369cc20e"
+    },
+    {
+      "path": "research/clock_selection/evidence/structure_v1/records/pristine-L193-d4-10.json.gz",
+      "bytes": 28606,
+      "sha256": "2f3ded4e3132ae57a016023ba78b36e30bf59b21a5590f350a0b7346368673d3"
+    },
+    {
+      "path": "research/clock_selection/evidence/structure_v1/records/pristine-L193-d7-10.json.gz",
+      "bytes": 28607,
+      "sha256": "050852fa0c8bef678555dc1be22488e427c5580a08013c12bdaa7e2a2a79316c"
+    },
+    {
+      "path": "research/clock_selection/evidence/two_outlet_v1/records/orthogonal-isolated-X-gap0-10.json.gz",
+      "bytes": 27196,
+      "sha256": "69f632f922ba7814401ae8595de386e52cb0ebd5ae960faf53278c42cf074842"
+    },
+    {
+      "path": "research/clock_selection/evidence/two_outlet_v1/records/orthogonal-isolated-Y-gap0-01.json.gz",
+      "bytes": 27459,
+      "sha256": "06cda4b7d7ac6b43a03a5c94575e6486f721558a785d08b372b65da065a6d689"
+    },
+    {
+      "path": "research/clock_selection/evidence/two_outlet_v1/records/orthogonal-isolated-Y-gap34-01.json.gz",
+      "bytes": 27434,
+      "sha256": "f94df1f7a8cd06a53f5a23663c17a0fe6fbde695a8dfcd2b4889739f3aa3fc89"
+    },
+    {
+      "path": "research/clock_selection/evidence/two_outlet_v1/records/orthogonal-isolated-Y-gap36-01.json.gz",
+      "bytes": 27448,
+      "sha256": "a83e603120e0e557eac519020afb6a4d1ee5d6be33fc432f2dc79cbe5805c993"
+    }
+  ],
+  "source_snapshots": [
+    {
+      "manifest": {
+        "path": "research/clock_selection/evidence/activation_v1/source_provenance/manifest.json",
+        "bytes": 4687,
+        "sha256": "7e98a3416af3e0bb5e2f1e80740bfe9b91f80e1ec19f024079ac73b8f4c5b434"
+      },
+      "files": 30,
+      "archive_verified": true,
+      "live_sources_unchanged": true,
+      "archive_mismatches": [],
+      "live_mismatches": []
+    },
+    {
+      "manifest": {
+        "path": "research/clock_selection/evidence/clock_region_mediation/source_provenance/manifest.json",
+        "bytes": 4508,
+        "sha256": "91db522ddd73d9696a680b6d54ae854eed17b9e3fc04268f951225831c54ad3c"
+      },
+      "files": 33,
+      "archive_verified": true,
+      "live_sources_unchanged": true,
+      "archive_mismatches": [],
+      "live_mismatches": []
+    },
+    {
+      "manifest": {
+        "path": "research/clock_selection/evidence/coherent_wave_v1/source_provenance/manifest.json",
+        "bytes": 13987,
+        "sha256": "00b816db318aa5ba30ae2a5d1c4096259b0fe5560f88b8e9b54dbde329523329"
+      },
+      "files": 35,
+      "archive_verified": true,
+      "live_sources_unchanged": true,
+      "archive_mismatches": [],
+      "live_mismatches": []
+    },
+    {
+      "manifest": {
+        "path": "research/clock_selection/evidence/recurrence_long_v1/source_provenance/manifest.json",
+        "bytes": 6075,
+        "sha256": "a2e0896ebae8179bdda117ba9478d3940a2de9eafef833b0018547dc28dfb2cb"
+      },
+      "files": 35,
+      "archive_verified": true,
+      "live_sources_unchanged": false,
+      "archive_mismatches": [],
+      "live_mismatches": [
+        "research/clock_selection/recurrence_long.py"
+      ]
+    },
+    {
+      "manifest": {
+        "path": "research/clock_selection/evidence/recurrence_long_v1_corrected/source_provenance/manifest.json",
+        "bytes": 6114,
+        "sha256": "d4173a9ff5c78ddcbd63a4cd7a140ddf2ac674fc3283ebb5183cb043c05f33d0"
+      },
+      "files": 35,
+      "archive_verified": true,
+      "live_sources_unchanged": true,
+      "archive_mismatches": [],
+      "live_mismatches": []
+    },
+    {
+      "manifest": {
+        "path": "research/clock_selection/evidence/recurrence_v1/source_provenance/manifest.json",
+        "bytes": 7659,
+        "sha256": "9e264cf1722f210d561b0f37b30be6804b37ee9d5cf9989630fffbc89774fbe7"
+      },
+      "files": 33,
+      "archive_verified": true,
+      "live_sources_unchanged": true,
+      "archive_mismatches": [],
+      "live_mismatches": []
+    },
+    {
+      "manifest": {
+        "path": "research/clock_selection/evidence/two_outlet_v1/source_provenance/manifest.json",
+        "bytes": 5117,
+        "sha256": "0d02d500afa9bea6ba28e789d6691732d38d790736e7fa12e29f613185eb9f9b"
+      },
+      "files": 33,
+      "archive_verified": true,
+      "live_sources_unchanged": false,
+      "archive_mismatches": [],
+      "live_mismatches": [
+        "research/clock_selection/two_outlet.py"
+      ]
+    },
+    {
+      "manifest": {
+        "path": "research/clock_selection/evidence/two_outlet_v1_retry01/source_provenance/manifest.json",
+        "bytes": 5212,
+        "sha256": "3c2a8f955551ef16cf3f8a789bdd217ced10476cd38f8f0eb9b987ab6e86a280"
+      },
+      "files": 33,
+      "archive_verified": true,
+      "live_sources_unchanged": true,
+      "archive_mismatches": [],
+      "live_mismatches": []
+    },
+    {
+      "manifest": {
+        "path": "research/clock_selection/evidence/write_probe_v1_run01/source_provenance/manifest.json",
+        "bytes": 3958,
+        "sha256": "ed240a9e3be8eae198e43e7a8df3ad36f897b29a4d10ef90626af7493a5ea686"
+      },
+      "files": 29,
+      "archive_verified": true,
+      "live_sources_unchanged": true,
+      "archive_mismatches": [],
+      "live_mismatches": []
+    },
+    {
+      "manifest": {
+        "path": "research/clock_selection/evidence/write_probe_v2/source_provenance/manifest.json",
+        "bytes": 4295,
+        "sha256": "70fe97c799847715c2c8cab52a0c4998e8356dfd35e594ee407b4163ed916701"
+      },
+      "files": 31,
+      "archive_verified": true,
+      "live_sources_unchanged": true,
+      "archive_mismatches": [],
+      "live_mismatches": []
+    }
+  ],
+  "source_exception_scope": "Only the explicitly retained failed original long-capture and interrupted original two-outlet producers differ from current corrected files. Their archived bytes still verify.",
+  "authoritative_structural_result": {
+    "path": "research/clock_selection/evidence/structure_v1_analysis/result.json",
+    "bytes": 30237,
+    "sha256": "452526e579947011463592bfdc214f972c11cb775cf693b7e7ef7995fa08871b"
+  },
+  "superseded_structural_observer": "structure_v1_corrected/result.json contains the withdrawn product-observer result; complete native frames remain valid. Do not derive scientific verdicts from that field.",
+  "independent_audit_files": [
+    {
+      "path": "research/clock_selection/evidence/independent_audit/.coherent_wave_v1.json.xj3pN7",
+      "bytes": 111411200,
+      "sha256": "76b6703f6b5c22ef7511da7f037d38363d2da33b56731c5b00ccee821bb1c84a"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/activation_multinode_exploration.json",
+      "bytes": 1338,
+      "sha256": "620c6648a48e4db4747183643caaebb31372975e404f3c3a4937a92aa2ede304"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/activation_preflight.json",
+      "bytes": 19419,
+      "sha256": "b421e758734f9d6fa65db1a8fc1d6b4b25cd74b3ac0739e034ab9ece9049a625"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/activation_v1.json",
+      "bytes": 102691,
+      "sha256": "bfd6ffbe9f86bb2fd1a708da6eb6407bf890f757e3b59d0068fc65216a9e4a15"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/activation_v1_schema_failure.json",
+      "bytes": 3655,
+      "sha256": "16bfe8753c1bb0b08e3ae4b1f3261d4c5d3173e159372769b57206e779cbe343"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/archive_transport_review.json",
+      "bytes": 957,
+      "sha256": "8bfdfedbcdc51372579abdb6860fa58c16024e10687e188a62914314a600de97"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/audit_hash_format_v0.py",
+      "bytes": 18535,
+      "sha256": "28ee8a4e6264279b22783e09cf398e169d3a29198f1883577f32d7857867d7ad"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/carrier_memory_preflight.json",
+      "bytes": 25538,
+      "sha256": "9bdcb41de4b6f97bf08d5a228e5c533108369104fa427a9db8a16934178592fd"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/carrier_memory_preflight_wording_supplement.json",
+      "bytes": 796,
+      "sha256": "f38c01cc25d95b7bb4aaf489cc9d6db3c1f2894b8cd22583a9604c057d361041"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/carrier_memory_terminal_aliases.json",
+      "bytes": 4562,
+      "sha256": "b173c9f867a077fd0d2ca94af522c758a9239aab23280deba0d506479b96614e"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/carrier_memory_v1.json",
+      "bytes": 245578,
+      "sha256": "8671960193c15252cef8afdce30ae27ec4efc742db3f47598f8a57bcafb71d2d"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/clock_region_mediation.json",
+      "bytes": 49174,
+      "sha256": "8f4ff83e0e0edc2ca03407fb6650310fe39512e01e2ccaa20d0f9b27c08907c9"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/coherent_wave_full_channel_review.json",
+      "bytes": 2133,
+      "sha256": "6effbbb7b5a7c2b661d0970a15cfa236c3e6a24999502c148c05a994e2d8d3a9"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/coherent_wave_math_review.json",
+      "bytes": 1840,
+      "sha256": "a195f4f75e853a224f715618b949a66a06f16e9de75156d1c8b1c869e8922edb"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/coherent_wave_preflight.json",
+      "bytes": 4790,
+      "sha256": "ee0e43bf7830bd834c191a16031453a96c33bf699c165d3f39db9290d39ae6c3"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/coherent_wave_v1.json",
+      "bytes": 467546178,
+      "sha256": "d99a5502d1671a3840f9a401420b86e9607f747b2fc7b3e477eb19f665ffb77f"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/coherent_wave_v1.json.gz",
+      "bytes": 8523053,
+      "sha256": "3e883256b40a0c941e9fdd47e99dc10dc2126d84946020bfd75d048915618b7a"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/coherent_wave_v1_summary.json",
+      "bytes": 24226,
+      "sha256": "9529be929df1c42bdd47ca92e9072212a91e1a9b6e3b9ebf60b1db1af3f5a6f0"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/executed_audit_activation.py",
+      "bytes": 10055,
+      "sha256": "9c0d566398abad241df1c290e0a632ed7bc1021741ac96db9032ad12b47e0748"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/executed_audit_activation_preflight.py",
+      "bytes": 4159,
+      "sha256": "affb68441717138debcdfb837752cccafc2eb5586e7246f35ae065af609c3c30"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/executed_audit_activation_schema_failure.py",
+      "bytes": 10000,
+      "sha256": "41f22210a1b0bfac14af517b5a08d8edec2d94c8d4abfc32f64f530fb90776ae"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/executed_audit_carrier_memory.py",
+      "bytes": 9795,
+      "sha256": "5c176aee94e58209cb7be8014da9c0cf892f801caffeb754ffd43b3cefa40e3d"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/executed_audit_carrier_memory_preflight.py",
+      "bytes": 5122,
+      "sha256": "df4139b55bc613f47ea81295b6f2c6039d87513e51b2ebb5e44ec37c8cb42015"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/executed_audit_coherent_wave.py",
+      "bytes": 7664,
+      "sha256": "b4e473e05c423825ec4301360a5068dcf10b087ec7f2c3716c19e96dc94cd6a7"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/executed_audit_division.py",
+      "bytes": 6677,
+      "sha256": "dede02ba8ceea0953bfc4a3608a16294a305a0670e5a097d2e61c24ea1148a33"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/executed_audit_information_location.py",
+      "bytes": 2711,
+      "sha256": "6068a33af7af17682c03a5130dca168aa0b76294c30155b1195bca2488a22327"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/executed_audit_internal_gap.py",
+      "bytes": 6231,
+      "sha256": "4df4fe887d541afb2888bf997b124b5b8fc1eef822bdbbd3c27a563dbe746de6"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/executed_audit_long.py",
+      "bytes": 9458,
+      "sha256": "5362b8a45fb44f0dc3f3411fda633c1af6009a94fed0f5dcc9a0d66d3e73b6b2"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/executed_audit_mediation.py",
+      "bytes": 9031,
+      "sha256": "36e6b7255f15ebaf031cdb20f0f701f793f91630da3137e6069ce529fabffb6f"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/executed_audit_multinode.py",
+      "bytes": 3742,
+      "sha256": "0c75fc84e31e0b8e9b9388d518c3e26fed48803097a41579f087e046e759b173"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/executed_audit_orthogonal.py",
+      "bytes": 5315,
+      "sha256": "ede83fc7dd4fa0be2ca2772018fb778461dd5f67e1f8889c9af2e072d1cc9fff"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/executed_audit_prior_context.py",
+      "bytes": 3299,
+      "sha256": "59b7fa409446e903587adc1b60769faa3703eecd8b696534393ba6b1a3b17e77"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/executed_audit_quiet_clock.py",
+      "bytes": 4635,
+      "sha256": "d6fa64b89645d23df553aca79a016b4f7ba116ee1b4f699df27fe57b908a9938"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/executed_audit_recurrence.py",
+      "bytes": 13209,
+      "sha256": "605acef3c56401c94e9257d334da8f531438375d12181a3949f58084933f329c"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/executed_audit_route_clock.py",
+      "bytes": 13313,
+      "sha256": "30670df077287ba3d133c19c32895a2bcd64dc919e2f8576ff9bd7f261c74006"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/executed_audit_route_clock_preflight.py",
+      "bytes": 5199,
+      "sha256": "3e6b8638b9d78c53bae220898b4b756b0492fd4e0fe3826ee310fa5ca0a42ac5"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/executed_audit_route_horizon.py",
+      "bytes": 2352,
+      "sha256": "0557727ccdfcfc81870888f4ad347dc38bff53a429e13361e281d3893862be3d"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/executed_audit_structure.py",
+      "bytes": 13966,
+      "sha256": "24968295ae490972dd6c1adaa4f50feefe93a0c064494d983f09eaa6d966c760"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/executed_audit_two_outlet_preflight.py",
+      "bytes": 5145,
+      "sha256": "fffc6a2e158471c6fc9690269fb630ac201479e4f8181363a5f22edc850eb060"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/executed_audit_two_outlet_run.py",
+      "bytes": 15253,
+      "sha256": "c23761e3f698f1320f59b6be25e6ce13e0477d5cd411a6950c9e942041391606"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/executed_audit_v1.py",
+      "bytes": 18773,
+      "sha256": "db72cdd87b718ed6efc2232e12d22c067a4d6b230998b9baa1fc40bf228228d3"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/executed_audit_v2.py",
+      "bytes": 15921,
+      "sha256": "c7716ebcaa0aa8cf54068b6c00c58945a0b4273417d68996dfd03aa9b4c802eb"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/final_audit_source_retention.json",
+      "bytes": 2943,
+      "sha256": "468d3f90a620212c6471f891b9a3a62aa122755401045881c28e59732788fe9e"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/fixed_ratio_document_alignment_supplement.json",
+      "bytes": 1216,
+      "sha256": "016841cb6f29ed22e8dd4476e1e57c192c5a2c8f5373110b0a7050ec1adddf88"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/internal_channel_eigenvectors.json",
+      "bytes": 10385,
+      "sha256": "90c8718d4cbc05280670d108a09a742f01d13538f7cefac65fa3c8cac919a4b8"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/internal_gap_preflight.json",
+      "bytes": 2540,
+      "sha256": "58bf21f315744561159512af40b75c4fa73451be9d33ccb30d14749819b25388"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/internal_gap_preflight_v2.json",
+      "bytes": 9787,
+      "sha256": "2203563f207171770d3fd62b48800734035832db83a69bd126603a82b04127e5"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/internal_gap_v1.json",
+      "bytes": 63427908,
+      "sha256": "71a1761b0ead12adf36b58a2d332948406f99c003bfa3f16a6b4b58769cf3d7f"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/internal_gap_v1.json.gz",
+      "bytes": 1156727,
+      "sha256": "5f911a97fcee6209bb8bc93035a4ac3ce201f80d264e16541a159e0288de83da"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/internal_gap_v1_summary.json",
+      "bytes": 32291,
+      "sha256": "eac03f787a6a2f9da2a6d4e1455eb6c8b65467b5c54f05e203231c1ed8500245"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/mathematical_review_final_checkpoint.json",
+      "bytes": 4443,
+      "sha256": "e9bf265432ece96e69fab6d9dace54cea2d08266622aefbf6477af2ac7be69e3"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/model_contract_checkpoint.json",
+      "bytes": 7546,
+      "sha256": "0b8836d3383e3575e3e341ca837b4b279ca8de3dd52362befd11d27a51d3072c"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/model_contract_final_checkpoint.json",
+      "bytes": 7648,
+      "sha256": "09fb8ec3d12b2bb3f335d5c7601e015a47d96cc7eb7ce48628fcfffb5887ffb2"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/orthogonal_preflight_v1.json",
+      "bytes": 5373,
+      "sha256": "997ca59fc9e3cf703ddf363bdd6787ecd6d2b3c1143960504f42c4bc3b6bae9e"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/parallel_division_v1.json",
+      "bytes": 121941,
+      "sha256": "db4e93a395871271db754fbc95a24dec7040e2bf2a872b5a8256fae37153b5e4"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/partial_certificate_prefix_check.json",
+      "bytes": 699,
+      "sha256": "fa6e853a700912c3ade270ea9d08db843d90ca2254b0c8968a8dabeb87744ecc"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/phase_record_information_location.json",
+      "bytes": 3247,
+      "sha256": "e2ca10ffe641f8f58a8f52fcd8c8ed33426dc7f3b302b47515b687dee7ea3872"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/prior_competition_context.json",
+      "bytes": 2891,
+      "sha256": "5562e8b820a70f1275b02f4a7900287543e05d8e3ccac4df34f04126815aa08b"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/quantum_time_review_supplement.json",
+      "bytes": 830,
+      "sha256": "97a274341d640f126c91b129b1a54f1d6590afccb50cc8f6bb9c8c7466004df9"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/quiet_clock_preflight_review.json",
+      "bytes": 660,
+      "sha256": "c4bc7fc198d106044e32f8de59aac9c0df43bbf0e773a824de88a279186a2c4d"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/quiet_clock_v1.json",
+      "bytes": 112999,
+      "sha256": "09c371e46d7a56dda754c3b5eb94917e81e82ff1e5dc841d04b2fa5e34d16d45"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/recurrence_long_v1.json",
+      "bytes": 379590,
+      "sha256": "407ca141ec432b82ac1764bc130e317fb6723f9c805b052271896e6242a67796"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/recurrence_v1.json",
+      "bytes": 165645,
+      "sha256": "eeaa86fcd0860a21139f41e4ea33d5daff101ba769e809a74723b74f7e31fdce"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/route_clock_preflight.json",
+      "bytes": 29444,
+      "sha256": "e01c3dc6236fe5e493ac98094aa1ed3a2a83c67c26c76430bc431a2219281e4b"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/route_clock_v1.json",
+      "bytes": 176562,
+      "sha256": "2c635ab1d8cae5065e4464530e16d68562d6104ccf2cf75fc6cbdbe22478681c"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/route_horizon_extension.json",
+      "bytes": 42271,
+      "sha256": "ecba85524c9118d3dd47c1d086e3f215d6c93c325c758664a83fc614deedde2a"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/structure_capture_overlap.json",
+      "bytes": 5498,
+      "sha256": "f0e849228a2a92438c7ffa0a1fbb1100fd5451a21d47f100db10ba6891dd10e1"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/structure_formation_v1.json",
+      "bytes": 82816,
+      "sha256": "b2f416264f1ce10cab7af6f3a77f39c802bed86979ce31568fbc4047550b7ae1"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/structure_source_check.json",
+      "bytes": 317,
+      "sha256": "50f86b6e8d77d92d234cc0e91b6a21ce3404f255b987a814edb178c1c2c86e66"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/structure_v1.json",
+      "bytes": 74885,
+      "sha256": "f934962566e60fb341017e01663419c8f1a7802e5ca43ba9c56e117e135a762c"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/two_outlet_preflight.json",
+      "bytes": 46613,
+      "sha256": "cad61c06e5ce0e23eab0e384a48f39373ac4cef3d6e65c56afa953f8ec2bd492"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/two_outlet_preflight_final.json",
+      "bytes": 46613,
+      "sha256": "cad61c06e5ce0e23eab0e384a48f39373ac4cef3d6e65c56afa953f8ec2bd492"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/two_outlet_timing_scope_review.json",
+      "bytes": 1535,
+      "sha256": "0d1b027e0666cee269a7a9891f8587bd48a19875540e3324d62db8fc955f51fd"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/two_outlet_v1.json",
+      "bytes": 366716,
+      "sha256": "11fbbe04e944e4e8fc03f89fa98ef6aa10cfdf719857af377ea469b68eabdef6"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/wave_partial_copy_provenance.json",
+      "bytes": 724,
+      "sha256": "a2a86094282953134f7b6e138d328422ba124a5be4de4c000222d522806fd743"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/write_probe_v1.json",
+      "bytes": 3903,
+      "sha256": "00eda4beaec5d02f246737dcc257860680386b0349c72d77653966a64f2826af"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/write_probe_v1_verified.json",
+      "bytes": 146419,
+      "sha256": "68f903d3b8616a3d2f859532f0c96fc2b6615a05cc4162838ae12d133a36141e"
+    },
+    {
+      "path": "research/clock_selection/evidence/independent_audit/write_probe_v2.json",
+      "bytes": 679880,
+      "sha256": "8b303f68e6663c7d14582204b280c2079d7a1ab3a038a6c978d2fbb6900d16c2"
+    }
+  ],
+  "presenter_reports": [
+    {
+      "path": "research/clock_selection/evidence/presenter_dom_smoke/report.json",
+      "bytes": 41991,
+      "sha256": "72066ca08f59ce177725277ed5e4ec5a3867e6c663def21deff25c6651cedc73"
+    },
+    {
+      "path": "research/clock_selection/evidence/presenter_dom_smoke_additional/report.json",
+      "bytes": 47944,
+      "sha256": "cd37f2a054f89778e9017eca4af6c10393b1b50a91357c7c66dfc6249015c4c1"
+    },
+    {
+      "path": "research/clock_selection/evidence/presenter_dom_smoke_waves/report.json",
+      "bytes": 9651,
+      "sha256": "d8441abb6da78312b48820e818189b3a1f54e60f1b92f00404ed5cac92b7ad83"
+    },
+    {
+      "path": "research/clock_selection/evidence/presenter_dom_smoke_final/report.json",
+      "bytes": 75070,
+      "sha256": "17e55e264a42c59f178d3d93ce45be5b502d92a4af850ec8f5249ef506797b05"
+    },
+    {
+      "path": "research/clock_selection/evidence/presenter_dom_smoke_activation_route/report.json",
+      "bytes": 45010,
+      "sha256": "1ba97911119e92b003f4cc4fd84c841c2bd14e990a1b8f0bdcf480b6a1c1340b"
+    },
+    {
+      "path": "research/clock_selection/evidence/presenter_dom_smoke_carrier_memory/report.json",
+      "bytes": 7767,
+      "sha256": "6973f2731fb88f548de89d878301d13db73d27b42e622f2db57647065e4115c6"
+    },
+    {
+      "path": "research/clock_selection/evidence/presenter_dom_smoke_carrier_memory_combined/report.json",
+      "bytes": 220862,
+      "sha256": "3cb9bd067623cd1cd5741d773f3ab080ac360977f65adf59bc09d89ae4165cc2"
+    }
+  ],
+  "selected_complete_presenter_experiments": 131,
+  "selected_native_frames": 21963,
+  "presenter_scope": "Application JavaScript and native Canvas with explicit geometry; no real-browser CSS, native touch, Safari/iPad or attachment-preview certification.",
+  "scientific_scope": "Use the claim register and corrected reports. Native integrity, target acceptance and resource compliance remain separate."
+}

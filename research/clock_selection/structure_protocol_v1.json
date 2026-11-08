@@ -1,0 +1,86 @@
+{
+  "id": "U24-CLOCK-SELECTION-STRUCTURE-v1",
+  "question": "Can one incoming carrier create or reconfigure a complete paired-clock cluster, or produce two isolated clock templates, in a fixed prepared environment?",
+  "baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+  "family": {
+    "sides": [
+      161,
+      193
+    ],
+    "cluster_phases": [
+      1,
+      2
+    ],
+    "delays": [
+      4,
+      7
+    ],
+    "controls": [
+      "00",
+      "10",
+      "01",
+      "11"
+    ],
+    "encounters": 32,
+    "pristine_controls": 4
+  },
+  "board": {
+    "background": [
+      0,
+      0,
+      2
+    ],
+    "body_signs": [
+      1,
+      1,
+      1
+    ]
+  },
+  "steps": 48,
+  "geometry": "Guide channels0/14 along +X at y=z=c. Cluster centers (c,c+1,c) and (c,c+1,c+1), channels2/24. Source origin x=c-16-delay. All coordinates are native board coordinates.",
+  "preparation": "A complete phase1 or2 of the analytically derived two-site period5 cluster, including all exterior remainder halo. Both phases match the guide-facing (r0,r14)=(0,4). Shared assignments must agree; no overwrites or runtime changes. Control bits remove packet and cluster initial counters only, preserving all remainders.",
+  "readouts": {
+    "incoming_times": "delay+4 through delay+7; complete native carrier template including halo",
+    "hold_states": [
+      32,
+      48
+    ],
+    "periods": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "target_region": "All48 channels at the union of radius-one neighborhoods of both initial cluster centers (12 nodes,576 triples).",
+    "isolation": "Every individual external incoming counter term entering the complete target region is zero for updates33 through48.",
+    "reconfiguration": "Joint control11 has a nonzero periodic isolated target region during the hold, and its full region trace differs from clock-only01. Classify separately whether the result still matches a canonical period5 cluster.",
+    "creation": "Packet-only10 has a nonzero periodic isolated target region during the hold while00 is inactive; this is activation in a prepared remainder apparatus, not spontaneous emergence.",
+    "object_search": "Candidate object origins are all offsets in [-4,4]^3 from the first initial cluster center. Every match compares all48 triples of the entire radius-one region, never just counters or an activity centroid.",
+    "composite_template": "Analytic complete two-site period5 template, phases0..4, same channels and +Z orientation. Record all matches at every saved state. Only one match per frame with expected phase increment and spatial displacement at most1 is an unambiguous tracked object.",
+    "isolated_products": "Canonical paired-channel2/24 isolated period4 clock (channel2 begins(-1,-1,0), channel24 its counter negative with remainder4), including the complete seven-node halo. During states32..48 require two fixed origins at Manhattan distance>=3, correct phase succession, zero individual incoming terms to each region, and no composite match. Report source-induced separated clock products only if absent in the matched source-off control; do not call this physical dissociation.",
+    "raw_events": "Retain every arithmetic C0/C1/C2 event and complete full-board frames.",
+    "force_scope": "Attraction and repulsion are not tested: this family starts with one stationary composite, not two independently identified moving objects. A shifted centroid, changed period or lost template cannot be counted as mechanical force or binding.",
+    "boundary_C": {
+      "core": "Both fixed initial center nodes; each is an inner-boundary node of the two-site core.",
+      "skin": "The10 nodes of the radius-one union outside the two-site core; exterior is every other node. Fixed native masks, not recentered after results.",
+      "events": "Every rawC event with class, quotient, nativeaddress, update and allsixsignedprevious-state inputs. Preserve full-region individual external-input traces. Sourceoff is distinct from zero externalterms.",
+      "coexistence": "For each ordered class pair and lag0,1,2,3,4, count all ordered distinct event pairs globally. Lag0 sameclass excludes selfpairs; no class is assigned selection semantics.",
+      "association": "Compare complete class/region traces against the separately fixed final-region outcomes across matched controls. No new threshold, event filter or route-selection claim."
+    }
+  },
+  "acceptance": "Report validity, periodicity, complete-template tracking and source-induced predicates separately. An invalid incoming carrier makes the source-driven functional comparison ineligible, not successful cancellation. A budget stop is inconclusive. No all-target conjunction is imposed.",
+  "budget": {
+    "max_cpu_seconds": 600,
+    "max_wall_seconds": 900,
+    "max_sparse_channels": 20000,
+    "max_seconds_per_record": 45,
+    "max_recorded_bytes": 67108864
+  },
+  "presenter": "Four matched controls for each phase on L161,delay4 (eight complete recordings).",
+  "seed": null,
+  "publication_status": "Protocol prepared before execution; root and independent reviewer must approve before capture."
+}

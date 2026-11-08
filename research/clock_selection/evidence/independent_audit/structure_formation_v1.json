@@ -1,0 +1,3173 @@
+{
+  "auditor_sha256": "be45ee018dcdfa177265a9fa8b20dcf87c2291826422730627b55e3c08083990",
+  "cpu_seconds": 42.378170647999994,
+  "failure": null,
+  "finite_formation_groups": 0,
+  "full_rewinds": 48,
+  "full_states": 4656,
+  "groups": [
+    {
+      "all_control_bridge_traces_quiet": true,
+      "both_initial_complete_identities": true,
+      "counter_masks_commute": true,
+      "eligible": true,
+      "exact_negative_control_agrees": null,
+      "finite_stationary_composite_formed": false,
+      "geometry": {
+        "distance": 2,
+        "id": "formation-L225-d2-s+1",
+        "second_sign": 1,
+        "side": 225
+      },
+      "inactive_core_controls_quiet": true,
+      "joint_hold_periods": [],
+      "joint_individually_isolated": false,
+      "late_core_causal_difference": {
+        "A": true,
+        "B": true
+      },
+      "matched_remainders": true,
+      "new_bridge": true,
+      "new_recurrent_bridge": false,
+      "physical_binding_or_force_established": false,
+      "predicted_negative": false,
+      "singleton_complete_identities_preserved": true
+    },
+    {
+      "all_control_bridge_traces_quiet": true,
+      "both_initial_complete_identities": true,
+      "counter_masks_commute": true,
+      "eligible": true,
+      "exact_negative_control_agrees": true,
+      "finite_stationary_composite_formed": false,
+      "geometry": {
+        "distance": 2,
+        "id": "formation-L225-d2-s-1",
+        "second_sign": -1,
+        "side": 225
+      },
+      "inactive_core_controls_quiet": true,
+      "joint_hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "joint_individually_isolated": true,
+      "late_core_causal_difference": {
+        "A": false,
+        "B": false
+      },
+      "matched_remainders": true,
+      "new_bridge": false,
+      "new_recurrent_bridge": false,
+      "physical_binding_or_force_established": false,
+      "predicted_negative": true,
+      "singleton_complete_identities_preserved": true
+    },
+    {
+      "all_control_bridge_traces_quiet": true,
+      "both_initial_complete_identities": true,
+      "counter_masks_commute": true,
+      "eligible": true,
+      "exact_negative_control_agrees": true,
+      "finite_stationary_composite_formed": false,
+      "geometry": {
+        "distance": 3,
+        "id": "formation-L225-d3-s+1",
+        "second_sign": 1,
+        "side": 225
+      },
+      "inactive_core_controls_quiet": true,
+      "joint_hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "joint_individually_isolated": true,
+      "late_core_causal_difference": {
+        "A": false,
+        "B": false
+      },
+      "matched_remainders": true,
+      "new_bridge": false,
+      "new_recurrent_bridge": false,
+      "physical_binding_or_force_established": false,
+      "predicted_negative": true,
+      "singleton_complete_identities_preserved": true
+    },
+    {
+      "all_control_bridge_traces_quiet": true,
+      "both_initial_complete_identities": true,
+      "counter_masks_commute": true,
+      "eligible": true,
+      "exact_negative_control_agrees": true,
+      "finite_stationary_composite_formed": false,
+      "geometry": {
+        "distance": 3,
+        "id": "formation-L225-d3-s-1",
+        "second_sign": -1,
+        "side": 225
+      },
+      "inactive_core_controls_quiet": true,
+      "joint_hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "joint_individually_isolated": true,
+      "late_core_causal_difference": {
+        "A": false,
+        "B": false
+      },
+      "matched_remainders": true,
+      "new_bridge": false,
+      "new_recurrent_bridge": false,
+      "physical_binding_or_force_established": false,
+      "predicted_negative": true,
+      "singleton_complete_identities_preserved": true
+    },
+    {
+      "all_control_bridge_traces_quiet": true,
+      "both_initial_complete_identities": true,
+      "counter_masks_commute": true,
+      "eligible": true,
+      "exact_negative_control_agrees": true,
+      "finite_stationary_composite_formed": false,
+      "geometry": {
+        "distance": 4,
+        "id": "formation-L225-d4-s+1",
+        "second_sign": 1,
+        "side": 225
+      },
+      "inactive_core_controls_quiet": true,
+      "joint_hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "joint_individually_isolated": true,
+      "late_core_causal_difference": {
+        "A": false,
+        "B": false
+      },
+      "matched_remainders": true,
+      "new_bridge": false,
+      "new_recurrent_bridge": false,
+      "physical_binding_or_force_established": false,
+      "predicted_negative": true,
+      "singleton_complete_identities_preserved": true
+    },
+    {
+      "all_control_bridge_traces_quiet": true,
+      "both_initial_complete_identities": true,
+      "counter_masks_commute": true,
+      "eligible": true,
+      "exact_negative_control_agrees": true,
+      "finite_stationary_composite_formed": false,
+      "geometry": {
+        "distance": 4,
+        "id": "formation-L225-d4-s-1",
+        "second_sign": -1,
+        "side": 225
+      },
+      "inactive_core_controls_quiet": true,
+      "joint_hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "joint_individually_isolated": true,
+      "late_core_causal_difference": {
+        "A": false,
+        "B": false
+      },
+      "matched_remainders": true,
+      "new_bridge": false,
+      "new_recurrent_bridge": false,
+      "physical_binding_or_force_established": false,
+      "predicted_negative": true,
+      "singleton_complete_identities_preserved": true
+    },
+    {
+      "all_control_bridge_traces_quiet": true,
+      "both_initial_complete_identities": true,
+      "counter_masks_commute": true,
+      "eligible": true,
+      "exact_negative_control_agrees": null,
+      "finite_stationary_composite_formed": false,
+      "geometry": {
+        "distance": 2,
+        "id": "formation-L257-d2-s+1",
+        "second_sign": 1,
+        "side": 257
+      },
+      "inactive_core_controls_quiet": true,
+      "joint_hold_periods": [],
+      "joint_individually_isolated": false,
+      "late_core_causal_difference": {
+        "A": true,
+        "B": true
+      },
+      "matched_remainders": true,
+      "new_bridge": true,
+      "new_recurrent_bridge": false,
+      "physical_binding_or_force_established": false,
+      "predicted_negative": false,
+      "singleton_complete_identities_preserved": true
+    },
+    {
+      "all_control_bridge_traces_quiet": true,
+      "both_initial_complete_identities": true,
+      "counter_masks_commute": true,
+      "eligible": true,
+      "exact_negative_control_agrees": true,
+      "finite_stationary_composite_formed": false,
+      "geometry": {
+        "distance": 2,
+        "id": "formation-L257-d2-s-1",
+        "second_sign": -1,
+        "side": 257
+      },
+      "inactive_core_controls_quiet": true,
+      "joint_hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "joint_individually_isolated": true,
+      "late_core_causal_difference": {
+        "A": false,
+        "B": false
+      },
+      "matched_remainders": true,
+      "new_bridge": false,
+      "new_recurrent_bridge": false,
+      "physical_binding_or_force_established": false,
+      "predicted_negative": true,
+      "singleton_complete_identities_preserved": true
+    },
+    {
+      "all_control_bridge_traces_quiet": true,
+      "both_initial_complete_identities": true,
+      "counter_masks_commute": true,
+      "eligible": true,
+      "exact_negative_control_agrees": true,
+      "finite_stationary_composite_formed": false,
+      "geometry": {
+        "distance": 3,
+        "id": "formation-L257-d3-s+1",
+        "second_sign": 1,
+        "side": 257
+      },
+      "inactive_core_controls_quiet": true,
+      "joint_hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "joint_individually_isolated": true,
+      "late_core_causal_difference": {
+        "A": false,
+        "B": false
+      },
+      "matched_remainders": true,
+      "new_bridge": false,
+      "new_recurrent_bridge": false,
+      "physical_binding_or_force_established": false,
+      "predicted_negative": true,
+      "singleton_complete_identities_preserved": true
+    },
+    {
+      "all_control_bridge_traces_quiet": true,
+      "both_initial_complete_identities": true,
+      "counter_masks_commute": true,
+      "eligible": true,
+      "exact_negative_control_agrees": true,
+      "finite_stationary_composite_formed": false,
+      "geometry": {
+        "distance": 3,
+        "id": "formation-L257-d3-s-1",
+        "second_sign": -1,
+        "side": 257
+      },
+      "inactive_core_controls_quiet": true,
+      "joint_hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "joint_individually_isolated": true,
+      "late_core_causal_difference": {
+        "A": false,
+        "B": false
+      },
+      "matched_remainders": true,
+      "new_bridge": false,
+      "new_recurrent_bridge": false,
+      "physical_binding_or_force_established": false,
+      "predicted_negative": true,
+      "singleton_complete_identities_preserved": true
+    },
+    {
+      "all_control_bridge_traces_quiet": true,
+      "both_initial_complete_identities": true,
+      "counter_masks_commute": true,
+      "eligible": true,
+      "exact_negative_control_agrees": true,
+      "finite_stationary_composite_formed": false,
+      "geometry": {
+        "distance": 4,
+        "id": "formation-L257-d4-s+1",
+        "second_sign": 1,
+        "side": 257
+      },
+      "inactive_core_controls_quiet": true,
+      "joint_hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "joint_individually_isolated": true,
+      "late_core_causal_difference": {
+        "A": false,
+        "B": false
+      },
+      "matched_remainders": true,
+      "new_bridge": false,
+      "new_recurrent_bridge": false,
+      "physical_binding_or_force_established": false,
+      "predicted_negative": true,
+      "singleton_complete_identities_preserved": true
+    },
+    {
+      "all_control_bridge_traces_quiet": true,
+      "both_initial_complete_identities": true,
+      "counter_masks_commute": true,
+      "eligible": true,
+      "exact_negative_control_agrees": true,
+      "finite_stationary_composite_formed": false,
+      "geometry": {
+        "distance": 4,
+        "id": "formation-L257-d4-s-1",
+        "second_sign": -1,
+        "side": 257
+      },
+      "inactive_core_controls_quiet": true,
+      "joint_hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "joint_individually_isolated": true,
+      "late_core_causal_difference": {
+        "A": false,
+        "B": false
+      },
+      "matched_remainders": true,
+      "new_bridge": false,
+      "new_recurrent_bridge": false,
+      "physical_binding_or_force_established": false,
+      "predicted_negative": true,
+      "singleton_complete_identities_preserved": true
+    }
+  ],
+  "passed": true,
+  "protocol_sha256": "147a40c82d584990a822f4904c85f543e23f29fdf9ceba0b01870811a4383917",
+  "records": [
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "00",
+        "distance": 2,
+        "id": "formation-L225-d2-s+1",
+        "second_sign": 1,
+        "side": 225
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "8073633ed16cf2bbce3e02d8026c5c6d630f2f5e0ef7de567dfa5e32fdf705b9",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "8073633ed16cf2bbce3e02d8026c5c6d630f2f5e0ef7de567dfa5e32fdf705b9",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "10",
+        "distance": 2,
+        "id": "formation-L225-d2-s+1",
+        "second_sign": 1,
+        "side": 225
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "4fbf57868234fc6f50053e6ed354fe61fb471b4660d24327bc7a3ee16cf8664f",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "4fbf57868234fc6f50053e6ed354fe61fb471b4660d24327bc7a3ee16cf8664f",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 1152,
+        "whole_board_R_sha256": "78dd81c5ae7131733ae0a3c0f0039bf1fcb747be04a6854c02adb5214b52ac4f"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "01",
+        "distance": 2,
+        "id": "formation-L225-d2-s+1",
+        "second_sign": 1,
+        "side": 225
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "15e8d5ccfd69ddba13dcd2647534538fef822b2384a20bd8681e60e7bc410de1",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "15e8d5ccfd69ddba13dcd2647534538fef822b2384a20bd8681e60e7bc410de1",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 1152,
+        "whole_board_R_sha256": "a5039fc945824140443bc35fef836406b53afed8f1dfbfa187c2990da982ec87"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 260,
+          "1": 308,
+          "2": 308
+        },
+        "endpoint": {
+          "0": 588,
+          "1": 616,
+          "2": 616
+        },
+        "exterior": {
+          "0": 24684,
+          "1": 34814,
+          "2": 34814
+        },
+        "halo": {
+          "0": 3112,
+          "1": 3656,
+          "2": 3656
+        }
+      },
+      "case": {
+        "control": "11",
+        "distance": 2,
+        "id": "formation-L225-d2-s+1",
+        "second_sign": 1,
+        "side": 225
+      },
+      "first_bridge_counter_activity": 1,
+      "hold_periods": [],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "f6c9a112c43f77fa9836f9df68516a316787fe8983214e944695d1d31b56cb2c",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "2a6cd6a03d21018762e4a7aa9d2300f9955cf9924d07d5dcdda488f8abad9949",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {
+          "0": 28644,
+          "1": 39394,
+          "2": 39394
+        },
+        "whole_board_C_count": 107432,
+        "whole_board_C_sha256": "7523951b396e9e54748ab93a2c2be33ba915c8a2e16e67fe2c190c6777122146",
+        "whole_board_R_change_count": 323796,
+        "whole_board_R_sha256": "3b338ab4994cbea2337d45a7ba4115abb7b050cfe1eda1522a6c7c1a66269651"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "00",
+        "distance": 2,
+        "id": "formation-L225-d2-s-1",
+        "second_sign": -1,
+        "side": 225
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "8073633ed16cf2bbce3e02d8026c5c6d630f2f5e0ef7de567dfa5e32fdf705b9",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "8073633ed16cf2bbce3e02d8026c5c6d630f2f5e0ef7de567dfa5e32fdf705b9",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "10",
+        "distance": 2,
+        "id": "formation-L225-d2-s-1",
+        "second_sign": -1,
+        "side": 225
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "4fbf57868234fc6f50053e6ed354fe61fb471b4660d24327bc7a3ee16cf8664f",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "4fbf57868234fc6f50053e6ed354fe61fb471b4660d24327bc7a3ee16cf8664f",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 1152,
+        "whole_board_R_sha256": "78dd81c5ae7131733ae0a3c0f0039bf1fcb747be04a6854c02adb5214b52ac4f"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "01",
+        "distance": 2,
+        "id": "formation-L225-d2-s-1",
+        "second_sign": -1,
+        "side": 225
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "30496f30372d9a04e7cc9d839c22084bf4f725d2f009ff4fd3f62766b103e9d1",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "30496f30372d9a04e7cc9d839c22084bf4f725d2f009ff4fd3f62766b103e9d1",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 1152,
+        "whole_board_R_sha256": "95e3a9ae0d091a13007c253cbf7dbd4522fe26a9e591734245bc5ad2057c625b"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "11",
+        "distance": 2,
+        "id": "formation-L225-d2-s-1",
+        "second_sign": -1,
+        "side": 225
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "1602aa410056b0facfef684eb2fff45627cd81c558d028150f66da92bce18572",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "1602aa410056b0facfef684eb2fff45627cd81c558d028150f66da92bce18572",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 1920,
+        "whole_board_R_sha256": "e4dfb1158699e7346f7c67a4e18adbca016ae0b68b698635edbcff6d5318bc80"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "00",
+        "distance": 3,
+        "id": "formation-L225-d3-s+1",
+        "second_sign": 1,
+        "side": 225
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "fd4336f771e6e8ffa22ecc482f87ed21dfbc1600556e1d903e80c42c49d80e4f",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "fd4336f771e6e8ffa22ecc482f87ed21dfbc1600556e1d903e80c42c49d80e4f",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "10",
+        "distance": 3,
+        "id": "formation-L225-d3-s+1",
+        "second_sign": 1,
+        "side": 225
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "17515856548f542b354d6b71cdd59e77ca106a53cd2020b4196ae72fbebc9542",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "17515856548f542b354d6b71cdd59e77ca106a53cd2020b4196ae72fbebc9542",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 1152,
+        "whole_board_R_sha256": "78dd81c5ae7131733ae0a3c0f0039bf1fcb747be04a6854c02adb5214b52ac4f"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "01",
+        "distance": 3,
+        "id": "formation-L225-d3-s+1",
+        "second_sign": 1,
+        "side": 225
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "78d33e2455dd294c74128f5054247f57b85d45f8f28a1a974b0f170325c8dec4",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "78d33e2455dd294c74128f5054247f57b85d45f8f28a1a974b0f170325c8dec4",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 1152,
+        "whole_board_R_sha256": "8fa6797858dd6e31488a385579f4ce36203b5f1f7d4d8bbffb362ff3284be1b9"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "11",
+        "distance": 3,
+        "id": "formation-L225-d3-s+1",
+        "second_sign": 1,
+        "side": 225
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "6d8800c0736c33d5e8127c89d918ad79a54752395e00945fd6e551f7bbee112e",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "6d8800c0736c33d5e8127c89d918ad79a54752395e00945fd6e551f7bbee112e",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 2304,
+        "whole_board_R_sha256": "c1db4bd5a37d506bff50dc0406a62e7e1035e91dd079028fa9d472d154c20fe5"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "00",
+        "distance": 3,
+        "id": "formation-L225-d3-s-1",
+        "second_sign": -1,
+        "side": 225
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "fd4336f771e6e8ffa22ecc482f87ed21dfbc1600556e1d903e80c42c49d80e4f",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "fd4336f771e6e8ffa22ecc482f87ed21dfbc1600556e1d903e80c42c49d80e4f",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "10",
+        "distance": 3,
+        "id": "formation-L225-d3-s-1",
+        "second_sign": -1,
+        "side": 225
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "17515856548f542b354d6b71cdd59e77ca106a53cd2020b4196ae72fbebc9542",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "17515856548f542b354d6b71cdd59e77ca106a53cd2020b4196ae72fbebc9542",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 1152,
+        "whole_board_R_sha256": "78dd81c5ae7131733ae0a3c0f0039bf1fcb747be04a6854c02adb5214b52ac4f"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "01",
+        "distance": 3,
+        "id": "formation-L225-d3-s-1",
+        "second_sign": -1,
+        "side": 225
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "7804b57a9347cd37bff3832cfce7f652c7ac63dbd782150cbf53775615d11c04",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "7804b57a9347cd37bff3832cfce7f652c7ac63dbd782150cbf53775615d11c04",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 1152,
+        "whole_board_R_sha256": "6cac4a0f369cd75de5d928af685b757642f64d78030aa51ef296d3874cb6a40c"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "11",
+        "distance": 3,
+        "id": "formation-L225-d3-s-1",
+        "second_sign": -1,
+        "side": 225
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "f0899c99fb34d273f184c6db19bb7888978f027159f29a14e2bce8f501a91440",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "f0899c99fb34d273f184c6db19bb7888978f027159f29a14e2bce8f501a91440",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 2304,
+        "whole_board_R_sha256": "b60725cf7acbfd1f654c1056555911fe32f627323589780e1161aa0f7429431b"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "00",
+        "distance": 4,
+        "id": "formation-L225-d4-s+1",
+        "second_sign": 1,
+        "side": 225
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "18f66f397affb00b80497c4adc8c07b2c313a1fa5c13f7822860150d5c53e6d8",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "18f66f397affb00b80497c4adc8c07b2c313a1fa5c13f7822860150d5c53e6d8",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "10",
+        "distance": 4,
+        "id": "formation-L225-d4-s+1",
+        "second_sign": 1,
+        "side": 225
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "10e386726ad10d9b8ecfe67948bc2c97a6b5eee25d0f4e1d262d70a2501a22b7",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "10e386726ad10d9b8ecfe67948bc2c97a6b5eee25d0f4e1d262d70a2501a22b7",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 1152,
+        "whole_board_R_sha256": "606020a48a79157e56e940d606efe5f9ae8c44489becb608f6186fef60955864"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "01",
+        "distance": 4,
+        "id": "formation-L225-d4-s+1",
+        "second_sign": 1,
+        "side": 225
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "bb9c08601396925ba2694da840f026a3e030848cd7d0d20066a4966b1725d290",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "bb9c08601396925ba2694da840f026a3e030848cd7d0d20066a4966b1725d290",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 1152,
+        "whole_board_R_sha256": "8fa6797858dd6e31488a385579f4ce36203b5f1f7d4d8bbffb362ff3284be1b9"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "11",
+        "distance": 4,
+        "id": "formation-L225-d4-s+1",
+        "second_sign": 1,
+        "side": 225
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "0702ab6fcd5b6b492cbf51a350ee15448e41dd8808439d916a6f13fcb5038069",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "0702ab6fcd5b6b492cbf51a350ee15448e41dd8808439d916a6f13fcb5038069",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 2304,
+        "whole_board_R_sha256": "b706280ba8a4de21bbc3ef298dcbedac667c10d4fe0958892ebbdbddbc7205a4"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "00",
+        "distance": 4,
+        "id": "formation-L225-d4-s-1",
+        "second_sign": -1,
+        "side": 225
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "18f66f397affb00b80497c4adc8c07b2c313a1fa5c13f7822860150d5c53e6d8",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "18f66f397affb00b80497c4adc8c07b2c313a1fa5c13f7822860150d5c53e6d8",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "10",
+        "distance": 4,
+        "id": "formation-L225-d4-s-1",
+        "second_sign": -1,
+        "side": 225
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "10e386726ad10d9b8ecfe67948bc2c97a6b5eee25d0f4e1d262d70a2501a22b7",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "10e386726ad10d9b8ecfe67948bc2c97a6b5eee25d0f4e1d262d70a2501a22b7",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 1152,
+        "whole_board_R_sha256": "606020a48a79157e56e940d606efe5f9ae8c44489becb608f6186fef60955864"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "01",
+        "distance": 4,
+        "id": "formation-L225-d4-s-1",
+        "second_sign": -1,
+        "side": 225
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "a46c4d5a4b4c1fdb81dec66b871e40887c1be25ae54d891fdc80425812b459fc",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "a46c4d5a4b4c1fdb81dec66b871e40887c1be25ae54d891fdc80425812b459fc",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 1152,
+        "whole_board_R_sha256": "6cac4a0f369cd75de5d928af685b757642f64d78030aa51ef296d3874cb6a40c"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "11",
+        "distance": 4,
+        "id": "formation-L225-d4-s-1",
+        "second_sign": -1,
+        "side": 225
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "fc6899ce8924ee72b04c3cd6b3a035ff38d5209bd130c761a3d799eb60e2bf01",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "fc6899ce8924ee72b04c3cd6b3a035ff38d5209bd130c761a3d799eb60e2bf01",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 2304,
+        "whole_board_R_sha256": "98b451b4ad46954122cc5ce7ab63dbb8d877483a497d385e99cc1c2b9b3f8bec"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "00",
+        "distance": 2,
+        "id": "formation-L257-d2-s+1",
+        "second_sign": 1,
+        "side": 257
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "a6197f756a048c203b7d2c7a91c69351b40368405bd9883fed4e8a30de98e4e8",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "a6197f756a048c203b7d2c7a91c69351b40368405bd9883fed4e8a30de98e4e8",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "10",
+        "distance": 2,
+        "id": "formation-L257-d2-s+1",
+        "second_sign": 1,
+        "side": 257
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "4c747bfbcbaffcd401a37328515125ec244678dae3eb82f349fc3d67a08c3e49",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "4c747bfbcbaffcd401a37328515125ec244678dae3eb82f349fc3d67a08c3e49",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 1152,
+        "whole_board_R_sha256": "9d1b50dd14b289f6444c16350559047968db07f089a32bca090af2c5952ce56d"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "01",
+        "distance": 2,
+        "id": "formation-L257-d2-s+1",
+        "second_sign": 1,
+        "side": 257
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "01b7c09d8ef18b7cbbf78953a9d61818cd08cd8ee1d52170de66ae57a94d72f1",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "01b7c09d8ef18b7cbbf78953a9d61818cd08cd8ee1d52170de66ae57a94d72f1",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 1152,
+        "whole_board_R_sha256": "d32ab842deb95b59fdcb212c429d60738fa900dd213ee2dd138d3b5358b66919"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 260,
+          "1": 308,
+          "2": 308
+        },
+        "endpoint": {
+          "0": 588,
+          "1": 616,
+          "2": 616
+        },
+        "exterior": {
+          "0": 24684,
+          "1": 34814,
+          "2": 34814
+        },
+        "halo": {
+          "0": 3112,
+          "1": 3656,
+          "2": 3656
+        }
+      },
+      "case": {
+        "control": "11",
+        "distance": 2,
+        "id": "formation-L257-d2-s+1",
+        "second_sign": 1,
+        "side": 257
+      },
+      "first_bridge_counter_activity": 1,
+      "hold_periods": [],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "5be961e829dbdea211fd175a13ab11514e5cd990ba2a36f153643762deaa5087",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "ddc967c1e1d1d7be27ab1a86d9c5be2e291a5b690716530dad978ccb7fa52c90",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {
+          "0": 28644,
+          "1": 39394,
+          "2": 39394
+        },
+        "whole_board_C_count": 107432,
+        "whole_board_C_sha256": "e2b39cf987bfa0a8d776ba43388f3f6d7e7447b583fcd9c8bce0b9645e7103c2",
+        "whole_board_R_change_count": 323796,
+        "whole_board_R_sha256": "6f60786d16f1b8f93d9dd8c392ee4a8ec749b2390c919a26ca60e760f435bb00"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "00",
+        "distance": 2,
+        "id": "formation-L257-d2-s-1",
+        "second_sign": -1,
+        "side": 257
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "a6197f756a048c203b7d2c7a91c69351b40368405bd9883fed4e8a30de98e4e8",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "a6197f756a048c203b7d2c7a91c69351b40368405bd9883fed4e8a30de98e4e8",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "10",
+        "distance": 2,
+        "id": "formation-L257-d2-s-1",
+        "second_sign": -1,
+        "side": 257
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "4c747bfbcbaffcd401a37328515125ec244678dae3eb82f349fc3d67a08c3e49",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "4c747bfbcbaffcd401a37328515125ec244678dae3eb82f349fc3d67a08c3e49",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 1152,
+        "whole_board_R_sha256": "9d1b50dd14b289f6444c16350559047968db07f089a32bca090af2c5952ce56d"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "01",
+        "distance": 2,
+        "id": "formation-L257-d2-s-1",
+        "second_sign": -1,
+        "side": 257
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "248f53a6cf68730ace7026ff8402ad7271067af7fab5fb6fdbad89e6614c8ede",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "248f53a6cf68730ace7026ff8402ad7271067af7fab5fb6fdbad89e6614c8ede",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 1152,
+        "whole_board_R_sha256": "e1f15c63c1b5ffc2046ff2f21c468279c461c1451ad32e90fb997856bb242706"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "11",
+        "distance": 2,
+        "id": "formation-L257-d2-s-1",
+        "second_sign": -1,
+        "side": 257
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "85b65bdd3f65358749bece3715000ea93bb50ce0fca8263e57da877d1fd2f3df",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "85b65bdd3f65358749bece3715000ea93bb50ce0fca8263e57da877d1fd2f3df",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 1920,
+        "whole_board_R_sha256": "f488dddcc9de90a2f3008910a6d538b357cce1b36e1dec6c5af3dec4a3ea16b4"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "00",
+        "distance": 3,
+        "id": "formation-L257-d3-s+1",
+        "second_sign": 1,
+        "side": 257
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "1135dc3d8b499b785ee953188b682b644075dc590d39417e54b9b8113273de6a",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "1135dc3d8b499b785ee953188b682b644075dc590d39417e54b9b8113273de6a",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "10",
+        "distance": 3,
+        "id": "formation-L257-d3-s+1",
+        "second_sign": 1,
+        "side": 257
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "8ff24837ae94821c06642a5a0d2e1f25229a17f55fabd00edb9bf78ae5c84e2e",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "8ff24837ae94821c06642a5a0d2e1f25229a17f55fabd00edb9bf78ae5c84e2e",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 1152,
+        "whole_board_R_sha256": "9d1b50dd14b289f6444c16350559047968db07f089a32bca090af2c5952ce56d"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "01",
+        "distance": 3,
+        "id": "formation-L257-d3-s+1",
+        "second_sign": 1,
+        "side": 257
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "0dd0a4708c8df5e8b65fb4f19ff3560b808cc16e7b3fe3312b02e88dac030975",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "0dd0a4708c8df5e8b65fb4f19ff3560b808cc16e7b3fe3312b02e88dac030975",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 1152,
+        "whole_board_R_sha256": "5879966747c554199c492035aba0cbe6bfa9379c3201a3806f22a7dfe2010856"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "11",
+        "distance": 3,
+        "id": "formation-L257-d3-s+1",
+        "second_sign": 1,
+        "side": 257
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "0c76af2687d44abc605f160c71becf1fa31794a5749075d0052038c9138c2e3c",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "0c76af2687d44abc605f160c71becf1fa31794a5749075d0052038c9138c2e3c",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 2304,
+        "whole_board_R_sha256": "530ee15effa4fd37b88adb27374a99d7bb28e0782017bfffa3c21b2414f97974"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "00",
+        "distance": 3,
+        "id": "formation-L257-d3-s-1",
+        "second_sign": -1,
+        "side": 257
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "1135dc3d8b499b785ee953188b682b644075dc590d39417e54b9b8113273de6a",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "1135dc3d8b499b785ee953188b682b644075dc590d39417e54b9b8113273de6a",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "10",
+        "distance": 3,
+        "id": "formation-L257-d3-s-1",
+        "second_sign": -1,
+        "side": 257
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "8ff24837ae94821c06642a5a0d2e1f25229a17f55fabd00edb9bf78ae5c84e2e",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "8ff24837ae94821c06642a5a0d2e1f25229a17f55fabd00edb9bf78ae5c84e2e",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 1152,
+        "whole_board_R_sha256": "9d1b50dd14b289f6444c16350559047968db07f089a32bca090af2c5952ce56d"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "01",
+        "distance": 3,
+        "id": "formation-L257-d3-s-1",
+        "second_sign": -1,
+        "side": 257
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "5fac6d3a88b2480ce7f38a755ce677c4ed0f073f4c888a7dc79d103256b3b8de",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "5fac6d3a88b2480ce7f38a755ce677c4ed0f073f4c888a7dc79d103256b3b8de",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 1152,
+        "whole_board_R_sha256": "b2dc6fa80a6bc2f7ddf89e3668822374b5cfea0c8aa24c931116da301a7d94c0"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "11",
+        "distance": 3,
+        "id": "formation-L257-d3-s-1",
+        "second_sign": -1,
+        "side": 257
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "3cf7c194c0d061cf1aef9a2ca1421f3412ba7582a5bcd0df22b5c7256bff7513",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "3cf7c194c0d061cf1aef9a2ca1421f3412ba7582a5bcd0df22b5c7256bff7513",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 2304,
+        "whole_board_R_sha256": "e8087174c5c789d8c459aafb85a796ffb2fc2def46c5a9d9e46a054f04c2ff73"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "00",
+        "distance": 4,
+        "id": "formation-L257-d4-s+1",
+        "second_sign": 1,
+        "side": 257
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "0aeedf62e04fbff2ebfb3ae196aa3ab6bdb9c73e6f4d4a5350a0cb86a7274a4d",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "0aeedf62e04fbff2ebfb3ae196aa3ab6bdb9c73e6f4d4a5350a0cb86a7274a4d",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "10",
+        "distance": 4,
+        "id": "formation-L257-d4-s+1",
+        "second_sign": 1,
+        "side": 257
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "be805a2b7531f4b73f5ac9fd34a5bd0f0b201f5b930f17ee899d11538768a322",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "be805a2b7531f4b73f5ac9fd34a5bd0f0b201f5b930f17ee899d11538768a322",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 1152,
+        "whole_board_R_sha256": "1d5e1b9c79dc49c055ae39beda95167f41fedbcb34a8d0a6e58bf69e3281752f"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "01",
+        "distance": 4,
+        "id": "formation-L257-d4-s+1",
+        "second_sign": 1,
+        "side": 257
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "04c48ccb1133a84b44dde672fb475a478ca5a7cfb577d8fa6194123db1bd39b5",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "04c48ccb1133a84b44dde672fb475a478ca5a7cfb577d8fa6194123db1bd39b5",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 1152,
+        "whole_board_R_sha256": "5879966747c554199c492035aba0cbe6bfa9379c3201a3806f22a7dfe2010856"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "11",
+        "distance": 4,
+        "id": "formation-L257-d4-s+1",
+        "second_sign": 1,
+        "side": 257
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "7e9f6dc186f2d57c1bfc2234362eda64e75d9fa9dc0293f802c733a9a0326360",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "7e9f6dc186f2d57c1bfc2234362eda64e75d9fa9dc0293f802c733a9a0326360",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 2304,
+        "whole_board_R_sha256": "c293dd3210643e8702a6a6013c862e40d58143e263e08d529379eabd463b7944"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "00",
+        "distance": 4,
+        "id": "formation-L257-d4-s-1",
+        "second_sign": -1,
+        "side": 257
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "0aeedf62e04fbff2ebfb3ae196aa3ab6bdb9c73e6f4d4a5350a0cb86a7274a4d",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "0aeedf62e04fbff2ebfb3ae196aa3ab6bdb9c73e6f4d4a5350a0cb86a7274a4d",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "10",
+        "distance": 4,
+        "id": "formation-L257-d4-s-1",
+        "second_sign": -1,
+        "side": 257
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "be805a2b7531f4b73f5ac9fd34a5bd0f0b201f5b930f17ee899d11538768a322",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "be805a2b7531f4b73f5ac9fd34a5bd0f0b201f5b930f17ee899d11538768a322",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 1152,
+        "whole_board_R_sha256": "1d5e1b9c79dc49c055ae39beda95167f41fedbcb34a8d0a6e58bf69e3281752f"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "01",
+        "distance": 4,
+        "id": "formation-L257-d4-s-1",
+        "second_sign": -1,
+        "side": 257
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "43f5d551058bef162024e1c6b7cd4d1d08aec97c5feef80b8a8989d2daf1b2da",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "43f5d551058bef162024e1c6b7cd4d1d08aec97c5feef80b8a8989d2daf1b2da",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 1152,
+        "whole_board_R_sha256": "b2dc6fa80a6bc2f7ddf89e3668822374b5cfea0c8aa24c931116da301a7d94c0"
+      },
+      "recurrent_bridge_periods": []
+    },
+    {
+      "C_counts": {
+        "bridge": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "endpoint": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "exterior": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        },
+        "halo": {
+          "0": 0,
+          "1": 0,
+          "2": 0
+        }
+      },
+      "case": {
+        "control": "11",
+        "distance": 4,
+        "id": "formation-L257-d4-s-1",
+        "second_sign": -1,
+        "side": 257
+      },
+      "first_bridge_counter_activity": null,
+      "hold_periods": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "integrity": {
+        "boundary_counter_hits": [],
+        "final_state_sha256": "1f7fec5d041a25168d1dd506e90da9b2fd5a4fda8b0436dccb854c6c1ddd61aa",
+        "forward_transitions": 96,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "1f7fec5d041a25168d1dd506e90da9b2fd5a4fda8b0436dccb854c6c1ddd61aa",
+        "inverse_transitions": 96,
+        "observations": {},
+        "passed": true,
+        "states": 97,
+        "whole_board_C_by_kind": {},
+        "whole_board_C_count": 0,
+        "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "whole_board_R_change_count": 2304,
+        "whole_board_R_sha256": "78ddb8b3cd6cc9437e514124d2ed73527aece173ddf52d4276e4b71b7eb864a4"
+      },
+      "recurrent_bridge_periods": []
+    }
+  ],
+  "scope": "Finite formation conjunction as frozen; complete singleton controls and all raw C retained.",
+  "sources_unchanged": true,
+  "transitions": 4608
+}

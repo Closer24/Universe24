@@ -1,0 +1,23 @@
+{
+  "format": "universe24-coherent-wave-passive-qualification-v1",
+  "original_result_sha256": "d1bebe00d8cc70b92164f3b9d91456e1019c591d88bdfe5e9723968e8a76a40f",
+  "original_budget_receipt_sha256": "e11eac54480ab77f4ecf1893fcb8790b16567e2e0ae9d8a55340bfa8b8175c1b",
+  "producer_comparisons": {
+    "completed": 16,
+    "passed": 16,
+    "independent_replay": "passed all16 mathematical comparisons and full native records"
+  },
+  "resource_protocol_status": "FAIL_CPU",
+  "cpu_limit_seconds": 300,
+  "cpu_actual_seconds": 328.94349358,
+  "cpu_overrun_seconds": 28.943493579999995,
+  "wall_and_byte_limits_passed": true,
+  "cause": "The producer checked cumulative CPU before starting each complete record; the final complete record and its observation/serialization crossed the remaining allowance.",
+  "original_evidence_changed": false,
+  "decision": "Retain all16 complete records, audit mathematical outcomes separately, and do not retroactively increase the budget or rerun merely to erase this failure.",
+  "future_budget_rule": "Before admitting another case, reserve its registered capture/observation/serialization bound, or use a validated interruptible recorder that preserves explicit incomplete state. A computational stop is not physical approval or selection.",
+  "independent_audit": {
+    "path": "research/clock_selection/evidence/independent_audit/coherent_wave_v1.json",
+    "sha256": "d99a5502d1671a3840f9a401420b86e9607f747b2fc7b3e477eb19f665ffb77f"
+  }
+}
