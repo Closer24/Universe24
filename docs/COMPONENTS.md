@@ -47,6 +47,12 @@ use the same generic command. All paths in this paragraph are relative to
 
 ## Prepare a board in Python
 
+For the newer period-five/period-six clocks, complete even packet, cooperative
+pair and scoped scatterer/register assemblies, see
+[Local building blocks: API, algebra and replay](LOCAL_BUILDING_BLOCKS.md).
+They use this same composer and generic JSON runner. Their factories prepare
+data only; a valid overlap contract does not establish functional composition.
+
 ```python
 from research.components import (
     BoardSpec, SignalSource, GuideSegment, Receiver, place, finalize,

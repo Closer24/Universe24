@@ -9,6 +9,7 @@ that engine; observers and the Presenter read determined states.
 | Purpose | Start here |
 | --- | --- |
 | Place compatible components on one board | [Component API](../docs/COMPONENTS.md), `components/` |
+| Use local period-five/six clocks, packets and a scoped register | [API and algebra](../docs/LOCAL_BUILDING_BLOCKS.md), [compact replay](component_families/README.md) |
 | Prepare clocks and signal-mediated assemblies | [Clock interfaces and limits](../docs/CLOCK_SELECTION.md), `clock_selection/quiet_clock.py`, `staged_blocks/` |
 | Run a JSON experiment and export recordings | [Detailed walkthrough](../docs/COMPONENT_WALKTHROUGH.md), `experiments/run.py` |
 | Replay clocks and gears | [Presenter](../docs/PRESENTER.md), `presenter/` |
@@ -24,6 +25,7 @@ assignments. Functional composition requires a new controlled native run.
 | Research line | Status and evidence |
 | --- | --- |
 | Component assembly | [API results](../docs/COMPONENT_RESULTS.md) and [review](../docs/COMPONENT_REVIEW.md); prepared signals, finite memory and route controls |
+| Local family components | [31-case replay](component_families/README.md); exact prepared clocks, guided scattering, source-overlap single read and failed two-read composition |
 | Clock-mediated signals | [Clock research](clock_selection/README.md); verified phase responses alongside failed unique-record and formation targets |
 | Effective scalar families | [Invariant families](invariant_families_v1/README.md); exact global encodings under `num=den=1`, 48 native cases and four nonlinear-overlap controls |
 | Light-approval hypothesis | [Study record](light_approval/README.md); explicit hypotheses and negative controls, not a physical approval mechanism |
