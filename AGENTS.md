@@ -20,6 +20,10 @@ This file governs automated and human contributions to the **reference** Univers
 Tests, documentation, optimization preserving exact state traces, optional read-only observables, data-only preparations and explicitly separate candidate variants. Any optimization must show equality on *all* retained state components for declared test regimes.
 
 ## Verification
+
+First complete the dependency and evidence setup in
+[full research validation](docs/QUICKSTART.md#full-research-validation).
+The core itself uses only the standard library; the full research suite does not.
 ```bash
 python -m unittest discover -s tests -v
 python -m universe24 --config examples/impulse.json --audit

@@ -8,7 +8,7 @@ Read [AGENTS.md](AGENTS.md), [the mathematical model](docs/MODEL.md), [architect
 
 ## Non-negotiable default-model constraints
 
-- Exactly **one board** per site; exactly **48 channels** per board.
+- Exactly **one board**, with **48 channels** at each spatial site.
 - A periodic cube of side `L >= 3`; every channel has exactly **six spatial inputs**, no on-site coupling.
 - The 48 labels and fixed coupling matrices are derived from `2O`.
 - All state-changing dynamics use `(ell,r')=divmod(2*u+r,6), a'=b, b'=ell-a`, with no per-experiment law.
@@ -22,17 +22,17 @@ A scientifically interesting but incompatible rule is welcome only as an **expli
 
 1. State which mathematical or implementation claim is being tested.
 2. Provide exact input configuration(s), baseline and controls, including failure cases.
-3. Run `python -m unittest discover -s tests -v`.
+3. Follow [full research validation](docs/QUICKSTART.md#full-research-validation), including pinned dependencies and evidence restoration, before running the full tests.
 4. Test exact one-step and multi-step inverse, all six spatial ports, signed coupling reciprocity, arithmetic with negative/large integers, and observer independence where applicable.
 5. Explain whether a change affects the **law**, **static coupling**, **seed**, **external observation**, or **only documentation**.
 6. Update the appropriate docs and report known scientific limitations. All project documentation must be written in English.
 
 ## What belongs where?
 
-- New seeds or experimental comparisons: `examples/` and documentation.
-- External statistics, plots and additional click readouts: `observation/`, strictly read-only.
+- Small engine seed examples: `examples/`; reusable initial preparations and study producers: `research/` (see [the research index](research/README.md)).
+- External statistics, plots and additional click readouts: `universe24/observation/` or research observers, strictly read-only.
 - Generic mathematical proof/audit tests: `tests/`.
-- Node updates: only `core/rule3.py` for the **reference** law; any proposed new law must be a separately named variant.
+- Node updates: only `universe24/core/rule3.py` for the **reference** law; any proposed new law must be a separately named variant.
 
 ## Reporting evidence
 

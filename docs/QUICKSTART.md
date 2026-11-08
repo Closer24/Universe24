@@ -1,12 +1,13 @@
 # Quickstart and command reference
 
-This tutorial uses **Python 3.11+**, the standard library, and the source tree as-is. Commands below run from the repository root.
+The engine examples use **Python 3.11+** and the standard library. Commands run
+from the repository root. Full research validation has additional setup below.
 
 ## 1. Verify the installation
 
 ```bash
 python --version
-python -m unittest discover -s tests -v
+python -m universe24 --help
 ```
 
 An optional editable install is supported by `pyproject.toml`, but is **not required** for `python -m universe24`.
@@ -69,6 +70,30 @@ python -m universe24 --config examples/clock.json --steps 30 --audit
 | `--events FILE` | Create a **new** read-only arithmetic event log in JSONL |
 | `--output FILE` | Create a **new** full-state checkpoint in JSON |
 | `-h`, `--help` | Show built-in help |
+
+## Full research validation
+
+Use a Git checkout with history: provenance tests inspect recorded commits.
+The engine has no third-party runtime dependencies, but research tests need the
+pinned arithmetic and solver packages. Run this setup before the full suite:
+
+```sh
+python -m pip install -r research/clock_selection/requirements.txt -r research/clock_selection/requirements-solver.txt
+python -m research.experiments.materialize_evidence
+python -m research.clock_selection.archive materialize
+python -m research.invariant_families_v1.verify_evidence
+python -m unittest discover -s tests -v
+python -m universe24 --config examples/impulse.json --audit
+python -m universe24 --config examples/signed_impulse.json --audit
+```
+
+The materializers restore only declared, checksum-locked research evidence.
+They do not overwrite live code or differing existing files. Restoration uses
+local archive parts and requires disk space for complete recordings. The
+[invariant-family evidence](../research/invariant_families_v1/README.md) is
+already tracked directly. The [reliability bundle](RELIABILITY.md) describes
+versioned test artifacts and independent reruns; its historical acceptance
+counts describe those earlier runs, not the current suite size.
 
 ## Troubleshooting
 

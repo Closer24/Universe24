@@ -20,29 +20,34 @@ The user-facing command line is a generic executor and data-loader. It must not 
 | `observation/diagnostics.py` | Verify inverse and exact algebraic balance | **Never** |
 | `__main__.py` | CLI: load, evolve, optionally observe and save | Only via engine |
 
+## Engine, components and research
+
+The installed Python package contains only `universe24/`. Its runtime imports
+no `research` module. The one forward law is
+[`universe24/core/rule3.py`](../universe24/core/rule3.py), orchestrated by
+[`universe24/core/engine.py`](../universe24/core/engine.py).
+
+`research/components/` and the documented clock recipes create initial data;
+`research/experiments/` records runs; `research/presenter/` reads those records.
+Independent reference implementations are validation oracles, not alternate
+stages of forward evolution. Older study producers remain where later audits
+and hash-locked evidence reference them. The [research index](../research/README.md)
+separates reusable interfaces, studies, references and preserved history.
+
 ## State flow
 
-```text
-JSON config (L, fixed signs, seed, steps)
-  |
-  v
-Validated immutable initial State -- group(2O) --> fixed Coupling
-  |                                              |
-  +------------------- Engine.advance -----------+
-                         |
-             six signed spatial inputs
-                         |
-                     Rule3.forward
-                         |
-                   next full State
-                         |
-                +--------+----------+
-                |                   |
-                v                   v
-          passive observer     inverse/balance audit
-                |                   |
-          JSONL output        diagnostics only
+```mermaid
+flowchart TD
+    A["Initial data and fixed coupling"] --> B["Complete old state"]
+    B --> C["Engine: six signed inputs"]
+    C --> D["Rule3: quotient and remainder"]
+    D --> E["Complete next state"]
+    E --> B
+    E --> F["Read-only observations and replay"]
 ```
+
+Preparation runs once before this loop. Inverse checks are a separate audit;
+neither observations nor the Presenter have an edge back into evolution.
 
 `Engine.advance` computes inputs from the complete old snapshot and returns a **new** `State`; all per-channel arithmetic takes place in `rule3.forward`. `Engine.rewind` uses the mathematical inverse for research and checkpoints, **not** as a second forward physical process.
 
