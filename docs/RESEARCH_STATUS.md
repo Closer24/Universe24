@@ -15,10 +15,19 @@ The algebraic law and the static coupling definition are reproducible. Passing t
 | Finite cube covariance | Group-derived 24 proper spatial rotations with 48 double-cover channel labels |
 | Three remainder classes | Algebraic `C0,C1,C2` transition classification, passive readout |
 | Local balance identity | Exact arithmetic residual of Rule3 |
-| Signed account `Q` | Conserved in the positive reference case on the periodic graph; may change with frustrated signed coupling |
+| Signed account `Q` | Conserved in the positive reference case on the periodic graph; generally changes for other sign choices |
 | Clock/packet preparations | Candidate examples and research testbeds, not identified physical particles |
+| Restricted clock-rate coincidence | Two specified all-48-channel probes have local periods 4 without and 5 with the same neighboring source, with a period-4 reference; not universal gravitational redshift |
+| Collective activity | Exact quadratic identity and balance update; no derived clock-slowing function of the activity tensor alone |
+| Autonomous finite-guide link | Prepared source, propagated phase front, endpoint reflection and cyclic local records; not permanent memory or physical time |
 
 These results should not be conflated with claims from other prototype graphs or prior experimental variants. In particular, a previous prototype with two on-site and four spatial contacts **is not** the topology implemented here.
+
+The [clock and gravity status](GRAVITY_STATUS.md) links the exact proofs,
+scoped computational results and remaining metric/Einstein tests. In particular,
+the restricted `4/5` coincidence is positive evidence about two preparations;
+other clocks respond differently, so a common physical proper-time law remains
+unproved.
 
 ## Not yet demonstrated
 

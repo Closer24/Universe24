@@ -11,6 +11,8 @@ that engine; observers and the Presenter read determined states.
 | Place compatible components on one board | [Component API](../docs/COMPONENTS.md), `components/` |
 | Use local period-five/six clocks, packets and a scoped register | [API and algebra](../docs/LOCAL_BUILDING_BLOCKS.md), [compact replay](component_families/README.md) |
 | Prepare clocks and signal-mediated assemblies | [Clock interfaces and limits](../docs/CLOCK_SELECTION.md), `clock_selection/quiet_clock.py`, `staged_blocks/` |
+| Compare clock-rate and gravity claims | [Current evidence and limits](../docs/GRAVITY_STATUS.md) |
+| Build an autonomous guided source/record/echo | [Finite-guide clock link](clock_link_v1/README.md) |
 | Run a JSON experiment and export recordings | [Detailed walkthrough](../docs/COMPONENT_WALKTHROUGH.md), `experiments/run.py` |
 | Replay clocks and gears | [Presenter](../docs/PRESENTER.md), `presenter/` |
 | Verify mathematics independently | [Independent reference](reference/README.md), `reference/` |
@@ -28,6 +30,9 @@ assignments. Functional composition requires a new controlled native run.
 | Local family components | [31-case replay](component_families/README.md); exact prepared clocks, guided scattering, source-overlap single read and failed two-read composition |
 | Clock-mediated signals | [Clock research](clock_selection/README.md); verified phase responses alongside failed unique-record and formation targets |
 | Effective scalar families | [Invariant families](invariant_families_v1/README.md); exact global encodings under `num=den=1`, 48 native cases and four nonlinear-overlap controls |
+| Clock-rate prerequisites | [All-48-channel audit](einstein_clock_bricks_v1/README.md); restricted two-probe `4/5` recurrence-rate coincidence, arithmetic continuity and mean-field limits; no gravity derivation |
+| Collective activity and clocks | [Exact identities and independent replay](collective_clock_geometry/README.md); quadratic activity, counterexamples to an activity-only update and scoped verification of the rate result |
+| Autonomous clock link | [Finite-guide construction](clock_link_v1/README.md); local launch, endpoint return and cyclic records under unchanged Rule3 |
 | Light-approval hypothesis | [Study record](light_approval/README.md); explicit hypotheses and negative controls, not a physical approval mechanism |
 | Message mechanism | [Study record](message_mechanism/README.md); preparations, interfaces and limits |
 | Algorithm comparisons | [Analogue review](algorithm_analogues/README.md); conceptual comparisons, not imported dynamics |

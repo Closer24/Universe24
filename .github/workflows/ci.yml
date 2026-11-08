@@ -18,6 +18,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: ${{ matrix.python }}
@@ -37,6 +38,11 @@ jobs:
           python -m research.reproducibility.run --compare runs/first runs/second --compare-experiments
       - name: Reusable family component evidence
         run: python -m research.component_families.verify --output runs/component-families
+      - name: Clock-rate prerequisites and independent reconstructions
+        run: |
+          python research/einstein_clock_bricks_v1/audit.py > runs/einstein-clock-prerequisites.json
+          python -m research.collective_clock_geometry.audit --output runs/collective-clock-geometry
+          python -m research.clock_link_v1.audit --output runs/clock-link.json
       - name: Evidence and failures
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2

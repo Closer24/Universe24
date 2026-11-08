@@ -22,6 +22,13 @@ these particular behavioral contracts have not been generalized to them.
 | `RemainderTarget()` | A complete twelve-site resting neighborhood with four special channels | Passive hardware; the downstream arrangement below scatters, then resets |
 | `RegisterWriter()` + `SourceOverlapRegister()` | A packet with four explicit sockets filled by resting r0 hardware | Prepared source-overlap halo clearing, followed by a separately prepared read probe |
 
+A separate [finite-guide clock-link package](../research/clock_link_v1/README.md)
+adds data-only source, resting corridor and endpoint preparations. One local
+source activates the guide, the endpoint returns a phase front, and the source
+and endpoint retain cyclic parity records. This has its own declared domain
+and fresh full-state audit; it does not repair the failed repeated-read register
+below or establish arbitrary interaction between assembled links.
+
 `phase`, `core_remainder`, `halo_parity`, presence flags and coordinates require
 exact Python types. `active=False` on clocks removes counters **and retains the
 prepared remainders**; it is a counter-mask control. `present=False` on the new

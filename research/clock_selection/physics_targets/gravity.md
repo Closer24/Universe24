@@ -5,6 +5,12 @@ result for Universe24. Sources were checked on 2026-11-08. No new gravitational
 simulation is claimed in this note. The model remains one board, 48 channels,
 six spatial neighbors, fixed pre-run couplings and unchanged synchronous Rule3.
 
+For subsequent mathematical and computational results, use the
+[current clock and gravity status](../../../docs/GRAVITY_STATUS.md). It includes
+the restricted all-48-channel two-probe `4/5` rate coincidence and the autonomous
+finite-guide echo component. Neither result establishes the physical benchmarks
+in this target sheet.
+
 ## What the physical evidence asks us to reproduce
 
 Gravity is not established by attractive-looking activity or by naming a
@@ -51,8 +57,8 @@ claim that Cassini independently measured every lensing observable.
    site-dependent runtime coupling or selected path would add the phenomenon
    instead of deriving it.
 
-The current prepared-clock result establishes a period-four orbit. The existing
-signal-written phase result changes its phase while retaining its later rate.
+The earlier prepared-clock study established a period-four orbit. Its
+signal-written phase result changed the phase while retaining the later rate.
 A lasting phase offset is not a gravitational frequency shift. A scheduled
 pause/restart supplied by trains is not gravitational time dilation. The
 periodic-return study deliberately uses wraparound; it cannot supply a
