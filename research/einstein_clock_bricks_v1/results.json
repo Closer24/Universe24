@@ -1,0 +1,128 @@
+{
+  "reference_core_commit": "c5a23743d96936190210dd510105ed470d4a0b23",
+  "science_claim": "Exact restricted clock-rate coincidence and mathematical preconditions, NOT Einstein gravity",
+  "two_clock_classes": {
+    "native_cases": 24,
+    "all_48_channels": true,
+    "directions": 6,
+    "probe_seeds": [
+      [
+        -1,
+        -1,
+        0
+      ],
+      [
+        0,
+        -1,
+        4
+      ]
+    ],
+    "source_seed": [
+      -1,
+      -1,
+      0
+    ],
+    "baseline_period": 4,
+    "sourced_period": 5,
+    "reference_period": 4,
+    "observed_period_ratio": "4/5",
+    "full_state_step_and_inverse_checks": 960,
+    "not_universal_for_all_clocks": true
+  },
+  "local_current": {
+    "exact_site_continuity_checks": 364,
+    "signed_scope": "+++ only",
+    "physical_energy_identified": false
+  },
+  "central_and_J_symmetry": {
+    "sign_choices": 8,
+    "center_index": 14,
+    "port_covariance_checks": 2304,
+    "complete_trajectory_symmetry_checks": 96,
+    "fixed_balanced_remainder_vacuum": true
+  },
+  "phase_balanced_response": {
+    "all48_positive_negative_full_state_partner": true,
+    "plus_and_minus_tooth_tensors": "Xi+ = Xi- = I/2",
+    "standard_vacuum_nearest_step1": {
+      "0-1": 0,
+      "0+1": 0,
+      "1-1": 0,
+      "1+1": 0,
+      "2-1": 0,
+      "2+1": 0
+    },
+    "balanced_vacuum_nearest_step1": {
+      "0-1": 24,
+      "0+1": 24,
+      "1-1": 24,
+      "1+1": 24,
+      "2-1": 24,
+      "2+1": 24
+    },
+    "balanced_vacuum_nearest_step3": {
+      "0-1": 7,
+      "0+1": 10,
+      "1-1": 8,
+      "1+1": 4,
+      "2-1": 10,
+      "2+1": 7
+    },
+    "isotropic_beyond_first_step": false
+  },
+  "signed_graph_kernel": {
+    "kernel_classes_finite": {
+      "3": [
+        "+++",
+        "+--"
+      ],
+      "4": [
+        "+++",
+        "+--",
+        "-++",
+        "---"
+      ],
+      "5": [
+        "+++",
+        "+--"
+      ],
+      "6": [
+        "+++",
+        "+--",
+        "-++",
+        "---"
+      ]
+    },
+    "tested_L": [
+      3,
+      4,
+      5,
+      6
+    ],
+    "signed_nonzero_fixed_state_replays": 24,
+    "full_infinite_L_classification_claimed": false
+  },
+  "periodic_mean": {
+    "cases": [
+      {
+        "number_of_prepared_sites": 1,
+        "period": 4,
+        "time_average_b_exactly_zero_all_addresses": true
+      },
+      {
+        "number_of_prepared_sites": 2,
+        "period": 5,
+        "time_average_b_exactly_zero_all_addresses": true
+      },
+      {
+        "number_of_prepared_sites": 1,
+        "period": 4,
+        "time_average_b_exactly_zero_all_addresses": true
+      }
+    ],
+    "proof": "p(t+1)-p(t)=-L_sigma b(t); sum a full return period"
+  },
+  "gravity_derived": false,
+  "physical_energy_stress_identified": false,
+  "universal_equivalence_principle_verified": false
+}
