@@ -16,6 +16,8 @@ This repository provides the **MIT-licensed reference engine for one specific ma
 
 The separately audited [four-control overlap](research/invariant_families_v1/overlap_results.md) verifies the predicted nonlinear carry between two initially overlapping patterns. [Choose from all nine new examples](research/invariant_families_v1/evidence/presenter_combined_v1/index.html), or open the [complete 17-study inventory](research/invariant_families_v1/evidence/collection_v1/index.html). The prior archives and their 890 recordings are unchanged.
 
+The exact global sectors are [invariant backward as well as forward](research/clock_selection/invariant_sector_limit.md), so they cannot first be entered from an outside full state. This limit concerns complete global encodings; it does not exclude localized or approximate formation with information retained elsewhere.
+
 ## The research question — beyond this code
 
 The premise being tested is that **space, time, waves, matter and observed measurement events might be emergent behaviors of exact integer states**, rather than separately programmed kinds of objects. Each elementary node would obey the **same local law**; different initial patterns and interactions would produce different large-scale phenomena.

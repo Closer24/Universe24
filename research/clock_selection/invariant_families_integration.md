@@ -186,9 +186,21 @@ Complexity preference and evolution require additional, separately declared
 tests: internal variation, retained distinctions, differential propagation
 under one read-only metric, and repeated renewal without external selection.
 More modes, a longer period, more C events or larger counters are not that
-metric. Natural generation would require recurrence across a preregistered
-ensemble of simple initial states; success in an exact manufactured eigenpattern
-is a different result. A physical mass interpretation additionally requires
+metric. Natural generation of local or approximate structures would require
+recurrence across a preregistered ensemble of simple initial states; success in
+an exact manufactured eigenpattern is a different result.
+
+There is a strict limit on exact global entry. For a fixed ternary pattern and
+fixed zero-pattern remainder background beta, let M_beta be the complete
+encoded sector. Its reduced scalar map is bijective, so
+`W(M_beta)=M_beta=W_inverse(M_beta)`. A full-board state outside that sector
+cannot enter it in finitely many native updates. The union over the permitted
+zero-pattern remainder backgrounds is likewise invariant in both directions.
+This excludes exact global capture from outside that union, not formation of
+local, approximate or coarse-grained structures while information remains in
+the exterior. Those are the appropriate natural-formation targets.
+
+A physical mass interpretation additionally requires
 the dispersion, localization, motion and calibrated click relations described
 in [the mass-family tests](physics_targets/mass_families.md).
 

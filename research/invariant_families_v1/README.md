@@ -36,6 +36,12 @@ The effective ratio describes an exact recurrence correspondence, not one
 fitted frequency. In particular, the ratio-`2/3` cases have different periods
 for different initial counters and remainders.
 
+The [M11 scope corollary](../clock_selection/invariant_sector_limit.md) adds a
+precise limit: the reduced scalar map is bijective, so each exact full-board
+encoded sector is invariant backward as well as forward. An outside full state
+cannot first enter it in finite time. This does not exclude localized,
+approximate or coarse pattern formation with information retained elsewhere.
+
 These are global invariant preparations on periodic cubes. They are not
 localized components, photons, mass, spontaneous pattern formation or a proof
 that arbitrary overlapping preparations add linearly. A zero total input may

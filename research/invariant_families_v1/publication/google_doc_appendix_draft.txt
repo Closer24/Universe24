@@ -10,6 +10,8 @@ Independent verification. Forty-eight runs cover four families, two counter seed
 
 Interaction and its limit. Overlapping spatial and internal λ4 patterns with identical initial remainder 2 produces the predicted first-step counter-addition defect: +1 at 128 addresses and −1 at 128, with compensating remainder contrasts. This is native nonlinear interaction. A doubled single-mode amplitude can produce the same local carry, so the result is not complexity preference. Conversely, exact planar, λ3 and λ6 additions with input divisible by three leave an underlying trajectory unchanged after subtracting the added counters; a passed planar pulse cannot leave a residual local record through that mechanism. Transparent additions may nevertheless alter raw C events through the quotient and changed-triple guards. Previously verified guided-packet phase writing is a distinct signal construction.
 
+Exact global sectors have a further limit: their reduced map is bijective, so each is invariant both forward and backward. A full-board state outside such a sector cannot enter it after finitely many updates. Formation targets must therefore concern local, approximate or coarse-grained structures, with distinguishing information retained elsewhere, rather than exact entry of the complete board.
+
 The earlier two-clock composition still has 0/8 strong terminal records: joint-input receivers alias null/probe-only receivers. The next gates are localized moving preparations and a distinct retained native record under complete controls. Mass, autonomous selection and quantum measurement remain unproved.
 
 Repository review and evidence: https://github.com/Closer24/Universe24/pull/11

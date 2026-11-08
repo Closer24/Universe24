@@ -165,6 +165,11 @@ verifies the predicted first-step nonlinear carry between two global initial
 patterns; it does not establish a localized encounter or retained detector
 record. All 147 saved states use the unchanged Presenter.
 
+A [corollary of the exact encoding](../research/clock_selection/invariant_sector_limit.md)
+limits formation claims: its full-board sectors are invariant in both time
+directions and cannot be entered from an outside full state. Localized,
+approximate or coarse patterns with information elsewhere are not excluded.
+
 The earlier
 [mathematical proposal](../research/clock_selection/fixed_ratio_candidate.md)
 defines how positive rational coefficients could be fixed at each site/channel
