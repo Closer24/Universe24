@@ -1,5 +1,12 @@
 # Clockwork replay and signal-started building blocks
 
+This is a **historical study report**, including its original failed prediction
+and rendering checks. For current reusable preparations, use the
+[local building-block guide](LOCAL_BUILDING_BLOCKS.md) and
+[component API](COMPONENTS.md); use the [generic Presenter](PRESENTER.md) for new
+recordings. The protocols, results and next-step discussion below describe this
+earlier study, not the current component-library acceptance scope.
+
 The prepared Rule3 guide starts two local counter clocks and writes finite
 internal records in a single complete trajectory. An offline replay renders
 those exact counters as clock hands and the retained remainders as six-position

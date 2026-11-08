@@ -13,7 +13,9 @@ from pathlib import Path
 import time
 
 from research.components import (BoardSpec, TensorSpec, Patch, Socket, SignalSource,
-                                 GuideSegment, Receiver, PairedArm, GuidedPacketSource, place, finalize, plain)
+                                 GuideSegment, Receiver, PairedArm, GuidedPacketSource, place, finalize, plain,
+                                 LocalizedSixClock, CompactFiveClock, CooperativeClockPair,
+                                 EvenPacketSource, RemainderTarget, RegisterWriter, SourceOverlapRegister)
 from research.presenter.export import (capture, bundle, write_bundle, decimal_string,
                                        parse_decimal, _portable_state)
 from research.presenter.build import build, _new_file
@@ -24,7 +26,11 @@ ROOT = Path(__file__).resolve().parents[2]
 FORMAT = 'universe24-assembly-experiment-v1'
 STUDY = 'universe24-component-study-v1'
 RECIPES = {'SignalSource': SignalSource, 'GuideSegment': GuideSegment,
-           'Receiver': Receiver, 'PairedArm': PairedArm, 'GuidedPacketSource': GuidedPacketSource}
+           'Receiver': Receiver, 'PairedArm': PairedArm, 'GuidedPacketSource': GuidedPacketSource,
+           'LocalizedSixClock': LocalizedSixClock, 'CompactFiveClock': CompactFiveClock,
+           'CooperativeClockPair': CooperativeClockPair, 'EvenPacketSource': EvenPacketSource,
+           'RemainderTarget': RemainderTarget, 'RegisterWriter': RegisterWriter,
+           'SourceOverlapRegister': SourceOverlapRegister}
 
 
 def portable(value):

@@ -67,6 +67,17 @@ See [the component walkthrough](docs/COMPONENT_WALKTHROUGH.md),
 [the assembly API](docs/COMPONENTS.md) and [current clock recipes](docs/CLOCK_SELECTION.md).
 The composer rejects incompatible tensors, backgrounds and overlapping triples.
 
+New [local clock, packet and remainder-register building blocks](docs/LOCAL_BUILDING_BLOCKS.md)
+include period-five dimer/plaquette clocks, a period-six cube, an explicit
+cooperative pair and scoped signal assemblies. Run three blocks on one board:
+
+```sh
+python -m research.experiments.run --spec research/component_families/examples/three_clocks.json --output runs/three-clocks
+```
+
+The [compact replay package](research/component_families/README.md) includes the
+source-overlap single-read controls and the failed two-read composition test.
+
 ## View recorded experiments
 
 ```sh

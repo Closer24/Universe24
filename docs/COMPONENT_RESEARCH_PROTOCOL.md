@@ -1,5 +1,12 @@
 # Component research: prospective acceptance contract
 
+This is the **historical acceptance contract** for the component studies and
+follow-ups reported below. Their criteria and negative outcomes remain part of
+the research record. For current reusable preparations and commands, start with
+the [local building-block guide](LOCAL_BUILDING_BLOCKS.md) and
+[component API](COMPONENTS.md). New scientific studies need their own frozen
+protocols; the earlier results do not automatically validate a new assembly.
+
 This protocol separates a valid software assembly from demonstrated component
 behavior. The frozen machine-readable contract is
 [U24-COMPONENT-CONTRACT-v1](../research/component_studies/protocols/component_contract_v1.json).
