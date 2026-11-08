@@ -1,0 +1,694 @@
+{
+  "report_schema": "universe24-variational-operational-gate-v1",
+  "reference_core_commit": "c5a23743d96936190210dd510105ed470d4a0b23",
+  "pinned_blobs": {
+    "rule3.py": "dd2a7cdd34200aeb73aba64d02f6cccbfb32afe5",
+    "coupling.py": "16d959466bd31bbcf292b6c0e1e3f4f78f748900",
+    "engine.py": "2493378dd0b692491bca78c0250433189c96258d",
+    "group_2o.py": "16c4ae73de6b8208696196bf68517de2bd8548c8",
+    "state.py": "3d706224eef1ec158f78623efa453bc39b0afe30"
+  },
+  "status": "exact finite math + negative Einstein diagnostic; no GR derivation",
+  "canonical": {
+    "coordinate_bijection_large_integers": 5000,
+    "K_prime_at_integer": 601,
+    "positive_semidefinite_K_verified_on": "integer -300..300"
+  },
+  "signed_tests": {
+    "tested_sign_choices": 8,
+    "tested_sizes": [
+      3,
+      4
+    ],
+    "boards": 16,
+    "full_state_channels": 34944,
+    "exact_action_equations_per_channel": 34944,
+    "exact_edge_gradient_tests": 240,
+    "observed_nonconservation_of_naive_H": true,
+    "maximum_naive_H_change": "48873/2",
+    "odd_parity_cells": 4016,
+    "cases": [
+      {
+        "signs": [
+          -1,
+          -1,
+          -1
+        ],
+        "L": 3,
+        "channels": 1296,
+        "V": "9404",
+        "canonical_action_stationarity": true,
+        "inverse": true,
+        "total_H_changed": true
+      },
+      {
+        "signs": [
+          -1,
+          -1,
+          -1
+        ],
+        "L": 4,
+        "channels": 3072,
+        "V": "20563",
+        "canonical_action_stationarity": true,
+        "inverse": true,
+        "total_H_changed": true
+      },
+      {
+        "signs": [
+          -1,
+          -1,
+          1
+        ],
+        "L": 3,
+        "channels": 1296,
+        "V": "9907",
+        "canonical_action_stationarity": true,
+        "inverse": true,
+        "total_H_changed": true
+      },
+      {
+        "signs": [
+          -1,
+          -1,
+          1
+        ],
+        "L": 4,
+        "channels": 3072,
+        "V": "20829",
+        "canonical_action_stationarity": true,
+        "inverse": true,
+        "total_H_changed": true
+      },
+      {
+        "signs": [
+          -1,
+          1,
+          -1
+        ],
+        "L": 3,
+        "channels": 1296,
+        "V": "8722",
+        "canonical_action_stationarity": true,
+        "inverse": true,
+        "total_H_changed": true
+      },
+      {
+        "signs": [
+          -1,
+          1,
+          -1
+        ],
+        "L": 4,
+        "channels": 3072,
+        "V": "21361",
+        "canonical_action_stationarity": true,
+        "inverse": true,
+        "total_H_changed": true
+      },
+      {
+        "signs": [
+          -1,
+          1,
+          1
+        ],
+        "L": 3,
+        "channels": 1296,
+        "V": "9306",
+        "canonical_action_stationarity": true,
+        "inverse": true,
+        "total_H_changed": true
+      },
+      {
+        "signs": [
+          -1,
+          1,
+          1
+        ],
+        "L": 4,
+        "channels": 3072,
+        "V": "21438",
+        "canonical_action_stationarity": true,
+        "inverse": true,
+        "total_H_changed": true
+      },
+      {
+        "signs": [
+          1,
+          -1,
+          -1
+        ],
+        "L": 3,
+        "channels": 1296,
+        "V": "9495",
+        "canonical_action_stationarity": true,
+        "inverse": true,
+        "total_H_changed": true
+      },
+      {
+        "signs": [
+          1,
+          -1,
+          -1
+        ],
+        "L": 4,
+        "channels": 3072,
+        "V": "20643",
+        "canonical_action_stationarity": true,
+        "inverse": true,
+        "total_H_changed": true
+      },
+      {
+        "signs": [
+          1,
+          -1,
+          1
+        ],
+        "L": 3,
+        "channels": 1296,
+        "V": "8243",
+        "canonical_action_stationarity": true,
+        "inverse": true,
+        "total_H_changed": true
+      },
+      {
+        "signs": [
+          1,
+          -1,
+          1
+        ],
+        "L": 4,
+        "channels": 3072,
+        "V": "20098",
+        "canonical_action_stationarity": true,
+        "inverse": true,
+        "total_H_changed": true
+      },
+      {
+        "signs": [
+          1,
+          1,
+          -1
+        ],
+        "L": 3,
+        "channels": 1296,
+        "V": "9239",
+        "canonical_action_stationarity": true,
+        "inverse": true,
+        "total_H_changed": true
+      },
+      {
+        "signs": [
+          1,
+          1,
+          -1
+        ],
+        "L": 4,
+        "channels": 3072,
+        "V": "21063",
+        "canonical_action_stationarity": true,
+        "inverse": true,
+        "total_H_changed": true
+      },
+      {
+        "signs": [
+          1,
+          1,
+          1
+        ],
+        "L": 3,
+        "channels": 1296,
+        "V": "8913",
+        "canonical_action_stationarity": true,
+        "inverse": true,
+        "total_H_changed": true
+      },
+      {
+        "signs": [
+          1,
+          1,
+          1
+        ],
+        "L": 4,
+        "channels": 3072,
+        "V": "21269",
+        "canonical_action_stationarity": true,
+        "inverse": true,
+        "total_H_changed": true
+      }
+    ]
+  },
+  "symplectic": {
+    "finite_symplectic_jacobian_check": "PASS",
+    "test_matrix_size": 8,
+    "L_and_M_are_noncommuting": true
+  },
+  "GR_compatibility": {
+    "GR_static_conformal_null_cone_conditional_theorem": "G00=-2*Lap(lnOmega)-|grad lnOmega|^2; sum_i Gii=4*Lap(lnOmega)+5|grad lnOmega|^2; if all G_ab=0 then grad Omega=0",
+    "rational_jet_checks": 1000,
+    "physical_assumptions": "static, zero shift, isotropic coordinate light cone, conformal Minkowski, Lambda=0, vacuum; not derived from Universe24",
+    "PPN_gate": "if N=1-U/c^2 and photon coordinate speed c_sig/c=1-(1+gamma)U/c^2 then alpha=d ln(c_sig/c)/d ln(N)=1+gamma. GR gamma=1 gives alpha=2; constant c_sig gives alpha=0 and gamma=-1. Requires calibrated photon-like signals and asymptotically Cartesian gauge."
+  },
+  "supplementary_previous_signal_controls": {
+    "source": "new independent local reproduction, does not reuse older two_ended.py",
+    "six_directions_source_on_off_strong_pulse": 12,
+    "amplitude_controls": 4,
+    "cases": [
+      {
+        "direction": 0,
+        "source_on": false,
+        "balanced48_pulse_amplitude": 6,
+        "first_arrivals": {
+          "near": {
+            "full": 3,
+            "b": 3
+          },
+          "far": {
+            "full": 3,
+            "b": 3
+          }
+        },
+        "first_seeded_clock_difference": {
+          "near": 3,
+          "far": 3
+        },
+        "exact_native_inverse_checks": 6,
+        "near_period": 4,
+        "far_period": 4,
+        "initial_full_near_far_nodes_identical": true,
+        "source_and_all48_states": true
+      },
+      {
+        "direction": 0,
+        "source_on": true,
+        "balanced48_pulse_amplitude": 6,
+        "first_arrivals": {
+          "near": {
+            "full": 3,
+            "b": 3
+          },
+          "far": {
+            "full": 3,
+            "b": 3
+          }
+        },
+        "first_seeded_clock_difference": {
+          "near": 3,
+          "far": 3
+        },
+        "exact_native_inverse_checks": 6,
+        "near_period": 5,
+        "far_period": 4,
+        "initial_full_near_far_nodes_identical": true,
+        "source_and_all48_states": true
+      },
+      {
+        "direction": 1,
+        "source_on": false,
+        "balanced48_pulse_amplitude": 6,
+        "first_arrivals": {
+          "near": {
+            "full": 3,
+            "b": 3
+          },
+          "far": {
+            "full": 3,
+            "b": 3
+          }
+        },
+        "first_seeded_clock_difference": {
+          "near": 3,
+          "far": 3
+        },
+        "exact_native_inverse_checks": 6,
+        "near_period": 4,
+        "far_period": 4,
+        "initial_full_near_far_nodes_identical": true,
+        "source_and_all48_states": true
+      },
+      {
+        "direction": 1,
+        "source_on": true,
+        "balanced48_pulse_amplitude": 6,
+        "first_arrivals": {
+          "near": {
+            "full": 3,
+            "b": 3
+          },
+          "far": {
+            "full": 3,
+            "b": 3
+          }
+        },
+        "first_seeded_clock_difference": {
+          "near": 3,
+          "far": 3
+        },
+        "exact_native_inverse_checks": 6,
+        "near_period": 5,
+        "far_period": 4,
+        "initial_full_near_far_nodes_identical": true,
+        "source_and_all48_states": true
+      },
+      {
+        "direction": 2,
+        "source_on": false,
+        "balanced48_pulse_amplitude": 6,
+        "first_arrivals": {
+          "near": {
+            "full": 3,
+            "b": 3
+          },
+          "far": {
+            "full": 3,
+            "b": 3
+          }
+        },
+        "first_seeded_clock_difference": {
+          "near": 3,
+          "far": 3
+        },
+        "exact_native_inverse_checks": 6,
+        "near_period": 4,
+        "far_period": 4,
+        "initial_full_near_far_nodes_identical": true,
+        "source_and_all48_states": true
+      },
+      {
+        "direction": 2,
+        "source_on": true,
+        "balanced48_pulse_amplitude": 6,
+        "first_arrivals": {
+          "near": {
+            "full": 3,
+            "b": 3
+          },
+          "far": {
+            "full": 3,
+            "b": 3
+          }
+        },
+        "first_seeded_clock_difference": {
+          "near": 3,
+          "far": 3
+        },
+        "exact_native_inverse_checks": 6,
+        "near_period": 5,
+        "far_period": 4,
+        "initial_full_near_far_nodes_identical": true,
+        "source_and_all48_states": true
+      },
+      {
+        "direction": 3,
+        "source_on": false,
+        "balanced48_pulse_amplitude": 6,
+        "first_arrivals": {
+          "near": {
+            "full": 3,
+            "b": 3
+          },
+          "far": {
+            "full": 3,
+            "b": 3
+          }
+        },
+        "first_seeded_clock_difference": {
+          "near": 3,
+          "far": 3
+        },
+        "exact_native_inverse_checks": 6,
+        "near_period": 4,
+        "far_period": 4,
+        "initial_full_near_far_nodes_identical": true,
+        "source_and_all48_states": true
+      },
+      {
+        "direction": 3,
+        "source_on": true,
+        "balanced48_pulse_amplitude": 6,
+        "first_arrivals": {
+          "near": {
+            "full": 3,
+            "b": 3
+          },
+          "far": {
+            "full": 3,
+            "b": 3
+          }
+        },
+        "first_seeded_clock_difference": {
+          "near": 3,
+          "far": 3
+        },
+        "exact_native_inverse_checks": 6,
+        "near_period": 5,
+        "far_period": 4,
+        "initial_full_near_far_nodes_identical": true,
+        "source_and_all48_states": true
+      },
+      {
+        "direction": 4,
+        "source_on": false,
+        "balanced48_pulse_amplitude": 6,
+        "first_arrivals": {
+          "near": {
+            "full": 3,
+            "b": 3
+          },
+          "far": {
+            "full": 3,
+            "b": 3
+          }
+        },
+        "first_seeded_clock_difference": {
+          "near": 3,
+          "far": 3
+        },
+        "exact_native_inverse_checks": 6,
+        "near_period": 4,
+        "far_period": 4,
+        "initial_full_near_far_nodes_identical": true,
+        "source_and_all48_states": true
+      },
+      {
+        "direction": 4,
+        "source_on": true,
+        "balanced48_pulse_amplitude": 6,
+        "first_arrivals": {
+          "near": {
+            "full": 3,
+            "b": 3
+          },
+          "far": {
+            "full": 3,
+            "b": 3
+          }
+        },
+        "first_seeded_clock_difference": {
+          "near": 3,
+          "far": 3
+        },
+        "exact_native_inverse_checks": 6,
+        "near_period": 5,
+        "far_period": 4,
+        "initial_full_near_far_nodes_identical": true,
+        "source_and_all48_states": true
+      },
+      {
+        "direction": 5,
+        "source_on": false,
+        "balanced48_pulse_amplitude": 6,
+        "first_arrivals": {
+          "near": {
+            "full": 3,
+            "b": 3
+          },
+          "far": {
+            "full": 3,
+            "b": 3
+          }
+        },
+        "first_seeded_clock_difference": {
+          "near": 3,
+          "far": 3
+        },
+        "exact_native_inverse_checks": 6,
+        "near_period": 4,
+        "far_period": 4,
+        "initial_full_near_far_nodes_identical": true,
+        "source_and_all48_states": true
+      },
+      {
+        "direction": 5,
+        "source_on": true,
+        "balanced48_pulse_amplitude": 6,
+        "first_arrivals": {
+          "near": {
+            "full": 3,
+            "b": 3
+          },
+          "far": {
+            "full": 3,
+            "b": 3
+          }
+        },
+        "first_seeded_clock_difference": {
+          "near": 3,
+          "far": 3
+        },
+        "exact_native_inverse_checks": 6,
+        "near_period": 5,
+        "far_period": 4,
+        "initial_full_near_far_nodes_identical": true,
+        "source_and_all48_states": true
+      },
+      {
+        "direction": 0,
+        "source_on": true,
+        "balanced48_pulse_amplitude": 1,
+        "first_arrivals": {
+          "near": {
+            "full": null,
+            "b": null
+          },
+          "far": {
+            "full": null,
+            "b": null
+          }
+        },
+        "first_seeded_clock_difference": {
+          "near": null,
+          "far": null
+        },
+        "exact_native_inverse_checks": 6,
+        "near_period": 5,
+        "far_period": 4,
+        "initial_full_near_far_nodes_identical": true,
+        "source_and_all48_states": true
+      },
+      {
+        "direction": 0,
+        "source_on": true,
+        "balanced48_pulse_amplitude": 3,
+        "first_arrivals": {
+          "near": {
+            "full": 3,
+            "b": 3
+          },
+          "far": {
+            "full": 4,
+            "b": 8
+          }
+        },
+        "first_seeded_clock_difference": {
+          "near": 3,
+          "far": 4
+        },
+        "exact_native_inverse_checks": 6,
+        "near_period": 5,
+        "far_period": 4,
+        "initial_full_near_far_nodes_identical": true,
+        "source_and_all48_states": true
+      },
+      {
+        "direction": 0,
+        "source_on": true,
+        "balanced48_pulse_amplitude": -3,
+        "first_arrivals": {
+          "near": {
+            "full": 5,
+            "b": 11
+          },
+          "far": {
+            "full": 4,
+            "b": 6
+          }
+        },
+        "first_seeded_clock_difference": {
+          "near": 5,
+          "far": 4
+        },
+        "exact_native_inverse_checks": 6,
+        "near_period": 5,
+        "far_period": 4,
+        "initial_full_near_far_nodes_identical": true,
+        "source_and_all48_states": true
+      },
+      {
+        "direction": 0,
+        "source_on": true,
+        "balanced48_pulse_amplitude": 6,
+        "first_arrivals": {
+          "near": {
+            "full": 3,
+            "b": 3
+          },
+          "far": {
+            "full": 3,
+            "b": 3
+          }
+        },
+        "first_seeded_clock_difference": {
+          "near": 3,
+          "far": 3
+        },
+        "exact_native_inverse_checks": 6,
+        "near_period": 5,
+        "far_period": 4,
+        "initial_full_near_far_nodes_identical": true,
+        "source_and_all48_states": true
+      }
+    ],
+    "first_arrival_amplitude_summary": {
+      "1": {
+        "near": {
+          "full": null,
+          "b": null
+        },
+        "far": {
+          "full": null,
+          "b": null
+        }
+      },
+      "3": {
+        "near": {
+          "full": 3,
+          "b": 3
+        },
+        "far": {
+          "full": 4,
+          "b": 8
+        }
+      },
+      "-3": {
+        "near": {
+          "full": 5,
+          "b": 11
+        },
+        "far": {
+          "full": 4,
+          "b": 6
+        }
+      },
+      "6": {
+        "near": {
+          "full": 3,
+          "b": 3
+        },
+        "far": {
+          "full": 3,
+          "b": 3
+        }
+      }
+    },
+    "scope": "perturbation support not physical photon speed; seeded-clock changed is not a stable proper time clock"
+  },
+  "limitations": [
+    "The smooth canonical generating function is an auxiliary extension of the integer map; its real-valued nearby trajectories are not asserted physical.",
+    "Kinetic plus potential H is not conserved by the discrete kick-drift map; no physical energy or T_mu_nu has been identified.",
+    "A GR-facing no-go for the static conformal ansatz does not prove that Universe24 realizes such a metric.",
+    "The previous 4/5 rate ratio is for selected strongly interacting oscillator preparations only.",
+    "Pulse earliest support is not an independently calibrated photon velocity; varying amplitude changes arrival detection.",
+    "No vacuum Einstein metric or long-range source field has been derived."
+  ]
+}

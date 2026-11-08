@@ -20,6 +20,9 @@ six spatial inputs, fixed pre-run coupling and the same integer Rule3.
 | Local arithmetic continuity | The positive coupling has an exact local storage/current identity for the existing arithmetic account `Q`; it is not established energy or stress-energy. |
 | Collective activity identity | The sum of the activity tensor's traces is a quadratic coupling functional whose gradient gives the exact `p` increment. Its value alone does not determine the next state or a clock rate. |
 | Autonomous finite-guide link | A prepared local source launches a phase front, the endpoint records and returns it, and the source retains return parity. Records are cyclic; this is not an accumulated elapsed-time counter. |
+| Exact variational Rule3 | The full-48 chart `(b,p,epsilon)` has a nearest-neighbor discrete generating action for every signed tensor. Its auxiliary symplectic embedding is not physical spacetime or conserved energy. |
+| Newtonian spatial operator | The 48-channel-uniform `+++` sector yields the 3D scalar Laplacian with a `1/(4*pi*r)` Green tail, but no self-sustained mass source or force has been derived. |
+| Einstein clock-signal gate | A nonconstant static conformal lapse with unchanged *physical* coordinate null cones cannot be a vacuum Einstein solution at Lambda=0. Present pulse fronts are not calibrated photons, so no PPN gamma is extracted. |
 
 The first four results are documented in the existing
 [all-48-channel prerequisites](../research/einstein_clock_bricks_v1/README.md).
@@ -128,3 +131,25 @@ fresh checks; historical local run counts are not presented as recovered data.
 Use each linked package's command and read its declared preparation domain,
 source hashes, controls, complete-state inverse checks and limitations. None
 of these packages modifies the core, coupling or arithmetic C classifier.
+
+## Variational action, Newtonian kernel and Einstein consistency
+
+The [new all-channel variational/Einstein gate](../research/variational_gravity_gate_v1/README.md) is a **mathematical bridge and falsification framework, not an Einstein gravity solution**. It extends the existing exact `p`/strain identity (above; no change to Rule3) by a phase-space action and a separately checked Einstein-vacuum metric constraint.
+
+For each complete channel, the invertible chart is `(b,p,epsilon)`, `p=3(b-a)+floor(r/2)-1`, `epsilon=r mod 2`; `p'=p-L_sigma b`, `b'=b+floor((p'+1)/3)`, `epsilon'=epsilon`. Let `V(b)=b^T L_sigma b/2`. Choose a differentiable real interpolation `K` with `K'(m)=floor((m+1)/3)` at integer `m` (the linked audit supplies an explicit monotone interpolation). Then the *auxiliary* nearest-neighbor discrete action
+
+```text
+S = sum_n [ p_(n+1) · (b_(n+1)-b_n)
+            - sum_channels K(p_(n+1))
+            - V(b_n) ]
+```
+
+has stationary equations exactly equal to native Rule3 on all integer states, with the original remainder reconstructed from `(p,epsilon)`. It gives a canonical/symplectic real-valued embedding, **not a claim that the physical cellular automaton is continuous**. The naive `H=V+sum K` is *not* conserved by the finite update; neither it nor the earlier arithmetic account `Q` is proved to be physical stress-energy.
+
+For `+++`, the channel-uniform scalar sector is preserved exactly and `(L_+ b)_(x,g)=6 B_x-sum_(d=±x,±y,±z)B_(x+d)` for **every one of the 48 channels**. Its 3D Green kernel has leading static far-field `G(r)=1/(4*pi*r)+O(r^-3)`. On a finite periodic board `L_scalar G_L=delta_0-1/L^3`; the kernel is an **inverse of a spatial operator**, not a demonstrated self-generated source, acceleration, or gravity. The exact orbit identity `L_sigma mean_T(b)=-(p_T-p_0)/T` shows why a complete periodic trajectory cannot create a nonuniform static mean-`b` potential in the connected positive case. A self-consistent source with independently measured physical mass remains missing.
+
+In a stationary, zero-shift *physical* ansatz `ds²=-N²c²dt²+H² dx_i dx_i`, physical null signals would obey `v_null/c=N/H`. If they had position-independent isotropic coordinate speed `c`, then `H=N`, `g_mu_nu=N² eta_mu_nu`. With `omega=ln N`, exact four-dimensional curvature gives `G_00=-2 Delta omega-|grad omega|²` and `sum_i G_ii=4 Delta omega+5|grad omega|²`, hence `sum_i G_ii+2G_00=3|grad omega|²`. An exterior **vacuum** Einstein solution with `Lambda=0` therefore requires `grad N=0` under this restricted ansatz. This does **not** imply that equal first-arrival update indices from current Universe24 pulses establish that ansatz; amplitude controls show they are not calibrated photon speeds.
+
+In weak-field isotropic PPN coordinates, `N≈1-U/c²` and `v_null/c≈1-(1+gamma)U/c²`. GR requires `gamma=1` and thus the log-slope `d ln(v_null/c)/d ln(N)≈2` for a calibrated signal family; an unchanged physical coordinate null speed would instead imply `gamma=-1`. These are **prospective model-discrimination tests**, not fitted model results. The specified source perturbs two prepared clock types by the same ratio `4/5`, but its influence is confined and seeded midpoint pulse arrival depends on amplitude/sign; no long-range mass profile, universal clock or physical null cone is established.
+
+**Reproduce:** `python -m research.variational_gravity_gate_v1.audit`, `python -m research.variational_gravity_gate_v1.signal_gate`; optional NumPy `python -m research.variational_gravity_gate_v1.newtonian_kernel`, optional SymPy `python -m research.variational_gravity_gate_v1.check_einstein_symbolic`, and `python -m unittest discover -s tests -p test_variational_gravity_gate.py -v`. The pinned five unmodified core blobs originate from `c5a23743`; local clean-tree checks passed seven regressions. Detailed observations, serialized receipts and limitations are in the linked research package. Neither the core nor the Presenter nor the observation classifier is altered.
