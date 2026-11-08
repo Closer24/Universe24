@@ -2,6 +2,13 @@
 
 Status: mathematical proposal only. No variant engine, preparation, recording or
 Presenter support has been implemented. No baseline source or experiment changes.
+
+Selection decision, 2026-11-08: this alternative is **unselected**. The project
+continues with `num=den=1` in every channel. Effective ratios must be derived
+from baseline patterns; no per-channel coefficient field is authorized for
+implementation. The specification below is preserved as a mathematical
+comparison, not as the next implementation step.
+
 The current `universe24/core/rule3.py` exposes `forward(old, neighbor_sum)` and
 hardcodes `divmod(2*neighbor_sum+old.r,6)`. The independent reference implements
 the same arithmetic. Neither has a general num/den parameter. The proposal below

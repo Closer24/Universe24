@@ -1,0 +1,100 @@
+{
+  "source_worktree": "/workspace/scratch/1966445260ce/Universe24-clock-selection",
+  "files": [
+    {
+      "path": "research/invariant_families_v1/reference.py",
+      "bytes": 2818,
+      "sha256": "da1faeb5847f767487470b6060050668a2a8160192871a0cb4715ec4511b6473"
+    },
+    {
+      "path": "research/invariant_families_v1/preflight.py",
+      "bytes": 4029,
+      "sha256": "50cdcb4b85ab6e5da2033751c7da04e56f542cc37efcad948cf10b96e12b01d3"
+    },
+    {
+      "path": "research/invariant_families_v1/audit.py",
+      "bytes": 7256,
+      "sha256": "b54ba7b350b3414c34f35d8b6fe8eeacb286c71aea2bc6981c9b4197958feeb1"
+    },
+    {
+      "path": "research/invariant_families_v1/independent_math_review.md",
+      "bytes": 6635,
+      "sha256": "3ff6801c84d71d5d7e975e8c1541eba0b17455e116b42c42d3b1c4a4de56de9c"
+    },
+    {
+      "path": "research/invariant_families_v1/evidence/independent_preflight.json",
+      "bytes": 91111,
+      "sha256": "9d84b61227419f8b8244410e45ffa65cf4ceeeeaeba0dd2fbf6f60f807269640"
+    },
+    {
+      "path": "research/invariant_families_v1/evidence/independent_preflight_current_note.json",
+      "bytes": 91111,
+      "sha256": "5d2d899e24686a1e80be9988f24ed5a7ab3181235e742a0227c8f11311ef8963"
+    },
+    {
+      "path": "research/invariant_families_v1/evidence/independent_audit.json",
+      "bytes": 147170,
+      "sha256": "49e1f3702980c7c6c303aa3b669f6080ff1842da28581e1613563191c31b43b7"
+    },
+    {
+      "path": "research/invariant_families_v1/evidence/independent_source_retention.json",
+      "bytes": 2749,
+      "sha256": "9e5862831297b6e6739ccbd403835a1ab404ec252b5f8df8e041f0ad470934be"
+    },
+    {
+      "path": "research/invariant_families_v1/evidence/executed_preflight_initial.py",
+      "bytes": 4016,
+      "sha256": "d34a0bfa8279df926227e8f05f02de1a7c260b0645736bbcc70a44444f3954f7"
+    },
+    {
+      "path": "research/invariant_families_v1/evidence/reviewed_math_note_62d157.md",
+      "bytes": 12391,
+      "sha256": "62d1572ac61cbce6a581ba663befb18bfe28058f066c61f75380686c8d49e170"
+    },
+    {
+      "path": "research/invariant_families_v1/evidence/math_note_final_supplement.json",
+      "bytes": 926,
+      "sha256": "f3812b155c28f7f562689b13613b10eb28c065b91c0df2400fdce787cfcd1c8c"
+    },
+    {
+      "path": "research/invariant_families_v1/evidence/executed_review_sources/research/clock_selection/audit.py",
+      "bytes": 18773,
+      "sha256": "db72cdd87b718ed6efc2232e12d22c067a4d6b230998b9baa1fc40bf228228d3"
+    },
+    {
+      "path": "research/invariant_families_v1/evidence/executed_review_sources/research/component_review/audit.py",
+      "bytes": 8114,
+      "sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42"
+    },
+    {
+      "path": "research/invariant_families_v1/evidence/executed_review_sources/research/invariant_families_v1/audit.py",
+      "bytes": 7256,
+      "sha256": "b54ba7b350b3414c34f35d8b6fe8eeacb286c71aea2bc6981c9b4197958feeb1"
+    },
+    {
+      "path": "research/invariant_families_v1/evidence/executed_review_sources/research/invariant_families_v1/preflight.py",
+      "bytes": 4029,
+      "sha256": "50cdcb4b85ab6e5da2033751c7da04e56f542cc37efcad948cf10b96e12b01d3"
+    },
+    {
+      "path": "research/invariant_families_v1/evidence/executed_review_sources/research/invariant_families_v1/reference.py",
+      "bytes": 2818,
+      "sha256": "da1faeb5847f767487470b6060050668a2a8160192871a0cb4715ec4511b6473"
+    },
+    {
+      "path": "research/invariant_families_v1/evidence/executed_review_sources/research/message_mechanism/audit.py",
+      "bytes": 47594,
+      "sha256": "6894ba40741a72978865b2a61efda05b65d17b5e1fc95249e4bd1fad636065fa"
+    },
+    {
+      "path": "research/invariant_families_v1/evidence/executed_review_sources/research/reference/algebra.py",
+      "bytes": 5383,
+      "sha256": "f6c225663a545887f1992041de97e9bd1e1e6a4f3b186c9a77ad79f27df290e9"
+    },
+    {
+      "path": "research/invariant_families_v1/evidence/executed_review_sources/research/staged_blocks/audit.py",
+      "bytes": 130125,
+      "sha256": "ad4643b115efcf748f81c81231fc94c741d8432f12a74605ecc1128658049354"
+    }
+  ]
+}

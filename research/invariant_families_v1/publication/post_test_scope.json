@@ -1,0 +1,157 @@
+{
+  "format": "universe24-invariant-post-test-scope-v1",
+  "created_utc": "2026-11-08T04:48:14.012789+00:00",
+  "tested_tree": "0c02879d8b015b6ec3568e61108b937322941f5a",
+  "current_index_tree_before_this_receipt": "698241b5b43948abb60ab7956643988070f9973b",
+  "changes": [
+    {
+      "path": "research/clock_selection/.gitattributes",
+      "sha256": "cc460f5d7fd81b39751fe76490a253b4701f9129e3961df3cf42438c220cb142",
+      "kind": "checkout byte preservation metadata"
+    },
+    {
+      "path": "research/invariant_families_v1/README.md",
+      "sha256": "3215f74347e7b651294c4f2bb99f2195ec77b4710c5a4eb76627327d33ee6e9f",
+      "kind": "documentation attribution"
+    },
+    {
+      "path": "research/invariant_families_v1/publication/formatting_check.txt",
+      "sha256": "40d3dc96c507bbf10a5c3fed5d1e848fc0a7d6c80b8d2e77f87ebec373349f28",
+      "kind": "validation or provenance receipt"
+    },
+    {
+      "path": "research/invariant_families_v1/publication/fresh_clock_check.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "kind": "validation or provenance receipt"
+    },
+    {
+      "path": "research/invariant_families_v1/publication/fresh_clock_check.stdout.txt",
+      "sha256": "3def8ac98a70f8cddc2dddc6bde0ab37247802fad5f2ca2693eba65ef42c1a02",
+      "kind": "validation or provenance receipt"
+    },
+    {
+      "path": "research/invariant_families_v1/publication/fresh_clock_restore.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "kind": "validation or provenance receipt"
+    },
+    {
+      "path": "research/invariant_families_v1/publication/fresh_clock_restore.stdout.txt",
+      "sha256": "e17ff5bc017414dd6ae340128d9214434142552596972cbd07c58e3b4f4dda19",
+      "kind": "validation or provenance receipt"
+    },
+    {
+      "path": "research/invariant_families_v1/publication/fresh_environment.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "kind": "validation or provenance receipt"
+    },
+    {
+      "path": "research/invariant_families_v1/publication/fresh_environment.stdout.txt",
+      "sha256": "91378661c28d0b8769d62f66e98baab875e05433babfc17826c037ce9dc6e47e",
+      "kind": "validation or provenance receipt"
+    },
+    {
+      "path": "research/invariant_families_v1/publication/fresh_full_tests.stderr.txt",
+      "sha256": "803c74ed6a1183f8d979a522de2ea5be08e377a347d9d68eaca0ba514a1e9741",
+      "kind": "validation or provenance receipt"
+    },
+    {
+      "path": "research/invariant_families_v1/publication/fresh_full_tests.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "kind": "validation or provenance receipt"
+    },
+    {
+      "path": "research/invariant_families_v1/publication/fresh_historical_check.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "kind": "validation or provenance receipt"
+    },
+    {
+      "path": "research/invariant_families_v1/publication/fresh_historical_check.stdout.txt",
+      "sha256": "fd2c5dbefb9f286831ce6f4d4a5af4fd242a3e3ed6b9b8762431348f0253767c",
+      "kind": "validation or provenance receipt"
+    },
+    {
+      "path": "research/invariant_families_v1/publication/fresh_historical_restore.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "kind": "validation or provenance receipt"
+    },
+    {
+      "path": "research/invariant_families_v1/publication/fresh_historical_restore.stdout.txt",
+      "sha256": "a4f7e3a444ac8c901f361461e159b22864567afc7b11459bb29107f4cab57598",
+      "kind": "validation or provenance receipt"
+    },
+    {
+      "path": "research/invariant_families_v1/publication/fresh_impulse.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "kind": "validation or provenance receipt"
+    },
+    {
+      "path": "research/invariant_families_v1/publication/fresh_impulse.stdout.txt",
+      "sha256": "29a28c18f680bab4bb55eda0fd16eed94ed8e083f46dfbf6dd6a40a6158e37c1",
+      "kind": "validation or provenance receipt"
+    },
+    {
+      "path": "research/invariant_families_v1/publication/fresh_new_evidence.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "kind": "validation or provenance receipt"
+    },
+    {
+      "path": "research/invariant_families_v1/publication/fresh_new_evidence.stdout.txt",
+      "sha256": "d6e2776dc0a2c8c11c0564f99666d4dfb921bc799e40a8438ef84f2b3ecc16ec",
+      "kind": "validation or provenance receipt"
+    },
+    {
+      "path": "research/invariant_families_v1/publication/fresh_old_index.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "kind": "validation or provenance receipt"
+    },
+    {
+      "path": "research/invariant_families_v1/publication/fresh_old_index.stdout.txt",
+      "sha256": "2351f055c32eb6ecbf348b903f751fc11b17ea5ccae56a2ad1e3358e8d96437f",
+      "kind": "validation or provenance receipt"
+    },
+    {
+      "path": "research/invariant_families_v1/publication/fresh_signed_impulse.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "kind": "validation or provenance receipt"
+    },
+    {
+      "path": "research/invariant_families_v1/publication/fresh_signed_impulse.stdout.txt",
+      "sha256": "29aa4e072c7b9438c5de07661928ce2be05c300c5b080aab16ff56558b4f5566",
+      "kind": "validation or provenance receipt"
+    },
+    {
+      "path": "research/invariant_families_v1/publication/fresh_validation.json",
+      "sha256": "1f3f38682a9f05c23e5555a62467a3c37acdd8fd3ac1465d212e8ffed7d872ec",
+      "kind": "validation or provenance receipt"
+    },
+    {
+      "path": "research/invariant_families_v1/publication/staged_checkout.json",
+      "sha256": "651d2f00b0e85414de63783459f0c945050e5aef19e9072c24869901731e2eea",
+      "kind": "validation or provenance receipt"
+    },
+    {
+      "path": "research/invariant_families_v1/publication/google_doc_appendix_draft.txt",
+      "sha256": "90db881a4a76a5b068ceeb84ed141669c7834d474b5477bda4e131e85c8fecd1",
+      "kind": "reviewed publication draft or source-read receipt; no external write yet"
+    },
+    {
+      "path": "research/invariant_families_v1/publication/google_doc_appendix_read_receipt.json",
+      "sha256": "3e4498d00070f0bc106232b9fffda0b43cbe7034199cc3e9dba62aa71116648c",
+      "kind": "minimal publication draft/source-hash status; revision guard, tab metadata and document text excluded"
+    }
+  ],
+  "scientific_sources_changed_after_tests": false,
+  "evidence_manifest_unchanged": true,
+  "protected_sources_unchanged": true,
+  "note": "The current README additionally attributes preexisting homogeneous-encoding summaries in the research document. Final reviewer receipts may be added without changing scientific source or evidence.",
+  "metadata_redaction_before_publication": {
+    "path": "research/invariant_families_v1/publication/google_doc_appendix_read_receipt.json",
+    "omitted": [
+      "revision guard",
+      "tab indices",
+      "document excerpts",
+      "update capability metadata"
+    ],
+    "scope": "Unpublished local metadata only; scientific source/evidence unchanged."
+  }
+}

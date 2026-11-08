@@ -142,12 +142,34 @@ updates in two periodic preparations. Following the other two sizes through
 32 return opportunities found no regenerated registered carrier after loss.
 An exact cycle repeats its state rather than accumulating new attempts.
 
-## Fixed initial ratios are a separate candidate
+## Fundamental rule and effective ratios
 
-The executed baseline always has `num=den=1`. A
+The selected model keeps `num=den=1` at every site and channel. Per-channel
+coefficients will not be implemented in this research line. A ratio such as
+`1/2` or `2/3` must instead be derived from a specified invariant pattern or
+measured behavior under the same scalar rule, with its assumptions stated.
+
+The [invariant-pattern follow-up](../research/invariant_families_v1/README.md)
+does this for four globally prepared patterns under `+++`: the uniform pattern,
+two spatial periodic patterns and one internal channel pattern. Their exact
+operator eigenvalues give effective homogeneous ratios `1`, `1/2` and `2/3`
+through a full scalar-state correspondence. All 48 registered preparations
+pass independent replay, including odd remainders, all native C events and
+complete rewinds. The [separate claim addendum](../research/clock_selection/invariant_families_claims.md)
+states the proof assumptions and finite test domain. These whole-board sectors
+are not localized building blocks, and the ratio is not a universal period or
+a measured mass. The [nine-example viewer](../research/invariant_families_v1/evidence/presenter_combined_v1/index.html)
+shows five complete family recordings and all four controls from a separate
+[overlap study](../research/invariant_families_v1/overlap_results.md). That study
+verifies the predicted first-step nonlinear carry between two global initial
+patterns; it does not establish a localized encounter or retained detector
+record. All 147 saved states use the unchanged Presenter.
+
+The earlier
 [mathematical proposal](../research/clock_selection/fixed_ratio_candidate.md)
 defines how positive rational coefficients could be fixed at each site/channel
-before startup while retaining an explicit inverse. Nonunit coefficients change
+before startup while retaining an explicit inverse. That alternative is
+unselected and retained as a mathematical comparison only. Nonunit coefficients change
 the model contract; denominators above1 also enlarge the remainder domain.
 It is a separate candidate with no implemented
 engine, experiment or Presenter support here. A coefficient fixed to a lattice
@@ -157,6 +179,11 @@ state the additional operational requirements. Effective measured ratios in
 baseline experiments are also distinct from changing the microscopic rule.
 
 ## View the complete cube
+
+The newer [combined recording inventory](../research/invariant_families_v1/evidence/collection_v1/index.html)
+adds the two independently audited invariant/overlap studies: 17 studies,
+140 complete selected examples and 22,110 saved states. The full evidence now
+contains 942 complete recordings. The original inventory below remains intact.
 
 Open the [final recording inventory](../research/clock_selection/evidence/presentation_collection_v3/index.html):
 15 studies,131 complete selected experiments and21,963 saved states. The full

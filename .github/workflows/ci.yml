@@ -29,6 +29,7 @@ jobs:
           python -m research.experiments.materialize_evidence --check-only
           python -m research.clock_selection.archive materialize
           python -m research.clock_selection.archive materialize --check-only
+          python -m research.invariant_families_v1.verify_evidence
           python -m research.reproducibility.run --output runs/first
       - name: Independent rerun of deterministic experiment outputs
         run: |

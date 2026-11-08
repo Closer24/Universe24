@@ -1,0 +1,65 @@
+{
+  "source_worktree": "/workspace/scratch/1966445260ce/Universe24-clock-selection",
+  "files": [
+    {
+      "path": "research/invariant_families_v1/overlap_preflight.py",
+      "bytes": 3199,
+      "sha256": "74270073d5a6902a448f9150016624296067c6c92877eec53d0b1f8d58c11f85"
+    },
+    {
+      "path": "research/invariant_families_v1/audit_overlap.py",
+      "bytes": 7558,
+      "sha256": "5e26f771d56759cd9f7b85d1ef9c161b9720e675ff882ef4fb352ac667c6dd46"
+    },
+    {
+      "path": "research/invariant_families_v1/audit_overlap_budget.py",
+      "bytes": 2328,
+      "sha256": "2dcea45f5cc4ec6d03d4d6e717f8cae3b5bed5982e911d43cb2b52bf8c8976b6"
+    },
+    {
+      "path": "research/invariant_families_v1/evidence/overlap_independent_audit.json",
+      "bytes": 16104,
+      "sha256": "9d4ed12c7c829c7fe5e2373c3363a71dcdbbbee20f7eb0c598df40935f36e4e7"
+    },
+    {
+      "path": "research/invariant_families_v1/evidence/overlap_independent_audit.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/invariant_families_v1/evidence/overlap_independent_audit.stdout.txt",
+      "bytes": 200,
+      "sha256": "fa5abcd8cd773ede57a83dbf92321919f910377d55d32d53f3056bc72ec0ee78"
+    },
+    {
+      "path": "research/invariant_families_v1/evidence/overlap_independent_audit_budget.json",
+      "bytes": 802,
+      "sha256": "ff32d150d1cd259e5da7b112c394cf94e7bf53a9bb3c92c897bb0bcd1efd065b"
+    },
+    {
+      "path": "research/invariant_families_v1/evidence/overlap_independent_preflight.json",
+      "bytes": 1076,
+      "sha256": "2982b612b7c864294faa7d728e17f5c10c93d0db5f558e6c38586721bcfa4a79"
+    },
+    {
+      "path": "research/invariant_families_v1/evidence/overlap_independent_source_retention.json",
+      "bytes": 1167,
+      "sha256": "ceebb8cc72948827ba6e23ca59a4074a3cbdb62a999bb415d1b0f7eef2c8da6a"
+    },
+    {
+      "path": "research/invariant_families_v1/evidence/executed_review_sources/research/invariant_families_v1/audit_overlap.py",
+      "bytes": 7558,
+      "sha256": "5e26f771d56759cd9f7b85d1ef9c161b9720e675ff882ef4fb352ac667c6dd46"
+    },
+    {
+      "path": "research/invariant_families_v1/evidence/executed_review_sources/research/invariant_families_v1/audit_overlap_budget.py",
+      "bytes": 2328,
+      "sha256": "2dcea45f5cc4ec6d03d4d6e717f8cae3b5bed5982e911d43cb2b52bf8c8976b6"
+    },
+    {
+      "path": "research/invariant_families_v1/evidence/executed_review_sources/research/invariant_families_v1/overlap_preflight.py",
+      "bytes": 3199,
+      "sha256": "74270073d5a6902a448f9150016624296067c6c92877eec53d0b1f8d58c11f85"
+    }
+  ]
+}

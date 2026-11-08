@@ -1,0 +1,6918 @@
+{
+  "auditor_sha256": "b54ba7b350b3414c34f35d8b6fe8eeacb286c71aea2bc6981c9b4197958feeb1",
+  "channel_state_triples": 1586880,
+  "cpu_seconds": 36.911030546000006,
+  "failure": null,
+  "full_rewinds": 48,
+  "passed": true,
+  "protocol_sha256": "f0340b86b689d681cc37cfd76e9e8617cd4f400ea1cb868fa94d00ff7471f523",
+  "records": [
+    {
+      "C_counts": {
+        "0": 23328,
+        "1": 0,
+        "2": 0
+      },
+      "all_observed_returns_within_H": [],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 0,
+        "b": 1,
+        "id": "uniform-L3-r0-a0-b1",
+        "lambda": 6,
+        "pattern": "uniform",
+        "r": 0,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": null,
+      "input_arrays_sha256": "29d27b14a00a0c8db7651a41e83e5596571b409a813def976a33b86e6b318c50",
+      "integrity": {
+        "final_state_sha256": "556397849acb6ce5d194ce6ff96aa80292a4e50ec96aed1a39fe46f6827b1572",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "d731694486c2e94a91939a81ed649c9d318078d719c0b066eaa7e661750c434d",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 23712,
+        "periodic_boundary_counter_hit_sha256": "15eed5810b66f647ffdf5b0e0c6c5f0e26a61bb248fcb866e4a99d480473a3b3",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 23328
+        },
+        "whole_board_C_count": 23328,
+        "whole_board_C_sha256": "c1220c142954e3381588e204bb602a54c36d415864a9fc39fc98b6f2aa33a94e",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "native_checkpoint_sha256": "fcbbcd9ad49e62398f75dba18bdf9f65ec33e942a17b4bcc269d0e5b4051fc13",
+      "raw_C_with_six_terms_sha256": "28ba0775e79ec0520a8ff89080506ae88b73e33669ee53c8895aaa348564ca04",
+      "record_sha256": "8c5e12664676acc3d66af1d7ea23812427eaf9c8b04dd222d677320ba724492b",
+      "scalar_trace": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          2,
+          0
+        ],
+        [
+          2,
+          3,
+          0
+        ],
+        [
+          3,
+          4,
+          0
+        ],
+        [
+          4,
+          5,
+          0
+        ],
+        [
+          5,
+          6,
+          0
+        ],
+        [
+          6,
+          7,
+          0
+        ],
+        [
+          7,
+          8,
+          0
+        ],
+        [
+          8,
+          9,
+          0
+        ],
+        [
+          9,
+          10,
+          0
+        ],
+        [
+          10,
+          11,
+          0
+        ],
+        [
+          11,
+          12,
+          0
+        ],
+        [
+          12,
+          13,
+          0
+        ],
+        [
+          13,
+          14,
+          0
+        ],
+        [
+          14,
+          15,
+          0
+        ],
+        [
+          15,
+          16,
+          0
+        ],
+        [
+          16,
+          17,
+          0
+        ],
+        [
+          17,
+          18,
+          0
+        ],
+        [
+          18,
+          19,
+          0
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 23328,
+        "1": 0,
+        "2": 0
+      },
+      "all_observed_returns_within_H": [],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 2,
+        "b": -1,
+        "id": "uniform-L3-r0-a2-b-1",
+        "lambda": 6,
+        "pattern": "uniform",
+        "r": 0,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": null,
+      "input_arrays_sha256": "e0adfd00535513feb21de00355bbe2b99919798e3e33dce148eeede7147d8a72",
+      "integrity": {
+        "final_state_sha256": "d740cb6ebe2883c7083f91307f9bee6dff87893f4d720bc4909dd0c5d6b245c6",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "58410957cc32fe18ab5ace93278e2a17e618a35d7a1e4d5a7057daa7cfa22c4a",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 23712,
+        "periodic_boundary_counter_hit_sha256": "15eed5810b66f647ffdf5b0e0c6c5f0e26a61bb248fcb866e4a99d480473a3b3",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 23328
+        },
+        "whole_board_C_count": 23328,
+        "whole_board_C_sha256": "fc8bed9105c710a304cebc6458835900b633d114ded139176dfd3c72e7718231",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "native_checkpoint_sha256": "e355b260a12e89806d6eabfc5b629d970ce79631227e53110d0434a69ffbdb00",
+      "raw_C_with_six_terms_sha256": "0822d05364eacec10d1f08e7190b59be52a69001382013643fea35b04638bb60",
+      "record_sha256": "85b7ccf678cbcf252d7f60519abf84040c78353778e7f5e3cf902840cc40252f",
+      "scalar_trace": [
+        [
+          2,
+          -1,
+          0
+        ],
+        [
+          -1,
+          -4,
+          0
+        ],
+        [
+          -4,
+          -7,
+          0
+        ],
+        [
+          -7,
+          -10,
+          0
+        ],
+        [
+          -10,
+          -13,
+          0
+        ],
+        [
+          -13,
+          -16,
+          0
+        ],
+        [
+          -16,
+          -19,
+          0
+        ],
+        [
+          -19,
+          -22,
+          0
+        ],
+        [
+          -22,
+          -25,
+          0
+        ],
+        [
+          -25,
+          -28,
+          0
+        ],
+        [
+          -28,
+          -31,
+          0
+        ],
+        [
+          -31,
+          -34,
+          0
+        ],
+        [
+          -34,
+          -37,
+          0
+        ],
+        [
+          -37,
+          -40,
+          0
+        ],
+        [
+          -40,
+          -43,
+          0
+        ],
+        [
+          -43,
+          -46,
+          0
+        ],
+        [
+          -46,
+          -49,
+          0
+        ],
+        [
+          -49,
+          -52,
+          0
+        ],
+        [
+          -52,
+          -55,
+          0
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 23328,
+        "1": 0,
+        "2": 0
+      },
+      "all_observed_returns_within_H": [],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 0,
+        "b": 1,
+        "id": "uniform-L3-r1-a0-b1",
+        "lambda": 6,
+        "pattern": "uniform",
+        "r": 1,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": null,
+      "input_arrays_sha256": "29d27b14a00a0c8db7651a41e83e5596571b409a813def976a33b86e6b318c50",
+      "integrity": {
+        "final_state_sha256": "8ca51e501e4ee5b308f3ee5e940cea21ea0007395830f5f8d0b23c09b0c13080",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "a12b30575007095efeef2a4da425aa62a2a0b2e9511cd5190c772af741822c42",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 23712,
+        "periodic_boundary_counter_hit_sha256": "15eed5810b66f647ffdf5b0e0c6c5f0e26a61bb248fcb866e4a99d480473a3b3",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 23328
+        },
+        "whole_board_C_count": 23328,
+        "whole_board_C_sha256": "c1220c142954e3381588e204bb602a54c36d415864a9fc39fc98b6f2aa33a94e",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "native_checkpoint_sha256": "649f82d3028fb3bd13dcf5fec0d66e14696aaaad45c0f6f3bf7c9e7f16d43971",
+      "raw_C_with_six_terms_sha256": "28ba0775e79ec0520a8ff89080506ae88b73e33669ee53c8895aaa348564ca04",
+      "record_sha256": "52f5344012a6095b955175202669fc6945c2b4c91367d0162c531561ce628d8c",
+      "scalar_trace": [
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          2,
+          3,
+          1
+        ],
+        [
+          3,
+          4,
+          1
+        ],
+        [
+          4,
+          5,
+          1
+        ],
+        [
+          5,
+          6,
+          1
+        ],
+        [
+          6,
+          7,
+          1
+        ],
+        [
+          7,
+          8,
+          1
+        ],
+        [
+          8,
+          9,
+          1
+        ],
+        [
+          9,
+          10,
+          1
+        ],
+        [
+          10,
+          11,
+          1
+        ],
+        [
+          11,
+          12,
+          1
+        ],
+        [
+          12,
+          13,
+          1
+        ],
+        [
+          13,
+          14,
+          1
+        ],
+        [
+          14,
+          15,
+          1
+        ],
+        [
+          15,
+          16,
+          1
+        ],
+        [
+          16,
+          17,
+          1
+        ],
+        [
+          17,
+          18,
+          1
+        ],
+        [
+          18,
+          19,
+          1
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 23328,
+        "1": 0,
+        "2": 0
+      },
+      "all_observed_returns_within_H": [],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 2,
+        "b": -1,
+        "id": "uniform-L3-r1-a2-b-1",
+        "lambda": 6,
+        "pattern": "uniform",
+        "r": 1,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": null,
+      "input_arrays_sha256": "e0adfd00535513feb21de00355bbe2b99919798e3e33dce148eeede7147d8a72",
+      "integrity": {
+        "final_state_sha256": "5b1439cf4ed36ab27e7271c76ba1d23f7ef8288c6bd444185db08ea4bd4f8b9f",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "e9618e148a032d6ed3e43a844281fcab24ef7107ce374714773df0b9884337ef",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 23712,
+        "periodic_boundary_counter_hit_sha256": "15eed5810b66f647ffdf5b0e0c6c5f0e26a61bb248fcb866e4a99d480473a3b3",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 23328
+        },
+        "whole_board_C_count": 23328,
+        "whole_board_C_sha256": "fc8bed9105c710a304cebc6458835900b633d114ded139176dfd3c72e7718231",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "native_checkpoint_sha256": "c7913b801357a29d124f9aa213999cf64f7cecbc2c83ac60a4b0a40d783e1987",
+      "raw_C_with_six_terms_sha256": "0822d05364eacec10d1f08e7190b59be52a69001382013643fea35b04638bb60",
+      "record_sha256": "b5e31b9e1e576f99e8ceeb799076894679efdbc180ce8b14a2423b6867175e97",
+      "scalar_trace": [
+        [
+          2,
+          -1,
+          1
+        ],
+        [
+          -1,
+          -4,
+          1
+        ],
+        [
+          -4,
+          -7,
+          1
+        ],
+        [
+          -7,
+          -10,
+          1
+        ],
+        [
+          -10,
+          -13,
+          1
+        ],
+        [
+          -13,
+          -16,
+          1
+        ],
+        [
+          -16,
+          -19,
+          1
+        ],
+        [
+          -19,
+          -22,
+          1
+        ],
+        [
+          -22,
+          -25,
+          1
+        ],
+        [
+          -25,
+          -28,
+          1
+        ],
+        [
+          -28,
+          -31,
+          1
+        ],
+        [
+          -31,
+          -34,
+          1
+        ],
+        [
+          -34,
+          -37,
+          1
+        ],
+        [
+          -37,
+          -40,
+          1
+        ],
+        [
+          -40,
+          -43,
+          1
+        ],
+        [
+          -43,
+          -46,
+          1
+        ],
+        [
+          -46,
+          -49,
+          1
+        ],
+        [
+          -49,
+          -52,
+          1
+        ],
+        [
+          -52,
+          -55,
+          1
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 23328,
+        "1": 0,
+        "2": 0
+      },
+      "all_observed_returns_within_H": [],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 0,
+        "b": 1,
+        "id": "uniform-L3-r2-a0-b1",
+        "lambda": 6,
+        "pattern": "uniform",
+        "r": 2,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": null,
+      "input_arrays_sha256": "29d27b14a00a0c8db7651a41e83e5596571b409a813def976a33b86e6b318c50",
+      "integrity": {
+        "final_state_sha256": "c807a1957135e15dba080e8985425da2c9e90cbb84a7baa29b47d720d06f62b0",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "3d9ff8145e52ccce598444c667be11d8ccb3b5b3c82e2d243b0991ef4ed765c6",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 23712,
+        "periodic_boundary_counter_hit_sha256": "15eed5810b66f647ffdf5b0e0c6c5f0e26a61bb248fcb866e4a99d480473a3b3",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 23328
+        },
+        "whole_board_C_count": 23328,
+        "whole_board_C_sha256": "c1220c142954e3381588e204bb602a54c36d415864a9fc39fc98b6f2aa33a94e",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "native_checkpoint_sha256": "806486f08043df534f1e25a51794121081e6a9563b6c9cf0cabda5686375d19f",
+      "raw_C_with_six_terms_sha256": "28ba0775e79ec0520a8ff89080506ae88b73e33669ee53c8895aaa348564ca04",
+      "record_sha256": "414d1c485628e41cacf34c31fd9b614d781477cf7b082cd393529dbecacecc89",
+      "scalar_trace": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          1,
+          2,
+          2
+        ],
+        [
+          2,
+          3,
+          2
+        ],
+        [
+          3,
+          4,
+          2
+        ],
+        [
+          4,
+          5,
+          2
+        ],
+        [
+          5,
+          6,
+          2
+        ],
+        [
+          6,
+          7,
+          2
+        ],
+        [
+          7,
+          8,
+          2
+        ],
+        [
+          8,
+          9,
+          2
+        ],
+        [
+          9,
+          10,
+          2
+        ],
+        [
+          10,
+          11,
+          2
+        ],
+        [
+          11,
+          12,
+          2
+        ],
+        [
+          12,
+          13,
+          2
+        ],
+        [
+          13,
+          14,
+          2
+        ],
+        [
+          14,
+          15,
+          2
+        ],
+        [
+          15,
+          16,
+          2
+        ],
+        [
+          16,
+          17,
+          2
+        ],
+        [
+          17,
+          18,
+          2
+        ],
+        [
+          18,
+          19,
+          2
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 23328,
+        "1": 0,
+        "2": 0
+      },
+      "all_observed_returns_within_H": [],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 2,
+        "b": -1,
+        "id": "uniform-L3-r2-a2-b-1",
+        "lambda": 6,
+        "pattern": "uniform",
+        "r": 2,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": null,
+      "input_arrays_sha256": "e0adfd00535513feb21de00355bbe2b99919798e3e33dce148eeede7147d8a72",
+      "integrity": {
+        "final_state_sha256": "513641b9f330d080cb72949013a2c47cd720d8488f9beb907936397f2bf9be79",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "b52875a6e583d34b22d1eefb870f8ba56f5cb38083870ee81d9a44ddc60c1262",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 23712,
+        "periodic_boundary_counter_hit_sha256": "15eed5810b66f647ffdf5b0e0c6c5f0e26a61bb248fcb866e4a99d480473a3b3",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 23328
+        },
+        "whole_board_C_count": 23328,
+        "whole_board_C_sha256": "fc8bed9105c710a304cebc6458835900b633d114ded139176dfd3c72e7718231",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "native_checkpoint_sha256": "a934d6c78d92cf25a521799f544c9851aa5d14a9371b90aff5038343dde4395b",
+      "raw_C_with_six_terms_sha256": "0822d05364eacec10d1f08e7190b59be52a69001382013643fea35b04638bb60",
+      "record_sha256": "20f5e8e20d33355de06c667aa7095452cdecd51e9e4ddc0d91e0822f824c2846",
+      "scalar_trace": [
+        [
+          2,
+          -1,
+          2
+        ],
+        [
+          -1,
+          -4,
+          2
+        ],
+        [
+          -4,
+          -7,
+          2
+        ],
+        [
+          -7,
+          -10,
+          2
+        ],
+        [
+          -10,
+          -13,
+          2
+        ],
+        [
+          -13,
+          -16,
+          2
+        ],
+        [
+          -16,
+          -19,
+          2
+        ],
+        [
+          -19,
+          -22,
+          2
+        ],
+        [
+          -22,
+          -25,
+          2
+        ],
+        [
+          -25,
+          -28,
+          2
+        ],
+        [
+          -28,
+          -31,
+          2
+        ],
+        [
+          -31,
+          -34,
+          2
+        ],
+        [
+          -34,
+          -37,
+          2
+        ],
+        [
+          -37,
+          -40,
+          2
+        ],
+        [
+          -40,
+          -43,
+          2
+        ],
+        [
+          -43,
+          -46,
+          2
+        ],
+        [
+          -46,
+          -49,
+          2
+        ],
+        [
+          -49,
+          -52,
+          2
+        ],
+        [
+          -52,
+          -55,
+          2
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 23328,
+        "1": 0,
+        "2": 0
+      },
+      "all_observed_returns_within_H": [],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 0,
+        "b": 1,
+        "id": "uniform-L3-r3-a0-b1",
+        "lambda": 6,
+        "pattern": "uniform",
+        "r": 3,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": null,
+      "input_arrays_sha256": "29d27b14a00a0c8db7651a41e83e5596571b409a813def976a33b86e6b318c50",
+      "integrity": {
+        "final_state_sha256": "aa63eac75d2dbbd039aef97d4742a8f67a806a3f9e8280fca026fa8635c74644",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "6e4bef0c4ffacd002a3b853b8abb8501de6f0fc4f55671489eb4443766edc7d1",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 23712,
+        "periodic_boundary_counter_hit_sha256": "15eed5810b66f647ffdf5b0e0c6c5f0e26a61bb248fcb866e4a99d480473a3b3",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 23328
+        },
+        "whole_board_C_count": 23328,
+        "whole_board_C_sha256": "c1220c142954e3381588e204bb602a54c36d415864a9fc39fc98b6f2aa33a94e",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "native_checkpoint_sha256": "54acb16a10eabe49d5e8563ee6805ccc4b6348dbe59fd005019b55e8b13989b9",
+      "raw_C_with_six_terms_sha256": "28ba0775e79ec0520a8ff89080506ae88b73e33669ee53c8895aaa348564ca04",
+      "record_sha256": "a999d51f4bfbfe519e8c4ff65f85e324fddef053e4767aaeb805134d6bc7dc8f",
+      "scalar_trace": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          2,
+          3,
+          3
+        ],
+        [
+          3,
+          4,
+          3
+        ],
+        [
+          4,
+          5,
+          3
+        ],
+        [
+          5,
+          6,
+          3
+        ],
+        [
+          6,
+          7,
+          3
+        ],
+        [
+          7,
+          8,
+          3
+        ],
+        [
+          8,
+          9,
+          3
+        ],
+        [
+          9,
+          10,
+          3
+        ],
+        [
+          10,
+          11,
+          3
+        ],
+        [
+          11,
+          12,
+          3
+        ],
+        [
+          12,
+          13,
+          3
+        ],
+        [
+          13,
+          14,
+          3
+        ],
+        [
+          14,
+          15,
+          3
+        ],
+        [
+          15,
+          16,
+          3
+        ],
+        [
+          16,
+          17,
+          3
+        ],
+        [
+          17,
+          18,
+          3
+        ],
+        [
+          18,
+          19,
+          3
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 23328,
+        "1": 0,
+        "2": 0
+      },
+      "all_observed_returns_within_H": [],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 2,
+        "b": -1,
+        "id": "uniform-L3-r3-a2-b-1",
+        "lambda": 6,
+        "pattern": "uniform",
+        "r": 3,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": null,
+      "input_arrays_sha256": "e0adfd00535513feb21de00355bbe2b99919798e3e33dce148eeede7147d8a72",
+      "integrity": {
+        "final_state_sha256": "3dc3ea7126c54cd71110fc3f9c0abd503f6bccd0426dbfaecad72cd9cf51ecf6",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "0cb619c5e930ed885e2e52d19c1c2e7f887ce8c973b8e8917a49ee21a8054c85",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 23712,
+        "periodic_boundary_counter_hit_sha256": "15eed5810b66f647ffdf5b0e0c6c5f0e26a61bb248fcb866e4a99d480473a3b3",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 23328
+        },
+        "whole_board_C_count": 23328,
+        "whole_board_C_sha256": "fc8bed9105c710a304cebc6458835900b633d114ded139176dfd3c72e7718231",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "native_checkpoint_sha256": "1eb3b9ee6342a5bd2dd7505ce0bd3bfa97e298df472787179ac578d26ca75a14",
+      "raw_C_with_six_terms_sha256": "0822d05364eacec10d1f08e7190b59be52a69001382013643fea35b04638bb60",
+      "record_sha256": "708a90b76afbb353af391ede7f7e07acf5f4272145d4e457219b51d5bd55eaa9",
+      "scalar_trace": [
+        [
+          2,
+          -1,
+          3
+        ],
+        [
+          -1,
+          -4,
+          3
+        ],
+        [
+          -4,
+          -7,
+          3
+        ],
+        [
+          -7,
+          -10,
+          3
+        ],
+        [
+          -10,
+          -13,
+          3
+        ],
+        [
+          -13,
+          -16,
+          3
+        ],
+        [
+          -16,
+          -19,
+          3
+        ],
+        [
+          -19,
+          -22,
+          3
+        ],
+        [
+          -22,
+          -25,
+          3
+        ],
+        [
+          -25,
+          -28,
+          3
+        ],
+        [
+          -28,
+          -31,
+          3
+        ],
+        [
+          -31,
+          -34,
+          3
+        ],
+        [
+          -34,
+          -37,
+          3
+        ],
+        [
+          -37,
+          -40,
+          3
+        ],
+        [
+          -40,
+          -43,
+          3
+        ],
+        [
+          -43,
+          -46,
+          3
+        ],
+        [
+          -46,
+          -49,
+          3
+        ],
+        [
+          -49,
+          -52,
+          3
+        ],
+        [
+          -52,
+          -55,
+          3
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 23328,
+        "1": 0,
+        "2": 0
+      },
+      "all_observed_returns_within_H": [],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 0,
+        "b": 1,
+        "id": "uniform-L3-r4-a0-b1",
+        "lambda": 6,
+        "pattern": "uniform",
+        "r": 4,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": null,
+      "input_arrays_sha256": "29d27b14a00a0c8db7651a41e83e5596571b409a813def976a33b86e6b318c50",
+      "integrity": {
+        "final_state_sha256": "c0c7d96d8e63957f1e638b43daf265154bb367cb36acdd47a9804c2bfea60d83",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "9abe522a5287cd05cb88007b65a114955e47cb79075fd7d3999ea08c04c996fe",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 23712,
+        "periodic_boundary_counter_hit_sha256": "15eed5810b66f647ffdf5b0e0c6c5f0e26a61bb248fcb866e4a99d480473a3b3",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 23328
+        },
+        "whole_board_C_count": 23328,
+        "whole_board_C_sha256": "c1220c142954e3381588e204bb602a54c36d415864a9fc39fc98b6f2aa33a94e",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "native_checkpoint_sha256": "718254ddc9e99dea3152c3b870eb33c63569145fba991b974e7659b4b29ae3f5",
+      "raw_C_with_six_terms_sha256": "28ba0775e79ec0520a8ff89080506ae88b73e33669ee53c8895aaa348564ca04",
+      "record_sha256": "d29678edef89666023846b0c19617b4794a75bf16dcbbfca6cbd9902b13489d9",
+      "scalar_trace": [
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          1,
+          2,
+          4
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          3,
+          4,
+          4
+        ],
+        [
+          4,
+          5,
+          4
+        ],
+        [
+          5,
+          6,
+          4
+        ],
+        [
+          6,
+          7,
+          4
+        ],
+        [
+          7,
+          8,
+          4
+        ],
+        [
+          8,
+          9,
+          4
+        ],
+        [
+          9,
+          10,
+          4
+        ],
+        [
+          10,
+          11,
+          4
+        ],
+        [
+          11,
+          12,
+          4
+        ],
+        [
+          12,
+          13,
+          4
+        ],
+        [
+          13,
+          14,
+          4
+        ],
+        [
+          14,
+          15,
+          4
+        ],
+        [
+          15,
+          16,
+          4
+        ],
+        [
+          16,
+          17,
+          4
+        ],
+        [
+          17,
+          18,
+          4
+        ],
+        [
+          18,
+          19,
+          4
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 23328,
+        "1": 0,
+        "2": 0
+      },
+      "all_observed_returns_within_H": [],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 2,
+        "b": -1,
+        "id": "uniform-L3-r4-a2-b-1",
+        "lambda": 6,
+        "pattern": "uniform",
+        "r": 4,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": null,
+      "input_arrays_sha256": "e0adfd00535513feb21de00355bbe2b99919798e3e33dce148eeede7147d8a72",
+      "integrity": {
+        "final_state_sha256": "b3e5efe3edc9717968ce0af561588a36b6b2c1ca90158900a02e890f7c69a3b5",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "ebf4da4f60c63adb18d4540a6d0ded008e6ce469ee9c29b4e7a3fb22c3245931",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 23712,
+        "periodic_boundary_counter_hit_sha256": "15eed5810b66f647ffdf5b0e0c6c5f0e26a61bb248fcb866e4a99d480473a3b3",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 23328
+        },
+        "whole_board_C_count": 23328,
+        "whole_board_C_sha256": "fc8bed9105c710a304cebc6458835900b633d114ded139176dfd3c72e7718231",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "native_checkpoint_sha256": "b27f7cace824161d11c9f125bc8e4c648576f9e111e514ac266b6c82f8cf761d",
+      "raw_C_with_six_terms_sha256": "0822d05364eacec10d1f08e7190b59be52a69001382013643fea35b04638bb60",
+      "record_sha256": "8115832416c4d5835982daa124bce566f5cdd236c7cb0b60a5219018191971ca",
+      "scalar_trace": [
+        [
+          2,
+          -1,
+          4
+        ],
+        [
+          -1,
+          -4,
+          4
+        ],
+        [
+          -4,
+          -7,
+          4
+        ],
+        [
+          -7,
+          -10,
+          4
+        ],
+        [
+          -10,
+          -13,
+          4
+        ],
+        [
+          -13,
+          -16,
+          4
+        ],
+        [
+          -16,
+          -19,
+          4
+        ],
+        [
+          -19,
+          -22,
+          4
+        ],
+        [
+          -22,
+          -25,
+          4
+        ],
+        [
+          -25,
+          -28,
+          4
+        ],
+        [
+          -28,
+          -31,
+          4
+        ],
+        [
+          -31,
+          -34,
+          4
+        ],
+        [
+          -34,
+          -37,
+          4
+        ],
+        [
+          -37,
+          -40,
+          4
+        ],
+        [
+          -40,
+          -43,
+          4
+        ],
+        [
+          -43,
+          -46,
+          4
+        ],
+        [
+          -46,
+          -49,
+          4
+        ],
+        [
+          -49,
+          -52,
+          4
+        ],
+        [
+          -52,
+          -55,
+          4
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 23328,
+        "1": 0,
+        "2": 0
+      },
+      "all_observed_returns_within_H": [],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 0,
+        "b": 1,
+        "id": "uniform-L3-r5-a0-b1",
+        "lambda": 6,
+        "pattern": "uniform",
+        "r": 5,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": null,
+      "input_arrays_sha256": "29d27b14a00a0c8db7651a41e83e5596571b409a813def976a33b86e6b318c50",
+      "integrity": {
+        "final_state_sha256": "0a9c342c026bce2fa1d34cece33a61e3f8e036f084a237778cb6b0d876b76bcc",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "1bf2d0a92860af96f903cef135ad36e370961ddf5e27dc71f11bf8926544190b",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 23712,
+        "periodic_boundary_counter_hit_sha256": "15eed5810b66f647ffdf5b0e0c6c5f0e26a61bb248fcb866e4a99d480473a3b3",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 23328
+        },
+        "whole_board_C_count": 23328,
+        "whole_board_C_sha256": "c1220c142954e3381588e204bb602a54c36d415864a9fc39fc98b6f2aa33a94e",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "native_checkpoint_sha256": "91f13ebfd03412587d1dd359b8f2d446b90459a8bca173783e2714c93601ce5c",
+      "raw_C_with_six_terms_sha256": "28ba0775e79ec0520a8ff89080506ae88b73e33669ee53c8895aaa348564ca04",
+      "record_sha256": "b8803c20a3061e2574df5aa8e33ce04bceb5c96e3c11dedb840c67e2fe259541",
+      "scalar_trace": [
+        [
+          0,
+          1,
+          5
+        ],
+        [
+          1,
+          2,
+          5
+        ],
+        [
+          2,
+          3,
+          5
+        ],
+        [
+          3,
+          4,
+          5
+        ],
+        [
+          4,
+          5,
+          5
+        ],
+        [
+          5,
+          6,
+          5
+        ],
+        [
+          6,
+          7,
+          5
+        ],
+        [
+          7,
+          8,
+          5
+        ],
+        [
+          8,
+          9,
+          5
+        ],
+        [
+          9,
+          10,
+          5
+        ],
+        [
+          10,
+          11,
+          5
+        ],
+        [
+          11,
+          12,
+          5
+        ],
+        [
+          12,
+          13,
+          5
+        ],
+        [
+          13,
+          14,
+          5
+        ],
+        [
+          14,
+          15,
+          5
+        ],
+        [
+          15,
+          16,
+          5
+        ],
+        [
+          16,
+          17,
+          5
+        ],
+        [
+          17,
+          18,
+          5
+        ],
+        [
+          18,
+          19,
+          5
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 23328,
+        "1": 0,
+        "2": 0
+      },
+      "all_observed_returns_within_H": [],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 2,
+        "b": -1,
+        "id": "uniform-L3-r5-a2-b-1",
+        "lambda": 6,
+        "pattern": "uniform",
+        "r": 5,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": null,
+      "input_arrays_sha256": "e0adfd00535513feb21de00355bbe2b99919798e3e33dce148eeede7147d8a72",
+      "integrity": {
+        "final_state_sha256": "6e9d92aef6411915f5abb288c6801c97d1001cc62a3bece9dbd9ff8d1a31a150",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "eda966b683eb2006adbdd94f01dc39c8f5e85eea756844ab73867e0980d58d01",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 23712,
+        "periodic_boundary_counter_hit_sha256": "15eed5810b66f647ffdf5b0e0c6c5f0e26a61bb248fcb866e4a99d480473a3b3",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 23328
+        },
+        "whole_board_C_count": 23328,
+        "whole_board_C_sha256": "fc8bed9105c710a304cebc6458835900b633d114ded139176dfd3c72e7718231",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "native_checkpoint_sha256": "3c4f11d891fa38c9e5242404015305b3c9f2ab8fe1b6f1ae76e2e6d68a369509",
+      "raw_C_with_six_terms_sha256": "0822d05364eacec10d1f08e7190b59be52a69001382013643fea35b04638bb60",
+      "record_sha256": "efa9d26cb854cef2268018c94e5f3b783412d1a9d8a0728d4d86679c3a847294",
+      "scalar_trace": [
+        [
+          2,
+          -1,
+          5
+        ],
+        [
+          -1,
+          -4,
+          5
+        ],
+        [
+          -4,
+          -7,
+          5
+        ],
+        [
+          -7,
+          -10,
+          5
+        ],
+        [
+          -10,
+          -13,
+          5
+        ],
+        [
+          -13,
+          -16,
+          5
+        ],
+        [
+          -16,
+          -19,
+          5
+        ],
+        [
+          -19,
+          -22,
+          5
+        ],
+        [
+          -22,
+          -25,
+          5
+        ],
+        [
+          -25,
+          -28,
+          5
+        ],
+        [
+          -28,
+          -31,
+          5
+        ],
+        [
+          -31,
+          -34,
+          5
+        ],
+        [
+          -34,
+          -37,
+          5
+        ],
+        [
+          -37,
+          -40,
+          5
+        ],
+        [
+          -40,
+          -43,
+          5
+        ],
+        [
+          -43,
+          -46,
+          5
+        ],
+        [
+          -46,
+          -49,
+          5
+        ],
+        [
+          -49,
+          -52,
+          5
+        ],
+        [
+          -52,
+          -55,
+          5
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 10368,
+        "1": 0,
+        "2": 0
+      },
+      "all_observed_returns_within_H": [
+        6,
+        12,
+        18
+      ],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 0,
+        "b": 1,
+        "id": "spatial_period3-L3-r0-a0-b1",
+        "lambda": 3,
+        "pattern": "spatial_period3",
+        "r": 0,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": 6,
+      "input_arrays_sha256": "f4de338100ada816470c4c0e4965dc2bfd48b12f4cedadd35fd29673ab77a5c0",
+      "integrity": {
+        "final_state_sha256": "6081572807351498a46b6bb2f13359005ea38cddc3d0f511f5f7d3f20786617e",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "6081572807351498a46b6bb2f13359005ea38cddc3d0f511f5f7d3f20786617e",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 15504,
+        "periodic_boundary_counter_hit_sha256": "968315eb3c3efa8a7dff86dc7894f1a70611409011758feec8b44c04b7e63a20",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 10368
+        },
+        "whole_board_C_count": 10368,
+        "whole_board_C_sha256": "b0e0ca923333c3380ae9ba3af3b22cfe98d8eb07931f59dec7fd20419116538a",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "native_checkpoint_sha256": "f820989658e19fe9699cb422709861b0098ce4c96833172a738f35baa0152f35",
+      "raw_C_with_six_terms_sha256": "e6ab4f5e49a77a8c84212d133e1938da677f372008e7adb99c504ba9c694d1ef",
+      "record_sha256": "e27a34dcb2dc0f231631ae2b5b0724a81865b80ff514c24b4a5cda1bd3674d5c",
+      "scalar_trace": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          -1,
+          -1,
+          0
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          -1,
+          -1,
+          0
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          -1,
+          -1,
+          0
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 15552,
+        "1": 0,
+        "2": 0
+      },
+      "all_observed_returns_within_H": [
+        6,
+        12,
+        18
+      ],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 2,
+        "b": -1,
+        "id": "spatial_period3-L3-r0-a2-b-1",
+        "lambda": 3,
+        "pattern": "spatial_period3",
+        "r": 0,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": 6,
+      "input_arrays_sha256": "a46ddaa909b39069a7bb3c0e463de8dbf1cca9b16769e66dda7d2aef6bd4ce70",
+      "integrity": {
+        "final_state_sha256": "80d33d2e50849e04d9e8e4fec1141b0c228fe6f0d27c735cf047093f6ee064c4",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "80d33d2e50849e04d9e8e4fec1141b0c228fe6f0d27c735cf047093f6ee064c4",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 15504,
+        "periodic_boundary_counter_hit_sha256": "968315eb3c3efa8a7dff86dc7894f1a70611409011758feec8b44c04b7e63a20",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 15552
+        },
+        "whole_board_C_count": 15552,
+        "whole_board_C_sha256": "3d1a3c8c4affab0b12c77324d18e7ed795b1958b092b5bb07dcaf6b22827bf0e",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "native_checkpoint_sha256": "d651fa4a39e8819d2d3c02c250d64f67fdda00dc77a232c5579744061de3886e",
+      "raw_C_with_six_terms_sha256": "3bda4ff57afb1e65d78d69bd8f4bd1e58f8db4347f685f75705512df869ef59c",
+      "record_sha256": "ccd0c486443acecca1afb8e5e2491d81f85a1c2e25cb964d410407fbe5f4e86a",
+      "scalar_trace": [
+        [
+          2,
+          -1,
+          0
+        ],
+        [
+          -1,
+          -3,
+          0
+        ],
+        [
+          -3,
+          -2,
+          0
+        ],
+        [
+          -2,
+          1,
+          0
+        ],
+        [
+          1,
+          3,
+          0
+        ],
+        [
+          3,
+          2,
+          0
+        ],
+        [
+          2,
+          -1,
+          0
+        ],
+        [
+          -1,
+          -3,
+          0
+        ],
+        [
+          -3,
+          -2,
+          0
+        ],
+        [
+          -2,
+          1,
+          0
+        ],
+        [
+          1,
+          3,
+          0
+        ],
+        [
+          3,
+          2,
+          0
+        ],
+        [
+          2,
+          -1,
+          0
+        ],
+        [
+          -1,
+          -3,
+          0
+        ],
+        [
+          -3,
+          -2,
+          0
+        ],
+        [
+          -2,
+          1,
+          0
+        ],
+        [
+          1,
+          3,
+          0
+        ],
+        [
+          3,
+          2,
+          0
+        ],
+        [
+          2,
+          -1,
+          0
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 10368,
+        "1": 0,
+        "2": 0
+      },
+      "all_observed_returns_within_H": [
+        6,
+        12,
+        18
+      ],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 0,
+        "b": 1,
+        "id": "spatial_period3-L3-r1-a0-b1",
+        "lambda": 3,
+        "pattern": "spatial_period3",
+        "r": 1,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": 6,
+      "input_arrays_sha256": "f4de338100ada816470c4c0e4965dc2bfd48b12f4cedadd35fd29673ab77a5c0",
+      "integrity": {
+        "final_state_sha256": "c95074ab268a5fbe82d5f71d49a80d49712eac157c20c492b20ea526713ce271",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "c95074ab268a5fbe82d5f71d49a80d49712eac157c20c492b20ea526713ce271",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 15504,
+        "periodic_boundary_counter_hit_sha256": "968315eb3c3efa8a7dff86dc7894f1a70611409011758feec8b44c04b7e63a20",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 10368
+        },
+        "whole_board_C_count": 10368,
+        "whole_board_C_sha256": "b0e0ca923333c3380ae9ba3af3b22cfe98d8eb07931f59dec7fd20419116538a",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "native_checkpoint_sha256": "2321d601e914e5e01129a888be31d311921b8a702ea0bacdf57632f89f38be95",
+      "raw_C_with_six_terms_sha256": "e6ab4f5e49a77a8c84212d133e1938da677f372008e7adb99c504ba9c694d1ef",
+      "record_sha256": "75b523cb1702ab1c05a9dcde607b95c837c95c1cce2c9fff4837ebf00041a9b0",
+      "scalar_trace": [
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          -1,
+          1
+        ],
+        [
+          -1,
+          -1,
+          1
+        ],
+        [
+          -1,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          -1,
+          1
+        ],
+        [
+          -1,
+          -1,
+          1
+        ],
+        [
+          -1,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          -1,
+          1
+        ],
+        [
+          -1,
+          -1,
+          1
+        ],
+        [
+          -1,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 15552,
+        "1": 0,
+        "2": 0
+      },
+      "all_observed_returns_within_H": [
+        6,
+        12,
+        18
+      ],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 2,
+        "b": -1,
+        "id": "spatial_period3-L3-r1-a2-b-1",
+        "lambda": 3,
+        "pattern": "spatial_period3",
+        "r": 1,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": 6,
+      "input_arrays_sha256": "a46ddaa909b39069a7bb3c0e463de8dbf1cca9b16769e66dda7d2aef6bd4ce70",
+      "integrity": {
+        "final_state_sha256": "8ae9a3e6af5df73ec1a853fff74866602d2bfb1e7146004980bf7686151df6db",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "8ae9a3e6af5df73ec1a853fff74866602d2bfb1e7146004980bf7686151df6db",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 15504,
+        "periodic_boundary_counter_hit_sha256": "968315eb3c3efa8a7dff86dc7894f1a70611409011758feec8b44c04b7e63a20",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 15552
+        },
+        "whole_board_C_count": 15552,
+        "whole_board_C_sha256": "3d1a3c8c4affab0b12c77324d18e7ed795b1958b092b5bb07dcaf6b22827bf0e",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "native_checkpoint_sha256": "3b1da099173a1e28b5ef241da80e358eedb2313ebe72d7c44e79ba3f8e9da023",
+      "raw_C_with_six_terms_sha256": "3bda4ff57afb1e65d78d69bd8f4bd1e58f8db4347f685f75705512df869ef59c",
+      "record_sha256": "6e68ce73b6c35e273e9b6175b4259e09664e1b55d3fc584f35cd714f16c0f490",
+      "scalar_trace": [
+        [
+          2,
+          -1,
+          1
+        ],
+        [
+          -1,
+          -3,
+          1
+        ],
+        [
+          -3,
+          -2,
+          1
+        ],
+        [
+          -2,
+          1,
+          1
+        ],
+        [
+          1,
+          3,
+          1
+        ],
+        [
+          3,
+          2,
+          1
+        ],
+        [
+          2,
+          -1,
+          1
+        ],
+        [
+          -1,
+          -3,
+          1
+        ],
+        [
+          -3,
+          -2,
+          1
+        ],
+        [
+          -2,
+          1,
+          1
+        ],
+        [
+          1,
+          3,
+          1
+        ],
+        [
+          3,
+          2,
+          1
+        ],
+        [
+          2,
+          -1,
+          1
+        ],
+        [
+          -1,
+          -3,
+          1
+        ],
+        [
+          -3,
+          -2,
+          1
+        ],
+        [
+          -2,
+          1,
+          1
+        ],
+        [
+          1,
+          3,
+          1
+        ],
+        [
+          3,
+          2,
+          1
+        ],
+        [
+          2,
+          -1,
+          1
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 10368,
+        "1": 0,
+        "2": 0
+      },
+      "all_observed_returns_within_H": [
+        6,
+        12,
+        18
+      ],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 0,
+        "b": 1,
+        "id": "spatial_period3-L3-r2-a0-b1",
+        "lambda": 3,
+        "pattern": "spatial_period3",
+        "r": 2,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": 6,
+      "input_arrays_sha256": "f4de338100ada816470c4c0e4965dc2bfd48b12f4cedadd35fd29673ab77a5c0",
+      "integrity": {
+        "final_state_sha256": "fbf1e75ed146bc655211dece7d16b0788d33fcc669d2cac384626b8268eecbc2",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "fbf1e75ed146bc655211dece7d16b0788d33fcc669d2cac384626b8268eecbc2",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 15504,
+        "periodic_boundary_counter_hit_sha256": "968315eb3c3efa8a7dff86dc7894f1a70611409011758feec8b44c04b7e63a20",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 10368
+        },
+        "whole_board_C_count": 10368,
+        "whole_board_C_sha256": "b0e0ca923333c3380ae9ba3af3b22cfe98d8eb07931f59dec7fd20419116538a",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "native_checkpoint_sha256": "be271b220541769e864c1e01ede6c8d5228493771a8b9839fe8d673df84a907c",
+      "raw_C_with_six_terms_sha256": "e6ab4f5e49a77a8c84212d133e1938da677f372008e7adb99c504ba9c694d1ef",
+      "record_sha256": "d069c54dbdac8e15801aa73436c552ba98ef4d7d631296f84418c3c43ed897fe",
+      "scalar_trace": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          0,
+          2
+        ],
+        [
+          0,
+          -1,
+          2
+        ],
+        [
+          -1,
+          -1,
+          2
+        ],
+        [
+          -1,
+          0,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          0,
+          2
+        ],
+        [
+          0,
+          -1,
+          2
+        ],
+        [
+          -1,
+          -1,
+          2
+        ],
+        [
+          -1,
+          0,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          0,
+          2
+        ],
+        [
+          0,
+          -1,
+          2
+        ],
+        [
+          -1,
+          -1,
+          2
+        ],
+        [
+          -1,
+          0,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 15552,
+        "1": 0,
+        "2": 0
+      },
+      "all_observed_returns_within_H": [
+        6,
+        12,
+        18
+      ],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 2,
+        "b": -1,
+        "id": "spatial_period3-L3-r2-a2-b-1",
+        "lambda": 3,
+        "pattern": "spatial_period3",
+        "r": 2,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": 6,
+      "input_arrays_sha256": "a46ddaa909b39069a7bb3c0e463de8dbf1cca9b16769e66dda7d2aef6bd4ce70",
+      "integrity": {
+        "final_state_sha256": "b2d6f0d988f2e59c3e6fa9e3edd4c68626c69a90eda08e2810517dc8a9ad55ba",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "b2d6f0d988f2e59c3e6fa9e3edd4c68626c69a90eda08e2810517dc8a9ad55ba",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 15504,
+        "periodic_boundary_counter_hit_sha256": "968315eb3c3efa8a7dff86dc7894f1a70611409011758feec8b44c04b7e63a20",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 15552
+        },
+        "whole_board_C_count": 15552,
+        "whole_board_C_sha256": "3d1a3c8c4affab0b12c77324d18e7ed795b1958b092b5bb07dcaf6b22827bf0e",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "native_checkpoint_sha256": "491b16d6133b6dfd1a93299d22d74f07ee1cd2bf87ead7ab8d07d14434e147cc",
+      "raw_C_with_six_terms_sha256": "3bda4ff57afb1e65d78d69bd8f4bd1e58f8db4347f685f75705512df869ef59c",
+      "record_sha256": "a1c41ca829c1e594f36a1c96daf6858a07457feab83607930c973eeb833ec5a6",
+      "scalar_trace": [
+        [
+          2,
+          -1,
+          2
+        ],
+        [
+          -1,
+          -3,
+          2
+        ],
+        [
+          -3,
+          -2,
+          2
+        ],
+        [
+          -2,
+          1,
+          2
+        ],
+        [
+          1,
+          3,
+          2
+        ],
+        [
+          3,
+          2,
+          2
+        ],
+        [
+          2,
+          -1,
+          2
+        ],
+        [
+          -1,
+          -3,
+          2
+        ],
+        [
+          -3,
+          -2,
+          2
+        ],
+        [
+          -2,
+          1,
+          2
+        ],
+        [
+          1,
+          3,
+          2
+        ],
+        [
+          3,
+          2,
+          2
+        ],
+        [
+          2,
+          -1,
+          2
+        ],
+        [
+          -1,
+          -3,
+          2
+        ],
+        [
+          -3,
+          -2,
+          2
+        ],
+        [
+          -2,
+          1,
+          2
+        ],
+        [
+          1,
+          3,
+          2
+        ],
+        [
+          3,
+          2,
+          2
+        ],
+        [
+          2,
+          -1,
+          2
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 10368,
+        "1": 0,
+        "2": 0
+      },
+      "all_observed_returns_within_H": [
+        6,
+        12,
+        18
+      ],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 0,
+        "b": 1,
+        "id": "spatial_period3-L3-r3-a0-b1",
+        "lambda": 3,
+        "pattern": "spatial_period3",
+        "r": 3,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": 6,
+      "input_arrays_sha256": "f4de338100ada816470c4c0e4965dc2bfd48b12f4cedadd35fd29673ab77a5c0",
+      "integrity": {
+        "final_state_sha256": "6bf08283c080fecb08cf42201d7c89c628246f385b0aefaf9254d23fe17ef9bf",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "6bf08283c080fecb08cf42201d7c89c628246f385b0aefaf9254d23fe17ef9bf",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 15504,
+        "periodic_boundary_counter_hit_sha256": "968315eb3c3efa8a7dff86dc7894f1a70611409011758feec8b44c04b7e63a20",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 10368
+        },
+        "whole_board_C_count": 10368,
+        "whole_board_C_sha256": "b0e0ca923333c3380ae9ba3af3b22cfe98d8eb07931f59dec7fd20419116538a",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "native_checkpoint_sha256": "1bbb61aa23932a22ffe27a1d9e5ef19e51d899cf1395f8af2258a847257264dd",
+      "raw_C_with_six_terms_sha256": "e6ab4f5e49a77a8c84212d133e1938da677f372008e7adb99c504ba9c694d1ef",
+      "record_sha256": "db001ea84c67b5924aaca51d92f049f80f5c7d20b2f85a0342a147de6b57a4ab",
+      "scalar_trace": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          1,
+          1,
+          3
+        ],
+        [
+          1,
+          0,
+          3
+        ],
+        [
+          0,
+          -1,
+          3
+        ],
+        [
+          -1,
+          -1,
+          3
+        ],
+        [
+          -1,
+          0,
+          3
+        ],
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          1,
+          1,
+          3
+        ],
+        [
+          1,
+          0,
+          3
+        ],
+        [
+          0,
+          -1,
+          3
+        ],
+        [
+          -1,
+          -1,
+          3
+        ],
+        [
+          -1,
+          0,
+          3
+        ],
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          1,
+          1,
+          3
+        ],
+        [
+          1,
+          0,
+          3
+        ],
+        [
+          0,
+          -1,
+          3
+        ],
+        [
+          -1,
+          -1,
+          3
+        ],
+        [
+          -1,
+          0,
+          3
+        ],
+        [
+          0,
+          1,
+          3
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 15552,
+        "1": 0,
+        "2": 0
+      },
+      "all_observed_returns_within_H": [
+        6,
+        12,
+        18
+      ],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 2,
+        "b": -1,
+        "id": "spatial_period3-L3-r3-a2-b-1",
+        "lambda": 3,
+        "pattern": "spatial_period3",
+        "r": 3,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": 6,
+      "input_arrays_sha256": "a46ddaa909b39069a7bb3c0e463de8dbf1cca9b16769e66dda7d2aef6bd4ce70",
+      "integrity": {
+        "final_state_sha256": "e978b12b86371eea6900381a84afc8216cfa2e4d2cdfe97b27f4459c3db60039",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "e978b12b86371eea6900381a84afc8216cfa2e4d2cdfe97b27f4459c3db60039",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 15504,
+        "periodic_boundary_counter_hit_sha256": "968315eb3c3efa8a7dff86dc7894f1a70611409011758feec8b44c04b7e63a20",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 15552
+        },
+        "whole_board_C_count": 15552,
+        "whole_board_C_sha256": "3d1a3c8c4affab0b12c77324d18e7ed795b1958b092b5bb07dcaf6b22827bf0e",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "native_checkpoint_sha256": "c16417b1c32a0d58f10183f901ad0b3db68e70ff8e4b91783791af93589c20c9",
+      "raw_C_with_six_terms_sha256": "3bda4ff57afb1e65d78d69bd8f4bd1e58f8db4347f685f75705512df869ef59c",
+      "record_sha256": "8f64780ee6c3ff2846b58f15a6d606f3ab2e3f4fc68bc48331d746040c4b85f4",
+      "scalar_trace": [
+        [
+          2,
+          -1,
+          3
+        ],
+        [
+          -1,
+          -3,
+          3
+        ],
+        [
+          -3,
+          -2,
+          3
+        ],
+        [
+          -2,
+          1,
+          3
+        ],
+        [
+          1,
+          3,
+          3
+        ],
+        [
+          3,
+          2,
+          3
+        ],
+        [
+          2,
+          -1,
+          3
+        ],
+        [
+          -1,
+          -3,
+          3
+        ],
+        [
+          -3,
+          -2,
+          3
+        ],
+        [
+          -2,
+          1,
+          3
+        ],
+        [
+          1,
+          3,
+          3
+        ],
+        [
+          3,
+          2,
+          3
+        ],
+        [
+          2,
+          -1,
+          3
+        ],
+        [
+          -1,
+          -3,
+          3
+        ],
+        [
+          -3,
+          -2,
+          3
+        ],
+        [
+          -2,
+          1,
+          3
+        ],
+        [
+          1,
+          3,
+          3
+        ],
+        [
+          3,
+          2,
+          3
+        ],
+        [
+          2,
+          -1,
+          3
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 10368,
+        "1": 0,
+        "2": 0
+      },
+      "all_observed_returns_within_H": [
+        6,
+        12,
+        18
+      ],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 0,
+        "b": 1,
+        "id": "spatial_period3-L3-r4-a0-b1",
+        "lambda": 3,
+        "pattern": "spatial_period3",
+        "r": 4,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": 6,
+      "input_arrays_sha256": "f4de338100ada816470c4c0e4965dc2bfd48b12f4cedadd35fd29673ab77a5c0",
+      "integrity": {
+        "final_state_sha256": "e57c0954e71ffe726447cc78db8ab660e47b719c73e228891230f3a874214c4e",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "e57c0954e71ffe726447cc78db8ab660e47b719c73e228891230f3a874214c4e",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 15504,
+        "periodic_boundary_counter_hit_sha256": "968315eb3c3efa8a7dff86dc7894f1a70611409011758feec8b44c04b7e63a20",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 10368
+        },
+        "whole_board_C_count": 10368,
+        "whole_board_C_sha256": "b0e0ca923333c3380ae9ba3af3b22cfe98d8eb07931f59dec7fd20419116538a",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "native_checkpoint_sha256": "ea27842cb0639dfcf9137407fa70ce88c9afb1ad39f7b4e7a9d90e36fc61abda",
+      "raw_C_with_six_terms_sha256": "e6ab4f5e49a77a8c84212d133e1938da677f372008e7adb99c504ba9c694d1ef",
+      "record_sha256": "1d806b88ce6027f5140e03a61829bd5d15eb4de153c193f89ab2e225adb0236f",
+      "scalar_trace": [
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          1,
+          1,
+          4
+        ],
+        [
+          1,
+          0,
+          4
+        ],
+        [
+          0,
+          -1,
+          4
+        ],
+        [
+          -1,
+          -1,
+          4
+        ],
+        [
+          -1,
+          0,
+          4
+        ],
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          1,
+          1,
+          4
+        ],
+        [
+          1,
+          0,
+          4
+        ],
+        [
+          0,
+          -1,
+          4
+        ],
+        [
+          -1,
+          -1,
+          4
+        ],
+        [
+          -1,
+          0,
+          4
+        ],
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          1,
+          1,
+          4
+        ],
+        [
+          1,
+          0,
+          4
+        ],
+        [
+          0,
+          -1,
+          4
+        ],
+        [
+          -1,
+          -1,
+          4
+        ],
+        [
+          -1,
+          0,
+          4
+        ],
+        [
+          0,
+          1,
+          4
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 15552,
+        "1": 0,
+        "2": 0
+      },
+      "all_observed_returns_within_H": [
+        6,
+        12,
+        18
+      ],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 2,
+        "b": -1,
+        "id": "spatial_period3-L3-r4-a2-b-1",
+        "lambda": 3,
+        "pattern": "spatial_period3",
+        "r": 4,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": 6,
+      "input_arrays_sha256": "a46ddaa909b39069a7bb3c0e463de8dbf1cca9b16769e66dda7d2aef6bd4ce70",
+      "integrity": {
+        "final_state_sha256": "33c25d09d29b0e6ccb2917b5d3ddb78a29aedcfdafa91670674ff1eb2964db6a",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "33c25d09d29b0e6ccb2917b5d3ddb78a29aedcfdafa91670674ff1eb2964db6a",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 15504,
+        "periodic_boundary_counter_hit_sha256": "968315eb3c3efa8a7dff86dc7894f1a70611409011758feec8b44c04b7e63a20",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 15552
+        },
+        "whole_board_C_count": 15552,
+        "whole_board_C_sha256": "3d1a3c8c4affab0b12c77324d18e7ed795b1958b092b5bb07dcaf6b22827bf0e",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "native_checkpoint_sha256": "7fb695fa7f6e9c9f4485423cc7cdffe7eca420d69336e801eeba1eac5b5516b2",
+      "raw_C_with_six_terms_sha256": "3bda4ff57afb1e65d78d69bd8f4bd1e58f8db4347f685f75705512df869ef59c",
+      "record_sha256": "b8acdefbe75f8eed83858f65d4c8ef38667d145c7b3334e0068a4c357a85ece4",
+      "scalar_trace": [
+        [
+          2,
+          -1,
+          4
+        ],
+        [
+          -1,
+          -3,
+          4
+        ],
+        [
+          -3,
+          -2,
+          4
+        ],
+        [
+          -2,
+          1,
+          4
+        ],
+        [
+          1,
+          3,
+          4
+        ],
+        [
+          3,
+          2,
+          4
+        ],
+        [
+          2,
+          -1,
+          4
+        ],
+        [
+          -1,
+          -3,
+          4
+        ],
+        [
+          -3,
+          -2,
+          4
+        ],
+        [
+          -2,
+          1,
+          4
+        ],
+        [
+          1,
+          3,
+          4
+        ],
+        [
+          3,
+          2,
+          4
+        ],
+        [
+          2,
+          -1,
+          4
+        ],
+        [
+          -1,
+          -3,
+          4
+        ],
+        [
+          -3,
+          -2,
+          4
+        ],
+        [
+          -2,
+          1,
+          4
+        ],
+        [
+          1,
+          3,
+          4
+        ],
+        [
+          3,
+          2,
+          4
+        ],
+        [
+          2,
+          -1,
+          4
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 10368,
+        "1": 0,
+        "2": 0
+      },
+      "all_observed_returns_within_H": [
+        6,
+        12,
+        18
+      ],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 0,
+        "b": 1,
+        "id": "spatial_period3-L3-r5-a0-b1",
+        "lambda": 3,
+        "pattern": "spatial_period3",
+        "r": 5,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": 6,
+      "input_arrays_sha256": "f4de338100ada816470c4c0e4965dc2bfd48b12f4cedadd35fd29673ab77a5c0",
+      "integrity": {
+        "final_state_sha256": "fbf7bd1185fa32ad118ecc23a716cb7261742f5977b5ad92417c53330a6bc038",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "fbf7bd1185fa32ad118ecc23a716cb7261742f5977b5ad92417c53330a6bc038",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 15504,
+        "periodic_boundary_counter_hit_sha256": "968315eb3c3efa8a7dff86dc7894f1a70611409011758feec8b44c04b7e63a20",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 10368
+        },
+        "whole_board_C_count": 10368,
+        "whole_board_C_sha256": "b0e0ca923333c3380ae9ba3af3b22cfe98d8eb07931f59dec7fd20419116538a",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "native_checkpoint_sha256": "8baaa53e3f68a43ce784a6d597a5f63a967c96fcc25ece609605c36b33026643",
+      "raw_C_with_six_terms_sha256": "e6ab4f5e49a77a8c84212d133e1938da677f372008e7adb99c504ba9c694d1ef",
+      "record_sha256": "c56e3571bba7bf9a66d2f01724b9a07e90365035a02bc182ff4d4d228b8dc016",
+      "scalar_trace": [
+        [
+          0,
+          1,
+          5
+        ],
+        [
+          1,
+          1,
+          5
+        ],
+        [
+          1,
+          0,
+          5
+        ],
+        [
+          0,
+          -1,
+          5
+        ],
+        [
+          -1,
+          -1,
+          5
+        ],
+        [
+          -1,
+          0,
+          5
+        ],
+        [
+          0,
+          1,
+          5
+        ],
+        [
+          1,
+          1,
+          5
+        ],
+        [
+          1,
+          0,
+          5
+        ],
+        [
+          0,
+          -1,
+          5
+        ],
+        [
+          -1,
+          -1,
+          5
+        ],
+        [
+          -1,
+          0,
+          5
+        ],
+        [
+          0,
+          1,
+          5
+        ],
+        [
+          1,
+          1,
+          5
+        ],
+        [
+          1,
+          0,
+          5
+        ],
+        [
+          0,
+          -1,
+          5
+        ],
+        [
+          -1,
+          -1,
+          5
+        ],
+        [
+          -1,
+          0,
+          5
+        ],
+        [
+          0,
+          1,
+          5
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 15552,
+        "1": 0,
+        "2": 0
+      },
+      "all_observed_returns_within_H": [
+        6,
+        12,
+        18
+      ],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 2,
+        "b": -1,
+        "id": "spatial_period3-L3-r5-a2-b-1",
+        "lambda": 3,
+        "pattern": "spatial_period3",
+        "r": 5,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": 6,
+      "input_arrays_sha256": "a46ddaa909b39069a7bb3c0e463de8dbf1cca9b16769e66dda7d2aef6bd4ce70",
+      "integrity": {
+        "final_state_sha256": "6fee095d96fd074122218026aac26bc19179a64f5ea603c81a582aca39afbca3",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "6fee095d96fd074122218026aac26bc19179a64f5ea603c81a582aca39afbca3",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 15504,
+        "periodic_boundary_counter_hit_sha256": "968315eb3c3efa8a7dff86dc7894f1a70611409011758feec8b44c04b7e63a20",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 15552
+        },
+        "whole_board_C_count": 15552,
+        "whole_board_C_sha256": "3d1a3c8c4affab0b12c77324d18e7ed795b1958b092b5bb07dcaf6b22827bf0e",
+        "whole_board_R_change_count": 0,
+        "whole_board_R_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "native_checkpoint_sha256": "a206ddb4d63c51abfe5bd3de81e6df6b151f6a06ddbbcb9c17e9beffe5316eb7",
+      "raw_C_with_six_terms_sha256": "3bda4ff57afb1e65d78d69bd8f4bd1e58f8db4347f685f75705512df869ef59c",
+      "record_sha256": "4eb1059a2fd0516ad13beeaf669a89f2e162a784c8e7b4f32515fbe22cfffce4",
+      "scalar_trace": [
+        [
+          2,
+          -1,
+          5
+        ],
+        [
+          -1,
+          -3,
+          5
+        ],
+        [
+          -3,
+          -2,
+          5
+        ],
+        [
+          -2,
+          1,
+          5
+        ],
+        [
+          1,
+          3,
+          5
+        ],
+        [
+          3,
+          2,
+          5
+        ],
+        [
+          2,
+          -1,
+          5
+        ],
+        [
+          -1,
+          -3,
+          5
+        ],
+        [
+          -3,
+          -2,
+          5
+        ],
+        [
+          -2,
+          1,
+          5
+        ],
+        [
+          1,
+          3,
+          5
+        ],
+        [
+          3,
+          2,
+          5
+        ],
+        [
+          2,
+          -1,
+          5
+        ],
+        [
+          -1,
+          -3,
+          5
+        ],
+        [
+          -3,
+          -2,
+          5
+        ],
+        [
+          -2,
+          1,
+          5
+        ],
+        [
+          1,
+          3,
+          5
+        ],
+        [
+          3,
+          2,
+          5
+        ],
+        [
+          2,
+          -1,
+          5
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 0,
+        "1": 9216,
+        "2": 9216
+      },
+      "all_observed_returns_within_H": [
+        6,
+        12,
+        18
+      ],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 0,
+        "b": 1,
+        "id": "spatial_period4-L4-r0-a0-b1",
+        "lambda": 4,
+        "pattern": "spatial_period4",
+        "r": 0,
+        "side": 4,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": 6,
+      "input_arrays_sha256": "0ab3a0f95a07dfe9610550d4cdad54f5473d26d918602fda2fd6d0b8ab750b1d",
+      "integrity": {
+        "final_state_sha256": "a7570fcc469c78c5c9dc62a1841aba861631fd348b44b9839ca9676078fc676f",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "a7570fcc469c78c5c9dc62a1841aba861631fd348b44b9839ca9676078fc676f",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 25536,
+        "periodic_boundary_counter_hit_sha256": "b4dd27e7bf84726a8287c179266b981817c1e86819c162dd24d9272e9b35678b",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "1": 9216,
+          "2": 9216
+        },
+        "whole_board_C_count": 18432,
+        "whole_board_C_sha256": "46f6e40b4697d94ee7e9fc859003f4be88455c7f13ce50382f180d1ffb1f949b",
+        "whole_board_R_change_count": 18432,
+        "whole_board_R_sha256": "936a93e6078db48625b96014687a3dddac542b55372213663cd45258a7b571ff"
+      },
+      "native_checkpoint_sha256": "ef59c550a8e2160f10b0be2cd063b3f513e9286b29f5995a12c8f2c3e11e2c52",
+      "raw_C_with_six_terms_sha256": "9154069d5c714141581606e739301539c01763bea612f51eaff1c9ccb268fe7a",
+      "record_sha256": "075ea494cca1931e63b6419536996e2832dc9225421a4b8fae77711388d651b9",
+      "scalar_trace": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          0,
+          4
+        ],
+        [
+          0,
+          -1,
+          4
+        ],
+        [
+          -1,
+          -1,
+          2
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          0,
+          4
+        ],
+        [
+          0,
+          -1,
+          4
+        ],
+        [
+          -1,
+          -1,
+          2
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          0,
+          4
+        ],
+        [
+          0,
+          -1,
+          4
+        ],
+        [
+          -1,
+          -1,
+          2
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 4608,
+        "1": 10752,
+        "2": 10752
+      },
+      "all_observed_returns_within_H": [],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 2,
+        "b": -1,
+        "id": "spatial_period4-L4-r0-a2-b-1",
+        "lambda": 4,
+        "pattern": "spatial_period4",
+        "r": 0,
+        "side": 4,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": null,
+      "input_arrays_sha256": "73ce27edbc4e36faf523ad90e893a9f72141499e4924ea5f6fcb5d30792ad438",
+      "integrity": {
+        "final_state_sha256": "ebf963c22b2634a3618671a4d671975560e79bae6178d499815d9398409350bf",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "8d104102ee8886a06b689a3eb84cb301ff92b9cec2d39835206d71ccaa673e9f",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 25536,
+        "periodic_boundary_counter_hit_sha256": "b4dd27e7bf84726a8287c179266b981817c1e86819c162dd24d9272e9b35678b",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 4608,
+          "1": 10752,
+          "2": 10752
+        },
+        "whole_board_C_count": 26112,
+        "whole_board_C_sha256": "d749cb6c86ce68078492a47b43c341e1595b7941fcfeb69022c0d90bc9186895",
+        "whole_board_R_change_count": 21504,
+        "whole_board_R_sha256": "b6b2454eebbbfad885463277d2571bb63d1cb0ff01ec51da967122aa14111e99"
+      },
+      "native_checkpoint_sha256": "903cbe20f3fa83ef0e55a7471504bd60a957df2fc66f4d66985b8507e3460a4f",
+      "raw_C_with_six_terms_sha256": "1c0cae5014ad8b227de0dbf3c93bc54d7f8bf695ca4eed570f3888247af096b7",
+      "record_sha256": "54be8b2113f9e141fde661686b84fb8d2eeea9ac67889fb3e5db2193e22124e0",
+      "scalar_trace": [
+        [
+          2,
+          -1,
+          0
+        ],
+        [
+          -1,
+          -4,
+          4
+        ],
+        [
+          -4,
+          -4,
+          2
+        ],
+        [
+          -4,
+          -1,
+          0
+        ],
+        [
+          -1,
+          2,
+          4
+        ],
+        [
+          2,
+          4,
+          2
+        ],
+        [
+          4,
+          3,
+          4
+        ],
+        [
+          3,
+          0,
+          4
+        ],
+        [
+          0,
+          -3,
+          4
+        ],
+        [
+          -3,
+          -4,
+          4
+        ],
+        [
+          -4,
+          -2,
+          2
+        ],
+        [
+          -2,
+          1,
+          4
+        ],
+        [
+          1,
+          4,
+          0
+        ],
+        [
+          4,
+          4,
+          2
+        ],
+        [
+          4,
+          1,
+          4
+        ],
+        [
+          1,
+          -2,
+          0
+        ],
+        [
+          -2,
+          -4,
+          2
+        ],
+        [
+          -4,
+          -3,
+          0
+        ],
+        [
+          -3,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 0,
+        "1": 9216,
+        "2": 9216
+      },
+      "all_observed_returns_within_H": [
+        6,
+        12,
+        18
+      ],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 0,
+        "b": 1,
+        "id": "spatial_period4-L4-r1-a0-b1",
+        "lambda": 4,
+        "pattern": "spatial_period4",
+        "r": 1,
+        "side": 4,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": 6,
+      "input_arrays_sha256": "0ab3a0f95a07dfe9610550d4cdad54f5473d26d918602fda2fd6d0b8ab750b1d",
+      "integrity": {
+        "final_state_sha256": "44225e8d28a58964419ca69edec09da1434d20e46d374692db3e750ef818d892",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "44225e8d28a58964419ca69edec09da1434d20e46d374692db3e750ef818d892",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 25536,
+        "periodic_boundary_counter_hit_sha256": "b4dd27e7bf84726a8287c179266b981817c1e86819c162dd24d9272e9b35678b",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "1": 9216,
+          "2": 9216
+        },
+        "whole_board_C_count": 18432,
+        "whole_board_C_sha256": "46f6e40b4697d94ee7e9fc859003f4be88455c7f13ce50382f180d1ffb1f949b",
+        "whole_board_R_change_count": 18432,
+        "whole_board_R_sha256": "c08959aac7d56101d40d5a56dfa2efbd46c5eb4b408171e672a990d3d1b1ba54"
+      },
+      "native_checkpoint_sha256": "9fdfe251a0e43b0b3df24df1e78fd1334dae74a80a377fc1d72655224c3cb8e9",
+      "raw_C_with_six_terms_sha256": "9154069d5c714141581606e739301539c01763bea612f51eaff1c9ccb268fe7a",
+      "record_sha256": "24e8ef2b7b110900f67ada4e62f422b4291ad56d3e775b373b57d974092f4e54",
+      "scalar_trace": [
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          3
+        ],
+        [
+          1,
+          0,
+          5
+        ],
+        [
+          0,
+          -1,
+          5
+        ],
+        [
+          -1,
+          -1,
+          3
+        ],
+        [
+          -1,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          3
+        ],
+        [
+          1,
+          0,
+          5
+        ],
+        [
+          0,
+          -1,
+          5
+        ],
+        [
+          -1,
+          -1,
+          3
+        ],
+        [
+          -1,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          3
+        ],
+        [
+          1,
+          0,
+          5
+        ],
+        [
+          0,
+          -1,
+          5
+        ],
+        [
+          -1,
+          -1,
+          3
+        ],
+        [
+          -1,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 4608,
+        "1": 10752,
+        "2": 10752
+      },
+      "all_observed_returns_within_H": [],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 2,
+        "b": -1,
+        "id": "spatial_period4-L4-r1-a2-b-1",
+        "lambda": 4,
+        "pattern": "spatial_period4",
+        "r": 1,
+        "side": 4,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": null,
+      "input_arrays_sha256": "73ce27edbc4e36faf523ad90e893a9f72141499e4924ea5f6fcb5d30792ad438",
+      "integrity": {
+        "final_state_sha256": "e1cee066244210572947e1b991a937679c391a32d8f1641b241f6638e5293f86",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "4018f5157ba01a24961a4750d27a3367dad38f6d36b9a6e2cc73488ce768133e",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 25536,
+        "periodic_boundary_counter_hit_sha256": "b4dd27e7bf84726a8287c179266b981817c1e86819c162dd24d9272e9b35678b",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 4608,
+          "1": 10752,
+          "2": 10752
+        },
+        "whole_board_C_count": 26112,
+        "whole_board_C_sha256": "d749cb6c86ce68078492a47b43c341e1595b7941fcfeb69022c0d90bc9186895",
+        "whole_board_R_change_count": 21504,
+        "whole_board_R_sha256": "674e282846f541cf44f42a433642c078aa7706432a7ea338b78f09c7c6d7ef5a"
+      },
+      "native_checkpoint_sha256": "a0a41550a33a00fbb00959abf20f1011c1752dacde0efd04a06d2c3144c7a7e3",
+      "raw_C_with_six_terms_sha256": "1c0cae5014ad8b227de0dbf3c93bc54d7f8bf695ca4eed570f3888247af096b7",
+      "record_sha256": "a819bb248069580f9090fa2ccb50cb553e4b2204104ca4183a89a19c0155eb57",
+      "scalar_trace": [
+        [
+          2,
+          -1,
+          1
+        ],
+        [
+          -1,
+          -4,
+          5
+        ],
+        [
+          -4,
+          -4,
+          3
+        ],
+        [
+          -4,
+          -1,
+          1
+        ],
+        [
+          -1,
+          2,
+          5
+        ],
+        [
+          2,
+          4,
+          3
+        ],
+        [
+          4,
+          3,
+          5
+        ],
+        [
+          3,
+          0,
+          5
+        ],
+        [
+          0,
+          -3,
+          5
+        ],
+        [
+          -3,
+          -4,
+          5
+        ],
+        [
+          -4,
+          -2,
+          3
+        ],
+        [
+          -2,
+          1,
+          5
+        ],
+        [
+          1,
+          4,
+          1
+        ],
+        [
+          4,
+          4,
+          3
+        ],
+        [
+          4,
+          1,
+          5
+        ],
+        [
+          1,
+          -2,
+          1
+        ],
+        [
+          -2,
+          -4,
+          3
+        ],
+        [
+          -4,
+          -3,
+          1
+        ],
+        [
+          -3,
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 0,
+        "1": 10752,
+        "2": 10752
+      },
+      "all_observed_returns_within_H": [
+        8,
+        16
+      ],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 0,
+        "b": 1,
+        "id": "spatial_period4-L4-r2-a0-b1",
+        "lambda": 4,
+        "pattern": "spatial_period4",
+        "r": 2,
+        "side": 4,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": 8,
+      "input_arrays_sha256": "cf4471ed180c8b86003ac36ce16c7637d1c9a77915e2100531995db04884741b",
+      "integrity": {
+        "final_state_sha256": "b1abbbb853da5e335eaaf156e80f9253bd1e45d3bfe896ecbfb1ea547532c6f7",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "5c51489154106f4dd1293b7343d7c3738e594995f33e7225dd19989d2b645cda",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 25536,
+        "periodic_boundary_counter_hit_sha256": "b4dd27e7bf84726a8287c179266b981817c1e86819c162dd24d9272e9b35678b",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "1": 10752,
+          "2": 10752
+        },
+        "whole_board_C_count": 21504,
+        "whole_board_C_sha256": "844556b0b56807c00a2fb4d8fd7aeedb96df52a19e0cb8e2627d1fdbfc895c2f",
+        "whole_board_R_change_count": 21504,
+        "whole_board_R_sha256": "e5142d5d9183e666bb146f4370e00bb2af6009c9246089cf81b565aec8cc0b42"
+      },
+      "native_checkpoint_sha256": "ac54a1160cfbcd0c8952c4c61cdc226b02fe9225ec5e3baaeaf104d2cdf48bc0",
+      "raw_C_with_six_terms_sha256": "9016124228ee9abd8ffae5dd55d4370c1d36640b40f94306fd79863012a68025",
+      "record_sha256": "d66c3d3b6956a27b4127d33b5b927adbc3121ef323403d605ef460424573a2f0",
+      "scalar_trace": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          1,
+          1,
+          4
+        ],
+        [
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          2
+        ],
+        [
+          0,
+          -1,
+          2
+        ],
+        [
+          -1,
+          -1,
+          0
+        ],
+        [
+          -1,
+          -1,
+          4
+        ],
+        [
+          -1,
+          0,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          1,
+          1,
+          4
+        ],
+        [
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          2
+        ],
+        [
+          0,
+          -1,
+          2
+        ],
+        [
+          -1,
+          -1,
+          0
+        ],
+        [
+          -1,
+          -1,
+          4
+        ],
+        [
+          -1,
+          0,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          1,
+          1,
+          4
+        ],
+        [
+          1,
+          1,
+          0
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 12288,
+        "1": 6912,
+        "2": 6912
+      },
+      "all_observed_returns_within_H": [
+        15
+      ],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 2,
+        "b": -1,
+        "id": "spatial_period4-L4-r2-a2-b-1",
+        "lambda": 4,
+        "pattern": "spatial_period4",
+        "r": 2,
+        "side": 4,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": 15,
+      "input_arrays_sha256": "3c265f2c32021b8aa6e3b0011c8595699df83dcceacccb4c59347a3b85613229",
+      "integrity": {
+        "final_state_sha256": "d9ca8e80f2ca40f7c72ab646782b71b38659578d3c37b10ff7f89bb40de9c6c3",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "48933d8246e1aff2959fe575868d0c695fb819a7812310d5f8f0bb4d59a520f4",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 25536,
+        "periodic_boundary_counter_hit_sha256": "b4dd27e7bf84726a8287c179266b981817c1e86819c162dd24d9272e9b35678b",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 12288,
+          "1": 6912,
+          "2": 6912
+        },
+        "whole_board_C_count": 26112,
+        "whole_board_C_sha256": "66329f7f899809a16506cb0d690f9ee264920b7a0fc97f1089b762395b9ef997",
+        "whole_board_R_change_count": 13824,
+        "whole_board_R_sha256": "c597ec1d5688d570c7e67f68402bc9fc268daf5ffb6cf05c868d53b4ce308730"
+      },
+      "native_checkpoint_sha256": "0fe56105b818fae47844b19131fbe9f25908a3c874b5a75508fb07a859770fce",
+      "raw_C_with_six_terms_sha256": "39f91f9856c05cb4fff5ee4e02300dc913251e83a95b18edea9e6a4fff6c8b95",
+      "record_sha256": "82a62f0398600d4c013a02b62335c09f93bb1036e4854050d27560280a070b73",
+      "scalar_trace": [
+        [
+          2,
+          -1,
+          2
+        ],
+        [
+          -1,
+          -3,
+          0
+        ],
+        [
+          -3,
+          -3,
+          0
+        ],
+        [
+          -3,
+          -1,
+          0
+        ],
+        [
+          -1,
+          1,
+          4
+        ],
+        [
+          1,
+          3,
+          0
+        ],
+        [
+          3,
+          3,
+          0
+        ],
+        [
+          3,
+          1,
+          0
+        ],
+        [
+          1,
+          -2,
+          2
+        ],
+        [
+          -2,
+          -4,
+          4
+        ],
+        [
+          -4,
+          -3,
+          2
+        ],
+        [
+          -3,
+          0,
+          2
+        ],
+        [
+          0,
+          3,
+          2
+        ],
+        [
+          3,
+          4,
+          2
+        ],
+        [
+          4,
+          2,
+          4
+        ],
+        [
+          2,
+          -1,
+          2
+        ],
+        [
+          -1,
+          -3,
+          0
+        ],
+        [
+          -3,
+          -3,
+          0
+        ],
+        [
+          -3,
+          -1,
+          0
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 0,
+        "1": 10752,
+        "2": 10752
+      },
+      "all_observed_returns_within_H": [
+        8,
+        16
+      ],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 0,
+        "b": 1,
+        "id": "spatial_period4-L4-r3-a0-b1",
+        "lambda": 4,
+        "pattern": "spatial_period4",
+        "r": 3,
+        "side": 4,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": 8,
+      "input_arrays_sha256": "cf4471ed180c8b86003ac36ce16c7637d1c9a77915e2100531995db04884741b",
+      "integrity": {
+        "final_state_sha256": "8bdb96c90a6ad3d0a6ea0eb752f837362ea714373dfda34c1e70ddefb265823c",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "a18fe0b2a0e6b43bfb1197a3d0d636c934c345645167ad76c00182f2abb3b1dc",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 25536,
+        "periodic_boundary_counter_hit_sha256": "b4dd27e7bf84726a8287c179266b981817c1e86819c162dd24d9272e9b35678b",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "1": 10752,
+          "2": 10752
+        },
+        "whole_board_C_count": 21504,
+        "whole_board_C_sha256": "844556b0b56807c00a2fb4d8fd7aeedb96df52a19e0cb8e2627d1fdbfc895c2f",
+        "whole_board_R_change_count": 21504,
+        "whole_board_R_sha256": "77b5195a407d8267328eff2b13e3f234573808ab43199952672c98e4e7ef90e7"
+      },
+      "native_checkpoint_sha256": "e96e8ad5b83f9690a065ea4b252fae9e1b9c7c6c38f7d468771b3a831b37beb8",
+      "raw_C_with_six_terms_sha256": "9016124228ee9abd8ffae5dd55d4370c1d36640b40f94306fd79863012a68025",
+      "record_sha256": "ece9bb0fadc3a8b48f8905c16a17d5f6c8665bea8d7bae5c4866cf2c71fbc8d3",
+      "scalar_trace": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          1,
+          1,
+          5
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          3
+        ],
+        [
+          0,
+          -1,
+          3
+        ],
+        [
+          -1,
+          -1,
+          1
+        ],
+        [
+          -1,
+          -1,
+          5
+        ],
+        [
+          -1,
+          0,
+          3
+        ],
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          1,
+          1,
+          5
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          3
+        ],
+        [
+          0,
+          -1,
+          3
+        ],
+        [
+          -1,
+          -1,
+          1
+        ],
+        [
+          -1,
+          -1,
+          5
+        ],
+        [
+          -1,
+          0,
+          3
+        ],
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          1,
+          1,
+          5
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 12288,
+        "1": 6912,
+        "2": 6912
+      },
+      "all_observed_returns_within_H": [
+        15
+      ],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 2,
+        "b": -1,
+        "id": "spatial_period4-L4-r3-a2-b-1",
+        "lambda": 4,
+        "pattern": "spatial_period4",
+        "r": 3,
+        "side": 4,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": 15,
+      "input_arrays_sha256": "3c265f2c32021b8aa6e3b0011c8595699df83dcceacccb4c59347a3b85613229",
+      "integrity": {
+        "final_state_sha256": "2e2d5f7d4a5529179804641901f3c3c8c8ae29560fe776e5772ba5f6cf29e6b0",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "b8c5b19a80308a9bebc9b15134c0bbceacf53a0d2dc25cbbfa31c6a9853292d6",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 25536,
+        "periodic_boundary_counter_hit_sha256": "b4dd27e7bf84726a8287c179266b981817c1e86819c162dd24d9272e9b35678b",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 12288,
+          "1": 6912,
+          "2": 6912
+        },
+        "whole_board_C_count": 26112,
+        "whole_board_C_sha256": "66329f7f899809a16506cb0d690f9ee264920b7a0fc97f1089b762395b9ef997",
+        "whole_board_R_change_count": 13824,
+        "whole_board_R_sha256": "c426ac14342bc98f572e8bde0925aa4ebe4bb692518ab9f0c09cd723b95cb58e"
+      },
+      "native_checkpoint_sha256": "add0a964ee5b81c73c938ad4a18cbb785e70553a6c62842acc1c0c49f635564e",
+      "raw_C_with_six_terms_sha256": "39f91f9856c05cb4fff5ee4e02300dc913251e83a95b18edea9e6a4fff6c8b95",
+      "record_sha256": "61034192bd2f2f24d557a53b5cd90d7d54642c9919b8f5806a565b006e89e2f9",
+      "scalar_trace": [
+        [
+          2,
+          -1,
+          3
+        ],
+        [
+          -1,
+          -3,
+          1
+        ],
+        [
+          -3,
+          -3,
+          1
+        ],
+        [
+          -3,
+          -1,
+          1
+        ],
+        [
+          -1,
+          1,
+          5
+        ],
+        [
+          1,
+          3,
+          1
+        ],
+        [
+          3,
+          3,
+          1
+        ],
+        [
+          3,
+          1,
+          1
+        ],
+        [
+          1,
+          -2,
+          3
+        ],
+        [
+          -2,
+          -4,
+          5
+        ],
+        [
+          -4,
+          -3,
+          3
+        ],
+        [
+          -3,
+          0,
+          3
+        ],
+        [
+          0,
+          3,
+          3
+        ],
+        [
+          3,
+          4,
+          3
+        ],
+        [
+          4,
+          2,
+          5
+        ],
+        [
+          2,
+          -1,
+          3
+        ],
+        [
+          -1,
+          -3,
+          1
+        ],
+        [
+          -3,
+          -3,
+          1
+        ],
+        [
+          -3,
+          -1,
+          1
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 0,
+        "1": 10752,
+        "2": 10752
+      },
+      "all_observed_returns_within_H": [
+        8,
+        16
+      ],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 0,
+        "b": 1,
+        "id": "spatial_period4-L4-r4-a0-b1",
+        "lambda": 4,
+        "pattern": "spatial_period4",
+        "r": 4,
+        "side": 4,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": 8,
+      "input_arrays_sha256": "741c11a370ef8de93adf3f6d09e4df06862c5d005589c087aee7bd40571d0506",
+      "integrity": {
+        "final_state_sha256": "e36a9f59879de426a2311ffade9788c39566b825b640524fa2d7918882b01ea5",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "8ffc8711e83d4e9f2d853f9679fe549d9c90a7058f9ff6d6cba180e5195cc7da",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 25536,
+        "periodic_boundary_counter_hit_sha256": "b4dd27e7bf84726a8287c179266b981817c1e86819c162dd24d9272e9b35678b",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "1": 10752,
+          "2": 10752
+        },
+        "whole_board_C_count": 21504,
+        "whole_board_C_sha256": "fb3a722b9e15985082baaac21587474d1225722b75984ba16bd584caf01c9163",
+        "whole_board_R_change_count": 21504,
+        "whole_board_R_sha256": "7c418712ac28fefb54dce74f3ade39f90edc48cf208595e07f4d1f8b886c57f3"
+      },
+      "native_checkpoint_sha256": "6e85a7db68bec0a7dc846678ea324a152242ea2118dbf07d077b2a95d5d0530f",
+      "raw_C_with_six_terms_sha256": "28f4e4e8bf504a7b8ca97a8d59ff74d4c8be018c0b89a0e7c6e73aff32972d6b",
+      "record_sha256": "abccf4b1721d4711b7738b1459a7ebc88c91ff5e4bc6f95a71f67abb8850e346",
+      "scalar_trace": [
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          1,
+          2,
+          0
+        ],
+        [
+          2,
+          1,
+          4
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          -1,
+          -2,
+          4
+        ],
+        [
+          -2,
+          -1,
+          0
+        ],
+        [
+          -1,
+          0,
+          4
+        ],
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          1,
+          2,
+          0
+        ],
+        [
+          2,
+          1,
+          4
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          -1,
+          -2,
+          4
+        ],
+        [
+          -2,
+          -1,
+          0
+        ],
+        [
+          -1,
+          0,
+          4
+        ],
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          1,
+          2,
+          0
+        ],
+        [
+          2,
+          1,
+          4
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 10752,
+        "1": 7680,
+        "2": 7680
+      },
+      "all_observed_returns_within_H": [],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 2,
+        "b": -1,
+        "id": "spatial_period4-L4-r4-a2-b-1",
+        "lambda": 4,
+        "pattern": "spatial_period4",
+        "r": 4,
+        "side": 4,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": null,
+      "input_arrays_sha256": "822b3d7893b8c3219279d104fb5c4d5e3ec17cdf0c187d8eb4b9917d24eb4f93",
+      "integrity": {
+        "final_state_sha256": "25f299dc2884450108bb0ff10bea5d1b2108a32f9ff6063e3e60c3b3a0217052",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "7ed8f556d9ff0f5f0588710156b31eb1450aa523e0aa0e65bba401a63b8d07b6",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 25536,
+        "periodic_boundary_counter_hit_sha256": "b4dd27e7bf84726a8287c179266b981817c1e86819c162dd24d9272e9b35678b",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 10752,
+          "1": 7680,
+          "2": 7680
+        },
+        "whole_board_C_count": 26112,
+        "whole_board_C_sha256": "e836b2bb1b917fe036d1797043b7261536989e562e5c0eeb7259a8fbc8e3e710",
+        "whole_board_R_change_count": 15360,
+        "whole_board_R_sha256": "766dc55fdd58c75df107981f2559f08f70988895be4e51928e0ecfb164ae6155"
+      },
+      "native_checkpoint_sha256": "734964d355e4d80c5be4381f3f1035037d1a3a3aab483f3af69f239380a098b7",
+      "raw_C_with_six_terms_sha256": "8ffb2801080add83e4c52c02df23bd0e750ca69f0bb232c23976221f9489b9a3",
+      "record_sha256": "b12300150f44a012c8aea47b33df3610a0f27f60ec57a74ec34b476337ae7f83",
+      "scalar_trace": [
+        [
+          2,
+          -1,
+          4
+        ],
+        [
+          -1,
+          -3,
+          2
+        ],
+        [
+          -3,
+          -3,
+          2
+        ],
+        [
+          -3,
+          -1,
+          2
+        ],
+        [
+          -1,
+          2,
+          0
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          3,
+          2,
+          4
+        ],
+        [
+          2,
+          0,
+          2
+        ],
+        [
+          0,
+          -2,
+          2
+        ],
+        [
+          -2,
+          -3,
+          4
+        ],
+        [
+          -3,
+          -2,
+          4
+        ],
+        [
+          -2,
+          1,
+          0
+        ],
+        [
+          1,
+          3,
+          2
+        ],
+        [
+          3,
+          3,
+          2
+        ],
+        [
+          3,
+          1,
+          2
+        ],
+        [
+          1,
+          -2,
+          4
+        ],
+        [
+          -2,
+          -3,
+          0
+        ],
+        [
+          -3,
+          -2,
+          0
+        ],
+        [
+          -2,
+          0,
+          2
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 0,
+        "1": 10752,
+        "2": 10752
+      },
+      "all_observed_returns_within_H": [
+        8,
+        16
+      ],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 0,
+        "b": 1,
+        "id": "spatial_period4-L4-r5-a0-b1",
+        "lambda": 4,
+        "pattern": "spatial_period4",
+        "r": 5,
+        "side": 4,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": 8,
+      "input_arrays_sha256": "741c11a370ef8de93adf3f6d09e4df06862c5d005589c087aee7bd40571d0506",
+      "integrity": {
+        "final_state_sha256": "9063ac74132c39f63ca1d0bca640c54747ad4458d5d8d16e6e6b85bc4d553287",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "bdb229570e6e135adae09d9efba6d1452965b6c3ffc6edb9ee8017b8e6db179c",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 25536,
+        "periodic_boundary_counter_hit_sha256": "b4dd27e7bf84726a8287c179266b981817c1e86819c162dd24d9272e9b35678b",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "1": 10752,
+          "2": 10752
+        },
+        "whole_board_C_count": 21504,
+        "whole_board_C_sha256": "fb3a722b9e15985082baaac21587474d1225722b75984ba16bd584caf01c9163",
+        "whole_board_R_change_count": 21504,
+        "whole_board_R_sha256": "00fd437db2f03d6f2fa6ea9116cfc1d2ebf717ab8a0472791d15bccb51965130"
+      },
+      "native_checkpoint_sha256": "8e9d9cf00630d8db56af238640cb6ea235ad625d9877a2cd8dcf905efcde678f",
+      "raw_C_with_six_terms_sha256": "28f4e4e8bf504a7b8ca97a8d59ff74d4c8be018c0b89a0e7c6e73aff32972d6b",
+      "record_sha256": "2e95503fe9762ecb7a96d675870093c9e1b30bbd8e2ff5963b2d3ecdc5f60ab6",
+      "scalar_trace": [
+        [
+          0,
+          1,
+          5
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          2,
+          1,
+          5
+        ],
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          -1,
+          1
+        ],
+        [
+          -1,
+          -2,
+          5
+        ],
+        [
+          -2,
+          -1,
+          1
+        ],
+        [
+          -1,
+          0,
+          5
+        ],
+        [
+          0,
+          1,
+          5
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          2,
+          1,
+          5
+        ],
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          -1,
+          1
+        ],
+        [
+          -1,
+          -2,
+          5
+        ],
+        [
+          -2,
+          -1,
+          1
+        ],
+        [
+          -1,
+          0,
+          5
+        ],
+        [
+          0,
+          1,
+          5
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          2,
+          1,
+          5
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 10752,
+        "1": 7680,
+        "2": 7680
+      },
+      "all_observed_returns_within_H": [],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 2,
+        "b": -1,
+        "id": "spatial_period4-L4-r5-a2-b-1",
+        "lambda": 4,
+        "pattern": "spatial_period4",
+        "r": 5,
+        "side": 4,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": null,
+      "input_arrays_sha256": "822b3d7893b8c3219279d104fb5c4d5e3ec17cdf0c187d8eb4b9917d24eb4f93",
+      "integrity": {
+        "final_state_sha256": "bc68f1eb715d4acc91696e98333e64f2c44eb526ec86919cb999ccbeea51ee6a",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "6b4923d5fabedd642b306ae4445a6085751fdb137fe81f9198ceb22a6b23f329",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 25536,
+        "periodic_boundary_counter_hit_sha256": "b4dd27e7bf84726a8287c179266b981817c1e86819c162dd24d9272e9b35678b",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 10752,
+          "1": 7680,
+          "2": 7680
+        },
+        "whole_board_C_count": 26112,
+        "whole_board_C_sha256": "e836b2bb1b917fe036d1797043b7261536989e562e5c0eeb7259a8fbc8e3e710",
+        "whole_board_R_change_count": 15360,
+        "whole_board_R_sha256": "e3f9625f6434174f2bc9e365c0740b31ae736d20e73131bf85944eaabede690c"
+      },
+      "native_checkpoint_sha256": "931e36b60f402ee3db7064e8c72c54ec01e179c897c1627f7769aa0e65d8ed05",
+      "raw_C_with_six_terms_sha256": "8ffb2801080add83e4c52c02df23bd0e750ca69f0bb232c23976221f9489b9a3",
+      "record_sha256": "7c3039f86e1b5d1119073dc1d0855058940cf8d09261a0b20ad8911043dd658b",
+      "scalar_trace": [
+        [
+          2,
+          -1,
+          5
+        ],
+        [
+          -1,
+          -3,
+          3
+        ],
+        [
+          -3,
+          -3,
+          3
+        ],
+        [
+          -3,
+          -1,
+          3
+        ],
+        [
+          -1,
+          2,
+          1
+        ],
+        [
+          2,
+          3,
+          5
+        ],
+        [
+          3,
+          2,
+          5
+        ],
+        [
+          2,
+          0,
+          3
+        ],
+        [
+          0,
+          -2,
+          3
+        ],
+        [
+          -2,
+          -3,
+          5
+        ],
+        [
+          -3,
+          -2,
+          5
+        ],
+        [
+          -2,
+          1,
+          1
+        ],
+        [
+          1,
+          3,
+          3
+        ],
+        [
+          3,
+          3,
+          3
+        ],
+        [
+          3,
+          1,
+          3
+        ],
+        [
+          1,
+          -2,
+          5
+        ],
+        [
+          -2,
+          -3,
+          1
+        ],
+        [
+          -3,
+          -2,
+          1
+        ],
+        [
+          -2,
+          0,
+          3
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 0,
+        "1": 2592,
+        "2": 2592
+      },
+      "all_observed_returns_within_H": [
+        6,
+        12,
+        18
+      ],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 0,
+        "b": 1,
+        "id": "internal_yy-L3-r0-a0-b1",
+        "lambda": 4,
+        "pattern": "internal_yy",
+        "r": 0,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": 6,
+      "input_arrays_sha256": "52868302ffecf491465e3c01d27726ca5bcced7796ed29fb119faeadad6a6918",
+      "integrity": {
+        "final_state_sha256": "aaed93338444282337c00099374a20b1de9b8384e4078f6577e634ce2efcd74d",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "aaed93338444282337c00099374a20b1de9b8384e4078f6577e634ce2efcd74d",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 7904,
+        "periodic_boundary_counter_hit_sha256": "e14b76677e09fd9eb5b59f0623c32286e7b938e17aae6cd3528abf03c5c34e78",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "1": 2592,
+          "2": 2592
+        },
+        "whole_board_C_count": 5184,
+        "whole_board_C_sha256": "e206b4b3759cdc5997a0fb97a4211093624d4a40ae989eaf872d6ac30b505b69",
+        "whole_board_R_change_count": 5184,
+        "whole_board_R_sha256": "8a211ae6fa44fd9db56862f310427a3b1de28e29c43234ce71e217e243d93cfa"
+      },
+      "native_checkpoint_sha256": "462b470994e604e3d74aa839b56291d8400d033a3136f72d70ed1701a5c287d9",
+      "raw_C_with_six_terms_sha256": "636d94ec2612f82a2ad80c66869c2ae9183f59c108a58c01b1cc9f98d99be504",
+      "record_sha256": "a23825145038084ff398499ca07734ece042b1e9282896942f6dc3de163d4212",
+      "scalar_trace": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          0,
+          4
+        ],
+        [
+          0,
+          -1,
+          4
+        ],
+        [
+          -1,
+          -1,
+          2
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          0,
+          4
+        ],
+        [
+          0,
+          -1,
+          4
+        ],
+        [
+          -1,
+          -1,
+          2
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          0,
+          4
+        ],
+        [
+          0,
+          -1,
+          4
+        ],
+        [
+          -1,
+          -1,
+          2
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 1296,
+        "1": 3024,
+        "2": 3024
+      },
+      "all_observed_returns_within_H": [],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 2,
+        "b": -1,
+        "id": "internal_yy-L3-r0-a2-b-1",
+        "lambda": 4,
+        "pattern": "internal_yy",
+        "r": 0,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": null,
+      "input_arrays_sha256": "ecddde3630161310344b35fe306afe2b083dbfdf216b86ea934bef3b18c7486e",
+      "integrity": {
+        "final_state_sha256": "5a6336ca6e9c46ff4deb7ea4e5f3a1d1aa42ead24f80b485884a69eb713cc23a",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "8c944a13033ff8a89ce4bcec6a5b14ac93dc0bce35d6c85098ea5d7cb2bfc7ad",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 7904,
+        "periodic_boundary_counter_hit_sha256": "e14b76677e09fd9eb5b59f0623c32286e7b938e17aae6cd3528abf03c5c34e78",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 1296,
+          "1": 3024,
+          "2": 3024
+        },
+        "whole_board_C_count": 7344,
+        "whole_board_C_sha256": "3709fbb737eb02521b9ecbc3d7ef376a26bd1925e1550eb3a664de362ac94f7b",
+        "whole_board_R_change_count": 6048,
+        "whole_board_R_sha256": "40f7d28bb90c1b711454785ae14348d3f5d8bcc2de41415fffc43aa7c9f4a271"
+      },
+      "native_checkpoint_sha256": "9bfd1ced6be35916998fbb58ca5cbbb984410f203c03e43aa1bc1e1849a92cdf",
+      "raw_C_with_six_terms_sha256": "9b3e1f4df0e9effb7493584ead72b6e1ffc8fa9afcc6d3eafbd4e402d6798aca",
+      "record_sha256": "aa1dc436ea5a581d5196c41a446cadf85df66211cd94145fbf51a5304bf5566f",
+      "scalar_trace": [
+        [
+          2,
+          -1,
+          0
+        ],
+        [
+          -1,
+          -4,
+          4
+        ],
+        [
+          -4,
+          -4,
+          2
+        ],
+        [
+          -4,
+          -1,
+          0
+        ],
+        [
+          -1,
+          2,
+          4
+        ],
+        [
+          2,
+          4,
+          2
+        ],
+        [
+          4,
+          3,
+          4
+        ],
+        [
+          3,
+          0,
+          4
+        ],
+        [
+          0,
+          -3,
+          4
+        ],
+        [
+          -3,
+          -4,
+          4
+        ],
+        [
+          -4,
+          -2,
+          2
+        ],
+        [
+          -2,
+          1,
+          4
+        ],
+        [
+          1,
+          4,
+          0
+        ],
+        [
+          4,
+          4,
+          2
+        ],
+        [
+          4,
+          1,
+          4
+        ],
+        [
+          1,
+          -2,
+          0
+        ],
+        [
+          -2,
+          -4,
+          2
+        ],
+        [
+          -4,
+          -3,
+          0
+        ],
+        [
+          -3,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 0,
+        "1": 2592,
+        "2": 2592
+      },
+      "all_observed_returns_within_H": [
+        6,
+        12,
+        18
+      ],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 0,
+        "b": 1,
+        "id": "internal_yy-L3-r1-a0-b1",
+        "lambda": 4,
+        "pattern": "internal_yy",
+        "r": 1,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": 6,
+      "input_arrays_sha256": "52868302ffecf491465e3c01d27726ca5bcced7796ed29fb119faeadad6a6918",
+      "integrity": {
+        "final_state_sha256": "52d9c2767c1ce98b5cf082455f87c3a399b0b183256d5fc80ba475d88c45acc0",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "52d9c2767c1ce98b5cf082455f87c3a399b0b183256d5fc80ba475d88c45acc0",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 7904,
+        "periodic_boundary_counter_hit_sha256": "e14b76677e09fd9eb5b59f0623c32286e7b938e17aae6cd3528abf03c5c34e78",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "1": 2592,
+          "2": 2592
+        },
+        "whole_board_C_count": 5184,
+        "whole_board_C_sha256": "e206b4b3759cdc5997a0fb97a4211093624d4a40ae989eaf872d6ac30b505b69",
+        "whole_board_R_change_count": 5184,
+        "whole_board_R_sha256": "e317150e661bd1195dae3e0130380bf4d3950ed00bff3984c4708ac9583ea4e4"
+      },
+      "native_checkpoint_sha256": "974de8b5ae36a5cf1e775fcebc52cfd9c3431ba077b00120d4a91eb856fc76f1",
+      "raw_C_with_six_terms_sha256": "636d94ec2612f82a2ad80c66869c2ae9183f59c108a58c01b1cc9f98d99be504",
+      "record_sha256": "be222f8ac614862a8914aefc7ac36d3c48453e6b4f9fefb5741138855bf11fe3",
+      "scalar_trace": [
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          3
+        ],
+        [
+          1,
+          0,
+          5
+        ],
+        [
+          0,
+          -1,
+          5
+        ],
+        [
+          -1,
+          -1,
+          3
+        ],
+        [
+          -1,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          3
+        ],
+        [
+          1,
+          0,
+          5
+        ],
+        [
+          0,
+          -1,
+          5
+        ],
+        [
+          -1,
+          -1,
+          3
+        ],
+        [
+          -1,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          3
+        ],
+        [
+          1,
+          0,
+          5
+        ],
+        [
+          0,
+          -1,
+          5
+        ],
+        [
+          -1,
+          -1,
+          3
+        ],
+        [
+          -1,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 1296,
+        "1": 3024,
+        "2": 3024
+      },
+      "all_observed_returns_within_H": [],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 2,
+        "b": -1,
+        "id": "internal_yy-L3-r1-a2-b-1",
+        "lambda": 4,
+        "pattern": "internal_yy",
+        "r": 1,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": null,
+      "input_arrays_sha256": "ecddde3630161310344b35fe306afe2b083dbfdf216b86ea934bef3b18c7486e",
+      "integrity": {
+        "final_state_sha256": "c7e360d588441fb2f6af3121a1a5883ee2de430768db180affe6d058f1bfeddd",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "e2fd4cca22dfeb02e8a59f4ad71c7693f5a548628736839bbb5fb4a1eb43baef",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 7904,
+        "periodic_boundary_counter_hit_sha256": "e14b76677e09fd9eb5b59f0623c32286e7b938e17aae6cd3528abf03c5c34e78",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 1296,
+          "1": 3024,
+          "2": 3024
+        },
+        "whole_board_C_count": 7344,
+        "whole_board_C_sha256": "3709fbb737eb02521b9ecbc3d7ef376a26bd1925e1550eb3a664de362ac94f7b",
+        "whole_board_R_change_count": 6048,
+        "whole_board_R_sha256": "bf15e8e785de452a4edf8c948fa98cf719e941fd5815aae7903eefa909d6ca63"
+      },
+      "native_checkpoint_sha256": "d61870e5c18d2879ae1a7a786d268a8312c56c724b844b433c698433aed97588",
+      "raw_C_with_six_terms_sha256": "9b3e1f4df0e9effb7493584ead72b6e1ffc8fa9afcc6d3eafbd4e402d6798aca",
+      "record_sha256": "6c45580bb7889343de2457f14b18dae537a4d663a4310c5841ae939194757a89",
+      "scalar_trace": [
+        [
+          2,
+          -1,
+          1
+        ],
+        [
+          -1,
+          -4,
+          5
+        ],
+        [
+          -4,
+          -4,
+          3
+        ],
+        [
+          -4,
+          -1,
+          1
+        ],
+        [
+          -1,
+          2,
+          5
+        ],
+        [
+          2,
+          4,
+          3
+        ],
+        [
+          4,
+          3,
+          5
+        ],
+        [
+          3,
+          0,
+          5
+        ],
+        [
+          0,
+          -3,
+          5
+        ],
+        [
+          -3,
+          -4,
+          5
+        ],
+        [
+          -4,
+          -2,
+          3
+        ],
+        [
+          -2,
+          1,
+          5
+        ],
+        [
+          1,
+          4,
+          1
+        ],
+        [
+          4,
+          4,
+          3
+        ],
+        [
+          4,
+          1,
+          5
+        ],
+        [
+          1,
+          -2,
+          1
+        ],
+        [
+          -2,
+          -4,
+          3
+        ],
+        [
+          -4,
+          -3,
+          1
+        ],
+        [
+          -3,
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 0,
+        "1": 3024,
+        "2": 3024
+      },
+      "all_observed_returns_within_H": [
+        8,
+        16
+      ],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 0,
+        "b": 1,
+        "id": "internal_yy-L3-r2-a0-b1",
+        "lambda": 4,
+        "pattern": "internal_yy",
+        "r": 2,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": 8,
+      "input_arrays_sha256": "a9f92984e9ff5dd2fe77ca4628cab7b633e37d3e351ff47a829b60e4f822655f",
+      "integrity": {
+        "final_state_sha256": "4645eeb18997d4dfe66d52943547dfe573393ce4f55386681682399e32b3c597",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "673233a38c991e9b5ce8b381d96f0eaddc90c09beacb25157040aecee6c1d621",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 7904,
+        "periodic_boundary_counter_hit_sha256": "e14b76677e09fd9eb5b59f0623c32286e7b938e17aae6cd3528abf03c5c34e78",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "1": 3024,
+          "2": 3024
+        },
+        "whole_board_C_count": 6048,
+        "whole_board_C_sha256": "22d75083ae1244e8e7d4e8b1dbef3fa5531d14e73adebee9cc20582737ad8625",
+        "whole_board_R_change_count": 6048,
+        "whole_board_R_sha256": "86da3e8fdee08760fb4cfbd718e5f4215c3e1f0948c51d4988ca5d8461c201c6"
+      },
+      "native_checkpoint_sha256": "e900b348ca99920e3724e8c321daf60af3a1d5ae7adcbd1c4af9b0150eb0b7c6",
+      "raw_C_with_six_terms_sha256": "fff3f2a797703f3510b6b4120ade3543c66d458e4accab796ee81fcc833b9907",
+      "record_sha256": "a7af76718112a7b78054c626116b430e87d2476acef9c3bb5cbbdd6370bc06fb",
+      "scalar_trace": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          1,
+          1,
+          4
+        ],
+        [
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          2
+        ],
+        [
+          0,
+          -1,
+          2
+        ],
+        [
+          -1,
+          -1,
+          0
+        ],
+        [
+          -1,
+          -1,
+          4
+        ],
+        [
+          -1,
+          0,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          1,
+          1,
+          4
+        ],
+        [
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          2
+        ],
+        [
+          0,
+          -1,
+          2
+        ],
+        [
+          -1,
+          -1,
+          0
+        ],
+        [
+          -1,
+          -1,
+          4
+        ],
+        [
+          -1,
+          0,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          1,
+          1,
+          4
+        ],
+        [
+          1,
+          1,
+          0
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 3456,
+        "1": 1944,
+        "2": 1944
+      },
+      "all_observed_returns_within_H": [
+        15
+      ],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 2,
+        "b": -1,
+        "id": "internal_yy-L3-r2-a2-b-1",
+        "lambda": 4,
+        "pattern": "internal_yy",
+        "r": 2,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": 15,
+      "input_arrays_sha256": "d0231ec58650abd9c26669d96db77e20c2f80fb20e793bf04108fc97f9cecf4f",
+      "integrity": {
+        "final_state_sha256": "d6589324e987579d580a03d60954fa5494403165f5bf494a1ae88675a3f7dd66",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "6229aab13e5b0861260700b19802b2d71184445e9a8ef77f014d3ed93b8b3b46",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 7904,
+        "periodic_boundary_counter_hit_sha256": "e14b76677e09fd9eb5b59f0623c32286e7b938e17aae6cd3528abf03c5c34e78",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 3456,
+          "1": 1944,
+          "2": 1944
+        },
+        "whole_board_C_count": 7344,
+        "whole_board_C_sha256": "219f63f3b3001065d1407e34c2675c9c35c9491afebf02d41261af9fa272a5a0",
+        "whole_board_R_change_count": 3888,
+        "whole_board_R_sha256": "d2bb1fcf8d6afdd28dd5ebfb227f6c7ccc75be8fb5abe2985ad2c137ad4ab092"
+      },
+      "native_checkpoint_sha256": "4de188cafebe79594401fee8cc69dda2252db7806da6588b3a5f0f10f79d2b8a",
+      "raw_C_with_six_terms_sha256": "69c16e6e5c4b181736e38c3ea8d488cf685778444161823361e72dc95ca52bf9",
+      "record_sha256": "146ff8c282f045033310b601b3d772569e0da1b4e5c189821d6776128dccc484",
+      "scalar_trace": [
+        [
+          2,
+          -1,
+          2
+        ],
+        [
+          -1,
+          -3,
+          0
+        ],
+        [
+          -3,
+          -3,
+          0
+        ],
+        [
+          -3,
+          -1,
+          0
+        ],
+        [
+          -1,
+          1,
+          4
+        ],
+        [
+          1,
+          3,
+          0
+        ],
+        [
+          3,
+          3,
+          0
+        ],
+        [
+          3,
+          1,
+          0
+        ],
+        [
+          1,
+          -2,
+          2
+        ],
+        [
+          -2,
+          -4,
+          4
+        ],
+        [
+          -4,
+          -3,
+          2
+        ],
+        [
+          -3,
+          0,
+          2
+        ],
+        [
+          0,
+          3,
+          2
+        ],
+        [
+          3,
+          4,
+          2
+        ],
+        [
+          4,
+          2,
+          4
+        ],
+        [
+          2,
+          -1,
+          2
+        ],
+        [
+          -1,
+          -3,
+          0
+        ],
+        [
+          -3,
+          -3,
+          0
+        ],
+        [
+          -3,
+          -1,
+          0
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 0,
+        "1": 3024,
+        "2": 3024
+      },
+      "all_observed_returns_within_H": [
+        8,
+        16
+      ],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 0,
+        "b": 1,
+        "id": "internal_yy-L3-r3-a0-b1",
+        "lambda": 4,
+        "pattern": "internal_yy",
+        "r": 3,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": 8,
+      "input_arrays_sha256": "a9f92984e9ff5dd2fe77ca4628cab7b633e37d3e351ff47a829b60e4f822655f",
+      "integrity": {
+        "final_state_sha256": "8a3a1f4db9af010999c2ff84f6997d7ac18bd9e0b6e4d7965ce65cf866263a2b",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "c97296308b6019ea490dd2a03fe3e998b08140b3b9f6bec0361ebe68b62c6f1e",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 7904,
+        "periodic_boundary_counter_hit_sha256": "e14b76677e09fd9eb5b59f0623c32286e7b938e17aae6cd3528abf03c5c34e78",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "1": 3024,
+          "2": 3024
+        },
+        "whole_board_C_count": 6048,
+        "whole_board_C_sha256": "22d75083ae1244e8e7d4e8b1dbef3fa5531d14e73adebee9cc20582737ad8625",
+        "whole_board_R_change_count": 6048,
+        "whole_board_R_sha256": "25a6a67b08f86676b59aa95f3a78cde53940150d2798a906701c71e7669f7fa8"
+      },
+      "native_checkpoint_sha256": "8512476ca2853967afc140651cc7543903ee1bccdac2516ffb5097ddbc0523e0",
+      "raw_C_with_six_terms_sha256": "fff3f2a797703f3510b6b4120ade3543c66d458e4accab796ee81fcc833b9907",
+      "record_sha256": "fea08b36c899147b88629ecd0a72d6bb0e8f3a19be27144099bde61b5bbe20e2",
+      "scalar_trace": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          1,
+          1,
+          5
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          3
+        ],
+        [
+          0,
+          -1,
+          3
+        ],
+        [
+          -1,
+          -1,
+          1
+        ],
+        [
+          -1,
+          -1,
+          5
+        ],
+        [
+          -1,
+          0,
+          3
+        ],
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          1,
+          1,
+          5
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          3
+        ],
+        [
+          0,
+          -1,
+          3
+        ],
+        [
+          -1,
+          -1,
+          1
+        ],
+        [
+          -1,
+          -1,
+          5
+        ],
+        [
+          -1,
+          0,
+          3
+        ],
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          1,
+          1,
+          5
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 3456,
+        "1": 1944,
+        "2": 1944
+      },
+      "all_observed_returns_within_H": [
+        15
+      ],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 2,
+        "b": -1,
+        "id": "internal_yy-L3-r3-a2-b-1",
+        "lambda": 4,
+        "pattern": "internal_yy",
+        "r": 3,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": 15,
+      "input_arrays_sha256": "d0231ec58650abd9c26669d96db77e20c2f80fb20e793bf04108fc97f9cecf4f",
+      "integrity": {
+        "final_state_sha256": "aaf7c48d13356409bb7420c360f09dbc3c0ddad606e26acc8659852e23f1aae1",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "96c900ef1efc1c4d20979384c58ccb13d6cdc385d7c1896227fe5ee8fb1140ee",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 7904,
+        "periodic_boundary_counter_hit_sha256": "e14b76677e09fd9eb5b59f0623c32286e7b938e17aae6cd3528abf03c5c34e78",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 3456,
+          "1": 1944,
+          "2": 1944
+        },
+        "whole_board_C_count": 7344,
+        "whole_board_C_sha256": "219f63f3b3001065d1407e34c2675c9c35c9491afebf02d41261af9fa272a5a0",
+        "whole_board_R_change_count": 3888,
+        "whole_board_R_sha256": "5daf1942490edb5ee9aa7c17298f0e97bb877726609fb97d4f84cfbe9f3fee60"
+      },
+      "native_checkpoint_sha256": "591f95bfc058eaac7e7427121a74b225bfc84912a3bbdf24d18a7552df6bb439",
+      "raw_C_with_six_terms_sha256": "69c16e6e5c4b181736e38c3ea8d488cf685778444161823361e72dc95ca52bf9",
+      "record_sha256": "7f8475749b86b0f7c46be5f005ab4dd17599a58e7449477dfff3e84d4d83486e",
+      "scalar_trace": [
+        [
+          2,
+          -1,
+          3
+        ],
+        [
+          -1,
+          -3,
+          1
+        ],
+        [
+          -3,
+          -3,
+          1
+        ],
+        [
+          -3,
+          -1,
+          1
+        ],
+        [
+          -1,
+          1,
+          5
+        ],
+        [
+          1,
+          3,
+          1
+        ],
+        [
+          3,
+          3,
+          1
+        ],
+        [
+          3,
+          1,
+          1
+        ],
+        [
+          1,
+          -2,
+          3
+        ],
+        [
+          -2,
+          -4,
+          5
+        ],
+        [
+          -4,
+          -3,
+          3
+        ],
+        [
+          -3,
+          0,
+          3
+        ],
+        [
+          0,
+          3,
+          3
+        ],
+        [
+          3,
+          4,
+          3
+        ],
+        [
+          4,
+          2,
+          5
+        ],
+        [
+          2,
+          -1,
+          3
+        ],
+        [
+          -1,
+          -3,
+          1
+        ],
+        [
+          -3,
+          -3,
+          1
+        ],
+        [
+          -3,
+          -1,
+          1
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 0,
+        "1": 3024,
+        "2": 3024
+      },
+      "all_observed_returns_within_H": [
+        8,
+        16
+      ],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 0,
+        "b": 1,
+        "id": "internal_yy-L3-r4-a0-b1",
+        "lambda": 4,
+        "pattern": "internal_yy",
+        "r": 4,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": 8,
+      "input_arrays_sha256": "60488ccfd90bde1b34913e4925d9963f06ab761ba966379c659674f583e40b7a",
+      "integrity": {
+        "final_state_sha256": "5826559aa5868e606687c4e4b646ed450fe3cd28cedb69f6d26ccbc0d5d49f84",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "1a44a441fd5a2e710c53b6670eacb45929507dccc823ef227ac89bdf71fdc00c",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 7904,
+        "periodic_boundary_counter_hit_sha256": "e14b76677e09fd9eb5b59f0623c32286e7b938e17aae6cd3528abf03c5c34e78",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "1": 3024,
+          "2": 3024
+        },
+        "whole_board_C_count": 6048,
+        "whole_board_C_sha256": "6730066a07afa34a04ab7fe07c58365cdf17079f93b739ffb1d4a43a020e2d4a",
+        "whole_board_R_change_count": 6048,
+        "whole_board_R_sha256": "d784267b4f0a964acda0d57e69ffeb7a83af1b3b332fee1c20456cabe2e4237a"
+      },
+      "native_checkpoint_sha256": "881eaf128bf57593cb552a3aa69e82f91601426f1c8e29c74d2fdede7b371758",
+      "raw_C_with_six_terms_sha256": "0d3c8ae5d2659fd30ed83af8956294fb9569dbb281189b9fe6222992bdc3fa59",
+      "record_sha256": "291094ac882d458e42ceb54623e3edc1a37add76a18a40dd63c2bc280259b4bc",
+      "scalar_trace": [
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          1,
+          2,
+          0
+        ],
+        [
+          2,
+          1,
+          4
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          -1,
+          -2,
+          4
+        ],
+        [
+          -2,
+          -1,
+          0
+        ],
+        [
+          -1,
+          0,
+          4
+        ],
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          1,
+          2,
+          0
+        ],
+        [
+          2,
+          1,
+          4
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          -1,
+          -2,
+          4
+        ],
+        [
+          -2,
+          -1,
+          0
+        ],
+        [
+          -1,
+          0,
+          4
+        ],
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          1,
+          2,
+          0
+        ],
+        [
+          2,
+          1,
+          4
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 3024,
+        "1": 2160,
+        "2": 2160
+      },
+      "all_observed_returns_within_H": [],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 2,
+        "b": -1,
+        "id": "internal_yy-L3-r4-a2-b-1",
+        "lambda": 4,
+        "pattern": "internal_yy",
+        "r": 4,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": null,
+      "input_arrays_sha256": "22e2d91ecbeba0540297a5c294b8b3f7c8c55d6e01dc0e027ba75887107ce0b6",
+      "integrity": {
+        "final_state_sha256": "6c699775a58cb6957a04f79756b565c0fe8512bbf85d282a64ca2a853e61388b",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "19f40f4025298f1f08f95e27c236c1c1d2f7b186005603a629f6d041baffbc65",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 7904,
+        "periodic_boundary_counter_hit_sha256": "e14b76677e09fd9eb5b59f0623c32286e7b938e17aae6cd3528abf03c5c34e78",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 3024,
+          "1": 2160,
+          "2": 2160
+        },
+        "whole_board_C_count": 7344,
+        "whole_board_C_sha256": "ecb903cb68a9180415307117dc67387482d432c710f0018bb6b974047addd5d3",
+        "whole_board_R_change_count": 4320,
+        "whole_board_R_sha256": "06979d59559d4a0f2bffa28876ddd870b3dd997b2911276c038238ce9b748c84"
+      },
+      "native_checkpoint_sha256": "093d5ea26f8aefcb1ce48d58e362628b7031f7af62313d1d6ec483f31afe32a6",
+      "raw_C_with_six_terms_sha256": "6df48c2df2a10b7be398284668449ec5071a04cb6f659863b876f8b868dc798a",
+      "record_sha256": "a6799e51ee7f2ad0635cbe5dad3fe1e0117825bfbbaf002e166c2e2134ce6675",
+      "scalar_trace": [
+        [
+          2,
+          -1,
+          4
+        ],
+        [
+          -1,
+          -3,
+          2
+        ],
+        [
+          -3,
+          -3,
+          2
+        ],
+        [
+          -3,
+          -1,
+          2
+        ],
+        [
+          -1,
+          2,
+          0
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          3,
+          2,
+          4
+        ],
+        [
+          2,
+          0,
+          2
+        ],
+        [
+          0,
+          -2,
+          2
+        ],
+        [
+          -2,
+          -3,
+          4
+        ],
+        [
+          -3,
+          -2,
+          4
+        ],
+        [
+          -2,
+          1,
+          0
+        ],
+        [
+          1,
+          3,
+          2
+        ],
+        [
+          3,
+          3,
+          2
+        ],
+        [
+          3,
+          1,
+          2
+        ],
+        [
+          1,
+          -2,
+          4
+        ],
+        [
+          -2,
+          -3,
+          0
+        ],
+        [
+          -3,
+          -2,
+          0
+        ],
+        [
+          -2,
+          0,
+          2
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 0,
+        "1": 3024,
+        "2": 3024
+      },
+      "all_observed_returns_within_H": [
+        8,
+        16
+      ],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 0,
+        "b": 1,
+        "id": "internal_yy-L3-r5-a0-b1",
+        "lambda": 4,
+        "pattern": "internal_yy",
+        "r": 5,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": 8,
+      "input_arrays_sha256": "60488ccfd90bde1b34913e4925d9963f06ab761ba966379c659674f583e40b7a",
+      "integrity": {
+        "final_state_sha256": "624892d14b570966357b5051e14d891dc9d3f83d96bd72765a198f74154ffa87",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "3d57fa06501e52d1bcfc1387da2a0fcb1ee7e719ea5bdd14d946dcf8e2ab54dc",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 7904,
+        "periodic_boundary_counter_hit_sha256": "e14b76677e09fd9eb5b59f0623c32286e7b938e17aae6cd3528abf03c5c34e78",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "1": 3024,
+          "2": 3024
+        },
+        "whole_board_C_count": 6048,
+        "whole_board_C_sha256": "6730066a07afa34a04ab7fe07c58365cdf17079f93b739ffb1d4a43a020e2d4a",
+        "whole_board_R_change_count": 6048,
+        "whole_board_R_sha256": "d7e0895565855aa2efe2bd11890d70d752615490b2a1df259f87a95f1bacad7e"
+      },
+      "native_checkpoint_sha256": "897ea3a5705aaa17b7c7a549cf18568aea76161b495ac2a7df5a8a21f7b3a9c2",
+      "raw_C_with_six_terms_sha256": "0d3c8ae5d2659fd30ed83af8956294fb9569dbb281189b9fe6222992bdc3fa59",
+      "record_sha256": "621e8627ab4f248ef3adfadb45a4b16d4cc0e9bdce8f2b08744b59ab964afb0a",
+      "scalar_trace": [
+        [
+          0,
+          1,
+          5
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          2,
+          1,
+          5
+        ],
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          -1,
+          1
+        ],
+        [
+          -1,
+          -2,
+          5
+        ],
+        [
+          -2,
+          -1,
+          1
+        ],
+        [
+          -1,
+          0,
+          5
+        ],
+        [
+          0,
+          1,
+          5
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          2,
+          1,
+          5
+        ],
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          -1,
+          1
+        ],
+        [
+          -1,
+          -2,
+          5
+        ],
+        [
+          -2,
+          -1,
+          1
+        ],
+        [
+          -1,
+          0,
+          5
+        ],
+        [
+          0,
+          1,
+          5
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          2,
+          1,
+          5
+        ]
+      ]
+    },
+    {
+      "C_counts": {
+        "0": 3024,
+        "1": 2160,
+        "2": 2160
+      },
+      "all_observed_returns_within_H": [],
+      "all_oracles_equal": true,
+      "case": {
+        "a": 2,
+        "b": -1,
+        "id": "internal_yy-L3-r5-a2-b-1",
+        "lambda": 4,
+        "pattern": "internal_yy",
+        "r": 5,
+        "side": 3,
+        "steps": 18
+      },
+      "first_complete_state_return_within_H": null,
+      "input_arrays_sha256": "22e2d91ecbeba0540297a5c294b8b3f7c8c55d6e01dc0e027ba75887107ce0b6",
+      "integrity": {
+        "final_state_sha256": "e6a96a41e10e173175151dd78a4d09c3210f3514d027458e987d19cb038265cb",
+        "forward_transitions": 18,
+        "full_rewind_equal": true,
+        "initial_state_sha256": "441b71c6efa840297daa8c09a4ccc65aeb1926e0781704790dac2ccc23015c5e",
+        "inverse_transitions": 18,
+        "observations": {},
+        "passed": true,
+        "periodic_boundary_counter_hit_count": 7904,
+        "periodic_boundary_counter_hit_sha256": "e14b76677e09fd9eb5b59f0623c32286e7b938e17aae6cd3528abf03c5c34e78",
+        "states": 19,
+        "whole_board_C_by_kind": {
+          "0": 3024,
+          "1": 2160,
+          "2": 2160
+        },
+        "whole_board_C_count": 7344,
+        "whole_board_C_sha256": "ecb903cb68a9180415307117dc67387482d432c710f0018bb6b974047addd5d3",
+        "whole_board_R_change_count": 4320,
+        "whole_board_R_sha256": "0632624514a3b4e7268ecb8edecc5a697635a568509cbe24af4073da4f369e76"
+      },
+      "native_checkpoint_sha256": "56cc41ab210385ff7adb2bf4baa920348c3c6368aa688df91b41397a24c15c52",
+      "raw_C_with_six_terms_sha256": "6df48c2df2a10b7be398284668449ec5071a04cb6f659863b876f8b868dc798a",
+      "record_sha256": "936ce8414052dd11e3bb2643ce86caf37661cf09ebaf1de450e1952788fdc025",
+      "scalar_trace": [
+        [
+          2,
+          -1,
+          5
+        ],
+        [
+          -1,
+          -3,
+          3
+        ],
+        [
+          -3,
+          -3,
+          3
+        ],
+        [
+          -3,
+          -1,
+          3
+        ],
+        [
+          -1,
+          2,
+          1
+        ],
+        [
+          2,
+          3,
+          5
+        ],
+        [
+          3,
+          2,
+          5
+        ],
+        [
+          2,
+          0,
+          3
+        ],
+        [
+          0,
+          -2,
+          3
+        ],
+        [
+          -2,
+          -3,
+          5
+        ],
+        [
+          -3,
+          -2,
+          5
+        ],
+        [
+          -2,
+          1,
+          1
+        ],
+        [
+          1,
+          3,
+          3
+        ],
+        [
+          3,
+          3,
+          3
+        ],
+        [
+          3,
+          1,
+          3
+        ],
+        [
+          1,
+          -2,
+          5
+        ],
+        [
+          -2,
+          -3,
+          1
+        ],
+        [
+          -3,
+          -2,
+          1
+        ],
+        [
+          -2,
+          0,
+          3
+        ]
+      ]
+    }
+  ],
+  "reference_sha256": "da1faeb5847f767487470b6060050668a2a8160192871a0cb4715ec4511b6473",
+  "scope": "New complete native checks of four global periodic+++ invariant sectors,6base remainders and2counter seeds,H18. The all-state embedding proof is separate. This is not the unavailable historical48-case data, not signed native dynamics, not all6q generalized remainders, not propagation or physical mass, and not an overlap-interaction study.",
+  "source_sha256": {
+    "research/components/__init__.py": "bc3c504533e052ea7dfee41483df25ee7ecc3bd30aba70fb52ed2d6f245afd4a",
+    "research/components/compose.py": "463f960fe44533310e98528d3f85b611101fa661c70ce18beed3ac72885ed496",
+    "research/components/recipes.py": "99a199109782b9115e06c67517a948d904a2659ffbeedadc92bb0606d653a0bc",
+    "research/components/spec.py": "1bb4bb06eaddebd0bb0d0287a6fc846900396b6fbcd00ec61cd28917f8e778d4",
+    "research/experiments/__init__.py": "1a31c776b2e99bbc5cd5abb4cfa75d72a46305546b947eb315dd5209ed0949f6",
+    "research/experiments/collection.py": "d00821114fe81aa5bfe611fdd3be5a90fb635fe5d4cd38c131d29952a899a8f8",
+    "research/experiments/compatibility.py": "4f22d87e9962b0be35f74a1735b71d40a24b2c545820a11c5bc0aa1c5e71abe8",
+    "research/experiments/interfaces.py": "507cbf34499f655d4726aeee8f795801fd837853d929e78ec105a45adacf246a",
+    "research/experiments/materialize_evidence.py": "b2dc2c886ef5fe3cdaf5145bc64139ca1d46a7c21b057dafc60381294e0eb206",
+    "research/experiments/run.py": "2a9361b777f4eff1192cc5911d7521e3a6c81342e9e119dabff9d6e5941e679d",
+    "research/invariant_families_v1/__init__.py": "69f6142961001b5eaf08d35c842819c167a66ea7a904b04bfb57dc4a4a2d17e8",
+    "research/invariant_families_v1/budget.py": "8758a85953d0fd925fb7658a2c1d592adca7af2cdadf0f86ea1611fdb345eef4",
+    "research/invariant_families_v1/protocol.json": "f0340b86b689d681cc37cfd76e9e8617cd4f400ea1cb868fa94d00ff7471f523",
+    "research/invariant_families_v1/run.py": "556b7adc1bff1a0cefc420c9e796f3fa19e35059f04c1857c4289dd87487c6be",
+    "research/presenter/build.py": "0845fecd843702d1e2387a0955a4fb9a92b195e2bcab390c957171a4a2528ad8",
+    "research/presenter/demo.py": "5ffbaf1036d39574dfc7ae3d981632cd9c290d35e01b162098d510bcb2c90585",
+    "research/presenter/export.py": "2168f532626c13170ca0791e7d896dac96c638ad6f2b704ee7e359d4ef6681cc",
+    "research/reference/__init__.py": "58c984fcf9f9afa8e54be99771cdb1745272566158701cb9ca0e86bdc7b5445c",
+    "research/reference/algebra.py": "f6c225663a545887f1992041de97e9bd1e1e6a4f3b186c9a77ad79f27df290e9",
+    "universe24/__init__.py": "fdce7c34f1c57d4601ddb445b0c46889418630cc175551b3cddcb56f0e8393b7",
+    "universe24/__main__.py": "157a90dd1a31ded840ac00e991d31c187b3e1c8ba72de3048deddb0b2ffc425e",
+    "universe24/core/__init__.py": "54b4904eead9518f5c5b7a40681c709eb45f1a9ea6588e0bce69338d17ac144f",
+    "universe24/core/coupling.py": "4d822203dbb75bd5192c4fddcbf8e2ffbab6c46c2a55cb19f101bcecaa4f6489",
+    "universe24/core/engine.py": "4ee34937e2d82d68aa3414dd0fbe71f4e01cc075753c7a638d10667afceaa938",
+    "universe24/core/group_2o.py": "3f0475445dfc65042651a68036835e375003a86873fc202b8e904fdf470fb055",
+    "universe24/core/rule3.py": "216e2490e7a9f683db1a8918dc46c7aa11213aaf0409a13ddf7f1850f7b88555",
+    "universe24/core/state.py": "6581559406158af6febe1f5763901915e4e6287ee9ebabe34a3db9186b8c45f0",
+    "universe24/experiments/__init__.py": "073f5497951a49f85e4ef6d348dade004167959fe7f023c4837e4e24dbae7e22",
+    "universe24/experiments/config.py": "8ce7828a3a2d677e0234d76fcb91dd493f216892f0e57182c246b36ef6efb926",
+    "universe24/observation/__init__.py": "86f59ebf4ecd61b9a5fa8071b93b0ebdb89ec489268b9d09c30130981f3678cb",
+    "universe24/observation/clicks.py": "cd14589241086d0b00adae1819ae8e230ad1b1a221714d84a6bf698e2424cced",
+    "universe24/observation/diagnostics.py": "ea4ab16b615333bbb2f1293fd4dd45c99c29dac5cf9206cc3b3245ed6a73b6c3"
+  },
+  "states": 912,
+  "transitions": 864,
+  "whole_workflow_budget_receipt": {
+    "all_work_completed": true,
+    "budget_passed": true,
+    "bytes_before_receipt": 9117595,
+    "child_completed_cases": 48,
+    "child_cpu_seconds": 57.222822,
+    "child_status": "completed",
+    "cpu_budget_seconds": 180,
+    "protocol_sha256": "f0340b86b689d681cc37cfd76e9e8617cd4f400ea1cb868fa94d00ff7471f523",
+    "returncode": 0,
+    "scope": "Entire dedicated wrapper process CPU plus child user/system CPU, including imports, preflight, capture, inverses, analysis, compression, export and archive hashing.",
+    "timeout": false,
+    "wall_budget_seconds": 300,
+    "whole_workflow_cpu_seconds": 57.356811871,
+    "whole_workflow_wall_seconds": 57.26925008999933,
+    "wrapper_cpu_seconds_at_receipt": 0.135640792
+  }
+}

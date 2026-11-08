@@ -1,0 +1,21 @@
+{
+  "files": [
+    {
+      "retained": "research/invariant_families_v1/evidence/executed_review_sources/research/invariant_families_v1/overlap_preflight.py",
+      "sha256": "74270073d5a6902a448f9150016624296067c6c92877eec53d0b1f8d58c11f85",
+      "source": "research/invariant_families_v1/overlap_preflight.py"
+    },
+    {
+      "retained": "research/invariant_families_v1/evidence/executed_review_sources/research/invariant_families_v1/audit_overlap.py",
+      "sha256": "5e26f771d56759cd9f7b85d1ef9c161b9720e675ff882ef4fb352ac667c6dd46",
+      "source": "research/invariant_families_v1/audit_overlap.py"
+    },
+    {
+      "retained": "research/invariant_families_v1/evidence/executed_review_sources/research/invariant_families_v1/audit_overlap_budget.py",
+      "sha256": "2dcea45f5cc4ec6d03d4d6e717f8cae3b5bed5982e911d43cb2b52bf8c8976b6",
+      "source": "research/invariant_families_v1/audit_overlap_budget.py"
+    }
+  ],
+  "passed": true,
+  "scope": "Exact independent four-mask preflight, complete native auditor and whole-process CPU wrapper sources. Earlier reference/helper snapshots remain unchanged. These files do not supply runtime board behavior."
+}

@@ -28,6 +28,15 @@ available preparation APIs, supported environments and first run commands.
 
 ## Fixed model and research boundaries
 
+The later [invariant-pattern follow-up](../invariant_families_v1/README.md)
+derives effective scalar ratios from explicitly encoded global patterns while
+keeping `num=den=1` everywhere. Its [claim addendum](invariant_families_claims.md),
+48-case evidence and separate four-control overlap are independent of the 15 studies and 890 records
+catalogued below. The earlier per-channel coefficient extension is unselected.
+The [new combined inventory](../invariant_families_v1/evidence/collection_v1/index.html)
+links 17 studies and 140 complete selected examples; the original inventory
+and its frozen evidence remain unchanged.
+
 Every run has one board, 48 channels per node, six spatial neighbors, and one
 tensor fixed before the first update. Only synchronous Rule3 with `num=den=1`
 evolves the counters and retained remainders. All components are initial data.
@@ -89,8 +98,11 @@ The existing symbolic-synthesis tests additionally use
 report explicit optional skips. Reliability CI installs both pinned research dependencies,
 restores and hash-checks the historical and clock-selection evidence archives,
 then executes the existing test/reproducibility job. It does not repeat every
-large research search. A configured workflow is not a claim that remote CI has
-already run successfully.
+large research search. The published PR #11 tree passed both Python 3.11/3.12
+Reliability jobs and the separate Clockwork evidence/replay job on 2026-11-08;
+the [remote observation receipt](publication/github_ci_observation.json) pins
+the exact commit, run identifiers and completed steps. That receipt applies to
+the published clock-selection tree, not to later follow-up changes.
 
 Each submitted study directory must preserve `protocol.json`, `result.json`
 and every complete recording under `records/`. Indexing keeps unsuccessful
@@ -192,7 +204,9 @@ is an exact baseline-sector reduction and finite-time comparison theorem.
 mathematical criteria, while their **300-second CPU ceiling fails by28.943
 seconds**. The [internal-gap demonstration](internal_gap_results.md) independently
 checks20 finite native runs under unchanged Rule3. Neither result establishes
-physical light or mass. Other per-channel ratios remain a mathematical candidate.
+physical light or mass. The earlier per-channel coefficient proposal is
+unselected: the selected model keeps `num=den=1` everywhere, and effective
+ratios must be derived from patterns under that rule.
 
 The [separate-clock formation study](structure_formation_results.md) verifies48
 runs and finds zero registered formed composites. Equal-phase nearby clocks

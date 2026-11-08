@@ -1,0 +1,1203 @@
+{
+  "base_commit": "88700611ef307cb560f43957fc2dcb8be60c36b6",
+  "complete_recordings": 52,
+  "complete_states": 964,
+  "files": [
+    {
+      "bytes": 77,
+      "path": "research/clock_selection/evidence/invariant_families_algebra/.gitattributes",
+      "sha256": "b26d3ff3711e6097b79e3126a3dc9095024fbfe134c3b0c0829512d665941778"
+    },
+    {
+      "bytes": 19876,
+      "path": "research/clock_selection/evidence/invariant_families_algebra/static_checks.json",
+      "sha256": "529df550f602938208209f06c47e83f9eca2288a9a1bb831f10ff662cf56923e"
+    },
+    {
+      "bytes": 15476,
+      "path": "research/invariant_families_v1/evidence/collection_v1/index.html",
+      "sha256": "683435c7a2275472ec849950fce3af9a4baf267fe5a4febc9f44d689e7560708"
+    },
+    {
+      "bytes": 12933,
+      "path": "research/invariant_families_v1/evidence/collection_v1/manifest.json",
+      "sha256": "308a50077650a9a93dbb492041d3e474d6ce654b942d9aa35aaf5e27ff4c4c42"
+    },
+    {
+      "bytes": 4016,
+      "path": "research/invariant_families_v1/evidence/executed_preflight_initial.py",
+      "sha256": "d34a0bfa8279df926227e8f05f02de1a7c260b0645736bbcc70a44444f3954f7"
+    },
+    {
+      "bytes": 18773,
+      "path": "research/invariant_families_v1/evidence/executed_review_sources/research/clock_selection/audit.py",
+      "sha256": "db72cdd87b718ed6efc2232e12d22c067a4d6b230998b9baa1fc40bf228228d3"
+    },
+    {
+      "bytes": 8114,
+      "path": "research/invariant_families_v1/evidence/executed_review_sources/research/component_review/audit.py",
+      "sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42"
+    },
+    {
+      "bytes": 7256,
+      "path": "research/invariant_families_v1/evidence/executed_review_sources/research/invariant_families_v1/audit.py",
+      "sha256": "b54ba7b350b3414c34f35d8b6fe8eeacb286c71aea2bc6981c9b4197958feeb1"
+    },
+    {
+      "bytes": 7558,
+      "path": "research/invariant_families_v1/evidence/executed_review_sources/research/invariant_families_v1/audit_overlap.py",
+      "sha256": "5e26f771d56759cd9f7b85d1ef9c161b9720e675ff882ef4fb352ac667c6dd46"
+    },
+    {
+      "bytes": 2328,
+      "path": "research/invariant_families_v1/evidence/executed_review_sources/research/invariant_families_v1/audit_overlap_budget.py",
+      "sha256": "2dcea45f5cc4ec6d03d4d6e717f8cae3b5bed5982e911d43cb2b52bf8c8976b6"
+    },
+    {
+      "bytes": 3199,
+      "path": "research/invariant_families_v1/evidence/executed_review_sources/research/invariant_families_v1/overlap_preflight.py",
+      "sha256": "74270073d5a6902a448f9150016624296067c6c92877eec53d0b1f8d58c11f85"
+    },
+    {
+      "bytes": 4029,
+      "path": "research/invariant_families_v1/evidence/executed_review_sources/research/invariant_families_v1/preflight.py",
+      "sha256": "50cdcb4b85ab6e5da2033751c7da04e56f542cc37efcad948cf10b96e12b01d3"
+    },
+    {
+      "bytes": 2818,
+      "path": "research/invariant_families_v1/evidence/executed_review_sources/research/invariant_families_v1/reference.py",
+      "sha256": "da1faeb5847f767487470b6060050668a2a8160192871a0cb4715ec4511b6473"
+    },
+    {
+      "bytes": 47594,
+      "path": "research/invariant_families_v1/evidence/executed_review_sources/research/message_mechanism/audit.py",
+      "sha256": "6894ba40741a72978865b2a61efda05b65d17b5e1fc95249e4bd1fad636065fa"
+    },
+    {
+      "bytes": 5383,
+      "path": "research/invariant_families_v1/evidence/executed_review_sources/research/reference/algebra.py",
+      "sha256": "f6c225663a545887f1992041de97e9bd1e1e6a4f3b186c9a77ad79f27df290e9"
+    },
+    {
+      "bytes": 130125,
+      "path": "research/invariant_families_v1/evidence/executed_review_sources/research/staged_blocks/audit.py",
+      "sha256": "ad4643b115efcf748f81c81231fc94c741d8432f12a74605ecc1128658049354"
+    },
+    {
+      "bytes": 147170,
+      "path": "research/invariant_families_v1/evidence/independent_audit.json",
+      "sha256": "49e1f3702980c7c6c303aa3b669f6080ff1842da28581e1613563191c31b43b7"
+    },
+    {
+      "bytes": 91111,
+      "path": "research/invariant_families_v1/evidence/independent_preflight.json",
+      "sha256": "9d84b61227419f8b8244410e45ffa65cf4ceeeeaeba0dd2fbf6f60f807269640"
+    },
+    {
+      "bytes": 91111,
+      "path": "research/invariant_families_v1/evidence/independent_preflight_current_note.json",
+      "sha256": "5d2d899e24686a1e80be9988f24ed5a7ab3181235e742a0227c8f11311ef8963"
+    },
+    {
+      "bytes": 2749,
+      "path": "research/invariant_families_v1/evidence/independent_source_retention.json",
+      "sha256": "9e5862831297b6e6739ccbd403835a1ab404ec252b5f8df8e041f0ad470934be"
+    },
+    {
+      "bytes": 926,
+      "path": "research/invariant_families_v1/evidence/math_note_final_supplement.json",
+      "sha256": "f3812b155c28f7f562689b13613b10eb28c065b91c0df2400fdce787cfcd1c8c"
+    },
+    {
+      "bytes": 15208,
+      "path": "research/invariant_families_v1/evidence/native_v1/archive_hashes.json",
+      "sha256": "e28d750db151b1b12fb4d957193d380e00601188ba89471331205f38194de583"
+    },
+    {
+      "bytes": 503,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/research/components/__init__.py",
+      "sha256": "bc3c504533e052ea7dfee41483df25ee7ecc3bd30aba70fb52ed2d6f245afd4a"
+    },
+    {
+      "bytes": 5637,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/research/components/compose.py",
+      "sha256": "463f960fe44533310e98528d3f85b611101fa661c70ce18beed3ac72885ed496"
+    },
+    {
+      "bytes": 6163,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/research/components/recipes.py",
+      "sha256": "99a199109782b9115e06c67517a948d904a2659ffbeedadc92bb0606d653a0bc"
+    },
+    {
+      "bytes": 8328,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/research/components/spec.py",
+      "sha256": "1bb4bb06eaddebd0bb0d0287a6fc846900396b6fbcd00ec61cd28917f8e778d4"
+    },
+    {
+      "bytes": 82,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/research/experiments/__init__.py",
+      "sha256": "1a31c776b2e99bbc5cd5abb4cfa75d72a46305546b947eb315dd5209ed0949f6"
+    },
+    {
+      "bytes": 11951,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/research/experiments/collection.py",
+      "sha256": "d00821114fe81aa5bfe611fdd3be5a90fb635fe5d4cd38c131d29952a899a8f8"
+    },
+    {
+      "bytes": 4440,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/research/experiments/compatibility.py",
+      "sha256": "4f22d87e9962b0be35f74a1735b71d40a24b2c545820a11c5bc0aa1c5e71abe8"
+    },
+    {
+      "bytes": 3844,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/research/experiments/interfaces.py",
+      "sha256": "507cbf34499f655d4726aeee8f795801fd837853d929e78ec105a45adacf246a"
+    },
+    {
+      "bytes": 9142,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/research/experiments/materialize_evidence.py",
+      "sha256": "b2dc2c886ef5fe3cdaf5145bc64139ca1d46a7c21b057dafc60381294e0eb206"
+    },
+    {
+      "bytes": 15509,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/research/experiments/run.py",
+      "sha256": "2a9361b777f4eff1192cc5911d7521e3a6c81342e9e119dabff9d6e5941e679d"
+    },
+    {
+      "bytes": 83,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/research/invariant_families_v1/__init__.py",
+      "sha256": "69f6142961001b5eaf08d35c842819c167a66ea7a904b04bfb57dc4a4a2d17e8"
+    },
+    {
+      "bytes": 3150,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/research/invariant_families_v1/budget.py",
+      "sha256": "8758a85953d0fd925fb7658a2c1d592adca7af2cdadf0f86ea1611fdb345eef4"
+    },
+    {
+      "bytes": 8424,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/research/invariant_families_v1/protocol.json",
+      "sha256": "f0340b86b689d681cc37cfd76e9e8617cd4f400ea1cb868fa94d00ff7471f523"
+    },
+    {
+      "bytes": 14837,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/research/invariant_families_v1/run.py",
+      "sha256": "556b7adc1bff1a0cefc420c9e796f3fa19e35059f04c1857c4289dd87487c6be"
+    },
+    {
+      "bytes": 9425,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/research/presenter/build.py",
+      "sha256": "0845fecd843702d1e2387a0955a4fb9a92b195e2bcab390c957171a4a2528ad8"
+    },
+    {
+      "bytes": 11610,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/research/presenter/demo.py",
+      "sha256": "5ffbaf1036d39574dfc7ae3d981632cd9c290d35e01b162098d510bcb2c90585"
+    },
+    {
+      "bytes": 26318,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/research/presenter/export.py",
+      "sha256": "2168f532626c13170ca0791e7d896dac96c638ad6f2b704ee7e359d4ef6681cc"
+    },
+    {
+      "bytes": 295,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/research/reference/__init__.py",
+      "sha256": "58c984fcf9f9afa8e54be99771cdb1745272566158701cb9ca0e86bdc7b5445c"
+    },
+    {
+      "bytes": 5383,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/research/reference/algebra.py",
+      "sha256": "f6c225663a545887f1992041de97e9bd1e1e6a4f3b186c9a77ad79f27df290e9"
+    },
+    {
+      "bytes": 227,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/universe24/__init__.py",
+      "sha256": "fdce7c34f1c57d4601ddb445b0c46889418630cc175551b3cddcb56f0e8393b7"
+    },
+    {
+      "bytes": 3955,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/universe24/__main__.py",
+      "sha256": "157a90dd1a31ded840ac00e991d31c187b3e1c8ba72de3048deddb0b2ffc425e"
+    },
+    {
+      "bytes": 227,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/universe24/core/__init__.py",
+      "sha256": "54b4904eead9518f5c5b7a40681c709eb45f1a9ea6588e0bce69338d17ac144f"
+    },
+    {
+      "bytes": 2713,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/universe24/core/coupling.py",
+      "sha256": "4d822203dbb75bd5192c4fddcbf8e2ffbab6c46c2a55cb19f101bcecaa4f6489"
+    },
+    {
+      "bytes": 2785,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/universe24/core/engine.py",
+      "sha256": "4ee34937e2d82d68aa3414dd0fbe71f4e01cc075753c7a638d10667afceaa938"
+    },
+    {
+      "bytes": 3265,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/universe24/core/group_2o.py",
+      "sha256": "3f0475445dfc65042651a68036835e375003a86873fc202b8e904fdf470fb055"
+    },
+    {
+      "bytes": 435,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/universe24/core/rule3.py",
+      "sha256": "216e2490e7a9f683db1a8918dc46c7aa11213aaf0409a13ddf7f1850f7b88555"
+    },
+    {
+      "bytes": 2514,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/universe24/core/state.py",
+      "sha256": "6581559406158af6febe1f5763901915e4e6287ee9ebabe34a3db9186b8c45f0"
+    },
+    {
+      "bytes": 214,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/universe24/experiments/__init__.py",
+      "sha256": "073f5497951a49f85e4ef6d348dade004167959fe7f023c4837e4e24dbae7e22"
+    },
+    {
+      "bytes": 3455,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/universe24/experiments/config.py",
+      "sha256": "8ce7828a3a2d677e0234d76fcb91dd493f216892f0e57182c246b36ef6efb926"
+    },
+    {
+      "bytes": 317,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/universe24/observation/__init__.py",
+      "sha256": "86f59ebf4ecd61b9a5fa8071b93b0ebdb89ec489268b9d09c30130981f3678cb"
+    },
+    {
+      "bytes": 1243,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/universe24/observation/clicks.py",
+      "sha256": "cd14589241086d0b00adae1819ae8e230ad1b1a221714d84a6bf698e2424cced"
+    },
+    {
+      "bytes": 1310,
+      "path": "research/invariant_families_v1/evidence/native_v1/executed_sources/universe24/observation/diagnostics.py",
+      "sha256": "ea4ab16b615333bbb2f1293fd4dd45c99c29dac5cf9206cc3b3245ed6a73b6c3"
+    },
+    {
+      "bytes": 1919441,
+      "path": "research/invariant_families_v1/evidence/native_v1/experiments.json",
+      "sha256": "16eb5c2e4db6a952a4ab7ce11ee922f51c2b5b3139538849647f9df0e2cd852d"
+    },
+    {
+      "bytes": 22136,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/internal_yy-L3-r0-a0-b1.json.gz",
+      "sha256": "462b470994e604e3d74aa839b56291d8400d033a3136f72d70ed1701a5c287d9"
+    },
+    {
+      "bytes": 21971,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/internal_yy-L3-r0-a2-b-1.json.gz",
+      "sha256": "9bfd1ced6be35916998fbb58ca5cbbb984410f203c03e43aa1bc1e1849a92cdf"
+    },
+    {
+      "bytes": 22118,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/internal_yy-L3-r1-a0-b1.json.gz",
+      "sha256": "974de8b5ae36a5cf1e775fcebc52cfd9c3431ba077b00120d4a91eb856fc76f1"
+    },
+    {
+      "bytes": 21969,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/internal_yy-L3-r1-a2-b-1.json.gz",
+      "sha256": "d61870e5c18d2879ae1a7a786d268a8312c56c724b844b433c698433aed97588"
+    },
+    {
+      "bytes": 23555,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/internal_yy-L3-r2-a0-b1.json.gz",
+      "sha256": "e900b348ca99920e3724e8c321daf60af3a1d5ae7adcbd1c4af9b0150eb0b7c6"
+    },
+    {
+      "bytes": 23140,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/internal_yy-L3-r2-a2-b-1.json.gz",
+      "sha256": "4de188cafebe79594401fee8cc69dda2252db7806da6588b3a5f0f10f79d2b8a"
+    },
+    {
+      "bytes": 23258,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/internal_yy-L3-r3-a0-b1.json.gz",
+      "sha256": "8512476ca2853967afc140651cc7543903ee1bccdac2516ffb5097ddbc0523e0"
+    },
+    {
+      "bytes": 23153,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/internal_yy-L3-r3-a2-b-1.json.gz",
+      "sha256": "591f95bfc058eaac7e7427121a74b225bfc84912a3bbdf24d18a7552df6bb439"
+    },
+    {
+      "bytes": 23438,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/internal_yy-L3-r4-a0-b1.json.gz",
+      "sha256": "881eaf128bf57593cb552a3aa69e82f91601426f1c8e29c74d2fdede7b371758"
+    },
+    {
+      "bytes": 23066,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/internal_yy-L3-r4-a2-b-1.json.gz",
+      "sha256": "093d5ea26f8aefcb1ce48d58e362628b7031f7af62313d1d6ec483f31afe32a6"
+    },
+    {
+      "bytes": 23447,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/internal_yy-L3-r5-a0-b1.json.gz",
+      "sha256": "897ea3a5705aaa17b7c7a549cf18568aea76161b495ac2a7df5a8a21f7b3a9c2"
+    },
+    {
+      "bytes": 23074,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/internal_yy-L3-r5-a2-b-1.json.gz",
+      "sha256": "56cc41ab210385ff7adb2bf4baa920348c3c6368aa688df91b41397a24c15c52"
+    },
+    {
+      "bytes": 43213,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/spatial_period3-L3-r0-a0-b1.json.gz",
+      "sha256": "f820989658e19fe9699cb422709861b0098ce4c96833172a738f35baa0152f35"
+    },
+    {
+      "bytes": 38963,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/spatial_period3-L3-r0-a2-b-1.json.gz",
+      "sha256": "d651fa4a39e8819d2d3c02c250d64f67fdda00dc77a232c5579744061de3886e"
+    },
+    {
+      "bytes": 43213,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/spatial_period3-L3-r1-a0-b1.json.gz",
+      "sha256": "2321d601e914e5e01129a888be31d311921b8a702ea0bacdf57632f89f38be95"
+    },
+    {
+      "bytes": 38972,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/spatial_period3-L3-r1-a2-b-1.json.gz",
+      "sha256": "3b1da099173a1e28b5ef241da80e358eedb2313ebe72d7c44e79ba3f8e9da023"
+    },
+    {
+      "bytes": 43216,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/spatial_period3-L3-r2-a0-b1.json.gz",
+      "sha256": "be271b220541769e864c1e01ede6c8d5228493771a8b9839fe8d673df84a907c"
+    },
+    {
+      "bytes": 38984,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/spatial_period3-L3-r2-a2-b-1.json.gz",
+      "sha256": "491b16d6133b6dfd1a93299d22d74f07ee1cd2bf87ead7ab8d07d14434e147cc"
+    },
+    {
+      "bytes": 43212,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/spatial_period3-L3-r3-a0-b1.json.gz",
+      "sha256": "1bbb61aa23932a22ffe27a1d9e5ef19e51d899cf1395f8af2258a847257264dd"
+    },
+    {
+      "bytes": 39003,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/spatial_period3-L3-r3-a2-b-1.json.gz",
+      "sha256": "c16417b1c32a0d58f10183f901ad0b3db68e70ff8e4b91783791af93589c20c9"
+    },
+    {
+      "bytes": 43225,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/spatial_period3-L3-r4-a0-b1.json.gz",
+      "sha256": "ea27842cb0639dfcf9137407fa70ce88c9afb1ad39f7b4e7a9d90e36fc61abda"
+    },
+    {
+      "bytes": 38973,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/spatial_period3-L3-r4-a2-b-1.json.gz",
+      "sha256": "7fb695fa7f6e9c9f4485423cc7cdffe7eca420d69336e801eeba1eac5b5516b2"
+    },
+    {
+      "bytes": 43217,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/spatial_period3-L3-r5-a0-b1.json.gz",
+      "sha256": "8baaa53e3f68a43ce784a6d597a5f63a967c96fcc25ece609605c36b33026643"
+    },
+    {
+      "bytes": 38961,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/spatial_period3-L3-r5-a2-b-1.json.gz",
+      "sha256": "a206ddb4d63c51abfe5bd3de81e6df6b151f6a06ddbbcb9c17e9beffe5316eb7"
+    },
+    {
+      "bytes": 70490,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/spatial_period4-L4-r0-a0-b1.json.gz",
+      "sha256": "ef59c550a8e2160f10b0be2cd063b3f513e9286b29f5995a12c8f2c3e11e2c52"
+    },
+    {
+      "bytes": 70744,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/spatial_period4-L4-r0-a2-b-1.json.gz",
+      "sha256": "903cbe20f3fa83ef0e55a7471504bd60a957df2fc66f4d66985b8507e3460a4f"
+    },
+    {
+      "bytes": 70512,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/spatial_period4-L4-r1-a0-b1.json.gz",
+      "sha256": "9fdfe251a0e43b0b3df24df1e78fd1334dae74a80a377fc1d72655224c3cb8e9"
+    },
+    {
+      "bytes": 70721,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/spatial_period4-L4-r1-a2-b-1.json.gz",
+      "sha256": "a0a41550a33a00fbb00959abf20f1011c1752dacde0efd04a06d2c3144c7a7e3"
+    },
+    {
+      "bytes": 70620,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/spatial_period4-L4-r2-a0-b1.json.gz",
+      "sha256": "ac54a1160cfbcd0c8952c4c61cdc226b02fe9225ec5e3baaeaf104d2cdf48bc0"
+    },
+    {
+      "bytes": 70743,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/spatial_period4-L4-r2-a2-b-1.json.gz",
+      "sha256": "0fe56105b818fae47844b19131fbe9f25908a3c874b5a75508fb07a859770fce"
+    },
+    {
+      "bytes": 70615,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/spatial_period4-L4-r3-a0-b1.json.gz",
+      "sha256": "e96e8ad5b83f9690a065ea4b252fae9e1b9c7c6c38f7d468771b3a831b37beb8"
+    },
+    {
+      "bytes": 70742,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/spatial_period4-L4-r3-a2-b-1.json.gz",
+      "sha256": "add0a964ee5b81c73c938ad4a18cbb785e70553a6c62842acc1c0c49f635564e"
+    },
+    {
+      "bytes": 70671,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/spatial_period4-L4-r4-a0-b1.json.gz",
+      "sha256": "6e85a7db68bec0a7dc846678ea324a152242ea2118dbf07d077b2a95d5d0530f"
+    },
+    {
+      "bytes": 70719,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/spatial_period4-L4-r4-a2-b-1.json.gz",
+      "sha256": "734964d355e4d80c5be4381f3f1035037d1a3a3aab483f3af69f239380a098b7"
+    },
+    {
+      "bytes": 70668,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/spatial_period4-L4-r5-a0-b1.json.gz",
+      "sha256": "8e9d9cf00630d8db56af238640cb6ea235ad625d9877a2cd8dcf905efcde678f"
+    },
+    {
+      "bytes": 70713,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/spatial_period4-L4-r5-a2-b-1.json.gz",
+      "sha256": "931e36b60f402ee3db7064e8c72c54ec01e179c897c1627f7769aa0e65d8ed05"
+    },
+    {
+      "bytes": 60268,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/uniform-L3-r0-a0-b1.json.gz",
+      "sha256": "fcbbcd9ad49e62398f75dba18bdf9f65ec33e942a17b4bcc269d0e5b4051fc13"
+    },
+    {
+      "bytes": 60933,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/uniform-L3-r0-a2-b-1.json.gz",
+      "sha256": "e355b260a12e89806d6eabfc5b629d970ce79631227e53110d0434a69ffbdb00"
+    },
+    {
+      "bytes": 60264,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/uniform-L3-r1-a0-b1.json.gz",
+      "sha256": "649f82d3028fb3bd13dcf5fec0d66e14696aaaad45c0f6f3bf7c9e7f16d43971"
+    },
+    {
+      "bytes": 60969,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/uniform-L3-r1-a2-b-1.json.gz",
+      "sha256": "c7913b801357a29d124f9aa213999cf64f7cecbc2c83ac60a4b0a40d783e1987"
+    },
+    {
+      "bytes": 60243,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/uniform-L3-r2-a0-b1.json.gz",
+      "sha256": "806486f08043df534f1e25a51794121081e6a9563b6c9cf0cabda5686375d19f"
+    },
+    {
+      "bytes": 60939,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/uniform-L3-r2-a2-b-1.json.gz",
+      "sha256": "a934d6c78d92cf25a521799f544c9851aa5d14a9371b90aff5038343dde4395b"
+    },
+    {
+      "bytes": 60273,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/uniform-L3-r3-a0-b1.json.gz",
+      "sha256": "54acb16a10eabe49d5e8563ee6805ccc4b6348dbe59fd005019b55e8b13989b9"
+    },
+    {
+      "bytes": 60936,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/uniform-L3-r3-a2-b-1.json.gz",
+      "sha256": "1eb3b9ee6342a5bd2dd7505ce0bd3bfa97e298df472787179ac578d26ca75a14"
+    },
+    {
+      "bytes": 60272,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/uniform-L3-r4-a0-b1.json.gz",
+      "sha256": "718254ddc9e99dea3152c3b870eb33c63569145fba991b974e7659b4b29ae3f5"
+    },
+    {
+      "bytes": 60943,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/uniform-L3-r4-a2-b-1.json.gz",
+      "sha256": "b27f7cace824161d11c9f125bc8e4c648576f9e111e514ac266b6c82f8cf761d"
+    },
+    {
+      "bytes": 60274,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/uniform-L3-r5-a0-b1.json.gz",
+      "sha256": "91f13ebfd03412587d1dd359b8f2d446b90459a8bca173783e2714c93601ce5c"
+    },
+    {
+      "bytes": 60949,
+      "path": "research/invariant_families_v1/evidence/native_v1/native/uniform-L3-r5-a2-b-1.json.gz",
+      "sha256": "3c4f11d891fa38c9e5242404015305b3c9f2ab8fe1b6f1ae76e2e6d68a369509"
+    },
+    {
+      "bytes": 702,
+      "path": "research/invariant_families_v1/evidence/native_v1/outer_budget.json",
+      "sha256": "db49be189496ea80ef4f8ba8214aff8d8c3538f51dee6ab60cda8bda4f2e753e"
+    },
+    {
+      "bytes": 8424,
+      "path": "research/invariant_families_v1/evidence/native_v1/protocol.json",
+      "sha256": "f0340b86b689d681cc37cfd76e9e8617cd4f400ea1cb868fa94d00ff7471f523"
+    },
+    {
+      "bytes": 38822,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/internal_yy-L3-r0-a0-b1.json.gz",
+      "sha256": "a23825145038084ff398499ca07734ece042b1e9282896942f6dc3de163d4212"
+    },
+    {
+      "bytes": 45377,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/internal_yy-L3-r0-a2-b-1.json.gz",
+      "sha256": "aa1dc436ea5a581d5196c41a446cadf85df66211cd94145fbf51a5304bf5566f"
+    },
+    {
+      "bytes": 38814,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/internal_yy-L3-r1-a0-b1.json.gz",
+      "sha256": "be222f8ac614862a8914aefc7ac36d3c48453e6b4f9fefb5741138855bf11fe3"
+    },
+    {
+      "bytes": 45369,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/internal_yy-L3-r1-a2-b-1.json.gz",
+      "sha256": "6c45580bb7889343de2457f14b18dae537a4d663a4310c5841ae939194757a89"
+    },
+    {
+      "bytes": 42968,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/internal_yy-L3-r2-a0-b1.json.gz",
+      "sha256": "a7af76718112a7b78054c626116b430e87d2476acef9c3bb5cbbdd6370bc06fb"
+    },
+    {
+      "bytes": 46670,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/internal_yy-L3-r2-a2-b-1.json.gz",
+      "sha256": "146ff8c282f045033310b601b3d772569e0da1b4e5c189821d6776128dccc484"
+    },
+    {
+      "bytes": 42596,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/internal_yy-L3-r3-a0-b1.json.gz",
+      "sha256": "fea08b36c899147b88629ecd0a72d6bb0e8f3a19be27144099bde61b5bbe20e2"
+    },
+    {
+      "bytes": 46699,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/internal_yy-L3-r3-a2-b-1.json.gz",
+      "sha256": "7f8475749b86b0f7c46be5f005ab4dd17599a58e7449477dfff3e84d4d83486e"
+    },
+    {
+      "bytes": 42967,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/internal_yy-L3-r4-a0-b1.json.gz",
+      "sha256": "291094ac882d458e42ceb54623e3edc1a37add76a18a40dd63c2bc280259b4bc"
+    },
+    {
+      "bytes": 46420,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/internal_yy-L3-r4-a2-b-1.json.gz",
+      "sha256": "a6799e51ee7f2ad0635cbe5dad3fe1e0117825bfbbaf002e166c2e2134ce6675"
+    },
+    {
+      "bytes": 42973,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/internal_yy-L3-r5-a0-b1.json.gz",
+      "sha256": "621e8627ab4f248ef3adfadb45a4b16d4cc0e9bdce8f2b08744b59ab964afb0a"
+    },
+    {
+      "bytes": 46434,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/internal_yy-L3-r5-a2-b-1.json.gz",
+      "sha256": "936ce8414052dd11e3bb2643ce86caf37661cf09ebaf1de450e1952788fdc025"
+    },
+    {
+      "bytes": 73440,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/spatial_period3-L3-r0-a0-b1.json.gz",
+      "sha256": "e27a34dcb2dc0f231631ae2b5b0724a81865b80ff514c24b4a5cda1bd3674d5c"
+    },
+    {
+      "bytes": 83031,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/spatial_period3-L3-r0-a2-b-1.json.gz",
+      "sha256": "ccd0c486443acecca1afb8e5e2491d81f85a1c2e25cb964d410407fbe5f4e86a"
+    },
+    {
+      "bytes": 73445,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/spatial_period3-L3-r1-a0-b1.json.gz",
+      "sha256": "75b523cb1702ab1c05a9dcde607b95c837c95c1cce2c9fff4837ebf00041a9b0"
+    },
+    {
+      "bytes": 83043,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/spatial_period3-L3-r1-a2-b-1.json.gz",
+      "sha256": "6e68ce73b6c35e273e9b6175b4259e09664e1b55d3fc584f35cd714f16c0f490"
+    },
+    {
+      "bytes": 73454,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/spatial_period3-L3-r2-a0-b1.json.gz",
+      "sha256": "d069c54dbdac8e15801aa73436c552ba98ef4d7d631296f84418c3c43ed897fe"
+    },
+    {
+      "bytes": 83061,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/spatial_period3-L3-r2-a2-b-1.json.gz",
+      "sha256": "a1c41ca829c1e594f36a1c96daf6858a07457feab83607930c973eeb833ec5a6"
+    },
+    {
+      "bytes": 73450,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/spatial_period3-L3-r3-a0-b1.json.gz",
+      "sha256": "db001ea84c67b5924aaca51d92f049f80f5c7d20b2f85a0342a147de6b57a4ab"
+    },
+    {
+      "bytes": 83075,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/spatial_period3-L3-r3-a2-b-1.json.gz",
+      "sha256": "8f64780ee6c3ff2846b58f15a6d606f3ab2e3f4fc68bc48331d746040c4b85f4"
+    },
+    {
+      "bytes": 73462,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/spatial_period3-L3-r4-a0-b1.json.gz",
+      "sha256": "1d806b88ce6027f5140e03a61829bd5d15eb4de153c193f89ab2e225adb0236f"
+    },
+    {
+      "bytes": 83037,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/spatial_period3-L3-r4-a2-b-1.json.gz",
+      "sha256": "b8acdefbe75f8eed83858f65d4c8ef38667d145c7b3334e0068a4c357a85ece4"
+    },
+    {
+      "bytes": 73457,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/spatial_period3-L3-r5-a0-b1.json.gz",
+      "sha256": "c56e3571bba7bf9a66d2f01724b9a07e90365035a02bc182ff4d4d228b8dc016"
+    },
+    {
+      "bytes": 83035,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/spatial_period3-L3-r5-a2-b-1.json.gz",
+      "sha256": "4eb1059a2fd0516ad13beeaf669a89f2e162a784c8e7b4f32515fbe22cfffce4"
+    },
+    {
+      "bytes": 124687,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/spatial_period4-L4-r0-a0-b1.json.gz",
+      "sha256": "075ea494cca1931e63b6419536996e2832dc9225421a4b8fae77711388d651b9"
+    },
+    {
+      "bytes": 147099,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/spatial_period4-L4-r0-a2-b-1.json.gz",
+      "sha256": "54be8b2113f9e141fde661686b84fb8d2eeea9ac67889fb3e5db2193e22124e0"
+    },
+    {
+      "bytes": 124710,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/spatial_period4-L4-r1-a0-b1.json.gz",
+      "sha256": "24e8ef2b7b110900f67ada4e62f422b4291ad56d3e775b373b57d974092f4e54"
+    },
+    {
+      "bytes": 147079,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/spatial_period4-L4-r1-a2-b-1.json.gz",
+      "sha256": "a819bb248069580f9090fa2ccb50cb553e4b2204104ca4183a89a19c0155eb57"
+    },
+    {
+      "bytes": 133863,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/spatial_period4-L4-r2-a0-b1.json.gz",
+      "sha256": "d66c3d3b6956a27b4127d33b5b927adbc3121ef323403d605ef460424573a2f0"
+    },
+    {
+      "bytes": 147155,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/spatial_period4-L4-r2-a2-b-1.json.gz",
+      "sha256": "82a62f0398600d4c013a02b62335c09f93bb1036e4854050d27560280a070b73"
+    },
+    {
+      "bytes": 133864,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/spatial_period4-L4-r3-a0-b1.json.gz",
+      "sha256": "ece9bb0fadc3a8b48f8905c16a17d5f6c8665bea8d7bae5c4866cf2c71fbc8d3"
+    },
+    {
+      "bytes": 147160,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/spatial_period4-L4-r3-a2-b-1.json.gz",
+      "sha256": "61034192bd2f2f24d557a53b5cd90d7d54642c9919b8f5806a565b006e89e2f9"
+    },
+    {
+      "bytes": 133934,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/spatial_period4-L4-r4-a0-b1.json.gz",
+      "sha256": "abccf4b1721d4711b7738b1459a7ebc88c91ff5e4bc6f95a71f67abb8850e346"
+    },
+    {
+      "bytes": 147028,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/spatial_period4-L4-r4-a2-b-1.json.gz",
+      "sha256": "b12300150f44a012c8aea47b33df3610a0f27f60ec57a74ec34b476337ae7f83"
+    },
+    {
+      "bytes": 133936,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/spatial_period4-L4-r5-a0-b1.json.gz",
+      "sha256": "2e95503fe9762ecb7a96d675870093c9e1b30bbd8e2ff5963b2d3ecdc5f60ab6"
+    },
+    {
+      "bytes": 147046,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/spatial_period4-L4-r5-a2-b-1.json.gz",
+      "sha256": "7c3039f86e1b5d1119073dc1d0855058940cf8d09261a0b20ad8911043dd658b"
+    },
+    {
+      "bytes": 123214,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/uniform-L3-r0-a0-b1.json.gz",
+      "sha256": "8c5e12664676acc3d66af1d7ea23812427eaf9c8b04dd222d677320ba724492b"
+    },
+    {
+      "bytes": 123618,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/uniform-L3-r0-a2-b-1.json.gz",
+      "sha256": "85b7ccf678cbcf252d7f60519abf84040c78353778e7f5e3cf902840cc40252f"
+    },
+    {
+      "bytes": 123211,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/uniform-L3-r1-a0-b1.json.gz",
+      "sha256": "52f5344012a6095b955175202669fc6945c2b4c91367d0162c531561ce628d8c"
+    },
+    {
+      "bytes": 123652,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/uniform-L3-r1-a2-b-1.json.gz",
+      "sha256": "b5e31b9e1e576f99e8ceeb799076894679efdbc180ce8b14a2423b6867175e97"
+    },
+    {
+      "bytes": 123190,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/uniform-L3-r2-a0-b1.json.gz",
+      "sha256": "414d1c485628e41cacf34c31fd9b614d781477cf7b082cd393529dbecacecc89"
+    },
+    {
+      "bytes": 123618,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/uniform-L3-r2-a2-b-1.json.gz",
+      "sha256": "20f5e8e20d33355de06c667aa7095452cdecd51e9e4ddc0d91e0822f824c2846"
+    },
+    {
+      "bytes": 123225,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/uniform-L3-r3-a0-b1.json.gz",
+      "sha256": "a999d51f4bfbfe519e8c4ff65f85e324fddef053e4767aaeb805134d6bc7dc8f"
+    },
+    {
+      "bytes": 123618,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/uniform-L3-r3-a2-b-1.json.gz",
+      "sha256": "708a90b76afbb353af391ede7f7e07acf5f4272145d4e457219b51d5bd55eaa9"
+    },
+    {
+      "bytes": 123223,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/uniform-L3-r4-a0-b1.json.gz",
+      "sha256": "d29678edef89666023846b0c19617b4794a75bf16dcbbfca6cbd9902b13489d9"
+    },
+    {
+      "bytes": 123624,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/uniform-L3-r4-a2-b-1.json.gz",
+      "sha256": "8115832416c4d5835982daa124bce566f5cdd236c7cb0b60a5219018191971ca"
+    },
+    {
+      "bytes": 123229,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/uniform-L3-r5-a0-b1.json.gz",
+      "sha256": "b8803c20a3061e2574df5aa8e33ce04bceb5c96e3c11dedb840c67e2fe259541"
+    },
+    {
+      "bytes": 123632,
+      "path": "research/invariant_families_v1/evidence/native_v1/records/uniform-L3-r5-a2-b-1.json.gz",
+      "sha256": "efa9d26cb854cef2268018c94e5f3b783412d1a9d8a0728d4d86679c3a847294"
+    },
+    {
+      "bytes": 21820,
+      "path": "research/invariant_families_v1/evidence/native_v1/registration.json",
+      "sha256": "b3afb6fd04c08c7725042716cee90bce7442e5c6ff0414bcc46ec3684001227d"
+    },
+    {
+      "bytes": 28506,
+      "path": "research/invariant_families_v1/evidence/native_v1/result.json",
+      "sha256": "ed693f5ef550a1d0bb97df97aa5e323570a61a49e0923c090550af5d8794f46e"
+    },
+    {
+      "bytes": 16104,
+      "path": "research/invariant_families_v1/evidence/overlap_independent_audit.json",
+      "sha256": "9d4ed12c7c829c7fe5e2373c3363a71dcdbbbee20f7eb0c598df40935f36e4e7"
+    },
+    {
+      "bytes": 0,
+      "path": "research/invariant_families_v1/evidence/overlap_independent_audit.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 200,
+      "path": "research/invariant_families_v1/evidence/overlap_independent_audit.stdout.txt",
+      "sha256": "fa5abcd8cd773ede57a83dbf92321919f910377d55d32d53f3056bc72ec0ee78"
+    },
+    {
+      "bytes": 802,
+      "path": "research/invariant_families_v1/evidence/overlap_independent_audit_budget.json",
+      "sha256": "ff32d150d1cd259e5da7b112c394cf94e7bf53a9bb3c92c897bb0bcd1efd065b"
+    },
+    {
+      "bytes": 1076,
+      "path": "research/invariant_families_v1/evidence/overlap_independent_preflight.json",
+      "sha256": "2982b612b7c864294faa7d728e17f5c10c93d0db5f558e6c38586721bcfa4a79"
+    },
+    {
+      "bytes": 1167,
+      "path": "research/invariant_families_v1/evidence/overlap_independent_source_retention.json",
+      "sha256": "ceebb8cc72948827ba6e23ca59a4074a3cbdb62a999bb415d1b0f7eef2c8da6a"
+    },
+    {
+      "bytes": 5553,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/archive_hashes.json",
+      "sha256": "261bb56601111b9bc31f18d9028cd145e0fd512a44d63c9c66918e117733c2ea"
+    },
+    {
+      "bytes": 225,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/checkpoint-00.json",
+      "sha256": "6f1d4a5edf6cd987741f812e51ec922f2bff2248ecb636afe2d9b4dbde9958d8"
+    },
+    {
+      "bytes": 524,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/checkpoint-01.json",
+      "sha256": "dd26890c2e59dd7c326e34170723da9ca766fb13efe75e87b05a24d72bda5fa3"
+    },
+    {
+      "bytes": 374,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/checkpoint-10.json",
+      "sha256": "c1b56f183bc91601af8b3e5d586c612c239f50aac5013ef16145ade403476cbd"
+    },
+    {
+      "bytes": 674,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/checkpoint-11.json",
+      "sha256": "ded4aecf0c9188a048c625389ee76a83c0193dc56ee1138c5fe10fbfae03c1ad"
+    },
+    {
+      "bytes": 7314,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/research/clock_selection/invariant_overlap_protocol.json",
+      "sha256": "1c6851a118c1141e5ad983dc2c736f35a858d8c416a7e63caf04ba1ba4339e32"
+    },
+    {
+      "bytes": 503,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/research/components/__init__.py",
+      "sha256": "bc3c504533e052ea7dfee41483df25ee7ecc3bd30aba70fb52ed2d6f245afd4a"
+    },
+    {
+      "bytes": 5637,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/research/components/compose.py",
+      "sha256": "463f960fe44533310e98528d3f85b611101fa661c70ce18beed3ac72885ed496"
+    },
+    {
+      "bytes": 6163,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/research/components/recipes.py",
+      "sha256": "99a199109782b9115e06c67517a948d904a2659ffbeedadc92bb0606d653a0bc"
+    },
+    {
+      "bytes": 8328,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/research/components/spec.py",
+      "sha256": "1bb4bb06eaddebd0bb0d0287a6fc846900396b6fbcd00ec61cd28917f8e778d4"
+    },
+    {
+      "bytes": 82,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/research/experiments/__init__.py",
+      "sha256": "1a31c776b2e99bbc5cd5abb4cfa75d72a46305546b947eb315dd5209ed0949f6"
+    },
+    {
+      "bytes": 11951,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/research/experiments/collection.py",
+      "sha256": "d00821114fe81aa5bfe611fdd3be5a90fb635fe5d4cd38c131d29952a899a8f8"
+    },
+    {
+      "bytes": 4440,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/research/experiments/compatibility.py",
+      "sha256": "4f22d87e9962b0be35f74a1735b71d40a24b2c545820a11c5bc0aa1c5e71abe8"
+    },
+    {
+      "bytes": 3844,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/research/experiments/interfaces.py",
+      "sha256": "507cbf34499f655d4726aeee8f795801fd837853d929e78ec105a45adacf246a"
+    },
+    {
+      "bytes": 9142,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/research/experiments/materialize_evidence.py",
+      "sha256": "b2dc2c886ef5fe3cdaf5145bc64139ca1d46a7c21b057dafc60381294e0eb206"
+    },
+    {
+      "bytes": 15509,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/research/experiments/run.py",
+      "sha256": "2a9361b777f4eff1192cc5911d7521e3a6c81342e9e119dabff9d6e5941e679d"
+    },
+    {
+      "bytes": 83,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/research/invariant_families_v1/__init__.py",
+      "sha256": "69f6142961001b5eaf08d35c842819c167a66ea7a904b04bfb57dc4a4a2d17e8"
+    },
+    {
+      "bytes": 15697,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/research/invariant_families_v1/overlap.py",
+      "sha256": "7efd85923de1b4d832d455ae8c5a2a1df5394b1c19c657d87bd1ffc20525ebd1"
+    },
+    {
+      "bytes": 3447,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/research/invariant_families_v1/overlap_budget.py",
+      "sha256": "7912467c54893d2bfcbe7116675acb98995d132aa41e2770ad4a14c6a6840c95"
+    },
+    {
+      "bytes": 9425,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/research/presenter/build.py",
+      "sha256": "0845fecd843702d1e2387a0955a4fb9a92b195e2bcab390c957171a4a2528ad8"
+    },
+    {
+      "bytes": 11610,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/research/presenter/demo.py",
+      "sha256": "5ffbaf1036d39574dfc7ae3d981632cd9c290d35e01b162098d510bcb2c90585"
+    },
+    {
+      "bytes": 26318,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/research/presenter/export.py",
+      "sha256": "2168f532626c13170ca0791e7d896dac96c638ad6f2b704ee7e359d4ef6681cc"
+    },
+    {
+      "bytes": 295,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/research/reference/__init__.py",
+      "sha256": "58c984fcf9f9afa8e54be99771cdb1745272566158701cb9ca0e86bdc7b5445c"
+    },
+    {
+      "bytes": 5383,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/research/reference/algebra.py",
+      "sha256": "f6c225663a545887f1992041de97e9bd1e1e6a4f3b186c9a77ad79f27df290e9"
+    },
+    {
+      "bytes": 227,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/universe24/__init__.py",
+      "sha256": "fdce7c34f1c57d4601ddb445b0c46889418630cc175551b3cddcb56f0e8393b7"
+    },
+    {
+      "bytes": 3955,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/universe24/__main__.py",
+      "sha256": "157a90dd1a31ded840ac00e991d31c187b3e1c8ba72de3048deddb0b2ffc425e"
+    },
+    {
+      "bytes": 227,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/universe24/core/__init__.py",
+      "sha256": "54b4904eead9518f5c5b7a40681c709eb45f1a9ea6588e0bce69338d17ac144f"
+    },
+    {
+      "bytes": 2713,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/universe24/core/coupling.py",
+      "sha256": "4d822203dbb75bd5192c4fddcbf8e2ffbab6c46c2a55cb19f101bcecaa4f6489"
+    },
+    {
+      "bytes": 2785,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/universe24/core/engine.py",
+      "sha256": "4ee34937e2d82d68aa3414dd0fbe71f4e01cc075753c7a638d10667afceaa938"
+    },
+    {
+      "bytes": 3265,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/universe24/core/group_2o.py",
+      "sha256": "3f0475445dfc65042651a68036835e375003a86873fc202b8e904fdf470fb055"
+    },
+    {
+      "bytes": 435,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/universe24/core/rule3.py",
+      "sha256": "216e2490e7a9f683db1a8918dc46c7aa11213aaf0409a13ddf7f1850f7b88555"
+    },
+    {
+      "bytes": 2514,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/universe24/core/state.py",
+      "sha256": "6581559406158af6febe1f5763901915e4e6287ee9ebabe34a3db9186b8c45f0"
+    },
+    {
+      "bytes": 214,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/universe24/experiments/__init__.py",
+      "sha256": "073f5497951a49f85e4ef6d348dade004167959fe7f023c4837e4e24dbae7e22"
+    },
+    {
+      "bytes": 3455,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/universe24/experiments/config.py",
+      "sha256": "8ce7828a3a2d677e0234d76fcb91dd493f216892f0e57182c246b36ef6efb926"
+    },
+    {
+      "bytes": 317,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/universe24/observation/__init__.py",
+      "sha256": "86f59ebf4ecd61b9a5fa8071b93b0ebdb89ec489268b9d09c30130981f3678cb"
+    },
+    {
+      "bytes": 1243,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/universe24/observation/clicks.py",
+      "sha256": "cd14589241086d0b00adae1819ae8e230ad1b1a221714d84a6bf698e2424cced"
+    },
+    {
+      "bytes": 1310,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/executed_sources/universe24/observation/diagnostics.py",
+      "sha256": "ea4ab16b615333bbb2f1293fd4dd45c99c29dac5cf9206cc3b3245ed6a73b6c3"
+    },
+    {
+      "bytes": 1255248,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/experiments.json",
+      "sha256": "d5dee7f2c3f39a379a27214adcd3bda8297b993584f6aa66ec5a17b4632108e7"
+    },
+    {
+      "bytes": 2538,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/interaction_defects.json.gz",
+      "sha256": "70d74b8d59a4fa9af8561e8cd1ac3e1ffbe43fbe4c17a00b71f6d56cdf790ba4"
+    },
+    {
+      "bytes": 2036,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/native/overlap-00.json.gz",
+      "sha256": "564ae9293db9ceb115d1bf5021118b5bac1b03a7930d3215afef0304cec48326"
+    },
+    {
+      "bytes": 35889,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/native/overlap-01.json.gz",
+      "sha256": "d2525d77644f0b57e5daa93b80421b28b9f2679e481771ec8aca9895f6957955"
+    },
+    {
+      "bytes": 49111,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/native/overlap-10.json.gz",
+      "sha256": "cf5658972e12e0aad455a5db644ed7cca711df2fac37144a7c076cd44d812b05"
+    },
+    {
+      "bytes": 57947,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/native/overlap-11.json.gz",
+      "sha256": "4313fea4023b68d50adbbc11dd49dfa903d42bdb63bcac446199ba963a0198c4"
+    },
+    {
+      "bytes": 839,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/outer_budget.json",
+      "sha256": "bcc0cf4d039bf8630cb883bb7dac588532d915f826c8866a07b7bd543d90cb5c"
+    },
+    {
+      "bytes": 7314,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/protocol.json",
+      "sha256": "1c6851a118c1141e5ad983dc2c736f35a858d8c416a7e63caf04ba1ba4339e32"
+    },
+    {
+      "bytes": 832,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/records/overlap-00.json.gz",
+      "sha256": "821f93a4131ca137f3a601a1a808266bc2c8084059bee79e02c3165f1068940f"
+    },
+    {
+      "bytes": 28184,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/records/overlap-01.json.gz",
+      "sha256": "f27809b792db708b7e39eec0c16124d8d9003338dd50cf7add4f8c1225b6cdce"
+    },
+    {
+      "bytes": 42746,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/records/overlap-10.json.gz",
+      "sha256": "d56c1ed881c8851e0537cbb90bea44aeba521aeb67384d8eec4a91c64ce05e23"
+    },
+    {
+      "bytes": 56496,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/records/overlap-11.json.gz",
+      "sha256": "dbcedca986b819553bc393558ee15fab1ab8ab8e45a1c538e77c1b4f71b3f92a"
+    },
+    {
+      "bytes": 105849,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/registration.json",
+      "sha256": "27a9f62b571a99de38d23b225f08994a8ae774a5b5c389dd9efb8a03ef75083d"
+    },
+    {
+      "bytes": 2250,
+      "path": "research/invariant_families_v1/evidence/overlap_v1/result.json",
+      "sha256": "983897e9329aafd5bf0e354442f49b61f2fb20e1e0a834cc695e2b8f193edf59"
+    },
+    {
+      "bytes": 17688,
+      "path": "research/invariant_families_v1/evidence/preflight_local_before_full_remote_commit.json",
+      "sha256": "3790ead239c8b37db35fd1b2077a27d46c8a18052a1b0a1acf900265da4561d0"
+    },
+    {
+      "bytes": 76496,
+      "path": "research/invariant_families_v1/evidence/presenter_checks/bundle-1-whole-cube.png",
+      "sha256": "12eae41551b0d252e8468132130d250be94817bc058041b8ce1593cd6cc6eb9b"
+    },
+    {
+      "bytes": 9284,
+      "path": "research/invariant_families_v1/evidence/presenter_checks/report.json",
+      "sha256": "cd7fec92fe6cb3e7c6ada22c4b0eb0a28928c277f65b290e066ac7601abf4319"
+    },
+    {
+      "bytes": 76496,
+      "path": "research/invariant_families_v1/evidence/presenter_combined_checks/bundle-1-whole-cube.png",
+      "sha256": "12eae41551b0d252e8468132130d250be94817bc058041b8ce1593cd6cc6eb9b"
+    },
+    {
+      "bytes": 15607,
+      "path": "research/invariant_families_v1/evidence/presenter_combined_checks/report.json",
+      "sha256": "a3011b9ef54c6384e7e0bb4422ff4ecc70d282ba61180b219ba8703065c0604d"
+    },
+    {
+      "bytes": 3265835,
+      "path": "research/invariant_families_v1/evidence/presenter_combined_v1/The_Presenter.html",
+      "sha256": "bd331858dc673b4db0cdf4a1a72e039aab17bde5fbc0199a26b4b203e5b933f2"
+    },
+    {
+      "bytes": 6230,
+      "path": "research/invariant_families_v1/evidence/presenter_combined_v1/The_Presenter.html.manifest.json",
+      "sha256": "2bc6d3e8b17ad8f0feac0aaa295b55bc6b004b73fa38f696a4a75e8b56b38b62"
+    },
+    {
+      "bytes": 3160374,
+      "path": "research/invariant_families_v1/evidence/presenter_combined_v1/experiments-001.json",
+      "sha256": "c6da4cbe76aaf558658650db53b0b3263e60d7c7a59afa4d7eb33f67845d40b9"
+    },
+    {
+      "bytes": 1957,
+      "path": "research/invariant_families_v1/evidence/presenter_combined_v1/index.html",
+      "sha256": "a48a256bef1d6592700aee9ba32222baf2fdd7ede47ae273adde77e443786acd"
+    },
+    {
+      "bytes": 1554,
+      "path": "research/invariant_families_v1/evidence/presenter_combined_v1/manifest.json",
+      "sha256": "ba9517508c71a29a6eee8b6b7716ee3415e75c0018e69d96d58178df7e0e03e9"
+    },
+    {
+      "bytes": 76496,
+      "path": "research/invariant_families_v1/evidence/presenter_images_check/bundle-1-whole-cube.png",
+      "sha256": "12eae41551b0d252e8468132130d250be94817bc058041b8ce1593cd6cc6eb9b"
+    },
+    {
+      "bytes": 76373,
+      "path": "research/invariant_families_v1/evidence/presenter_images_check/internal-odd-initial.png",
+      "sha256": "33bd2738bcd6f702d1cac582f0697319098369a574d75dc6428c9fbb88711fba"
+    },
+    {
+      "bytes": 10934,
+      "path": "research/invariant_families_v1/evidence/presenter_images_check/report.json",
+      "sha256": "8f354a200db661d053076b7689fa2c14fab266f21002398a8a8be9dfa3ffb99b"
+    },
+    {
+      "bytes": 74861,
+      "path": "research/invariant_families_v1/evidence/presenter_images_check/spatial-period3-initial.png",
+      "sha256": "b7b7cc30709213e90b62264c9d56e7665633eec2245724eb7dcfea60b03461f7"
+    },
+    {
+      "bytes": 135031,
+      "path": "research/invariant_families_v1/evidence/presenter_images_check/spatial-period4-initial.png",
+      "sha256": "44c83c685d992049f53904be199fcfe6f8b1ac83aeb971d4cd3d8356cdee700d"
+    },
+    {
+      "bytes": 1360170,
+      "path": "research/invariant_families_v1/evidence/presenter_overlap_v1/The_Presenter.html",
+      "sha256": "1132c14982cbaf4e4316ff37ac01a8e36fe51bc44ef2d8b3e98b7bf765d6296e"
+    },
+    {
+      "bytes": 4241,
+      "path": "research/invariant_families_v1/evidence/presenter_overlap_v1/The_Presenter.html.manifest.json",
+      "sha256": "89a4aa335d2d114809f12da8ceb17eb06664015767bfddb9a6f3c04f90f6085a"
+    },
+    {
+      "bytes": 1255248,
+      "path": "research/invariant_families_v1/evidence/presenter_overlap_v1/experiments-001.json",
+      "sha256": "3d6970793e837e8c2e9f7e1474c6b7755cc6d9cd56109e4286ee62aa2babc1f9"
+    },
+    {
+      "bytes": 1284,
+      "path": "research/invariant_families_v1/evidence/presenter_overlap_v1/index.html",
+      "sha256": "01c2bc22e3fc85b24fac7d13908e38c8c6486d09791ea95706e81236eb001b8c"
+    },
+    {
+      "bytes": 914,
+      "path": "research/invariant_families_v1/evidence/presenter_overlap_v1/manifest.json",
+      "sha256": "01155e990461bf1ef625b2d6810928a9a202e8af5a60110118c0503f29c80a1b"
+    },
+    {
+      "bytes": 2024564,
+      "path": "research/invariant_families_v1/evidence/presenter_v1/The_Presenter.html",
+      "sha256": "d158041ddacdc3cd7554c2da121fcab9c762b49bc7003c38bf314b7d8e08e9fa"
+    },
+    {
+      "bytes": 4694,
+      "path": "research/invariant_families_v1/evidence/presenter_v1/The_Presenter.html.manifest.json",
+      "sha256": "e775500bb85ecdba3c2b16437355980bd24cfb831be2bacdad87a892b9068b04"
+    },
+    {
+      "bytes": 1919451,
+      "path": "research/invariant_families_v1/evidence/presenter_v1/experiments-001.json",
+      "sha256": "dd458edabdd5109c30a62256a8eede60a553d208d648f3bc44d2313415e4b260"
+    },
+    {
+      "bytes": 1563,
+      "path": "research/invariant_families_v1/evidence/presenter_v1/index.html",
+      "sha256": "0d8443e65675ddce614b0a09606c8d8bb63f7338f909e9e7957f47f73f0afaa7"
+    },
+    {
+      "bytes": 1159,
+      "path": "research/invariant_families_v1/evidence/presenter_v1/manifest.json",
+      "sha256": "acdf5f6fa67550b079a4b05f80a91d42a65eb21b8fa1b4e1ece947003783f8c6"
+    },
+    {
+      "bytes": 12391,
+      "path": "research/invariant_families_v1/evidence/reviewed_math_note_62d157.md",
+      "sha256": "62d1572ac61cbce6a581ba663befb18bfe28058f066c61f75380686c8d49e170"
+    }
+  ],
+  "format": "universe24-invariant-evidence-v1",
+  "forward_transitions": 912,
+  "frozen_utc": "2026-11-08T04:42:37.047606+00:00",
+  "full_rewinds": 52,
+  "native_studies": 2,
+  "scope": "Complete directly tracked invariant-family, overlap, independent-audit and passive presentation evidence. Previous archives remain unchanged. Presentation bytes are separate from original native-study budgets."
+}

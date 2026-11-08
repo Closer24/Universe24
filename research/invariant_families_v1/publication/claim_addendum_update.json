@@ -1,0 +1,14 @@
+[
+  {
+    "path": "research/clock_selection/invariant_families_claims.json",
+    "previous_sha256": "0bb480c6b30cdee0b677f3f9d22a757f0f2a6037aaa9ff07099c937516064dfa",
+    "final_sha256": "93e34c8f11efa64b57584191960814555213ad50f267f65119f75e14d9b67445",
+    "scope": "Append independently audited overlap C22 to the new addendum; original 34-claim register unchanged."
+  },
+  {
+    "path": "research/clock_selection/invariant_families_claims.md",
+    "previous_sha256": "63627e53784062e9a0425b9b0179200b3890128514250052f1069bc688286e89",
+    "final_sha256": "4a7932c777cd6d29e494dd1ce400611a2aeba30d9092e6ac8a16893caca34690",
+    "scope": "Append independently audited overlap C22 to the new addendum; original 34-claim register unchanged."
+  }
+]

@@ -1,0 +1,259 @@
+{
+  "format": "universe24-invariant-staged-checkout-v1",
+  "created_utc": "2026-11-08T04:44:28.651044+00:00",
+  "fresh_checkout": "/workspace/scratch/1966445260ce/Universe24-invariant-verify",
+  "temporary_directory": "/workspace/scratch/1966445260ce/invariant-validation-temporary",
+  "source_worktree": "/workspace/scratch/1966445260ce/Universe24-invariant-integration",
+  "baseline_commit": "88700611ef307cb560f43957fc2dcb8be60c36b6",
+  "core_baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
+  "staged_tree": "0c02879d8b015b6ec3568e61108b937322941f5a",
+  "verified_git_blobs": 3750,
+  "declared_archives_only": true,
+  "new_evidence_manifest_sha256": "80dcf5c01c0336c3e274d467cc1d70e92658c6d413937f659bcfe447d7aa51f1",
+  "started_utc": "2026-11-08T04:44:29.253299+00:00",
+  "dependency_directory": "/workspace/scratch/1966445260ce/clock-python-deps",
+  "commands": [
+    {
+      "name": "environment",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-c",
+        "import sys,mpmath,z3,json; print(json.dumps({'python':sys.version,'mpmath':mpmath.__version__,'z3':z3.get_version_string()}))"
+      ],
+      "returncode": 0,
+      "wall_seconds": 0.09799263700006122,
+      "logs": {
+        "stdout": {
+          "file": "fresh_environment.stdout.txt",
+          "bytes": 103,
+          "sha256": "91378661c28d0b8769d62f66e98baab875e05433babfc17826c037ce9dc6e47e"
+        },
+        "stderr": {
+          "file": "fresh_environment.stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "name": "historical_restore",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "research.experiments.materialize_evidence"
+      ],
+      "returncode": 0,
+      "wall_seconds": 5.692274536999321,
+      "logs": {
+        "stdout": {
+          "file": "fresh_historical_restore.stdout.txt",
+          "bytes": 339,
+          "sha256": "a4f7e3a444ac8c901f361461e159b22864567afc7b11459bb29107f4cab57598"
+        },
+        "stderr": {
+          "file": "fresh_historical_restore.stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "name": "historical_check",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "research.experiments.materialize_evidence",
+        "--check-only"
+      ],
+      "returncode": 0,
+      "wall_seconds": 3.819035763001011,
+      "logs": {
+        "stdout": {
+          "file": "fresh_historical_check.stdout.txt",
+          "bytes": 337,
+          "sha256": "fd2c5dbefb9f286831ce6f4d4a5af4fd242a3e3ed6b9b8762431348f0253767c"
+        },
+        "stderr": {
+          "file": "fresh_historical_check.stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "name": "clock_restore",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "research.clock_selection.archive",
+        "materialize"
+      ],
+      "returncode": 0,
+      "wall_seconds": 7.976558798000042,
+      "logs": {
+        "stdout": {
+          "file": "fresh_clock_restore.stdout.txt",
+          "bytes": 287,
+          "sha256": "e17ff5bc017414dd6ae340128d9214434142552596972cbd07c58e3b4f4dda19"
+        },
+        "stderr": {
+          "file": "fresh_clock_restore.stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "name": "clock_check",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "research.clock_selection.archive",
+        "materialize",
+        "--check-only"
+      ],
+      "returncode": 0,
+      "wall_seconds": 6.336432520000017,
+      "logs": {
+        "stdout": {
+          "file": "fresh_clock_check.stdout.txt",
+          "bytes": 284,
+          "sha256": "3def8ac98a70f8cddc2dddc6bde0ab37247802fad5f2ca2693eba65ef42c1a02"
+        },
+        "stderr": {
+          "file": "fresh_clock_check.stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "name": "new_evidence",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "research.invariant_families_v1.verify_evidence"
+      ],
+      "returncode": 0,
+      "wall_seconds": 0.12828889900083595,
+      "logs": {
+        "stdout": {
+          "file": "fresh_new_evidence.stdout.txt",
+          "bytes": 267,
+          "sha256": "d6e2776dc0a2c8c11c0564f99666d4dfb921bc799e40a8438ef84f2b3ecc16ec"
+        },
+        "stderr": {
+          "file": "fresh_new_evidence.stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "name": "full_tests",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "returncode": 0,
+      "wall_seconds": 128.86749012499968,
+      "logs": {
+        "stdout": {
+          "file": "fresh_full_tests.stdout.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "file": "fresh_full_tests.stderr.txt",
+          "bytes": 42411,
+          "sha256": "803c74ed6a1183f8d979a522de2ea5be08e377a347d9d68eaca0ba514a1e9741"
+        }
+      }
+    },
+    {
+      "name": "impulse",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "universe24",
+        "--config",
+        "examples/impulse.json",
+        "--audit"
+      ],
+      "returncode": 0,
+      "wall_seconds": 0.05919027200070559,
+      "logs": {
+        "stdout": {
+          "file": "fresh_impulse.stdout.txt",
+          "bytes": 361,
+          "sha256": "29a28c18f680bab4bb55eda0fd16eed94ed8e083f46dfbf6dd6a40a6158e37c1"
+        },
+        "stderr": {
+          "file": "fresh_impulse.stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "name": "signed_impulse",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "universe24",
+        "--config",
+        "examples/signed_impulse.json",
+        "--audit"
+      ],
+      "returncode": 0,
+      "wall_seconds": 0.054412251000030665,
+      "logs": {
+        "stdout": {
+          "file": "fresh_signed_impulse.stdout.txt",
+          "bytes": 362,
+          "sha256": "29aa4e072c7b9438c5de07661928ce2be05c300c5b080aab16ff56558b4f5566"
+        },
+        "stderr": {
+          "file": "fresh_signed_impulse.stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "name": "old_index",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "research.clock_selection.run",
+        "verify-index",
+        "--index",
+        "research/clock_selection/evidence/index_final/index.json"
+      ],
+      "returncode": 0,
+      "wall_seconds": 0.2156789269993169,
+      "logs": {
+        "stdout": {
+          "file": "fresh_old_index.stdout.txt",
+          "bytes": 72,
+          "sha256": "2351f055c32eb6ecbf348b903f751fc11b17ea5ccae56a2ad1e3358e8d96437f"
+        },
+        "stderr": {
+          "file": "fresh_old_index.stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    }
+  ],
+  "scope": "Fresh exact staged tree, declared archived and directly tracked evidence, full tests and required CLI audits. No new registered research run.",
+  "complete": true,
+  "passed": true,
+  "protected_runtime_diff": [],
+  "finished_utc": "2026-11-08T04:47:02.508916+00:00"
+}

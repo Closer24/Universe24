@@ -1,0 +1,10 @@
+{
+  "format": "universe24-google-doc-appendix-publication-status-v1",
+  "document_url": "https://docs.google.com/document/d/1NDPfeFj9vldgb0RMSSvx2lBSmOo__E-F3t2cZwfjOjI/edit",
+  "approved_draft": "google_doc_appendix_draft.txt",
+  "approved_draft_sha256": "90db881a4a76a5b068ceeb84ed141669c7834d474b5477bda4e131e85c8fecd1",
+  "approved_draft_words": 514,
+  "status": "Approved draft; Google Doc append held pending repository publication and project-manager GO.",
+  "google_doc_written": false,
+  "privacy": "Full source document, revision guard and pre-existing excerpts are excluded from repository publication. Only the approved appendix and minimal status are published."
+}
