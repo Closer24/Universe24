@@ -52,7 +52,7 @@ distance `d` along +X, source-present versus source-absent controls:
 | Distance (lattice links) | A: complete-state recurrence | A: ticks in 20 update indices | B: complete-state recurrence | B: ticks in 20 update indices |
 | --- | --- | --- | --- | --- |
 | 1 | 5 | 4, regular | 5 | 4, regular |
-| 2 | no recurrence up to 40 | 3, irregular | 20 | **5, irregular** |
+| 2 | no period of length 1–20 fits 41 sampled states | 3, irregular | 20 | **5, irregular** |
 | 3–6 | 4 | 5, regular | 4 | 5, regular |
 
 **Long recurrence period ≠ slow physical clock.** The `d=2` B preparation
