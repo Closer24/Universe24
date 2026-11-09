@@ -1,7 +1,7 @@
 {
  "package": "research/click_decoder_v1",
- "release": "1.0.1",
- "release_utc": "2026-11-09T03:24:57Z",
+ "release": "1.0.2",
+ "release_utc": "2026-11-09T04:06:32Z",
  "default_version": "1.0",
  "versions": {
   "1.0": "FROZEN.json",
@@ -10,18 +10,31 @@
  },
  "change": {
   "files": [
-   "validation/run.py"
+   "validation/run.py",
+   "README.md"
   ],
-  "what": "catalog_cases(): set A is the registered first 338 catalog entries, pinned by the truth fingerprint of exactly that prefix (TRUTH_SHA c3123352...); the scorer stops with an error if the prefix ever differs (a changed truth field, reordered or inserted entries, fewer than 338 entries); entries appended after them are not scored, and a one-line notice says so.",
-  "reason": "the published catalog grew 338 -> 346 entries by append (commit dff39dc); release 1.0's scorer fingerprinted the whole entry list and refused the catalog at HEAD, so the README's set-A rerun did not hold.",
-  "unchanged": "every other package file, including all decoders, configs, FROZEN files, README and results, is byte-identical to release 1.0; no score changes."
+  "what": "run.py: `logs --sets A` and `score --sets A` run set A alone, from tracked data; `score` and `extra` write their scores under runs/click_decoder_v1/v<version>/ instead of over the recorded results files in validation/, compare each set with the recorded file (timing ignored) and report `equal` and `reproduces_recorded` per set; they stop with an error if a recorded value is not reproduced. README: the set-A rerun instructions use exactly these commands; the full-set block says where scores go and that heldout and heldout_sign still rewrite their recorded files. README also names where the program's provenance paths are archived (branch backup/matter-light-working, commit 2483837).",
+  "reason": "in a clean checkout the README's `run logs` stopped at set C and `run score` at set B (both need local logs) before writing anything, and `score` wrote over the tracked results files.",
+  "unchanged": "decoders, configs, FROZEN files, recorded results and every other package file are byte-identical to releases 1.0 and 1.0.1; no score changes."
  },
- "previous_release": {
-  "release": "1.0",
-  "release_utc": "2026-11-09T02:45:47Z",
-  "commit": "0af5984",
-  "validation/run.py": "531e1b0b0a39a0bb7f2f837fdebc5e00963a722f2d649ef99d4a8fd0826296a4"
- },
+ "previous_releases": [
+  {
+   "release": "1.0",
+   "release_utc": "2026-11-09T02:45:47Z",
+   "commit": "0af5984",
+   "validation/run.py": "531e1b0b0a39a0bb7f2f837fdebc5e00963a722f2d649ef99d4a8fd0826296a4",
+   "README.md": "d7c4144c766afcaab7a22c7733bf28069a1ce1b4f5088231d9e0803cbc2ed0a8"
+  },
+  {
+   "release": "1.0.1",
+   "release_utc": "2026-11-09T03:24:57Z",
+   "commit": "8eabd78",
+   "validation/run.py": "f933fc6d7840ed414e68ea4d48cda1804072d4040561731b8b2154290a8de2d1",
+   "README.md": "d7c4144c766afcaab7a22c7733bf28069a1ce1b4f5088231d9e0803cbc2ed0a8",
+   "RELEASE.json": "6d3e4cf553ef9c5fd03fd05292ff3325be923860653e017a16190ab59d5d09fb",
+   "change": "catalog_cases(): set A is the registered first 338 catalog entries, pinned by the truth fingerprint of exactly that prefix (TRUTH_SHA c3123352...); the scorer stops with an error if the prefix ever differs (a changed truth field, reordered or inserted entries, fewer than 338 entries); entries appended after them are not scored, and a one-line notice says so."
+  }
+ ],
  "tests": {
   "commands": "python -m unittest tests.test_click_decoder_v1 tests.test_click_decoder_v11",
   "result": "24/24 OK",
@@ -30,17 +43,121 @@
    "tests/test_click_decoder_v11.py": "821bed98472c3e8fe85ba0d0301821d0db6732028c21128750573b489711dbb4"
   }
  },
- "set_A_rerun_at_HEAD": {
-  "tree": "clean export of commit 597df1e (universe24/, research/click_decoder_v1/, research/matter_light_blocks_v1/) with this release's validation/run.py; catalog.json 2335027d46377b3d... (346 entries)",
-  "logs": "194 set-A logs regenerated with the official CLI (released logs(), set C off: its observer logs are local); 194/194 byte-identical to the recorded SHA-256",
-  "v1.1": "metrics, by-group table and all 194 case rows equal to validation/results_v1.1.json (timing excluded)",
-  "v1.0": "by-group table and all 194 case rows equal to validation/results_v1.0.json (timing excluded); metrics equal except one key the scorer gained after v1.0's results were written ('A-B box c_image: C-image lap == declared lap (v1.1 test)': absent there, 0/2 in the rerun, since v1.0 has no C-image test)"
+ "set_A_rerun_clean_checkout": {
+  "tree": "clean export of commit 7236fda (universe24/, research/click_decoder_v1/, research/matter_light_blocks_v1/) with this release's package files",
+  "commands": [
+   {
+    "command": "nice -n 10 python -m research.click_decoder_v1.validation.run logs --sets A",
+    "exit": 0,
+    "recorded_check": null
+   },
+   {
+    "command": "nice -n 10 python -m research.click_decoder_v1.validation.run score --sets A",
+    "exit": 0,
+    "recorded_check": {
+     "set_A": {
+      "equal": false,
+      "metrics_not_recorded": [
+       "A-B box c_image: C-image lap == declared lap (v1.1 test)"
+      ],
+      "reproduces_recorded": true
+     }
+    }
+   },
+   {
+    "command": "nice -n 10 python -m research.click_decoder_v1.validation.run score --sets A --version 1.1",
+    "exit": 0,
+    "recorded_check": {
+     "set_A": {
+      "equal": true,
+      "metrics_not_recorded": [],
+      "reproduces_recorded": true
+     }
+    }
+   }
+  ],
+  "error_paths": [
+   {
+    "command": "score --sets B",
+    "exit": 1
+   },
+   {
+    "command": "extra --sets A",
+    "exit": 1
+   }
+  ],
+  "logs": {
+   "regenerated": 194,
+   "equal_to_recorded_sha256": 194
+  },
+  "written_outside_runs": [],
+  "note": "README.md gained one provenance sentence after these runs (README sha256 at the runs: cc6537e8ed2d8d61f13e54655a086c91c382775bdc21258564cca3ea477cf5c2); no command or code changed."
+ },
+ "full_validation_with_local_logs": {
+  "tree": "the program's working tree (local logs present), this release's package files",
+  "commands": [
+   "run score",
+   "run extra",
+   "run score --version 1.1",
+   "run extra --version 1.1"
+  ],
+  "recorded_check": {
+   "v1.0/results_v1.0.json": {
+    "set_A": {
+     "equal": false,
+     "reproduces_recorded": true
+    },
+    "set_B": {
+     "equal": true,
+     "reproduces_recorded": true
+    },
+    "set_C": {
+     "equal": true,
+     "reproduces_recorded": true
+    }
+   },
+   "v1.0/results_v1.0_extra.json": {
+    "set_C_coverage_posthoc": {
+     "equal": true,
+     "reproduces_recorded": true
+    },
+    "set_D": {
+     "equal": true,
+     "reproduces_recorded": true
+    }
+   },
+   "v1.1/results_v1.1.json": {
+    "set_A": {
+     "equal": true,
+     "reproduces_recorded": true
+    },
+    "set_B": {
+     "equal": true,
+     "reproduces_recorded": true
+    },
+    "set_C": {
+     "equal": true,
+     "reproduces_recorded": true
+    }
+   },
+   "v1.1/results_v1.1_extra.json": {
+    "set_C_coverage_posthoc": {
+     "equal": true,
+     "reproduces_recorded": true
+    },
+    "set_D": {
+     "equal": true,
+     "reproduces_recorded": true
+    }
+   }
+  },
+  "package_files_unchanged_by_the_runs": true
  },
  "files_sha256": {
   "FROZEN.json": "48e599a07c71f747196fa048eb0bad6b0b4bdebdcf77a83e4e1f86b18ecad121",
   "FROZEN_sign_split_v1.json": "8f717548f3cf42b55b6bcf8de9ac2ad561f2fa523153aff12e0375835a43d929",
   "FROZEN_v1.1.json": "573d5181c973d5dc5c84f4121360e234ab6036cef30d8de2d10a1788d1668c27",
-  "README.md": "d7c4144c766afcaab7a22c7733bf28069a1ce1b4f5088231d9e0803cbc2ed0a8",
+  "README.md": "4ca8e41506a43b821db0238e957c2c57a3c6f144e5fa37a1e024dcf7014a9cdc",
   "__init__.py": "6d3e6b520fff7dc1572c05616f53503c33e5674943f7651af6987571a28bb4a5",
   "__main__.py": "740eb796cb8e2c6c40995074506b36b5c359f33d670366ada804dab791548340",
   "config_v1.1.json": "3b1e104b7e77d0f28fea0fc594625b572bee4b59529730edbc8f3b021d5f6e6d",
@@ -61,9 +178,9 @@
   "validation/results_v1.0_extra.json": "f68f42cb1c1aeb909f4cb0de036936acb7b12a1553c29eb4305112264e734d31",
   "validation/results_v1.1.json": "1ca12b08db8c9d7b4cdb68e34785129626e957f042106ffb9ec95504eae34557",
   "validation/results_v1.1_extra.json": "1af847e201c999fb620f94c590b06e2c6ac4ba49a400e08d3b875b245c6cf081",
-  "validation/run.py": "f933fc6d7840ed414e68ea4d48cda1804072d4040561731b8b2154290a8de2d1",
+  "validation/run.py": "79de05c382c552e0b3621f70a3f9f8c258cbbfb588559cf697d5027e94eb45a4",
   "validation/snapshot_r08.py": "a105f1165831d20e7dd7f6a319fe3244175963f720fbf2a0d90fbf39e68fde3d",
   "validation/table.py": "eb7ce6cb980098afe3a1d4d4ebb9e27dff4434718b1890933897f29c0bf5a0da"
  },
- "note": "release 1.0.1 for the architect's review before the push; supersedes release 1.0 (02:45:47Z). No file of this package is edited after this time (v1.2 and later are developed in research/matter_light_v1/r17/)."
+ "note": "release 1.0.2 for the architect's review before the push; supersedes release 1.0.1. No file of this package is edited after this time."
 }

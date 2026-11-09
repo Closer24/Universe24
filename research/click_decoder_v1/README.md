@@ -157,21 +157,41 @@ site (13 of its 14 sites obey lap(n+1) = C(lap n) with lap 18; the junction site
 relation jointly over a source and its arm rule removes ring sites, so it misses it.
 
 **Reruns.** Only set A can be rerun from tracked data: its logs are regenerated from the published init files with
-the official CLI. Sets B, C and D and every held-out target need the program's local logs (`runs/matter_light_v1/`,
-not in the repository); their SHA-256 are recorded in `validation/r08_reference.json` and in the results files.
+the official CLI. In a clean checkout:
 
-Reproduce with
+```sh
+nice -n 10 python -m research.click_decoder_v1.validation.run logs --sets A                 # set-A logs (official CLI)
+nice -n 10 python -m research.click_decoder_v1.validation.run score --sets A                # score set A with v1.0
+nice -n 10 python -m research.click_decoder_v1.validation.run score --sets A --version 1.1  # the same with v1.1
+```
+
+These commands write only under `runs/click_decoder_v1/` (logs, per-case reports and
+`v<version>/results_setA.json`). `score` compares each set with the recorded `validation/results_v<version>.json`
+(timing ignored), reports per set whether it is `equal` and whether it `reproduces_recorded` (every recorded value
+reproduced; the scorer gained one set-A metric after v1.0's results were recorded), and stops with an error if a
+recorded value is not reproduced. Sets B, C and D and every held-out target need the program's local logs
+(`runs/matter_light_v1/`, not in the repository); their SHA-256 are recorded in `validation/r08_reference.json` and in
+the results files.
+Paths under `research/matter_light_v1/` named in this package (provenance, held-out inputs) are files of the
+program's working folder, archived uncurated on branch `backup/matter-light-working` at commit 2483837; logs
+under `runs/` are local and recorded here by SHA-256 only.
+
+Reproduce all sets (needs those local logs) with
 
 ```sh
 nice -n 10 python -m research.click_decoder_v1.validation.run logs    # official CLI logs (set A), l = 0 layers (set C)
-nice -n 10 python -m research.click_decoder_v1.validation.run score   # decode sets A, B, C and score
-nice -n 10 python -m research.click_decoder_v1.validation.run extra   # set D and the set-C coverage diagnostic
+nice -n 10 python -m research.click_decoder_v1.validation.run score   # sets A, B, C; compared with results_v1.0.json
+nice -n 10 python -m research.click_decoder_v1.validation.run extra   # set D, set-C coverage; vs results_v1.0_extra.json
 nice -n 10 python -m research.click_decoder_v1.validation.run score --version 1.1   # the same with v1.1 (also extra)
 nice -n 10 python -m research.click_decoder_v1.validation.heldout       # v1.1 held-out targets (needs the owners' logs)
 nice -n 10 python -m research.click_decoder_v1.validation.heldout_sign  # r20's sign-layer counts
 python -m research.click_decoder_v1.validation.table                  # print the tables
 python -m unittest tests.test_click_decoder_v1 tests.test_click_decoder_v11
 ```
+
+`run` writes its scores under `runs/click_decoder_v1/v<version>/`, never into the package. `heldout` and
+`heldout_sign` still rewrite their recorded files `validation/heldout_v1.1.json` and
+`validation/heldout_sign_split_v1.json`.
 
 Set A uses the declared signatures of `research/matter_light_blocks_v1/catalog.json`
 (period, translation, silence, clicks and kinds per period, box checks), pinned through a

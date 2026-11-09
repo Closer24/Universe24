@@ -1,14 +1,17 @@
 """Validation of the click decoder on the pre-registered sets (validation/PREREGISTRATION.md, v1.0: 01:00 UTC).
 
     nice -n 10 python -m research.click_decoder_v1.validation.run logs     # official CLI logs, set A; layers, set C
-    nice -n 10 python -m research.click_decoder_v1.validation.run score    # decode A, B, C; write results_v<version>.json
+    nice -n 10 python -m research.click_decoder_v1.validation.run score    # decode and score A, B, C
     ... run score --version 1.1 / run extra --version 1.1                   # the same with decoder v1.1
+    ... run logs --sets A / run score --sets A [--version 1.1]              # set A only, from tracked data
 
 Set A: catalog blocks of research/matter_light_blocks_v1 (declared signatures).
 Set B: r08's wave-6 test set with r08's reference truth (validation/r08_reference.json).
 Set C: the l = 0 layer (change observer minus native) of r08's wave-7 logs.
-Logs and per-case reports go to runs/click_decoder_v1/ (not versioned); the scores are written
-next to this file. The truth is used only here, never by the decoder.
+Logs, per-case reports and scores go to runs/click_decoder_v1/ (not versioned); nothing is written into the
+package. score and extra compare their scores with the recorded files next to this file (results_v<version>.json,
+results_v<version>_extra.json) and stop with an error if a recorded value is not reproduced.
+The truth is used only here, never by the decoder.
 """
 from __future__ import annotations
 
@@ -107,7 +110,8 @@ def _truth_sha(entries):
     return hashlib.sha256(blob.encode()).hexdigest()
 
 
-def logs():
+def logs(sets="ABC"):
+    """Set-A logs with the official CLI; unless sets == "A", also set C's l = 0 layers (needs local observer logs)."""
     (RUNS / "setA").mkdir(parents=True, exist_ok=True)
     index = {}
     for c in catalog_cases():
@@ -122,6 +126,8 @@ def logs():
         index[c["name"]] = {"log": str(log.relative_to(ROOT)), "sha256": _sha(log), "H": c["H"],
                             "command": f"python -m universe24 --config {c['file']} --steps {c['H']} --events LOG"}
     (RUNS / "setA" / "index.json").write_text(json.dumps(index, indent=1) + "\n")
+    if sets == "A":
+        return
     (RUNS / "setC").mkdir(parents=True, exist_ok=True)
     for name in SET_C:
         out = RUNS / "setC" / f"{name}.L0.jsonl"
@@ -440,7 +446,7 @@ def score_c(tag):
     return {"totals": tot, "cases": rows}
 
 
-def score():
+def score(sets="ABC"):
     _watchdog()
     tag = f"v{D.VERSION}"
     ff = HERE.parent / FROZEN_FILE[D.VERSION]
@@ -454,13 +460,49 @@ def score():
            "catalog_truth_sha256": TRUTH_SHA,
            "started_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
     out["set_A"] = score_a(tag)
-    out["set_B"] = score_b(tag)
-    out["set_C"] = score_c(tag)
-    out["seconds"] = round(time.time() - t, 1)
-    path = HERE / f"results_v{D.VERSION}.json"
-    path.write_text(json.dumps(out, indent=1, sort_keys=True) + "\n")
-    print(json.dumps({"A": out["set_A"]["metrics"], "B": out["set_B"]["totals"], "C": out["set_C"]["totals"]},
+    if sets != "A":
+        out["set_B"] = score_b(tag)
+        out["set_C"] = score_c(tag)
+    print(json.dumps({k[4:]: out[k]["metrics" if k == "set_A" else "totals"] for k in out if k.startswith("set_")},
                      indent=1))
+    _record(out, f"results_v{D.VERSION}.json", "results_setA.json" if sets == "A" else f"results_v{D.VERSION}.json", t)
+
+
+def _no_timing(x):
+    if isinstance(x, dict):
+        return {k: _no_timing(v) for k, v in x.items() if k != "seconds"}
+    if isinstance(x, list):
+        return [_no_timing(v) for v in x]
+    return x
+
+
+def _reproduces(cur, rec):
+    """True if every recorded value is reproduced: dicts on the recorded keys, lists element by element, timing
+    ignored (the scorer gained fields after v1.0's results were recorded)."""
+    if isinstance(rec, dict):
+        return isinstance(cur, dict) and all(k == "seconds" or (k in cur and _reproduces(cur[k], v))
+                                             for k, v in rec.items())
+    if isinstance(rec, list):
+        return isinstance(cur, list) and len(cur) == len(rec) and all(_reproduces(c, r) for c, r in zip(cur, rec))
+    return cur == rec
+
+
+def _record(out, recorded, written, t):
+    """Write the scores under runs/click_decoder_v1/v<version>/ (never into the package) and compare each set with
+    the recorded file validation/<recorded>; stop with an error if a recorded value is not reproduced."""
+    ref = json.loads((HERE / recorded).read_text())
+    check = {k: {"equal": _no_timing(out[k]) == _no_timing(ref.get(k)),
+                 "reproduces_recorded": _reproduces(out[k], ref.get(k))} for k in sorted(out) if k.startswith("set_")}
+    if "set_A" in out:
+        check["set_A"]["metrics_not_recorded"] = sorted(set(out["set_A"]["metrics"]) - set(ref["set_A"]["metrics"]))
+    out["recorded_check"] = {"recorded": f"validation/{recorded}", "sets": check}
+    out["seconds"] = round(time.time() - t, 1)
+    path = RUNS / f"v{D.VERSION}" / written
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(out, indent=1, sort_keys=True) + "\n")
+    print(json.dumps({"recorded_check": out["recorded_check"], "written": str(path.relative_to(ROOT))}, indent=1))
+    if not all(c["reproduces_recorded"] for c in check.values()):
+        raise SystemExit(f"scores differ from validation/{recorded}")
 
 
 SET_D = {6: "8ec29c6cea7485ff4fa08056296bd85aebc23b05357a3ecee92487dbeb239392",
@@ -471,6 +513,7 @@ SET_D = {6: "8ec29c6cea7485ff4fa08056296bd85aebc23b05357a3ecee92487dbeb239392",
 def extra():
     """Held-out set D (pre-registered 01:40) and a post-hoc coverage diagnostic for set C."""
     _watchdog()
+    t = time.time()
     tag, out = f"v{D.VERSION}", {"decoder": {"version": D.VERSION, "code_sha256": D.code_fingerprint()}}
     rows = []
     for d, sha in SET_D.items():
@@ -505,9 +548,12 @@ def extra():
                                              "Chebyshev max(1, own radius) (many-to-one)",
                                      "covered": _rate(sum(c["covered"] for c in cov), len(cov)),
                                      "not_covered": [c for c in cov if not c["covered"]]}
-    (HERE / f"results_v{D.VERSION}_extra.json").write_text(json.dumps(out, indent=1, sort_keys=True) + "\n")
     print(json.dumps({"D": out["set_D"], "C_cov": out["set_C_coverage_posthoc"]["covered"]}, indent=1))
+    _record(out, f"results_v{D.VERSION}_extra.json", f"results_v{D.VERSION}_extra.json", t)
 
 
 if __name__ == "__main__":
-    {"logs": logs, "score": score, "extra": extra}[sys.argv[1]]()   # optional: --version 1.1
+    SETS = sys.argv[sys.argv.index("--sets") + 1] if "--sets" in sys.argv else "ABC"
+    if SETS not in ("A", "ABC") or (SETS == "A" and sys.argv[1] == "extra"):
+        raise SystemExit("--sets: use --sets A with logs or score (sets B, C and D need the program's local logs)")
+    {"logs": lambda: logs(SETS), "score": lambda: score(SETS), "extra": extra}[sys.argv[1]]()   # also: --version 1.1
