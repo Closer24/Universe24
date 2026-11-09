@@ -2945,3 +2945,134 @@ def e11_main_plane_light_spec(side=6, clocks=None, steps=24):
         beams.append({"sigma": [-v for v in s], "profile": [g[(-m) % side] for m in range(side)]})
     return {"format": FORMAT, "id": "e11_main_diagonal", "board": _board(side, PPP),
             "placements": [plane_light_placement("light", beams)], "steps": steps}
+
+
+# ---------------------------------------------------------------------------- WAVE 10: builder D R5, one hardware
+#: select.escort_end_junction@1 (builder D R5's device CC7-M, refereed by r10r: R10R-0..13), +++: r20's escorted junction
+#: with a bare-ended input line A (from the junction node X along -x to its bare end), bare-ended exits B (+x) and C (+y)
+#: beyond their doors, each door an X-gate on a private escort line along z, bent away from the other escort line d nodes
+#: above and below its door (escort B's line toward -y, escort C's toward +y).  Lengths in nodes: NA (A beyond X), lB and
+#: lC (the exits beyond their doors), sB / fB and sC / fC (each escort line's arm below / above its door).  Every packet
+#: (profile C = (1,-1,0)) starts k nodes before a bare end and moves toward it; h is escort B's starting end (0: its
+#: lower arm, 1: its upper arm), a part of the prepared state, not of the hardware.
+CC7M = {"NA": 11, "lB": 5, "lC": 6, "sB": 12, "fB": 29, "sC": 42, "fC": 114, "d": 4, "k": 6}
+CC7M_AT = (128, 128, 128)          # X on the members' boards: builder D's L = 256 board; the same site on 2L = 512
+#: the member h = 1 at its integer moment t_m = k + 3 = 9 (JR-fixed, a = -b on every channel): the hardware without
+#: packets plus three seed.cyclic_point@2 reflections at bare ends (the quantum at A's end, escort B at its upper end,
+#: escort C at its lower end); O = the end node relative to X, cells [dx, dy, dz, g, a, b, r] relative to O.  The end
+#: node and its inner neighbour (back at the vacuum) are gap nodes of that hardware.  Checked natively (the wave-10
+#: test): the member advanced 9 updates.
+CC7M_H1_MOMENT = {"t_m": 9, "patches": {
+    "A": {"O": (-11, 0, 0), "cells": [
+        [-1, 0, 0, 0, 0, 0, 0], [0, -1, 0, 45, 0, 0, 0], [0, 0, -1, 28, 0, 0, 0], [0, 0, 0, 0, -1, 1, 4],
+        [0, 0, 1, 25, 0, 0, 0], [0, 1, 0, 2, 0, 0, 0], [1, 0, 0, 0, 0, 0, 2]]},
+    "eB_hi": {"O": (1, -25, 4), "cells": [
+        [-1, 0, 0, 41, 0, 0, 0], [0, -1, 0, 6, 0, 0, 0], [0, 0, -1, 13, 0, 0, 0], [0, 0, 0, 13, -1, 1, 4],
+        [0, 0, 1, 13, 0, 0, 0], [0, 1, 0, 14, 0, 0, 2], [1, 0, 0, 37, 0, 0, 0]]},
+    "eC_lo": {"O": (0, 39, -4), "cells": [
+        [-1, 0, 0, 19, 0, 0, 0], [0, -1, 0, 36, 0, 0, 2], [0, 0, -1, 45, 0, 0, 0], [0, 0, 0, 45, -1, 1, 4],
+        [0, 0, 1, 45, 0, 0, 0], [0, 1, 0, 0, 0, 0, 0], [1, 0, 0, 18, 0, 0, 0]]}}}
+#: builder D R5 (c): the member h = 1 at its moment, translated by (90, -100, 60) and carried from +++ into (-,+,+) by the
+#: class-B gauge (character and staggered), beside r36b's C3c seed: X at (218, 28, 188)
+CC7M_C3C_AT = (218, 28, 188)
+CC7M_C3C_GAUGE = {"character": True, "staggered": True}
+
+
+def _cc7m_paths(hw=None, signs=PPP):
+    """The device's guide paths in local coordinates (X at the origin), each running outward from X or from a door
+    (so every packet moves forward on its path), the two door sites (vacuum gap nodes) and the parameters."""
+    p = dict(CC7M, **(hw or {}))
+    c = Coupling(tuple(signs))
+    door_b = G.channel_path(c, (0, 0, 0), 0, [0])[1]            # X -> door B (+x)
+    door_c = G.channel_path(c, (0, 0, 0), 0, [2])[1]            # X -> door C (+y)
+
+    def out(name, door, runs):
+        s, g, sg = door
+        return {"name": name, "start": list(s), "g0": g, "sigma0": sg, "dirs": [[int(a), int(n)] for a, n in runs]}
+    paths = [{"name": "A", "start": [0, 0, 0], "g0": 0, "dirs": [[1, p["NA"]]]},
+             out("B", door_b, [(0, p["lB"])]), out("C", door_c, [(2, p["lC"])]),
+             out("eB_lo", door_b, [(5, p["d"]), (3, p["sB"] - p["d"])]),
+             out("eB_hi", door_b, [(4, p["d"]), (3, p["fB"] - p["d"])]),
+             out("eC_lo", door_c, [(5, p["d"]), (2, p["sC"] - p["d"])]),
+             out("eC_hi", door_c, [(4, p["d"]), (2, p["fC"] - p["d"])])]
+    return paths, [list(door_b[0]), list(door_c[0])], p
+
+
+def cc7m_router_placement(name, at, h=0, quantum=True, escort_B=True, escort_C=True, f=(1, -1), hw=None, gaps=(),
+                          signs=PPP, wrap=False):
+    """select.escort_end_junction@1 (builder D R5's CC7-M) with X at ``at``: the hardware (``CC7M``) as guide_net@1 pieces
+    (gapped_guide_placement: the two doors left at the vacuum) and in-flight packets of shape ``f``, each k nodes before
+    a bare end and moving toward it: the quantum on A, escort B on its lower (h = 0) or upper (h = 1) arm, escort C on its
+    lower arm.  The hardware does not depend on h.  ``gaps`` (local addresses [x, y, z, g]) leaves further nodes at the
+    vacuum for moment patches (the hardware without packets)."""
+    if h not in (0, 1):
+        raise ValueError("h is escort B's starting end: 0 (its lower arm) or 1 (its upper arm)")
+    paths, doors, p = _cc7m_paths(hw, signs)
+    k, pk = p["k"], []
+    if quantum:
+        pk.append({"path": "A", "f": list(f), "lead": p["NA"] - k})
+    if escort_B:
+        pk.append({"path": "eB_lo", "f": list(f), "lead": p["sB"] - k} if h == 0 else
+                  {"path": "eB_hi", "f": list(f), "lead": p["fB"] - k})
+    if escort_C:
+        pk.append({"path": "eC_lo", "f": list(f), "lead": p["sC"] - k})
+    return gapped_guide_placement(name, at, paths, doors + [[int(v) for v in g] for g in gaps], pk, signs, wrap)
+
+
+def cc7m_spec(h=0, L=256, at=CC7M_AT, steps=None):
+    """exp.one_hardware_two_outcomes@1, builder D R5 (a) and (b): member h of CC7-M on the +++ board of side L, X at
+    ``at`` (the same site on L = 256 and 2L = 512, so the two boards give the same click log).  Builder D's init files
+    (rebuild_r5.py: f4470888... for h = 0, 9b44e620... for h = 1) are these compositions exactly.  Exact cycles (R10R-2,
+    R10R-3): h = 0 period 90, integer moments 9 + 45Z, exit B lit; h = 1 period 320, moments 9 + 160Z, exit C lit.
+    Controls, masks of the packets (the repaired control, R10R-7): 'no_quantum' (period 90 for h = 0 and 2880 for
+    h = 1, both exits click-free) and, for h = 0, 'no_escorts' (period 30, both exits click-free)."""
+    dev = cc7m_router_placement("cc7m", at, h)
+
+    def packets(**kw):
+        return {"cc7m": {"packets": cc7m_router_placement("cc7m", at, h, **kw)["params"]["packets"]}}
+    controls = [{"name": "no_quantum", "override": packets(quantum=False)}]
+    if h == 0:
+        controls.append({"name": "no_escorts", "override": packets(escort_B=False, escort_C=False)})
+    P = (90, 320)[h]
+    periods = {"no_quantum": (90, 2880)[h], **({"no_escorts": 30} if h == 0 else {})}
+    return {"format": FORMAT, "id": f"cc7m_h{h}_L{L}", "board": _board(L, PPP), "placements": [dev],
+            "timing": {"t0": 0, "declared": {"h": h, "period": P, "integer_moments": f"9 + {P // 2}Z",
+                                             "lit_exit": "BC"[h], "control_periods": periods}},
+            "controls": controls, "steps": 3 * P if steps is None else steps}
+
+
+def cc7m_moment_placements(at, prefix="cc7m", gauge=None, native=PPP):
+    """The member h = 1 at its integer moment t = 9 as registered blocks, X at ``at``: the hardware without packets (the
+    nodes of the moment patches left open) plus three seed.cyclic_point@2 reflections at bare ends (``CC7M_H1_MOMENT``,
+    literal_patch@1).  With ``gauge`` every placement is generated in ``native`` (+++) and carried into the board's
+    triple as data (symmetry; one gauge class)."""
+    m = CC7M_H1_MOMENT["patches"]
+    gaps = [[d["O"][0] + c[0], d["O"][1] + c[1], d["O"][2] + c[2], c[3]] for d in m.values() for c in d["cells"]
+            if c[6] == 2 or (c[4], c[5]) != (0, 0)]
+    pl = [cc7m_router_placement(prefix, at, quantum=False, escort_B=False, escort_C=False, gaps=gaps)]
+    for part, d in m.items():
+        pl.append({"name": f"{prefix}_moment_{part}", "block": "literal_patch@1",
+                   "params": {"kind": "fibre-packet", "cells": [list(c) for c in d["cells"]]},
+                   "at": [at[i] + d["O"][i] for i in range(3)], "wrap": False})
+    if gauge is not None:
+        for q in pl:
+            q["gauge"], q["native_signs"] = dict(gauge), list(native)
+    return pl
+
+
+def cc7m_in_c3c_spec(L=256, at=CC7M_C3C_AT, steps=960):
+    """exp.one_hardware_two_outcomes@1, builder D R5 (c): the member h = 1 placed in r36b's refereed C3c cycle without
+    interacting with it: C3c's seed (cyclic_universe_c3c_spec) plus the member at its integer moment t = 9
+    (cc7m_moment_placements), X at ``at``, carried into (-,+,+) by the class-B gauge.  Builder D's union init file
+    (f0a5a6be...) is this composition exactly on L = 256; JR-fixed, integer moments exactly 160Z, period 320, equal to
+    C3c alone (+) the device alone at every update, supports never closer than 98 sites in Manhattan distance (R10R-8,
+    R10R-9).  Controls:
+    'c3c_alone' (the device removed: C3c's seed) and 'device_alone' (C3c removed)."""
+    base = cyclic_universe_c3c_spec(L, steps)
+    dev = cc7m_moment_placements(at, gauge=CC7M_C3C_GAUGE)
+    return {"format": FORMAT, "id": f"c3c_cc7m_h1_L{L}", "board": base["board"], "placements": base["placements"] + dev,
+            "timing": {"t0": "integer moment (JR S = S)", "declared": {"period": 320, "moments": "160Z",
+                                                                        "device_t_m": CC7M_H1_MOMENT["t_m"]}},
+            "controls": [{"name": "c3c_alone", "remove": [q["name"] for q in dev]},
+                         {"name": "device_alone", "remove": [q["name"] for q in base["placements"]]}],
+            "steps": steps}

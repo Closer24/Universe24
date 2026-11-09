@@ -87,7 +87,7 @@ was also checked against the program's own code:
   kind, registration new / update-of / republication-of, generator, coupling, evidence status, parts,
   lineage), the experiments and their cards (`experiment_cards`), the read-only `observers`, the
   `aliases`, the registrar's decisions on proposed cards, the verified points (init files regenerated
-  exactly, recipes and builder equalities, with SHA-256 prefixes; 485 after WAVE 8, all exact), and the
+  exactly, recipes and builder equalities, with SHA-256 prefixes; 488 after WAVE 10, all exact), and the
   role of each of the 348 published names (the 338 of 8301320, the 8 appended in dff39dc and the 2 appended with the
   candidate-coupling framework (the variant block and its reference companion): canonical, variant, control, alias,
   J-image, experiment instance).
@@ -105,8 +105,9 @@ Both files are compact JSON. Paths and modules under `research/matter_light_v1/`
 name are files of the program's working folder, archived uncurated on branch `backup/matter-light-working` at commit
 2483837, except five WAVE 5 source files (`r27b/cards_r27b.json` and the four `r27b/preparations/bb27v4_ringclock_*`
 files) and r30's `proposal_chiral_both_forces.json` (WAVE 9, the variant block), which are first archived at commit
-9f9cc64, the WAVE 6 sources at commit 39ca35f and the WAVE 7 and 8 sources at commit 7aac8c5. Nothing there is
-needed to regenerate or verify a block or a composition; `runs/` paths are local.
+9f9cc64, the WAVE 6 sources at commit 39ca35f, the WAVE 7 and 8 sources at commit 7aac8c5 and the WAVE 10 sources
+(builder D's `remote/builderD_R5/` and `remote/BUILDER_D_REPORT5.md`, r10r's `r10/r10r_REVIEW.md`) at commit 96b1c0f.
+Nothing there is needed to regenerate or verify a block or a composition; `runs/` paths are local.
 
 `compositions.py` also holds the WAVE 2 compositions: the published guide instances
 (`published_guide_specs`), r08's W9 devices, r03's Q1c selector, r12's approval router, r13's beam-splitter
@@ -188,6 +189,20 @@ non-interacting sectors on one board (R10G-44, R10G-73), beside its reference co
 `{"kind": "variant", "label", "fingerprint"}`; its record and card name the same label.
 `tests/test_matter_light_blocks_registry_variants.py` rebuilds the five tables from their constructions with the
 framework and checks that the variant block carries exactly its table.
+
+WAVE 10 (r67) added builder D's device CC7-M (R5, refereed by r10r: R10R-0..13) as the assembly
+`select.escort_end_junction@1`, a variant-of `select.escorted_junction@1` with a bare-ended input line, bare-ended
+exits behind the doors and escort lines bent away 4 nodes from them (`CC7M`, `cc7m_router_placement`: pieces of
+`guide_net@1` through `gapped_guide_placement`, every path running outward from the junction or a door). Its members
+`cc7m_spec(h, L)` differ only in escort B's starting end h, a datum of the prepared state, not of the hardware
+(controls `no_quantum` and `no_escorts`, packet masks); the member h = 1 at its integer moment t = 9 is
+`cc7m_moment_placements` (the hardware without packets plus three `seed.cyclic_point@2` patches, `CC7M_H1_MOMENT`), and
+`cc7m_in_c3c_spec(L)` places it beside r36b's C3c seed with the class-B gauge into (−,+,+) (controls `c3c_alone` and
+`device_alone`). No generator changed. They write the curated experiments `E20_one_hardware_two_outcomes` and
+`E20b_one_hardware_in_c3c`. `tests/test_matter_light_blocks_registry_wave10.py` checks that the members and the union
+write builder D's init files byte for byte, that both members have the same hardware and differ in 14 cells on escort
+B's line or its face neighbours, that the moment form is the member advanced 9 updates natively (JR-fixed), and that
+the union is C3c's seed plus the device, with disjoint supports.
 
 ## Limits
 
