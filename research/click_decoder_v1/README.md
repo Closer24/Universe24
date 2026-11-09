@@ -186,7 +186,7 @@ nice -n 10 python -m research.click_decoder_v1.validation.run score --version 1.
 nice -n 10 python -m research.click_decoder_v1.validation.heldout       # v1.1 held-out targets (needs the owners' logs)
 nice -n 10 python -m research.click_decoder_v1.validation.heldout_sign  # r20's sign-layer counts
 python -m research.click_decoder_v1.validation.table                  # print the tables
-python -m unittest tests.test_click_decoder_v1 tests.test_click_decoder_v11
+python -m unittest tests.test_click_decoder_v1 tests.test_click_decoder_v11 tests.test_click_decoder_layers
 ```
 
 `run` writes its scores under `runs/click_decoder_v1/v<version>/`, never into the package. `heldout` and
@@ -295,8 +295,58 @@ for example channel 0 only (`g0`), or the sites inside declared boxes. Name it w
 projection, channel-dependent results (C-image laps, channel periods) are meaningful only if every channel
 of the object is kept; box projections cut every object at the box boundary, and nothing outside is visible.
 
+## Frozen layers `log_symmetry_v1` and `beat_clock_v1` (release 1.0.3)
+
+Two declared read-only layers outside the decoder cores, each pre-registered, frozen before its validation and
+pinned by its own FROZEN file. Decoder versions and the default 1.0 are unchanged. Both use the standard library
+only and never import `universe24`.
+
+**Input contract.** The official `--events` JSONL or a list of records. `log_symmetry_v1` keeps `step`, `address`
+= (x, y, z, g), `kind` and `quotient` as (t, x, y, z, g, k, q); only `period(..., full_records=True)`, an explicit
+option, compares complete JSON records. `beat_clock_v1` uses `step`, `address` and `quotient`.
+
+**`log_symmetry_v1`** (`python -m research.click_decoder_v1.log_symmetry_v1 LOG [--tau T | --best] [--period P]
+[--c-image T --region ... --kind C|K] [--diff OTHER]`):
+* `mirror(log, tau)`: pairs (t, x, y, z, g, k, q) with (2 tau + 1 - t, x, y, z, g, -k mod 3, -q) (C0 <-> C0,
+  C1 <-> C2), tau integer or half-integer; unpaired records and mirrored steps. `best_tau(log)`: the tau that
+  pairs the most records, and whether it is unique.
+* `period(log, P, t0, horizon, full_records=False, write_prefix=None)`: cycles of P updates compared after
+  shifting, and the records that differ; it writes cycle files only when `write_prefix` is given.
+* `c_image(log, T, region=None, kind="C")`: the records at n + T against the C image (channel g -> z.g, z = 14,
+  the fixed table `Z_TABLE`, equal to the decoder config's `c_image_table` and checked against
+  `universe24.core.group_2o` by the tests) or the K image (channel z.g, k -> -k mod 3, q -> -q) of those at n,
+  inside an optional declared box: image steps and plain repeats.
+* `split(log, t)`, `shift(log, dt)`, `record_diff(a, b)`.
+
+**`beat_clock_v1`** (byte-identical to r25's observer, whose hash experiment E11 pins): `beat_clock(events, side,
+steps, channel, clock, sites)` and `run_declared(log, declaration)` read the rates of declared beat clocks (two
+wavevectors, an axis, a declared c) from Fourier projections of the click quotients: chord speed u, clock rate
+Omega, rest frequency w' and the ratio Omega / Omega_SR.
+
+**Freeze and validation** (`validation/PREREGISTRATION_*_v1.md`, `validation/results_*_v1.json`):
+* `log_symmetry_v1`: pre-registered 04:20 UTC, frozen 04:21:49, validated 04:22; for this release re-frozen at
+  04:38:46 after a docstring-only change (the pre-registration pointer and the usage line), and re-run identical.
+  r27b's bounce (L = 640, 1280): 49,830 records, 0 unpaired at tau = 240, the unique best tau. r36's cyclic bangs:
+  C1 period 48 (6 identical cycles of 316 records), C2 period 164 (4 of 1372), each cycle mirrored with 0 unpaired;
+  blind C3a: period 164, 4 identical cycles of 2612, C image on 82/82 steps of the ring box. Equal to r36's own
+  observers on all 28 cycle files. Controls as predicted (the unsymmetrized bounce leaves 78,572 of 97,636 records
+  unpaired; an asymmetric seed breaks period 48; a log without the ring has no records in its box); 8 synthetic cases.
+* `beat_clock_v1`: pre-registered 04:24 UTC, frozen 04:25:11. On three logs that E11 does not use: u/c = +-1/3
+  with ratio 1 within 2e-16 and Omega = pi/3, 2 pi/3 (L = 12 with doubled wavenumbers; L = 6 with the clocks
+  swapped); the generic clock control gives 1.0945; r25's 5 synthetic cases.
+
+**Provenance.** The pre-registrations stay byte-identical (their hashes are pinned). Logs under `runs/` named in
+them are local and recorded by SHA-256 only; their `research/matter_light_v1/` paths are files of the program's
+working folder, archived uncurated on branch `backup/matter-light-working` at commit 9f9cc64.
+
+**Limits.** `log_symmetry_v1` compares click records only: dark parts are invisible to it, and a mirrored or
+periodic click record does not by itself show a mirrored or periodic board state. `beat_clock_v1` uses floating
+point and a declared c; its ratio 1 is an algebraic identity of exactly linear dispersion (R10G-36): it tests the
+d'Alembert law, not an independent time-dilation factor.
+
 ## Versions
 
 v1.0 frozen 2026-11-09 01:29:27 UTC (`FROZEN.json`); v1.1 frozen 02:07:53 UTC (`FROZEN_v1.1.json`, which also
-re-records v1.0's hashes). Any v1.x is re-run on all earlier validation cases; the results of every version
-are kept (`validation/results_v<version>.json`, `validation/heldout_v1.1.json`).
+re-records v1.0's hashes). Layers: sign_split_v1 frozen 02:23:10 UTC; log_symmetry_v1 04:21:49 UTC, re-frozen
+04:38:46 UTC for release 1.0.3; beat_clock_v1 04:25:11 UTC. Any v1.x is re-run on all earlier validation cases;
+the results of every version are kept (`validation/results_v<version>.json`, `validation/heldout_v1.1.json`).
