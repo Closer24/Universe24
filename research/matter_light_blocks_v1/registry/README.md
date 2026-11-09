@@ -87,7 +87,7 @@ was also checked against the program's own code:
   kind, registration new / update-of / republication-of, generator, coupling, evidence status, parts,
   lineage), the experiments and their cards (`experiment_cards`), the read-only `observers`, the
   `aliases`, the registrar's decisions on proposed cards, the verified points (init files regenerated
-  exactly, recipes and builder equalities, with SHA-256 prefixes; 502 after WAVE 14, all exact), and the
+  exactly, recipes and builder equalities, with SHA-256 prefixes; 503 after WAVE 15, all exact), and the
   role of each of the 348 published names (the 338 of 8301320, the 8 appended in dff39dc and the 2 appended with the
   candidate-coupling framework (the variant block and its reference companion): canonical, variant, control, alias,
   J-image, experiment instance).
@@ -115,7 +115,9 @@ reports, fresh machine 2's `remote/FRESH_MACHINE_REPORT_QMF4.md`) at commit 6c07
 sources (r70's `r70/flrw.py`, `r70/kit70.py`, `r70/results/`, r10zf's `r10/REVIEW_R10ZF.md`, the fresh-machine
 reports `remote/FRESH_MACHINE_REPORT_GRF8.md` and `GRF10.md`) at commit 3ee08d7, and the WAVE 14 sources
 (builder B's `remote/builderB_QMSHOW/qmshow/`, `remote/builderB_QMSHOW5/qmb/grid.py`, r10zh's `r10/REVIEW_R10ZH.md`,
-fresh machine 2's `remote/FRESH_MACHINE_REPORT_QMF15.md`) at commit fd49c09.
+fresh machine 2's `remote/FRESH_MACHINE_REPORT_QMF15.md`) at commit fd49c09, and the WAVE 15 sources (builder F's
+`remote/builderF_FINAL/`, `remote/BUILDER_F_REPORT_SWL.md`, r10zi's `r10/REVIEW_R10ZI.md`, fresh machine 2's
+`remote/FRESH_MACHINE_REPORT_GRF12.md`) at commit c2b4258.
 Nothing there is needed to regenerate or verify a block or a composition; `runs/` paths are local.
 
 `compositions.py` also holds the WAVE 2 compositions: the published guide instances
@@ -260,6 +262,14 @@ boards (34 members × 4 masks) equal builder B's, and his two CLI init files are
 the curated experiment `E26_one_gate_two_quanta`. `tests/test_matter_light_blocks_registry_wave14.py` checks the two
 init files, the packet masks, and for all 8 of E26's mirror runs the init-file hashes, the return to JR(x0) and the
 mirrored records, with the exact union of the branch logs where the gate stays silent.
+
+WAVE 15 (r67) added builder F's prescribed Schwarzschild-lapse ladder (g00 only; refereed by r10zi, R10ZI-1..20;
+reproduced by fresh machine 2, GR-F12) as the assembly `clock.lapse_ring_ladder@1`: five closed rectangle rings of
+node counts 120/N with static taps and three side taps (`LADDER`, `ladder_params`, `lapse_ladder_spec(L)`; equal to
+builder F's init file byte for byte), and his SHAPIRO-RADIAL chain (`SHAPIRO`, `shapiro_params`,
+`shapiro_chain_spec(L)`, controls curved and flat). No generator changed. They write the curated experiment
+`E27_lapse_ladder_g00`, read by the frozen layer gr_observer_v1. `tests/test_matter_light_blocks_registry_wave15.py`
+checks the init file, the node counts 120/N, the taps and the two chains.
 
 ## Limits
 

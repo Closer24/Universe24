@@ -3352,3 +3352,56 @@ def x_gate_pair_spec(members, L=128, at=TRIPLE_GATE_AT, steps=80, name="pair"):
     return {"format": FORMAT, "id": f"x_gate_pair_L{L}", "board": _board(L, MPP), "placements": [base],
             "timing": {"t0": 0, "declared": {"T": steps, "gate": [*at, 1], "exits": "x+, x-, y+, y- at distance 3"}},
             "controls": controls, "steps": steps}
+
+
+# ------------------------------------------------- WAVE 15: builder F, a prescribed Schwarzschild-lapse ladder (g00 only)
+#: builder F's SW-LADDER v3c (research/matter_light_v1/remote/builderF_FINAL/sw_ladder3.py) and SHAPIRO-RADIAL chain
+#: (shapiro.py); refereed r10zi R10ZI-1..20, reproduced GR-F12.  +++, A-pulses (1,0,-1) (two elementary quanta) on r04
+#: guides.  Ladder: five closed rectangle rings in the plane z = 20, one A-pulse each (lead 10), with node counts 120/N,
+#: N = 1, 5/6, 4/5, 3/4, 2/3 (a PRESCRIBED lapse written into the node counts; g00 only; the radii r = 2M/(1 - N^2) are
+#: labels); each ring has a +z tap of 370 nodes from ring node 0, and three side taps carry one ring's pulses past another
+#: station's port (the Pound-Rebka pairs).  Shapiro chain: one straight fibre with one A-pulse (lead 100); the "curved"
+#: chain has the rounded segment node counts 89, 98, 115 beyond the port S4 (node 200), its flat twin 177.
+LADDER = {"stations": (("F", 30, 30, 10), ("S4", 36, 36, 50), ("S3", 37, 38, 96), ("S2", 40, 40, 144), ("S1", 44, 46, 194)),
+          "tap": 370, "lead": 10,
+          "pr": (("PR13", "S1", 44, ((5, 6), (1, 178), (2, 250))), ("PR31", "S3", 75, ((5, 10), (0, 197), (2, 250))),
+                 ("PR42", "S4", 72, ((5, 20), (0, 214), (2, 250))))}
+SHAPIRO = {"seg": (89, 98, 115), "flat": 177, "port_S4": 200, "lead": 100}
+
+
+def ladder_params():
+    """guide_net@1 params of builder F's ladder (world coordinates): rings, their +z taps (branches at ring node 0) and
+    the three side taps (branches at ring nodes 44, 75, 72), one A-pulse per ring."""
+    paths, packets, closed = [], [], []
+    for name, n1, n2, x0 in LADDER["stations"]:
+        dirs = [0] * n1 + [2] * n2 + [1] * n1 + [3] * n2                      # r04 rectangle_dirs(0, 1, n1, n2)
+        paths.append({"name": f"ring_{name}", "start": [x0, 10, 20], "g0": 0, "dirs": _rle(dirs[:-1])})
+        closed.append(f"ring_{name}")
+        paths.append({"name": f"tap_{name}", "branch_of": f"ring_{name}", "at_node": 0, "dir": 4, "length": LADDER["tap"]})
+        packets.append({"path": f"ring_{name}", "f": list(FLRW_A), "lead": LADDER["lead"]})
+    for name, station, i, runs in LADDER["pr"]:
+        dirs = [d for d, n in runs for _ in range(n)]
+        paths.append({"name": name, "branch_of": f"ring_{station}", "at_node": i, "dir": dirs[0], "dirs": _rle(dirs[1:])})
+    return {"paths": paths, "packets": packets, "closed": closed}
+
+
+def shapiro_params(kind):
+    """guide_net@1 params of builder F's radial chain: 'curved' (segments 89, 98, 115 beyond S4) or 'flat' (177)."""
+    n = SHAPIRO["port_S4"] + (sum(SHAPIRO["seg"]) if kind == "curved" else SHAPIRO["flat"]) + 1
+    return {"paths": [{"name": "line", "start": [10, 10, 10], "g0": 0, "dirs": [[0, n - 1]]}],
+            "packets": [{"path": "line", "f": list(FLRW_A), "lead": SHAPIRO["lead"]}]}
+
+
+def lapse_ladder_spec(L=400, steps=700):
+    """exp.lapse_ladder@1 (builder F): ONE guide_net@1 placement, the whole ladder."""
+    return {"format": FORMAT, "id": f"lapse_ladder_L{L}", "board": _board(L, PPP),
+            "placements": [{"name": "ladder", "block": "guide_net@1", "params": ladder_params(), "at": [0, 0, 0],
+                            "wrap": False}], "steps": steps}
+
+
+def shapiro_chain_spec(L=800, steps=800):
+    """the Shapiro chain pair: ONE composition (the curved chain) and the control 'flat' (its flat twin)."""
+    base = {"name": "chain", "block": "guide_net@1", "params": shapiro_params("curved"), "at": [0, 0, 0], "wrap": False}
+    return {"format": FORMAT, "id": f"shapiro_chain_L{L}", "board": _board(L, PPP), "placements": [base],
+            "controls": [{"name": "curved", "override": {}},
+                         {"name": "flat", "override": {"chain": shapiro_params("flat")}}], "steps": steps}
