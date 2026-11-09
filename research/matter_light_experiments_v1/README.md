@@ -37,15 +37,16 @@ cosmology or quantum behaviour is claimed. `C2` is not a selection law and `Q` i
 | [E19](E19_cyclic_universe_c4_variant/CARD.md) | VARIANT C4: seven prepared, non-interacting sectors on one board, sharing one bang and turnaround schedule (period 320): light, matter at exact ∓1/3 and twin cavity atom candidates created by the decoder's positional rule inside prepared modules, a 720° spin ring, a ring clock at N = 3/5, and the weak-like (32 vs 56) and EM-like signatures | VARIANT chiral-011-mpp@190301d802c5 | THEOREM + SIMULATION | 15 of 15 pass (10 decoder, 5 log_symmetry_v1) | remote FRESH11-C4, r10g R10G-111..117, 119 CONFIRMED (R10G-120 PARTLY, wording) | ~1.5 min |
 | [E20](E20_one_hardware_two_outcomes/CARD.md) | one hardware, two outcomes: two prepared initial states on identical hardware, differing only in escort B's starting end h, light only exit B and its clock (h = 0, exact cycle 90) or only exit C and its clock (h = 1, exact cycle 320); only one detector ever clicks in a cycle; for the detector-only observer the outcome is known only through the detector click, while the full official log shows h from update 1 | +++ | THEOREM + SIMULATION | 32 of 32 pass (13 decoder, 19 log_symmetry_v1) | r10r R10R-0..10, 12, 13 CONFIRMED (R10R-11 PARTLY, not claimed) | ~20 s |
 | [E20b](E20b_one_hardware_in_c3c/CARD.md) | E20's member h = 1 placed in the refereed C3c cycle without interacting with it: period 320, integer moments 160ℤ, only exit C clicks, and the union's click log is C3c's refereed log plus the device's records | (−,+,+) | THEOREM + SIMULATION | 16 of 16 pass (6 decoder, 10 log_symmetry_v1) | r10r R10R-8..10 CONFIRMED | ~40 s |
+| [E21](E21_gr_observer_clicks_only/CARD.md) | a clicks-only observer reads E09 and E10 at declared stations: exact clock periods, redshift from exact periods, Shapiro delays, routes, E10's lapse N, radial stretch H_r and α = 2 (E) or 1 (T), and a radar echo whose dwell is one device constant; E10's clicks hold no areal-radius measurement, so no spatial curvature is read | +++ | SIMULATION | 25 of 25 pass (gr_observer_v1) | r10zb R10ZB-1, 3, 4, 5, 7, 16, 17 CONFIRMED (R10ZB-6 PARTLY, fix-6 frame; R10ZB-19's profile wording applied); fresh machine 1 GRF2, GRF5 CONFIRMED | ~20 s |
 
 E01's twin runs reference the blocks appended to `research/matter_light_blocks_v1` in dff39dc. Like E01, E07b's run
 a_A references a published block (`exact_front_111_box`).
 
 Decoder pin: `click_decoder_v1` 1.0, frozen 2026-11-09T01:29:27Z (`research/click_decoder_v1/FROZEN.json`). E15,
-E15b, E17, E18, E19, E20 and E20b also pin the frozen layer log_symmetry_v1, and E11 the frozen layer beat_clock_v1 (release
-1.0.3). An experiment is **ready** when every run replays exactly (initial-state, final-state and log hashes),
-every declared check passes and the referee's verdict is recorded as CONFIRMED or PARTLY (E13 and E16: PARTLY,
-with their caveats on the cards).
+E15b, E17, E18, E19, E20 and E20b also pin the frozen layer log_symmetry_v1, E11 the frozen layer beat_clock_v1 (release
+1.0.3) and E21 the frozen layer gr_observer_v1 (release 1.0.5). An experiment is **ready** when every run
+replays exactly (initial-state, final-state and log hashes), every declared check passes and the referee's
+verdict is recorded as CONFIRMED or PARTLY (E13 and E16: PARTLY, with their caveats on the cards).
 
 ## Commands
 
@@ -55,7 +56,7 @@ python -m research.matter_light_experiments_v1.verify E01_local_atom_twins E02_c
     E09_einstein1911_clicks E10_prescribed_schwarzschild_lattice E11_light_clock_dilation E12_planar_forces \
     E13_exchange_contact_counts E14_two_beam_interference E15_cyclic_bangs E15b_planar_cyclic_box \
     E16_bigbang_backward_v5 E17_exact_bounce_v6 E18_cyclic_universe_c3c E19_cyclic_universe_c4_variant \
-    E20_one_hardware_two_outcomes E20b_one_hardware_in_c3c \
+    E20_one_hardware_two_outcomes E20b_one_hardware_in_c3c E21_gr_observer_clicks_only \
                                                                                 # every one "ready": true
 python -m research.matter_light_experiments_v1.verify --all                     # every experiment folder present
 python -m research.matter_light_experiments_v1.verify --fast                    # only the runs marked fast
@@ -65,7 +66,7 @@ python -m unittest tests.test_matter_light_experiments_v1                       
 
 `--fast` is a smoke test, not a verification: it replays only the runs marked `fast` and reports every check that
 reads another run as "skipped (runs not selected)", so an experiment with slower runs ends with `"ok": true` and
-`"ready": false`. Only E09, E10, E11 and E15, whose runs are all marked fast, can be ready under `--fast`; E01,
+`"ready": false`. Only E09, E10, E11, E15 and E21, whose runs are all marked fast, can be ready under `--fast`; E01,
 E04, E06, E15b, E17 and E20b have no fast run. `--help` prints the usage, and an unknown flag stops with exit status 2.
 
 ```python
@@ -127,8 +128,9 @@ example `{"run": "bounce", "layer": "log_symmetry_v1", "call": "mirror", "args":
 "/unpaired", "op": "eq", "value": 0}`.
 
 * The layers are a closed list in `verify.py` (`LAYERS`, with the calls each allows): `log_symmetry_v1` (`mirror`,
-  `best_tau`, `period`, `c_image`, `record_diff`) and `beat_clock_v1` (`run_declared`). Each is frozen by
-  `research/click_decoder_v1/FROZEN_<name>.json`, which names the layer's file and its SHA-256, and the manifest
+  `best_tau`, `period`, `c_image`, `record_diff`), `beat_clock_v1` (`run_declared`) and `gr_observer_v1`
+  (`run_declared`: r64's clicks-only GR observer, its declarations in the experiment's detectors.json). Each is
+  frozen by `research/click_decoder_v1/FROZEN_<name>.json`, which names the layer's file and its SHA-256, and the manifest
   pins that SHA-256 under `layers`; any other file reports every check of that layer as "decoder layer changed:
   re-validate".
 * A call reads the official click logs of the check's runs first. `record_diff` reads two, `"runs": [a, b]` in that
@@ -216,3 +218,6 @@ in the last column (7aac8c5 is a later snapshot of the same folder).
 | remote referee report FRESH11 (E19) | `remote/FRESH_MACHINE_REPORT11.md` | 678258e |
 | R10R-0..13 (E20, E20b): builder D's report 5 and its files | `r10/r10r_REVIEW.md` (pre-registration `r10/r10r_NOTES.md`); `remote/BUILDER_D_REPORT5.md`, `remote/builderD_R5/` | 96b1c0f |
 | remote referee report FRESH19 (E20: builder D's report 4, two different boards) | `remote/FRESH_MACHINE_REPORT19.md` | 96b1c0f |
+| R10ZB-1..19 (E21): r64's observer and its E09 / E10 readouts | `r10/REVIEW_R10ZB.md`; r64's `r64/NOTES.md` (P1, P4, P17) and `r64/REPORT.md` | 13d4fa9 |
+| remote referee report GRF2 (E21) | `remote/FRESH_MACHINE_REPORT_GRF2.md` | 13d4fa9 |
+| remote referee report GRF5 (E21 reproduced) | `remote/FRESH_MACHINE_REPORT_GRF5.md` | 405aded |
