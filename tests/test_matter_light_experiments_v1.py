@@ -49,24 +49,26 @@ class Manifests(unittest.TestCase):
                     self.assertEqual(pin, json.loads(record.read_text(encoding="utf-8"))["sha256"], name)
 
     def test_compositions_regenerate_their_runs(self):
-        """Every composition run's initial state.  A run prepared by more than SHORT_REWIND exact rewinds is only
-        composed here; its rewind and initial-state hash are checked by ``verify`` (about 10 s per 240 rewinds on a
-        640-site board)."""
+        """For every experiment made from compositions, its first composition run (in manifest order, normally the
+        main run) regenerates its recorded initial state with the current registry.  ``verify`` regenerates every run,
+        and the registry's own tests pin its generators; one board per experiment keeps this file under 10 s as
+        experiments are added.  A run prepared by more than SHORT_REWIND exact rewinds is only composed here; its
+        rewind and initial-state hash are checked by ``verify`` (about 10 s per 240 rewinds on a 640-site board)."""
         for eid in X.experiment_ids():
             man = X.manifest(eid)
             if not X._uses_composition(man):                 # composition.json or the declared compositions
                 continue
             build = X._composition(eid, man)
-            for run in man["runs"]:
-                fc = run.get("from_composition")
-                if fc is None:
+            run = next((r for r in man["runs"] if r.get("from_composition") is not None), None)
+            if run is None:
+                continue
+            fc = run["from_composition"]
+            with self.subTest(experiment=eid, run=run["name"]):
+                if fc.get("rewind", 0) > SHORT_REWIND:
+                    self.assertIsNotNone(build(fc.get("control"), fc.get("composition")))
                     continue
-                with self.subTest(run=run["name"]):
-                    if fc.get("rewind", 0) > SHORT_REWIND:
-                        self.assertIsNotNone(build(fc.get("control"), fc.get("composition")))
-                        continue
-                    engine, initial, steps, notes = X.load_run(eid, man, run, build)
-                    self.assertEqual(X.state_sha256(initial), run["initial_state_sha256"])
+                engine, initial, steps, notes = X.load_run(eid, man, run, build)
+                self.assertEqual(X.state_sha256(initial), run["initial_state_sha256"])
 
 
 class CompositionRuns(unittest.TestCase):
