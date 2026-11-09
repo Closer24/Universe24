@@ -1,8 +1,9 @@
 # Matter and light experiments (curated, v1)
 
-Each experiment here shows one result of the matter/light research program on the unchanged reference model. It
-is **data**: compositions of registered blocks, init files in the official format or references to published
-blocks, declared detectors, and a card. One generic verifier replays every run natively with the exact inverse,
+Each experiment here shows one result of the matter/light research program on the unchanged reference model (E19:
+under an explicitly separate candidate variant, labelled as such). It is **data**: compositions of registered blocks,
+init files in the official format (E19: the variant format) or references to published blocks, declared detectors,
+and a card. One generic verifier replays every run natively with the exact inverse,
 writes the official click log, and reads every claim **only from the frozen click decoder's report**
 (`research/click_decoder_v1`). There is no per-experiment code.
 
@@ -29,12 +30,13 @@ cosmology or quantum behaviour is claimed. `C2` is not a selection law and `Q` i
 | [E16](E16_bigbang_backward_v5/CARD.md) | Big Bang candidate v5, built backwards: created light, two created ring clocks (36, 22), one gate decision, a matched α_in = 1 instrument pair and a radar echo, from a 14-cell seed in a prepared network | (−,+,+) | SIMULATION | 20 of 20 pass | r10h R10H-1..8 PARTLY (1, 3, 4, 7 CONFIRMED) | ~2 min |
 | [E17](E17_exact_bounce_v6/CARD.md) | an exact bounce: one JR-fixed state s* whose contraction and expansion are mirror images in the clicks (0 of 49,830 records unpaired), on L and 2L | (−,+,+) | THEOREM + SIMULATION | 12 of 12 pass (7 decoder, 5 log_symmetry_v1) | remote FRESH4-A1..A3 CONFIRMED | ~2 min |
 | [E18](E18_cyclic_universe_c3c/CARD.md) | C3c, a cyclic universe candidate (period 320): created light, created matter at exact ∓1/3, a 720° spin ring, a ring clock at N = 3/5 and twin cavity atom candidates | (−,+,+) | THEOREM + SIMULATION | 15 of 15 pass (9 decoder, 6 log_symmetry_v1) | remote FRESH8 CONFIRMED (K6 PARTLY) | ~1 min |
+| [E19](E19_cyclic_universe_c4_variant/CARD.md) | VARIANT C4: seven prepared, non-interacting sectors on one board, sharing one bang and turnaround schedule (period 320): light, matter at exact ∓1/3 and twin cavity atom candidates created by the decoder's positional rule inside prepared modules, a 720° spin ring, a ring clock at N = 3/5, and the weak-like (32 vs 56) and EM-like signatures | VARIANT chiral-011-mpp@190301d802c5 | THEOREM + SIMULATION | 15 of 15 pass (10 decoder, 5 log_symmetry_v1) | remote FRESH11-C4, r10g R10G-111..117, 119 CONFIRMED (R10G-120 PARTLY, wording) | ~1.5 min |
 
 E01's twin runs reference the blocks appended to `research/matter_light_blocks_v1` in dff39dc. Like E01, E07b's run
 a_A references a published block (`exact_front_111_box`).
 
 Decoder pin: `click_decoder_v1` 1.0, frozen 2026-11-09T01:29:27Z (`research/click_decoder_v1/FROZEN.json`). E15,
-E15b, E17 and E18 also pin the frozen layer log_symmetry_v1 (release 1.0.3). An experiment is **ready** when every
+E15b, E17, E18 and E19 also pin the frozen layer log_symmetry_v1 (release 1.0.3). An experiment is **ready** when every
 run replays exactly (initial-state, final-state and log hashes), every declared check passes and the referee's verdict
 is recorded as CONFIRMED or PARTLY (E16: PARTLY, with its caveats on the card).
 
@@ -44,7 +46,7 @@ is recorded as CONFIRMED or PARTLY (E16: PARTLY, with its caveats on the card).
 python -m research.matter_light_experiments_v1.verify E01_local_atom_twins E02_clicktime_chsh E03_exclusive_detection \
     E04_einstein_created E06_moving_clocks E07_sce_collapse_entanglement E07b_sce_superposition_interference \
     E09_einstein1911_clicks E10_prescribed_schwarzschild_lattice E15_cyclic_bangs E15b_planar_cyclic_box \
-    E16_bigbang_backward_v5 E17_exact_bounce_v6 E18_cyclic_universe_c3c \
+    E16_bigbang_backward_v5 E17_exact_bounce_v6 E18_cyclic_universe_c3c E19_cyclic_universe_c4_variant \
                                                                                 # every one "ready": true
 python -m research.matter_light_experiments_v1.verify --all                     # every experiment folder present
 python -m research.matter_light_experiments_v1.verify --fast                    # only the runs marked fast
@@ -73,7 +75,13 @@ generated HTML. At most 1 MB of data per experiment.
 
 ## The manifest (`matter_light_experiments_v1-experiment-1`)
 
-* `coupling`: `{"kind": "reference", "signs": [..]}`; every run must have exactly this triple.
+* `coupling`: `{"kind": "reference", "signs": [..]}`; every run must have exactly this triple. Or, for an explicitly
+  separate candidate variant (AGENTS.md; E19), `{"kind": "variant", "label": "variant:<name>@<12 hex>",
+  "fingerprint": "<64 hex>"}`, as in the blocks catalog; the card title then begins "VARIANT". Its init files and
+  declared board files (`compositions`, no controls, `rewind` as below) are `universe24-variant-init-v1` files loaded
+  only by `research.coupling_variants_v1`, whose table must be the declared one; every run is the variant runner's
+  audited run (`python -m research.coupling_variants_v1 --audit`, in process), and its official click log is what the
+  decoder and the layers read.
 * `compositions` (optional): `{key: file}`, composition files inside the experiment folder, for runs on more than
   one board; `composition` (optional) is the default one.
 * `runs`: each run names its initial data by `init` + `init_sha256`, or `block` + `block_file_sha256` (a published
@@ -179,10 +187,12 @@ in the last column (7aac8c5 is a later snapshot of the same folder).
 | r13 G0, carry-free gates only (E07) | `r13/NOTES.md`, the entry "G0 [THEOREM, no run]"; its scope: R10E-2 | 2483837 |
 | THEOREM FF (E10) | `r22/REPORT_WAVE2.md` §3 | 2483837 |
 | r23 Lemma 2, s − 4 = R (E16) | `r23/NOTES.md`, the 02:20 theory record | 2483837 |
-| time reversal F⁻¹ = JR∘F∘JR (E15, E15b, E17, E18) | `chapters/THEORY.md`, row S6; proved as Lemma 1 in `r36/REPORT_WAVE1.md` §1 | 2483837; 7aac8c5 |
-| two moments make the history periodic (E15, E18) | `r36/REPORT_WAVE1.md` §1 | 7aac8c5 |
+| time reversal F⁻¹ = JR∘F∘JR (E15, E15b, E17, E18, E19) | `chapters/THEORY.md`, row S6; proved as Lemma 1 in `r36/REPORT_WAVE1.md` §1 | 2483837; 7aac8c5 |
+| two moments make the history periodic (E15, E18, E19) | `r36/REPORT_WAVE1.md` §1 | 7aac8c5 |
 | the planar box period 4d + 4 (E15b) | `r18b/REPORT_WAVE1.md`, first section | 7aac8c5 |
 | the exact bounce of a JR-fixed s* (E17) | `r27b/REPORT_WAVE3.md`, breakthrough 1 and §1 | 7aac8c5 |
 | referee ids R10E-n | `r10/r10e_REVIEW.md`, "Verdicts (R10E-\*)" | 2483837 |
 | R10F-n; R10G-74..77; R10H-1..8; R10H-29..31 | `r10/REVIEW_R10F.md`; `r10/REVIEW_R10G_W3.md`; `r10/REVIEW_R10H.md`; `r10/REVIEW_R10H_W2.md` | 7aac8c5 |
+| R10G-111..120 (E19) | `r10/REVIEW_R10G_W4.md`, §1 | bf2313b |
 | remote referee reports FRESH4, FRESH6 and FRESH8 | `remote/FRESH_MACHINE_REPORT4.md`, `remote/FRESH_MACHINE_REPORT6.md`, `remote/FRESH_MACHINE_REPORT8.md` | 7aac8c5 |
+| remote referee report FRESH11 (E19) | `remote/FRESH_MACHINE_REPORT11.md` | 678258e |
