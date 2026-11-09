@@ -124,6 +124,14 @@ files, recorded in each entry's `origin`. That folder is the program's local wor
 tree and is not part of this repository: `origin` is a provenance string, and re-running
 the build needs that folder. `verify.py` does not.
 
+The working folder is archived uncurated on branch `backup/matter-light-working`. Every
+path or module under `research/matter_light_v1/` that `catalog.json`, this README or
+`build_from_library.py` names exists there at commit 2483837, the first snapshot, taken
+after the build (the registry's own note is in `registry/README.md`). At that commit the
+268 `origin` strings that name an init file hold exactly the published initial state and
+sign triple; the other 78 name a constructor. A block is verified from its `file_sha256`
+and `final_state_sha256` alone; nothing in the archive is needed.
+
 ## Catalog fields
 
 | field | meaning |

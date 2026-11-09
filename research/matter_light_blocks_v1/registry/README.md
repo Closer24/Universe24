@@ -88,8 +88,11 @@ was also checked against the program's own code:
 * [`data/cards.json`](data/cards.json): one card per block. Card format: (a) use = purpose, interface, timing,
   coupling and composability; (b) algebra = the law with its evidence label; (c) clocks = gears and click signature.
 
-Both files are compact JSON. Provenance paths under `research/matter_light_v1/` are archived at 2483837; files
-made later are recorded by SHA-256 only; `runs/` paths are local.
+Both files are compact JSON. Paths and modules under `research/matter_light_v1/` that the registry's code or data
+name are files of the program's working folder, archived uncurated on branch `backup/matter-light-working` at
+commit 2483837, except five WAVE 5 source files (`r27b/cards_r27b.json` and the four
+`r27b/preparations/bb27v4_ringclock_*` files), which are first archived at commit 9f9cc64. Nothing there is needed
+to regenerate or verify a block or a composition; `runs/` paths are local.
 
 `compositions.py` also holds the WAVE 2 compositions: the published guide instances
 (`published_guide_specs`), r08's W9 devices, r03's Q1c selector, r12's approval router, r13's beam-splitter
