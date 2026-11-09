@@ -9,6 +9,7 @@ from universe24.experiments import from_dict
 from research.matter_light_experiments_v1 import verify as X
 
 HEADINGS = ("## On the event board", "## In the clicks", "## Claim")
+SHORT_REWIND = 16           # longer exact-rewind preparations are left to verify (unit tests stay under 10 s)
 
 
 class Manifests(unittest.TestCase):
@@ -44,20 +45,28 @@ class Manifests(unittest.TestCase):
                         self.assertIn(check.get("call"), X.LAYERS.get(check["layer"], {}), check["claim"])
                         self.assertIn(check["layer"], man.get("layers", {}), check["claim"])
                 for name, pin in man.get("layers", {}).items():
-                    frozen = X.ROOT / f"research/click_decoder_v1/FROZEN_{name}.json"
-                    self.assertEqual(pin, json.loads(frozen.read_text(encoding="utf-8"))["sha256"], name)
+                    record = X.ROOT / f"research/click_decoder_v1/FROZEN_{name}.json"
+                    self.assertEqual(pin, json.loads(record.read_text(encoding="utf-8"))["sha256"], name)
 
     def test_compositions_regenerate_their_runs(self):
+        """Every composition run's initial state.  A run prepared by more than SHORT_REWIND exact rewinds is only
+        composed here; its rewind and initial-state hash are checked by ``verify`` (about 10 s per 240 rewinds on a
+        640-site board)."""
         for eid in X.experiment_ids():
             man = X.manifest(eid)
             if not X._uses_composition(man):                 # composition.json or the declared compositions
                 continue
             build = X._composition(eid, man)
             for run in man["runs"]:
-                if "from_composition" in run:
-                    with self.subTest(run=run["name"]):
-                        engine, initial, steps, notes = X.load_run(eid, man, run, build)
-                        self.assertEqual(X.state_sha256(initial), run["initial_state_sha256"])
+                fc = run.get("from_composition")
+                if fc is None:
+                    continue
+                with self.subTest(run=run["name"]):
+                    if fc.get("rewind", 0) > SHORT_REWIND:
+                        self.assertIsNotNone(build(fc.get("control"), fc.get("composition")))
+                        continue
+                    engine, initial, steps, notes = X.load_run(eid, man, run, build)
+                    self.assertEqual(X.state_sha256(initial), run["initial_state_sha256"])
 
 
 class CompositionRuns(unittest.TestCase):
