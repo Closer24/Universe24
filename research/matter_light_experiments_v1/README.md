@@ -19,8 +19,12 @@ law and `Q` is not energy (AGENTS rules 10 and 12).
 | [E03](E03_exclusive_detection/CARD.md) | exclusive single-click detection: with one light approval exactly one of two detectors clicks | +++ | THEOREM + SIMULATION | 5 of 5 pass | r10e R10E-53 CONFIRMED | ~15 s |
 | [E04](E04_einstein_created/CARD.md) | two-way Einstein synchronisation with created atom-clock candidates, t_B = (t1 + t2)/2 | (−,+,+) | SIMULATION | 10 of 10 pass | r10e R10E-40 CONFIRMED | ~1 min |
 | [E06](E06_moving_clocks/CARD.md) | moving clocks: co-moving Einstein synchronisation gives δ = (3/8)(D + 24) | (−,+,+) | SIMULATION | 8 of 8 pass | r10e R10E-54 CONFIRMED | ~1.5 min |
+| [E07](E07_sce_collapse_entanglement/CARD.md) | collapse and entanglement candidates in clicks: one approval gives one outbound copy (α = 0); a common-past Z4 Bell test, CHSH 2 | +++ | THEOREM + SIMULATION | 31 of 31 pass | r10e R10E-55 CONFIRMED (r10f R10F-9) | ~0.5 min |
+| [E07b](E07b_sce_superposition_interference/CARD.md) | superposition and interference candidates in clicks: two exact C0 fronts, dark planes z = 0 and 3 | +++ | THEOREM + SIMULATION | 9 of 9 pass | r10e R10E-56 CONFIRMED (r10f R10F-10) | ~10 s |
+| [E10](E10_prescribed_schwarzschild_lattice/CARD.md) | prescribed Schwarzschild relay lattice (PRESCRIBED geometry, not sourced gravity) | +++ | THEOREM + SIMULATION | 73 of 73 pass | r10f R10F-7 CONFIRMED | ~0.5 min |
 
-E01's twin runs reference the blocks appended to `research/matter_light_blocks_v1` in dff39dc.
+E01's twin runs reference the blocks appended to `research/matter_light_blocks_v1` in dff39dc. Like E01, E07b's run
+a_A references a published block (`exact_front_111_box`).
 
 Decoder pin: `click_decoder_v1` 1.0, frozen 2026-11-09T01:29:27Z (`research/click_decoder_v1/FROZEN.json`). An
 experiment is **ready** when every declared check passes on the decoder report and the referee's verdict is recorded.
@@ -29,7 +33,8 @@ experiment is **ready** when every declared check passes on the decoder report a
 
 ```sh
 python -m research.matter_light_experiments_v1.verify E01_local_atom_twins E02_clicktime_chsh E03_exclusive_detection \
-    E04_einstein_created E06_moving_clocks                                     # every one "ready": true
+    E04_einstein_created E06_moving_clocks E07_sce_collapse_entanglement E07b_sce_superposition_interference \
+    E10_prescribed_schwarzschild_lattice                                       # every one "ready": true
 python -m research.matter_light_experiments_v1.verify --all                     # every experiment folder present
 python -m research.matter_light_experiments_v1.verify --fast                    # only the runs marked fast
 python -m research.matter_light_experiments_v1.verify E04_einstein_created --keep runs/exp   # keep logs and reports
@@ -97,3 +102,9 @@ The manifests were built by the program's builder (`research/matter_light_v1/r01
 record) from the researchers' init files and the published blocks; each run names its source file and SHA-256. The
 verifier needs only `universe24`, `research.components`, `research.matter_light_blocks_v1` (blocks and registry) and
 `research.click_decoder_v1`.
+
+Manifests may carry four informational keys that the verifier ignores: `builder` (how the composition or init files
+were made), `built_utc`, `composition_note` and `data_bytes`. A path under `research/matter_light_v1/` there or in this
+README names a file of the program's working folder, archived uncurated on branch `backup/matter-light-working` at
+commit 2483837; nothing there is needed to verify an experiment. The compositions of E07 and E07b are also produced
+exactly by the registry builders `sce_e07_spec` and `sce_e07b_spec` in `research.matter_light_blocks_v1.registry`.
