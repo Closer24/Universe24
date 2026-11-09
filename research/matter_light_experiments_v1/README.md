@@ -38,15 +38,16 @@ cosmology or quantum behaviour is claimed. `C2` is not a selection law and `Q` i
 | [E20](E20_one_hardware_two_outcomes/CARD.md) | one hardware, two outcomes: two prepared initial states on identical hardware, differing only in escort B's starting end h, light only exit B and its clock (h = 0, exact cycle 90) or only exit C and its clock (h = 1, exact cycle 320); only one detector ever clicks in a cycle; for the detector-only observer the outcome is known only through the detector click, while the full official log shows h from update 1 | +++ | THEOREM + SIMULATION | 32 of 32 pass (13 decoder, 19 log_symmetry_v1) | r10r R10R-0..10, 12, 13 CONFIRMED (R10R-11 PARTLY, not claimed) | ~20 s |
 | [E20b](E20b_one_hardware_in_c3c/CARD.md) | E20's member h = 1 placed in the refereed C3c cycle without interacting with it: period 320, integer moments 160ℤ, only exit C clicks, and the union's click log is C3c's refereed log plus the device's records | (−,+,+) | THEOREM + SIMULATION | 16 of 16 pass (6 decoder, 10 log_symmetry_v1) | r10r R10R-8..10 CONFIRMED | ~40 s |
 | [E21](E21_gr_observer_clicks_only/CARD.md) | a clicks-only observer reads E09 and E10 at declared stations: exact clock periods, redshift from exact periods, Shapiro delays, routes, E10's lapse N, radial stretch H_r and α = 2 (E) or 1 (T), and a radar echo whose dwell is one device constant; E10's clicks hold no areal-radius measurement, so no spatial curvature is read | +++ | SIMULATION | 25 of 25 pass (gr_observer_v1) | r10zb R10ZB-1, 3, 4, 5, 7, 16, 17 CONFIRMED (R10ZB-6 PARTLY, fix-6 frame; R10ZB-19's profile wording applied); fresh machine 1 GRF2, GRF5 CONFIRMED | ~20 s |
+| [E22](E22_one_quantum_one_exit/CARD.md) | one quantum token, one exit per cycle: in builder D's CC8 router three separately prepared unit fibre packets are lit (the quantum and two escorts, which are prepared hardware) and the quantum reaches one exit only, per cycle; the run's exit is unpredictable for the detector-only observer, while the full official log shows the deciding datum (the quantum's phase) from the input line's clicks; over a uniform hidden phase P(exit B) = N_B / 14 (all 182 members replayed), a counting-fraction sawtooth (rising 1/14 per device phase step, up to ties from sampling 14 of 17 phases: D′ = 12 and 14 both give 11/14), not cos², not Born | +++ | SIMULATION | 41 of 41 pass (39 decoder, 2 log_symmetry_v1) | r10g R10G-276..281, 283, 284 CONFIRMED; 282, 286 PARTLY (wording, applied); 285 NOT CHECKED (QM-1, not in E22); fresh machine 2 QM-F4 ALL PASS | ~10 min |
 
 E01's twin runs reference the blocks appended to `research/matter_light_blocks_v1` in dff39dc. Like E01, E07b's run
 a_A references a published block (`exact_front_111_box`).
 
 Decoder pin: `click_decoder_v1` 1.0, frozen 2026-11-09T01:29:27Z (`research/click_decoder_v1/FROZEN.json`). E15,
-E15b, E17, E18, E19, E20 and E20b also pin the frozen layer log_symmetry_v1, E11 the frozen layer beat_clock_v1 (release
-1.0.3) and E21 the frozen layer gr_observer_v1 (release 1.0.5). An experiment is **ready** when every run
-replays exactly (initial-state, final-state and log hashes), every declared check passes and the referee's
-verdict is recorded as CONFIRMED or PARTLY (E13 and E16: PARTLY, with their caveats on the cards).
+E15b, E17, E18, E19, E20, E20b and E22 also pin the frozen layer log_symmetry_v1, E11 the frozen layer beat_clock_v1
+(release 1.0.3) and E21 the frozen layer gr_observer_v1 (release 1.0.5). An experiment is **ready** when every run
+replays exactly (initial-state, final-state and log hashes), every declared check passes and the referee's verdict is
+recorded as CONFIRMED or PARTLY (E13 and E16: PARTLY, with their caveats on the cards).
 
 ## Commands
 
@@ -57,6 +58,7 @@ python -m research.matter_light_experiments_v1.verify E01_local_atom_twins E02_c
     E13_exchange_contact_counts E14_two_beam_interference E15_cyclic_bangs E15b_planar_cyclic_box \
     E16_bigbang_backward_v5 E17_exact_bounce_v6 E18_cyclic_universe_c3c E19_cyclic_universe_c4_variant \
     E20_one_hardware_two_outcomes E20b_one_hardware_in_c3c E21_gr_observer_clicks_only \
+    E22_one_quantum_one_exit \
                                                                                 # every one "ready": true
 python -m research.matter_light_experiments_v1.verify --all                     # every experiment folder present
 python -m research.matter_light_experiments_v1.verify --fast                    # only the runs marked fast
@@ -221,3 +223,5 @@ in the last column (7aac8c5 is a later snapshot of the same folder).
 | R10ZB-1..19 (E21): r64's observer and its E09 / E10 readouts | `r10/REVIEW_R10ZB.md`; r64's `r64/NOTES.md` (P1, P4, P17) and `r64/REPORT.md` | 13d4fa9 |
 | remote referee report GRF2 (E21) | `remote/FRESH_MACHINE_REPORT_GRF2.md` | 13d4fa9 |
 | remote referee report GRF5 (E21 reproduced) | `remote/FRESH_MACHINE_REPORT_GRF5.md` | 405aded |
+| R10G-276..286 (E22): builder D's QM-3, device CC8 | `r10/REVIEW_R10G_W9.md` (item 1) | 01790e6 |
+| remote referee report QM-F4 (E22: builder D's QM-3, all 182 members reproduced) | `remote/FRESH_MACHINE_REPORT_QMF4.md`; builder D's `remote/BUILDER_D_REPORT_QMA_INTERIM.md`, `remote/BUILDER_D_REPORT_QMA_FINAL.md`, `remote/builderD_QMA_interim/`, `remote/builderD_QMA_final/` | 6c0798c |
