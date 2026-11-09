@@ -1,0 +1,889 @@
+{
+  "worker": "B_clock_distance",
+  "status": "PASS",
+  "L": 19,
+  "sources_all48": true,
+  "source_clock_distance_control": [
+    {
+      "kind": "A",
+      "source": "off",
+      "distance": 1,
+      "horizon": 40,
+      "complete_clock_node_period": 4,
+      "b_counter_node_period": 4,
+      "tick_times": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33,
+        37
+      ],
+      "tick_interval_values": [
+        4
+      ],
+      "tick_count_states_0_to_19": 5,
+      "mean_rate_first_20": 0.25,
+      "steady_tick": true,
+      "max_retained_cells": 336,
+      "counter_active_spatial_sites": 1,
+      "full_state_inverse_steps": 40,
+      "all48_clock_initial_preparation": true
+    },
+    {
+      "kind": "A",
+      "source": "on",
+      "distance": 1,
+      "horizon": 40,
+      "complete_clock_node_period": 5,
+      "b_counter_node_period": 5,
+      "tick_times": [
+        1,
+        6,
+        11,
+        16,
+        21,
+        26,
+        31,
+        36
+      ],
+      "tick_interval_values": [
+        5
+      ],
+      "tick_count_states_0_to_19": 4,
+      "mean_rate_first_20": 0.2,
+      "steady_tick": true,
+      "max_retained_cells": 576,
+      "counter_active_spatial_sites": 2,
+      "full_state_inverse_steps": 40,
+      "all48_clock_initial_preparation": true
+    },
+    {
+      "kind": "A",
+      "source": "off",
+      "distance": 2,
+      "horizon": 40,
+      "complete_clock_node_period": 4,
+      "b_counter_node_period": 4,
+      "tick_times": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33,
+        37
+      ],
+      "tick_interval_values": [
+        4
+      ],
+      "tick_count_states_0_to_19": 5,
+      "mean_rate_first_20": 0.25,
+      "steady_tick": true,
+      "max_retained_cells": 336,
+      "counter_active_spatial_sites": 1,
+      "full_state_inverse_steps": 40,
+      "all48_clock_initial_preparation": true
+    },
+    {
+      "kind": "A",
+      "source": "on",
+      "distance": 2,
+      "horizon": 40,
+      "complete_clock_node_period": null,
+      "b_counter_node_period": null,
+      "tick_times": [
+        1,
+        7,
+        11,
+        21,
+        25,
+        31,
+        35,
+        37,
+        39
+      ],
+      "tick_interval_values": [
+        2,
+        4,
+        6,
+        10
+      ],
+      "tick_count_states_0_to_19": 3,
+      "mean_rate_first_20": 0.15,
+      "steady_tick": false,
+      "max_retained_cells": 27024,
+      "counter_active_spatial_sites": 547,
+      "full_state_inverse_steps": 40,
+      "all48_clock_initial_preparation": true
+    },
+    {
+      "kind": "A",
+      "source": "off",
+      "distance": 3,
+      "horizon": 40,
+      "complete_clock_node_period": 4,
+      "b_counter_node_period": 4,
+      "tick_times": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33,
+        37
+      ],
+      "tick_interval_values": [
+        4
+      ],
+      "tick_count_states_0_to_19": 5,
+      "mean_rate_first_20": 0.25,
+      "steady_tick": true,
+      "max_retained_cells": 336,
+      "counter_active_spatial_sites": 1,
+      "full_state_inverse_steps": 40,
+      "all48_clock_initial_preparation": true
+    },
+    {
+      "kind": "A",
+      "source": "on",
+      "distance": 3,
+      "horizon": 40,
+      "complete_clock_node_period": 4,
+      "b_counter_node_period": 4,
+      "tick_times": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33,
+        37
+      ],
+      "tick_interval_values": [
+        4
+      ],
+      "tick_count_states_0_to_19": 5,
+      "mean_rate_first_20": 0.25,
+      "steady_tick": true,
+      "max_retained_cells": 672,
+      "counter_active_spatial_sites": 2,
+      "full_state_inverse_steps": 40,
+      "all48_clock_initial_preparation": true
+    },
+    {
+      "kind": "A",
+      "source": "off",
+      "distance": 4,
+      "horizon": 40,
+      "complete_clock_node_period": 4,
+      "b_counter_node_period": 4,
+      "tick_times": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33,
+        37
+      ],
+      "tick_interval_values": [
+        4
+      ],
+      "tick_count_states_0_to_19": 5,
+      "mean_rate_first_20": 0.25,
+      "steady_tick": true,
+      "max_retained_cells": 336,
+      "counter_active_spatial_sites": 1,
+      "full_state_inverse_steps": 40,
+      "all48_clock_initial_preparation": true
+    },
+    {
+      "kind": "A",
+      "source": "on",
+      "distance": 4,
+      "horizon": 40,
+      "complete_clock_node_period": 4,
+      "b_counter_node_period": 4,
+      "tick_times": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33,
+        37
+      ],
+      "tick_interval_values": [
+        4
+      ],
+      "tick_count_states_0_to_19": 5,
+      "mean_rate_first_20": 0.25,
+      "steady_tick": true,
+      "max_retained_cells": 672,
+      "counter_active_spatial_sites": 2,
+      "full_state_inverse_steps": 40,
+      "all48_clock_initial_preparation": true
+    },
+    {
+      "kind": "A",
+      "source": "off",
+      "distance": 5,
+      "horizon": 40,
+      "complete_clock_node_period": 4,
+      "b_counter_node_period": 4,
+      "tick_times": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33,
+        37
+      ],
+      "tick_interval_values": [
+        4
+      ],
+      "tick_count_states_0_to_19": 5,
+      "mean_rate_first_20": 0.25,
+      "steady_tick": true,
+      "max_retained_cells": 336,
+      "counter_active_spatial_sites": 1,
+      "full_state_inverse_steps": 40,
+      "all48_clock_initial_preparation": true
+    },
+    {
+      "kind": "A",
+      "source": "on",
+      "distance": 5,
+      "horizon": 40,
+      "complete_clock_node_period": 4,
+      "b_counter_node_period": 4,
+      "tick_times": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33,
+        37
+      ],
+      "tick_interval_values": [
+        4
+      ],
+      "tick_count_states_0_to_19": 5,
+      "mean_rate_first_20": 0.25,
+      "steady_tick": true,
+      "max_retained_cells": 672,
+      "counter_active_spatial_sites": 2,
+      "full_state_inverse_steps": 40,
+      "all48_clock_initial_preparation": true
+    },
+    {
+      "kind": "A",
+      "source": "off",
+      "distance": 6,
+      "horizon": 40,
+      "complete_clock_node_period": 4,
+      "b_counter_node_period": 4,
+      "tick_times": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33,
+        37
+      ],
+      "tick_interval_values": [
+        4
+      ],
+      "tick_count_states_0_to_19": 5,
+      "mean_rate_first_20": 0.25,
+      "steady_tick": true,
+      "max_retained_cells": 336,
+      "counter_active_spatial_sites": 1,
+      "full_state_inverse_steps": 40,
+      "all48_clock_initial_preparation": true
+    },
+    {
+      "kind": "A",
+      "source": "on",
+      "distance": 6,
+      "horizon": 40,
+      "complete_clock_node_period": 4,
+      "b_counter_node_period": 4,
+      "tick_times": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33,
+        37
+      ],
+      "tick_interval_values": [
+        4
+      ],
+      "tick_count_states_0_to_19": 5,
+      "mean_rate_first_20": 0.25,
+      "steady_tick": true,
+      "max_retained_cells": 672,
+      "counter_active_spatial_sites": 2,
+      "full_state_inverse_steps": 40,
+      "all48_clock_initial_preparation": true
+    },
+    {
+      "kind": "B",
+      "source": "off",
+      "distance": 1,
+      "horizon": 40,
+      "complete_clock_node_period": 4,
+      "b_counter_node_period": 4,
+      "tick_times": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33,
+        37
+      ],
+      "tick_interval_values": [
+        4
+      ],
+      "tick_count_states_0_to_19": 5,
+      "mean_rate_first_20": 0.25,
+      "steady_tick": true,
+      "max_retained_cells": 336,
+      "counter_active_spatial_sites": 1,
+      "full_state_inverse_steps": 40,
+      "all48_clock_initial_preparation": true
+    },
+    {
+      "kind": "B",
+      "source": "on",
+      "distance": 1,
+      "horizon": 40,
+      "complete_clock_node_period": 5,
+      "b_counter_node_period": 5,
+      "tick_times": [
+        1,
+        6,
+        11,
+        16,
+        21,
+        26,
+        31,
+        36
+      ],
+      "tick_interval_values": [
+        5
+      ],
+      "tick_count_states_0_to_19": 4,
+      "mean_rate_first_20": 0.2,
+      "steady_tick": true,
+      "max_retained_cells": 576,
+      "counter_active_spatial_sites": 2,
+      "full_state_inverse_steps": 40,
+      "all48_clock_initial_preparation": true
+    },
+    {
+      "kind": "B",
+      "source": "off",
+      "distance": 2,
+      "horizon": 40,
+      "complete_clock_node_period": 4,
+      "b_counter_node_period": 4,
+      "tick_times": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33,
+        37
+      ],
+      "tick_interval_values": [
+        4
+      ],
+      "tick_count_states_0_to_19": 5,
+      "mean_rate_first_20": 0.25,
+      "steady_tick": true,
+      "max_retained_cells": 336,
+      "counter_active_spatial_sites": 1,
+      "full_state_inverse_steps": 40,
+      "all48_clock_initial_preparation": true
+    },
+    {
+      "kind": "B",
+      "source": "on",
+      "distance": 2,
+      "horizon": 40,
+      "complete_clock_node_period": 20,
+      "b_counter_node_period": 20,
+      "tick_times": [
+        1,
+        6,
+        10,
+        14,
+        17,
+        21,
+        26,
+        30,
+        34,
+        37
+      ],
+      "tick_interval_values": [
+        3,
+        4,
+        5
+      ],
+      "tick_count_states_0_to_19": 5,
+      "mean_rate_first_20": 0.25,
+      "steady_tick": false,
+      "max_retained_cells": 624,
+      "counter_active_spatial_sites": 3,
+      "full_state_inverse_steps": 40,
+      "all48_clock_initial_preparation": true
+    },
+    {
+      "kind": "B",
+      "source": "off",
+      "distance": 3,
+      "horizon": 40,
+      "complete_clock_node_period": 4,
+      "b_counter_node_period": 4,
+      "tick_times": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33,
+        37
+      ],
+      "tick_interval_values": [
+        4
+      ],
+      "tick_count_states_0_to_19": 5,
+      "mean_rate_first_20": 0.25,
+      "steady_tick": true,
+      "max_retained_cells": 336,
+      "counter_active_spatial_sites": 1,
+      "full_state_inverse_steps": 40,
+      "all48_clock_initial_preparation": true
+    },
+    {
+      "kind": "B",
+      "source": "on",
+      "distance": 3,
+      "horizon": 40,
+      "complete_clock_node_period": 4,
+      "b_counter_node_period": 4,
+      "tick_times": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33,
+        37
+      ],
+      "tick_interval_values": [
+        4
+      ],
+      "tick_count_states_0_to_19": 5,
+      "mean_rate_first_20": 0.25,
+      "steady_tick": true,
+      "max_retained_cells": 672,
+      "counter_active_spatial_sites": 2,
+      "full_state_inverse_steps": 40,
+      "all48_clock_initial_preparation": true
+    },
+    {
+      "kind": "B",
+      "source": "off",
+      "distance": 4,
+      "horizon": 40,
+      "complete_clock_node_period": 4,
+      "b_counter_node_period": 4,
+      "tick_times": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33,
+        37
+      ],
+      "tick_interval_values": [
+        4
+      ],
+      "tick_count_states_0_to_19": 5,
+      "mean_rate_first_20": 0.25,
+      "steady_tick": true,
+      "max_retained_cells": 336,
+      "counter_active_spatial_sites": 1,
+      "full_state_inverse_steps": 40,
+      "all48_clock_initial_preparation": true
+    },
+    {
+      "kind": "B",
+      "source": "on",
+      "distance": 4,
+      "horizon": 40,
+      "complete_clock_node_period": 4,
+      "b_counter_node_period": 4,
+      "tick_times": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33,
+        37
+      ],
+      "tick_interval_values": [
+        4
+      ],
+      "tick_count_states_0_to_19": 5,
+      "mean_rate_first_20": 0.25,
+      "steady_tick": true,
+      "max_retained_cells": 672,
+      "counter_active_spatial_sites": 2,
+      "full_state_inverse_steps": 40,
+      "all48_clock_initial_preparation": true
+    },
+    {
+      "kind": "B",
+      "source": "off",
+      "distance": 5,
+      "horizon": 40,
+      "complete_clock_node_period": 4,
+      "b_counter_node_period": 4,
+      "tick_times": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33,
+        37
+      ],
+      "tick_interval_values": [
+        4
+      ],
+      "tick_count_states_0_to_19": 5,
+      "mean_rate_first_20": 0.25,
+      "steady_tick": true,
+      "max_retained_cells": 336,
+      "counter_active_spatial_sites": 1,
+      "full_state_inverse_steps": 40,
+      "all48_clock_initial_preparation": true
+    },
+    {
+      "kind": "B",
+      "source": "on",
+      "distance": 5,
+      "horizon": 40,
+      "complete_clock_node_period": 4,
+      "b_counter_node_period": 4,
+      "tick_times": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33,
+        37
+      ],
+      "tick_interval_values": [
+        4
+      ],
+      "tick_count_states_0_to_19": 5,
+      "mean_rate_first_20": 0.25,
+      "steady_tick": true,
+      "max_retained_cells": 672,
+      "counter_active_spatial_sites": 2,
+      "full_state_inverse_steps": 40,
+      "all48_clock_initial_preparation": true
+    },
+    {
+      "kind": "B",
+      "source": "off",
+      "distance": 6,
+      "horizon": 40,
+      "complete_clock_node_period": 4,
+      "b_counter_node_period": 4,
+      "tick_times": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33,
+        37
+      ],
+      "tick_interval_values": [
+        4
+      ],
+      "tick_count_states_0_to_19": 5,
+      "mean_rate_first_20": 0.25,
+      "steady_tick": true,
+      "max_retained_cells": 336,
+      "counter_active_spatial_sites": 1,
+      "full_state_inverse_steps": 40,
+      "all48_clock_initial_preparation": true
+    },
+    {
+      "kind": "B",
+      "source": "on",
+      "distance": 6,
+      "horizon": 40,
+      "complete_clock_node_period": 4,
+      "b_counter_node_period": 4,
+      "tick_times": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33,
+        37
+      ],
+      "tick_interval_values": [
+        4
+      ],
+      "tick_count_states_0_to_19": 5,
+      "mean_rate_first_20": 0.25,
+      "steady_tick": true,
+      "max_retained_cells": 672,
+      "counter_active_spatial_sites": 2,
+      "full_state_inverse_steps": 40,
+      "all48_clock_initial_preparation": true
+    }
+  ],
+  "source_amplitude_control": [
+    {
+      "kind": "A",
+      "distance": 1,
+      "source_amplitude": 1,
+      "clock_period_first_20_steps": 5,
+      "max_retained_cells": 576,
+      "inverse_steps": 20
+    },
+    {
+      "kind": "A",
+      "distance": 1,
+      "source_amplitude": 2,
+      "clock_period_first_20_steps": null,
+      "max_retained_cells": 8688,
+      "inverse_steps": 20
+    },
+    {
+      "kind": "A",
+      "distance": 1,
+      "source_amplitude": 3,
+      "clock_period_first_20_steps": 20,
+      "max_retained_cells": 3072,
+      "inverse_steps": 20
+    },
+    {
+      "kind": "A",
+      "distance": 3,
+      "source_amplitude": 1,
+      "clock_period_first_20_steps": 4,
+      "max_retained_cells": 672,
+      "inverse_steps": 20
+    },
+    {
+      "kind": "A",
+      "distance": 3,
+      "source_amplitude": 2,
+      "clock_period_first_20_steps": 4,
+      "max_retained_cells": 2784,
+      "inverse_steps": 20
+    },
+    {
+      "kind": "A",
+      "distance": 3,
+      "source_amplitude": 3,
+      "clock_period_first_20_steps": null,
+      "max_retained_cells": 10512,
+      "inverse_steps": 20
+    },
+    {
+      "kind": "B",
+      "distance": 1,
+      "source_amplitude": 1,
+      "clock_period_first_20_steps": 5,
+      "max_retained_cells": 576,
+      "inverse_steps": 20
+    },
+    {
+      "kind": "B",
+      "distance": 1,
+      "source_amplitude": 2,
+      "clock_period_first_20_steps": null,
+      "max_retained_cells": 8688,
+      "inverse_steps": 20
+    },
+    {
+      "kind": "B",
+      "distance": 1,
+      "source_amplitude": 3,
+      "clock_period_first_20_steps": null,
+      "max_retained_cells": 9456,
+      "inverse_steps": 20
+    },
+    {
+      "kind": "B",
+      "distance": 3,
+      "source_amplitude": 1,
+      "clock_period_first_20_steps": 4,
+      "max_retained_cells": 672,
+      "inverse_steps": 20
+    },
+    {
+      "kind": "B",
+      "distance": 3,
+      "source_amplitude": 2,
+      "clock_period_first_20_steps": null,
+      "max_retained_cells": 11280,
+      "inverse_steps": 20
+    },
+    {
+      "kind": "B",
+      "distance": 3,
+      "source_amplitude": 3,
+      "clock_period_first_20_steps": null,
+      "max_retained_cells": 12096,
+      "inverse_steps": 20
+    }
+  ],
+  "six_direction_controls": [
+    {
+      "face": 0,
+      "kind": "A",
+      "near_period": 5
+    },
+    {
+      "face": 0,
+      "kind": "B",
+      "near_period": 5
+    },
+    {
+      "face": 1,
+      "kind": "A",
+      "near_period": 5
+    },
+    {
+      "face": 1,
+      "kind": "B",
+      "near_period": 5
+    },
+    {
+      "face": 2,
+      "kind": "A",
+      "near_period": 5
+    },
+    {
+      "face": 2,
+      "kind": "B",
+      "near_period": 5
+    },
+    {
+      "face": 3,
+      "kind": "A",
+      "near_period": 5
+    },
+    {
+      "face": 3,
+      "kind": "B",
+      "near_period": 5
+    },
+    {
+      "face": 4,
+      "kind": "A",
+      "near_period": 5
+    },
+    {
+      "face": 4,
+      "kind": "B",
+      "near_period": 5
+    },
+    {
+      "face": 5,
+      "kind": "A",
+      "near_period": 5
+    },
+    {
+      "face": 5,
+      "kind": "B",
+      "near_period": 5
+    }
+  ],
+  "interpretation": "Restricted oscillators; no universal inverse-radius redshift. A 20-step full-return may contain irregular tick events; no physical proper-time clock calibration."
+}

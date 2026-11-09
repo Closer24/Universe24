@@ -1,0 +1,325 @@
+{
+  "worker": "A_exact_event_algebra",
+  "status": "PASS",
+  "wave": {
+    "signed_full_board_cases": 16,
+    "full_address_update_checks": 34944,
+    "exact_integer_wave_eq": "6*(b[n+1]-2*b[n]+b[n-1])+2*(L_sigma b[n])+(r[n+1]-r[n])=0",
+    "exact_phase_eq": "p[n+1]-p[n]=-(L_sigma b[n])",
+    "all_signed_choices": [
+      {
+        "signs": [
+          -1,
+          -1,
+          -1
+        ],
+        "L": 3,
+        "all_channel_addresses_checked": 1296,
+        "forward_reverse_equal": true,
+        "exact_integer_event_wave_residual_max": 0
+      },
+      {
+        "signs": [
+          -1,
+          -1,
+          -1
+        ],
+        "L": 4,
+        "all_channel_addresses_checked": 3072,
+        "forward_reverse_equal": true,
+        "exact_integer_event_wave_residual_max": 0
+      },
+      {
+        "signs": [
+          -1,
+          -1,
+          1
+        ],
+        "L": 3,
+        "all_channel_addresses_checked": 1296,
+        "forward_reverse_equal": true,
+        "exact_integer_event_wave_residual_max": 0
+      },
+      {
+        "signs": [
+          -1,
+          -1,
+          1
+        ],
+        "L": 4,
+        "all_channel_addresses_checked": 3072,
+        "forward_reverse_equal": true,
+        "exact_integer_event_wave_residual_max": 0
+      },
+      {
+        "signs": [
+          -1,
+          1,
+          -1
+        ],
+        "L": 3,
+        "all_channel_addresses_checked": 1296,
+        "forward_reverse_equal": true,
+        "exact_integer_event_wave_residual_max": 0
+      },
+      {
+        "signs": [
+          -1,
+          1,
+          -1
+        ],
+        "L": 4,
+        "all_channel_addresses_checked": 3072,
+        "forward_reverse_equal": true,
+        "exact_integer_event_wave_residual_max": 0
+      },
+      {
+        "signs": [
+          -1,
+          1,
+          1
+        ],
+        "L": 3,
+        "all_channel_addresses_checked": 1296,
+        "forward_reverse_equal": true,
+        "exact_integer_event_wave_residual_max": 0
+      },
+      {
+        "signs": [
+          -1,
+          1,
+          1
+        ],
+        "L": 4,
+        "all_channel_addresses_checked": 3072,
+        "forward_reverse_equal": true,
+        "exact_integer_event_wave_residual_max": 0
+      },
+      {
+        "signs": [
+          1,
+          -1,
+          -1
+        ],
+        "L": 3,
+        "all_channel_addresses_checked": 1296,
+        "forward_reverse_equal": true,
+        "exact_integer_event_wave_residual_max": 0
+      },
+      {
+        "signs": [
+          1,
+          -1,
+          -1
+        ],
+        "L": 4,
+        "all_channel_addresses_checked": 3072,
+        "forward_reverse_equal": true,
+        "exact_integer_event_wave_residual_max": 0
+      },
+      {
+        "signs": [
+          1,
+          -1,
+          1
+        ],
+        "L": 3,
+        "all_channel_addresses_checked": 1296,
+        "forward_reverse_equal": true,
+        "exact_integer_event_wave_residual_max": 0
+      },
+      {
+        "signs": [
+          1,
+          -1,
+          1
+        ],
+        "L": 4,
+        "all_channel_addresses_checked": 3072,
+        "forward_reverse_equal": true,
+        "exact_integer_event_wave_residual_max": 0
+      },
+      {
+        "signs": [
+          1,
+          1,
+          -1
+        ],
+        "L": 3,
+        "all_channel_addresses_checked": 1296,
+        "forward_reverse_equal": true,
+        "exact_integer_event_wave_residual_max": 0
+      },
+      {
+        "signs": [
+          1,
+          1,
+          -1
+        ],
+        "L": 4,
+        "all_channel_addresses_checked": 3072,
+        "forward_reverse_equal": true,
+        "exact_integer_event_wave_residual_max": 0
+      },
+      {
+        "signs": [
+          1,
+          1,
+          1
+        ],
+        "L": 3,
+        "all_channel_addresses_checked": 1296,
+        "forward_reverse_equal": true,
+        "exact_integer_event_wave_residual_max": 0
+      },
+      {
+        "signs": [
+          1,
+          1,
+          1
+        ],
+        "L": 4,
+        "all_channel_addresses_checked": 3072,
+        "forward_reverse_equal": true,
+        "exact_integer_event_wave_residual_max": 0
+      }
+    ]
+  },
+  "bounded_source": {
+    "complete_period": 20,
+    "full_state_return": true,
+    "exact_laplacian_time_sum_all_addresses_zero": true,
+    "finite_cover_connectivity": [
+      {
+        "L": 3,
+        "reachable": 1296,
+        "total": 1296,
+        "connected": true
+      },
+      {
+        "L": 4,
+        "reachable": 3072,
+        "total": 3072,
+        "connected": true
+      },
+      {
+        "L": 5,
+        "reachable": 6000,
+        "total": 6000,
+        "connected": true
+      },
+      {
+        "L": 6,
+        "reachable": 10368,
+        "total": 10368,
+        "connected": true
+      }
+    ],
+    "theorem": "for every bounded trajectory, abs(L mean_T b)_nu=abs(p_T-p_0)_nu/T ->0; for a complete period it equals zero exactly",
+    "scope": "mean b only; does not rule out phase-correlation or nonperiodic gravity"
+  },
+  "smooth_tangent": {
+    "integer_samples": 121,
+    "max_approx_derivative_h1e-5": 1.5000001241105563e-05,
+    "exact_piecewise_derivative_at_all_integers": "0 (flat plateau and cubic smoothstep has zero endpoint slope)",
+    "auxiliary_symplectic_tangent_map_at_integer": "delta_b_next=delta_b; delta_p_next=delta_p-L_sigma delta_b",
+    "T_step_jacobian": "[[I,0],[-T*L_sigma,I]] when all iterates are integer",
+    "relevance": "arbitrary real interpolation is not calibrated photon or gravitational spin-2 propagation; finite integer pulses can still change b"
+  },
+  "parity_decoupling": {
+    "exact_decoupling_identity": "divmod(2u+2theta+epsilon,6)=(floor((u+theta)/3),2*((u+theta) mod 3)+epsilon)",
+    "parity_bit_is_completely_inert_for_a_b_theta": true,
+    "all48_per_site_still_retained_exactly": true,
+    "arbitrary_local_parity_experiment_full_states": 72576,
+    "cases": [
+      {
+        "signs": [
+          -1,
+          -1,
+          -1
+        ],
+        "addresses": 1296,
+        "times": 7,
+        "all_counter_theta_same": true,
+        "arbitrary_parity_mask_retained": true
+      },
+      {
+        "signs": [
+          -1,
+          -1,
+          1
+        ],
+        "addresses": 1296,
+        "times": 7,
+        "all_counter_theta_same": true,
+        "arbitrary_parity_mask_retained": true
+      },
+      {
+        "signs": [
+          -1,
+          1,
+          -1
+        ],
+        "addresses": 1296,
+        "times": 7,
+        "all_counter_theta_same": true,
+        "arbitrary_parity_mask_retained": true
+      },
+      {
+        "signs": [
+          -1,
+          1,
+          1
+        ],
+        "addresses": 1296,
+        "times": 7,
+        "all_counter_theta_same": true,
+        "arbitrary_parity_mask_retained": true
+      },
+      {
+        "signs": [
+          1,
+          -1,
+          -1
+        ],
+        "addresses": 1296,
+        "times": 7,
+        "all_counter_theta_same": true,
+        "arbitrary_parity_mask_retained": true
+      },
+      {
+        "signs": [
+          1,
+          -1,
+          1
+        ],
+        "addresses": 1296,
+        "times": 7,
+        "all_counter_theta_same": true,
+        "arbitrary_parity_mask_retained": true
+      },
+      {
+        "signs": [
+          1,
+          1,
+          -1
+        ],
+        "addresses": 1296,
+        "times": 7,
+        "all_counter_theta_same": true,
+        "arbitrary_parity_mask_retained": true
+      },
+      {
+        "signs": [
+          1,
+          1,
+          1
+        ],
+        "addresses": 1296,
+        "times": 7,
+        "all_counter_theta_same": true,
+        "arbitrary_parity_mask_retained": true
+      }
+    ]
+  }
+}
