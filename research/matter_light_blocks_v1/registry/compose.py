@@ -16,6 +16,12 @@ Added by r21 (WAVE 2), backwards compatible:
 * ``include`` placements: a sub-composition (a spec) placed by translation ``at``, optionally gauged;
   its placements get ``prefix`` and its assertions are carried along.
 * assertions ``beside_fibre`` and ``clearance``.
+
+Added by r21 (WAVE 4), backwards compatible:
+* assertion ``guide_halo_clear``: [{"port": "<placement>.<path>_nodes", "closed": bool, "allow": [[x,y,z,g]]}]
+  -- every halo channel of that guide (receivers off the guide, from the board's coupling) is vacuum in the
+  initial state, except the listed junction channels (r04's insertion rule for rings beside a line);
+* ``apply_control`` on a spec without ``assertions`` no longer raises (r12) and adds none.
 """
 from __future__ import annotations
 
@@ -28,6 +34,7 @@ from universe24.experiments import checkpoint_data
 from research.components import BoardSpec, Patch, Socket, TensorSpec, finalize, place
 
 from . import symmetry as SY
+from . import guides as G
 from .generators import BLOCKS, SILENT, _tensor
 
 FORMAT = "u24-composition-v1"
@@ -204,6 +211,17 @@ def check_assertions(spec, prepared):
                         "ok": d is not None and d >= c["min"]})
         rep["clearance"] = res
         rep["clearance_ok"] = all(r["ok"] for r in res)
+    if "guide_halo_clear" in a:          # WAVE 4: r04 insertion rule (a guide's halo channels stay vacuum)
+        coupling = prepared.engine.coupling
+        res = []
+        for item in a["guide_halo_clear"]:
+            nodes = [(tuple(k[:3]), k[3], 1) for k in prepared.ports[item["port"]]]
+            allow = {(int(v[0]) % L, int(v[1]) % L, int(v[2]) % L, int(v[3])) for v in item.get("allow", [])}
+            recs = {rec for hm in G.halo_map(coupling, nodes, L, bool(item.get("closed", False))) for rec, _, _ in hm}
+            bad = sorted(r for r in recs if r in st.cells and r not in allow)
+            res.append({"port": item["port"], "halo": len(recs), "prepared_in_halo": len(bad), "examples": bad[:3]})
+        rep["guide_halo_clear"] = res
+        rep["guide_halo_clear_ok"] = all(r["prepared_in_halo"] == 0 for r in res)
     return rep
 
 
@@ -219,13 +237,14 @@ def apply_control(spec, control):
             p["params"].update(control["override"][p["name"]])
         if control.get("unfill_sockets") and p["block"] == "matter_line@1":
             p["params"]["sockets"] = []
-    for k, v in control.get("assertions", {}).items():
-        if v is None:
-            out["assertions"].pop(k, None)
-        else:
-            out["assertions"][k] = v
-    out["assertions"]["slot_clocks_silent"] = [n for n in out["assertions"].get("slot_clocks_silent", [])
-                                               if n not in removed]
+    if "assertions" in out or control.get("assertions"):     # a spec without assertions stays without them
+        a = out.setdefault("assertions", {})
+        for k, v in control.get("assertions", {}).items():
+            if v is None:
+                a.pop(k, None)
+            else:
+                a[k] = v
+        a["slot_clocks_silent"] = [n for n in a.get("slot_clocks_silent", []) if n not in removed]
     out.pop("controls", None)
     return out
 

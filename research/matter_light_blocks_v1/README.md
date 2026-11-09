@@ -36,8 +36,8 @@ print(entry["what"], entry["signature"], entry["limits"])
 `matter_line@1`, `guide_net@1` and `phase_gate@2`; the full list is in the registry README), the
 registry metadata, composition data, and a composer for compositions (`u24-composition-v1`). They
 rebuild prepared networks from placements, so an experiment can ship a short composition instead
-of large init files. Twelve published blocks (four D1 blocks and eight guide blocks) regenerate
-exactly from tracked code.
+of large init files. Twenty-three published blocks (four D1 blocks, eight guide blocks, three
+clock-rate blocks and the eight blocks appended in dff39dc) regenerate exactly from tracked code.
 
 ## What is shipped
 

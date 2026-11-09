@@ -3,7 +3,13 @@
  "full_text": [
   "research/matter_light_v1/r21/CARDS.md",
   "research/matter_light_v1/r21/CARDS_WAVE2.md",
-  "research/matter_light_v1/r21/staging/registry_wave3_delta.json"
+  "research/matter_light_v1/r21/staging/registry_wave3_delta.json",
+  "research/matter_light_v1/r06b/NOTES.md (V4 blocks)",
+  "research/matter_light_v1/r23/CARDS.md",
+  "research/matter_light_v1/r15/block_cards_r15.json",
+  "research/matter_light_v1/r19/NOTES.md (sr_gate card)",
+  "research/matter_light_v1/r18/REPORT_WAVE1.md (s7)",
+  "research/matter_light_v1/r14/REPORT_WAVE3.md (s3)"
  ],
  "cards": {
   "atom.ring_core@1": {
@@ -520,6 +526,156 @@
    ],
    "coupling": "(-,+,+) on the bb27 network junction O = A0 x B0",
    "registration": "new (r27): the minimal-support state of the bb27 Big Bang among equal slot-clock phases (rule A2)"
+  },
+  "dump.open_line@1": {
+   "a_use": "diverts outgoing packets so that nothing returns to a detector before the horizon (needs D sites beyond the last element, horizon < t_entry + 2D + 2)",
+   "b_algebra": "a fibre end is an exact elastic, recordless mirror [SIMULATION]; no silent absorption exists (T4), so a dump delays and never destroys",
+   "c_clocks": "light clicks only; 0 detector events",
+   "status": "E1 replayed",
+   "flags": [
+    "physics_from_decoder"
+   ],
+   "coupling": "+++ (gauge transport to (-,+,+) exact)",
+   "registration": "new (r15)"
+  },
+  "gate.shared_rotor_two_readers@2": {
+   "a_use": "which-way device with ONE record for both outcomes: an approval = a pulse pair (F1 at t, F2 at t+2)",
+   "b_algebra": "gate law (CLOCKS s1, THEOREM): both fibres read the same clock channel 6, so one parity sets both windows (always complementary, T7); each detection flips the parity and delays its own arm by 4",
+   "c_clocks": "one detection = 8 native clicks (halo pair, record writes on channel 6, halo echo) + two light bands on the firing fibre; 0 clicks between approvals",
+   "status": "E1 replayed",
+   "flags": [
+    "physics_from_decoder"
+   ],
+   "coupling": "+++",
+   "registration": "update-of gate.shared_rotor_two_readers@1 (generalizes: F2 = channel-14 fibre with sigma +1 and + pulses 2 updates after F1; the clock at any orbit phase with its history halo). r19's sr_gate is this id"
+  },
+  "gravity.contact_slow_clock@1": {
+   "a_use": "point clock (all-48 probe touching its read-out fibre) whose rate is lowered by a face-adjacent source monomer, read only through its light at a distant monitor",
+   "b_algebra": "probe + source = 48 two-channel dimers [THEOREM, r22 C1]; monomer period 4, dimer period 5",
+   "c_clocks": "native click word at the monitor: free (+1,-1) period 2 rate 1; sourced (+,-,+,-,.) period 5 rate 4/5 (r23, official CLI); decoder: source periods 5 and 2",
+   "status": "E2 law-checked",
+   "flags": [
+    "physics_from_decoder"
+   ],
+   "coupling": "+++",
+   "registration": "new assembly: card of the clock half of exp.rate_by_light@1 (r23 G1 'update-of r08 clockrates' = card_rev 2 of that experiment)"
+  },
+  "gravity.core_pair_delay@1": {
+   "a_use": "a delay element: at one arrival phase a packet leaves as an exact copy delayed by 2d+4 and both cores are left flipped by 2 (a record)",
+   "b_algebra": "[SIMULATION, exploration] d = 3, 5, 7 -> 10, 14, 18; other phases reflect or split",
+   "c_clocks": "one bounce inside the pair (one atom level)",
+   "status": "E0 declared (law: 3 exploration hits); data E1 replayed",
+   "flags": [
+    "exploration"
+   ],
+   "coupling": "+++",
+   "registration": "variant-of atom.two_core_trap@1 (odd d, cores at phases (0,3) / (3,0))"
+  },
+  "gravity.counter_flux_link@1": {
+   "a_use": "the 'long link' half: a fibre segment whose links are lengthened by counter-moving light",
+   "b_algebra": "each head-on crossing delays both packets by 4 (r22 C3): Delta = 4k; stationary flux of spacing P: tau = (P+4)/(P-4) per node [hold model, T5]",
+   "c_clocks": "C1+/C2- pairs on the fibre only; a crossing = a 4-update hold (r23: 48/48, 0 off-fibre clicks)",
+   "status": "E1 replayed",
+   "flags": [
+    "physics_from_decoder"
+   ],
+   "coupling": "+++",
+   "registration": "new assembly"
+  },
+  "gravity.gate_window_clock@1": {
+   "a_use": "reads a dark clock's rate from clicks only: one calibrated packet per launch phase; a pass is clean iff the joint log is the union of the region-alone and signal-alone logs",
+   "b_algebra": "gate law (r08 CLOCKS s1, THEOREM); clean passes have Delta = 0 exactly",
+   "c_clocks": "free probe clean 2 of 4 phases (FTTF), sourced 3 of 5 (FTTTF); distance >= 3 always clean (r23, L and 2L)",
+   "status": "E1 replayed",
+   "flags": [
+    "physics_from_decoder"
+   ],
+   "coupling": "+++",
+   "registration": "new assembly (derived-from gate.phase_gate@2: same geometry; the gated clock may be the sourced dimer)"
+  },
+  "medium.guide_bridge@1": {
+   "a_use": "joins the slot (+z) or the -z partner of one light line's node to the same partner of a parallel line, leaving the plane by h sites (L1 clearance >= 3 from the line between)",
+   "b_algebra": "guide lemma + decoupling (r20 S8, THEOREM there): unit transport along the turns; gauge sigma0 = phase",
+   "c_clocks": "rest gears 0/2 alternating; a packet makes 2 clicks per node; r06b V4-3b scans: 0 complete Einstein triples (negative)",
+   "status": "E1 replayed (cells only: 36 parameter sets equal r06b compose_v3.light_bridge)",
+   "flags": [
+    "no_instance_file"
+   ],
+   "coupling": "(-,+,+)",
+   "registration": "new (r20 S8 bridge, used by r06b V4-3b)"
+  },
+  "medium.mark_plane@1": {
+   "a_use": "static charge planes that a planar glider either passes (moving them +2 planes) or is reflected by",
+   "b_algebra": "r18 planar law [EXHAUSTIVE 452 cases, exact ring reduction]: G- passes iff every prefix sum of p_i <= 0 (block moves +2, D_out = 2 - 2Q), else reflects as JG+",
+   "c_clocks": "a passing glider leaves kinks; marks are dark until hit",
+   "status": "E2 law-checked",
+   "flags": [
+    "physics_from_decoder"
+   ],
+   "coupling": "+++",
+   "registration": "new (r18 static marks)"
+  },
+  "medium.matter_line@2": {
+   "a_use": "matter fibre carrying a catalog medium (e.g. '0002', the 1/2-speed species' line): the seed line of r14 W3",
+   "b_algebra": "rest r = 2 medium[((origin - i) mod L) mod P] read along the glider's direction (r06 catalog)",
+   "c_clocks": "frozen gears (rest); the catalog glider rides it",
+   "status": "E1 replayed",
+   "flags": [],
+   "coupling": "(-,+,+)",
+   "registration": "update-of medium.matter_line@1 (generalizes: periodic r06 catalog medium; medium (0,) is @1 exactly)"
+  },
+  "parity.wu_seed@1": {
+   "a_use": "mirror-symmetric seed whose emission is asymmetric only in coupling class F (a Wu-type parity probe)",
+   "b_algebra": "the same data under every coupling; the asymmetry is a property of the coupling class [r18]",
+   "c_clocks": "decoder: A = +74 (++-), -74 (+-+), 0 (+++); the z-centroid leaves the mirror plane in class F",
+   "status": "E1 replayed",
+   "flags": [
+    "physics_from_decoder"
+   ],
+   "coupling": "any (+++, ++-, +-+ tested)",
+   "registration": "new (r18)"
+  },
+  "router.conserving@0": {
+   "a_use": "one quantum in, exactly one out, every copy accounted for",
+   "b_algebra": "requirements [THEOREM pieces, r15]: a resting junction copies; no silent stop (T4); a store captures only with a timed partner; a reflected copy needs another junction, which copies again",
+   "c_clocks": "none (no run)",
+   "status": "E0 declared",
+   "flags": [],
+   "coupling": "+++",
+   "registration": "declared only (E0): not buildable from resting media + halo cores + traps without auxiliary ports"
+  },
+  "seed.emitter_core@1": {
+   "a_use": "one-shot light seed: fires its node once, one packet each way after t = 0; the seed never clicks",
+   "b_algebra": "the core's free rotation feeds +1 into the r = 4 node at the first update, then core and node settle to a quiet gated pair [SIMULATION, r15]",
+   "c_clocks": "0 clicks at the seed; the node's carry starts two light tracks",
+   "status": "E1 replayed",
+   "flags": [
+    "physics_from_decoder"
+   ],
+   "coupling": "+++ (gauge transport to (-,+,+) exact)",
+   "registration": "new (r15)"
+  },
+  "spin.holonomy_ring_h1@1": {
+   "a_use": "control ring for the spin module: joined to a matter-line node J like the holonomy-z ring, but its channel chain closes after ONE lap; a glider passing J starts it",
+   "b_algebra": "closed guide, chain sign +1, holonomy 1: region 22-periodic (one lap), no C relation (r04 W6 control, SIMULATION); its halo (55 channels besides J.41) must stay vacuum (assertion guide_halo_clear)",
+   "c_clocks": "junction fires every lap (22 updates); decoder v1.0: a created source of period 22 with glider tracks every 22 (r06b v4a)",
+   "status": "E1 replayed",
+   "flags": [
+    "physics_from_decoder"
+   ],
+   "coupling": "(-,+,+)",
+   "registration": "new: control-of spin.holonomy_ring@1 (r04 W6 holonomy-1 ring); its data is a light.fibre_ring@1 instance (holonomy order 1, P = 14). r06b's requested id 'spin.holonomy_ring@1' is the holonomy-z module"
+  },
+  "store.two_core_trap_store@1": {
+   "a_use": "pending store for a lone copy: lone copy held ~2d and sent back; copy + partner at P = 2d -> HOLD; one later feature -> COMMIT (two pulses leave); unreleased -> CANCEL",
+   "b_algebra": "capture needs two inputs and emits one feature (T4); commit = K(capture) exactly (F(K(F(S))) = K(S), CLOCKS 6.4) [THEOREM]; absorption line one update wide (r08)",
+   "c_clocks": "decoder (d = 6): HOLD source period 16; COMMIT two +x tracks (r15)",
+   "status": "E3 refereed (R10B-10)",
+   "flags": [
+    "physics_from_decoder"
+   ],
+   "coupling": "+++ (gauge transport to (-,+,+))",
+   "registration": "new assembly (republishes r08 6.2-6.4 / r20 S1 as a store with hold, commit and cancel)"
   }
  }
 }

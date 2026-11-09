@@ -1,6 +1,6 @@
 {
  "format": "u24-registry-v1",
- "built_utc": "2026-11-09T02:22:20Z",
+ "built_utc": "2026-11-09T03:19:10Z",
  "registrar": "r21",
  "spec": "research/matter_light_v1/r21/REGISTRY_SPEC.md (u24-block-card-v1)",
  "generators": [
@@ -18,7 +18,10 @@
   "light_line@2",
   "light_line_s@1",
   "fibre_packet@1",
-  "literal_patch@1"
+  "literal_patch@1",
+  "all48_planes@1",
+  "matter_line@2",
+  "slow_glider@2"
  ],
  "blocks": [
   {
@@ -51,7 +54,7 @@
     "light.fibre_packet@1",
     "matter.slot_clock@1 x2"
    ],
-   "lineage": "",
+   "lineage": "r08 spectro census (26 files); r23 T9 core pair (odd d)",
    "card": {
     "a_use": "atom candidate: packet bound between two silent cores; emission line 2k+2 / 2(d-k)+2; absorption P = 2d",
     "b_algebra": "level 2d+4 [S]; which d bind [EXHAUSTIVE 1D]; no capture without emission [THEOREM N2]; release = K reverse",
@@ -131,7 +134,7 @@
    "status": "E3 refereed",
    "flags": [],
    "parts": [],
-   "lineage": "",
+   "lineage": "r23 E-I emitters (s16, s20; exit fibre 330 nodes, L = 400)",
    "card": {
     "a_use": "clock emitting one identical packet every N = 16 updates through a degree-3 tap",
     "b_algebra": "fan-out at the tap + guide lemma; emission interval = ring period [S]",
@@ -179,6 +182,24 @@
     "a_use": "non-demolition binary detector: the flash returns only after the next detector's window; repeatability 1, 1/2, 0, 1/2",
     "b_algebra": "tap copy; gate law; flash returns after 2s+6 [S]",
     "c_clocks": "one dark clock per detector; carry burst only at the detector"
+   }
+  },
+  {
+   "id": "dump.open_line@1",
+   "kind": "primitive",
+   "registration": "new (r15)",
+   "generator": "guide_net@1 straight open path (r15 W3 side fibre) via compositions.r15_w3_selector_spec",
+   "coupling": "+++ (gauge transport to (-,+,+) exact)",
+   "status": "E1 replayed",
+   "flags": [
+    "physics_from_decoder"
+   ],
+   "parts": [],
+   "lineage": "r15 block_cards_r15.json",
+   "card": {
+    "a_use": "diverts outgoing packets so that nothing returns to a detector before the horizon (needs D sites beyond the last element, horizon < t_entry + 2D + 2)",
+    "b_algebra": "a fibre end is an exact elastic, recordless mirror [SIMULATION]; no silent absorption exists (T4), so a dump delays and never destroys",
+    "c_clocks": "light clicks only; 0 detector events"
    }
   },
   {
@@ -259,7 +280,7 @@
     "matter.silent_monomer@1",
     "light.fibre_packet@1"
    ],
-   "lineage": "",
+   "lineage": "r06b v4c / v4c2 gates (phases 0 / 2, offset +2z above B lines); r23 G2 probe geometry",
    "card": {
     "a_use": "dark-clock gate two sites beside a fibre: transparent at two arrival phases, absorbs at the other two (writes a click-dark 1-bit record)",
     "b_algebra": "gate law [THEOREM]: overflow iff (t_arr + phase) mod 4 in {1,2}; onset theorem",
@@ -307,6 +328,107 @@
     "a_use": "exactly one of two detectors fires at every approval of a stream (the shared record W9 lacked); reads must be simultaneous; even spacings >= 14",
     "b_algebra": "gate law S6 = -1,0,1,0 -> W1 = {1,2}, W2 = {3,0}; slip rule: D1 fires at approval k iff (t_k - 2k) mod 4 in {1,2}; delay 4 per earlier firing of the same reader; rests on T8, J, C",
     "c_clocks": "one dark period-4 rotor; the record is channel 6's 2-quarter-turn slip; two bursts at the selected halo site"
+   }
+  },
+  {
+   "id": "gate.shared_rotor_two_readers@2",
+   "kind": "assembly",
+   "registration": "update-of gate.shared_rotor_two_readers@1 (generalizes: F2 = channel-14 fibre with sigma +1 and + pulses 2 updates after F1; the clock at any orbit phase with its history halo). r19's sr_gate is this id",
+   "generator": "2 x pulse_train@1 (ch 0 and ch 14, sigma +1) + phase_gate@2 via compositions.r19_sr_gate_placements",
+   "coupling": "+++",
+   "status": "E1 replayed",
+   "flags": [
+    "physics_from_decoder"
+   ],
+   "parts": [],
+   "lineage": "r19 NOTES 01:43 card; r20 SR2",
+   "card": {
+    "a_use": "which-way device with ONE record for both outcomes: an approval = a pulse pair (F1 at t, F2 at t+2)",
+    "b_algebra": "gate law (CLOCKS s1, THEOREM): both fibres read the same clock channel 6, so one parity sets both windows (always complementary, T7); each detection flips the parity and delays its own arm by 4",
+    "c_clocks": "one detection = 8 native clicks (halo pair, record writes on channel 6, halo echo) + two light bands on the firing fibre; 0 clicks between approvals"
+   }
+  },
+  {
+   "id": "gravity.contact_slow_clock@1",
+   "kind": "assembly",
+   "registration": "new assembly: card of the clock half of exp.rate_by_light@1 (r23 G1 'update-of r08 clockrates' = card_rev 2 of that experiment)",
+   "generator": "compositions.r08_clockrates_spec (all48_site@1 + guide_net@1)",
+   "coupling": "+++",
+   "status": "E2 law-checked",
+   "flags": [
+    "physics_from_decoder"
+   ],
+   "parts": [
+    "matter.silent_monomer@1 (probe)",
+    "matter.silent_monomer@1 (source)",
+    "r08 read-out fibre"
+   ],
+   "lineage": "r08 CLOCKS s3 clockrates; r23 CARDS G1",
+   "card": {
+    "a_use": "point clock (all-48 probe touching its read-out fibre) whose rate is lowered by a face-adjacent source monomer, read only through its light at a distant monitor",
+    "b_algebra": "probe + source = 48 two-channel dimers [THEOREM, r22 C1]; monomer period 4, dimer period 5",
+    "c_clocks": "native click word at the monitor: free (+1,-1) period 2 rate 1; sourced (+,-,+,-,.) period 5 rate 4/5 (r23, official CLI); decoder: source periods 5 and 2"
+   }
+  },
+  {
+   "id": "gravity.core_pair_delay@1",
+   "kind": "assembly",
+   "registration": "variant-of atom.two_core_trap@1 (odd d, cores at phases (0,3) / (3,0))",
+   "generator": "compositions.r23_core_pair_spec (guide_net@1 + 2 slot_clock@1)",
+   "coupling": "+++",
+   "status": "E0 declared (law: 3 exploration hits); data E1 replayed",
+   "flags": [
+    "exploration"
+   ],
+   "parts": [],
+   "lineage": "r23 CARDS G4 (T9)",
+   "card": {
+    "a_use": "a delay element: at one arrival phase a packet leaves as an exact copy delayed by 2d+4 and both cores are left flipped by 2 (a record)",
+    "b_algebra": "[SIMULATION, exploration] d = 3, 5, 7 -> 10, 14, 18; other phases reflect or split",
+    "c_clocks": "one bounce inside the pair (one atom level)"
+   }
+  },
+  {
+   "id": "gravity.counter_flux_link@1",
+   "kind": "assembly",
+   "registration": "new assembly",
+   "generator": "compositions.r23_counter_train_spec / r23_t5_spec (guide_net@1 packets on P and ~P)",
+   "coupling": "+++",
+   "status": "E1 replayed",
+   "flags": [
+    "physics_from_decoder"
+   ],
+   "parts": [
+    "light.fibre_packet@1 (k packets -x)",
+    "light.fibre_packet@1 (calibrated +x)"
+   ],
+   "lineage": "r23 CARDS G3 (T4m, T5, T7)",
+   "card": {
+    "a_use": "the 'long link' half: a fibre segment whose links are lengthened by counter-moving light",
+    "b_algebra": "each head-on crossing delays both packets by 4 (r22 C3): Delta = 4k; stationary flux of spacing P: tau = (P+4)/(P-4) per node [hold model, T5]",
+    "c_clocks": "C1+/C2- pairs on the fibre only; a crossing = a 4-update hold (r23: 48/48, 0 off-fibre clicks)"
+   }
+  },
+  {
+   "id": "gravity.gate_window_clock@1",
+   "kind": "assembly",
+   "registration": "new assembly (derived-from gate.phase_gate@2: same geometry; the gated clock may be the sourced dimer)",
+   "generator": "compositions.r23_gate_window_spec",
+   "coupling": "+++",
+   "status": "E1 replayed",
+   "flags": [
+    "physics_from_decoder"
+   ],
+   "parts": [
+    "gate.phase_gate@2 (probe at distance 2)",
+    "matter.silent_monomer@1 (optional source)",
+    "light.fibre_packet@1"
+   ],
+   "lineage": "r23 CARDS G2 (T3b)",
+   "card": {
+    "a_use": "reads a dark clock's rate from clicks only: one calibrated packet per launch phase; a pass is clean iff the joint log is the union of the region-alone and signal-alone logs",
+    "b_algebra": "gate law (r08 CLOCKS s1, THEOREM); clean passes have Delta = 0 exactly",
+    "c_clocks": "free probe clean 2 of 4 phases (FTTF), sourced 3 of 5 (FTTTF); distance >= 3 always clean (r23, L and 2L)"
    }
   },
   {
@@ -366,7 +488,7 @@
    "status": "E1 replayed",
    "flags": [],
    "parts": [],
-   "lineage": "",
+   "lineage": "counter-circulating packets: a second closed guide_net@1 path traversed backwards (r23 T6, E-I ring64)",
    "card": {
     "a_use": "closed light guide; a tap makes an emitter",
     "b_algebra": "period = unrolled channel loop (holonomy order k -> k*N); counter-packets N+8 [S]",
@@ -571,12 +693,12 @@
    "id": "matter.planar_glider@1",
    "kind": "primitive",
    "registration": "new (r05)",
-   "generator": "data (two all-48 planes)",
+   "generator": "all48_planes@1 (G-, JG-, G+, JG+: two whole planes)",
    "coupling": "+++",
    "status": "E1 replayed",
    "flags": [],
    "parts": [],
-   "lineage": "",
+   "lineage": "r05 W5; r18 planar.OBJ (WAVE 4 generator)",
    "card": {
     "a_use": "the only exact mover in the uniform quiet vacuum: planar, speed 1/2",
     "b_algebra": "S(t+2) = shift(-x) S(t) [S]; neutral dipole layer; no compact version (C5/N4)",
@@ -653,7 +775,7 @@
    "id": "matter.slow_glider@1",
    "kind": "primitive",
    "registration": "new (r06)",
-   "generator": "slow_glider@1",
+   "generator": "slow_glider@1 / slow_glider@2 (explicit r06 catalog species profiles: class '0' of the r08 / r14 ladders, '0002' the 1/2-speed seed)",
    "coupling": "(-,*,*) chain sign -1",
    "status": "E1 replayed",
    "flags": [],
@@ -714,6 +836,24 @@
    }
   },
   {
+   "id": "medium.guide_bridge@1",
+   "kind": "primitive",
+   "registration": "new (r20 S8 bridge, used by r06b V4-3b)",
+   "generator": "guide_net@1 open path (out h, -y n, back h) via compositions.r20_bridge_placement",
+   "coupling": "(-,+,+)",
+   "status": "E1 replayed (cells only: 36 parameter sets equal r06b compose_v3.light_bridge)",
+   "flags": [
+    "no_instance_file"
+   ],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "joins the slot (+z) or the -z partner of one light line's node to the same partner of a parallel line, leaving the plane by h sites (L1 clearance >= 3 from the line between)",
+    "b_algebra": "guide lemma + decoupling (r20 S8, THEOREM there): unit transport along the turns; gauge sigma0 = phase",
+    "c_clocks": "rest gears 0/2 alternating; a packet makes 2 clicks per node; r06b V4-3b scans: 0 complete Einstein triples (negative)"
+   }
+  },
+  {
    "id": "medium.light_line@1",
    "kind": "primitive",
    "registration": "new (r11 B-lines; r04 gauge)",
@@ -749,7 +889,7 @@
    "id": "medium.light_segment@1",
    "kind": "primitive",
    "registration": "variant of medium.light_line@1 (length < side, no wrap)",
-   "generator": "light_line@1",
+   "generator": "light_line@1 (finite; axis x or y; label 1 or 41: r06b twin segment and V4-3 link, r14 collectors)",
    "coupling": "(-,+,+)",
    "status": "E1 replayed",
    "flags": [],
@@ -759,6 +899,24 @@
     "a_use": "light line on [XA, XB] only; bare ends reflect (r11 twins)",
     "b_algebra": "guide lemma; reflection at a bare end (open fibre: period 2D+6) [S]; parity theorem for classes",
     "c_clocks": "as light_line; a click track reverses at an end"
+   }
+  },
+  {
+   "id": "medium.mark_plane@1",
+   "kind": "primitive",
+   "registration": "new (r18 static marks)",
+   "generator": "all48_planes@1 ('+' (0,0,4) / '-' (0,0,0) planes; sheets S+-, S2+-, dipoles Dpm / Dmp)",
+   "coupling": "+++",
+   "status": "E2 law-checked",
+   "flags": [
+    "physics_from_decoder"
+   ],
+   "parts": [],
+   "lineage": "r18 planar.OBJ",
+   "card": {
+    "a_use": "static charge planes that a planar glider either passes (moving them +2 planes) or is reflected by",
+    "b_algebra": "r18 planar law [EXHAUSTIVE 452 cases, exact ring reduction]: G- passes iff every prefix sum of p_i <= 0 (block moves +2, D_out = 2 - 2Q), else reflects as JG+",
+    "c_clocks": "a passing glider leaves kinks; marks are dark until hit"
    }
   },
   {
@@ -775,6 +933,40 @@
     "a_use": "class-0 matter line: the guide of the SLOW glider; sockets for seed windows",
     "b_algebra": "static theta = 0 landscape; chain weight -1",
     "c_clocks": "frozen gears, invisible"
+   }
+  },
+  {
+   "id": "medium.matter_line@2",
+   "kind": "primitive",
+   "registration": "update-of medium.matter_line@1 (generalizes: periodic r06 catalog medium; medium (0,) is @1 exactly)",
+   "generator": "matter_line@2",
+   "coupling": "(-,+,+)",
+   "status": "E1 replayed",
+   "flags": [],
+   "parts": [],
+   "lineage": "r14 w3_module A0",
+   "card": {
+    "a_use": "matter fibre carrying a catalog medium (e.g. '0002', the 1/2-speed species' line): the seed line of r14 W3",
+    "b_algebra": "rest r = 2 medium[((origin - i) mod L) mod P] read along the glider's direction (r06 catalog)",
+    "c_clocks": "frozen gears (rest); the catalog glider rides it"
+   }
+  },
+  {
+   "id": "parity.wu_seed@1",
+   "kind": "primitive (literal)",
+   "registration": "new (r18)",
+   "generator": "literal_patch@1 (8 channels of one site)",
+   "coupling": "any (+++, ++-, +-+ tested)",
+   "status": "E1 replayed",
+   "flags": [
+    "physics_from_decoder"
+   ],
+   "parts": [],
+   "lineage": "r18 preparations/wu_seed_*",
+   "card": {
+    "a_use": "mirror-symmetric seed whose emission is asymmetric only in coupling class F (a Wu-type parity probe)",
+    "b_algebra": "the same data under every coupling; the asymmetry is a property of the coupling class [r18]",
+    "c_clocks": "decoder: A = +74 (++-), -74 (+-+), 0 (+++); the z-centroid leaves the mirror plane in class F"
    }
   },
   {
@@ -813,6 +1005,22 @@
    }
   },
   {
+   "id": "router.conserving@0",
+   "kind": "requirements (negative)",
+   "registration": "declared only (E0): not buildable from resting media + halo cores + traps without auxiliary ports",
+   "generator": "none",
+   "coupling": "+++",
+   "status": "E0 declared",
+   "flags": [],
+   "parts": [],
+   "lineage": "r15 block_cards_r15.json (for r24)",
+   "card": {
+    "a_use": "one quantum in, exactly one out, every copy accounted for",
+    "b_algebra": "requirements [THEOREM pieces, r15]: a resting junction copies; no silent stop (T4); a store captures only with a timed partner; a reflected copy needs another junction, which copies again",
+    "c_clocks": "none (no run)"
+   }
+  },
+  {
    "id": "seed.bb27_point@1",
    "kind": "literal (found by rewind)",
    "registration": "new (r27): the minimal-support state of the bb27 Big Bang among equal slot-clock phases (rule A2)",
@@ -829,6 +1037,24 @@
     "a_use": "Big Bang point: placed at O on the dark bb27 network (fills A0 label-41 and B0 label-1 sockets), its forward run emits two light packets (+-x, speed 1) and two slow gliders (+-y, speed 1/3), which then create the hub event, two ring sources and two atom candidates (r27, decoder v1.0)",
     "b_algebra": "S0 = JR(F^N(JR(T))), F^-1 = JR o F o JR [THEOREM S6]; N = T+4: seed* 14 cells in 3x5x3 sites; N = T: 28-cell seed = tangent shell of the 4 registered movers; the same cells for the 3 r27 variants and L = 160 / 320; not composable from registered blocks; NOT the global minimum of the history: X_-7 has 12 cells (11 sites, box [4, 3, 4]) against the dark network rewound the same N (odd clock phase; r27 notes it)",
     "c_clocks": "seed clicks at O at t = 1-2 (r27, decoder v1.0); the emitted movers carry their own clocks"
+   }
+  },
+  {
+   "id": "seed.emitter_core@1",
+   "kind": "primitive",
+   "registration": "new (r15)",
+   "generator": "single_channel@1: one channel (-1,0,r) in a halo slot of a resting fibre node",
+   "coupling": "+++ (gauge transport to (-,+,+) exact)",
+   "status": "E1 replayed",
+   "flags": [
+    "physics_from_decoder"
+   ],
+   "parts": [],
+   "lineage": "r15 block_cards_r15.json",
+   "card": {
+    "a_use": "one-shot light seed: fires its node once, one packet each way after t = 0; the seed never clicks",
+    "b_algebra": "the core's free rotation feeds +1 into the r = 4 node at the first update, then core and node settle to a quiet gated pair [SIMULATION, r15]",
+    "c_clocks": "0 clicks at the seed; the node's carry starts two light tracks"
    }
   },
   {
@@ -891,6 +1117,24 @@
    }
   },
   {
+   "id": "spin.holonomy_ring_h1@1",
+   "kind": "primitive (control variant)",
+   "registration": "new: control-of spin.holonomy_ring@1 (r04 W6 holonomy-1 ring); its data is a light.fibre_ring@1 instance (holonomy order 1, P = 14). r06b's requested id 'spin.holonomy_ring@1' is the holonomy-z module",
+   "generator": "guide_net@1 (closed 4x3 rectangle from J + x) via compositions.h1_ring_placement",
+   "coupling": "(-,+,+)",
+   "status": "E1 replayed",
+   "flags": [
+    "physics_from_decoder"
+   ],
+   "parts": [],
+   "lineage": "r04 wave6_control.vector_candidates (d=+x, a2=+z, n1=4, n2=3); r06b h1_ring_fragment.json",
+   "card": {
+    "a_use": "control ring for the spin module: joined to a matter-line node J like the holonomy-z ring, but its channel chain closes after ONE lap; a glider passing J starts it",
+    "b_algebra": "closed guide, chain sign +1, holonomy 1: region 22-periodic (one lap), no C relation (r04 W6 control, SIMULATION); its halo (55 channels besides J.41) must stay vacuum (assertion guide_halo_clear)",
+    "c_clocks": "junction fires every lap (22 updates); decoder v1.0: a created source of period 22 with glider tracks every 22 (r06b v4a)"
+   }
+  },
+  {
    "id": "spin.spinor_sector_seed@1",
    "kind": "primitive",
    "registration": "new (see registry_v0 family)",
@@ -928,6 +1172,27 @@
    }
   },
   {
+   "id": "store.two_core_trap_store@1",
+   "kind": "assembly",
+   "registration": "new assembly (republishes r08 6.2-6.4 / r20 S1 as a store with hold, commit and cancel)",
+   "generator": "compositions.r08_spectro_spec (empty trap + pulse pairs); commit = K(F^T(capture))",
+   "coupling": "+++ (gauge transport to (-,+,+))",
+   "status": "E3 refereed (R10B-10)",
+   "flags": [
+    "physics_from_decoder"
+   ],
+   "parts": [
+    "atom.two_core_trap@1 (empty)",
+    "light.fibre_packet@1 pulse pairs"
+   ],
+   "lineage": "r08 spectro census; r15 block_cards_r15.json",
+   "card": {
+    "a_use": "pending store for a lone copy: lone copy held ~2d and sent back; copy + partner at P = 2d -> HOLD; one later feature -> COMMIT (two pulses leave); unreleased -> CANCEL",
+    "b_algebra": "capture needs two inputs and emits one feature (T4); commit = K(capture) exactly (F(K(F(S))) = K(S), CLOCKS 6.4) [THEOREM]; absorption line one update wide (r08)",
+    "c_clocks": "decoder (d = 6): HOLD source period 16; COMMIT two +x tracks (r15)"
+   }
+  },
+  {
    "id": "write.set_doublet@1",
    "kind": "assembly",
    "registration": "new (r15)",
@@ -961,7 +1226,20 @@
   "exp.a1core_clock_probes@1",
   "exp.flagship_v3@1",
   "exp.bell_router@1",
-  "exp.bigbang_backward@1"
+  "exp.bigbang_backward@1",
+  "exp.flagship_v4@1",
+  "exp.rate_by_light@1",
+  "exp.trap_spectroscopy@1",
+  "exp.alpha_flux_matched@1",
+  "exp.angle_pair_Z4@1",
+  "exp.co_moving_einstein@1",
+  "exp.created_co_moving_einstein@1",
+  "exp.planar_translation_law@1",
+  "exp.wu_parity@1",
+  "exp.bigbang_entangled_pair@1",
+  "exp.sce_collapse_entanglement@1",
+  "exp.sce_superposition_interference@1",
+  "exp.seeded_selector@1"
  ],
  "decisions": [
   {
@@ -1096,6 +1374,254 @@
    "verdict": "experiment",
    "registered_as": "exp.bigbang_backward@1 (alias exp.bigbang_backwards@1)",
    "evidence": "19 target/seed files exact by composition; recipe 12/12; controls 7/7"
+  },
+  {
+   "proposer": "r06b",
+   "proposed": "holonomy-1 ring (r04 control, P = 14)",
+   "verdict": "new: control variant of spin.holonomy_ring@1 (renamed: that id is the holonomy-z module); data = light.fibre_ring@1 instance",
+   "registered_as": "spin.holonomy_ring_h1@1",
+   "evidence": "= r04 vector_candidates node by node; halo = fragment + J; 18 r06b files exact",
+   "wave": 4
+  },
+  {
+   "proposer": "r06b",
+   "proposed": "gate.phase_gate@1 (all-48 dark clock beside a line)",
+   "verdict": "not new: gate.phase_gate@2 at phases 0 / 2 (@1's phases), offset (0,0,2)",
+   "registered_as": "gate.phase_gate@2",
+   "evidence": "11 v4c / v4c2 files exact",
+   "wave": 4
+  },
+  {
+   "proposer": "r06b",
+   "proposed": "finite light_line@1 (also along y)",
+   "verdict": "not new: medium.light_segment@1",
+   "registered_as": "medium.light_segment@1",
+   "evidence": "twin segment in 40 r06b files; y-link 24/24 vs compose_v3.light_fibre_line_y",
+   "wave": 4
+  },
+  {
+   "proposer": "r06b",
+   "proposed": "light guide path with turns (r20 S8 bridge)",
+   "verdict": "new primitive",
+   "registered_as": "medium.guide_bridge@1",
+   "evidence": "36/36 vs compose_v3.light_bridge; no init file",
+   "wave": 4
+  },
+  {
+   "proposer": "r06b",
+   "proposed": "flagship v3 / v4 compositions",
+   "verdict": "experiments",
+   "registered_as": "exp.flagship_v3@1 (card_rev 2), exp.flagship_v4@1",
+   "evidence": "50/50 r06b init files exact",
+   "wave": 4
+  },
+  {
+   "proposer": "r23",
+   "proposed": "G1 contact_slow_clock",
+   "verdict": "new assembly; card of the clock half of exp.rate_by_light@1",
+   "registered_as": "gravity.contact_slow_clock@1",
+   "evidence": "3 published clockrates files exact",
+   "wave": 4
+  },
+  {
+   "proposer": "r23",
+   "proposed": "G2 gate_window_clock",
+   "verdict": "new assembly (derived-from gate.phase_gate@2)",
+   "registered_as": "gravity.gate_window_clock@1",
+   "evidence": "4 T3b files exact",
+   "wave": 4
+  },
+  {
+   "proposer": "r23",
+   "proposed": "G3 counter_flux_link",
+   "verdict": "new assembly",
+   "registered_as": "gravity.counter_flux_link@1",
+   "evidence": "T4m 3 + T5 2 + T7 3 files exact",
+   "wave": 4
+  },
+  {
+   "proposer": "r23",
+   "proposed": "G4 core_pair_delay",
+   "verdict": "variant-of atom.two_core_trap@1 (law E0)",
+   "registered_as": "gravity.core_pair_delay@1",
+   "evidence": "3 T9 files exact",
+   "wave": 4
+  },
+  {
+   "proposer": "r23",
+   "proposed": "E-alpha alpha_flux_matched",
+   "verdict": "experiment",
+   "registered_as": "exp.alpha_flux_matched@1",
+   "evidence": "11 E-I + 4 T6 files exact",
+   "wave": 4
+  },
+  {
+   "proposer": "r15",
+   "proposed": "detect.halo_core_register, select.d2_approval_selector, select.d2j_junction_selector, store.halo_latch, write.set_doublet, exp.chsh_d2_stations",
+   "verdict": "unchanged (WAVE 2 decisions stand)",
+   "registered_as": "as in WAVE 2",
+   "evidence": "card_rev 1",
+   "wave": 4
+  },
+  {
+   "proposer": "r15",
+   "proposed": "dump.open_line",
+   "verdict": "new primitive",
+   "registered_as": "dump.open_line@1",
+   "evidence": "2 w3 files exact (+++ and (-,+,+))",
+   "wave": 4
+  },
+  {
+   "proposer": "r15",
+   "proposed": "seed.emitter_core",
+   "verdict": "new primitive",
+   "registered_as": "seed.emitter_core@1",
+   "evidence": "2 w3 files exact",
+   "wave": 4
+  },
+  {
+   "proposer": "r15",
+   "proposed": "store.two_core_trap_store",
+   "verdict": "new assembly",
+   "registered_as": "store.two_core_trap_store@1",
+   "evidence": "its 5 r08 instances exact (26 census files + 3 K-reversed by recipe)",
+   "wave": 4
+  },
+  {
+   "proposer": "r15",
+   "proposed": "router.conserving@0",
+   "verdict": "declared requirements card (E0), no data",
+   "registered_as": "router.conserving@0",
+   "evidence": "no run",
+   "wave": 4
+  },
+  {
+   "proposer": "r19",
+   "proposed": "sr_gate",
+   "verdict": "update-of gate.shared_rotor_two_readers@1 (generalizes)",
+   "registered_as": "gate.shared_rotor_two_readers@2",
+   "evidence": "6 r19 files exact",
+   "wave": 4
+  },
+  {
+   "proposer": "r19",
+   "proposed": "angle_pair_Z4",
+   "verdict": "experiment",
+   "registered_as": "exp.angle_pair_Z4@1",
+   "evidence": "3 files exact",
+   "wave": 4
+  },
+  {
+   "proposer": "r19",
+   "proposed": "heralded_projection_z6 (02:51 card)",
+   "verdict": "received; next wave",
+   "registered_as": "-",
+   "evidence": "no instance file named",
+   "wave": 4
+  },
+  {
+   "proposer": "r18",
+   "proposed": "planar mirror, planar pass-through",
+   "verdict": "experiment instances of matter.planar_glider@1 + medium.mark_plane@1",
+   "registered_as": "exp.planar_translation_law@1",
+   "evidence": "4 runs/ init files exact",
+   "wave": 4
+  },
+  {
+   "proposer": "r18",
+   "proposed": "planar pusher, self-made pull, planar clock memory",
+   "verdict": "experiments of the same blocks (not regenerated)",
+   "registered_as": "exp.planar_translation_law@1",
+   "evidence": "exact ring + native per r18; no init file",
+   "wave": 4
+  },
+  {
+   "proposer": "r18",
+   "proposed": "Wu seed",
+   "verdict": "new literal block + experiment",
+   "registered_as": "parity.wu_seed@1, exp.wu_parity@1",
+   "evidence": "3 files exact",
+   "wave": 4
+  },
+  {
+   "proposer": "r14",
+   "proposed": "co_moving_einstein_v1",
+   "verdict": "experiment (slow_glider@2 with the r06 catalog class-0 species)",
+   "registered_as": "exp.co_moving_einstein@1",
+   "evidence": "6 files exact",
+   "wave": 4
+  },
+  {
+   "proposer": "r14",
+   "proposed": "created_co_moving_einstein_v1",
+   "verdict": "experiment (matter_line@2 medium '0002', slow_glider@2)",
+   "registered_as": "exp.created_co_moving_einstein@1",
+   "evidence": "3 files exact",
+   "wave": 4
+  },
+  {
+   "proposer": "r14",
+   "proposed": "peak_arrival_click_v1",
+   "verdict": "observer (not a block)",
+   "registered_as": "observer.peak_arrival_click_v1",
+   "evidence": "read-only; r14 validation V1-V3",
+   "wave": 4
+  },
+  {
+   "proposer": "r27",
+   "proposed": "bb27v2 entangled-pair variants",
+   "verdict": "experiment",
+   "registered_as": "exp.bigbang_entangled_pair@1",
+   "evidence": "17 seed* files exact by composition, 18/18 by recipe",
+   "wave": 4
+  },
+  {
+   "proposer": "r12",
+   "proposed": "sce_e07_spec, sce_e07b_spec",
+   "verdict": "merged into compositions (verbatim, helper names prefixed)",
+   "registered_as": "exp.sce_collapse_entanglement@1, exp.sce_superposition_interference@1",
+   "evidence": "specs == composition.json; 75/75 + 6/6 initial-state hashes",
+   "wave": 4
+  },
+  {
+   "proposer": "r12",
+   "proposed": "apply_control KeyError without assertions",
+   "verdict": "fixed (compose.apply_control adds none)",
+   "registered_as": "compose.py",
+   "evidence": "registry tests green",
+   "wave": 4
+  },
+  {
+   "proposer": "r12",
+   "proposed": "background-valued all48_site@1 composes to no cells",
+   "verdict": "recorded (legitimate placeholder: a control can override or remove placements, never add one)",
+   "registered_as": "-",
+   "evidence": "E07b",
+   "wave": 4
+  },
+  {
+   "proposer": "r01b",
+   "proposed": "publish_proposal: twin_atoms_q212_L160, _L320, twin_atoms_q28_L160, _L320",
+   "verdict": "not new blocks: exp.twin_atoms@1 instances (= r11 twins_seg data, published names)",
+   "registered_as": "exp.twin_atoms@1",
+   "evidence": "4 published files exact (compositions.published_appended_specs)",
+   "wave": 4
+  },
+  {
+   "proposer": "r01b",
+   "proposed": "publish_proposal: twin_atoms_q212_L160_control_no_lower_cores, _control_no_seed",
+   "verdict": "controls of exp.twin_atoms@1 (masks)",
+   "registered_as": "exp.twin_atoms@1",
+   "evidence": "2 published files exact",
+   "wave": 4
+  },
+  {
+   "proposer": "r01b",
+   "proposed": "publish_proposal: d1_skeleton_atom_spin_clocks_L320, d1_skeleton_atom_spin_clocks_L160_control_no_seed",
+   "verdict": "variant (2L extension) and control of d1_skeleton_atom_spin_clocks_L160 (exp.bigbang_network)",
+   "registered_as": "exp.bigbang_network",
+   "evidence": "2 published files exact",
+   "wave": 4
   }
  ],
  "verified_points": [
@@ -1945,9 +2471,1199 @@
    "spec": "bb27_target_spec minus Pp+Pm+Gm+Gp, rewound T",
    "tracked": false,
    "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_e1_main_L160.json",
+   "file_sha256_prefix": "52be8a582a19fde1",
+   "spec": "flagship_v3_e1_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_skeleton_main_L160.json",
+   "file_sha256_prefix": "ae4b9d789d3741f1",
+   "spec": "flagship_v3_skeleton_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_skeleton_main_L256.json",
+   "file_sha256_prefix": "e4475df6aa9dab47",
+   "spec": "flagship_v3_skeleton_L256",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_skeleton_main_L320.json",
+   "file_sha256_prefix": "8deaa830735eb7bb",
+   "spec": "flagship_v3_skeleton_L320",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_skeleton_main_L512.json",
+   "file_sha256_prefix": "7437ffe9aed71a10",
+   "spec": "flagship_v3_skeleton_L512",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_skeleton_no_clocks_L160.json",
+   "file_sha256_prefix": "f3b7fe0fe605f983",
+   "spec": "flagship_v3_skeleton_L160__no_clocks",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_skeleton_no_cores_L160.json",
+   "file_sha256_prefix": "8faa3a84ae0c65e6",
+   "spec": "flagship_v3_skeleton_L160__no_cores",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_skeleton_no_ring_L160.json",
+   "file_sha256_prefix": "07d7da165ccfe3e6",
+   "spec": "flagship_v3_skeleton_L160__no_ring",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_skeleton_no_seed_L160.json",
+   "file_sha256_prefix": "d8f0a0576c12a994",
+   "spec": "flagship_v3_skeleton_L160__no_seed",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_twins_clocks_main_L160.json",
+   "file_sha256_prefix": "b668add1c5edacc7",
+   "spec": "flagship_v3_twins_clocks_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_twins_clocks_main_L320.json",
+   "file_sha256_prefix": "9e26f8ba55406a48",
+   "spec": "flagship_v3_twins_clocks_L320",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_twins_clocks_no_clocks_L160.json",
+   "file_sha256_prefix": "2c1ed167390b6437",
+   "spec": "flagship_v3_twins_clocks_L160__no_clocks",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_twins_clocks_no_cores_L160.json",
+   "file_sha256_prefix": "da4434872787dcc4",
+   "spec": "flagship_v3_twins_clocks_L160__no_cores",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_twins_clocks_no_lower_cores_L160.json",
+   "file_sha256_prefix": "776f208f2a72d253",
+   "spec": "flagship_v3_twins_clocks_L160__no_lower_cores",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_twins_clocks_no_ring_L160.json",
+   "file_sha256_prefix": "956511599e3dd436",
+   "spec": "flagship_v3_twins_clocks_L160__no_ring",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_twins_clocks_no_seed_L160.json",
+   "file_sha256_prefix": "e398469acae648e1",
+   "spec": "flagship_v3_twins_clocks_L160__no_seed",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_twins_far_main_L256.json",
+   "file_sha256_prefix": "bb49f3355867f5df",
+   "spec": "flagship_v3_twins_far_L256",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_twins_far_main_L512.json",
+   "file_sha256_prefix": "28cdb5d77cd3feae",
+   "spec": "flagship_v3_twins_far_L512",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_twins_far_no_clocks_L256.json",
+   "file_sha256_prefix": "2d737b26a6cb64fb",
+   "spec": "flagship_v3_twins_far_L256__no_clocks",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_twins_far_no_cores_L256.json",
+   "file_sha256_prefix": "61eff3e4b7de86c1",
+   "spec": "flagship_v3_twins_far_L256__no_cores",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_twins_far_no_lower_cores_L256.json",
+   "file_sha256_prefix": "a6c8f87063480c95",
+   "spec": "flagship_v3_twins_far_L256__no_lower_cores",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_twins_far_no_ring_L256.json",
+   "file_sha256_prefix": "426ee448241f2980",
+   "spec": "flagship_v3_twins_far_L256__no_ring",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_twins_far_no_seed_L256.json",
+   "file_sha256_prefix": "0355aede7b1bf713",
+   "spec": "flagship_v3_twins_far_L256__no_seed",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_twins_main_L160.json",
+   "file_sha256_prefix": "e701ebb24532478b",
+   "spec": "flagship_v3_twins_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_twins_main_L320.json",
+   "file_sha256_prefix": "e0ba35779740866a",
+   "spec": "flagship_v3_twins_L320",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_twins_no_clocks_L160.json",
+   "file_sha256_prefix": "2c1ed167390b6437",
+   "spec": "flagship_v3_twins_L160__no_clocks",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_twins_no_cores_L160.json",
+   "file_sha256_prefix": "308409ed81b16288",
+   "spec": "flagship_v3_twins_L160__no_cores",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_twins_no_lower_cores_L160.json",
+   "file_sha256_prefix": "6752365df5afc986",
+   "spec": "flagship_v3_twins_L160__no_lower_cores",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_twins_no_ring_L160.json",
+   "file_sha256_prefix": "6b1ed00401c5bbc1",
+   "spec": "flagship_v3_twins_L160__no_ring",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_twins_no_seed_L160.json",
+   "file_sha256_prefix": "a02064987833b57d",
+   "spec": "flagship_v3_twins_L160__no_seed",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_v4a_main_L256.json",
+   "file_sha256_prefix": "3f93402083cfe292",
+   "spec": "flagship_v3_v4a_L256",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_v4a_main_L512.json",
+   "file_sha256_prefix": "aac45de330174e2d",
+   "spec": "flagship_v3_v4a_L512",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_v4a_no_clocks_L256.json",
+   "file_sha256_prefix": "5b435b579109aca6",
+   "spec": "flagship_v3_v4a_L256__no_clocks",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_v4a_no_cores_L256.json",
+   "file_sha256_prefix": "d4b9be1a6d0fe128",
+   "spec": "flagship_v3_v4a_L256__no_cores",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_v4a_no_h1_L256.json",
+   "file_sha256_prefix": "bb49f3355867f5df",
+   "spec": "flagship_v3_v4a_L256__no_h1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_v4a_no_lower_cores_L256.json",
+   "file_sha256_prefix": "0a05842f9a6ca729",
+   "spec": "flagship_v3_v4a_L256__no_lower_cores",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_v4a_no_ring_L256.json",
+   "file_sha256_prefix": "569504f7044c8094",
+   "spec": "flagship_v3_v4a_L256__no_ring",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_v4a_no_seed_L256.json",
+   "file_sha256_prefix": "52088c013f271832",
+   "spec": "flagship_v3_v4a_L256__no_seed",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_v4c2_main_L256.json",
+   "file_sha256_prefix": "3f57b5c23491576a",
+   "spec": "flagship_v3_v4c2_L256",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_v4c2_main_L512.json",
+   "file_sha256_prefix": "49ae56a5ec8f763c",
+   "spec": "flagship_v3_v4c2_L512",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_v4c2_no_clocks_L256.json",
+   "file_sha256_prefix": "a92566072074e0a6",
+   "spec": "flagship_v3_v4c2_L256__no_clocks",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_v4c2_no_cores_L256.json",
+   "file_sha256_prefix": "cace0e449f6eca33",
+   "spec": "flagship_v3_v4c2_L256__no_cores",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_v4c2_no_gates_L256.json",
+   "file_sha256_prefix": "3f93402083cfe292",
+   "spec": "flagship_v3_v4c2_L256__no_gates",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_v4c2_no_h1_L256.json",
+   "file_sha256_prefix": "05d61ba9fa0b095e",
+   "spec": "flagship_v3_v4c2_L256__no_h1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_v4c2_no_lower_cores_L256.json",
+   "file_sha256_prefix": "1bbce9a49a4f060f",
+   "spec": "flagship_v3_v4c2_L256__no_lower_cores",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_v4c2_no_ring_L256.json",
+   "file_sha256_prefix": "cb0faf9326cc750e",
+   "spec": "flagship_v3_v4c2_L256__no_ring",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_v4c2_no_seed_L256.json",
+   "file_sha256_prefix": "1bb0132107242dee",
+   "spec": "flagship_v3_v4c2_L256__no_seed",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_v4c2_swap_main_L256.json",
+   "file_sha256_prefix": "e447d2bd608c1b7f",
+   "spec": "flagship_v3_v4c2_swap_L256",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_v4c_main_L256.json",
+   "file_sha256_prefix": "0bef113b442fe3fd",
+   "spec": "flagship_v3_v4c_L256",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/preparations/flagship_v3_v4c_main_L512.json",
+   "file_sha256_prefix": "fefdc4373366451d",
+   "spec": "flagship_v3_v4c_L512",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/T3b_joint_L90_d2_s1_lead2.json",
+   "file_sha256_prefix": "569a3f67dda9f6b1",
+   "spec": "r23_gate_window_L90_d2_s1_lead2",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/T3b_joint_L90_d2_s1_lead3.json",
+   "file_sha256_prefix": "6d3d8d4be10ce2b5",
+   "spec": "r23_gate_window_L90_d2_s1_lead3",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/T3b_region_L90_d2_s1.json",
+   "file_sha256_prefix": "a5ad69f557deb063",
+   "spec": "r23_gate_window_L90_d2_s1_leadNone",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/T3b_signal_L90_lead3.json",
+   "file_sha256_prefix": "fc9c57ad69158648",
+   "spec": "r23_gate_window_L90_d2_s0_lead3",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/T4m_free_L160.json",
+   "file_sha256_prefix": "8c121ed4f81e09f5",
+   "spec": "r23_counter_train_L160_P8_k0_s1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/T4m_train_L160_P8_k3.json",
+   "file_sha256_prefix": "35f6fe00c9f420ae",
+   "spec": "r23_counter_train_L160_P8_k3_s1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/T4m_trainonly_L160_P8_k3.json",
+   "file_sha256_prefix": "d36721583e9a4c9a",
+   "spec": "r23_counter_train_L160_P8_k3_s0",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/T5_flux_L480_P16.json",
+   "file_sha256_prefix": "983e9bf3f659db6f",
+   "spec": "r23_counter_train_L480_P16_k20_s1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/T5_fluxonly_L480_P16.json",
+   "file_sha256_prefix": "4cfc330b1b8642b0",
+   "spec": "r23_counter_train_L480_P16_k20_s0",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/T7_lamp_flux_P8_k6_ph0.json",
+   "file_sha256_prefix": "0ba0e14dd5d7ef02",
+   "spec": "r23_lamp_flux_x100_f1_l1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/T7_lamp_flux_P8_k6_ph1.json",
+   "file_sha256_prefix": "2b31e1e9f0135bca",
+   "spec": "r23_lamp_flux_x101_f1_l1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/T7_lamp_noflux.json",
+   "file_sha256_prefix": "e04ed471d66116be",
+   "spec": "r23_lamp_flux_x100_f0_l1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/T9_joint_L96_d3_ph03_lead13.json",
+   "file_sha256_prefix": "46e743c51e3dad1c",
+   "spec": "r23_core_pair_L96_d3_ph03_lead13",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/T9_free_L96_d3_ph03_lead13.json",
+   "file_sha256_prefix": "a3e0f35377140ccc",
+   "spec": "r23_core_pair_L96_d3_ph03_lead13",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/T9_cores_L96_d3_ph03_lead13.json",
+   "file_sha256_prefix": "7da88bd4dbf204c2",
+   "spec": "r23_core_pair_L96_d3_ph03_lead13",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/EI_s16_in_joint.json",
+   "file_sha256_prefix": "e31918e46402a8f8",
+   "spec": "r23_emitter_s16_e1_in",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/EI_s16_in_emitter.json",
+   "file_sha256_prefix": "9fc219bea7f4abd7",
+   "spec": "r23_emitter_s16_e1_none",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/EI_s16_in_free.json",
+   "file_sha256_prefix": "a24ecd40c06486a8",
+   "spec": "r23_emitter_s16_e0_in",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/EI_s20_in_joint.json",
+   "file_sha256_prefix": "e24e7e5967b3b118",
+   "spec": "r23_emitter_s20_e1_in",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/EI_s20_in_emitter.json",
+   "file_sha256_prefix": "abad05d5812c3ce3",
+   "spec": "r23_emitter_s20_e1_none",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/EI_s20_in_free.json",
+   "file_sha256_prefix": "1d6b839cedacbc05",
+   "spec": "r23_emitter_s20_e0_in",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/EI_s16_out_joint.json",
+   "file_sha256_prefix": "20410bff53277603",
+   "spec": "r23_emitter_s16_e1_out",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/EI_ring64_counter1_h35.json",
+   "file_sha256_prefix": "509a4421a39f6390",
+   "spec": "r23_ring_R64_L40_counter1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/EI_ring64_counter2_h24_46.json",
+   "file_sha256_prefix": "fd8a02a2d1d78092",
+   "spec": "r23_ring_R64_L40_counter2",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/EI_lamp_ph0_lampalone.json",
+   "file_sha256_prefix": "2ca2f0c50ca69017",
+   "spec": "r23_lamp_exit_f100_e0",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/EI_lamp_ph1_joint.json",
+   "file_sha256_prefix": "42259c2e180402a3",
+   "spec": "r23_lamp_exit_f101_e1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/T6_ring_L40_R16_counter0.json",
+   "file_sha256_prefix": "4cadb42fcd2050b6",
+   "spec": "r23_ring_R16_L40_counter0",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/T6_ring_L40_R16_counter1.json",
+   "file_sha256_prefix": "68de927d25ec3c4f",
+   "spec": "r23_ring_R16_L40_counter1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/T6_ring_L40_R64_counter0.json",
+   "file_sha256_prefix": "9f9f8f98f0ddd333",
+   "spec": "r23_ring_R64_L40_counter0",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r23/preparations/T6_ring_L40_R64_counter1.json",
+   "file_sha256_prefix": "cfb67cf752a2f4f1",
+   "spec": "r23_ring_R64_L40_counter1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_blocks_v1/blocks/clocks_and_gravity/clockrates_source_at_A.json",
+   "file_sha256_prefix": "e3b5c8f89524fc21",
+   "spec": "clockrates_source_A",
+   "tracked": true,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_blocks_v1/blocks/clocks_and_gravity/clockrates_source_at_B_swapped.json",
+   "file_sha256_prefix": "da6961dc46fd1b15",
+   "spec": "clockrates_source_B",
+   "tracked": true,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_blocks_v1/blocks/clocks_and_gravity/clockrates_no_source_control.json",
+   "file_sha256_prefix": "7ac948a7e00983c1",
+   "spec": "clockrates_source_None",
+   "tracked": true,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/w3_seeded_selector_G0_ppp.json",
+   "file_sha256_prefix": "7280f6f5b12edfbe",
+   "spec": "r15_w3_selector_G0_ppp",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/w3_seeded_selector_G0_signs-++.json",
+   "file_sha256_prefix": "0cfc3e48902d70b9",
+   "spec": "r15_w3_selector_G0_mpp",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d6_empty_trap_pair_t43_P12_capture.json",
+   "file_sha256_prefix": "c6e5c6b45f15d0f6",
+   "spec": "r08_spectro_d6_empty_43_55",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d6_empty_trap_pair_t43_P11_control.json",
+   "file_sha256_prefix": "31d1c3cd0743c374",
+   "spec": "r08_spectro_d6_empty_43_54",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d6_empty_trap_pair_t43_P13_control.json",
+   "file_sha256_prefix": "37621b6caa4e0298",
+   "spec": "r08_spectro_d6_empty_43_56",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d6_empty_trap_pair_t41_P12_control.json",
+   "file_sha256_prefix": "15a064a02ace5ec1",
+   "spec": "r08_spectro_d6_empty_41_53",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d6_empty_trap_single_t43_control.json",
+   "file_sha256_prefix": "ed40c2e942f2228b",
+   "spec": "r08_spectro_d6_empty_43",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d6_atom_alone_control.json",
+   "file_sha256_prefix": "a6a60edb9a94202c",
+   "spec": "r08_spectro_d6_atom_",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d6_fibre_pair_t43_P12_atom_absent_control.json",
+   "file_sha256_prefix": "451e3685425e4d67",
+   "spec": "r08_spectro_d6_empty_43_55",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d10_empty_trap_pair_t43_P20_capture.json",
+   "file_sha256_prefix": "89bef04fcb12640b",
+   "spec": "r08_spectro_d10_empty_43_63",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d10_empty_trap_pair_t43_P19_control.json",
+   "file_sha256_prefix": "3368cfb5e45fe4c9",
+   "spec": "r08_spectro_d10_empty_43_62",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d10_empty_trap_pair_t43_P21_control.json",
+   "file_sha256_prefix": "79a04f2ae4233247",
+   "spec": "r08_spectro_d10_empty_43_64",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d10_empty_trap_pair_t41_P20_control.json",
+   "file_sha256_prefix": "8094d8fef3f58d18",
+   "spec": "r08_spectro_d10_empty_41_61",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d10_empty_trap_single_t43_control.json",
+   "file_sha256_prefix": "25d21ba8790c7a30",
+   "spec": "r08_spectro_d10_empty_43",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d10_atom_alone_control.json",
+   "file_sha256_prefix": "c986e513cc373789",
+   "spec": "r08_spectro_d10_atom_",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d10_fibre_pair_t43_P20_atom_absent_control.json",
+   "file_sha256_prefix": "299b951b60263ee1",
+   "spec": "r08_spectro_d10_empty_43_63",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d14_empty_trap_pair_t43_P28_capture.json",
+   "file_sha256_prefix": "07a1149c44d29e34",
+   "spec": "r08_spectro_d14_empty_43_71",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d14_empty_trap_pair_t43_P27_control.json",
+   "file_sha256_prefix": "f15ff3113e209a0e",
+   "spec": "r08_spectro_d14_empty_43_70",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d14_empty_trap_pair_t43_P29_control.json",
+   "file_sha256_prefix": "2050137963d40457",
+   "spec": "r08_spectro_d14_empty_43_72",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d14_empty_trap_pair_t41_P28_control.json",
+   "file_sha256_prefix": "8d29de6910941aae",
+   "spec": "r08_spectro_d14_empty_41_69",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d14_empty_trap_single_t43_control.json",
+   "file_sha256_prefix": "1819e0bdaa97edcc",
+   "spec": "r08_spectro_d14_empty_43",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d14_atom_alone_control.json",
+   "file_sha256_prefix": "ac08eb9dcb64695f",
+   "spec": "r08_spectro_d14_atom_",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d14_fibre_pair_t43_P28_atom_absent_control.json",
+   "file_sha256_prefix": "6a8e1e1a48f4950a",
+   "spec": "r08_spectro_d14_empty_43_71",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d10_atom_pulse_t49_elastic.json",
+   "file_sha256_prefix": "c26f42a4ddc70de0",
+   "spec": "r08_spectro_d10_atom_49",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d10_atom_pulse_t51_shift12.json",
+   "file_sha256_prefix": "aa68113582d1c75a",
+   "spec": "r08_spectro_d10_atom_51",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d10_atom_pulse_t48_altered.json",
+   "file_sha256_prefix": "ffec1a3980ae81a6",
+   "spec": "r08_spectro_d10_atom_48",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d10_atom_pulse_t43_two_out_shift4.json",
+   "file_sha256_prefix": "971ac785da31f75e",
+   "spec": "r08_spectro_d10_atom_43",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d10_atom_pulse_t45_multiplication.json",
+   "file_sha256_prefix": "e11161ef865b8a4d",
+   "spec": "r08_spectro_d10_atom_45",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r19/preparations/w1_srgate_V14_single_t40.json",
+   "file_sha256_prefix": "2161ffd4276f548d",
+   "spec": "r19_sr_gate",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r19/preparations/w1_srgate_V14_single_t41.json",
+   "file_sha256_prefix": "3174689ab0368022",
+   "spec": "r19_sr_gate",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r19/preparations/w1_srgate_V14_control_no_approval.json",
+   "file_sha256_prefix": "e439f73821ea6b42",
+   "spec": "r19_sr_gate",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r19/preparations/w1_srgate_V14_stream_P20_t41_n12.json",
+   "file_sha256_prefix": "a4ae942b917d8d76",
+   "spec": "r19_sr_gate",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r19/preparations/w1_srgate_V14_stream_P17_t41_n12.json",
+   "file_sha256_prefix": "5113ba600ae6c59a",
+   "spec": "r19_sr_gate",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r19/preparations/w1_srgate_V14_stream_P17_t43_n12.json",
+   "file_sha256_prefix": "99aac681975bea23",
+   "spec": "r19_sr_gate",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r19/preparations/w1_angle_Z4_P20_t41_a0_b0.json",
+   "file_sha256_prefix": "cac33d3fed2bd198",
+   "spec": "r19_angle_Z4_P20_t41_a0_b0",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r19/preparations/w1_angle_Z4_P20_t41_a0_b1.json",
+   "file_sha256_prefix": "8fed2e3c277a838f",
+   "spec": "r19_angle_Z4_P20_t41_a0_b1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r19/preparations/w1_angle_Z4_P20_t41_a0_b2.json",
+   "file_sha256_prefix": "78d03999554fb619",
+   "spec": "r19_angle_Z4_P20_t41_a0_b2",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r14/preparations/w2_e2_sync_D40_both_L640.json",
+   "file_sha256_prefix": "13acca9ccfd6fe29",
+   "spec": "r14_e2_sync_D40_both",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r14/preparations/w2_e2_sync_D48_both_L640.json",
+   "file_sha256_prefix": "7de07773ff51f869",
+   "spec": "r14_e2_sync_D48_both",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r14/preparations/w2_e2_sync_D64_both_L640.json",
+   "file_sha256_prefix": "df815da77699c500",
+   "spec": "r14_e2_sync_D64_both",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r14/preparations/w2_e2_sync_D80_both_L640.json",
+   "file_sha256_prefix": "03139ce617287739",
+   "spec": "r14_e2_sync_D80_both",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r14/preparations/w2_e2_sync_D64_A_alone_L640.json",
+   "file_sha256_prefix": "0f02d00f8ae852fe",
+   "spec": "r14_e2_sync_D64_A_alone",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r14/preparations/w2_e2_sync_D64_B_alone_L640.json",
+   "file_sha256_prefix": "fd6a7f773ce43ebf",
+   "spec": "r14_e2_sync_D64_B_alone",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r14/preparations/w3_created_einstein_joint_L1280.json",
+   "file_sha256_prefix": "33759501513ee40a",
+   "spec": "r14_w3_created_einstein_joint_L1280",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r14/preparations/w3_created_einstein_noseed_L1280.json",
+   "file_sha256_prefix": "ea511054bf6d7d9f",
+   "spec": "r14_w3_created_einstein_noseed_L1280",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r14/preparations/w3_created_einstein_onejunction_L1280.json",
+   "file_sha256_prefix": "6fb138fcf3d46704",
+   "spec": "r14_w3_created_einstein_onejunction_L1280",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "runs/matter_light_v1/r18/decoder/i_Gminus_vs_Splus_L12.json",
+   "file_sha256_prefix": "4b6cbdfc53c98e78",
+   "spec": "planar_mirror",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "runs/matter_light_v1/r18/decoder/ii_Gminus_vs_Sminus_L12.json",
+   "file_sha256_prefix": "780dea187dccb132",
+   "spec": "planar_pass_through",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "runs/matter_light_v1/r18/decoder/iii_free_Gminus_L12.json",
+   "file_sha256_prefix": "7fc3599b4bb3f6d6",
+   "spec": "planar_free_glider",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "runs/matter_light_v1/r18/decoder/iv_Splus_alone_L12.json",
+   "file_sha256_prefix": "1910ddc2298fadac",
+   "spec": "planar_sheet_alone",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r18/preparations/wu_seed_+++_L19.json",
+   "file_sha256_prefix": "0474054aff1ccdee",
+   "spec": "wu_seed_+++_L19",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r18/preparations/wu_seed_++-_L19.json",
+   "file_sha256_prefix": "46a2fecadd334d52",
+   "spec": "wu_seed_++-_L19",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r18/preparations/wu_seed_+-+_L19.json",
+   "file_sha256_prefix": "614e232dfe10664f",
+   "spec": "wu_seed_+-+_L19",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27v2_ent_pA0_pB0_seedstar_L160.json",
+   "file_sha256_prefix": "e19732a7f38cb6e7",
+   "spec": "bb27v2_ent_pA0_pB0_seedstar_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27v2_ent_pA0_pB1_seedstar_L160.json",
+   "file_sha256_prefix": "16e7f9d749c5ee1b",
+   "spec": "bb27v2_ent_pA0_pB1_seedstar_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27v2_ent_pA0_pB2_seedstar_L160.json",
+   "file_sha256_prefix": "4526146c3b29e6db",
+   "spec": "bb27v2_ent_pA0_pB2_seedstar_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27v2_ent_pA0_pB3_seedstar_L160.json",
+   "file_sha256_prefix": "21bda89b7640d9d7",
+   "spec": "bb27v2_ent_pA0_pB3_seedstar_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27v2_ent_pA1_pB0_seedstar_L160.json",
+   "file_sha256_prefix": "7923f296a1cb9132",
+   "spec": "bb27v2_ent_pA1_pB0_seedstar_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27v2_ent_pA1_pB1_seedstar_L160.json",
+   "file_sha256_prefix": "ee54488811539c33",
+   "spec": "bb27v2_ent_pA1_pB1_seedstar_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27v2_ent_pA1_pB2_seedstar_L160.json",
+   "file_sha256_prefix": "b2fd4d8a75c0643e",
+   "spec": "bb27v2_ent_pA1_pB2_seedstar_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27v2_ent_pA1_pB3_seedstar_L160.json",
+   "file_sha256_prefix": "5c9ddc017c1546f4",
+   "spec": "bb27v2_ent_pA1_pB3_seedstar_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27v2_ent_pA2_pB0_seedstar_L160.json",
+   "file_sha256_prefix": "6b5fe0ed0d4a5d6d",
+   "spec": "bb27v2_ent_pA2_pB0_seedstar_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27v2_ent_pA2_pB1_seedstar_L160.json",
+   "file_sha256_prefix": "e4d4787fe7ee35cd",
+   "spec": "bb27v2_ent_pA2_pB1_seedstar_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27v2_ent_pA2_pB2_seedstar_L160.json",
+   "file_sha256_prefix": "6888b77ac73edd24",
+   "spec": "bb27v2_ent_pA2_pB2_seedstar_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27v2_ent_pA2_pB3_seedstar_L160.json",
+   "file_sha256_prefix": "fa5938da906b782e",
+   "spec": "bb27v2_ent_pA2_pB3_seedstar_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27v2_ent_pA3_pB0_seedstar_L160.json",
+   "file_sha256_prefix": "b3c68bf0e890c63a",
+   "spec": "bb27v2_ent_pA3_pB0_seedstar_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27v2_ent_pA3_pB1_seedstar_L160.json",
+   "file_sha256_prefix": "e5de5c7ce27e1386",
+   "spec": "bb27v2_ent_pA3_pB1_seedstar_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27v2_ent_pA3_pB2_seedstar_L160.json",
+   "file_sha256_prefix": "c0869bdd47bdb3e7",
+   "spec": "bb27v2_ent_pA3_pB2_seedstar_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27v2_ent_pA3_pB3_seedstar_L160.json",
+   "file_sha256_prefix": "ea5c32bc3a3dd19c",
+   "spec": "bb27v2_ent_pA3_pB3_seedstar_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27v2_ent_ctrl_nodet_seedstar_L160.json",
+   "file_sha256_prefix": "82db8f5f9830ec33",
+   "spec": "bb27v2_ent_ctrl_nodet_seedstar_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_blocks_v1/blocks/atoms/twin_atoms_q212_L160.json",
+   "file_sha256_prefix": "a3b3e20ed7a5ea28",
+   "spec": "twins_seg_q212_a3_L160",
+   "tracked": true,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_blocks_v1/blocks/atoms/twin_atoms_q212_L320.json",
+   "file_sha256_prefix": "729356f13125bc89",
+   "spec": "twins_seg_q212_a3_L320",
+   "tracked": true,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_blocks_v1/blocks/atoms/twin_atoms_q28_L160.json",
+   "file_sha256_prefix": "c1b7c3bdabe559b0",
+   "spec": "twins_seg_q28_a3_L160",
+   "tracked": true,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_blocks_v1/blocks/atoms/twin_atoms_q28_L320.json",
+   "file_sha256_prefix": "e61dbaca1b706dd0",
+   "spec": "twins_seg_q28_a3_L320",
+   "tracked": true,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_blocks_v1/blocks/atoms/twin_atoms_q212_L160_control_no_lower_cores.json",
+   "file_sha256_prefix": "5dc616cd46d36baf",
+   "spec": "twins_seg_q212_a3_L160__no_lower_cores",
+   "tracked": true,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_blocks_v1/blocks/atoms/twin_atoms_q212_L160_control_no_seed.json",
+   "file_sha256_prefix": "1e2f2f32dc42f6f6",
+   "spec": "twins_seg_q212_a3_L160__no_seed",
+   "tracked": true,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_blocks_v1/blocks/seeds_big_bang/d1_skeleton_atom_spin_clocks_L320.json",
+   "file_sha256_prefix": "ecb31472e5c964e9",
+   "spec": "d1_v3_skeleton_L320",
+   "tracked": true,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_blocks_v1/blocks/seeds_big_bang/d1_skeleton_atom_spin_clocks_L160_control_no_seed.json",
+   "file_sha256_prefix": "45a55aad1c3c7795",
+   "spec": "d1_v3_skeleton_L160__no_seed",
+   "tracked": true,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d6_K_reversed_capture_stimulated_release.json",
+   "file_sha256_prefix": "976ceda07b671e34",
+   "spec": "recipe K(F^163(capture)) from r08_spectro_spec",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d10_K_reversed_capture_stimulated_release.json",
+   "file_sha256_prefix": "c5daa1febc45b8e7",
+   "spec": "recipe K(F^195(capture)) from r08_spectro_spec",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/spectro_d14_K_reversed_capture_stimulated_release.json",
+   "file_sha256_prefix": "af3cb03b49ba7c01",
+   "spec": "recipe K(F^227(capture)) from r08_spectro_spec",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27v2_ent_ctrl_noP_seedstar_L160.json",
+   "file_sha256_prefix": "d5fc3b37d0ee0499",
+   "spec": "recipe JR(F^16(JR(bb27v2_target_spec(noP))))",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r12/experiments_proposal/E07_sce_collapse_entanglement/experiment.json",
+   "file_sha256_prefix": "eb80db5cd42d6361",
+   "spec": "sce spec controls: 75/75 initial-state hashes",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r12/experiments_proposal/E07b_sce_superposition_interference/experiment.json",
+   "file_sha256_prefix": "bf0785487f66fd77",
+   "spec": "sce spec controls: 6/6 initial-state hashes",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r04/wave6_control.py",
+   "file_sha256_prefix": "5a4c31417dff9bdc",
+   "spec": "h1_ring_placement == r04 vector_candidates",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/compose_v3.py",
+   "file_sha256_prefix": "0d335095ba266813",
+   "spec": "r06b_link_y_placement == light_fibre_line_y (24/24)",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r06b/compose_v3.py",
+   "file_sha256_prefix": "0d335095ba266813",
+   "spec": "r20_bridge_placement == light_bridge (36/36)",
+   "tracked": false,
+   "exact": true
   }
  ],
- "n_verified_exact": 121,
+ "n_verified_exact": 291,
  "published_roles": {
   "fiber_x_packet": {
    "family": "light.fibre_packet",
@@ -4314,15 +6030,204 @@
    "role": "instance",
    "of": null,
    "evidence_flag": null
+  },
+  "twin_atoms_q212_L160": {
+   "family": "exp.twin_atoms",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null,
+   "appended": "dff39dc (R10E-41..48)"
+  },
+  "twin_atoms_q212_L320": {
+   "family": "exp.twin_atoms",
+   "family_kind": "experiment",
+   "role": "variant",
+   "of": "twin_atoms_q212_L160",
+   "evidence_flag": null,
+   "appended": "dff39dc (R10E-41..48)"
+  },
+  "twin_atoms_q28_L160": {
+   "family": "exp.twin_atoms",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null,
+   "appended": "dff39dc (R10E-41..48)"
+  },
+  "twin_atoms_q28_L320": {
+   "family": "exp.twin_atoms",
+   "family_kind": "experiment",
+   "role": "variant",
+   "of": "twin_atoms_q28_L160",
+   "evidence_flag": null,
+   "appended": "dff39dc (R10E-41..48)"
+  },
+  "twin_atoms_q212_L160_control_no_lower_cores": {
+   "family": "exp.twin_atoms",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": "twin_atoms_q212_L160",
+   "evidence_flag": null,
+   "appended": "dff39dc (R10E-41..48)"
+  },
+  "twin_atoms_q212_L160_control_no_seed": {
+   "family": "exp.twin_atoms",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": "twin_atoms_q212_L160",
+   "evidence_flag": null,
+   "appended": "dff39dc (R10E-41..48)"
+  },
+  "d1_skeleton_atom_spin_clocks_L320": {
+   "family": "exp.bigbang_network",
+   "family_kind": "experiment",
+   "role": "variant",
+   "of": "d1_skeleton_atom_spin_clocks_L160",
+   "evidence_flag": null,
+   "appended": "dff39dc (R10E-41..48)"
+  },
+  "d1_skeleton_atom_spin_clocks_L160_control_no_seed": {
+   "family": "exp.bigbang_network",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": "d1_skeleton_atom_spin_clocks_L160",
+   "evidence_flag": null,
+   "appended": "dff39dc (R10E-41..48)"
   }
  },
  "source": {
   "registry_v0_sha256": "9d561c23c0f286e1434312aadcdd39ac225f8d5415d959cdf414ddd1c7b410cb",
-  "verify_sha256": "a13c42feee03ef3662cb1f2483ddea3ffdd3c1cb55b151f45d149f2f3435befb",
-  "wave3_checks_sha256": "ea466f0429f781acda06bd1e183a344244fd7672dcdcea528d7394d2f8e39075"
+  "verify_sha256": "8a3a885c0438bab378a68c2df50e72db7f631387e0872c079c65bc81ce8f1f25",
+  "wave3_checks_sha256": "ea466f0429f781acda06bd1e183a344244fd7672dcdcea528d7394d2f8e39075",
+  "wave4_checks_sha256": "251fa09111b6be9d70ba5513459e88398f446ec85b120b3b6a13a1f6eb39cf62"
  },
  "aliases": {
   "light_line_s@1": "light_line@2",
-  "exp.bigbang_backwards@1": "exp.bigbang_backward@1"
- }
+  "exp.bigbang_backwards@1": "exp.bigbang_backward@1",
+  "sr_gate": "gate.shared_rotor_two_readers@2",
+  "angle_pair_Z4": "exp.angle_pair_Z4@1",
+  "co_moving_einstein_v1": "exp.co_moving_einstein@1",
+  "created_co_moving_einstein_v1": "exp.created_co_moving_einstein@1",
+  "E07_sce_collapse_entanglement": "exp.sce_collapse_entanglement@1",
+  "E07b_sce_superposition_interference": "exp.sce_superposition_interference@1"
+ },
+ "experiment_cards": {
+  "exp.flagship_v3@1": {
+   "proposer": "r06b",
+   "composition": "compositions.r06b_flagship_spec(name in skeleton, twins, twins_clocks, twins_far, e1)",
+   "note": "card_rev 2: r06b's actual v3 compositions; compositions.flagship_v3_spec (WAVE 2, W9/Q1c by gauge transport) is an integrator proposal not run by r06b",
+   "evidence": "r06b v3 init files exact (controls as masks)"
+  },
+  "exp.flagship_v4@1": {
+   "proposer": "r06b",
+   "composition": "compositions.r06b_flagship_spec(name in v4a, v4c, v4c2, v4c2_swap)",
+   "controls": [
+    "no_seed",
+    "no_cores",
+    "no_ring",
+    "no_clocks",
+    "no_lower_cores",
+    "no_h1",
+    "no_gates"
+   ],
+   "evidence": "v4 init files exact; halo assertion on the h1 ring"
+  },
+  "exp.rate_by_light@1": {
+   "proposer": "r08 (card r23 G1)",
+   "composition": "compositions.r08_clockrates_spec",
+   "evidence": "3 published clockrates blocks exact (tracked)"
+  },
+  "exp.trap_spectroscopy@1": {
+   "proposer": "r08",
+   "composition": "compositions.r08_spectro_cases",
+   "evidence": "26 census files exact; 3 K-reversed files = K(F^T(capture)) (recipe)"
+  },
+  "exp.alpha_flux_matched@1": {
+   "proposer": "r23",
+   "composition": "compositions.r23_emitter_probe_spec, r23_ring_counter_spec, r23_lamp_beside_exit_spec",
+   "evidence": "11 E-I files + 4 T6 files exact; alpha = 1.000 read by decoder v1.0"
+  },
+  "exp.angle_pair_Z4@1": {
+   "proposer": "r19",
+   "composition": "compositions.r19_angle_pair_spec",
+   "evidence": "3 files exact; cos(90 deg delta) law read by decoder (r19)"
+  },
+  "exp.co_moving_einstein@1": {
+   "proposer": "r14",
+   "composition": "compositions.r14_e2_sync_spec",
+   "controls": [
+    "A alone",
+    "B alone"
+   ],
+   "observer": "observer.peak_arrival_click_v1",
+   "evidence": "6 files exact; tau_f, tau_b, delta exact in 4/4 (r14)"
+  },
+  "exp.created_co_moving_einstein@1": {
+   "proposer": "r14",
+   "composition": "compositions.r14_w3_created_spec",
+   "controls": [
+    "noseed",
+    "onejunction"
+   ],
+   "evidence": "3 files exact"
+  },
+  "exp.planar_translation_law@1": {
+   "proposer": "r18",
+   "composition": "compositions.r18_planar_spec",
+   "instances": [
+    "planar mirror (i)",
+    "planar pass-through (ii)",
+    "free glider (iii)",
+    "sheet alone (iv)"
+   ],
+   "not_regenerated": [
+    "planar pusher (planar_c.native_trains)",
+    "self-made pull (bigbang_pull, exact ring only)",
+    "planar clock memory (clocks.py)"
+   ],
+   "evidence": "4 runs/ init files exact; law EXHAUSTIVE 452 (exact ring)"
+  },
+  "exp.wu_parity@1": {
+   "proposer": "r18",
+   "composition": "compositions.r18_wu_seed_spec(signs)",
+   "evidence": "3 files exact"
+  },
+  "exp.bigbang_entangled_pair@1": {
+   "proposer": "r27",
+   "composition": "compositions.bb27v2_target_spec / bb27v2_seedstar_spec",
+   "controls": [
+    "noP",
+    "nodet"
+   ],
+   "evidence": "17 seed* files exact by composition; 18/18 by recipe; 18 target states equal r27's compositions"
+  },
+  "exp.sce_collapse_entanglement@1": {
+   "proposer": "r12",
+   "composition": "compositions.sce_e07_spec",
+   "evidence": "spec == E07 composition.json; 75/75 initial-state hashes"
+  },
+  "exp.sce_superposition_interference@1": {
+   "proposer": "r12",
+   "composition": "compositions.sce_e07b_spec",
+   "evidence": "spec == E07b composition.json; 6/6 initial-state hashes"
+  },
+  "exp.seeded_selector@1": {
+   "proposer": "r15",
+   "composition": "compositions.r15_w3_selector_spec(signs)",
+   "evidence": "2 files exact (+++ and gauge-transported (-,+,+))"
+  }
+ },
+ "observers": [
+  {
+   "id": "observer.peak_arrival_click_v1",
+   "proposer": "r14",
+   "file": "research/matter_light_v1/r14/peak_arrival.py",
+   "sha256": "5629d5b402b46bfed43e2b9744a3e64c8527c26ea58db39e3707c4443d8d0d5f",
+   "role": "read-only observer on click logs (step, address, kind, quotient); one record per site at its maximal sum |q| within +-8 updates",
+   "not_a_block": true,
+   "validation": "V1 native 3/3; peak speed / c_s = 0.9977, 0.9989, 1.0000 at amplitudes 1e4, 1e6, 1e9 (r14)",
+   "tracked": false
+  }
+ ]
 }

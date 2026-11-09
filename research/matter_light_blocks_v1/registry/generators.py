@@ -346,8 +346,9 @@ BLOCKS.update(BLOCKS_EXT)
 
 # ===================================================================== WAVE 3 (r21) additions
 def light_line_v2(board, *, length, label=1, axis="x", gauge_phase=0, sockets=()):
-    """light_line@2 = light_line@1 plus optional packet sockets (kind 'fibre-packet'); with no sockets the output
-    is exactly light_line@1's (update-of light_line@1, relation 'generalizes'; r27's light_line_s@1)."""
+    """light_line@2 = light_line@1 plus optional sockets that accept a 'fibre-packet' or a 'glider-seed' filler
+    (e.g. seed.bb27_point@1); with no sockets the output is exactly light_line@1's (update-of light_line@1,
+    relation 'generalizes'; r27's light_line_s@1)."""
     base = light_line(board, length=length, label=label, axis=axis, gauge_phase=gauge_phase)
     if not sockets:
         return base
@@ -405,3 +406,90 @@ LINEAGE.update({"light_line@2": "update-of light_line@1 (adds packet sockets; r2
                 "fibre_packet@1": "light.fibre_packet in socket form via guides.packet_state; equals r27 design.fibre_packet "
                                   "(D1 B0 packet, shape (1,-1)) exactly in both directions and gauge phases",
                 "literal_patch@1": "literal initial data (seeds found by rewind, r27 bb27_point)"})
+
+
+# ===================================================================== WAVE 4 (r21) additions
+def all48_planes(board, *, planes, size, axis="x"):
+    """A stack of consecutive whole planes normal to ``axis`` (local index 0, 1, ...): every site of plane k
+    (``size`` x ``size`` sites, the board's transverse extent) holds all 48 channels in ``planes[k]``. The planar
+    sector of r05 / r18: planar gliders G-+ (two planes), static mark planes '+' (0,0,4) / '-' (0,0,0), sheets
+    and dipole blocks. A vacuum entry (the background) leaves that plane empty (a gap)."""
+    ax = AXES[axis]
+    others = [i for i in range(3) if i != ax]
+    bg = tuple(board["background"])
+    cells = {}
+    for k, tr in enumerate(planes):
+        tr = tuple(int(v) for v in tr)
+        if tr == bg:
+            continue
+        for u in range(int(size)):
+            for v in range(int(size)):
+                pos = [0, 0, 0]
+                pos[ax], pos[others[0]], pos[others[1]] = k, u, v
+                for g in range(48):
+                    cells[(*pos, g)] = tr
+    return Patch("planes", cells, tensor=_tensor(board["signs"]), background=Channel(*board["background"]),
+                 ports={"origin": (min(cells),)} if cells else {},
+                 evidence_domains=("r18 planar translation law (exact ring, 452 cases; native + decoder).",))
+
+
+BLOCKS.update({"all48_planes@1": all48_planes})
+LINEAGE.update({"all48_planes@1": "r05 W5 / r18 planar.OBJ + decode_runs.cells_of (whole all-48 planes)"})
+
+
+def slow_glider_v2(board, *, start, hit="SLOW", label=41, axis="y"):
+    """slow_glider@2 = slow_glider@1 plus explicit r06 catalog species: ``hit`` is 'SLOW' / 'SLOW_LEFT' (then the
+    cells equal slow_glider@1's) or a profile {"W", "s", "a", "b", "c", "halo": {j: S}} of a natively verified
+    r06 catalog species (e.g. compositions.R06_CATALOG['0'], the class-0 species used by r08 / r14 ladders)."""
+    if isinstance(hit, str):
+        return slow_glider(board, start=start, hit=hit, label=label, axis=axis)
+    if tuple(board["background"]) != (0, 0, 2):
+        raise ValueError("the slow-glider halo is defined for the vacuum (0,0,2)")
+    prof = {"W": int(hit["W"]), "s": int(hit["s"]), "a": [int(v) for v in hit["a"]], "b": [int(v) for v in hit["b"]],
+            "c": [int(v) for v in hit["c"]], "halo": {int(k): int(v) for k, v in hit["halo"].items()}}
+    if not (len(prof["a"]) == len(prof["b"]) == len(prof["c"]) == prof["W"]):
+        raise ValueError("profile window arrays must have length W")
+    L = board["side"]
+    raw = glider_cells(L, board["signs"], label, (0, 0, 0), start % L, prof)
+
+    def local(k):
+        return tuple(((k[i] + L // 2) % L) - L // 2 for i in range(3)) + (k[3],)
+
+    cells = {local(k): v for k, v in raw.items()}
+    window = tuple(sorted(k for k in cells if k[3] == label and k[0] == 0 and k[2] == 0))
+    return Patch("glider-seed", cells, tensor=_tensor(board["signs"]), background=Channel(*board["background"]),
+                 ports={"window": window}, sources={"window": window},
+                 evidence_domains=("r06 catalog species (window + history halo), exact translator (r06 catalog).",))
+
+
+BLOCKS.update({"slow_glider@2": slow_glider_v2})
+LINEAGE.update({"slow_glider@2": "update-of slow_glider@1 (generalizes: explicit r06 catalog species profiles; "
+                                 "'SLOW'/'SLOW_LEFT' unchanged)"})
+
+
+def matter_line_v2(board, *, length, label=41, axis="y", sockets=(), medium=(0,), medium_origin=0):
+    """matter_line@2 = matter_line@1 plus a periodic catalog medium: node i rests at
+    r = 2 * medium[((medium_origin - i) mod length) mod len(medium)] (r06 catalog medium strings read along the
+    glider's direction, e.g. '0002' for the 1/2-speed species); medium (0,) is exactly matter_line@1."""
+    med = [int(v) for v in medium]
+    if tuple(med) == (0,):
+        return matter_line(board, length=length, label=label, axis=axis, sockets=sockets)
+    if any(v not in (0, 1, 2) for v in med):
+        raise ValueError("medium classes are remainders / 2 in {0, 1, 2}")
+    c = Coupling(tuple(board["signs"]))
+    ax = AXES[axis]
+    _straight(c, label, ax)
+    holes = set(int(i) for i in sockets)
+    P = len(med)
+    cells = {_node(ax, i, label): (0, 0, 2 * med[((int(medium_origin) - i) % length) % P])
+             for i in range(length) if i not in holes}
+    cells = {k: v for k, v in cells.items() if v != tuple(board["background"])}
+    sk = (Socket("seed-window", tuple(_node(ax, i, label) for i in sorted(holes)), ("glider-seed",)),) if holes else ()
+    return Patch("matter-line", cells, tensor=_tensor(board["signs"]), background=Channel(*board["background"]),
+                 ports={"start": (_node(ax, 0, label),), "end": (_node(ax, length - 1, label),)}, sockets=sk,
+                 evidence_domains=("r06 catalog medium line (natively verified species media, r06 / r08 / r14).",))
+
+
+BLOCKS.update({"matter_line@2": matter_line_v2})
+LINEAGE.update({"matter_line@2": "update-of matter_line@1 (generalizes: periodic r06 catalog medium; medium (0,) "
+                                 "unchanged); r14 w3_module A0 seed line"})
