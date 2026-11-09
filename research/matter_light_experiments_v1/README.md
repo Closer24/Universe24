@@ -39,15 +39,16 @@ cosmology or quantum behaviour is claimed. `C2` is not a selection law and `Q` i
 | [E20b](E20b_one_hardware_in_c3c/CARD.md) | E20's member h = 1 placed in the refereed C3c cycle without interacting with it: period 320, integer moments 160ℤ, only exit C clicks, and the union's click log is C3c's refereed log plus the device's records | (−,+,+) | THEOREM + SIMULATION | 16 of 16 pass (6 decoder, 10 log_symmetry_v1) | r10r R10R-8..10 CONFIRMED | ~40 s |
 | [E21](E21_gr_observer_clicks_only/CARD.md) | a clicks-only observer reads E09 and E10 at declared stations: exact clock periods, redshift from exact periods, Shapiro delays, routes, E10's lapse N, radial stretch H_r and α = 2 (E) or 1 (T), and a radar echo whose dwell is one device constant; E10's clicks hold no areal-radius measurement, so no spatial curvature is read | +++ | SIMULATION | 25 of 25 pass (gr_observer_v1) | r10zb R10ZB-1, 3, 4, 5, 7, 16, 17 CONFIRMED (R10ZB-6 PARTLY, fix-6 frame; R10ZB-19's profile wording applied); fresh machine 1 GRF2, GRF5 CONFIRMED | ~20 s |
 | [E22](E22_one_quantum_one_exit/CARD.md) | one quantum token, one exit per cycle: in builder D's CC8 router three separately prepared unit fibre packets are lit (the quantum and two escorts, which are prepared hardware) and the quantum reaches one exit only, per cycle; the run's exit is unpredictable for the detector-only observer, while the full official log shows the deciding datum (the quantum's phase) from the input line's clicks; over a uniform hidden phase P(exit B) = N_B / 14 (all 182 members replayed), a counting-fraction sawtooth (rising 1/14 per device phase step, up to ties from sampling 14 of 17 phases: D′ = 12 and 14 both give 11/14), not cos², not Born | +++ | SIMULATION | 41 of 41 pass (39 decoder, 2 log_symmetry_v1) | r10g R10G-276..281, 283, 284 CONFIRMED; 282, 286 PARTLY (wording, applied); 285 NOT CHECKED (QM-1, not in E22); fresh machine 2 QM-F4 ALL PASS | ~10 min |
+| [E25](E25_two_time_counting_rule/CARD.md) | the two-time counting rule in clicks on builder B's triple gate: a second forward run from JR of a run's final state gives the run's click log in reverse order, kinds and quotients negated (C0 stays C0, C1 ↔ C2), so the statistic k̄ equals k for the 12 replayed members (builder B's 972 + 485 runs reported); gears 2 and 3 are ε-twins; Theorem M (JR∘F∘JR = F⁻¹), the time symmetry of a reversible deterministic system, not a quantum effect | (−,+,+) | THEOREM + SIMULATION | 46 of 46 pass (38 decoder, 8 log_symmetry_v1) | r10zc R10ZC-7, 8, 9 CONFIRMED (R10ZC-10, 11 wording applied); fresh machine 2 QM-F5 ALL PASS | ~5 s |
 
 E01's twin runs reference the blocks appended to `research/matter_light_blocks_v1` in dff39dc. Like E01, E07b's run
 a_A references a published block (`exact_front_111_box`).
 
 Decoder pin: `click_decoder_v1` 1.0, frozen 2026-11-09T01:29:27Z (`research/click_decoder_v1/FROZEN.json`). E15,
-E15b, E17, E18, E19, E20, E20b and E22 also pin the frozen layer log_symmetry_v1, E11 the frozen layer beat_clock_v1
-(release 1.0.3) and E21 the frozen layer gr_observer_v1 (release 1.0.5). An experiment is **ready** when every run
-replays exactly (initial-state, final-state and log hashes), every declared check passes and the referee's verdict is
-recorded as CONFIRMED or PARTLY (E13 and E16: PARTLY, with their caveats on the cards).
+E15b, E17, E18, E19, E20, E20b, E22 and E25 also pin the frozen layer log_symmetry_v1, E11 the frozen layer
+beat_clock_v1 (release 1.0.3) and E21 the frozen layer gr_observer_v1 (release 1.0.5). An experiment is **ready**
+when every run replays exactly (initial-state, final-state and log hashes), every declared check passes and the
+referee's verdict is recorded as CONFIRMED or PARTLY (E13 and E16: PARTLY, with their caveats on the cards).
 
 ## Commands
 
@@ -58,7 +59,7 @@ python -m research.matter_light_experiments_v1.verify E01_local_atom_twins E02_c
     E13_exchange_contact_counts E14_two_beam_interference E15_cyclic_bangs E15b_planar_cyclic_box \
     E16_bigbang_backward_v5 E17_exact_bounce_v6 E18_cyclic_universe_c3c E19_cyclic_universe_c4_variant \
     E20_one_hardware_two_outcomes E20b_one_hardware_in_c3c E21_gr_observer_clicks_only \
-    E22_one_quantum_one_exit \
+    E22_one_quantum_one_exit E25_two_time_counting_rule \
                                                                                 # every one "ready": true
 python -m research.matter_light_experiments_v1.verify --all                     # every experiment folder present
 python -m research.matter_light_experiments_v1.verify --fast                    # only the runs marked fast
@@ -68,8 +69,9 @@ python -m unittest tests.test_matter_light_experiments_v1                       
 
 `--fast` is a smoke test, not a verification: it replays only the runs marked `fast` and reports every check that
 reads another run as "skipped (runs not selected)", so an experiment with slower runs ends with `"ok": true` and
-`"ready": false`. Only E09, E10, E11, E15 and E21, whose runs are all marked fast, can be ready under `--fast`; E01,
-E04, E06, E15b, E17 and E20b have no fast run. `--help` prints the usage, and an unknown flag stops with exit status 2.
+`"ready": false`. Only E09, E10, E11, E15, E21 and E25, whose runs are all marked fast, can be ready under `--fast`;
+E01, E04, E06, E15b, E17 and E20b have no fast run. `--help` prints the usage, and an unknown flag stops with exit
+status 2.
 
 ```python
 from research.matter_light_experiments_v1 import experiment
@@ -200,7 +202,7 @@ in the last column (7aac8c5 is a later snapshot of the same folder).
 | r13 G0, carry-free gates only (E07) | `r13/NOTES.md`, the entry "G0 [THEOREM, no run]"; its scope: R10E-2 | 2483837 |
 | THEOREM FF (E10) | `r22/REPORT_WAVE2.md` §3 | 2483837 |
 | r23 Lemma 2, s − 4 = R (E16) | `r23/NOTES.md`, the 02:20 theory record | 2483837 |
-| time reversal F⁻¹ = JR∘F∘JR (E15, E15b, E17, E18, E19, E20, E20b) | `chapters/THEORY.md`, row S6; proved as Lemma 1 in `r36/REPORT_WAVE1.md` §1 | 2483837; 7aac8c5 |
+| time reversal F⁻¹ = JR∘F∘JR (E15, E15b, E17, E18, E19, E20, E20b, E25) | `chapters/THEORY.md`, row S6; proved as Lemma 1 in `r36/REPORT_WAVE1.md` §1 | 2483837; 7aac8c5 |
 | two moments make the history periodic (E15, E18, E19, E20, E20b) | `r36/REPORT_WAVE1.md` §1 | 7aac8c5 |
 | the planar box period 4d + 4 (E15b) | `r18b/REPORT_WAVE1.md`, first section | 7aac8c5 |
 | the exact bounce of a JR-fixed s* (E17) | `r27b/REPORT_WAVE3.md`, breakthrough 1 and §1 | 7aac8c5 |
@@ -225,3 +227,5 @@ in the last column (7aac8c5 is a later snapshot of the same folder).
 | remote referee report GRF5 (E21 reproduced) | `remote/FRESH_MACHINE_REPORT_GRF5.md` | 405aded |
 | R10G-276..286 (E22): builder D's QM-3, device CC8 | `r10/REVIEW_R10G_W9.md` (item 1) | 01790e6 |
 | remote referee report QM-F4 (E22: builder D's QM-3, all 182 members reproduced) | `remote/FRESH_MACHINE_REPORT_QMF4.md`; builder D's `remote/BUILDER_D_REPORT_QMA_INTERIM.md`, `remote/BUILDER_D_REPORT_QMA_FINAL.md`, `remote/builderD_QMA_interim/`, `remote/builderD_QMA_final/` | 6c0798c |
+| R10ZC-7..9 (E25): builder B's QM-B8 | `r10/r10zc_REVIEW.md` (pre-registration `r10/r10zc_NOTES.md`, `r10/r10zc_verdicts.json`); builder B's `remote/BUILDER_B_REPORT_QMB_FULL.md` (QM-B8), `remote/builderB_QMB5/qmb8/`, `remote/builderB_QMB3/qmb/` | 3ca4977 |
+| remote referee report QM-F5 (E25: builder B's QM-B8 reproduced, 48 CLI logs) | `remote/FRESH_MACHINE_REPORT_QMF5.md` | 3ca4977 |
