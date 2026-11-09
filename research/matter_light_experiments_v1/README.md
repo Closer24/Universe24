@@ -25,6 +25,10 @@ cosmology or quantum behaviour is claimed. `C2` is not a selection law and `Q` i
 | [E07b](E07b_sce_superposition_interference/CARD.md) | superposition and interference candidates in clicks: two exact C0 fronts, dark planes z = 0 and 3 | +++ | THEOREM + SIMULATION | 9 of 9 pass | r10e R10E-56 CONFIRMED (r10f R10F-10) | ~10 s |
 | [E09](E09_einstein1911_clicks/CARD.md) | Einstein-1911 signatures in a prepared light-flux medium: Shapiro +4 per packet met, river, route switch, a received pattern that repeats every 24 instead of 16 (α = 1, γ = 0) | +++ | SIMULATION | 17 of 17 pass | r10f R10F-8 CONFIRMED | ~15 s |
 | [E10](E10_prescribed_schwarzschild_lattice/CARD.md) | prescribed Schwarzschild relay lattice (PRESCRIBED geometry, not sourced gravity) | +++ | THEOREM + SIMULATION | 73 of 73 pass | r10f R10F-7 CONFIRMED | ~0.5 min |
+| [E11](E11_light_clock_dilation/CARD.md) | moving light clocks: the beat of two exact diagonal light waves ticks at Ω = ω′√(1 − u²/c_s²), c_s = 1/√3, an identity of exact linear dispersion (free kinematics in the lattice frame) | +++ | THEOREM + SIMULATION | 10 of 10 pass (3 decoder, 7 beat_clock_v1) | r10g R10G-35 CONFIRMED (R10G-36) | ~10 s |
+| [E12](E12_planar_forces/CARD.md) | contact forces in a planar universe: a decaying seed plane, an EM-like sign rule at + and − walls, confinement between opposite signs, and a clock pulled toward the seed without fall-off over D = 4 and 7 | +++ | SIMULATION | 20 of 20 pass (projection layer) | remote FRESH6-1 CONFIRMED | ~6 min |
+| [E13](E13_exchange_contact_counts/CARD.md) | exchange contact counts on prescribed field lines: a fixed-area probe meets the prepared geometric count (192/r)² of lines, each delaying its probe quantum by 4 (prescribed flux) or 2 (created front) at every r: contact only, no fall-off per probe | +++ | THEOREM + SIMULATION | 19 of 19 pass | r10g R10G-46..50, 78..83 PARTLY (46, 47, 49, 78, 79 CONFIRMED) | ~4 min |
+| [E14](E14_two_beam_interference/CARD.md) | exact two-beam interference of prepared board-filling plane light: zero clicks on dark planes spaced λ/(2 sin θ/2) at 109.47°, 70.53° and 180°, fewer clicks with both beams, and a click-silent update after each b = 0 moment of the standing wave | +++ | THEOREM + SIMULATION | 15 of 15 pass | remote FRESH6-2 CONFIRMED | ~3 min |
 | [E15](E15_cyclic_bangs/CARD.md) | exactly periodic bang candidates: two time-symmetric moments per cycle (periods 48, 164, and 164 with a 720° ring) | (−,+,+) | THEOREM + SIMULATION | 29 of 29 pass (15 decoder, 14 log_symmetry_v1) | remote FRESH4-B1..B4, r10h R10H-29..31 CONFIRMED | ~20 s |
 | [E15b](E15b_planar_cyclic_box/CARD.md) | a cyclic planar box: the seed plane between two + planes re-bangs exactly every 4d + 4 = 16 updates | +++ | THEOREM + SIMULATION | 4 of 4 pass (log_symmetry_v1) | remote FRESH6-1, r10g R10G-74..77 CONFIRMED | ~30 s |
 | [E16](E16_bigbang_backward_v5/CARD.md) | Big Bang candidate v5, built backwards: created light, two created ring clocks (36, 22), one gate decision, a matched α_in = 1 instrument pair and a radar echo, from a 14-cell seed in a prepared network | (−,+,+) | SIMULATION | 20 of 20 pass | r10h R10H-1..8 PARTLY (1, 3, 4, 7 CONFIRMED) | ~2 min |
@@ -36,16 +40,18 @@ E01's twin runs reference the blocks appended to `research/matter_light_blocks_v
 a_A references a published block (`exact_front_111_box`).
 
 Decoder pin: `click_decoder_v1` 1.0, frozen 2026-11-09T01:29:27Z (`research/click_decoder_v1/FROZEN.json`). E15,
-E15b, E17, E18 and E19 also pin the frozen layer log_symmetry_v1 (release 1.0.3). An experiment is **ready** when every
-run replays exactly (initial-state, final-state and log hashes), every declared check passes and the referee's verdict
-is recorded as CONFIRMED or PARTLY (E16: PARTLY, with its caveats on the card).
+E15b, E17, E18 and E19 also pin the frozen layer log_symmetry_v1, and E11 the frozen layer beat_clock_v1 (release
+1.0.3). An experiment is **ready** when every run replays exactly (initial-state, final-state and log hashes),
+every declared check passes and the referee's verdict is recorded as CONFIRMED or PARTLY (E13 and E16: PARTLY,
+with their caveats on the cards).
 
 ## Commands
 
 ```sh
 python -m research.matter_light_experiments_v1.verify E01_local_atom_twins E02_clicktime_chsh E03_exclusive_detection \
     E04_einstein_created E06_moving_clocks E07_sce_collapse_entanglement E07b_sce_superposition_interference \
-    E09_einstein1911_clicks E10_prescribed_schwarzschild_lattice E15_cyclic_bangs E15b_planar_cyclic_box \
+    E09_einstein1911_clicks E10_prescribed_schwarzschild_lattice E11_light_clock_dilation E12_planar_forces \
+    E13_exchange_contact_counts E14_two_beam_interference E15_cyclic_bangs E15b_planar_cyclic_box \
     E16_bigbang_backward_v5 E17_exact_bounce_v6 E18_cyclic_universe_c3c E19_cyclic_universe_c4_variant \
                                                                                 # every one "ready": true
 python -m research.matter_light_experiments_v1.verify --all                     # every experiment folder present
@@ -56,8 +62,8 @@ python -m unittest tests.test_matter_light_experiments_v1                       
 
 `--fast` is a smoke test, not a verification: it replays only the runs marked `fast` and reports every check that
 reads another run as "skipped (runs not selected)", so an experiment with slower runs ends with `"ok": true` and
-`"ready": false`. Only E09, E10 and E15, whose runs are all marked fast, can be ready under `--fast`; E01, E04, E06,
-E15b and E17 have no fast run. `--help` prints the usage, and an unknown flag stops with exit status 2.
+`"ready": false`. Only E09, E10, E11 and E15, whose runs are all marked fast, can be ready under `--fast`; E01,
+E04, E06, E15b and E17 have no fast run. `--help` prints the usage, and an unknown flag stops with exit status 2.
 
 ```python
 from research.matter_light_experiments_v1 import experiment
@@ -191,8 +197,17 @@ in the last column (7aac8c5 is a later snapshot of the same folder).
 | two moments make the history periodic (E15, E18, E19) | `r36/REPORT_WAVE1.md` §1 | 7aac8c5 |
 | the planar box period 4d + 4 (E15b) | `r18b/REPORT_WAVE1.md`, first section | 7aac8c5 |
 | the exact bounce of a JR-fixed s* (E17) | `r27b/REPORT_WAVE3.md`, breakthrough 1 and §1 | 7aac8c5 |
+| exact light on the body diagonals, the discrete d'Alembert law at c_s = 1/√3 [THEOREM, r03 L4; r25] (E11) | `r03/REPORT.md`, finding 2 (u a multiple of 3 on the planes n = x + y + z); `r25/REPORT_WAVE2.md` | 2483837; 9f9cc64 |
+| r25 T8 (c_b = c_s is never exact) and V (no amplitude-scaling vertex) (E11) | `r25/REPORT_WAVE1.md`, T8 and V | 2483837 |
+| r18 T1, T2 (interaction only at a carry), T4 and T7 (E12, E13) | `r18/REPORT_WAVE1.md`, T1, T2 and T4; `r18/NOTES.md`, the 02:57 entry (T7) | 2483837 |
+| guide lemma (r04) (E13) | `r04/NOTES.md`, "Guide lemma" | 2483837 |
+| the contact count (192/r)², by central projection (E13) | `r33/REPORT_WAVE1.md`, finding 1 | 9f9cc64 |
+| r26 T1, T3, T4 and NB (E14) | `r26/REPORT_WAVE1.md`, T1, T3, T4 and NB; NB's scope: R10G-61 | 2483837 |
+| b = 0 on every channel gives S_t+1 = JR(S_t), one empty update (E14) | `r26b/REPORT_WAVE1.md`, first item; referee R10G-87 | 9f9cc64 |
 | referee ids R10E-n | `r10/r10e_REVIEW.md`, "Verdicts (R10E-\*)" | 2483837 |
-| R10F-n; R10G-74..77; R10H-1..8; R10H-29..31 | `r10/REVIEW_R10F.md`; `r10/REVIEW_R10G_W3.md`; `r10/REVIEW_R10H.md`; `r10/REVIEW_R10H_W2.md` | 7aac8c5 |
+| referee ids R10G-35, R10G-36 (E11) | `r10/REVIEW_R10G.md` | 9f9cc64 |
+| R10G-46..61 (E13, E14) | `r10/REVIEW_R10G_W2.md` | 7aac8c5 |
+| R10F-n; R10G-74..88; R10H-1..8; R10H-29..31 | `r10/REVIEW_R10F.md`; `r10/REVIEW_R10G_W3.md`; `r10/REVIEW_R10H.md`; `r10/REVIEW_R10H_W2.md` | 7aac8c5 |
 | R10G-111..120 (E19) | `r10/REVIEW_R10G_W4.md`, §1 | bf2313b |
 | remote referee reports FRESH4, FRESH6 and FRESH8 | `remote/FRESH_MACHINE_REPORT4.md`, `remote/FRESH_MACHINE_REPORT6.md`, `remote/FRESH_MACHINE_REPORT8.md` | 7aac8c5 |
 | remote referee report FRESH11 (E19) | `remote/FRESH_MACHINE_REPORT11.md` | 678258e |
