@@ -36,6 +36,7 @@ assignments. Functional composition requires a new controlled native run.
 | Light-approval hypothesis | [Study record](light_approval/README.md); explicit hypotheses and negative controls, not a physical approval mechanism |
 | Message mechanism | [Study record](message_mechanism/README.md); preparations, interfaces and limits |
 | Algorithm comparisons | [Analogue review](algorithm_analogues/README.md); conceptual comparisons, not imported dynamics |
+| Matter and light building blocks | [Published set](matter_light_blocks_v1/README.md); 338 data-only preparations (light, matter, atoms, spin, charge, clocks, media, seeds), each replayed natively with the exact inverse; candidate names, prepared media, stated limits |
 
 The [current claim addendum](clock_selection/invariant_families_claims.md)
 supplements the [earlier register](clock_selection/claim_register.md); it does
