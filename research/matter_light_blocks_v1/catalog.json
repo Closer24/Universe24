@@ -15812,7 +15812,7 @@
   {
    "name": "planar_glider_100",
    "group": "moving matter",
-   "what": "planar matter-candidate glider (r05): plane x0 = (0,-1,4), plane x0+1 = (-1,0,0) on all sites and all 48 channels; S(t+2) = shift(-x) S(t) at every t (speed 1/2, no wake), first return 2L = 24; every channel clicks C2 at every update",
+   "what": "planar translator (a board-wide sheet, not a localized object) (r05): plane x0 = (0,-1,4), plane x0+1 = (-1,0,0) on all sites and all 48 channels; S(t+2) = shift(-x) S(t) at every t (speed 1/2, no wake), first return 2L = 24; every channel clicks C2 at every update",
    "source": "r05",
    "origin": "research.matter_light_v1.r05 (REPORT_WAVE5): planes (0,-1,4)|(-1,0,0), +++, L=12",
    "status": "THEOREM (planar dipole layer allowed by N4 only for infinite support) + SIMULATION (native Engine, exact inverse every step)",
@@ -16456,7 +16456,7 @@
    "what": "locally created atom candidate (module D1, mixed-class junctions): the seed glider passes a class-2 junction and emits light; the light crosses a class-0 junction and creates a glider pair (t=29); the created glider passes a trapped class-2 junction and a packet stays bound between two silent cores with period 20 = 2d+4 from t_c = 80 while one packet leaves (radiative recombination)",
    "source": "r11",
    "origin": "research/matter_light_v1/r11/preparations/d1_main_L100.json",
-   "status": "SIMULATION (native Engine, exact inverse every update; manager re-check); referee pending",
+   "status": "SIMULATION (native Engine, exact inverse every update); referee CONFIRMED (R10D-2): created light captured in a prepared trap; the cores carry counters at t=0; lifetime set by the board",
    "signs": [
     -1,
     1,
@@ -16644,7 +16644,7 @@
    "what": "the same module D1 on the periodic 2L extension (every line and both cores tiled, one seed): same birth",
    "source": "r11",
    "origin": "research/matter_light_v1/r11/preparations/d1_main_L200.json",
-   "status": "SIMULATION (native Engine, exact inverse every update; manager re-check); referee pending",
+   "status": "SIMULATION (native Engine, exact inverse every update); referee CONFIRMED (R10D-2): identical to the L=100 board through t=141",
    "signs": [
     -1,
     1,
@@ -16832,7 +16832,7 @@
    "what": "control: module D1 without the seed glider: no click at all; the silent cores tick as dark period-4 clocks",
    "source": "r11",
    "origin": "research/matter_light_v1/r11/preparations/d1_control_no_seed_L100.json",
-   "status": "SIMULATION (native Engine, exact inverse every update; manager re-check); referee pending",
+   "status": "SIMULATION (native Engine, exact inverse every update); control behaves as declared (R10D-2)",
    "signs": [
     -1,
     1,
@@ -16874,7 +16874,7 @@
    "what": "one seed in a sparse prepared network creates light, a glider pair, an atom candidate (period 20) and a spinor-class light ring (r04's module on the created pair's -y member: the ring equals its 360-degree image after each 18-update lap, 7 laps checked), while 4 dark clocks on the atom's light line record the emitted packet without disturbing it",
    "source": "r11",
    "origin": "research/matter_light_v1/r11/preparations/d1_v3_skeleton_L160.json",
-   "status": "SIMULATION (native Engine, exact inverse every update; manager re-check); referee pending",
+   "status": "SIMULATION (native Engine, exact inverse every update); components CONFIRMED by the referee (R10D-2 atom, R10D-4 spin ring)",
    "signs": [
     -1,
     1,
@@ -17141,7 +17141,7 @@
    "what": "created spin: a 14-site light ring with channel holonomy z joined to a matter line by one partner junction, fed by the first glider that r06's pure4pairs cascade creates; the ring equals its 360-degree image after 18 updates and returns after 36 (720 degrees); the junction emits a glider pair every 720 degrees",
    "source": "r04",
    "origin": "research/matter_light_v1/r04/preparations/wave6_pure4pairs_spin_module.json",
-   "status": "SIMULATION (native Engine, exact inverse every update; manager re-check); referee pending",
+   "status": "SIMULATION (native Engine, exact inverse every update); referee CONFIRMED (R10D-4) on side 80 and 160; ring prepared, junction placement chosen post hoc",
    "signs": [
     -1,
     1,
@@ -17264,7 +17264,7 @@
    "what": "two atom clocks created after t=0 (A at t=62, B at t=122; prepared traps holding packets the seed emitted) joined by a light link: A's formation packet passes A's station at t1=66, is reflected at B at t_B=145 and is back at t2=224, so t_B = (t1+t2)/2 exactly (Einstein synchronisation with created instruments; station passages are read by r08's script)",
    "source": "r08",
    "origin": "research/matter_light_v1/r08/preparations/w8_einstein_module_d20_xm32_L240.json",
-   "status": "SIMULATION (native Engine, exact inverse every update; manager re-check); referee pending",
+   "status": "SIMULATION (native Engine, exact inverse every update); referee CONFIRMED (R10D-5) for the event times t1=66, t_B=145, t2=224 on L=240 and 480; tau = Delta_true follows from the declared dial rule itself",
    "signs": [
     -1,
     1,

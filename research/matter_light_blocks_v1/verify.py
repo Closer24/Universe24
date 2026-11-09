@@ -15,7 +15,8 @@ For every catalog entry it:
 Researcher-specific checks ("custom" in the catalog) were run by the source
 library when the package was built; they are listed, not re-run here.
 Local "box" checks are re-run: a declared set of sites is exactly P-periodic on
-a time window (an atom candidate in its trap), or equals its 360-degree image
+a time window with minimal period P (an atom candidate in its trap, not an empty trap
+whose cores tick with a divisor of P), or equals its 360-degree image
 C (every channel g -> z*g, z = 14) after each lap and itself after two laps
 (a spinor-class ring).
 
@@ -131,6 +132,10 @@ def check_boxes(entry: dict, measured: dict) -> list[str]:
                 fails.append(f"{b['label']}: box not {P}-periodic on [{t0},{t1}]")
             if P > 1 and all(series[i] == series[i + 1] for i in range(len(series) - 1)):
                 fails.append(f"{b['label']}: box is static, not a clock")
+            for q in range(1, P):
+                if P % q == 0 and all(series[i] == series[i + q] for i in range(len(series) - q)):
+                    fails.append(f"{b['label']}: box already {q}-periodic, so {P} is not its minimal period")
+                    break
         elif b["type"] == "c_image":
             t0, T, k = b["t0"], b["lap"], b["laps"]
             base = _restrict(boxes[t0], sites)

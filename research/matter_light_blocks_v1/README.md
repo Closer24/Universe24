@@ -36,7 +36,7 @@ print(entry["what"], entry["signature"], entry["limits"])
 |---|---:|---|
 | light | 26 | `fiber_x_packet` (light candidate on a gauged fibre, click-front speed 1 site/update), `exact_front_111_box` (exact (111) front, C0 clicks only), `diag_sheet` |
 | matter at rest | 31 | exact confined families, `B10_breather`, `B14_breather`, robust X12, lamps |
-| moving matter | 20 | guided gliders at speeds 1/3 … 1, `planar_glider_100` (exact planar glider at speed 1/2 in the quiet vacuum), crystal SLOW movers |
+| moving matter | 20 | guided gliders at speeds 1/3 … 1, `planar_glider_100` (exact planar translator at speed 1/2 in the quiet vacuum: a board-wide sheet, not a localized object), crystal SLOW movers |
 | atoms | 74 | `atom_trap_d6`, `atom_trap_d10` (a light packet between two dark cores, level 2d+4) with controls, period-shifted pairs, `d1_local_atom_L100` |
 | spin | 13 | `spinor_screw`, `spin720_ring`, `spinor_ring_r09` (360° image after one lap, return after 720°), `spin_module_pure4pairs_L80` |
 | charge | 44 | sign rules at contact, static charges, charge bookkeeping of Big-Bang seeds |
