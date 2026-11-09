@@ -85,7 +85,7 @@ was also checked against the program's own code:
   kind, registration new / update-of / republication-of, generator, coupling, evidence status, parts,
   lineage), the experiments and their cards (`experiment_cards`), the read-only `observers`, the
   `aliases`, the registrar's decisions on proposed cards, the verified points (init files regenerated
-  exactly, recipes and builder equalities, with SHA-256 prefixes; 454 after WAVE 6, all exact), and the
+  exactly, recipes and builder equalities, with SHA-256 prefixes; 476 after WAVE 7, all exact), and the
   role of each of the 346 published names (the 338 of 8301320 and the 8 appended in dff39dc: canonical,
   variant, control, alias, J-image, experiment instance).
 * [`data/cards.json`](data/cards.json): one card per block. Card format: (a) use = purpose, interface, timing,
@@ -93,10 +93,10 @@ was also checked against the program's own code:
   From WAVE 6 a block's card text is kept here only (its `registry.json` entry carries no second copy).
 
 Both files are compact JSON. Paths and modules under `research/matter_light_v1/` that the registry's code or data
-name are files of the program's working folder, archived uncurated on branch `backup/matter-light-working` at
-commit 2483837, except five WAVE 5 source files (`r27b/cards_r27b.json` and the four
-`r27b/preparations/bb27v4_ringclock_*` files), which are first archived at commit 9f9cc64, and the WAVE 6 sources
-at commit 39ca35f. Nothing there is needed to regenerate or verify a block or a composition; `runs/` paths are local.
+name are files of the program's working folder, archived uncurated on branch `backup/matter-light-working` at commit
+2483837, except five WAVE 5 source files (`r27b/cards_r27b.json` and the four `r27b/preparations/bb27v4_ringclock_*`
+files), which are first archived at commit 9f9cc64, the WAVE 6 sources at commit 39ca35f and the WAVE 7 sources at
+commit 7aac8c5. Nothing there is needed to regenerate or verify a block or a composition; `runs/` paths are local.
 
 `compositions.py` also holds the WAVE 2 compositions: the published guide instances
 (`published_guide_specs`), r08's W9 devices, r03's Q1c selector, r12's approval router, r13's beam-splitter
@@ -148,6 +148,17 @@ whose halo-core registers are `slot_clock@1` cores at an orbit phase (`CORE_ORBI
 share sit at r = 2, the vacuum value, so they are gap nodes). Existing generators are unchanged.
 `tests/test_matter_light_blocks_registry_wave6.py` checks these builders against recorded initial-state hashes,
 the seeds' JR symmetry, both C3a recipes natively and the bundle generator against the explicit guide form.
+
+WAVE 7 added the atoms inside the cycles and the bounces, every seed as ONE composition of existing generators (no
+generator changed): r36b's C3c (`cyclic_universe_c3c_spec`: C3b plus `atom.twin_cavity_module@1`,
+`twin_cavity_atoms_placements` / `twin_cavity_atoms_spec` with its controls `no_escorts` and `right_inarm_plus1`;
+the escort sources are `seed.cyclic_point@2` patches, `ESCORT_WALL_MINUS_Y`), r36's C3a without a recipe
+(`cyclic_spin_moment_spec`: the ring's moment patch `C3A_RING_MOMENT`), r27c's twin-atom module
+`atom.twin_xcavity@1` (`MOD82`, `twin_xcavity_module_placements`, `twin_xcavity_module_spec`), U82 = C3a + MOD82
+(`cyclic_spin_atoms_spec`) and the exact bounce with atoms s\*_c (`bigbang_bounce_atoms_spec`, controls
+`no_escorts` and `up_escort_late`), and r26b's half-integer bang (`half_integer_bang_spec`, design PG: b = 0 on every
+channel). `tests/test_matter_light_blocks_registry_wave7.py` checks them against recorded initial-state hashes, the
+seeds' JR symmetry and the moment patches natively.
 
 ## Limits
 

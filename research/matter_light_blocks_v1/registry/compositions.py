@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from fractions import Fraction
 from itertools import product
+import json
 import math
 
 from universe24 import Coupling
@@ -2568,3 +2569,335 @@ def r36b_part_spec(part, L=256, D=60, back=True, at=None):
                                  tap=tap)]
     return {"format": FORMAT, "id": f"r36b_{part}" + (f"_D{D}" if part == "lamp" else ""), "board": _board(L, MPP),
             "placements": pl}
+
+
+# ===================================================================== WAVE 7 (r21c)
+# ---------------------------------------------------------------------------- r36b C3c: twin cavity atoms in the cycle
+#: atom.twin_cavity_module@1 (r36b W2): module origin O = the atoms' bang node on a (-,+,+) data line along x (label 1;
+#: r = 0 at even x - O), door offset d, cavity length ell (exit gaps at +-(d + ell)), escort in-arm / out-arm lengths
+#: (left, right), all relative to O.
+R36B_ATOMS = {"O": (130, 80, 60), "d": 19, "ell": 8, "p_in": (19, 19), "p_out": (137, 137)}
+#: the escort's moment patch (seed.cyclic_point@2 data): r36b's (1,-1) packet on the in-arm 15 updates after t = 0 of
+#: its own composition, at its reflection midpoint at the in-arm's bare end E; cells [dx, dy, dz, g, a, b, r] relative
+#: to E, keyed by the in-arm's channel at E (the straight -y path from the door cycles through 8 channels; E's channel
+#: is 40 for r36b's 19-node in-arms and 23 for K6's 20-node arm).  The patch writes E (the counter) and E's arm
+#: neighbour (back at the vacuum), so the dark in-arm stops two nodes short of E.
+ESCORT_WALL_MINUS_Y = {
+    40: [[-1, 0, 0, 46, 0, 0, 0], [0, -1, 0, 23, 0, 0, 0], [0, 0, -1, 40, 0, 0, 4], [0, 0, 0, 40, -1, 1, 4],
+         [0, 0, 1, 40, 0, 0, 4], [0, 1, 0, 12, 0, 0, 2], [1, 0, 0, 30, 0, 0, 0]],
+    23: [[-1, 0, 0, 23, 0, 0, 4], [0, -1, 0, 5, 0, 0, 0], [0, 0, -1, 19, 0, 0, 0], [0, 0, 0, 23, -1, 1, 4],
+         [0, 0, 1, 34, 0, 0, 0], [0, 1, 0, 40, 0, 0, 2], [1, 0, 0, 23, 0, 0, 4]]}
+
+
+def _atoms_sigma(x):
+    """The data line's gauge sign at x - O: -1 (r = 0, class 0) at even x, +1 (r = 4) at odd x."""
+    return -1 if x % 2 == 0 else 1
+
+
+def _atoms_piece(name, x0, x1, O, sockets=()):
+    return {"name": name, "block": "light_line_s@1",
+            "params": {"length": x1 - x0 + 1, "gauge_phase": x0 % 2, "sockets": list(sockets)},
+            "at": [O[0] + x0, O[1], O[2]], "wrap": False}
+
+
+def _atoms_arm(name, door, ydir, n, O, signs=MPP):
+    """guide_net@1 path of n nodes leaving the door node (door, 0, 0) along ydir (2 = +y, 3 = -y), the door node left
+    out and the data line's gauge continued (r36b atoms.arm)."""
+    c = Coupling(tuple(signs))
+    step = 1 if ydir == 2 else -1
+    return {"name": name, "block": "guide_net@1",
+            "params": {"paths": [{"name": "A", "start": [0, 0, 0], "g0": c.ports[ydir][1],
+                                  "sigma0": _atoms_sigma(door) * c.weights[ydir][1], "dirs": [[ydir, n - 1]]}]},
+            "at": [O[0] + door, O[1] + step, O[2]], "wrap": True}
+
+
+def _arm_end_channel(arm, signs=MPP):
+    """The channel of an _atoms_arm path's last node."""
+    p = arm["params"]["paths"][0]
+    return G.channel_path(Coupling(tuple(signs)), (0, 0, 0), p["g0"], G.expand_dirs(p["dirs"]), None,
+                          sigma0=p["sigma0"])[-1][1]
+
+
+def twin_cavity_atoms_placements(O=None, d=None, ell=None, p_in=None, p_out=None, escorts=(True, True), data=True,
+                                 prefix="atoms_"):
+    """atom.twin_cavity_module@1 (r36b W2, after r27c): placements of the twin X-gate cavity atoms at their common
+    symmetric moment (integer, JR-fixed), all zero-counter hardware plus three seed.cyclic_point@2 moment patches.
+    * data line along x, cut into light_line_s@1 pieces with vacuum gaps: the antechamber [-d+1, d-1] holding the bang
+      pair at its head-on moment at O (seed.cyclic_point@1 'head_on'), doors at +-d, cavities [d+1, d+ell-1] and
+      [-d-ell+1, -d-1] (their bare ends at +-(d + ell) are the exit gaps);
+    * per door one escort line along y (the door node left out, gauge continued): an out-arm of p_out nodes along +y
+      and an in-arm of p_in nodes along -y whose source, a (1,-1) packet at its reflection midpoint at the bare end E,
+      is the escort moment patch (ESCORT_WALL_MINUS_Y).
+    ``escorts`` (left, right) False: that in-arm dark at full length (r36b K5); ``data`` False: no bang pair."""
+    A = R36B_ATOMS
+    O = tuple(A["O"] if O is None else O)
+    d, ell = A["d"] if d is None else d, A["ell"] if ell is None else ell
+    p_in, p_out = tuple(A["p_in"] if p_in is None else p_in), tuple(A["p_out"] if p_out is None else p_out)
+    socks = [d - 1 + n for n in _socket_nodes(CYCLIC_POINT["head_on"])] if data else []
+    pl = [_atoms_piece(prefix + "ante", -d + 1, d - 1, O, socks)]
+    if data:
+        pl.append(cyclic_point_placement("head_on", O, name=prefix + "bang"))
+    pl += [_atoms_piece(prefix + "cavR", d + 1, d + ell - 1, O), _atoms_piece(prefix + "cavL", -d - ell + 1, -d - 1, O)]
+    for side, door, k in (("L", -d, 0), ("R", d, 1)):
+        pl.append(_atoms_arm(f"{prefix}out{side}", door, 2, p_out[k], O))
+        if escorts[k]:
+            g_E = _arm_end_channel(_atoms_arm("E", door, 3, p_in[k], O))
+            if g_E not in ESCORT_WALL_MINUS_Y:
+                raise ValueError(f"no registered escort moment patch for an in-arm ending on channel {g_E}")
+            pl.append(_atoms_arm(f"{prefix}in{side}", door, 3, p_in[k] - 2, O))
+            E = (O[0] + door, O[1] - p_in[k], O[2])
+            pl.append({"name": f"{prefix}escort{side}", "block": "literal_patch@1",
+                       "params": {"kind": "fibre-packet", "cells": [list(c) for c in ESCORT_WALL_MINUS_Y[g_E]]},
+                       "at": list(E), "wrap": True})
+        else:
+            pl.append(_atoms_arm(f"{prefix}in{side}", door, 3, p_in[k], O))
+    return pl
+
+
+def twin_cavity_atoms_spec(L=256, steps=960):
+    """atom.twin_cavity_module@1 alone (r36b's AT universe): period 320, moments 160Z.  Controls (r36b W2): K5
+    'no_escorts' (both in-arms dark at full length, no escort sources) and K6 'right_inarm_plus1' (the right in-arm one
+    node longer, its escort source one node further)."""
+    A = R36B_ATOMS
+    pl = twin_cavity_atoms_placements()
+    k5 = {p["name"]: p["params"] for p in twin_cavity_atoms_placements(escorts=(False, False))}
+    k6 = {p["name"]: p for p in twin_cavity_atoms_placements(p_in=(A["p_in"][0], A["p_in"][1] + 1))}
+    controls = [{"name": "no_escorts", "remove": ["atoms_escortL", "atoms_escortR"],
+                 "override": {"atoms_inL": k5["atoms_inL"], "atoms_inR": k5["atoms_inR"]}}]
+    shift = [k6["atoms_escortR"]["at"][i] - next(p for p in pl if p["name"] == "atoms_escortR")["at"][i]
+             for i in range(3)]
+    controls.append({"name": "right_inarm_plus1", "override": {
+        "atoms_inR": k6["atoms_inR"]["params"],
+        "atoms_escortR": {"cells": [[c[0] + shift[0], c[1] + shift[1], c[2] + shift[2], *c[3:]]
+                                    for c in k6["atoms_escortR"]["params"]["cells"]]}}})
+    return {"format": FORMAT, "id": f"twin_cavity_atoms_L{L}", "board": _board(L, MPP), "placements": pl,
+            "timing": {"t0": "integer moment (JR S = S)", "declared": {
+                "period": 320, "moments": "160Z", "doors_open": 21, "stored_moments": "30 + 10k", "release": 298,
+                "sub_part_moments": {"data": 11, "escorts": 15}}},
+            "controls": controls, "steps": steps}
+
+
+def cyclic_universe_c3c_spec(L=256, steps=960):
+    """exp.cyclic_universe_c3c@1 (r36b C3c, refereed in FRESH 8): C3b (cyclic_gravity_spec 'c3b': C2' + spin box loop +
+    lamp, clock and free light) plus atom.twin_cavity_module@1 at R36B_ATOMS, as ONE composition: the dark parts plus one
+    moment patch per part (8 counter cells, each a = -b).  Period 320, moments 160Z; registered generators of HEAD
+    only (light_line_s@1, matter_line@1, guide_net@1, literal_patch@1)."""
+    base = cyclic_gravity_spec(L, "c3b")
+    return {"format": FORMAT, "id": f"c3c_seed_L{L}", "board": base["board"],
+            "placements": base["placements"] + twin_cavity_atoms_placements(),
+            "timing": {"t0": "integer moment (JR S = S)", "declared": {
+                "period": 320, "moments": "160Z", "parts_t_m": {**base["timing"]["declared"]["parts_t_m"],
+                                                                "atoms_data": 11, "atoms_escorts": 15}}},
+            "steps": steps}
+
+
+# ---------------------------------------------------------------------------- C3a as ONE composition (no recipe)
+#: spin.holonomy_ring@2's moment patch (seed.cyclic_point@2 data): the counter pair meeting head-on at O, 11 updates
+#: after r36's incoming form (leads 12, 127); cells [dx, dy, dz, g, a, b, r] relative to O (C3A_RING_AT + (3, 17, 0))
+C3A_RING_MOMENT = {"O": (103, 117, 60), "cells": [
+    [-1, 0, 0, 3, 0, 0, 4], [0, -1, 0, 8, 0, 0, 2], [0, 0, -1, 44, 0, 0, 0], [0, 0, 0, 3, -1, 1, 4],
+    [0, 0, 1, 29, 0, 0, 0], [0, 1, 0, 11, 0, 0, 2], [1, 0, 0, 3, 0, 0, 4]]}
+
+
+def _patch_gaps(O, cells, at):
+    """The cells of a moment patch that sit on guide nodes (the counter, or a node back at the vacuum), relative to
+    the guide placement's ``at``, as channel addresses for gapped_guide_placement."""
+    return [[O[0] + c[0] - at[0], O[1] + c[1] - at[1], O[2] + c[2] - at[2], c[3]] for c in cells
+            if c[6] == 2 or (c[4], c[5]) != (0, 0)]
+
+
+def cyclic_spin_moment_spec(L=256, steps=656):
+    """exp.cyclic_spin@1 (r36 C3a) as ONE composition at the bang, with no recipe: C2's seed (cyclic_matter_spec) plus
+    the dark two-lap holonomy-z ring with the meeting node's guide cells left open and the ring's moment patch
+    (C3A_RING_MOMENT).  The same state as cyclic_spin_spec's recipes (r36's c3_seed)."""
+    base = cyclic_matter_spec(L)
+    ring = holonomy_ring_counterpair_placement("R", C3A_RING_AT, C3A_LEADS["incoming"])
+    path = dict(ring["params"]["paths"][0], start=[0, 0, 0])
+    m = C3A_RING_MOMENT
+    pl = base["placements"] + [
+        {**gapped_guide_placement("R", C3A_RING_AT, [path], _patch_gaps(m["O"], m["cells"], C3A_RING_AT), (), MPP),
+         "wrap": True},
+        {"name": "moment_R", "block": "literal_patch@1", "params": {"kind": "fibre-packet", "cells": m["cells"]},
+         "at": list(m["O"]), "wrap": True}]
+    return {"format": FORMAT, "id": f"cyclic_spin_moment_L{L}", "board": base["board"], "placements": pl,
+            "assertions": base["assertions"],
+            "timing": {"t0": "integer moment (JR S = S)", "declared": {"period": 164, "moments": "82Z",
+                                                                        "ring": "X(t + 82) = C X(t)"}},
+            "steps": steps}
+
+
+# ---------------------------------------------------------------------------- r27c: MOD82, U82 = C3a + MOD82, s*_c
+#: atom.twin_xcavity@1 (r27c MOD82, T = 82), relative to the module origin O (the data line's bang node): the data line
+#: (81 nodes from x = -40 at y = 0, z = 4, gauge phase 1, sockets at the exits +-29, doors +-21 and the head-on nodes
+#: -1, 0, 1), the two private escort lines (in-arm: door -> 4 nodes along y -> 17 nodes along x, ending two nodes short
+#: of its bare end; out-arm: 3 nodes along y -> 54 along +z) and ONE literal patch: every cell where the module's
+#: moment differs from that dark hardware (the door and exit gaps, the bang pair's head-on moment and the two escort
+#: sources at their reflection midpoints; r27c package.py), signed coordinates.
+MOD82 = {
+    "line": {"at": [-40, 0, 4], "length": 81, "gauge_phase": 1, "sockets": [11, 19, 39, 40, 41, 61, 69]},
+    "escorts": {
+        "up": [{"name": "inarm", "start": [21, -1, 4], "g0": 35, "sigma0": -1, "dirs": [[3, 3], [1, 15]]},
+               {"name": "outarm", "start": [21, 1, 4], "g0": 22, "sigma0": -1, "dirs": [[2, 2], [4, 54]]}],
+        "lo": [{"name": "inarm", "start": [-21, 1, 4], "g0": 22, "sigma0": -1, "dirs": [[2, 3], [0, 15]]},
+               {"name": "outarm", "start": [-21, -1, 4], "g0": 35, "sigma0": -1, "dirs": [[3, 2], [4, 54]]}]},
+    "patch": [[-29, 0, 4, 1, 0, 0, 2], [-21, 0, 4, 1, 0, 0, 2], [-4, 3, 4, 5, 0, 0, 0], [-4, 4, 3, 19, 0, 0, 0],
+              [-4, 4, 4, 23, -1, 1, 4], [-4, 4, 5, 34, 0, 0, 0], [-4, 5, 4, 40, 0, 0, 0], [-3, 4, 4, 23, 0, 0, 4],
+              [-1, 0, 4, 1, 0, 0, 2], [0, -1, 4, 35, 0, 0, 0], [0, 0, 3, 41, 0, 0, 0], [0, 0, 4, 1, -1, 1, 4],
+              [0, 0, 5, 4, 0, 0, 0], [0, 1, 4, 22, 0, 0, 0], [1, 0, 4, 1, 0, 0, 2], [3, -4, 4, 23, 0, 0, 4],
+              [4, -5, 4, 5, 0, 0, 0], [4, -4, 3, 19, 0, 0, 0], [4, -4, 4, 23, -1, 1, 4], [4, -4, 5, 34, 0, 0, 0],
+              [4, -3, 4, 40, 0, 0, 0], [21, 0, 4, 1, 0, 0, 2], [29, 0, 4, 1, 0, 0, 2]]}
+U82_OFFSET = (185, 200, 120)          # r27c union_c3a.OFFSET: the module's origin on C3a's board
+
+
+def _mod(v, L):
+    return [int(x) % L for x in v]
+
+
+def twin_xcavity_module_placements(L, O=(0, 0, 0), prefix=""):
+    """atom.twin_xcavity@1 (r27c MOD82) placements with the module origin at O (every placement wraps)."""
+    ln, at = MOD82["line"], [O[i] + MOD82["line"]["at"][i] for i in range(3)]
+    pl = [{"name": prefix + "S", "block": "light_line_s@1",
+           "params": {"length": ln["length"], "gauge_phase": ln["gauge_phase"], "sockets": list(ln["sockets"])},
+           "at": _mod(at, L), "wrap": True}]
+    for side in ("up", "lo"):
+        pl.append({"name": f"{prefix}escort_{side}", "block": "guide_net@1", "wrap": True, "at": _mod(O, L),
+                   "params": {"paths": [dict(p) for p in MOD82["escorts"][side]]}})
+    pl.append({"name": prefix + "module_patch", "block": "literal_patch@1",
+               "params": {"kind": "fibre-packet", "cells": sorted([*_mod(c[:3], L), *c[3:]] for c in MOD82["patch"])},
+               "at": _mod(O, L), "wrap": True})
+    return pl
+
+
+def twin_xcavity_module_spec(L=256, steps=656):
+    """atom.twin_xcavity@1 alone (r27c MOD82): integer moments exactly 82Z, period 164; meshing rule [SIMULATION]
+    10 | (T - t_door), P_in = t_door - 1, P_out = T - t_door - 3.  Equals r27c's module_T82_L{128,256}.json."""
+    return {"format": FORMAT, "id": f"r27c_module_T82_L{L}", "board": _board(L, MPP),
+            "placements": twin_xcavity_module_placements(L), "steps": steps,
+            "timing": {"t0": "integer JR moment (seed)", "moments": "82Z", "period": 164}}
+
+
+def cyclic_spin_atoms_spec(L=256, steps=656):
+    """exp.cyclic_spin_atoms@1 (r27c U82 = C3a + MOD82): C3a as one composition (cyclic_spin_moment_spec) plus the
+    twin-atom module at U82_OFFSET (disjoint supports); period 164, moments 82Z; its click record is the disjoint union
+    of the parts' records [SIMULATION, r27c]."""
+    base = cyclic_spin_moment_spec(L)
+    jc = dict(base["assertions"]["junction_classes"])
+    jc[f"{U82_OFFSET[0] % L},{U82_OFFSET[1] % L}"] = 2      # the module's bang node: its label-41 halo remainder (r = 0)
+    #                                                          beside the data line (class 2), not a matter junction
+    return {"format": FORMAT, "id": f"union_c3a_mod82_L{L}", "board": base["board"],
+            "placements": base["placements"] + twin_xcavity_module_placements(L, U82_OFFSET, "mod82_"),
+            "assertions": {**base["assertions"], "junction_classes": jc},
+            "timing": {"t0": "integer moment (JR S = S)", "declared": {"period": 164, "moments": "82Z"}},
+            "steps": steps}
+
+
+#: exp.bigbang_bounce_atoms@1 (r27c s*_c, design 45/51): r27b's s* plus zero-counter hardware -- cavities [+-51, +-59]
+#: and shield doors +-45 as gap nodes (sockets) of B0, four private escort lines (in-arms ending two nodes short of their
+#: bare ends, out-arms of 300 nodes along +z) -- and ONE literal patch of 30 cells (the gaps and the four escort
+#: sources at their reflection midpoints), signed coordinates relative to the bang site.  K2: the cav_up escort's bare
+#: end one node further (x = 3), its source cells replaced.
+BOUNCE_ATOMS = {
+    "gaps": [-59, -51, -45, 45, 51, 59],
+    "escorts": {
+        "shield_up": [{"name": "inarm", "start": [45, -1, 4], "g0": 35, "sigma0": -1, "dirs": [[3, 7], [1, 39]]},
+                      {"name": "outarm", "start": [45, 1, 4], "g0": 22, "sigma0": -1, "dirs": [[2, 2], [4, 300]]}],
+        "cav_up": [{"name": "inarm", "start": [51, 1, 4], "g0": 22, "sigma0": -1, "dirs": [[2, 7], [1, 45]]},
+                   {"name": "outarm", "start": [51, -1, 4], "g0": 35, "sigma0": -1, "dirs": [[3, 2], [4, 300]]}],
+        "shield_lo": [{"name": "inarm", "start": [-45, 1, 4], "g0": 22, "sigma0": -1, "dirs": [[2, 8], [0, 38]]},
+                      {"name": "outarm", "start": [-45, -1, 4], "g0": 35, "sigma0": -1, "dirs": [[3, 2], [4, 300]]}],
+        "cav_lo": [{"name": "inarm", "start": [-51, -1, 4], "g0": 35, "sigma0": -1, "dirs": [[3, 7], [0, 45]]},
+                   {"name": "outarm", "start": [-51, 1, 4], "g0": 22, "sigma0": -1, "dirs": [[2, 2], [4, 300]]}]},
+    "patch": [[-59, 0, 4, 1, 0, 0, 2], [-51, 0, 4, 1, 0, 0, 2], [-45, 0, 4, 1, 0, 0, 2], [-5, 8, 4, 1, 0, 0, 4],
+              [-5, 9, 3, 22, 0, 0, 0], [-5, 9, 4, 22, 1, -1, 0], [-5, 9, 5, 22, 0, 0, 0], [-5, 10, 4, 26, 0, 0, 4],
+              [-4, -9, 4, 35, 0, 0, 0], [-4, -8, 3, 41, 0, 0, 0], [-4, -8, 4, 1, -1, 1, 4], [-4, -8, 5, 4, 0, 0, 0],
+              [-4, -7, 4, 22, 0, 0, 0], [-4, 9, 4, 29, 0, 0, 4], [-3, -8, 4, 1, 0, 0, 4], [3, -8, 4, 1, 0, 0, 4],
+              [3, 8, 4, 1, 0, 0, 4], [4, -9, 4, 35, 0, 0, 0], [4, -8, 3, 41, 0, 0, 0], [4, -8, 4, 1, -1, 1, 4],
+              [4, -8, 5, 4, 0, 0, 0], [4, -7, 4, 22, 0, 0, 0], [4, 7, 4, 35, 0, 0, 0], [4, 8, 3, 41, 0, 0, 0],
+              [4, 8, 4, 1, -1, 1, 4], [4, 8, 5, 4, 0, 0, 0], [4, 9, 4, 22, 0, 0, 0], [45, 0, 4, 1, 0, 0, 2],
+              [51, 0, 4, 1, 0, 0, 2], [59, 0, 4, 1, 0, 0, 2]],
+    # K2 (r27c bb27c K2_up_escort_late): the cav_up in-arm one node longer; its source moves from x = 4 to x = 3
+    "k2_drop": [[3, 8, 4, 1, 0, 0, 4], [4, 7, 4, 35, 0, 0, 0], [4, 8, 3, 41, 0, 0, 0], [4, 8, 4, 1, -1, 1, 4],
+                [4, 8, 5, 4, 0, 0, 0], [4, 9, 4, 22, 0, 0, 0]],
+    "k2_add": [[2, 8, 4, 1, 0, 0, 0], [3, 7, 4, 35, 0, 0, 4], [3, 8, 3, 41, 0, 0, 4], [3, 8, 4, 1, 1, -1, 0],
+               [3, 8, 5, 4, 0, 0, 4], [3, 9, 4, 22, 0, 0, 4]]}
+
+
+def _full_inarm(paths, extra=2):
+    out = [dict(p) for p in paths]
+    out[0] = dict(out[0], dirs=[list(d) for d in out[0]["dirs"]])
+    out[0]["dirs"][-1][1] += extra
+    return out
+
+
+def bigbang_bounce_atoms_spec(L=640):
+    """exp.bigbang_bounce_atoms@1 (r27c s*_c): bigbang_bounce_v6_spec(L) with the gap sockets on B0, the four escort
+    lines and the BOUNCE_ATOMS literal; JR(s*_c) = s*_c on the whole board.  Runs: forward from s*_c; the bounce =
+    rewind 240, then 480 updates.  Controls (r27c's): 'no_escorts' (K1: the escort lines at rest at full length, no
+    sources) and 'up_escort_late' (K2: the cav_up escort's bare end one node further, so it arrives 1 update late)."""
+    base = bigbang_bounce_v6_spec(L)
+    pl = json.loads(json.dumps(base["placements"]))
+    for q in pl:
+        if q["name"] == "B0":
+            q["params"]["sockets"] = sorted(set(q["params"]["sockets"]) | {x % L for x in BOUNCE_ATOMS["gaps"]})
+    for name, paths in BOUNCE_ATOMS["escorts"].items():
+        pl.append({"name": f"escort_{name}", "block": "guide_net@1", "wrap": True, "at": [0, 0, 0],
+                   "params": {"paths": [dict(p) for p in paths]}})
+    cells = sorted([*_mod(c[:3], L), *c[3:]] for c in BOUNCE_ATOMS["patch"])
+    pl.append({"name": "cavity_atoms_patch", "block": "literal_patch@1", "params": {"kind": "fibre-packet",
+                                                                                    "cells": cells},
+               "at": [0, 0, 0], "wrap": True})
+    gaps = [c for c in cells if c[6] == 2 and (c[4], c[5]) == (0, 0) and c[1] == 0 and c[3] == 1]
+    controls = [{"name": "no_escorts", "override": {
+        **{f"escort_{n}": {"paths": _full_inarm(p)} for n, p in BOUNCE_ATOMS["escorts"].items()},
+        "cavity_atoms_patch": {"cells": gaps}}}]
+    k2 = [c for c in BOUNCE_ATOMS["patch"] if c not in BOUNCE_ATOMS["k2_drop"]] + BOUNCE_ATOMS["k2_add"]
+    controls.append({"name": "up_escort_late", "override": {
+        "escort_cav_up": {"paths": _full_inarm(BOUNCE_ATOMS["escorts"]["cav_up"], 1)},
+        "cavity_atoms_patch": {"cells": sorted([*_mod(c[:3], L), *c[3:]] for c in k2)}}})
+    return {"format": FORMAT, "id": f"bb27c_sstar_c_L{L}", "board": base["board"], "placements": pl, "steps": 240,
+            "timing": {"t0": "the symmetric moment (JR s*_c = s*_c)",
+                       "bounce_log": "exact rewind 240 then 480 updates (bounce at 240)"},
+            "controls": controls}
+
+
+# ---------------------------------------------------------------------------- r26b: the half-integer bang (design PG)
+#: exp.half_integer_bang@1 (r26b HB, design PG): r27b's zero-counter hardware with the D1 trap cores and both analysers
+#: kept (slot_clock@1), the all-48 gates replaced by all-48 rotors (all48_site@1; a gate clock can never have b = 0),
+#: and ONE 12-cell literal at the bang site: the colliding packets half an update before they meet at O (b = 0 on every
+#: channel, F(S*) = JR(S*)).  Signed coordinates relative to the bang site; x positions of the cores on B+-12.
+HALF_BANG_PG = {
+    "cores": {"core1": 58, "core2": 66}, "core_state": [-1, 0, 0], "analysers": {"detA": 18, "detB": -20},
+    "analyser_state": [1, 0, 4], "rotor_gates": {"gateUp": [-1, 0, 0], "gateLo": [1, 0, 0]},
+    "A0_sockets": [0], "B0_sockets": [-1, 0, 1, 2],
+    "patch": [[-1, 0, 4, 1, 1, 0, 4], [0, -1, 4, 35, 0, 0, 4], [0, 0, 3, 41, 0, 0, 2], [0, 0, 4, 1, 1, 0, 0],
+              [0, 0, 5, 4, 0, 0, 4], [0, 1, 4, 22, 0, 0, 4], [1, -1, 4, 35, 0, 0, 0], [1, 0, 3, 41, 0, 0, 0],
+              [1, 0, 4, 1, -1, 0, 4], [1, 0, 5, 4, 0, 0, 0], [1, 1, 4, 22, 0, 0, 0], [2, 0, 4, 1, -1, 0, 0]]}
+
+
+def half_integer_bang_spec(L=640):
+    """exp.half_integer_bang@1 (r26b W2, design PG): the half moment S* (b = 0 on every channel, F(S*) = JR(S*), the
+    update after it has no click), as r27b's hardware (bigbang_bounce_v6_spec's lines, rings, tap and bridge) plus
+    slot-clock cores and analysers, two all-48 rotor gates and the HALF_BANG_PG literal.  Runs: forward from S*; the
+    bounce = rewind 240, then 481 updates (silent step 241).  Equals r26b's hbPG_sstar_L{320,640,1280}.json."""
+    hp = HALF_BANG_PG
+    v6 = {p["name"]: p for p in json.loads(json.dumps(bigbang_bounce_v6_spec(L)["placements"]))}
+    v6["A0"]["params"]["sockets"] = [s % L for s in hp["A0_sockets"]]
+    v6["B0"]["params"]["sockets"] = sorted(s % L for s in hp["B0_sockets"])
+
+    def slot(name, x, y, state):
+        return {"name": name, "block": "slot_clock@1", "params": {"state": list(state)}, "at": [x % L, y % L, 4]}
+    pl = [v6["A0"], v6["AH"], v6["B0"], v6["Bup"]]
+    pl += [slot(f"{c}_Bup", x, 12, hp["core_state"]) for c, x in hp["cores"].items()]
+    pl += [v6["Blo"]] + [slot(f"{c}_Blo", x, -12, hp["core_state"]) for c, x in hp["cores"].items()]
+    pl += [v6["ringA0"], v6["ringUp"]]
+    pl += [slot(n, x, 0, hp["analyser_state"]) for n, x in hp["analysers"].items()]
+    pl += [v6["tapLo"], v6["bridgeAB"]]
+    pl += [{"name": n, "block": "all48_site@1", "params": {"triple": list(t)}, "at": [107, (12 if n == "gateUp" else -12)
+                                                                                         % L, 6]}
+           for n, t in hp["rotor_gates"].items()]
+    pl.append({"name": "bang", "block": "literal_patch@1",
+               "params": {"kind": "glider-seed", "cells": sorted([*_mod(c[:3], L), *c[3:]] for c in hp["patch"])},
+               "at": [0, 0, 0], "wrap": True})
+    return {"format": FORMAT, "id": f"hbPG_sstar_L{L}", "board": _board(L, MPP), "placements": pl, "steps": 240,
+            "timing": {"t0": "the half moment: b = 0 on every channel, F(S*) = JR(S*) (r26b HB, design PG)",
+                       "bounce_log": "exact rewind 240, then 481 updates (silent step 241)"}}
