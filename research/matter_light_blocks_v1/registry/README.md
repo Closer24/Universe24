@@ -33,6 +33,9 @@ data = init_data(prepared, steps=140)                 # the official init format
 | `all48_planes@1` | consecutive whole planes, every site holding all 48 channels in one triple (planar gliders, mark planes) | — |
 | `matter_line@2` | `matter_line@1` with a periodic r06 catalog medium; medium (0,) = `matter_line@1` exactly | medium classes in {0, 1, 2} |
 | `slow_glider@2` | `slow_glider@1` plus explicit r06 catalog species profiles (`compositions.R06_CATALOG`); 'SLOW' / 'SLOW_LEFT' = `slow_glider@1` exactly | window arrays of length W; vacuum (0,0,2) |
+| `matter_line@3` | `matter_line@2` plus sparse rest-class marks `[[node, class], ...]` (class-2 marks are r06 phase advancers); no marks = `matter_line@2` exactly | classes in {0, 1, 2}; a mark is not a socket |
+| `fused_mover@1` | r29's fused mover β_n (β_1 = r06's SLOW family) on a class-0 chain, front activated at t = −phase, as the cumulative-hand embedding of its free translator ([`bform.py`](bform.py)); fills a matter-line socket of exactly `fused_mover_window(n, front, direction, phase)` | chain weight −1; vacuum (0,0,2); no shared vacuum partner |
+| `field_line_bundle@1` | r33's field-line bundle: the (2ρ)² open gauged staircases from a source point toward (2ρ, 2j+1, 2k+1) as guide paths, with parametric packets — `flux` (outward heads on every line), `probe` (one inward packet on each line crossing the plane x = r inside \|y\|, \|z\| ≤ half), explicit `packets` and `root_sources` (one single channel in the −x halo slot of every root) | r04's halo condition over the whole bundle (no shortcut, no shared halo channel) |
 
 The lineage of every generator is recorded in `generators.LINEAGE`. A changed generator gets a new
 version (`@2`); a composition names the versions it uses.
@@ -82,17 +85,18 @@ was also checked against the program's own code:
   kind, registration new / update-of / republication-of, generator, coupling, evidence status, parts,
   lineage), the experiments and their cards (`experiment_cards`), the read-only `observers`, the
   `aliases`, the registrar's decisions on proposed cards, the verified points (init files regenerated
-  exactly, recipes and builder equalities, with SHA-256 prefixes; 376 after WAVE 5, all exact), and the
+  exactly, recipes and builder equalities, with SHA-256 prefixes; 454 after WAVE 6, all exact), and the
   role of each of the 346 published names (the 338 of 8301320 and the 8 appended in dff39dc: canonical,
   variant, control, alias, J-image, experiment instance).
 * [`data/cards.json`](data/cards.json): one card per block. Card format: (a) use = purpose, interface, timing,
   coupling and composability; (b) algebra = the law with its evidence label; (c) clocks = gears and click signature.
+  From WAVE 6 a block's card text is kept here only (its `registry.json` entry carries no second copy).
 
 Both files are compact JSON. Paths and modules under `research/matter_light_v1/` that the registry's code or data
 name are files of the program's working folder, archived uncurated on branch `backup/matter-light-working` at
 commit 2483837, except five WAVE 5 source files (`r27b/cards_r27b.json` and the four
-`r27b/preparations/bb27v4_ringclock_*` files), which are first archived at commit 9f9cc64. Nothing there is needed
-to regenerate or verify a block or a composition; `runs/` paths are local.
+`r27b/preparations/bb27v4_ringclock_*` files), which are first archived at commit 9f9cc64, and the WAVE 6 sources
+at commit 39ca35f. Nothing there is needed to regenerate or verify a block or a composition; `runs/` paths are local.
 
 `compositions.py` also holds the WAVE 2 compositions: the published guide instances
 (`published_guide_specs`), r08's W9 devices, r03's Q1c selector, r12's approval router, r13's beam-splitter
@@ -124,6 +128,26 @@ with `e11_control_generic_spec`); the builders of the curated experiments E09 (`
 `medium.mirror_bridge@1` (`mirror_bridge_placement`). No generator changed.
 `tests/test_matter_light_blocks_registry_wave5.py` regenerates the three published planar blocks from
 `all48_planes@1` and checks the WAVE 5 builders against their assertions and recorded initial-state hashes.
+
+WAVE 6 added [`bform.py`](bform.py) (initial data from cumulative hands B(−1), B(0), r29's Theorem B0) and the
+generators `fused_mover@1`, `matter_line@3` and `field_line_bundle@1`; the cyclic universes of r36 — `seed.cyclic_point@1`
+(`CYCLIC_POINT`, `cyclic_point_placement`), `spin.holonomy_ring@2` (`holonomy_ring_counterpair_placement`),
+`cyclic_light_spec` (C1), `cyclic_matter_spec` (C2) and `cyclic_spin_spec` (C3a, whose seed is prepared by an exact
+recipe: form `'outgoing'` with 11 exact rewinds, or r36's form `'incoming'` with 11 updates; the two agree because
+the seed is JR-fixed) — r36b's gravity inside the cycle (`cyclic_gravity_spec`: G1 and C3b as ONE composition each,
+the dark parts plus one moment patch per part, `R36B_MOMENTS` = `seed.cyclic_point@2`; parts `counter_ring_placement`
+= `clock.counter_ring@1`, `clock.counter_lamp@1`, `spin.box_loop_z@1`; `r36b_part_spec`) and r27b's exact bounce
+`bigbang_bounce_v6_spec`; r33's E13 field-line bundle as the generator `field_line_bundle@1`
+(`field_line_bundle_placement`; `e13_spec` and `e13b_spec` regenerate every E13 and E13b board); r29's fused movers and rail pairs
+(`fused_mover_line_spec`, `towed_pair_spec`, `leapfrog_pair_spec`); and split guide paths for vacuum gap nodes
+shared by two fibres (`split_guide_path`, `path_through`, `gapped_guide_placement`): r20's `gate.x_gate@1`
+(`x_gate_spec`), `store.x_cavity@1` (`x_cavity_spec`) and `select.escorted_junction@1` (`escorted_junction_spec`),
+and r15b's `select.escort_pair_router@1` (`escort_pair_router_spec`), `store.set_entrance@1`,
+`router.conserving@1` (`conserving_router_spec`) and `router.conserving_pair@1` (`conserving_pair_router_spec`),
+whose halo-core registers are `slot_clock@1` cores at an orbit phase (`CORE_ORBIT`; at phases 2 and 3 the nodes they
+share sit at r = 2, the vacuum value, so they are gap nodes). Existing generators are unchanged.
+`tests/test_matter_light_blocks_registry_wave6.py` checks these builders against recorded initial-state hashes,
+the seeds' JR symmetry, both C3a recipes natively and the bundle generator against the explicit guide form.
 
 ## Limits
 

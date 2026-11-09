@@ -493,3 +493,184 @@ def matter_line_v2(board, *, length, label=41, axis="y", sockets=(), medium=(0,)
 BLOCKS.update({"matter_line@2": matter_line_v2})
 LINEAGE.update({"matter_line@2": "update-of matter_line@1 (generalizes: periodic r06 catalog medium; medium (0,) "
                                  "unchanged); r14 w3_module A0 seed line"})
+
+
+# ===================================================================== WAVE 6 (r21b) additions
+from . import bform as BF
+
+
+def fused_mover_window(n, front, direction=1, phase=0):
+    """Local chain indices (ascending) that ``fused_mover@1`` writes: every node where beta_n differs from the rest
+    at t = 0, padded by one node on each side (a matter-line socket window)."""
+    lo, hi = -(4 * n + phase + 6) // 3 - 2, (phase + 1) // 3 + 3
+    offs = list(range(lo, hi + 1))
+    act = [o for o, a, b, c in zip(offs, *(BF.beta_field(n, offs, t) for t in (phase - 1, phase, phase + 1)))
+           if a or b or c]
+    dys = range(min(act) - 2, max(act) + 3)
+    return sorted(front + direction * dy for dy in dys)
+
+
+def fused_mover(board, *, n, front, direction=1, phase=0, label=41, axis="y"):
+    """r29's fused mover beta_n (matter.fused_mover@1; beta_1 = r06's SLOW family) on a straight class-0 chain of
+    ``label`` along ``axis`` (chain weight -1), its front node ``front`` activated at t = -phase, moving ``direction``
+    (+1 / -1 along the axis): the cumulative-hand embedding (bform) of the free translator B(t), with the history
+    halo on the private vacuum partners.  Writes the whole ``fused_mover_window`` (rest values included), so it fills
+    a matter-line socket of exactly those nodes; the chain must be at rest class 0 there, with no coupled partner."""
+    if tuple(board["background"]) != (0, 0, 2):
+        raise ValueError("the fused-mover halo is defined for the vacuum (0,0,2)")
+    if int(n) < 1 or direction not in (1, -1) or int(phase) < 0:
+        raise ValueError("n >= 1, direction +-1, phase >= 0")
+    c = Coupling(tuple(board["signs"]))
+    ax = AXES[axis]
+    if _straight(c, label, ax) != -1:
+        raise ValueError("fused movers live on chains of weight -1 (the r06 matter-line convention)")
+    idx = fused_mover_window(int(n), int(front), direction, int(phase))
+    dys = [(i - front) * direction for i in idx]
+    nodes = [_node(ax, i, label) for i in idx]
+    cells = BF.bform_cells(c, nodes, [0] * len(nodes), BF.beta_field(int(n), dys, int(phase) - 1),
+                           BF.beta_field(int(n), dys, int(phase)))
+    return Patch("glider-seed", cells, tensor=_tensor(board["signs"]), background=Channel(*board["background"]),
+                 ports={"window": tuple(nodes)}, sources={"window": tuple(nodes)},
+                 evidence_domains=("r29 Theorem C: beta_n is an exact translator, one node per 3 updates (EXHAUSTIVE, "
+                                   "periods <= 18); cumulative-hand embedding (Theorem B0).",))
+
+
+def matter_line_v3(board, *, length, label=41, axis="y", sockets=(), medium=(0,), medium_origin=0, marks=()):
+    """matter_line@3 = matter_line@2 plus sparse rest-class marks: ``marks`` = [[node, class], ...] (class in {0, 1, 2};
+    a class-2 mark is r06's phase advancer, a SLOW passing it gains 4 updates); no marks = matter_line@2 exactly."""
+    base = matter_line_v2(board, length=length, label=label, axis=axis, sockets=sockets, medium=medium,
+                          medium_origin=medium_origin)
+    if not marks:
+        return base
+    ax = AXES[axis]
+    holes = {int(i) for i in sockets}
+    cells = {k: (v.a, v.b, v.r) for k, v in base.cells}
+    for node, cls in marks:
+        node, cls = int(node) % length, int(cls)
+        if cls not in (0, 1, 2) or node in holes:
+            raise ValueError("a mark is a class in {0, 1, 2} on a node that is not a socket")
+        cells[_node(ax, node, label)] = (0, 0, 2 * cls)
+    cells = {k: v for k, v in cells.items() if v != tuple(board["background"])}
+    return Patch("matter-line", cells, tensor=base.tensor, background=base.background, ports=dict(base.ports),
+                 sockets=base.sockets, evidence_domains=base.evidence_domains + (
+                     "matter_line@3: class-2 marks are r06 phase advancers (r29 braking rule, B-form model).",))
+
+
+BLOCKS.update({"fused_mover@1": fused_mover, "matter_line@3": matter_line_v3})
+LINEAGE.update({"fused_mover@1": "r29 blocks_r29.fused_mover_cells / bnet.beta_field (numpy BGraph), ported to the "
+                                 "standard library (bform.py); r29 Theorems B0 and C",
+                "matter_line@3": "update-of matter_line@2 (generalizes: sparse rest-class marks); r29 tow / leapfrog "
+                                 "rails with class-2 advancers"})
+
+
+# ---------------------------------------------------------------------------- WAVE 6 fix (r21c; r16c ARCHITECT_REPORT1 s5.2)
+_AX_DIR = {(0, 1): 0, (0, -1): 1, (1, 1): 2, (1, -1): 3, (2, 1): 4, (2, -1): 5}       # (axis, sign) -> direction
+
+
+def staircase_dirs(D, n):
+    """The first n unit steps of the monotone lattice staircase from the origin toward the integer direction D
+    (deficit rule: step along the axis whose count lags most behind n |D_k| / |D|_1; ties go x, y, z)."""
+    S = sum(abs(v) for v in D)
+    cnt, out = [0, 0, 0], []
+    for step in range(n):
+        best, arg = None, None
+        for k in range(3):
+            if D[k]:
+                deficit = (step + 1) * abs(D[k]) - S * cnt[k]
+                if best is None or deficit > best:
+                    best, arg = deficit, k
+        cnt[arg] += 1
+        out.append(_AX_DIR[(arg, 1 if D[arg] > 0 else -1)])
+    return out
+
+
+def field_line(D, x_root, x_end):
+    """One field line: the part of the staircase toward D (D[0] > 0) from its first node on the plane x = x_root to its
+    first node on x = x_end, as {D, start, dirs, sites} (sites in the source's local frame, the source at 0)."""
+    S = sum(abs(v) for v in D)
+    steps = staircase_dirs(D, (x_end + 2) * S // D[0] + 2 * S)
+    pos = [(0, 0, 0)]
+    for d in steps:
+        pos.append(G.add(pos[-1], d))
+    i0 = next(i for i, p in enumerate(pos) if p[0] == x_root)
+    i1 = next(i for i, p in enumerate(pos) if p[0] == x_end)
+    return {"D": tuple(D), "start": pos[i0], "dirs": steps[i0:i1], "sites": pos[i0:i1 + 1]}
+
+
+def field_line_bundle_lines(rho=4, x_root=16, x_end=100):
+    """medium.field_line_bundle@1 geometry (r33): the (2 rho)^2 lines L<j><k> toward D = (2 rho, 2j+1, 2k+1),
+    j, k = -rho .. rho-1 (the +x bundle of a cube-gnomonic source: the line through the grid point
+    ((j + 1/2)/rho, (k + 1/2)/rho) of the plane x = 1)."""
+    return {f"L{j + rho}{k + rho}": field_line((2 * rho, 2 * j + 1, 2 * k + 1), x_root, x_end)
+            for j in range(-rho, rho) for k in range(-rho, rho)}
+
+
+def bundle_halo_ok(coupling, lines, g0):
+    """r04's halo condition over the whole bundle at the channel level: no guide-to-guide shortcut and no halo channel
+    fed by two guide nodes (then each line propagates independently: no copy, no coincidence node)."""
+    owner, donors = {}, {}
+    for name, ln in lines.items():
+        for i, (s, g, _) in enumerate(G.channel_path(coupling, ln["start"], g0, ln["dirs"], None)):
+            owner[(*s, g)] = (name, i)
+    for (x, y, z, g), (name, i) in owner.items():
+        for d in range(6):
+            rec = (*G.add((x, y, z), d), coupling.ports[d][g])
+            if rec in owner:
+                on, j = owner[rec]
+                if on != name or abs(j - i) != 1:
+                    return False
+            elif donors.setdefault(rec, (name, i)) != (name, i):
+                return False
+    return True
+
+
+def field_line_bundle(board, *, rho=4, x_root=16, x_end=100, g0=0, flux=None, probe=None, packets=(),
+                      root_sources=None):
+    """medium.field_line_bundle@1 (r33 E13/E13b): the (2 rho)^2 open gauged staircases of ``field_line_bundle_lines``
+    from the local origin (the source point), written as guide_net@1 paths L<j><k> (no junction; r04's halo condition
+    over the whole bundle is checked here), with in-flight packets given parametrically:
+    * ``flux`` {"f", "heads"}: outward packets on every line, heads at the given local node indices;
+    * ``probe`` {"f", "x", "half"}: one inward packet on every line whose entry node into the plane x lies in
+      |y|, |z| <= half, its head at that entry node (r33's fixed-area probe surface);
+    * ``packets``: explicit guide_net@1 packets on the line paths;
+    * ``root_sources`` {"triple"}: one single channel per line in the -x halo slot of its root (r33's
+      seed.emitter_core@1, the created-flux source of E13b).
+    Equals guide_net@1 with the 64 explicit paths and the same packet list (r21b's field_line_bundle_placement)."""
+    c = Coupling(tuple(board["signs"]))
+    lines = field_line_bundle_lines(int(rho), int(x_root), int(x_end))
+    if not bundle_halo_ok(c, lines, int(g0)):
+        raise ValueError("field lines share halo channels or touch: raise x_root or lower rho")
+    names = sorted(lines)
+    pk = []
+    if flux:
+        pk += [{"path": n, "f": list(flux["f"]), "lead": int(h)} for n in names for h in flux["heads"]]
+    if probe:
+        r, half = int(probe["x"]), int(probe["half"])
+        for n in names:
+            sites = lines[n]["sites"]
+            p = next((i for i, s in enumerate(sites) if s[0] == r), None)
+            if p is not None and max(abs(sites[p][1]), abs(sites[p][2])) <= half:
+                pk.append({"path": "~" + n, "f": list(probe["f"]), "lead": len(sites) - 1 - p})
+    pk += [dict(q) for q in packets]
+    paths = [{"name": n, "g0": int(g0), "start": list(lines[n]["start"]), "dirs": [[d, 1] for d in lines[n]["dirs"]]}
+             for n in names]
+    net = guide_net(board, paths=paths, packets=pk)
+    cells = {k: (v.a, v.b, v.r) for k, v in net.cells}
+    ports = dict(net.ports)
+    if root_sources:
+        for n in names:
+            s0 = tuple(lines[n]["start"])
+            g_root = G.channel_path(c, s0, int(g0), lines[n]["dirs"][:1], None)[0][1]
+            addr = (*G.add(s0, 1), c.ports[1][g_root])
+            if addr in cells:
+                raise ValueError(f"the root source of {n} would overwrite a guide or packet cell")
+            cells[addr] = tuple(root_sources["triple"])
+            ports[f"{n}_root_source"] = (addr,)
+    return _patch("field-line-bundle", board, cells, ports=ports,
+                  evidence=net.evidence_domains + ("r33: the bundle's lines are independent guides (halo condition "
+                                                   "checked); counts at fixed area are geometric (R10G-46..50).",))
+
+
+BLOCKS.update({"field_line_bundle@1": field_line_bundle})
+LINEAGE.update({"field_line_bundle@1": "r33 field_lines.bundle / e13_build.spec and e13b_build.cores, via r21b's "
+                                       "field_line_bundle_placement (guide_net@1); r04 guide algebra and halo rule"})
