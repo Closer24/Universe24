@@ -25,9 +25,9 @@
   0/480 updates mirrored; its best moment (τ = 72) leaves 73,914 unpaired
 
 ## Claim
-- [THEOREM + SIMULATION] (r27b, declared 2026-11-09 03:54 UTC): a JR-fixed state bounces exactly: the contracting
-  universe before t = 0 (light converging, rings un-lighting) is the click mirror of the expanding one after it, up to
-  C1 ↔ C2 and q → −q, so the expanding half of the record determines the whole two-sided record
+- [THEOREM + SIMULATION] (r27b, declared 2026-11-09 03:54 UTC): a JR-fixed state bounces exactly: the board's click
+  record before t = 0 (light converging, rings un-lighting) is the mirror of its record after t = 0, up to C1 ↔ C2
+  and q → −q, so the record after t = 0 determines the whole two-sided record
 - inside the bounce the forward half keeps a matched α_in = 1 instrument pair whose moving parts are all created: the
   probe (tap fibre, slowed by the lamp stream to 7/11) and the h1 ring clock (slowed by its own counter packet from a
   free 14, E16's calibration, to 22) are separate devices equal by design (s − 4 = R), not N(x) and v(x) of one medium

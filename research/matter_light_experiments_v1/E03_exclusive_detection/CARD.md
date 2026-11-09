@@ -7,7 +7,8 @@
   absorbers) two sites beside arm node 20 of each arm, D_A at (90,100,98), D_B at (70,120,98); the approval = one
   packet already on arm A that writes D_A before the quantum arrives (r03's D1)
 - runs (5 of r13's declared families): approval with t_q = 24 and 25; no approval with t_q = 25; independent
-  complementary detector phases (2, 0) with t_q = 23; no quantum (control); horizon t_q + 70
+  complementary detector phases (2, 0) with t_q = 23; no quantum (control)
+- horizons: t_q + 70 updates (the complementary run 53, the control 100)
 - the quantum's arrival phase t_q is a hidden, deterministic parameter; after t = 0 only Rule3 acts
 
 ## In the clicks (click_decoder_v1 1.0, frozen 2026-11-09 01:29 UTC; official click logs only)

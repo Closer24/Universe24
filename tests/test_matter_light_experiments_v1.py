@@ -1,5 +1,7 @@
 """Curated matter/light experiments: manifests, data hashes, cards, decoder pin, compositions, two short decoded runs."""
+import contextlib
 import hashlib
+import io
 import json
 from pathlib import Path
 import tempfile
@@ -25,6 +27,7 @@ class Manifests(unittest.TestCase):
                 self.assertLessEqual(len(card), 40)
                 for heading in HEADINGS:
                     self.assertTrue(any(line.startswith(heading) for line in card), heading)
+                self.assertTrue(any(line.startswith("- referee:") for line in card), "referee line")
                 self.assertEqual(man["decoder"]["code_sha256"], frozen["code_sha256"])
                 self.assertIn("result", man["verdict"])
                 total = sum(p.stat().st_size for p in folder.rglob("*") if p.is_file())
@@ -114,6 +117,31 @@ class CompositionRuns(unittest.TestCase):
         for k in (-1, 1.5, True):
             with self.assertRaises(ValueError):
                 X.rewind_preparation(board.engine, board.initial, k)
+
+
+class CommandLine(unittest.TestCase):
+    """argparse: an unknown or abbreviated flag stops with exit status 2 and a usage line, --help prints the usage,
+    and an unknown experiment stops with one line; none of them replays a run."""
+
+    def _stop(self, argv):
+        out, err = io.StringIO(), io.StringIO()
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err), self.assertRaises(SystemExit) as stop:
+            X.main(argv)
+        return stop.exception.code, out.getvalue(), err.getvalue()
+
+    def test_usage_errors_exit_2_and_help(self):
+        usage = "usage: python -m research.matter_light_experiments_v1.verify"
+        for argv in (["--bogus"], ["--quik"], ["--fas"], ["E03_exclusive_detection", "--keep"]):
+            code, out, err = self._stop(argv)
+            self.assertEqual((code, out), (2, ""), argv)
+            self.assertIn(usage, err)
+        code, out, err = self._stop(["--help"])
+        self.assertEqual(code, 0)
+        self.assertIn(usage, out)
+        for flag in ("--all", "--fast", "--keep DIR"):
+            self.assertIn(flag, out)
+        code, out, err = self._stop(["E99_no_such_experiment"])
+        self.assertEqual(code, "unknown experiment(s): ['E99_no_such_experiment']")
 
 
 class DerivedQuantities(unittest.TestCase):

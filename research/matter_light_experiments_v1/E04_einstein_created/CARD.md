@@ -5,7 +5,7 @@
 - prepared at t = 0 (main run = published block `einstein_created_instruments_L240`): the seed's matter line A0,
   light lines B_A (y = 0) and B_B (y = −20), both gauge phase 1, a light-line link along y at x = −32, two traps
   (cores (−1,0,0) at x = −3 and 5, d = 8) on B_A and B_B, one SLOW seed glider (start ≡ 20 mod 4)
-- runs: main L240, size check L480, controls no link / no seed / no cores (L240); 230 updates
+- runs: main L240, size check L480, controls no link / no seed / no cores (L240); 230 updates (size check 400)
 - after t = 0 only Rule3 acts; nothing is injected or read back
 
 ## In the clicks (click_decoder_v1 1.0, frozen 2026-11-09 01:29 UTC; official click logs only)

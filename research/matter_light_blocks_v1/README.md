@@ -7,10 +7,10 @@ unchanged native `Engine`, with the exact inverse `Engine.rewind` checked at eve
 update, before it was published. Nothing here is an engine, a rule change, a
 detector that writes into a run, or a runtime method. After t = 0 only Rule3 acts.
 
-Names such as "light", "matter", "atom", "lamp", "spinor-class" and "charge" are
-**candidate names for click patterns and exact accounts of this model**. They
-are not claims about physical photons, mass, spin-1/2, electric charge or energy
-(AGENTS rules 10 and 12).
+Names such as "light", "matter", "atom", "lamp", "spinor-class", "charge", "Big Bang"
+and "toy universe" are **candidate names for click patterns and exact accounts of
+this model**. They are not claims about physical photons, mass, spin-1/2, electric
+charge, energy or cosmology (AGENTS rules 10 and 12).
 
 ## Quick use
 
@@ -36,8 +36,9 @@ print(entry["what"], entry["signature"], entry["limits"])
 `matter_line@1`, `guide_net@1` and `phase_gate@2`; the full list is in the registry README), the
 registry metadata, composition data, and a composer for compositions (`u24-composition-v1`). They
 rebuild prepared networks from placements, so an experiment can ship a short composition instead
-of large init files. Twenty-three published blocks (four D1 blocks, eight guide blocks, three
-clock-rate blocks and the eight blocks appended in dff39dc) regenerate exactly from tracked code.
+of large init files. Twenty-six published blocks (four D1 blocks, eight guide blocks, three
+clock-rate blocks, the eight blocks appended in dff39dc and the three planar blocks of the
+registry's WAVE 5) regenerate exactly from tracked code.
 
 ## What is shipped
 

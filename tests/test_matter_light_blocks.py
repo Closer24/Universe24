@@ -1,4 +1,6 @@
-"""Published matter/light building blocks: catalog integrity and a fast native replay subset."""
+"""Published matter/light building blocks: catalog integrity, a fast native replay subset and the command line."""
+import contextlib
+import io
 import json
 import unittest
 from pathlib import Path
@@ -31,6 +33,31 @@ class PublishedBlocks(unittest.TestCase):
             with self.subTest(block=name):
                 entry = self.entries[name]
                 self.assertEqual(V.check(entry, V.replay(entry)), [])
+
+
+class CommandLine(unittest.TestCase):
+    """argparse: an unknown or abbreviated flag stops with exit status 2 and a usage line, and --help prints the
+    usage; neither loads the catalog or replays a block."""
+
+    def _stop(self, argv):
+        out, err = io.StringIO(), io.StringIO()
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err), self.assertRaises(SystemExit) as stop:
+            V.main(argv)
+        return stop.exception.code, out.getvalue(), err.getvalue()
+
+    def test_usage_errors_exit_2_and_help(self):
+        usage = "usage: python -m research.matter_light_blocks_v1.verify"
+        for argv in (["--bogus"], ["--quik"], ["--lis"], ["fiber_x_packet", "-q"]):
+            code, out, err = self._stop(argv)
+            self.assertEqual((code, out), (2, ""), argv)
+            self.assertIn(usage, err)
+        code, out, err = self._stop(["--help"])
+        self.assertEqual(code, 0)
+        self.assertIn(usage, out)
+        for flag in ("--list", "--quick"):
+            self.assertIn(flag, out)
+        code, out, err = self._stop(["no_such_block"])
+        self.assertEqual(code, "unknown block(s): ['no_such_block']")
 
 
 if __name__ == "__main__":

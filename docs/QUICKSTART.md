@@ -33,11 +33,13 @@ The example differs by the **fixed pre-run** body signs `[1,-1,1]`. This changes
 ## 4. Write external observations and a checkpoint
 
 ```bash
-python -m universe24 --config examples/signed_impulse.json --steps 8 --events run8.jsonl --output run8.json --audit
+mkdir -p runs
+python -m universe24 --config examples/signed_impulse.json --steps 8 --events runs/run8.jsonl --output runs/run8.json --audit
 ```
 
-- `run8.jsonl` is a newline-delimited JSON stream of **passive arithmetic event observations**.
-- `run8.json` is the complete sparse retained state, together with the cube side, fixed coupling signs, completed step count and a coupling fingerprint.
+- `runs/run8.jsonl` is a newline-delimited JSON stream of **passive arithmetic event observations**.
+- `runs/run8.json` is the complete sparse retained state, together with the cube side, fixed coupling signs, completed step count and a coupling fingerprint.
+- `runs/` is ignored by Git, so these outputs never appear as untracked files.
 - The CLI refuses to overwrite either output and refuses to use the same path as its input.
 - The printed `logged_arithmetic_events` field is **zero if no `--events` log was requested**, even if the trajectory contains events.
 
@@ -46,7 +48,7 @@ Each observation contains a step number, a four-part address `[x,y,z,channel]`, 
 ## 5. Resume the checkpoint
 
 ```bash
-python -m universe24 --resume run8.json --steps 4 --audit --output run12.json
+python -m universe24 --resume runs/run8.json --steps 4 --audit --output runs/run12.json
 ```
 
 This advances the stored **full state** for four additional Rule3 reference steps. It does *not* reverse the physical trajectory. Do not resume an `events.jsonl` file; event logs are incomplete projections of the state.
@@ -73,7 +75,8 @@ python -m universe24 --config examples/clock.json --steps 30 --audit
 
 ## Full research validation
 
-Use a Git checkout with history: provenance tests inspect recorded commits.
+Use a Git checkout (a shallow clone, `git clone --depth 1`, is enough): some tests
+record the checkout's commit and status with `git`.
 The engine has no third-party runtime dependencies, but research tests need the
 pinned arithmetic and solver packages. Run this setup before the full suite:
 
@@ -86,6 +89,19 @@ python -m unittest discover -s tests -v
 python -m universe24 --config examples/impulse.json --audit
 python -m universe24 --config examples/signed_impulse.json --audit
 ```
+
+Restoration grows a fresh checkout from about 0.9 GB to about 3.0 GB, and the decoder's
+set-A rerun below writes about 0.35 GB of logs under the ignored `runs/`, so allow about
+3.5 GB of free disk. A virtual environment (`python -m venv .venv`, already ignored by
+Git; activate it before `pip install`) keeps the pinned packages out of the system
+interpreter. Node.js is optional: two presenter tests use it and are skipped without it.
+
+The curated matter/light packages have their own verifiers (about 15 minutes together):
+`python -m research.matter_light_experiments_v1.verify` (every experiment),
+`python -m research.matter_light_blocks_v1.verify --quick` (all 346 blocks without
+`--quick`), and the decoder's set-A rerun in
+[its README](../research/click_decoder_v1/README.md#validation-one-score-table-v10-against-v11).
+The first two print their usage with `--help`.
 
 The materializers restore only declared, checksum-locked research evidence.
 They do not overwrite live code or differing existing files. Restoration uses

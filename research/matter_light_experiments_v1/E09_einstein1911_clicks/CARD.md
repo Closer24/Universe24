@@ -8,7 +8,7 @@
   - bending: a Y junction; arm A (106 nodes) straight through a flux of k = 0..5 packets moving toward the junction,
     arm B (118 nodes) flux-free; one probe enters the junction and is copied into both arms
   - redshift: a ring16 emitter (tap, exit fibre 160 nodes) with or without one counter-circulating packet on the ring
-- controls: no flux (k = 0; far clock), flux only (no probe), emitter without packets; 140–220 updates
+- controls: no flux (k = 0; far clock), flux only (no probe), emitter without packets; 150–220 updates
 - after t = 0 only Rule3 acts; nothing is injected or read back
 
 ## In the clicks (click_decoder_v1 1.0, frozen 2026-11-09 01:29 UTC; official click logs only)

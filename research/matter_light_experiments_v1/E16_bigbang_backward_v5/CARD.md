@@ -24,9 +24,9 @@
   123; (0,12,3) 16 from 174; (33,0,4) 20 from 192
 
 ## Claim
-- [SIMULATION] From a 14-cell seed in a prepared zero-counter network decoder 1.0 reads created light, two created
-  ring clocks (36, 22), one gate decision, a matched α_in = 1 instrument pair whose moving parts are all created, and a
-  radar echo, identically on L and 2L.
+- [SIMULATION] From a 14-cell seed in a prepared network (zero-counter lines; gates, analysers, trap cores, recorders
+  with counters at t = 0) decoder 1.0 reads created light, two created ring clocks (36, 22), one gate decision, a
+  matched α_in = 1 instrument pair whose moving parts are all created, and a radar echo, identically on L and 2L.
 - referee: r10h R10H-1, 3, 4, 7 CONFIRMED; R10H-2, 5, 6, 8 PARTLY, with these caveats:
   - α_in = 1 is a matched instrument pair (r23 Lemma 2, s − 4 = R): the clock (h1 ring slowed by its own counter packet,
     14 → 22) and the probe (tap fibre slowed by the lamp stream, 7/11) are separate devices equal by design, not N(x)

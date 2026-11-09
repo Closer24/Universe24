@@ -36,7 +36,9 @@ assignments. Functional composition requires a new controlled native run.
 | Light-approval hypothesis | [Study record](light_approval/README.md); explicit hypotheses and negative controls, not a physical approval mechanism |
 | Message mechanism | [Study record](message_mechanism/README.md); preparations, interfaces and limits |
 | Algorithm comparisons | [Analogue review](algorithm_analogues/README.md); conceptual comparisons, not imported dynamics |
-| Matter and light building blocks | [Published set](matter_light_blocks_v1/README.md); 338 data-only preparations (light, matter, atoms, spin, charge, clocks, media, seeds), each replayed natively with the exact inverse; candidate names, prepared media, stated limits |
+| Matter and light building blocks | [Published set](matter_light_blocks_v1/README.md); 346 data-only preparations (light, matter, atoms, spin, charge, clocks, media, seeds), each replayed natively with the exact inverse; candidate names, prepared media, stated limits |
+| Matter and light experiments | [Curated experiments](matter_light_experiments_v1/README.md); each experiment is data (compositions of registered blocks, init files or published blocks; declared detectors; a card), replayed by one generic verifier with the exact inverse, with every claim read only from the frozen click decoder; candidate names, prepared media, stated limits |
+| Click decoder | [Generic click decoder](click_decoder_v1/README.md); frozen v1.0 (the default) and v1.1 and released read-only layers; reads click logs only, never a board |
 
 The [current claim addendum](clock_selection/invariant_families_claims.md)
 supplements the [earlier register](clock_selection/claim_register.md); it does

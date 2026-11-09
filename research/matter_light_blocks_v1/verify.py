@@ -27,6 +27,7 @@ C (every channel g -> z*g, z = 14) after each lap and itself after two laps
 """
 from __future__ import annotations
 
+import argparse
 from collections import Counter
 import hashlib
 import json
@@ -188,21 +189,34 @@ def check(entry: dict, measured: dict) -> list[str]:
     return fails
 
 
+def _parser() -> argparse.ArgumentParser:
+    p = argparse.ArgumentParser(
+        prog="python -m research.matter_light_blocks_v1.verify", allow_abbrev=False,
+        description="Replay the published blocks with the native Engine (exact inverse at every update) and check "
+                    "their init-file and final-state hashes and declared signatures.",
+        epilog="Exit status: 0 if every selected block passes, 1 if a block fails or a name is unknown, 2 for a usage "
+               "error.")
+    p.add_argument("names", nargs="*", metavar="BLOCK", help="blocks to replay (default: every block)")
+    p.add_argument("--list", action="store_true", help="list every block with its group and file, and replay nothing")
+    p.add_argument("--quick", action="store_true", help="skip the blocks marked heavy")
+    return p
+
+
 def main(argv=None) -> int:
-    argv = list(sys.argv[1:] if argv is None else argv)
+    args = _parser().parse_args(sys.argv[1:] if argv is None else argv)
     catalog = load_catalog()
     entries = catalog["entries"]
-    if "--list" in argv:
+    if args.list:
         for e in entries:
             print(f"{e['name']:55s} {e['group']:28s} {e['file']}")
         return 0
-    names = [a for a in argv if not a.startswith("--")]
+    names = args.names
     if names:
         unknown = set(names) - {e["name"] for e in entries}
         if unknown:
             raise SystemExit(f"unknown block(s): {sorted(unknown)}")
         entries = [e for e in entries if e["name"] in names]
-    if "--quick" in argv:
+    if args.quick:
         entries = [e for e in entries if not e.get("heavy")]
     passed, failed = 0, []
     start = time.time()

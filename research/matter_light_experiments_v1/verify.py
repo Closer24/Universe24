@@ -32,6 +32,7 @@ vocabulary cannot express yet are reported as "not decodable" and keep the exper
 """
 from __future__ import annotations
 
+import argparse
 from dataclasses import asdict
 import cmath
 import hashlib
@@ -684,13 +685,32 @@ def verify(eid, fast=False, keep=None):
     return out
 
 
+def _parser() -> argparse.ArgumentParser:
+    p = argparse.ArgumentParser(
+        prog="python -m research.matter_light_experiments_v1.verify", allow_abbrev=False,
+        description="Replay the curated experiments natively with the exact inverse and evaluate every declared check "
+                    "on the frozen click decoder's report; prints one JSON report.",
+        epilog="Exit status: 0 if every selected experiment is ok, 1 if an integrity step or an evaluable check fails "
+               "or an experiment is unknown, 2 for a usage error.")
+    p.add_argument("ids", nargs="*", metavar="EXPERIMENT",
+                   help="experiment folders to verify (default: every experiment folder present)")
+    p.add_argument("--all", action="store_true", help="every experiment folder present (the default without names)")
+    p.add_argument("--fast", action="store_true",
+                   help="replay only the runs marked fast; checks that read other runs are skipped, so an experiment "
+                        "with slower runs is not ready")
+    p.add_argument("--keep", metavar="DIR",
+                   help="keep the click logs and decoder reports under DIR/<id>, never overwriting")
+    return p
+
+
 def main(argv=None) -> int:
-    argv = list(sys.argv[1:] if argv is None else argv)
-    keep = argv[argv.index("--keep") + 1] if "--keep" in argv else None
-    ids = [a for i, a in enumerate(argv) if not a.startswith("--") and (i == 0 or argv[i - 1] != "--keep")]
-    if "--all" in argv or "--fast" in argv or not ids:
-        ids = ids or experiment_ids()
-    results = [verify(eid, fast="--fast" in argv, keep=keep) for eid in ids]
+    args = _parser().parse_args(sys.argv[1:] if argv is None else argv)
+    unknown = sorted(set(args.ids) - set(experiment_ids()))
+    if unknown:
+        raise SystemExit(f"unknown experiment(s): {unknown}")
+    keep = args.keep
+    ids = args.ids or experiment_ids()
+    results = [verify(eid, fast=args.fast, keep=keep) for eid in ids]
     print(json.dumps({"experiments": results, "ok": all(r["ok"] for r in results)}, indent=1, default=str))
     return 0 if all(r["ok"] for r in results) else 1
 
