@@ -43,7 +43,7 @@ class Manifests(unittest.TestCase):
     def test_compositions_regenerate_their_runs(self):
         for eid in X.experiment_ids():
             man = X.manifest(eid)
-            if not man.get("composition"):
+            if not X._uses_composition(man):                 # composition.json or the declared compositions
                 continue
             build = X._composition(eid, man)
             for run in man["runs"]:
@@ -51,6 +51,51 @@ class Manifests(unittest.TestCase):
                     with self.subTest(run=run["name"]):
                         engine, initial, steps, notes = X.load_run(eid, man, run, build)
                         self.assertEqual(X.state_sha256(initial), run["initial_state_sha256"])
+
+
+class CompositionRuns(unittest.TestCase):
+    """Runs made from compositions: declared keys and files inside the folder only, a recorded initial-state hash, and
+    an optional exact rewind before t = 0."""
+
+    def _with_composition(self):
+        for eid in X.experiment_ids():
+            man = X.manifest(eid)
+            if man.get("composition"):
+                return eid, man
+        self.skipTest("no experiment with a composition.json")
+
+    def test_refusals(self):
+        eid, man = self._with_composition()
+        build = X._composition(eid, {"composition": man["composition"], "runs": [],
+                                     "compositions": {"up": "../README.md", "abs": "/etc/hostname"}})
+        for key in ("up", "abs", "undeclared"):
+            with self.assertRaises(ValueError):
+                build(None, key)
+        with self.assertRaises(ValueError):
+            build("no such control")
+        with self.assertRaises(ValueError):
+            X._composition(eid, {"composition": None, "runs": []})()
+        run = {"name": "r", "steps": 1, "from_composition": {"control": None}}
+        with self.assertRaises(ValueError):              # a composition-only run must record its initial-state hash
+            X.load_run(eid, man, run, X._composition(eid, man))
+
+    def test_rewind_preparation(self):
+        eid, man = self._with_composition()
+        build = X._composition(eid, man)
+        board = build()
+        earlier = X.rewind_preparation(board.engine, board.initial, 3)
+        state = earlier
+        for _ in range(3):
+            state = board.engine.advance(state)
+        self.assertEqual(state, board.initial)
+        run = {"name": "r", "steps": 1, "from_composition": {"control": None, "rewind": 3},
+               "initial_state_sha256": X.state_sha256(earlier)}
+        self.assertEqual(X.load_run(eid, man, run, build)[1], earlier)
+        with self.assertRaises(ValueError):
+            X.load_run(eid, man, dict(run, initial_state_sha256="0" * 64), build)
+        for k in (-1, 1.5, True):
+            with self.assertRaises(ValueError):
+                X.rewind_preparation(board.engine, board.initial, k)
 
 
 class DerivedQuantities(unittest.TestCase):

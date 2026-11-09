@@ -8,9 +8,11 @@
 For every run of an experiment's ``experiment.json``:
 
 1. the initial data are checked: the init file's SHA-256, or the referenced published block's file SHA-256, or
-   (for a run made from the experiment's ``composition.json``) the composition is regenerated with the
-   registered generators (``research.matter_light_blocks_v1.registry``) and its initial-state digest compared;
-   a run that also names a file or block must have exactly that initial state;
+   (for a run made from a composition: the experiment's ``composition.json``, or one of the composition files that the
+   manifest declares under ``compositions``) the composition is regenerated with the registered generators
+   (``research.matter_light_blocks_v1.registry``), optionally followed by ``rewind`` exact inverse steps (a preparation
+   before t = 0, each step checked), and its initial-state digest compared; a run made only from a composition must
+   record that digest, and a run that also names a file or block must have exactly that initial state;
 2. the run is replayed with the unchanged ``Engine``, checking ``Engine.rewind`` at every update;
 3. the official click log is written (the record format of ``python -m universe24 --events``) into a temporary
    directory, or under ``--keep`` (never overwriting);
@@ -70,21 +72,63 @@ def state_sha256(state) -> str:
     return sha256_bytes(blob)
 
 
-def _composition(eid, man):
-    from research.matter_light_blocks_v1.registry import apply_control, compose
-    spec = json.loads((HERE / eid / man["composition"]).read_text(encoding="utf-8"))
-    cache = {}
+def _uses_composition(man) -> bool:
+    """True if the manifest declares a composition or any run is made from one."""
+    return bool(man.get("composition") or man.get("compositions")) or any("from_composition" in r for r in man["runs"])
 
-    def build(control):
-        if control not in cache:
-            s = spec if control is None else apply_control(spec, next(c for c in spec["controls"] if c["name"] == control))
+
+def _composition(eid, man):
+    """``build(control=None, key=None)``: the prepared board of one composition of the experiment, the file that the
+    manifest declares as ``compositions[key]`` (no key: the manifest's ``composition``), with one of its declared
+    controls applied.  An undeclared key, a file outside the experiment folder or an undeclared control is refused;
+    boards are cached per (file, control)."""
+    from research.matter_light_blocks_v1.registry import apply_control, compose
+    folder = (HERE / eid).resolve()
+    specs, cache = {}, {}
+
+    def build(control=None, key=None):
+        if key is None:
+            file = man.get("composition")
+        elif key in (man.get("compositions") or {}):
+            file = man["compositions"][key]
+        else:
+            raise ValueError(f"{eid}: composition {key!r} is not declared in the manifest")
+        if not file:
+            raise ValueError(f"{eid}: a composition run names no composition")
+        path = (folder / file).resolve()
+        if folder not in path.parents:
+            raise ValueError(f"{eid}: composition file {file!r} is not inside the experiment folder")
+        if file not in specs:
+            specs[file] = json.loads(path.read_text(encoding="utf-8"))
+        if (file, control) not in cache:
+            spec = specs[file]
+            if control is None:
+                s = spec
+            else:
+                found = [c for c in spec.get("controls", []) if c["name"] == control]
+                if len(found) != 1:
+                    raise ValueError(f"{eid}: {file} declares {len(found)} controls named {control!r}")
+                s = apply_control(spec, found[0])
             prepared, report = compose(s)
             bad = [k for k, v in report.items() if k.endswith("_ok") and v is False]
             if bad:
                 raise ValueError(f"{eid}: composition assertions failed: {bad}")
-            cache[control] = prepared
-        return cache[control]
+            cache[(file, control)] = prepared
+        return cache[(file, control)]
     return build
+
+
+def rewind_preparation(engine, state, k):
+    """The state ``k`` exact inverse steps before ``state``: a preparation before t = 0, not a stage of the forward run.
+    Every step is checked by advancing it again."""
+    if isinstance(k, bool) or not isinstance(k, int) or k < 0:
+        raise ValueError(f"rewind must be a non-negative integer, not {k!r}")
+    for step in range(1, k + 1):
+        earlier = engine.rewind(state)
+        if engine.advance(earlier) != state:
+            raise ArithmeticError(f"exact rewind failed at preparation step {step}")
+        state = earlier
+    return state
 
 
 def load_run(eid, man, run, composition=None):
@@ -111,12 +155,17 @@ def load_run(eid, man, run, composition=None):
             raise ValueError(f"{eid}/{run['name']}: file horizon {exp.steps} != manifest steps {steps}")
         notes["file_sha256"] = "ok"
     if "from_composition" in run:
-        prepared = composition(run["from_composition"].get("control"))
+        fc = run["from_composition"]
+        prepared = composition(fc.get("control"), fc.get("composition"))
+        k = fc.get("rewind", 0)
+        start = rewind_preparation(prepared.engine, prepared.initial, k)
         if initial is None:
-            engine, initial = prepared.engine, prepared.initial
-        elif prepared.initial != initial or prepared.engine.coupling.fingerprint != engine.coupling.fingerprint:
+            engine, initial = prepared.engine, start
+        elif start != initial or prepared.engine.coupling.fingerprint != engine.coupling.fingerprint:
             raise ValueError(f"{eid}/{run['name']}: composition does not regenerate the run's initial state")
-        notes["composition"] = "regenerated: equal initial state and coupling"
+        notes["composition"] = "regenerated: equal initial state and coupling" + (f" ({k} exact rewinds)" if k else "")
+        if "init" not in run and "block" not in run and not run.get("initial_state_sha256"):
+            raise ValueError(f"{eid}/{run['name']}: a run made only from a composition must record initial_state_sha256")
     if initial is None:
         raise ValueError(f"{eid}/{run['name']}: run has no initial data")
     if run.get("initial_state_sha256") and state_sha256(initial) != run["initial_state_sha256"]:
@@ -399,7 +448,7 @@ def _needed(check):
 def verify(eid, fast=False, keep=None):
     man = manifest(eid)
     detectors = json.loads((HERE / eid / man["detectors"]).read_text(encoding="utf-8")) if man.get("detectors") else None
-    composition = _composition(eid, man) if man.get("composition") else None
+    composition = _composition(eid, man) if _uses_composition(man) else None
     status, dec = decoder_status(man)
     out = {"id": eid, "runs": [], "checks": [], "decoder": status, "ok": True}
     reports = {}

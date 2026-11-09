@@ -16,9 +16,9 @@ def experiment_ids():
 
 def experiment(eid: str):
     """Every run of one experiment as {name, role, engine, initial, steps}; nothing is evolved."""
-    from .verify import _composition, load_run, manifest
+    from .verify import _composition, _uses_composition, load_run, manifest
     man = manifest(eid)
-    comp = _composition(eid, man) if man.get("composition") else None
+    comp = _composition(eid, man) if _uses_composition(man) else None
     out = []
     for run in man["runs"]:
         engine, initial, steps, _ = load_run(eid, man, run, comp)
