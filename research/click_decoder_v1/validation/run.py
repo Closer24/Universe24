@@ -37,9 +37,12 @@ CATALOG_SHA = "465c080634253134cd027018560430eca4c2211f6699d68795abdb319a508263"
 # The catalog's prose fields keep being edited (commit 17c7588 and later working-tree edits change only
 # 'what' and 'status'). The pre-registered truth is fixed through a fingerprint of exactly the fields used
 # here, computed from the registered file (validation/PREREGISTRATION.md, 01:31); the scorer refuses any catalog whose truth differs.
+# Release 1.0.1: the published catalog grows by appending (commit dff39dc: 338 -> 346 entries). Set A is the
+# registered first 338 entries; the fingerprint covers exactly that prefix, and appended entries are not scored.
+REGISTERED_ENTRIES = 338
 TRUTH_FIELDS = ("name", "group", "file", "file_sha256", "side", "steps", "heavy", "signature", "box_checks",
                 "final_state_sha256")
-TRUTH_SHA = "c3123352043c26124d10e9522d4666faa7948fc00819dae904151bba6c641c79"
+TRUTH_SHA = "c3123352043c26124d10e9522d4666faa7948fc00819dae904151bba6c641c79"     # first 338 entries
 OBS = ROOT / "runs/matter_light_v1/r08/observers"
 DEV = {"I6_impulse", "D5_dimer", "mover_v2of6_sp_guide02", "fiber_x_packet", "atom_trap_d6", "ring16",
        "lamp_pmm_bg4_core10", "bigbang_C3_seed_pmm_bg4", "crystal_light_matter_L8", "crystal_light_and_matter",
@@ -81,10 +84,15 @@ def horizon(e):
 
 def catalog_cases():
     entries = json.loads(CATALOG.read_text())["entries"]
-    if _truth_sha(entries) != TRUTH_SHA:
-        raise SystemExit("catalog.json truth fields differ from the pre-registered catalog")
+    registered = entries[:REGISTERED_ENTRIES]
+    if len(registered) != REGISTERED_ENTRIES or _truth_sha(registered) != TRUTH_SHA:
+        raise SystemExit(f"catalog.json: its first {REGISTERED_ENTRIES} entries differ from the pre-registered catalog "
+                         f"(truth fingerprint {_truth_sha(registered)}, registered {TRUTH_SHA}); set A is not scored")
+    if len(entries) > REGISTERED_ENTRIES:
+        print(f"catalog.json: {len(entries)} entries; set A uses the registered first {REGISTERED_ENTRIES} "
+              "(appended entries are not in set A)", file=sys.stderr, flush=True)
     out = []
-    for e in entries:
+    for e in registered:
         s = e["signature"]
         if e["heavy"] or not ("period" in s or "translation" in s or s.get("silent") or e.get("box_checks")):
             continue

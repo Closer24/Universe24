@@ -1,11 +1,26 @@
 {
  "package": "research/click_decoder_v1",
- "release_utc": "2026-11-09T02:45:47Z",
+ "release": "1.0.1",
+ "release_utc": "2026-11-09T03:24:57Z",
  "default_version": "1.0",
  "versions": {
   "1.0": "FROZEN.json",
   "1.1": "FROZEN_v1.1.json",
   "sign_split_v1 layer": "FROZEN_sign_split_v1.json"
+ },
+ "change": {
+  "files": [
+   "validation/run.py"
+  ],
+  "what": "catalog_cases(): set A is the registered first 338 catalog entries, pinned by the truth fingerprint of exactly that prefix (TRUTH_SHA c3123352...); the scorer stops with an error if the prefix ever differs (a changed truth field, reordered or inserted entries, fewer than 338 entries); entries appended after them are not scored, and a one-line notice says so.",
+  "reason": "the published catalog grew 338 -> 346 entries by append (commit dff39dc); release 1.0's scorer fingerprinted the whole entry list and refused the catalog at HEAD, so the README's set-A rerun did not hold.",
+  "unchanged": "every other package file, including all decoders, configs, FROZEN files, README and results, is byte-identical to release 1.0; no score changes."
+ },
+ "previous_release": {
+  "release": "1.0",
+  "release_utc": "2026-11-09T02:45:47Z",
+  "commit": "0af5984",
+  "validation/run.py": "531e1b0b0a39a0bb7f2f837fdebc5e00963a722f2d649ef99d4a8fd0826296a4"
  },
  "tests": {
   "commands": "python -m unittest tests.test_click_decoder_v1 tests.test_click_decoder_v11",
@@ -14,6 +29,12 @@
    "tests/test_click_decoder_v1.py": "fb9f2df93c348c9a9f6f2f58948763f3b3fa7cdcac66896bebcda70cb209d745",
    "tests/test_click_decoder_v11.py": "821bed98472c3e8fe85ba0d0301821d0db6732028c21128750573b489711dbb4"
   }
+ },
+ "set_A_rerun_at_HEAD": {
+  "tree": "clean export of commit 597df1e (universe24/, research/click_decoder_v1/, research/matter_light_blocks_v1/) with this release's validation/run.py; catalog.json 2335027d46377b3d... (346 entries)",
+  "logs": "194 set-A logs regenerated with the official CLI (released logs(), set C off: its observer logs are local); 194/194 byte-identical to the recorded SHA-256",
+  "v1.1": "metrics, by-group table and all 194 case rows equal to validation/results_v1.1.json (timing excluded)",
+  "v1.0": "by-group table and all 194 case rows equal to validation/results_v1.0.json (timing excluded); metrics equal except one key the scorer gained after v1.0's results were written ('A-B box c_image: C-image lap == declared lap (v1.1 test)': absent there, 0/2 in the rerun, since v1.0 has no C-image test)"
  },
  "files_sha256": {
   "FROZEN.json": "48e599a07c71f747196fa048eb0bad6b0b4bdebdcf77a83e4e1f86b18ecad121",
@@ -40,9 +61,9 @@
   "validation/results_v1.0_extra.json": "f68f42cb1c1aeb909f4cb0de036936acb7b12a1553c29eb4305112264e734d31",
   "validation/results_v1.1.json": "1ca12b08db8c9d7b4cdb68e34785129626e957f042106ffb9ec95504eae34557",
   "validation/results_v1.1_extra.json": "1af847e201c999fb620f94c590b06e2c6ac4ba49a400e08d3b875b245c6cf081",
-  "validation/run.py": "531e1b0b0a39a0bb7f2f837fdebc5e00963a722f2d649ef99d4a8fd0826296a4",
+  "validation/run.py": "f933fc6d7840ed414e68ea4d48cda1804072d4040561731b8b2154290a8de2d1",
   "validation/snapshot_r08.py": "a105f1165831d20e7dd7f6a319fe3244175963f720fbf2a0d90fbf39e68fde3d",
   "validation/table.py": "eb7ce6cb980098afe3a1d4d4ebb9e27dff4434718b1890933897f29c0bf5a0da"
  },
- "note": "release freeze for the architect's push; no file of this package is edited after this time (v1.2 is developed outside the package, in research/matter_light_v1/r17/v12_dev/)"
+ "note": "release 1.0.1 for the architect's review before the push; supersedes release 1.0 (02:45:47Z). No file of this package is edited after this time (v1.2 and later are developed in research/matter_light_v1/r17/)."
 }
