@@ -71,8 +71,8 @@ was also checked against the program's own code:
   THEORY S7: `research/matter_light_v1/chapters/THEORY.md`, program record). This is allowed only inside one
   gauge class (B = {+++, +−−, −++, −−−}, F = the other four), with a J-fixed background, and on even L when
   staggered. The click addresses are unchanged; C1↔C2 and q → −q on the flipped channels. Coupling patches
-  between different triples are impossible (r16, `research/coupling_variants_v1/`: program record, branch
-  `backup/matter-light-working`).
+  between different triples are impossible (r16,
+  [`research/coupling_variants_v1`](../../coupling_variants_v1/README.md)).
 * **Includes.** A placement `{"include": spec, "at": [...], "gauge": ..., "prefix": "..."}` inlines a
   sub-composition (`expand`), carrying its assertions.
 * **Assertions.** `junction_classes`, `slot_clocks_silent`, `beside_fibre` (a gate clock two sites from a

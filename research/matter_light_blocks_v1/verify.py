@@ -4,9 +4,12 @@ Uses only the unchanged engine package ``universe24`` and the standard library.
 For every catalog entry it:
 
 1. checks the SHA-256 of the init file against the catalog;
-2. loads it with ``universe24.experiments.from_dict`` (the official init format);
-3. runs the native ``Engine`` for the declared horizon and checks the exact
-   inverse ``Engine.rewind`` at every update;
+2. loads it with ``universe24.experiments.from_dict`` (the official init format), or a
+   ``universe24-variant-init-v1`` file with ``research.coupling_variants_v1.from_dict`` (an
+   explicitly separate candidate coupling; the catalog entry must declare the same label and
+   fingerprint, with ``"signs": null``);
+3. runs the native ``Engine`` (or the ``VariantEngine``, which applies the same Rule3
+   primitive) for the declared horizon and checks the exact inverse ``rewind`` at every update;
 4. compares the complete final state with the recorded SHA-256;
 5. re-checks the generic part of the declared signature (period, translation,
    silence, click counts and kinds, no-return bound) with the native click
@@ -41,6 +44,34 @@ from universe24.core.group_2o import group
 
 HERE = Path(__file__).resolve().parent
 CATALOG = HERE / "catalog.json"
+VARIANT_FORMAT = "universe24-variant-init-v1"
+
+
+def load_init(data: dict):
+    """An init dictionary: the official format, or the variant format (whose loader is imported only then)."""
+    if data.get("format") == VARIANT_FORMAT:
+        from research.coupling_variants_v1 import from_dict as variant_from_dict
+        experiment = variant_from_dict(data)      # rebuilds and validates the table, checks its fingerprint
+        if experiment.engine.coupling.reference_signs is not None:
+            raise ValueError("a reference coupling table belongs in the official init format")
+        return experiment
+    return from_dict(data)
+
+
+def experiment_of(entry: dict):
+    """The block's experiment. A variant file must carry exactly the table that the entry declares
+    (``coupling``: kind variant, label, fingerprint; ``signs``: null)."""
+    data = json.loads((HERE / entry["file"]).read_text(encoding="utf-8"))
+    experiment = load_init(data)
+    declared = entry.get("coupling") or {}
+    if data.get("format") == VARIANT_FORMAT:
+        table = experiment.engine.coupling
+        if (declared.get("kind"), declared.get("label"), declared.get("fingerprint"), entry.get("signs")) != \
+                ("variant", table.label, table.fingerprint, None):
+            raise ValueError(f"{entry['name']}: the variant table differs from the catalog entry")
+    elif declared.get("kind") == "variant":
+        raise ValueError(f"{entry['name']}: the catalog declares a variant coupling, the file is a reference init file")
+    return experiment
 
 
 def state_hash(state) -> str:
@@ -62,7 +93,7 @@ def load_catalog() -> dict:
 def load(name: str):
     """(engine, initial state, horizon, catalog entry) for one block."""
     entry = next(e for e in load_catalog()["entries"] if e["name"] == name)
-    experiment = from_dict(json.loads((HERE / entry["file"]).read_text(encoding="utf-8")))
+    experiment = experiment_of(entry)
     return experiment.engine, experiment.initial, experiment.steps, entry
 
 
@@ -74,7 +105,7 @@ def _shift(state, v):
 
 def replay(entry: dict) -> dict:
     """Native run with exact inverse every update; returns the measured quantities."""
-    experiment = from_dict(json.loads((HERE / entry["file"]).read_text(encoding="utf-8")))
+    experiment = experiment_of(entry)
     engine, initial, steps = experiment.engine, experiment.initial, experiment.steps
     sig = entry.get("signature", {})
     trans = sig.get("translation")
@@ -233,7 +264,7 @@ def main(argv=None) -> int:
     for name, fails in failed:
         print(f"FAIL {name}: {'; '.join(fails)}")
     print(f"{passed}/{len(entries)} blocks pass ({time.time() - start:.0f} s); "
-          f"native Engine, exact inverse at every update")
+          f"native Engine (VariantEngine for variant blocks), exact inverse at every update")
     return 1 if failed else 0
 
 

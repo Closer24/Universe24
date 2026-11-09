@@ -13,6 +13,7 @@ that engine; observers and the Presenter read determined states.
 | Prepare clocks and signal-mediated assemblies | [Clock interfaces and limits](../docs/CLOCK_SELECTION.md), `clock_selection/quiet_clock.py`, `staged_blocks/` |
 | Compare clock-rate and gravity claims | [Current evidence and limits](../docs/GRAVITY_STATUS.md) |
 | Build an autonomous guided source/record/echo | [Finite-guide clock link](clock_link_v1/README.md) |
+| Run with another fixed 2O-covariant coupling (separate variant) | [Candidate couplings](coupling_variants_v1/README.md); equal to the engine on the eight triples, every other table labelled |
 | Run a JSON experiment and export recordings | [Detailed walkthrough](../docs/COMPONENT_WALKTHROUGH.md), `experiments/run.py` |
 | Replay clocks and gears | [Presenter](../docs/PRESENTER.md), `presenter/` |
 | Verify mathematics independently | [Independent reference](reference/README.md), `reference/` |
@@ -36,7 +37,7 @@ assignments. Functional composition requires a new controlled native run.
 | Light-approval hypothesis | [Study record](light_approval/README.md); explicit hypotheses and negative controls, not a physical approval mechanism |
 | Message mechanism | [Study record](message_mechanism/README.md); preparations, interfaces and limits |
 | Algorithm comparisons | [Analogue review](algorithm_analogues/README.md); conceptual comparisons, not imported dynamics |
-| Matter and light building blocks | [Published set](matter_light_blocks_v1/README.md); 346 data-only preparations (light, matter, atoms, spin, charge, clocks, media, seeds), each replayed natively with the exact inverse; candidate names, prepared media, stated limits |
+| Matter and light building blocks | [Published set](matter_light_blocks_v1/README.md); 348 data-only preparations (light, matter, atoms, spin, charge, clocks, media, seeds; one block under an explicitly separate candidate variant, beside its reference companion), each replayed natively with the exact inverse; candidate names, prepared media, stated limits |
 | Matter and light experiments | [Curated experiments](matter_light_experiments_v1/README.md); each experiment is data (compositions of registered blocks, init files or published blocks; declared detectors; a card), replayed by one generic verifier with the exact inverse, with every claim read only from the frozen click decoder; candidate names, prepared media, stated limits |
 | Click decoder | [Generic click decoder](click_decoder_v1/README.md); frozen v1.0 (the default) and v1.1 and released read-only layers; reads click logs only, never a board |
 
@@ -49,7 +50,9 @@ while leaving local and approximate formation open.
 The [per-channel rational-coefficient proposal](clock_selection/fixed_ratio_candidate.md)
 is an **unselected, unimplemented comparison**, outside the current model.
 The [broader coupling families](../docs/COUPLING_FAMILIES.md) likewise distinguish
-mathematical options from the eight tensors accepted by the engine.
+mathematical options from the eight tensors accepted by the engine; the
+[candidate-coupling executor](coupling_variants_v1/README.md) runs them only as an
+explicitly separate, labelled variant.
 
 ## Preserved experiments and frozen evidence
 

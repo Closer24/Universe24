@@ -4,21 +4,24 @@
     python -m research.matter_light_blocks_v1.append PROPOSAL.json           # write files and the catalog
 
 A proposal is ``{"entries": [...]}``. Each entry gives ``name``, ``group``, ``file`` (a source init file in the
-official format, repository-relative), ``steps``, ``what``, ``limits``, ``status``, ``source``, ``origin``,
-``added`` and optionally ``signature``, ``box_checks``, ``controls``, ``tags``, ``composable``, ``heavy``.
+official format, or in the variant format ``universe24-variant-init-v1`` of ``research.coupling_variants_v1``;
+repository-relative), ``steps``, ``what``, ``limits``, ``status``, ``source``, ``origin``, ``added`` and optionally
+``signature``, ``box_checks``, ``controls``, ``tags``, ``composable``, ``heavy``. A variant entry must also declare
+``coupling`` = ``{"kind": "variant", "label": ..., "fingerprint": ...}`` exactly as its file's table gives them;
+its catalog entry then has ``"signs": null`` and that ``coupling``.
 For every entry the tool:
 
 1. refuses a published name, a repeated name, an unknown group, and an initial state identical to a published
    block (a repeated preparation is not republished);
-2. writes the official init file compactly to ``blocks/<group>/<name>.json`` (never overwrites; reload-checked);
-3. replays it with ``verify.replay`` (native Engine, exact inverse at every update) and requires
+2. writes the init file compactly to ``blocks/<group>/<name>.json`` (never overwrites; reload-checked);
+3. replays it with ``verify.replay`` (native Engine or VariantEngine, exact inverse at every update) and requires
    ``verify.check`` to report no failure;
 4. records ``file_sha256``, ``final_state_sha256`` and the measured click totals.
 
 Only if every entry passes does it copy the files in and append the entries to ``catalog.json``: the existing
 entries stay byte-identical (checked before writing). The 8301320 build tool ``build_from_library.py`` is not
 used: the program's source library has changed since, so a rebuild would not reproduce the published entries.
-Needs only ``universe24`` and the standard library.
+Needs only ``universe24`` and the standard library (and ``research.coupling_variants_v1`` for variant files).
 """
 from __future__ import annotations
 
@@ -28,8 +31,6 @@ from pathlib import Path
 import shutil
 import sys
 import tempfile
-
-from universe24.experiments import from_dict
 
 from . import verify as V
 
@@ -53,14 +54,31 @@ def compact(data: dict) -> str:
 
 
 def _official(path: Path, steps: int):
+    """The published form of a source init file: the official format, or the canonical variant format."""
     data = json.loads(path.read_text(encoding="utf-8"))
-    exp = from_dict(data)
+    exp = V.load_init(data)
     if exp.steps != steps:
         raise ValueError(f"{path}: file horizon {exp.steps} differs from the declared steps {steps}")
+    if data.get("format") == V.VARIANT_FORMAT:
+        from research.coupling_variants_v1 import init_data
+        return init_data(exp.engine.coupling, exp.initial, steps), exp
     return {"side": exp.initial.cube.side, "coupling_signs": list(exp.engine.coupling.body_signs),
             "background": list(exp.initial.background), "steps": steps,
             "seed_changes": [{"position": list(a[:3]), "channel": a[3], "state": list(s)}
                              for a, s in sorted(exp.initial.cells.items())]}, exp
+
+
+def _text(data: dict) -> str:
+    """The compact published layout of either format."""
+    if data.get("format") == V.VARIANT_FORMAT:
+        from research.coupling_variants_v1.config import dumps
+        return dumps(data)
+    return compact(data)
+
+
+def _key(exp) -> tuple:
+    """A preparation is the complete initial state under one coupling table."""
+    return exp.engine.coupling.fingerprint, V.state_hash(exp.initial)
 
 
 def prepare(proposal: dict, catalog: dict, stage: Path) -> list[dict]:
@@ -68,8 +86,7 @@ def prepare(proposal: dict, catalog: dict, stage: Path) -> list[dict]:
     published = {e["name"] for e in catalog["entries"]}
     initial = {}
     for e in catalog["entries"]:
-        exp = from_dict(json.loads((V.HERE / e["file"]).read_text(encoding="utf-8")))
-        initial.setdefault((exp.engine.coupling.body_signs, V.state_hash(exp.initial)), e["name"])
+        initial.setdefault(_key(V.experiment_of(e)), e["name"])
     names = Counter(p["name"] for p in proposal["entries"])
     out = []
     for p in proposal["entries"]:
@@ -81,20 +98,30 @@ def prepare(proposal: dict, catalog: dict, stage: Path) -> list[dict]:
         if p["group"] not in SLUG:
             raise ValueError(f"{p['name']}: unknown group {p['group']}")
         data, exp = _official(ROOT / p["file"], p["steps"])
-        same = initial.get((exp.engine.coupling.body_signs, V.state_hash(exp.initial)))
+        coupling = None
+        if data.get("format") == V.VARIANT_FORMAT:
+            table = exp.engine.coupling
+            coupling = {"kind": "variant", "label": table.label, "fingerprint": table.fingerprint}
+            if p.get("coupling") != coupling:
+                raise ValueError(f"{p['name']}: declared coupling {p.get('coupling')} differs from the file's {coupling}")
+        elif p.get("coupling") is not None:
+            raise ValueError(f"{p['name']}: a coupling is declared, but the file is in the official format")
+        same = initial.get(_key(exp))
         if same:
             raise ValueError(f"{p['name']}: same complete initial state as the published block {same}")
         rel = Path("blocks") / SLUG[p["group"]] / f"{p['name']}.json"
         target = stage / rel
         target.parent.mkdir(parents=True, exist_ok=True)
         with target.open("x", encoding="utf-8") as handle:
-            handle.write(compact(data))
-        if from_dict(json.loads(target.read_text(encoding="utf-8"))).initial != exp.initial:
+            handle.write(_text(data))
+        if V.load_init(json.loads(target.read_text(encoding="utf-8"))).initial != exp.initial:
             raise AssertionError(f"{p['name']}: written file does not reproduce the preparation")
         entry = {"name": p["name"], "group": p["group"], "what": p["what"], "source": p["source"],
-                 "origin": p["origin"], "status": p["status"], "signs": data["coupling_signs"],
+                 "origin": p["origin"], "status": p["status"], "signs": data.get("coupling_signs"),
                  "background": data["background"], "side": data["side"], "steps": p["steps"],
                  "cells": len(data["seed_changes"])}
+        if coupling is not None:
+            entry["coupling"] = coupling
         for key, default in OPTIONAL.items():
             entry[key] = p.get(key, default)
         entry.update({"limits": p["limits"], "file": rel.as_posix(), "file_sha256": V.file_sha256(target),

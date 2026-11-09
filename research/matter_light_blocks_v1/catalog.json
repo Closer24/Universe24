@@ -25905,6 +25905,363 @@
      "C0": 142
     }
    }
+  },
+  {
+   "name": "chiral_two_sector_board_L192",
+   "group": "interaction and detectors",
+   "what": "VARIANT chiral-011-mpp@190301d802c5: two prepared, non-interacting sectors on one board (its click log is the union of the sectors' logs, R10G-44): a weak-like candidate and an EM-like candidate (candidate wording). Weak-like: two emitters, each a gauged light ring with one packet on a skew hexagon, joined by a one-label junction to an output light half-line, sit on mirror geometries: the emitter on geometry G sends one light packet every 48 updates, the one on the mirror geometry every 24 (ring holonomy orders 8 and 4 sheets; a geometry-mirror comparison over all labels). Channel-blind, both rings have period 12, so the 48 vs 24 difference of the rings needs channel labels (R10G-39); the output tracks show it channel-blind (R10G-40). EM-like: a like pair of M4r_eta charges at contact distance 2 binds into a period-10 clock and the unlike pair stays dark; the linear charge Q_eta (eta = (-1)^(x+y+z) chi_A2(g)) is exactly conserved. Reference beside it (chiral_two_sector_board_L192_control_reference, (-,+,+), same layout, devices built for that table): emitters 48 and 48, like pair 10, unlike pair dark. Decoder click_decoder_v1 1.0 on the variant runner's click log (sha256 231f05796f9eab66e5deb114d592862a20c0089771d274a2874359b49264048d): sources 24/48/10, exact v = 1 light tracks spaced 24 (line y = 48) and 48 (line y = 16), unlike pair 0 clicks; on the reference companion's official CLI log (sha256 9bc6e70b2433e5cca08ff355fd698d25a8cde738ae75724e1eaba21b0043fedc): sources 48/48/10, spacings 48/48, unlike pair 0 clicks.",
+   "source": "r30, matter/light program wave 2 (two-sector board): skew-hexagon guides from r04's guide algebra with the table's own ports; r05's M4r monomers in the table's balanced gauge.",
+   "origin": "research (r30), 2026-11-09",
+   "status": "referee r10g: CONFIRMED - exact replay, min-period boxes 48/24/10 (ref 48/48/10), log SHAs, decoder v1.0; VARIANT; two prepared non-interacting sectors, contact-only charge rule",
+   "signs": null,
+   "background": [
+    0,
+    0,
+    2
+   ],
+   "side": 192,
+   "steps": 170,
+   "cells": 582,
+   "coupling": {
+    "kind": "variant",
+    "label": "variant:chiral-011-mpp@190301d802c5",
+    "fingerprint": "190301d802c54dcd752fa4e5025b66aabf2c4556feae706e27fd25ddfbc125cb"
+   },
+   "signature": {
+    "words": "sources 24/48/10; output tracks spaced 24 and 48 at v = 1; unlike pair silent"
+   },
+   "box_checks": [
+    {
+     "label": "ring G",
+     "type": "periodic",
+     "sites": [
+      [
+       10,
+       17,
+       16
+      ],
+      [
+       11,
+       17,
+       16
+      ],
+      [
+       11,
+       18,
+       16
+      ],
+      [
+       11,
+       18,
+       17
+      ],
+      [
+       10,
+       18,
+       17
+      ],
+      [
+       10,
+       17,
+       17
+      ]
+     ],
+     "period": 48,
+     "from": 2,
+     "to": 170
+    },
+    {
+     "label": "ring G-mirror",
+     "type": "periodic",
+     "sites": [
+      [
+       10,
+       47,
+       16
+      ],
+      [
+       9,
+       47,
+       16
+      ],
+      [
+       9,
+       46,
+       16
+      ],
+      [
+       9,
+       46,
+       15
+      ],
+      [
+       10,
+       46,
+       15
+      ],
+      [
+       10,
+       47,
+       15
+      ]
+     ],
+     "period": 24,
+     "from": 2,
+     "to": 170
+    },
+    {
+     "label": "like pair",
+     "type": "periodic",
+     "sites": [
+      [
+       60,
+       100,
+       100
+      ],
+      [
+       61,
+       100,
+       100
+      ],
+      [
+       62,
+       100,
+       100
+      ]
+     ],
+     "period": 10,
+     "from": 2,
+     "to": 170
+    },
+    {
+     "label": "unlike pair",
+     "type": "periodic",
+     "sites": [
+      [
+       60,
+       140,
+       140
+      ],
+      [
+       61,
+       140,
+       140
+      ],
+      [
+       62,
+       140,
+       140
+      ]
+     ],
+     "period": 4,
+     "from": 2,
+     "to": 170
+    }
+   ],
+   "controls": [
+    "chiral_two_sector_board_L192_control_reference"
+   ],
+   "tags": [
+    "new",
+    "variant",
+    "weak-like",
+    "EM-like",
+    "parity",
+    "charge"
+   ],
+   "composable": false,
+   "heavy": false,
+   "limits": "VARIANT chiral-011-mpp@190301d802c5: an explicitly separate candidate coupling (research/coupling_variants_v1), fixed before t = 0, not the reference model; the reference companion ((-,+,+), same layout) gives emitter periods 48 and 48. The devices are prepared, not created; the emitters are lamps, not decays; the charge rule acts at contact only (no force at a distance); the two sectors never interact (the board's click log is the union of the sectors' logs, R10G-44); the mirror test compares geometries over all labels (all 16 output labels give the same period on each geometry), because the variant has no orientation-reversing channel map; Q_eta and the routing blindness hold on even sides or with support off the seam (R10G-42/43); L = 192 is even; box checks are minimal periods on [2, 170] (a one-update halo transient of the preparation next to each junction at t = 0-1); device generality, not refereed (R10G-45): 73 of 76 devices pass, the 3 failures are junction effects on extra geometries (two sides: the second copy comes 4 updates late; one side: the first copy seeds growing debris).",
+   "file": "blocks/interaction_and_detectors/chiral_two_sector_board_L192.json",
+   "file_sha256": "d715db435ec65a39104a2f52bb179db1876a5c4ce0e003b753b6f259d5858366",
+   "library_verified": false,
+   "added": "2026-11-09",
+   "final_state_sha256": "f716905249a665948b87aad734ba531ee67d4a789e412ad7fc3ddd84a3e4f269",
+   "measured": {
+    "first_return": null,
+    "clicks_total": 8708,
+    "kinds_total": {
+     "C2": 4344,
+     "C1": 4364
+    }
+   }
+  },
+  {
+   "name": "chiral_two_sector_board_L192_control_reference",
+   "group": "interaction and detectors",
+   "what": "Reference companion of the VARIANT block chiral_two_sector_board_L192: the same layout under (-,+,+) (the achiral reference table), two prepared, non-interacting sectors with the two skew-ring emitters built for this table: both emit one light packet every 48 updates (equal rates: no geometry-mirror difference), the like M4r_eta pair binds into a period-10 clock, the unlike pair stays dark, Q_eta exactly conserved. Beside it, VARIANT chiral-011-mpp@190301d802c5: emitters 48 vs 24, like pair 10, unlike pair dark. Decoder click_decoder_v1 1.0 on the official click log (sha256 9bc6e70b2433e5cca08ff355fd698d25a8cde738ae75724e1eaba21b0043fedc): sources 48/48/10, exact v = 1 light tracks spaced 48 on both lines, unlike pair 0 clicks; the variant runner's log on this table equals the official CLI log bit for bit.",
+   "source": "r30, matter/light program wave 2 (two-sector board): skew-hexagon guides from r04's guide algebra with the table's own ports; r05's M4r monomers in the table's balanced gauge.",
+   "origin": "research (r30), 2026-11-09",
+   "status": "referee r10g: CONFIRMED - exact replay, min-period boxes 48/48/10, log SHA (official CLI), decoder v1.0; reference companion of the VARIANT block (R10G-67..70)",
+   "signs": [
+    -1,
+    1,
+    1
+   ],
+   "background": [
+    0,
+    0,
+    2
+   ],
+   "side": 192,
+   "steps": 170,
+   "cells": 606,
+   "signature": {
+    "words": "sources 48/48/10; output tracks spaced 48 and 48 at v = 1; unlike pair silent"
+   },
+   "box_checks": [
+    {
+     "label": "ring G",
+     "type": "periodic",
+     "sites": [
+      [
+       10,
+       17,
+       16
+      ],
+      [
+       11,
+       17,
+       16
+      ],
+      [
+       11,
+       18,
+       16
+      ],
+      [
+       11,
+       18,
+       17
+      ],
+      [
+       10,
+       18,
+       17
+      ],
+      [
+       10,
+       17,
+       17
+      ]
+     ],
+     "period": 48,
+     "from": 2,
+     "to": 170
+    },
+    {
+     "label": "ring G-mirror",
+     "type": "periodic",
+     "sites": [
+      [
+       10,
+       47,
+       16
+      ],
+      [
+       9,
+       47,
+       16
+      ],
+      [
+       9,
+       46,
+       16
+      ],
+      [
+       9,
+       46,
+       15
+      ],
+      [
+       10,
+       46,
+       15
+      ],
+      [
+       10,
+       47,
+       15
+      ]
+     ],
+     "period": 48,
+     "from": 2,
+     "to": 170
+    },
+    {
+     "label": "like pair",
+     "type": "periodic",
+     "sites": [
+      [
+       60,
+       100,
+       100
+      ],
+      [
+       61,
+       100,
+       100
+      ],
+      [
+       62,
+       100,
+       100
+      ]
+     ],
+     "period": 10,
+     "from": 2,
+     "to": 170
+    },
+    {
+     "label": "unlike pair",
+     "type": "periodic",
+     "sites": [
+      [
+       60,
+       140,
+       140
+      ],
+      [
+       61,
+       140,
+       140
+      ],
+      [
+       62,
+       140,
+       140
+      ]
+     ],
+     "period": 4,
+     "from": 2,
+     "to": 170
+    }
+   ],
+   "controls": [
+    "chiral_two_sector_board_L192"
+   ],
+   "tags": [
+    "new",
+    "control",
+    "EM-like",
+    "charge"
+   ],
+   "composable": false,
+   "heavy": false,
+   "limits": "Reference table (-,+,+); companion of VARIANT chiral-011-mpp@190301d802c5 (emitters 48 vs 24 there). The initial state is the same layout as the variant file, not the same cells: the rings follow each table's ports. The devices are prepared, not created; the emitters are lamps, not decays; the charge rule acts at contact only (no force at a distance); the two sectors never interact (the board's click log is the union of the sectors' logs, R10G-44); the mirror test compares geometries over all labels (all 16 output labels give the same period on each geometry), because the variant has no orientation-reversing channel map; Q_eta and the routing blindness hold on even sides or with support off the seam (R10G-42/43); L = 192 is even; box checks are minimal periods on [2, 170] (a one-update halo transient of the preparation next to each junction at t = 0-1); device generality, not refereed (R10G-45): 73 of 76 devices pass, the 3 failures are junction effects on extra geometries (two sides: the second copy comes 4 updates late; one side: the first copy seeds growing debris).",
+   "file": "blocks/interaction_and_detectors/chiral_two_sector_board_L192_control_reference.json",
+   "file_sha256": "3cdd62cff1b1c0dd3f3b265c71afd42b78a998900315a6c5375441d5853b2539",
+   "library_verified": false,
+   "added": "2026-11-09",
+   "final_state_sha256": "3b4f2098b0bf58e1a4845cda62ea20366a9986034b7c5a889791c7fd48428012",
+   "measured": {
+    "first_return": null,
+    "clicks_total": 8108,
+    "kinds_total": {
+     "C2": 4048,
+     "C1": 4060
+    }
+   }
   }
  ],
  "rejected": []

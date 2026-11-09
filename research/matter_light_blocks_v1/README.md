@@ -1,10 +1,13 @@
 # Matter and light building blocks (published set)
 
-346 **data-only initial preparations** from the matter/light research program.
+348 **data-only initial preparations** from the matter/light research program.
 Each one is an official init file: complete initial cells, background, one of the
-eight fixed sign triples, and a horizon. Every block was replayed with the
-unchanged native `Engine`, with the exact inverse `Engine.rewind` checked at every
-update, before it was published. Nothing here is an engine, a rule change, a
+eight fixed sign triples, and a horizon. The one exception is a **variant block**
+(`chiral_two_sector_board_L192`), a `universe24-variant-init-v1` file under the
+explicitly separate candidate coupling `variant:chiral-011-mpp@190301d802c5`, published
+beside its reference companion (see `coupling` below). Every block was replayed with the
+unchanged native `Engine` (the variant block with the `VariantEngine`), with the exact
+inverse checked at every update, before it was published. Nothing here is an engine, a rule change, a
 detector that writes into a run, or a runtime method. After t = 0 only Rule3 acts.
 
 Names such as "light", "matter", "atom", "lamp", "spinor-class", "charge", "Big Bang"
@@ -18,7 +21,7 @@ charge, energy or cosmology (AGENTS rules 10 and 12).
 python -m research.matter_light_blocks_v1.verify --list            # all blocks, group, file
 python -m research.matter_light_blocks_v1.verify fiber_x_packet     # replay and check one block
 python -m research.matter_light_blocks_v1.verify --quick            # every non-heavy block
-python -m research.matter_light_blocks_v1.verify                    # all 346 (about 3 minutes)
+python -m research.matter_light_blocks_v1.verify                    # all 348 (about 3 minutes)
 python -m universe24 --config research/matter_light_blocks_v1/blocks/light/fiber_x_packet.json --audit
 ```
 
@@ -51,7 +54,7 @@ registry's WAVE 5) regenerate exactly from tracked code.
 | spin | 13 | `spinor_screw`, `spin720_ring`, `spinor_ring_r09` (360° image after one lap, return after 720°), `spin_module_pure4pairs_L80` |
 | charge | 44 | sign rules at contact, static charges, charge bookkeeping of Big-Bang seeds |
 | clocks and gravity | 41 | Einstein networks, `charge_cavity_D10`, `created_atoms_as_clocks_R7`, `einstein_created_instruments_L240` |
-| interaction and detectors | 55 | phase gates, 1-bit records, track detectors, trap spectroscopy |
+| interaction and detectors | 57 | phase gates, 1-bit records, track detectors, trap spectroscopy |
 | media | 6 | `crystal_light_and_matter` (one (−,+,+) crystal carrying light candidates at click-front speed 1 and matter candidates at 1/3) |
 | seeds (big bang) | 30 | `toy_universe_v2_main`, `cascade_pure4pairs`, `planar_bigbang_L16`, `d1_skeleton_atom_spin_clocks_L160` |
 
@@ -82,14 +85,21 @@ registry's WAVE 5) regenerate exactly from tracked code.
 * `d1_skeleton_atom_spin_clocks_L320` — the skeleton on its periodic 2L extension (atom
   box and 7 ring laps checked); `d1_skeleton_atom_spin_clocks_L160_control_no_seed` is its
   silent control (the hardware alone is an exact period-4 clock).
+* `chiral_two_sector_board_L192` — **VARIANT** `chiral-011-mpp@190301d802c5`, an explicitly
+  separate candidate coupling: two prepared, non-interacting sectors on one board, a weak-like
+  candidate (skew-ring emitters on mirror geometries, one packet every 48 vs 24 updates) and an
+  EM-like candidate (like charge pair period 10, unlike pair dark). Its reference companion
+  `chiral_two_sector_board_L192_control_reference` ((−,+,+), same layout) gives 48 and 48.
 
 ## Checks performed on replay
 
 For every block `verify.py`:
 
 1. checks the init file's SHA-256 against `catalog.json`;
-2. loads the file with the official loader `universe24.experiments.from_dict`;
-3. runs the native Engine for the declared horizon, checking the exact inverse at every update;
+2. loads the file with the official loader `universe24.experiments.from_dict` (a variant file with
+   `research.coupling_variants_v1.from_dict`, whose table must be the entry's `coupling`);
+3. runs the native Engine (the `VariantEngine` for a variant file) for the declared horizon, checking
+   the exact inverse at every update;
 4. compares the complete final state with the recorded SHA-256;
 5. re-checks the generic signature fields with the native click classifier:
    first exact return (period), translation, silence, clicks and kinds per period,
@@ -141,6 +151,7 @@ and `final_state_sha256` alone; nothing in the archive is needed.
 | `what`, `limits`, `controls`, `tags` | declared behaviour, stated domain, control blocks, labels such as `new` |
 | `source`, `origin`, `status`, `library_verified` | researcher, provenance string, evidence label, registered by the source library |
 | `signs`, `background`, `side`, `steps`, `cells` | coupling triple, uniform background, board side, horizon, stored cells |
+| `coupling` | only for a variant block: `{"kind": "variant", "label", "fingerprint"}` of its table (then `signs` is `null`); its file is a `universe24-variant-init-v1` file of the explicitly separate candidate couplings in [`research/coupling_variants_v1`](../coupling_variants_v1/README.md), replayed by its `VariantEngine` with the exact inverse |
 | `signature`, `box_checks` | declared readouts re-checked by `verify.py` (`custom` and `words` are not) |
 | `final_state_sha256`, `measured` | complete final state hash; first return and native click totals |
 | `composable` | `false` for board-spanning media and sheets (not placeable as a local patch) |
