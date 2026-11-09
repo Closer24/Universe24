@@ -74,7 +74,7 @@ DERIVE = ("chsh", "alpha", "e_table", "covariant_curve", "best_chsh", "tlm", "pl
 # number of official logs each call reads first (a one-log call reads the check's run, or each of its runs; a call of
 # n > 1 logs reads "runs" = [a, b, ...] of length n, in that order)
 LAYERS = {"log_symmetry_v1": {"mirror": 1, "best_tau": 1, "period": 1, "c_image": 1, "record_diff": 2},
-          "beat_clock_v1": {"run_declared": 1}}
+          "beat_clock_v1": {"run_declared": 1}, "gr_observer_v1": {"run_declared": 1}}
 
 
 # ------------------------------------------------------------------------------------------- data and hashes

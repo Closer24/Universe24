@@ -1,29 +1,31 @@
 {
  "package": "research/click_decoder_v1",
- "release": "1.0.4",
- "release_utc": "2026-11-09T07:14:05Z",
+ "release": "1.0.5",
+ "release_utc": "2026-11-09T10:25:30Z",
  "default_version": "1.0",
  "versions": {
   "1.0": "FROZEN.json",
   "1.1": "FROZEN_v1.1.json",
   "sign_split_v1 layer": "FROZEN_sign_split_v1.json",
   "log_symmetry_v1 layer": "FROZEN_log_symmetry_v1.json",
-  "beat_clock_v1 layer": "FROZEN_beat_clock_v1.json"
+  "beat_clock_v1 layer": "FROZEN_beat_clock_v1.json",
+  "gr_observer_v1 layer": "FROZEN_gr_observer_v1.json"
  },
  "change": {
   "files_changed": [
    "README.md",
-   "validation/heldout.py",
-   "validation/heldout_sign.py",
-   "validation/results_beat_clock_v1.json",
-   "validation/run.py"
+   "RELEASE.json"
   ],
-  "tests_changed": [
-   "tests/test_click_decoder_v1.py"
+  "files_added": [
+   "gr_observer_v1.py",
+   "FROZEN_gr_observer_v1.json"
   ],
-  "what": "validation scripts and records only: heldout and heldout_sign write their results under runs/click_decoder_v1/heldout/ (never into the package) and compare each top-level entry with the recorded validation/heldout_v1.1.json and validation/heldout_sign_split_v1.json, timing ignored, stopping with an error if an entry that both hold differs; run's logs, score and extra (without --sets A) check the program's local logs first and stop with one line, before any decoding, if one is missing, and run without a known command prints a usage line; results_beat_clock_v1.json names its three logs by file name (the absolute local paths in report.log replaced; log_sha256 unchanged); README: the quick-use mkdir, provenance pointers, the cyclic-bang names CB1, CB2, CB3a, and the held-out and local-log behaviour; four tests of the validation scripts in tests/test_click_decoder_v1.py",
-  "reason": "release audit r48 (S7, S14, N8) and the fresh-clone referee FRESH2 report 3 (item 2); staged by r01h for the architect",
-  "unchanged": "decoders, configs, layers, every FROZEN file and every code hash they pin, the pre-registrations and every recorded score; results_beat_clock_v1.json differs from release 1.0.3 only in the three report.log strings; the default decoder stays 1.0"
+  "tests_added": [
+   "tests/test_click_decoder_gr_observer.py"
+  ],
+  "what": "the frozen read-only layer gr_observer_v1 (r64's clicks-only GR observer, observer_gr.py 1.2 byte for byte) and its README section; the experiments verifier lists it as a released layer with the call run_declared (research/matter_light_experiments_v1/verify.py, LAYERS)",
+  "reason": "the curated experiment E21_gr_observer_clicks_only reads E09's and E10's official logs through it; referee r10zb and fresh machine 1 (GRF2); placement ruled by the architect r16g; staged by r67",
+  "unchanged": "decoders, configs, every earlier layer, every FROZEN file and code hash they pin, the pre-registrations and every recorded score; the default decoder stays 1.0"
  },
  "previous_releases": [
   {
@@ -57,6 +59,14 @@
    "README.md": "0cc8a0eef7fe86948ceb77af34c580296b6ae73e896b28ea4fd17c9109c16b78",
    "RELEASE.json": "ebcc9e7e891009c302bee37cf59d50e1f98aed9e26d16110aeaabe9fa53a661d",
    "note": "release 1.0.3: frozen layers log_symmetry_v1 and beat_clock_v1; cores unchanged"
+  },
+  {
+   "release": "1.0.4",
+   "release_utc": "2026-11-09T07:14:05Z",
+   "commit": "b242300",
+   "README.md": "3de3c901020a54ceff51c0f5bb612090fe475e59eb7e8cd3e35669fb0ccd7fe3",
+   "RELEASE.json": "4a2e6ed1aba48e58d119eb01ab5431db74d8c1ce53b1a0004ea7e21c84fa83e6",
+   "note": "release 1.0.4: the validation scripts write only under runs/ and stop with one line when the program's local logs are missing; results_beat_clock_v1.json names its logs by file name; decoders, layers, FROZEN files and recorded scores unchanged"
   }
  ],
  "tests": {
@@ -71,10 +81,11 @@
  "files_sha256": {
   "FROZEN.json": "48e599a07c71f747196fa048eb0bad6b0b4bdebdcf77a83e4e1f86b18ecad121",
   "FROZEN_beat_clock_v1.json": "18bc4fec0adbea805f9549850da4ceee7d23c92253de6237bf74e8f80a1414ba",
+  "FROZEN_gr_observer_v1.json": "78cc670ea1ebf8a4d957466127816221a13e06e4433ecdb91cfa05f3f3dcb041",
   "FROZEN_log_symmetry_v1.json": "e725ebdae0494d65728f47f5621edb1af5a3dcce8c05bddcf5ba96fb7daabf37",
   "FROZEN_sign_split_v1.json": "8f717548f3cf42b55b6bcf8de9ac2ad561f2fa523153aff12e0375835a43d929",
   "FROZEN_v1.1.json": "573d5181c973d5dc5c84f4121360e234ab6036cef30d8de2d10a1788d1668c27",
-  "README.md": "3de3c901020a54ceff51c0f5bb612090fe475e59eb7e8cd3e35669fb0ccd7fe3",
+  "README.md": "f406a2897aaba2d1d19d9cc911ae7a9f2978977e726a47ca772b938ef5d6495a",
   "__init__.py": "6d3e6b520fff7dc1572c05616f53503c33e5674943f7651af6987571a28bb4a5",
   "__main__.py": "740eb796cb8e2c6c40995074506b36b5c359f33d670366ada804dab791548340",
   "beat_clock_v1.py": "05d9d49565c148468c59aea4d575ea03220784d0cc4e76bc2d6480298294699b",
@@ -83,6 +94,7 @@
   "correlate.py": "d4860ec57e1ba92484e9e49f3ad0f6eb43a325435486929ad2c2bee7597cad51",
   "decoder.py": "36f8b088e104b9223150150b120a38a080d848b8b42ab0daeee96d146210792c",
   "decoder_v11.py": "0a4984e5ef2fdd0884c2af19797f52d9d014a705fe6784c499608b9d5bdc12a3",
+  "gr_observer_v1.py": "e61f6bdd99b89afffc296faf103e15821d1d6a71ae7c8e114e61b769d5019b16",
   "layers.py": "a68412f653a0920432c0e63aeb2feecc7be29e9bf2602aefb4e575d04da3ea2b",
   "log_symmetry_v1.py": "61f5ba8ec338434625603997e0d761f7cb19147cb2ceed652d1d5a160bde8458",
   "sign_layer.py": "9eb55d1ad47edf680e7518102177a4efb91073ae3b705dee227574d376b5bad7",
@@ -105,5 +117,5 @@
   "validation/snapshot_r08.py": "a105f1165831d20e7dd7f6a319fe3244175963f720fbf2a0d90fbf39e68fde3d",
   "validation/table.py": "eb7ce6cb980098afe3a1d4d4ebb9e27dff4434718b1890933897f29c0bf5a0da"
  },
- "note": "release 1.0.4: the validation scripts write only under runs/ and stop with one line when the program's local logs are missing; results_beat_clock_v1.json names its logs by file name; decoders, layers, FROZEN files and recorded scores unchanged"
+ "note": "release 1.0.5: the frozen layer gr_observer_v1 (r64's clicks-only GR observer); decoders, earlier layers, FROZEN files and recorded scores unchanged"
 }

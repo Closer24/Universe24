@@ -1,0 +1,12 @@
+{
+ "name": "gr_observer_v1",
+ "file": "gr_observer_v1.py",
+ "sha256": "e61f6bdd99b89afffc296faf103e15821d1d6a71ae7c8e114e61b769d5019b16",
+ "frozen_utc": "2026-11-09T10:25:30Z",
+ "source": "byte-identical copy of r64's observer research/matter_light_v1/r64/observer_gr.py (VERSION r64-observer-gr-1.2), archived at backup/matter-light-working 13d4fa9",
+ "pre_registered": "r64's NOTES.md P1 (08:52:30 UTC: the observer contract and the predictions) and P4 (09:00:40 UTC: code and declarations fixed before the observer read any log), research/matter_light_v1/r64/NOTES.md @ 13d4fa9",
+ "validation": "local referee r10zb, r10/REVIEW_R10ZB.md (R10ZB-1..19; for E09 / E10: R10ZB-1, 3, 4, 5, 7 CONFIRMED, R10ZB-6 PARTLY) and fresh machine 1, remote/FRESH_MACHINE_REPORT_GRF2.md (items 1, 2a-2f CONFIRMED), both @ 13d4fa9; refereed as version 1.1. Version 1.2 is r64's fix pass: r10zb's wording fixes, the packaging (one self-contained file; run_declared) and r68's correction, which withdrew the shells readout's areal radius for clock-ring-only shells (UPDATE 46 item 7; r64 NOTES P17); every other measured number is unchanged (35 regenerated reports compared against snapshots), and the experiment E21 re-reads every E09 / E10 number with this file; fresh machine 1 reproduced E21 (remote/FRESH_MACHINE_REPORT_GRF5.md @ 405aded)",
+ "tests": "tests/test_click_decoder_gr_observer.py (r64's synthetic tests, ported; this record; one official E09 log)",
+ "released": "1.0.5",
+ "note": "declared read-only layer of click_decoder_v1, outside the frozen decoder cores; standard library only, never imports universe24; reads step, address, kind and quotient at the declared stations only; experiments call run_declared(log, declaration)"
+}

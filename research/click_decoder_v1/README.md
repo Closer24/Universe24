@@ -326,7 +326,7 @@ option, compares complete JSON records. `beat_clock_v1` uses `step`, `address` a
   inside an optional declared box: image steps and plain repeats.
 * `split(log, t)`, `shift(log, dt)`, `record_diff(a, b)`.
 
-**`beat_clock_v1`** (byte-identical to r25's observer, whose hash the staged experiment E11 pins): `beat_clock(events,
+**`beat_clock_v1`** (byte-identical to r25's observer, whose hash the curated experiment E11 pins): `beat_clock(events,
 side, steps, channel, clock, sites)` and `run_declared(log, declaration)` read the rates of declared beat clocks (two
 wavevectors, an axis, a declared c) from Fourier projections of the click quotients: chord speed u, clock rate
 Omega, rest frequency w' and the ratio Omega / Omega_SR.
@@ -340,7 +340,7 @@ Omega, rest frequency w' and the ratio Omega / Omega_SR.
   blind CB3a: period 164, 4 identical cycles of 2612, C image on 82/82 steps of the ring box. Equal to r36's own
   observers on all 28 cycle files. Controls as predicted (the unsymmetrized bounce leaves 78,572 of 97,636 records
   unpaired; an asymmetric seed breaks period 48; a log without the ring has no records in its box); 8 synthetic cases.
-* `beat_clock_v1`: pre-registered 04:24 UTC, frozen 04:25:11. On three logs that the staged experiment E11 does not
+* `beat_clock_v1`: pre-registered 04:24 UTC, frozen 04:25:11. On three logs that the curated experiment E11 does not
   use: u/c = +-1/3 with ratio 1 within 2e-16 and Omega = pi/3, 2 pi/3 (L = 12 with doubled wavenumbers; L = 6 with
   the clocks swapped); the generic clock control gives 1.0945; r25's 5 synthetic cases.
 
@@ -355,11 +355,37 @@ periodic click record does not by itself show a mirrored or periodic board state
 point and a declared c; its ratio 1 is an algebraic identity of exactly linear dispersion (R10G-36): it tests the
 d'Alembert law, not an independent time-dilation factor.
 
+## Frozen layer `gr_observer_v1` (release 1.0.5)
+
+r64's clicks-only GR observer, `observer_gr.py` (VERSION r64-observer-gr-1.2), byte for byte as `gr_observer_v1.py`
+and frozen by `FROZEN_gr_observer_v1.json`; one self-contained file, standard library only, never imports `universe24`.
+`run_declared(log, declaration)` returns the JSON form of `observe(log, declaration)`: for each readout of a declaration
+in the format `r64-observer-declaration-1` (stations with sites, optional channel, kind and quotient filters, a role and
+a packet profile; readouts `clock`, `received`, `redshift`, `one_way`, `radar`, `ring_radar`, `metric`, `regge`,
+`shells`, `schwarzschild`, `detector`, `outcome`) it reads only `step`, `address`, `kind` and `quotient` at the declared
+stations of one official log. Periods are exact (equality of click records over at least 3 periods), rates are lap / P
+in exact rationals, never raw click rates; the update index is only a click's coordinate label and proper time counts
+laps of a station's own declared ring.
+
+**Pre-registration and validation (program record, archive 13d4fa9).** r64's NOTES P1 and P4 fixed the contract, the
+declarations and the predictions before the observer read any log. Local referee r10zb (R10ZB-1..19) reproduced every
+E09 and E10 number with its own reader from logs it regenerated, and showed the contract: identical measurements after
+stripping `before`/`after`, after deleting every record off the declared sites and after relabelling every site
+(R10ZB-1); fresh machine 1 (GRF2) reproduced them again. Version 1.2 changed wording and packaging (profiles, not
+species; one file; `run_declared`) and withdrew the `shells` readout's areal radius for clock-ring-only shells (r68's
+correction, UPDATE 46 item 7; r64 NOTES P17); every other measured number is unchanged.
+
+**Limits.** The `regge`, `shells` and `schwarzschild` readouts are in the file but not used by any released experiment:
+on boards whose shells are clock rings only there is no areal-radius measurement, and the shells pass rule has a known
+stencil floor (r10zb, r68). A radar's Einstein offset referred to the mirror's dwell restates one device constant; it is
+not an independent synchronisation test (R10ZB-6).
+
 ## Versions
 
 v1.0 frozen 2026-11-09 01:29:27 UTC (`FROZEN.json`); v1.1 frozen 02:07:53 UTC (`FROZEN_v1.1.json`, which also
 re-records v1.0's hashes). Layers: sign_split_v1 frozen 02:23:10 UTC; log_symmetry_v1 04:21:49 UTC, re-frozen
-04:38:46 UTC for release 1.0.3; beat_clock_v1 04:25:11 UTC. Release 1.0.4 changes only the validation scripts,
+04:38:46 UTC for release 1.0.3; beat_clock_v1 04:25:11 UTC; gr_observer_v1
+10:25:30 UTC (release 1.0.5). Release 1.0.4 changes only the validation scripts,
 the log names in `validation/results_beat_clock_v1.json` and this README (`RELEASE.json`). Any v1.x is re-run on all
 earlier validation cases;
 the results of every version are kept (`validation/results_v<version>.json`, `validation/heldout_v1.1.json`).
