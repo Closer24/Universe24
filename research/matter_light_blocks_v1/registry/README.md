@@ -87,7 +87,7 @@ was also checked against the program's own code:
   kind, registration new / update-of / republication-of, generator, coupling, evidence status, parts,
   lineage), the experiments and their cards (`experiment_cards`), the read-only `observers`, the
   `aliases`, the registrar's decisions on proposed cards, the verified points (init files regenerated
-  exactly, recipes and builder equalities, with SHA-256 prefixes; 506 after WAVE 16, all exact), and the
+  exactly, recipes and builder equalities, with SHA-256 prefixes; 507 after WAVE 17, all exact), and the
   role of each of the 348 published names (the 338 of 8301320, the 8 appended in dff39dc and the 2 appended with the
   candidate-coupling framework (the variant block and its reference companion): canonical, variant, control, alias,
   J-image, experiment instance).
@@ -119,7 +119,9 @@ fresh machine 2's `remote/FRESH_MACHINE_REPORT_QMF15.md`) at commit fd49c09, and
 `remote/builderF_FINAL/`, `remote/BUILDER_F_REPORT_SWL.md`, r10zi's `r10/REVIEW_R10ZI.md`, fresh machine 2's
 `remote/FRESH_MACHINE_REPORT_GRF12.md`) at commit c2b4258, and the WAVE 16 sources (r71's `r71/tensor_board.py`,
 `r71/time_board.py`, `r71/stations_*.json`, r10zg's `r10/REVIEW_R10ZG.md`, fresh machine 2's
-`remote/FRESH_MACHINE_REPORT_GRF9.md`) at commit c2b4258.
+`remote/FRESH_MACHINE_REPORT_GRF9.md`) at commit c2b4258, and the WAVE 17 sources (builder C's
+`remote/builderC_GRS/grs/`, `remote/BUILDER_C_REPORT_GRS.md`, r10zj's `r10/REVIEW_R10ZJ.md`, fresh machine 1's
+`remote/FRESH_MACHINE_REPORT_GRF11.md`) at commit c2b4258.
 Nothing there is needed to regenerate or verify a block or a composition; `runs/` paths are local.
 
 `compositions.py` also holds the WAVE 2 compositions: the published guide instances
@@ -281,6 +283,15 @@ Manhattan control with g = 'manhattan'), and the two-station time board (`tensor
 generator changed. The aniso, manhattan and time_v2 boards equal r71's init files byte for byte. They write the
 curated experiment `E24_metric_tensor_declared_chart`. `tests/test_matter_light_blocks_registry_wave16.py` checks the
 time board against r71's init file, the design lengths of aniso and manhattan, and the arm geometry.
+
+WAVE 17 (r67) added builder C's GS-2b (refereed by r10zj, R10ZJ-1..20; reproduced by fresh machine 1, GR-F11) as the
+assembly `light.radial_relay_tree@1`: one connected relay tree of fibre light whose node counts were prescribed from
+Schwarzschild's formulas (M = 64), a spoke with six junctions and at each an open spiral branch fibre whose A→B node
+count is C_i = round(2πr_i/N_i) (prescribed; it does not close and encircles nothing), and seven ring clocks (`GS2B`,
+`GS2B_MEMBERS`, `gs2b_design`, `gs2b_params`, `gs2b_spec(member)` for S, T, F, D and S2L). No generator changed.
+GS2b_S equals builder C's init file byte for byte. It writes the curated experiment
+`E28_schwarzschild_radial_profile`. `tests/test_matter_light_blocks_registry_wave17.py` checks GS2b_S against builder
+C's init file and the design integers.
 
 ## Limits
 

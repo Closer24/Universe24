@@ -3522,3 +3522,116 @@ def tensor_time_spec(g=TENSOR_G_ANISO, side_factor=1):
     return {"format": FORMAT, "id": "tensor_time_v2", "board": _board(side, PPP), "placements": pl,
             "steps": 2 + 2 * max(a["D"] for a in S + F) + TENSOR["dwell"] + 24,
             "timing": {"t0": 0, "declared": {"N_S": "2/3", "B_T": T["B"]}}}
+
+
+# ------------------------------------------------------------------------------------------------ WAVE 17 (r67)
+# builder C's GS-2b (refereed by r10zj, R10ZJ-1..20; reproduced by fresh machine 1, GR-F11), ported from his gs2b.py: a
+# connected relay tree of fibre light whose node counts were PRESCRIBED from Schwarzschild's formulas (one mass,
+# M = 64 lattice units), clock-first.  Six shells: ring clocks of n_i = even round(LAP / N) nodes at the radii of equal
+# proper spacing ds = 80 (LAP = 480, N_1 = 0.6), so N_i = LAP / n_i exactly and r_i = 2M / (1 - N_i^2) is a DECLARED
+# areal radius; a SPOKE fibre along +x holds the shell junctions J_i (S: cumulative round(r*(r_i) - r*(r_0)); T, the
+# 1911 twin: round(s_i - s_0); F: round(r_i - r_0)), with an A-pulse (1,0,-1) launched outward at t = 0; at J_i an
+# open spiral branch fibre whose A -> B node count is C_i = round(2 pi r_i / N_i) (prescribed; it does not close and
+# encircles nothing); a far clock of LAP nodes.  Every fibre runs on past its last port, so in [0, H] no pulse meets
+# another or comes back.  PRESCRIBED metric data: not gravity, not produced by matter, not a test of the dynamics.
+GS2B = {"M": 64.0, "ds": 80.0, "lap": 480, "n1": 0.6, "shells": 6, "j0": 20, "lead": 4, "side": 1024,
+        "z0": {"S": 10, "T": 120, "F": 230, "D": 340}, "y0": 10, "x0": 10,
+        "ring": {480: (120, 120), 800: (200, 200), 684: (170, 172), 626: (157, 156), 592: (148, 148),
+                 570: (143, 142), 554: (139, 138)}}          # gs.ring_dims: closed rectangles, one turn, sign +1
+GS2B_MEMBERS = {"GS2b_S": ("S", 1024, True), "GS2b_T": ("T", 1024, True), "GS2b_F": ("F", 1024, True),
+                "GS2b_D": ("S", 1024, False), "GS2b_S2L": ("S", 2048, True)}
+
+
+def _gs2b_s(r, m=None):
+    m = GS2B["M"] if m is None else m
+    return math.sqrt(r * (r - 2 * m)) + 2 * m * math.log(math.sqrt(r) + math.sqrt(r - 2 * m))
+
+
+def _gs2b_rstar(r, m=None):
+    m = GS2B["M"] if m is None else m
+    return r + 2 * m * math.log(r / (2 * m) - 1)
+
+
+def gs2b_design(X="S"):
+    """builder C's numbers(X): clock nodes n_i, lapses N_i = LAP / n_i, declared radii r_i, junctions J_i, branch node
+    counts C_i (S: Schwarzschild; T: the 1911 twin; F: flat)."""
+    M, lap = GS2B["M"], GS2B["lap"]
+    r1 = 2 * M / (1 - GS2B["n1"] ** 2)
+    r0 = [r1]
+    for k in range(1, GS2B["shells"]):
+        a, b = r1, r1 + 100000
+        for _ in range(200):
+            c = (a + b) / 2
+            a, b = (a, c) if _gs2b_s(c) - _gs2b_s(r1) - k * GS2B["ds"] > 0 else (c, b)
+        r0.append((a + b) / 2)
+    clocks = [2 * round(lap / (2 * math.sqrt(1 - 2 * M / r))) for r in r0]
+    rs = [2 * M / (1 - float(Fraction(lap, n)) ** 2) for n in clocks]
+    if X == "F":
+        Ns, clocks = [1.0] * GS2B["shells"], [lap] * GS2B["shells"]
+    else:
+        Ns = [float(Fraction(lap, n)) for n in clocks]
+    f = {"S": _gs2b_rstar, "T": _gs2b_s, "F": lambda r: r}[X]
+    J = [GS2B["j0"] + round(f(r) - f(rs[0])) for r in rs]
+    C = [round(2 * math.pi * r / n) for r, n in zip(rs, Ns)]
+    return {"r": rs, "N": Ns, "J": J, "C": C, "clock_nodes": clocks}
+
+
+def gs2b_horizon():
+    return max(max(d["J"][i] + 3 + d["C"][i] for i in range(GS2B["shells"]))
+               for d in (gs2b_design("S"), gs2b_design("T"))) + 60
+
+
+def _gs2b_tail(arrival, H):
+    return (H - arrival) // 2 + 40
+
+
+def _gs2b_spiral(total, first=240, step=8):
+    out, left, s, k = [], total, first, 0
+    while left > 0:
+        n = min(s, left)
+        out.append([(2, 0, 3, 1)[k % 4], n])
+        left -= n
+        k += 1
+        if k % 2 == 0:
+            s -= step
+        if s <= 10:
+            raise ValueError("spiral too long")
+    return out
+
+
+def gs2b_params(X="S", packets=True):
+    """[net, clock_far, clock_0..5] placements' (name, at, params) of one member (builder C's placements(X))."""
+    d, H, z0 = gs2b_design(X), gs2b_horizon(), GS2B["z0"][X]
+    J = d["J"]
+    t, spoke, k = _gs2b_tail(J[-1], H) + 40 - 20, [[0, J[-1] + 10 + 20]], 0
+    while t > 0:                                                 # serpentine in y, 8 sites apart
+        n = min(250, t)
+        spoke.append([2 if k % 2 == 0 else 3, n])
+        t -= n
+        if t > 0:
+            spoke.append([0, 8])
+            t -= 8
+        k += 1
+    paths = [{"name": "spoke", "g0": 0, "dirs": spoke}]
+    for i in range(GS2B["shells"]):
+        rise, C = 8 * (i + 1), d["C"][i]
+        body = 2 + C + _gs2b_tail(C, H) - (rise - 1) - 8
+        paths.append({"name": f"loop{i}", "branch_of": "spoke", "at_node": J[i], "dir": 4,
+                      "dirs": [[4, rise - 1], [2, 8]] + _gs2b_spiral(body)})
+    pk = [{"path": "spoke", "f": list(FLRW_A), "lead": GS2B["lead"]}] if packets else []
+    out = [(f"{X}_net", [GS2B["x0"], GS2B["y0"], z0], {"paths": paths, "packets": pk})]
+    for k, (name, n) in enumerate([("clock_far", GS2B["lap"])] + [(f"clock_{i}", d["clock_nodes"][i])
+                                                                   for i in range(GS2B["shells"])]):
+        a, b = GS2B["ring"][n]
+        out.append((f"{X}_{name}", [GS2B["x0"] + 250 * (k % 4), 290 + 260 * (k // 4), z0],
+                    {"paths": [{"name": "R", "g0": 0, "dirs": [[0, a], [2, b], [1, a], [3, b - 1]]}],
+                     "packets": [{"path": "R", "f": list(FLRW_A), "lead": 3}] if packets else [], "closed": ["R"]}))
+    return out
+
+
+def gs2b_spec(member="GS2b_S"):
+    """builder C's GS-2b composition of one member: ONE guide_net@1 placement for the tree, one per ring clock."""
+    X, L, packets = GS2B_MEMBERS[member]
+    return {"format": FORMAT, "id": member, "board": _board(L, PPP),
+            "placements": [{"name": n, "block": "guide_net@1", "at": at, "params": p} for n, at, p in gs2b_params(X, packets)],
+            "steps": gs2b_horizon()}
