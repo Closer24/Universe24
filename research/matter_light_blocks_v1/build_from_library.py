@@ -15,6 +15,11 @@ init files) plus a few newer modules (listed in ``EXTRAS``) and, for every block
 It needs the source research folder ``research/matter_light_v1``; ``verify.py``
 does not.
 
+Historical record of the 8301320 build: the source library has changed since (four
+EXTRAS are now library entries with other horizons and checks), so a rebuild does not
+reproduce the published entries. Never rebuild the published package; add new entries
+with ``append.py``, which keeps every published entry byte-identical.
+
     python -m research.matter_light_blocks_v1.build_from_library OUT_DIR [--max-cells N] [NAME ...]
 """
 from __future__ import annotations
@@ -178,10 +183,11 @@ def build_library(out: Path, max_cells: int, only):
     return source["format"], results
 
 
-def build_extras(out: Path, only):
+def build_extras(out: Path, only, skip=frozenset()):
+    """EXTRAS not yet in the source library (``skip``: names the library build already produced)."""
     results = []
     for spec in EXTRAS:
-        if only and spec["name"] not in only:
+        if (only and spec["name"] not in only) or spec["name"] in skip:
             continue
         engine, initial, _ = H.load_config(spec["origin"])
         rel = Path("blocks") / SLUG[spec["group"]] / f"{spec['name']}.json"
@@ -206,7 +212,10 @@ def build_extras(out: Path, only):
 
 def build(out: Path, max_cells: int = 50_000, only=None):
     fmt, lib = build_library(out, max_cells, only)
-    extra = build_extras(out, only)
+    extra = build_extras(out, only, skip={e["name"] for e, _ in lib})
+    names = [e["name"] for e, _ in lib + extra]
+    if len(names) != len(set(names)):
+        raise ValueError(f"duplicate block names: {sorted({n for n in names if names.count(n) > 1})}")
     published = [e for e, f in lib + extra if not f]
     rejected = [{"name": e["name"], "fails": f} for e, f in lib + extra if f]
     catalog = {"format": "matter_light_blocks_v1-catalog-1",

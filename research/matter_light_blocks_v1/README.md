@@ -1,6 +1,6 @@
 # Matter and light building blocks (published set)
 
-338 **data-only initial preparations** from the matter/light research program.
+346 **data-only initial preparations** from the matter/light research program.
 Each one is an official init file: complete initial cells, background, one of the
 eight fixed sign triples, and a horizon. Every block was replayed with the
 unchanged native `Engine`, with the exact inverse `Engine.rewind` checked at every
@@ -18,7 +18,7 @@ are not claims about physical photons, mass, spin-1/2, electric charge or energy
 python -m research.matter_light_blocks_v1.verify --list            # all blocks, group, file
 python -m research.matter_light_blocks_v1.verify fiber_x_packet     # replay and check one block
 python -m research.matter_light_blocks_v1.verify --quick            # every non-heavy block
-python -m research.matter_light_blocks_v1.verify                    # all 338 (about 2 minutes)
+python -m research.matter_light_blocks_v1.verify                    # all 346 (about 3 minutes)
 python -m universe24 --config research/matter_light_blocks_v1/blocks/light/fiber_x_packet.json --audit
 ```
 
@@ -46,13 +46,13 @@ exactly from tracked code.
 | light | 26 | `fiber_x_packet` (light candidate on a gauged fibre, click-front speed 1 site/update), `exact_front_111_box` (exact (111) front, C0 clicks only), `diag_sheet` |
 | matter at rest | 31 | exact confined families, `B10_breather`, `B14_breather`, robust X12, lamps |
 | moving matter | 20 | guided gliders at speeds 1/3 … 1, `planar_glider_100` (exact planar translator at speed 1/2 in the quiet vacuum: a board-wide sheet, not a localized object), crystal SLOW movers |
-| atoms | 74 | `atom_trap_d6`, `atom_trap_d10` (a light packet between two dark cores, level 2d+4) with controls, period-shifted pairs, `d1_local_atom_L100` |
+| atoms | 80 | `atom_trap_d6`, `atom_trap_d10` (a light packet between two dark cores, level 2d+4) with controls, period-shifted pairs, `d1_local_atom_L100`, `twin_atoms_q212_L160` |
 | spin | 13 | `spinor_screw`, `spin720_ring`, `spinor_ring_r09` (360° image after one lap, return after 720°), `spin_module_pure4pairs_L80` |
 | charge | 44 | sign rules at contact, static charges, charge bookkeeping of Big-Bang seeds |
 | clocks and gravity | 41 | Einstein networks, `charge_cavity_D10`, `created_atoms_as_clocks_R7`, `einstein_created_instruments_L240` |
 | interaction and detectors | 55 | phase gates, 1-bit records, track detectors, trap spectroscopy |
 | media | 6 | `crystal_light_and_matter` (one (−,+,+) crystal carrying light candidates at click-front speed 1 and matter candidates at 1/3) |
-| seeds (big bang) | 28 | `toy_universe_v2_main`, `cascade_pure4pairs`, `planar_bigbang_L16`, `d1_skeleton_atom_spin_clocks_L160` |
+| seeds (big bang) | 30 | `toy_universe_v2_main`, `cascade_pure4pairs`, `planar_bigbang_L16`, `d1_skeleton_atom_spin_clocks_L160` |
 
 **Newest modules** (tag `new`; each entry's `status` field gives its evidence label):
 
@@ -72,6 +72,15 @@ exactly from tracked code.
   joined by light. One packet's round trip gives Einstein's midpoint exactly
   (t_B = (t1 + t2)/2). The clocks' periodicity is checked here; the station passages
   are documented in the catalog.
+* `twin_atoms_q212_L160` / `twin_atoms_q212_L320` — **twin atom candidates**: the two
+  members of one created glider pair each leave a bound packet in their own trap. Both
+  atoms are born at t = 80, and both trap boxes are exactly 20-periodic on [80, 200] (box
+  checks on both traps, L and 2L). `twin_atoms_q28_L160` / `_L320`: the same with births
+  12 updates apart. Controls: `twin_atoms_q212_L160_control_no_seed` (silent) and
+  `twin_atoms_q212_L160_control_no_lower_cores` (one atom only).
+* `d1_skeleton_atom_spin_clocks_L320` — the skeleton on its periodic 2L extension (atom
+  box and 7 ring laps checked); `d1_skeleton_atom_spin_clocks_L160_control_no_seed` is its
+  silent control (the hardware alone is an exact period-4 clock).
 
 ## Checks performed on replay
 
@@ -105,7 +114,7 @@ horizon 0, so only their init file hash is checked.
 * **Scope.** Each block's `limits` field states its domain.
 * **Repeated preparations.** 21 entries form 10 groups with identical complete initial
   states (for example `light_glider_r06`, `MV_glider_alone` and `W2_fast_glider_control`);
-  there are 327 distinct preparations. A name records a role in a study, not a new object.
+  there are 335 distinct preparations. A name records a role in a study, not a new object.
 
 ## Provenance
 
