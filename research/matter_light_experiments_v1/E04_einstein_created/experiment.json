@@ -1,0 +1,427 @@
+{
+ "format": "matter_light_experiments_v1-experiment-1",
+ "id": "E04_einstein_created",
+ "title": "Two-way Einstein synchronisation with created atom-clock candidates: t_B = (t1 + t2)/2 exactly",
+ "card": "CARD.md",
+ "composition": null,
+ "composition_note": "main run = the published block einstein_created_instruments_L240 (referenced, not copied)",
+ "coupling": {
+  "kind": "reference",
+  "signs": [
+   -1,
+   1,
+   1
+  ]
+ },
+ "detectors": "detectors.json",
+ "runs": [
+  {
+   "name": "main_L240",
+   "role": "main",
+   "block": "einstein_created_instruments_L240",
+   "block_file": "research/matter_light_blocks_v1/blocks/clocks_and_gravity/einstein_created_instruments_L240.json",
+   "block_file_sha256": "f6af5fc53a6f2948fa5eb1f8bbf706497215ac1f6293909eb64d70f222e1bcf0",
+   "steps": 230,
+   "initial_state_sha256": "25a056bb1dfb03b06197b0619a1f6abc29a314a423f0f79784fac0957aab24f4",
+   "final_state_sha256": "3f7c30f56bd43ecbd5bdc33017cc30ca7fcc78aad6f3e2c770e1c614723ae098",
+   "log_sha256": "84d9ba0051d73216d7b51897b776af62bb9f6bddcc5a313e7c45e6b14368572c",
+   "clicks": 5762,
+   "seconds": 3.3,
+   "fast": false,
+   "probes": [
+    {
+     "name": "A_inner_out",
+     "detector": "A_inner_L240",
+     "window": [
+      63,
+      70
+     ]
+    },
+    {
+     "name": "A_outer_out",
+     "detector": "A_outer_L240",
+     "window": [
+      63,
+      70
+     ]
+    },
+    {
+     "name": "B_outer_in",
+     "detector": "B_outer_L240",
+     "window": [
+      134,
+      141
+     ]
+    },
+    {
+     "name": "B_inner_in",
+     "detector": "B_inner_L240",
+     "window": [
+      134,
+      141
+     ]
+    },
+    {
+     "name": "B_inner_out",
+     "detector": "B_inner_L240",
+     "window": [
+      149,
+      156
+     ]
+    },
+    {
+     "name": "B_outer_out",
+     "detector": "B_outer_L240",
+     "window": [
+      149,
+      156
+     ]
+    },
+    {
+     "name": "A_outer_back",
+     "detector": "A_outer_L240",
+     "window": [
+      220,
+      227
+     ]
+    },
+    {
+     "name": "A_inner_back",
+     "detector": "A_inner_L240",
+     "window": [
+      220,
+      227
+     ]
+    }
+   ]
+  },
+  {
+   "name": "size_check_L480",
+   "role": "size_check",
+   "init": "init/size_check_L480.json",
+   "init_sha256": "8ecd04724992af8430f914127d3f2f82e71350395706eaad34a99ca9ab858e69",
+   "source": "research/matter_light_v1/r08/preparations/w8_einstein_module_d20_xm32_L480.json (program record; same initial state and coupling)",
+   "source_sha256": "5750b60163c54e4b91feceb93c6d61ae81074b79ec0f64ddc2eb5fad0e5412d2",
+   "steps": 400,
+   "initial_state_sha256": "94851902047aa35ac755172b6127ccfafea92e97a06738ed0d0b2a6712e76426",
+   "final_state_sha256": "a917d957bc987c92d5c3cbf42bda08fa2ca50578a03df84769592ac4e19184ac",
+   "log_sha256": "89f3fc6d64f72988885019c7712f1c85a69ba40215a8b870db8a63efb59223d3",
+   "clicks": 21892,
+   "seconds": 12.7,
+   "fast": false,
+   "probes": [
+    {
+     "name": "A_inner_out",
+     "detector": "A_inner_L480",
+     "window": [
+      63,
+      70
+     ]
+    },
+    {
+     "name": "A_outer_out",
+     "detector": "A_outer_L480",
+     "window": [
+      63,
+      70
+     ]
+    },
+    {
+     "name": "B_outer_in",
+     "detector": "B_outer_L480",
+     "window": [
+      134,
+      141
+     ]
+    },
+    {
+     "name": "B_inner_in",
+     "detector": "B_inner_L480",
+     "window": [
+      134,
+      141
+     ]
+    },
+    {
+     "name": "B_inner_out",
+     "detector": "B_inner_L480",
+     "window": [
+      149,
+      156
+     ]
+    },
+    {
+     "name": "B_outer_out",
+     "detector": "B_outer_L480",
+     "window": [
+      149,
+      156
+     ]
+    },
+    {
+     "name": "A_outer_back",
+     "detector": "A_outer_L480",
+     "window": [
+      220,
+      227
+     ]
+    },
+    {
+     "name": "A_inner_back",
+     "detector": "A_inner_L480",
+     "window": [
+      220,
+      227
+     ]
+    }
+   ]
+  },
+  {
+   "name": "control_no_link_L240",
+   "role": "control",
+   "init": "init/control_no_link_L240.json",
+   "init_sha256": "a31e6c3a7627e916744c36be486ba6beb54418864a2cf837a12cccdbff8208d5",
+   "source": "research/matter_light_v1/r08/preparations/w8_einstein_module_d20_xm32_L240_no_link_control.json (program record; same initial state and coupling)",
+   "source_sha256": "61c33ba474a6f90b6c100cdec8e1644c235dad84f211d9412d774e8e4ce0e1b2",
+   "steps": 230,
+   "initial_state_sha256": "e21bd0110bd59f3e48c5b824890f9fbdb10417d4cf8d418b6605798a4a6f6ad1",
+   "final_state_sha256": "f5a9bb18a05dd53c73547da15d880337313d5d5b9c7933aa535da8c48f944209",
+   "log_sha256": "e752c11d41ca560cbb49bbea4fa5d7825fe3bf68f7834d266ed815dc5066829e",
+   "clicks": 2134,
+   "seconds": 2.2,
+   "fast": false,
+   "probes": [
+    {
+     "name": "A_inner_out",
+     "detector": "A_inner_L240",
+     "window": [
+      63,
+      70
+     ]
+    },
+    {
+     "name": "A_outer_out",
+     "detector": "A_outer_L240",
+     "window": [
+      63,
+      70
+     ]
+    },
+    {
+     "name": "B_outer_in",
+     "detector": "B_outer_L240",
+     "window": [
+      134,
+      141
+     ]
+    },
+    {
+     "name": "B_inner_in",
+     "detector": "B_inner_L240",
+     "window": [
+      134,
+      141
+     ]
+    },
+    {
+     "name": "B_inner_out",
+     "detector": "B_inner_L240",
+     "window": [
+      149,
+      156
+     ]
+    },
+    {
+     "name": "B_outer_out",
+     "detector": "B_outer_L240",
+     "window": [
+      149,
+      156
+     ]
+    },
+    {
+     "name": "A_outer_back",
+     "detector": "A_outer_L240",
+     "window": [
+      220,
+      227
+     ]
+    },
+    {
+     "name": "A_inner_back",
+     "detector": "A_inner_L240",
+     "window": [
+      220,
+      227
+     ]
+    }
+   ]
+  },
+  {
+   "name": "control_no_seed_L240",
+   "role": "control",
+   "init": "init/control_no_seed_L240.json",
+   "init_sha256": "75ce52b240e8c559028302c055c3117c0d3510076fce3d67cb1797f973f803b0",
+   "source": "research/matter_light_v1/r08/preparations/w8_einstein_module_d20_xm32_L240_no_seed_control.json (program record; same initial state and coupling)",
+   "source_sha256": "fbd269c484725beffbe8f36c3b7daea2828a19ffda172299ed923471eee4022e",
+   "steps": 230,
+   "initial_state_sha256": "93872920928e3d53ed4bc65589c77c7d4b6b67158fce77996cd9874538e14cf9",
+   "final_state_sha256": "90c71494d2000a66221f116523ae03242816a3abb15f954cee934982ba495e1f",
+   "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "clicks": 0,
+   "seconds": 2.8,
+   "fast": false
+  },
+  {
+   "name": "control_no_cores_L240",
+   "role": "control",
+   "init": "init/control_no_cores_L240.json",
+   "init_sha256": "4ca3727c227d4f4a3e655c4b08f4ccc84afe9d06817ed72d24872042d19e8380",
+   "source": "research/matter_light_v1/r08/preparations/w8_einstein_module_d20_xm32_L240_no_cores_control.json (program record; same initial state and coupling)",
+   "source_sha256": "834802097b7ac240ab18a525355b671e25c467f77883ab6a535e9d24f93c11c0",
+   "steps": 230,
+   "initial_state_sha256": "5168e8e04c320e73675c53a00b9c53949019dcd095e398b12c3e23b100466893",
+   "final_state_sha256": "b52ae8eee426194f9ad110322113740f73074e6ad42d12009a9f411846aa243c",
+   "log_sha256": "2d5db93a00f4fdd42668a054e138c279425a3e474d83bf4fe8d41ea0de2913f1",
+   "clicks": 5486,
+   "seconds": 3.2,
+   "fast": false
+  }
+ ],
+ "decoder": {
+  "name": "click_decoder_v1",
+  "version": "1.0",
+  "code_sha256": {
+   "decoder.py": "36f8b088e104b9223150150b120a38a080d848b8b42ab0daeee96d146210792c",
+   "correlate.py": "d4860ec57e1ba92484e9e49f3ad0f6eb43a325435486929ad2c2bee7597cad51",
+   "config_v1.json": "fbce6c60da6c1707902a2ab0b867ab9b5de701fc11b7e2a051f0de4cfc830660"
+  },
+  "frozen_utc": "2026-11-09T01:29:27Z",
+  "detectors": "detectors.json"
+ },
+ "checks": [
+  {
+   "claim": "E04-1",
+   "text": "two periodic sources (created atom-clock candidates A and B), both period 20",
+   "run": "main_L240",
+   "pointers": [
+    "/sources/0/period",
+    "/sources/1/period"
+   ],
+   "op": "eq",
+   "value": [
+    20,
+    20
+   ]
+  },
+  {
+   "claim": "E04-2",
+   "text": "outward passage at A's station: inner node at t1 = 66, outer at 67",
+   "run": "main_L240",
+   "pointers": [
+    "/probes/A_inner_out/first_click",
+    "/probes/A_outer_out/first_click"
+   ],
+   "op": "eq",
+   "value": [
+    66,
+    67
+   ]
+  },
+  {
+   "claim": "E04-3",
+   "text": "inward passage at B's station: outer at 137, inner at t_in = 138",
+   "run": "main_L240",
+   "pointers": [
+    "/probes/B_outer_in/first_click",
+    "/probes/B_inner_in/first_click"
+   ],
+   "op": "eq",
+   "value": [
+    137,
+    138
+   ]
+  },
+  {
+   "claim": "E04-4",
+   "text": "outward passage at B's station: inner at t_out = 152, outer at 153; t_B = (138 + 152)/2 = 145",
+   "run": "main_L240",
+   "pointers": [
+    "/probes/B_inner_out/first_click",
+    "/probes/B_outer_out/first_click"
+   ],
+   "op": "eq",
+   "value": [
+    152,
+    153
+   ]
+  },
+  {
+   "claim": "E04-5",
+   "text": "inward passage back at A: outer at 223, inner at t2 = 224; so t_B = 145 = (t1 + t2)/2",
+   "run": "main_L240",
+   "pointers": [
+    "/probes/A_outer_back/first_click",
+    "/probes/A_inner_back/first_click"
+   ],
+   "op": "eq",
+   "value": [
+    223,
+    224
+   ]
+  },
+  {
+   "claim": "E04-6",
+   "text": "the same eight station onsets on 2L = 480 (local)",
+   "runs": [
+    "main_L240",
+    "size_check_L480"
+   ],
+   "pointer": "/probes",
+   "op": "same"
+  },
+  {
+   "claim": "E04-7",
+   "text": "no link: nothing reaches B's station inward in its window",
+   "run": "control_no_link_L240",
+   "pointer": "/probes/B_inner_in/clicks",
+   "op": "eq",
+   "value": 0
+  },
+  {
+   "claim": "E04-8",
+   "text": "no seed: no click",
+   "run": "control_no_seed_L240",
+   "pointer": "/input/events",
+   "op": "eq",
+   "value": 0
+  },
+  {
+   "claim": "E04-9",
+   "text": "no cores: no periodic source",
+   "run": "control_no_cores_L240",
+   "pointer": "/summary/sources",
+   "op": "eq",
+   "value": 0
+  },
+  {
+   "claim": "E04-10",
+   "text": "the births of the two sources differ by 60 (B - A; the decoder sorts sources by birth): the true dial offset birth_A - birth_B = -60, equal to the Einstein offset since t_B = (t1 + t2)/2",
+   "run": "main_L240",
+   "pointers": [
+    "/sources/0/birth/t",
+    "/sources/1/birth/t"
+   ],
+   "op": "diff",
+   "value": 60
+  }
+ ],
+ "verdict": {
+  "referee": "r10e",
+  "id": "R10E-40",
+  "result": "CONFIRMED"
+ },
+ "data_bytes": 264033,
+ "built_utc": "2026-11-09T02:19:13Z",
+ "builder": "research/matter_light_v1/r01b/build_experiments.py (program record)"
+}

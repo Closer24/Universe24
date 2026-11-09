@@ -1,0 +1,198 @@
+{
+ "format": "u24-composition-v1",
+ "id": "d1_main_L100",
+ "board": {
+  "side": 100,
+  "background": [
+   0,
+   0,
+   2
+  ],
+  "coupling": {
+   "signs": [
+    -1,
+    1,
+    1
+   ],
+   "variant": null
+  }
+ },
+ "placements": [
+  {
+   "name": "A0_0",
+   "block": "matter_line@1",
+   "params": {
+    "length": 100,
+    "sockets": [
+     4,
+     5,
+     6
+    ]
+   },
+   "at": [
+    0,
+    0,
+    3
+   ],
+   "wrap": true
+  },
+  {
+   "name": "A13_0",
+   "block": "matter_line@1",
+   "params": {
+    "length": 100,
+    "sockets": []
+   },
+   "at": [
+    13,
+    0,
+    3
+   ],
+   "wrap": true
+  },
+  {
+   "name": "B0_0",
+   "block": "light_line@1",
+   "params": {
+    "length": 100,
+    "gauge_phase": 1
+   },
+   "at": [
+    0,
+    0,
+    4
+   ],
+   "wrap": true
+  },
+  {
+   "name": "B12_0",
+   "block": "light_line@1",
+   "params": {
+    "length": 100,
+    "gauge_phase": 0
+   },
+   "at": [
+    0,
+    12,
+    4
+   ],
+   "wrap": true
+  },
+  {
+   "name": "core10_00",
+   "block": "slot_clock@1",
+   "params": {
+    "state": [
+     -1,
+     0,
+     0
+    ]
+   },
+   "at": [
+    10,
+    12,
+    4
+   ]
+  },
+  {
+   "name": "core18_00",
+   "block": "slot_clock@1",
+   "params": {
+    "state": [
+     -1,
+     0,
+     0
+    ]
+   },
+   "at": [
+    18,
+    12,
+    4
+   ]
+  },
+  {
+   "name": "seed",
+   "block": "slow_glider@1",
+   "params": {
+    "start": 6,
+    "hit": "SLOW"
+   },
+   "at": [
+    0,
+    0,
+    3
+   ],
+   "wrap": true
+  }
+ ],
+ "assertions": {
+  "junction_classes": {
+   "0,0": 2,
+   "13,0": 0,
+   "13,12": 2,
+   "0,12": 0
+  },
+  "slot_clocks_silent": [
+   "core10_00",
+   "core18_00"
+  ]
+ },
+ "timing": {
+  "t0": 0,
+  "declared": {
+   "t_A1": 29,
+   "t_c": 80,
+   "trap_period": 20,
+   "ring_lap": 18,
+   "recorder_clicks": [
+    [
+     81,
+     82
+    ],
+    [
+     85,
+     86
+    ],
+    [
+     89,
+     90
+    ],
+    [
+     93,
+     94
+    ]
+   ]
+  }
+ },
+ "steps": 240,
+ "observables": {
+  "decoder": "r17 generic click decoder (version recorded at run time)"
+ },
+ "controls": [
+  {
+   "name": "no_seed",
+   "remove": [
+    "seed"
+   ],
+   "unfill_sockets": true
+  },
+  {
+   "name": "no_cores",
+   "remove": [
+    "core10_00",
+    "core18_00"
+   ]
+  },
+  {
+   "name": "B0_phase0",
+   "override": {
+    "B0_0": {
+     "gauge_phase": 0
+    }
+   },
+   "assertions": {
+    "junction_classes": null
+   }
+  }
+ ]
+}

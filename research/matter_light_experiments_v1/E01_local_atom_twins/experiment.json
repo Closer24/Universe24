@@ -1,0 +1,368 @@
+{
+ "format": "matter_light_experiments_v1-experiment-1",
+ "id": "E01_local_atom_twins",
+ "title": "Locally created periodic-source (atom) candidates (D1) and twin candidates in exact phase",
+ "card": "CARD.md",
+ "composition": "composition.json",
+ "composition_note": "composition.json = registry d1_main_spec(100): it regenerates d1_atom_L100 and its three controls (masks); the six twin runs reference the blocks of the pending append (r01b/publish_proposal.json, byte-identical files), so this experiment verifies after that append",
+ "coupling": {
+  "kind": "reference",
+  "signs": [
+   -1,
+   1,
+   1
+  ]
+ },
+ "detectors": null,
+ "runs": [
+  {
+   "name": "d1_atom_L100",
+   "role": "main",
+   "block": "d1_local_atom_L100",
+   "block_file": "research/matter_light_blocks_v1/blocks/atoms/d1_local_atom_L100.json",
+   "block_file_sha256": "869175beed1c4bb4a94f9b0de5ff14f1d5fa4a9ad31ba4388ce5c29f0e656f15",
+   "from_composition": {
+    "control": null
+   },
+   "steps": 140,
+   "initial_state_sha256": "c803bb0e2353b89acacfc3827a184e619d67e3fd16985f330fc341cf7e5ba458",
+   "final_state_sha256": "75c56fe2b4dd1d6e12f2b50b80917932e1e3252f0b12f669f11a520257d405aa",
+   "log_sha256": "97762e8dfe350afc79e4ed3ec7947cc300ce4d3f668f863beb1ce8f28e4a266a",
+   "clicks": 2729,
+   "seconds": 1.2,
+   "fast": false
+  },
+  {
+   "name": "d1_atom_L200",
+   "role": "size_check",
+   "block": "d1_local_atom_L200",
+   "block_file": "research/matter_light_blocks_v1/blocks/atoms/d1_local_atom_L200.json",
+   "block_file_sha256": "4dfca8bdd27b2efdab68ced2e128f745883c9eae4231baff60fc4f5c12a2d10b",
+   "steps": 220,
+   "initial_state_sha256": "e619a9c4d0a75eef842b23fbcc7f4640162d07f66d7c3f3c80e8f42eae88f41b",
+   "final_state_sha256": "a1ffea993b19b10c3808082de28036422e022fa8187f56b9db1900282cb3e225",
+   "log_sha256": "097c1302021ec6749a9959abf1a25935e9aef9027a3f2865ff90955ccb487411",
+   "clicks": 42686,
+   "seconds": 10.0,
+   "fast": false
+  },
+  {
+   "name": "d1_control_no_seed_L100",
+   "role": "control",
+   "block": "d1_control_no_seed_L100",
+   "block_file": "research/matter_light_blocks_v1/blocks/atoms/d1_control_no_seed_L100.json",
+   "block_file_sha256": "c71470418357691d10e1da40f2a23b2f6ae1e119bc28c8d545afae57885e6c7b",
+   "from_composition": {
+    "control": "no_seed"
+   },
+   "steps": 140,
+   "initial_state_sha256": "5ce99bb177eeef39d7b042ca18b8ec09c251caeaf89e976524f3611002ce0e22",
+   "final_state_sha256": "5ce99bb177eeef39d7b042ca18b8ec09c251caeaf89e976524f3611002ce0e22",
+   "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "clicks": 0,
+   "seconds": 0.8,
+   "fast": false
+  },
+  {
+   "name": "d1_control_no_cores_L100",
+   "role": "control",
+   "from_composition": {
+    "control": "no_cores"
+   },
+   "steps": 140,
+   "source": "research/matter_light_v1/r11/preparations/d1_control_no_cores_L100.json (program record; equal initial state, checked by the builder)",
+   "initial_state_sha256": "23f91744a05b34c3cd14783a6486b2c43c3e67fa56172737c65270bf2ce66ee5",
+   "final_state_sha256": "fa0eb45698123ad2adb0b4ea9a82175ebcd3a04fadabf00d53e891c03d758aaf",
+   "log_sha256": "b83dc18ef5948e6ff0e0f273a62e89510d5f791e22543313a56c702bb658acc9",
+   "clicks": 3318,
+   "seconds": 0.8,
+   "fast": false
+  },
+  {
+   "name": "d1_control_B0_phase0_L100",
+   "role": "control",
+   "from_composition": {
+    "control": "B0_phase0"
+   },
+   "steps": 140,
+   "source": "research/matter_light_v1/r11/preparations/d1_control_B0_phase0_L100.json (program record; equal initial state, checked by the builder)",
+   "initial_state_sha256": "aa5bddbac0e35ca3d3a3613d38c1d0ee275dda73efbbb5a6360cd6f49f641ca1",
+   "final_state_sha256": "1dcc55e8cdca500877069246391e1ac53cd3035f53a074d60988b56dac9232af",
+   "log_sha256": "4b3f54dc1514b2049cea7325afe5c5259d9160925fbc9eeb61b9cf67196e5a33",
+   "clicks": 1802,
+   "seconds": 0.9,
+   "fast": false
+  },
+  {
+   "name": "twins_sync_L160",
+   "role": "main",
+   "block": "twin_atoms_q212_L160",
+   "block_file": "research/matter_light_blocks_v1/blocks/atoms/twin_atoms_q212_L160.json",
+   "block_file_sha256": "a3b3e20ed7a5ea28a4fed08f000d5cf676b8b999a437b729befdff35ff1fc9c2",
+   "pending_append": "research/matter_light_v1/r01b/publish_proposal.json (published by research.matter_light_blocks_v1.append at push time)",
+   "steps": 260,
+   "initial_state_sha256": "c40db4f1274fb44116982fa24ef4d7287cc62283ea705d8fba2fe8271c35cbd1",
+   "final_state_sha256": "0f59319571fd31fae4d41e45052b58f3984f4f3b3b40dbf29e58b1f031b383e1",
+   "log_sha256": "6c2f286b96438655f0d741c23374940cea77c238cd74c39bd96074eef8b21520",
+   "clicks": 13771,
+   "seconds": 4.3,
+   "fast": false
+  },
+  {
+   "name": "twins_sync_L320",
+   "role": "size_check",
+   "block": "twin_atoms_q212_L320",
+   "block_file": "research/matter_light_blocks_v1/blocks/atoms/twin_atoms_q212_L320.json",
+   "block_file_sha256": "729356f13125bc898fea7614969bd1695b89b28e0dda2671008cf01c3c2ea208",
+   "pending_append": "research/matter_light_v1/r01b/publish_proposal.json (published by research.matter_light_blocks_v1.append at push time)",
+   "steps": 260,
+   "initial_state_sha256": "8b8068a8d860e215655f51970e4a35d62c7d57fd2dbb4153f02e8667e1d8ab96",
+   "final_state_sha256": "aa19c790e09566a8da4736411f1529dc75a304f99a84bb7c4bc53b1c9cde282f",
+   "log_sha256": "4dc72390b41656aca9e1ab2f61324115aaaca6f196a6353abc2cb96cc9285fdf",
+   "clicks": 17536,
+   "seconds": 13.4,
+   "fast": false
+  },
+  {
+   "name": "twins_q28_L160",
+   "role": "main",
+   "block": "twin_atoms_q28_L160",
+   "block_file": "research/matter_light_blocks_v1/blocks/atoms/twin_atoms_q28_L160.json",
+   "block_file_sha256": "c1b7c3bdabe559b0d61f45190ae96530d8e16300dfa9ef56d8fdc93ab87f951f",
+   "pending_append": "research/matter_light_v1/r01b/publish_proposal.json (published by research.matter_light_blocks_v1.append at push time)",
+   "steps": 260,
+   "initial_state_sha256": "2a5f95596fc1345b398696be4f20dd9967eb0a6482d6e37990ae84f99155339c",
+   "final_state_sha256": "59286c448f2a49b533064029229e00c17e36427aaacf156b3b3d36101c048c5a",
+   "log_sha256": "51405e0212d24898b392894f94712f640970b2751aa6f19244142f8f9130913e",
+   "clicks": 13930,
+   "seconds": 3.2,
+   "fast": false
+  },
+  {
+   "name": "twins_q28_L320",
+   "role": "size_check",
+   "block": "twin_atoms_q28_L320",
+   "block_file": "research/matter_light_blocks_v1/blocks/atoms/twin_atoms_q28_L320.json",
+   "block_file_sha256": "e61dbaca1b706dd05a6a988f0b96756cbd31c9bb570a229228851f5b75b4ea6d",
+   "pending_append": "research/matter_light_v1/r01b/publish_proposal.json (published by research.matter_light_blocks_v1.append at push time)",
+   "steps": 260,
+   "initial_state_sha256": "68dc4191488caf6e0f849811e66a179673b9b8e00afec990b0f234bd01178f10",
+   "final_state_sha256": "f11d9e30915e0775cb0023ec6f9dc0ca84ebc9872ee93d4bb4154755ae0f140b",
+   "log_sha256": "da4cce0d77340a3d36a57261fbf3328fdb2863e67f45976c52e83ca0e78aca71",
+   "clicks": 20285,
+   "seconds": 14.8,
+   "fast": false
+  },
+  {
+   "name": "twins_sync_control_no_seed_L160",
+   "role": "control",
+   "block": "twin_atoms_q212_L160_control_no_seed",
+   "block_file": "research/matter_light_blocks_v1/blocks/atoms/twin_atoms_q212_L160_control_no_seed.json",
+   "block_file_sha256": "1e2f2f32dc42f6f65f4d0fff49aec7fc3f63c3d36ab51ba39fc87bd4f9aacfea",
+   "pending_append": "research/matter_light_v1/r01b/publish_proposal.json (published by research.matter_light_blocks_v1.append at push time)",
+   "steps": 240,
+   "initial_state_sha256": "8cff3c8560bfc7f6b6a9e5f7a101f2f8c47692e616d0cfb53e9eb0e3bfac3df6",
+   "final_state_sha256": "8cff3c8560bfc7f6b6a9e5f7a101f2f8c47692e616d0cfb53e9eb0e3bfac3df6",
+   "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "clicks": 0,
+   "seconds": 2.6,
+   "fast": false
+  },
+  {
+   "name": "twins_sync_control_no_lower_cores_L160",
+   "role": "control",
+   "block": "twin_atoms_q212_L160_control_no_lower_cores",
+   "block_file": "research/matter_light_blocks_v1/blocks/atoms/twin_atoms_q212_L160_control_no_lower_cores.json",
+   "block_file_sha256": "5dc616cd46d36baf6105dd514647cceeb705d976d4e071d40d7e3b28194c6116",
+   "pending_append": "research/matter_light_v1/r01b/publish_proposal.json (published by research.matter_light_blocks_v1.append at push time)",
+   "steps": 240,
+   "initial_state_sha256": "a74a986406f988bc41bc77157f6e64141b0a8c697b8b713e7b6e89af29d7eace",
+   "final_state_sha256": "82fbf69b2203e0604ac3eb065180b9e4590b0f52c8b1cb9f3f3b23eac259fe71",
+   "log_sha256": "f672343bce7425c6228b76d382b92c8f94a471bcc1dfe035c610f347c006bd3c",
+   "clicks": 8915,
+   "seconds": 2.7,
+   "fast": false
+  }
+ ],
+ "decoder": {
+  "name": "click_decoder_v1",
+  "version": "1.0",
+  "code_sha256": {
+   "decoder.py": "36f8b088e104b9223150150b120a38a080d848b8b42ab0daeee96d146210792c",
+   "correlate.py": "d4860ec57e1ba92484e9e49f3ad0f6eb43a325435486929ad2c2bee7597cad51",
+   "config_v1.json": "fbce6c60da6c1707902a2ab0b867ab9b5de701fc11b7e2a051f0de4cfc830660"
+  },
+  "frozen_utc": "2026-11-09T01:29:27Z",
+  "detectors": null
+ },
+ "checks": [
+  {
+   "claim": "E01-1",
+   "text": "D1: one periodic source, period 20 (= 2d+4, d = 8)",
+   "run": "d1_atom_L100",
+   "pointer": "/summary/periods",
+   "op": "eq",
+   "value": [
+    20
+   ]
+  },
+  {
+   "claim": "E01-2",
+   "text": "D1: exact click-front speeds 1 (light candidates) and 1/3 (matter candidates)",
+   "run": "d1_atom_L100",
+   "pointer": "/summary/exact_speeds",
+   "op": "eq",
+   "value": [
+    "1",
+    "1/3"
+   ]
+  },
+  {
+   "claim": "E01-3",
+   "text": "D1: the periodic source is created (born after the seed updates, > 4 sites from the seed)",
+   "run": "d1_atom_L100",
+   "pointer": "/sources/0/birth/created",
+   "op": "eq",
+   "value": true
+  },
+  {
+   "claim": "E01-4",
+   "text": "D1: the source's birth update is the same on L = 100 and 2L = 200 (local)",
+   "runs": [
+    "d1_atom_L100",
+    "d1_atom_L200"
+   ],
+   "pointer": "/sources/0/birth/t",
+   "op": "same"
+  },
+  {
+   "claim": "E01-5",
+   "text": "D1: the source's birth sites are the same on L = 100 and 2L = 200",
+   "runs": [
+    "d1_atom_L100",
+    "d1_atom_L200"
+   ],
+   "pointer": "/sources/0/birth/sites",
+   "op": "same"
+  },
+  {
+   "claim": "E01-6",
+   "text": "D1 no seed: no click",
+   "run": "d1_control_no_seed_L100",
+   "pointer": "/input/events",
+   "op": "eq",
+   "value": 0
+  },
+  {
+   "claim": "E01-7",
+   "text": "D1 no cores: no periodic source",
+   "run": "d1_control_no_cores_L100",
+   "pointer": "/summary/sources",
+   "op": "eq",
+   "value": 0
+  },
+  {
+   "claim": "E01-8",
+   "text": "D1 with B0 at gauge phase 0: no periodic source",
+   "run": "d1_control_B0_phase0_L100",
+   "pointer": "/summary/sources",
+   "op": "eq",
+   "value": 0
+  },
+  {
+   "claim": "E01-9",
+   "text": "twins (q2 = 12): two periodic sources, both period 20",
+   "run": "twins_sync_L160",
+   "pointers": [
+    "/sources/0/period",
+    "/sources/1/period"
+   ],
+   "op": "eq",
+   "value": [
+    20,
+    20
+   ]
+  },
+  {
+   "claim": "E01-10",
+   "text": "twins (q2 = 12): the two sources click in the same phases of the 20-period",
+   "run": "twins_sync_L160",
+   "pointers": [
+    "/sources/0/phases",
+    "/sources/1/phases"
+   ],
+   "op": "same"
+  },
+  {
+   "claim": "E01-11",
+   "text": "twins (q2 = 12): both sources are born at the same update",
+   "run": "twins_sync_L160",
+   "pointers": [
+    "/sources/0/birth/t",
+    "/sources/1/birth/t"
+   ],
+   "op": "same"
+  },
+  {
+   "claim": "E01-12",
+   "text": "twins (q2 = 12): births identical on L = 160 and 2L = 320 (local)",
+   "runs": [
+    "twins_sync_L160",
+    "twins_sync_L320"
+   ],
+   "pointer": "/sources/0/birth/t",
+   "op": "same"
+  },
+  {
+   "claim": "E01-13",
+   "text": "twins (q2 = 8): the two sources' births differ by 3(12 - q2) = 12 updates (the decoder sorts sources by birth: S1 - S0)",
+   "run": "twins_q28_L160",
+   "pointers": [
+    "/sources/0/birth/t",
+    "/sources/1/birth/t"
+   ],
+   "op": "diff",
+   "value": 12
+  },
+  {
+   "claim": "E01-16",
+   "text": "twins (q2 = 8): two periodic sources, both period 20",
+   "run": "twins_q28_L160",
+   "pointers": [
+    "/sources/0/period",
+    "/sources/1/period"
+   ],
+   "op": "eq",
+   "value": [
+    20,
+    20
+   ]
+  },
+  {
+   "claim": "E01-14",
+   "text": "twins no seed: no click",
+   "run": "twins_sync_control_no_seed_L160",
+   "pointer": "/input/events",
+   "op": "eq",
+   "value": 0
+  },
+  {
+   "claim": "E01-15",
+   "text": "twins without the lower cores: one periodic source, period 20",
+   "run": "twins_sync_control_no_lower_cores_L160",
+   "pointer": "/summary/periods",
+   "op": "eq",
+   "value": [
+    20
+   ]
+  }
+ ],
+ "verdict": {
+  "referee": "r10e",
+  "id": "R10E-52",
+  "result": "CONFIRMED"
+ },
+ "data_bytes": 14668,
+ "built_utc": "2026-11-09T02:18:43Z",
+ "builder": "research/matter_light_v1/r01b/build_experiments.py (program record)"
+}

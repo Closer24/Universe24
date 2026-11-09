@@ -1,0 +1,101 @@
+{
+ "note": "r08 wave 8 stations (pre-registered 23:14): the B-line nodes 6 (inner) and 7 (outer) sites outside the link-side core of each trap, channel 1 at z = 4; passages from click-run onsets: outward = inner then outer one update later, inward = outer then inner (time at the inner node)",
+ "detectors": {
+  "A_inner_L240": {
+   "sites": [
+    [
+     231,
+     0,
+     4
+    ]
+   ],
+   "channels": [
+    1
+   ]
+  },
+  "A_outer_L240": {
+   "sites": [
+    [
+     230,
+     0,
+     4
+    ]
+   ],
+   "channels": [
+    1
+   ]
+  },
+  "B_inner_L240": {
+   "sites": [
+    [
+     231,
+     220,
+     4
+    ]
+   ],
+   "channels": [
+    1
+   ]
+  },
+  "B_outer_L240": {
+   "sites": [
+    [
+     230,
+     220,
+     4
+    ]
+   ],
+   "channels": [
+    1
+   ]
+  },
+  "A_inner_L480": {
+   "sites": [
+    [
+     471,
+     0,
+     4
+    ]
+   ],
+   "channels": [
+    1
+   ]
+  },
+  "A_outer_L480": {
+   "sites": [
+    [
+     470,
+     0,
+     4
+    ]
+   ],
+   "channels": [
+    1
+   ]
+  },
+  "B_inner_L480": {
+   "sites": [
+    [
+     471,
+     460,
+     4
+    ]
+   ],
+   "channels": [
+    1
+   ]
+  },
+  "B_outer_L480": {
+   "sites": [
+    [
+     470,
+     460,
+     4
+    ]
+   ],
+   "channels": [
+    1
+   ]
+  }
+ }
+}

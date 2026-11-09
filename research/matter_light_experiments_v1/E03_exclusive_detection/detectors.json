@@ -1,0 +1,41 @@
+{
+ "note": "r13 readout detector_click_v1 (pre-registered 00:47, amended 00:49 before any registered run): a detector = all 48 channels of its clock site and of the site between clock and fibre",
+ "detectors": {
+  "A": {
+   "sites": [
+    [
+     90,
+     100,
+     98
+    ],
+    [
+     90,
+     100,
+     99
+    ]
+   ]
+  },
+  "B": {
+   "sites": [
+    [
+     70,
+     120,
+     98
+    ],
+    [
+     70,
+     120,
+     99
+    ]
+   ]
+  }
+ },
+ "stations": {
+  "A": [
+   "A"
+  ],
+  "B": [
+   "B"
+  ]
+ }
+}
