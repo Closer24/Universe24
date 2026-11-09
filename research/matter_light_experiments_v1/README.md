@@ -1,10 +1,10 @@
 # Matter and light experiments (curated, v1)
 
 Each experiment here shows one result of the matter/light research program on the unchanged reference model. It
-is **data**: init files in the official format or references to published blocks, declared detectors, and a card.
-One generic verifier replays every run natively with the exact inverse, writes the official click log, and reads
-every claim **only from the frozen click decoder's report** (`research/click_decoder_v1`). There is no
-per-experiment code.
+is **data**: compositions of registered blocks, init files in the official format or references to published
+blocks, declared detectors, and a card. One generic verifier replays every run natively with the exact inverse,
+writes the official click log, and reads every claim **only from the frozen click decoder's report**
+(`research/click_decoder_v1`). There is no per-experiment code.
 
 Names such as "light", "matter", "atom", "clock" and "charge" are **candidate names for click patterns** of this
 model. No physical photons, mass, charge, spin-1/2, gravity or quantum behaviour is claimed. `C2` is not a selection
@@ -23,22 +23,25 @@ law and `Q` is not energy (AGENTS rules 10 and 12).
 | [E07b](E07b_sce_superposition_interference/CARD.md) | superposition and interference candidates in clicks: two exact C0 fronts, dark planes z = 0 and 3 | +++ | THEOREM + SIMULATION | 9 of 9 pass | r10e R10E-56 CONFIRMED (r10f R10F-10) | ~10 s |
 | [E09](E09_einstein1911_clicks/CARD.md) | Einstein-1911 signatures in a prepared light-flux medium: Shapiro +4 per packet met, river, route switch, a received pattern that repeats every 24 instead of 16 (α = 1, γ = 0) | +++ | SIMULATION | 17 of 17 pass | r10f R10F-8 CONFIRMED | ~15 s |
 | [E10](E10_prescribed_schwarzschild_lattice/CARD.md) | prescribed Schwarzschild relay lattice (PRESCRIBED geometry, not sourced gravity) | +++ | THEOREM + SIMULATION | 73 of 73 pass | r10f R10F-7 CONFIRMED | ~0.5 min |
+| [E15](E15_cyclic_bangs/CARD.md) | exactly periodic bang candidates: two time-symmetric moments per cycle (periods 48, 164, and 164 with a 720° ring) | (−,+,+) | THEOREM + SIMULATION | 29 of 29 pass (15 decoder, 14 log_symmetry_v1) | remote FRESH4-B1..B4, r10h R10H-29..31 CONFIRMED | ~20 s |
+| [E15b](E15b_planar_cyclic_box/CARD.md) | a cyclic planar box: the seed plane between two + planes re-bangs exactly every 4d + 4 = 16 updates | +++ | THEOREM + SIMULATION | 4 of 4 pass (log_symmetry_v1) | remote FRESH6-1, r10g R10G-74..77 CONFIRMED | ~30 s |
 | [E16](E16_bigbang_backward_v5/CARD.md) | Big Bang candidate v5, built backwards: created light, two created ring clocks (36, 22), one gate decision, a matched α_in = 1 instrument pair and a radar echo, from a 14-cell seed | (−,+,+) | SIMULATION | 20 of 20 pass | r10h R10H-1..8 PARTLY (1, 3, 4, 7 CONFIRMED) | ~2 min |
 | [E17](E17_exact_bounce_v6/CARD.md) | an exact bounce: one JR-fixed state s* whose contraction and expansion are mirror images in the clicks (0 of 49,830 records unpaired), on L and 2L | (−,+,+) | THEOREM + SIMULATION | 12 of 12 pass (7 decoder, 5 log_symmetry_v1) | remote FRESH4-A1..A3 CONFIRMED | ~2 min |
 
 E01's twin runs reference the blocks appended to `research/matter_light_blocks_v1` in dff39dc. Like E01, E07b's run
 a_A references a published block (`exact_front_111_box`).
 
-Decoder pin: `click_decoder_v1` 1.0, frozen 2026-11-09T01:29:27Z (`research/click_decoder_v1/FROZEN.json`). E17
-also pins the frozen layer log_symmetry_v1 (release 1.0.3). An
-experiment is **ready** when every declared check passes on the decoder report and the referee's verdict is recorded.
+Decoder pin: `click_decoder_v1` 1.0, frozen 2026-11-09T01:29:27Z (`research/click_decoder_v1/FROZEN.json`). E15,
+E15b and E17 also pin the frozen layer log_symmetry_v1 (release 1.0.3). An experiment is **ready** when every
+declared check passes on the decoder report and the referee's verdict is recorded.
 
 ## Commands
 
 ```sh
 python -m research.matter_light_experiments_v1.verify E01_local_atom_twins E02_clicktime_chsh E03_exclusive_detection \
     E04_einstein_created E06_moving_clocks E07_sce_collapse_entanglement E07b_sce_superposition_interference \
-    E09_einstein1911_clicks E10_prescribed_schwarzschild_lattice E16_bigbang_backward_v5 E17_exact_bounce_v6 \
+    E09_einstein1911_clicks E10_prescribed_schwarzschild_lattice E15_cyclic_bangs E15b_planar_cyclic_box \
+    E16_bigbang_backward_v5 E17_exact_bounce_v6 \
                                                                                 # every one "ready": true
 python -m research.matter_light_experiments_v1.verify --all                     # every experiment folder present
 python -m research.matter_light_experiments_v1.verify --fast                    # only the runs marked fast
@@ -140,9 +143,10 @@ a = +1 if it fires, −1 if not. Settings are named by keys: **`chsh` uses `"xy"
 ## Provenance
 
 The manifests were built by the program's builder (`research/matter_light_v1/r01b/build_experiments.py`, program
-record) from the researchers' init files and the published blocks; each run names its source file and SHA-256. The
-verifier needs only `universe24`, `research.components`, `research.matter_light_blocks_v1` (blocks and registry) and
-`research.click_decoder_v1`.
+record) from the researchers' init files and the published blocks; each run names its source file and SHA-256. E02,
+E03, E04 and E06 shipped init files until e12a9c3; they are now compositions with every initial-state, final-state
+and log hash unchanged. The verifier needs only `universe24`, `research.components`,
+`research.matter_light_blocks_v1` (blocks and registry) and `research.click_decoder_v1`.
 
 Manifests may carry four informational keys that the verifier ignores: `builder` (how the composition or init files
 were made), `built_utc`, `composition_note` and `data_bytes`. A path under `research/matter_light_v1/` there, in this
