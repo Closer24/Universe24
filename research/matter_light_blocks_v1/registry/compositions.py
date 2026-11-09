@@ -2901,3 +2901,47 @@ def half_integer_bang_spec(L=640):
     return {"format": FORMAT, "id": f"hbPG_sstar_L{L}", "board": _board(L, MPP), "placements": pl, "steps": 240,
             "timing": {"t0": "the half moment: b = 0 on every channel, F(S*) = JR(S*) (r26b HB, design PG)",
                        "bounce_log": "exact rewind 240, then 481 updates (silent step 241)"}}
+
+
+# ===================================================================== WAVE 8 (r21c)
+# ---------------------------------------------------------------------------- r26 E14, r25 E11: exact plane light
+def plane_light_placement(name, beams):
+    """light.plane_light@1 as one placement at the origin (the generator writes the whole board)."""
+    return {"name": name, "block": "plane_light@1", "params": {"beams": [dict(b) for b in beams]}, "at": [0, 0, 0]}
+
+
+#: exp.two_beam_interference@1 (r26 E1 on L = 8, r26b's E14): beam A along (1,1,1), beam B along one of three other body
+#: diagonals, both with f = r26's cos_profile(8, 3); runs are the joint boards J<angle> = A + B<angle> and single beams
+E14 = {"side": 8, "profile": [3, 2, 0, -2, -3, -2, 0, 2], "A": [1, 1, 1],
+       "B": {"109": [1, -1, -1], "70": [1, 1, -1], "180": [-1, -1, -1]}, "steps": 24}
+
+
+def e14_two_beam_spec():
+    """exp.two_beam_interference@1 (r26b E14): ONE plane_light@1 placement on the +++ board of side 8; base = J109; the
+    seven runs J109, A, B109, J70, B70, J180, B180 are controls (beam masks).  Exact linear superposition of two
+    prepared board-filling waves (UPDATE 23.4 wording)."""
+    f = list(E14["profile"])
+    A = {"sigma": list(E14["A"]), "profile": f}
+    B = {k: {"sigma": list(v), "profile": f} for k, v in E14["B"].items()}
+    runs = {"J109": [A, B["109"]], "A": [A], "B109": [B["109"]], "J70": [A, B["70"]], "B70": [B["70"]],
+            "J180": [A, B["180"]], "B180": [B["180"]]}
+    return {"format": FORMAT, "id": "E14_two_beam_interference", "board": _board(E14["side"], PPP),
+            "placements": [plane_light_placement("light", runs["J109"])], "steps": E14["steps"],
+            "timing": {"t0": 0, "declared": {"label": "exact linear superposition of two prepared board-filling waves",
+                                             "fringe_normals": {"109": [0, 1, 1], "70": [0, 0, 1], "180": [1, 1, 1]}}},
+            "controls": [{"name": n, "override": {"light": {"beams": b}}} for n, b in runs.items()]}
+
+
+def e11_main_plane_light_spec(side=6, clocks=None, steps=24):
+    """clock.diagonal_light_clock@1 (r25 E11 main) as ONE plane_light@1 placement: per body-diagonal family a forward
+    beam (sigma, f_jf) and a backward beam (-sigma, the reflected profile g_jb); the same state as
+    e11_main_diagonal_spec (all48_site@1 per site)."""
+    clocks = clocks or E11_CLOCKS
+    beams = []
+    for nm, (jf, jb) in clocks.items():
+        s = FAMILIES[nm]
+        f, g = _profile(jf, side), _profile(jb, side)
+        beams.append({"sigma": list(s), "profile": f})
+        beams.append({"sigma": [-v for v in s], "profile": [g[(-m) % side] for m in range(side)]})
+    return {"format": FORMAT, "id": "e11_main_diagonal", "board": _board(side, PPP),
+            "placements": [plane_light_placement("light", beams)], "steps": steps}

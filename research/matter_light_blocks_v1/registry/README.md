@@ -36,6 +36,7 @@ data = init_data(prepared, steps=140)                 # the official init format
 | `matter_line@3` | `matter_line@2` plus sparse rest-class marks `[[node, class], ...]` (class-2 marks are r06 phase advancers); no marks = `matter_line@2` exactly | classes in {0, 1, 2}; a mark is not a socket |
 | `fused_mover@1` | r29's fused mover β_n (β_1 = r06's SLOW family) on a class-0 chain, front activated at t = −phase, as the cumulative-hand embedding of its free translator ([`bform.py`](bform.py)); fills a matter-line socket of exactly `fused_mover_window(n, front, direction, phase)` | chain weight −1; vacuum (0,0,2); no shared vacuum partner |
 | `field_line_bundle@1` | r33's field-line bundle: the (2ρ)² open gauged staircases from a source point toward (2ρ, 2j+1, 2k+1) as guide paths, with parametric packets — `flux` (outward heads on every line), `probe` (one inward packet on each line crossing the plane x = r inside \|y\|, \|z\| ≤ half), explicit `packets` and `root_sources` (one single channel in the −x halo slot of every root) | r04's halo condition over the whole bundle (no shortcut, no shared halo channel) |
+| `plane_light@1` | exact A1 plane light on the whole board: beams `{sigma, profile, shift}` along the eight body diagonals, a = Σ f(σ·x + 1 + k), b = Σ f(σ·x + k), r = 2 on all 48 channels (one beam (1,1,1) with a delta profile is the published `diag_sheet`) | σ a body diagonal; the profile period divides L; +++ and the vacuum (0,0,2) |
 
 The lineage of every generator is recorded in `generators.LINEAGE`. A changed generator gets a new
 version (`@2`); a composition names the versions it uses.
@@ -86,7 +87,7 @@ was also checked against the program's own code:
   kind, registration new / update-of / republication-of, generator, coupling, evidence status, parts,
   lineage), the experiments and their cards (`experiment_cards`), the read-only `observers`, the
   `aliases`, the registrar's decisions on proposed cards, the verified points (init files regenerated
-  exactly, recipes and builder equalities, with SHA-256 prefixes; 476 after WAVE 7, all exact), and the
+  exactly, recipes and builder equalities, with SHA-256 prefixes; 485 after WAVE 8, all exact), and the
   role of each of the 346 published names (the 338 of 8301320 and the 8 appended in dff39dc: canonical,
   variant, control, alias, J-image, experiment instance).
 * [`data/cards.json`](data/cards.json): one card per block. Card format: (a) use = purpose, interface, timing,
@@ -96,8 +97,9 @@ was also checked against the program's own code:
 Both files are compact JSON. Paths and modules under `research/matter_light_v1/` that the registry's code or data
 name are files of the program's working folder, archived uncurated on branch `backup/matter-light-working` at commit
 2483837, except five WAVE 5 source files (`r27b/cards_r27b.json` and the four `r27b/preparations/bb27v4_ringclock_*`
-files), which are first archived at commit 9f9cc64, the WAVE 6 sources at commit 39ca35f and the WAVE 7 sources at
-commit 7aac8c5. Nothing there is needed to regenerate or verify a block or a composition; `runs/` paths are local.
+files), which are first archived at commit 9f9cc64, the WAVE 6 sources at commit 39ca35f and the WAVE 7 and 8
+sources at commit 7aac8c5. Nothing there is needed to regenerate or verify a block or a composition; `runs/` paths
+are local.
 
 `compositions.py` also holds the WAVE 2 compositions: the published guide instances
 (`published_guide_specs`), r08's W9 devices, r03's Q1c selector, r12's approval router, r13's beam-splitter
@@ -162,6 +164,12 @@ the escort sources are `seed.cyclic_point@2` patches, `ESCORT_WALL_MINUS_Y`), r3
 `no_escorts` and `up_escort_late`), and r26b's half-integer bang (`half_integer_bang_spec`, design PG: b = 0 on every
 channel). `tests/test_matter_light_blocks_registry_wave7.py` checks them against recorded initial-state hashes, the
 seeds' JR symmetry and the moment patches natively.
+
+WAVE 8 added the generator `plane_light@1` (`light.plane_light@1`, an update of `light.front_111@1`: sums of exact
+plane waves along the body diagonals; `plane_light_placement`). It writes r26b's E14 (`e14_two_beam_spec`, one placement
+with the seven runs as beam masks), r25's E11 main board (`e11_main_plane_light_spec`, the same state as
+`e11_main_diagonal_spec`) and the published `diag_sheet`. `tests/test_matter_light_blocks_registry_wave8.py` checks
+them against the recorded initial-state hashes and the published block.
 
 ## Limits
 

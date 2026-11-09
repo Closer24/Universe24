@@ -674,3 +674,47 @@ def field_line_bundle(board, *, rho=4, x_root=16, x_end=100, g0=0, flux=None, pr
 BLOCKS.update({"field_line_bundle@1": field_line_bundle})
 LINEAGE.update({"field_line_bundle@1": "r33 field_lines.bundle / e13_build.spec and e13b_build.cores, via r21b's "
                                        "field_line_bundle_placement (guide_net@1); r04 guide algebra and halo rule"})
+
+
+# ===================================================================== WAVE 8 (r21c) additions
+def plane_light(board, *, beams):
+    """light.plane_light@1 (r26 blocks.plane111): exact A1 plane light on the whole board, a sum of travelling
+    profiles along the eight body diagonals.  ``beams`` = [{"sigma": [s1, s2, s3] (each +-1, the
+    direction of motion), "profile": [f_0, ..., f_{p-1}] (integers, p dividing the side), "shift": k (default 0)}];
+    every channel of every site x gets a = sum f((sigma.x + 1 + k) mod p), b = sum f((sigma.x + k) mod p), r = 2, and
+    a site with a = b = 0 stays vacuum.  The patch is the whole board in local coordinates 0..L-1 (place it at the
+    origin).  One beam (1,1,1) with a delta profile is the published diag_sheet (light.front_111@1).  Needs the
+    coupling +++ and the quiet vacuum (0, 0, 2), the scope of r26's theorem."""
+    L = int(board["side"])
+    if tuple(board["signs"]) != (1, 1, 1) or tuple(board["background"]) != (0, 0, 2):
+        raise ValueError("plane_light@1 needs the coupling +++ and the vacuum (0, 0, 2)")
+    parsed = []
+    for bm in beams:
+        s = tuple(int(v) for v in bm["sigma"])
+        f = [int(v) for v in bm["profile"]]
+        if len(s) != 3 or any(v not in (1, -1) for v in s):
+            raise ValueError("sigma must be a body diagonal (+-1, +-1, +-1)")
+        if not f or L % len(f):
+            raise ValueError("the profile period must divide the side")
+        parsed.append((s, f, int(bm.get("shift", 0))))
+    cells = {}
+    for x in range(L):
+        for y in range(L):
+            for z in range(L):
+                a = b = 0
+                for s, f, k in parsed:
+                    n = s[0] * x + s[1] * y + s[2] * z + k
+                    b += f[n % len(f)]
+                    a += f[(n + 1) % len(f)]
+                if a or b:
+                    for g in range(48):
+                        cells[(x, y, z, g)] = (a, b, 2)
+    return _patch("plane-light", board, cells,
+                  evidence=("r26 [THEOREM] (coherent_wave_algebra.md, extended to sums): the input of every channel is "
+                            "3 sum (f(s + 1) + f(s - 1)), a multiple of 3, so r stays 2 and b_t(x) = sum f(sigma.x + k - t) "
+                            "exactly, at every amplitude.",))
+
+
+BLOCKS.update({"plane_light@1": plane_light})
+LINEAGE.update({"plane_light@1": "r26 blocks.plane111 (proposed light.plane111@1), r25 preparations_e11.main_diagonal "
+                                 "and r01 blocks.diag_sheet; update-of the global preparation of light.front_111@1"})
