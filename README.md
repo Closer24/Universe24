@@ -112,6 +112,57 @@ The [research proposal](docs/RESEARCH_PROPOSAL.md),
 [full research document](https://docs.google.com/document/d/1NDPfeFj9vldgb0RMSSvx2lBSmOo__E-F3t2cZwfjOjI/edit)
 separate hypotheses and unimplemented candidates from this engine.
 
+## What a click is (proposal)
+
+A proposed reading, consistent with the engine contract: it adds no code and changes no state.
+[`universe24/observation/clicks.py`](universe24/observation/clicks.py) implements it as a passive readout.
+
+- A **click** is a channel update whose quotient `ell = (2*u + r) // 6` is non-zero (it equals
+  `b_next + a`): the moment the channel's remainder "gear" overflows. No detector code exists; the
+  click is the Rule3 step itself, read afterwards.
+- Its **kind** is `u mod 3` (C0, C1, C2), computed as `((r_next - r) // 2) % 3`; its **size** is the
+  quotient `ell`.
+- **Time mirror:** running the board forward from the mirror image of a final state retraces the run,
+  and the click log comes back in reverse order with kind and quotient negated: C1 and C2 swap, C0
+  stays C0.
+- **What clicks can and cannot tell:** nothing crosses hardware at rest without clicking, so light
+  leaves a trace wherever it moves. But clicks fix only ratios of clock periods, so an observer needs a
+  declared standard clock. Some state data never appear in any click (see the twins below).
+- C2 is an arithmetic class, not a proven physical selection law. No click chooses an outcome: clicks
+  record or reveal prepared data.
+
+The frozen [click decoder](research/click_decoder_v1/) reads official click logs only.
+
+## Algebra found on the board
+
+Labels: **THEOREM** (proved, refereed), **EXHAUSTIVE** (checked in every case of a stated domain),
+**REFEREED** (numbers reproduced by an independent referee). Proofs and referee reports are in the
+research record, not in the engine.
+
+- **Click mirror** [THEOREM; experiment E25]: `JR∘F∘JR = F⁻¹`. This is the time symmetry of a
+  reversible deterministic system, not a quantum effect.
+- **Click-invisible twins** [THEOREM; E25]: two states that differ only in the remainder `r` and
+  `r + 1` (`r` even) have identical click logs forever. The click record does not fix the full state.
+- **Head-on crossing of light** [EXHAUSTIVE]: two light pulses meeting head-on both pass, each delayed
+  by exactly 4 updates, with no residue (768 straight-fibre and 38,400 corner cases).
+- **C0 is a pure carry** [EXHAUSTIVE]: a C0 needs a push of at least 3, neither reads nor changes the
+  gear, and is its own time mirror; a C0 never revealed gear data (0 of 829 cases).
+- **The coupling is a fixed curved 2O connection** [REFEREED, under `+++`]: around every unit plaquette
+  the channel frame turns by an order-3 permutation with no fixed point (120°). A closed fibre loop
+  closes only when its total twist fixes its start channel. This curvature is built into the coupling,
+  uniform and constant; it is not gravity.
+- **Bell bound** [THEOREM]: with the light cone and independently prepared settings, every CHSH value
+  read from clicks satisfies `|S| <= 2`. The board reaches 2, never more.
+- **Exit law by counting** [THEOREM; E22]: in the CC8 router, `P(exit B) = N_B / 14` over the hidden
+  phase. This is a Chinese-remainder counting law, a sawtooth in the device phase, not `cos²` and not
+  the Born rule.
+- **Taxicab fibre geometry** [REFEREED]: in the lattice's own addresses, lengths along staircase fibres
+  are Manhattan lengths. A Riemannian metric exists only where the initial data write one.
+- **Light slows light** [REFEREED]: light crossing a source's light stream is delayed in proportion to
+  the flux density `r^-(d-1)`, the shape of Newton's field law, and the delay depends on the source's
+  timing parity. No clock is slowed, and there is no free fall beyond contact drift. It is contact,
+  not gravity.
+
 ## Contribute and cite
 
 Read [AGENTS.md](AGENTS.md) and [CONTRIBUTING.md](CONTRIBUTING.md).

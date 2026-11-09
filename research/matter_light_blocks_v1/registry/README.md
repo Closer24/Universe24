@@ -252,7 +252,7 @@ written into the packet positions (prescribed, not caused by matter). `flrw_para
 for v3 closed 600-node tape rings) with the data `FLRW` and `FLRW_TICKS` (r70's tick schedules), and `flrw_spec(runs,
 L, version)` one composition per hardware version and board side, the hardware without packets and one control per
 schedule. No generator changed. The composed EdS, EdS_2L, RAD, DARK, EdS2, RAD2, STATIC2 and CYC boards equal r70's
-init files byte for byte. They write the curated experiment `E23_flrw_in_clicks`.
+init files byte for byte. They write the curated experiment `E23_flrw_in_clicks` (withdrawn from the curated experiments on 2026-11-09; the block stays).
 `tests/test_matter_light_blocks_registry_wave13.py` checks the DARK board against r70's init file byte for byte,
 r70's tick schedules, the tapes' packets for every schedule and the U-path, lane and ring geometry.
 
@@ -272,7 +272,7 @@ reproduced by fresh machine 2, GR-F12) as the assembly `clock.lapse_ring_ladder@
 node counts 120/N with static taps and three side taps (`LADDER`, `ladder_params`, `lapse_ladder_spec(L)`; equal to
 builder F's init file byte for byte), and his SHAPIRO-RADIAL chain (`SHAPIRO`, `shapiro_params`,
 `shapiro_chain_spec(L)`, controls curved and flat). No generator changed. They write the curated experiment
-`E27_lapse_ladder_g00`, read by the frozen layer gr_observer_v1. `tests/test_matter_light_blocks_registry_wave15.py`
+`E27_lapse_ladder_g00` (withdrawn from the curated experiments on 2026-11-09; the block stays), read by the frozen layer gr_observer_v1. `tests/test_matter_light_blocks_registry_wave15.py`
 checks the init file, the node counts 120/N, the taps and the two chains.
 
 WAVE 16 (r67) added r71's radar tensor station (refereed by r10zg, R10ZG-1..12; reproduced by fresh machine 2, GR-F9)
@@ -281,7 +281,7 @@ light, one per lattice line and its negative, arm n assigned the coordinate B n 
 round(B √(nᵀgn)) (`TENSOR`, `TENSOR_G_ANISO`, `tensor_length`, `tensor_arms`, `tensor_station_spec(name, g, B)`; the
 Manhattan control with g = 'manhattan'), and the two-station time board (`tensor_time_spec()`, r71's v2). No
 generator changed. The aniso, manhattan and time_v2 boards equal r71's init files byte for byte. They write the
-curated experiment `E24_metric_tensor_declared_chart`. `tests/test_matter_light_blocks_registry_wave16.py` checks the
+curated experiment `E24_metric_tensor_declared_chart` (withdrawn from the curated experiments on 2026-11-09; the block stays). `tests/test_matter_light_blocks_registry_wave16.py` checks the
 time board against r71's init file, the design lengths of aniso and manhattan, and the arm geometry.
 
 WAVE 17 (r67) added builder C's GS-2b (refereed by r10zj, R10ZJ-1..20; reproduced by fresh machine 1, GR-F11) as the
@@ -290,7 +290,7 @@ Schwarzschild's formulas (M = 64), a spoke with six junctions and at each an ope
 count is C_i = round(2πr_i/N_i) (prescribed; it does not close and encircles nothing), and seven ring clocks (`GS2B`,
 `GS2B_MEMBERS`, `gs2b_design`, `gs2b_params`, `gs2b_spec(member)` for S, T, F, D and S2L). No generator changed.
 GS2b_S equals builder C's init file byte for byte. It writes the curated experiment
-`E28_schwarzschild_radial_profile`. `tests/test_matter_light_blocks_registry_wave17.py` checks GS2b_S against builder
+`E28_schwarzschild_radial_profile` (withdrawn from the curated experiments on 2026-11-09; the block stays). `tests/test_matter_light_blocks_registry_wave17.py` checks GS2b_S against builder
 C's init file and the design integers.
 
 ## Limits
