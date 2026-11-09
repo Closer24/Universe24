@@ -23,11 +23,14 @@ law and `Q` is not energy (AGENTS rules 10 and 12).
 | [E07b](E07b_sce_superposition_interference/CARD.md) | superposition and interference candidates in clicks: two exact C0 fronts, dark planes z = 0 and 3 | +++ | THEOREM + SIMULATION | 9 of 9 pass | r10e R10E-56 CONFIRMED (r10f R10F-10) | ~10 s |
 | [E09](E09_einstein1911_clicks/CARD.md) | Einstein-1911 signatures in a prepared light-flux medium: Shapiro +4 per packet met, river, route switch, a received pattern that repeats every 24 instead of 16 (α = 1, γ = 0) | +++ | SIMULATION | 17 of 17 pass | r10f R10F-8 CONFIRMED | ~15 s |
 | [E10](E10_prescribed_schwarzschild_lattice/CARD.md) | prescribed Schwarzschild relay lattice (PRESCRIBED geometry, not sourced gravity) | +++ | THEOREM + SIMULATION | 73 of 73 pass | r10f R10F-7 CONFIRMED | ~0.5 min |
+| [E16](E16_bigbang_backward_v5/CARD.md) | Big Bang candidate v5, built backwards: created light, two created ring clocks (36, 22), one gate decision, a matched α_in = 1 instrument pair and a radar echo, from a 14-cell seed | (−,+,+) | SIMULATION | 20 of 20 pass | r10h R10H-1..8 PARTLY (1, 3, 4, 7 CONFIRMED) | ~2 min |
+| [E17](E17_exact_bounce_v6/CARD.md) | an exact bounce: one JR-fixed state s* whose contraction and expansion are mirror images in the clicks (0 of 49,830 records unpaired), on L and 2L | (−,+,+) | THEOREM + SIMULATION | 12 of 12 pass (7 decoder, 5 log_symmetry_v1) | remote FRESH4-A1..A3 CONFIRMED | ~2 min |
 
 E01's twin runs reference the blocks appended to `research/matter_light_blocks_v1` in dff39dc. Like E01, E07b's run
 a_A references a published block (`exact_front_111_box`).
 
-Decoder pin: `click_decoder_v1` 1.0, frozen 2026-11-09T01:29:27Z (`research/click_decoder_v1/FROZEN.json`). An
+Decoder pin: `click_decoder_v1` 1.0, frozen 2026-11-09T01:29:27Z (`research/click_decoder_v1/FROZEN.json`). E17
+also pins the frozen layer log_symmetry_v1 (release 1.0.3). An
 experiment is **ready** when every declared check passes on the decoder report and the referee's verdict is recorded.
 
 ## Commands
@@ -35,7 +38,8 @@ experiment is **ready** when every declared check passes on the decoder report a
 ```sh
 python -m research.matter_light_experiments_v1.verify E01_local_atom_twins E02_clicktime_chsh E03_exclusive_detection \
     E04_einstein_created E06_moving_clocks E07_sce_collapse_entanglement E07b_sce_superposition_interference \
-    E09_einstein1911_clicks E10_prescribed_schwarzschild_lattice              # every one "ready": true
+    E09_einstein1911_clicks E10_prescribed_schwarzschild_lattice E16_bigbang_backward_v5 E17_exact_bounce_v6 \
+                                                                                # every one "ready": true
 python -m research.matter_light_experiments_v1.verify --all                     # every experiment folder present
 python -m research.matter_light_experiments_v1.verify --fast                    # only the runs marked fast
 python -m research.matter_light_experiments_v1.verify E04_einstein_created --keep runs/exp   # keep logs and reports
@@ -141,7 +145,8 @@ verifier needs only `universe24`, `research.components`, `research.matter_light_
 `research.click_decoder_v1`.
 
 Manifests may carry four informational keys that the verifier ignores: `builder` (how the composition or init files
-were made), `built_utc`, `composition_note` and `data_bytes`. A path under `research/matter_light_v1/` there or in this
-README names a file of the program's working folder, archived uncurated on branch `backup/matter-light-working` at
-commit 2483837; nothing there is needed to verify an experiment. The compositions of E07 and E07b are also produced
+were made), `built_utc`, `composition_note` and `data_bytes`. A path under `research/matter_light_v1/` there, in this
+README or in the package's test file names a file of the program's working folder, archived uncurated on branch
+`backup/matter-light-working` at commit 2483837 unless the path names a later archive commit; nothing there is needed
+to verify an experiment. The compositions of E07 and E07b are also produced
 exactly by the registry builders `sce_e07_spec` and `sce_e07b_spec` in `research.matter_light_blocks_v1.registry`.
