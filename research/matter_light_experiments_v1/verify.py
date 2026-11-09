@@ -29,17 +29,32 @@ For every run of an experiment's ``experiment.json``:
 The complete state is used only for integrity (inverse and hashes).  The verifier writes no state and prints one
 JSON report; the exit status is 1 if any integrity step or any evaluable check fails.  Checks that the closed
 vocabulary cannot express yet are reported as "not decodable" and keep the experiment out of "ready".
+
+**Explicitly separate candidate variants** (AGENTS.md).  A manifest whose ``coupling`` is ``{"kind": "variant",
+"label": "variant:<name>@<12 hex>", "fingerprint": "<64 hex>"}`` (the table's ``VariantCoupling.label`` and
+``.fingerprint``, as in the blocks catalog) runs under that fixed table, never under the reference model.  Its data
+files (``init``, ``block_file``, and the board files that ``compositions`` declares, since the registry composes
+reference boards only) are ``universe24-variant-init-v1`` files, loaded only by
+``research.coupling_variants_v1.from_dict`` (table rebuilt and validated, recorded fingerprint checked); each must hold
+exactly the declared table, and a variant board file declares no controls.  Step 2 is then the variant runner,
+``python -m research.coupling_variants_v1 --audit`` (in process): the ``VariantEngine`` with the exact inverse, the
+local balance and the signed-account identity checked at every update.  Its event log, the official record format,
+is the log that steps 4, 6 and 7 read; its summary (model, label, fingerprint, audited) is checked and reported.
+A reference manifest takes none of these paths.
 """
 from __future__ import annotations
 
 import argparse
+from contextlib import redirect_stderr, redirect_stdout
 from dataclasses import asdict
 import cmath
 import hashlib
+import io
 from itertools import product
 import json
 import math
 from pathlib import Path
+import re
 import sys
 import tempfile
 import time
@@ -50,6 +65,9 @@ from universe24.observation import clicks
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 FORMAT = "matter_light_experiments_v1-experiment-1"
+VARIANT_FORMAT = "universe24-variant-init-v1"          # research.coupling_variants_v1's init format
+VARIANT_LABEL = re.compile(r"variant:[A-Za-z0-9][A-Za-z0-9._+-]{0,63}@([0-9a-f]{12})")
+FINGERPRINT = re.compile(r"[0-9a-f]{64}")
 OPS = ("eq", "ne", "lt", "le", "gt", "ge", "approx", "not_approx", "in", "len_eq", "len_ge", "same", "diff")
 DERIVE = ("chsh", "alpha", "e_table", "covariant_curve", "best_chsh", "tlm", "plane_spectrum")
 # released decoder layers (click_decoder_v1, each frozen by its FROZEN_<name>.json): the calls a check may use, and the
@@ -87,11 +105,107 @@ def _uses_composition(man) -> bool:
     return bool(man.get("composition") or man.get("compositions")) or any("from_composition" in r for r in man["runs"])
 
 
+# ---------------------------------------------------------------------- explicitly separate candidate variants
+def variant_model(man):
+    """``(label, fingerprint)`` of a variant manifest's table, ``coupling`` = ``{"kind": "variant", "label":
+    "variant:<name>@<12 hex>", "fingerprint": "<64 hex>"}`` with the label's 12 hex the fingerprint's first 12; None
+    for any other manifest (the reference path is unchanged)."""
+    coupling = man.get("coupling") or {}
+    if coupling.get("kind") != "variant":
+        return None
+    label, fingerprint = coupling.get("label"), coupling.get("fingerprint")
+    found = VARIANT_LABEL.fullmatch(label) if isinstance(label, str) else None
+    if set(coupling) != {"kind", "label", "fingerprint"} or found is None or not isinstance(fingerprint, str) \
+            or not FINGERPRINT.fullmatch(fingerprint) or found.group(1) != fingerprint[:12]:
+        raise ValueError("a variant manifest's coupling is {'kind': 'variant', 'label': 'variant:<name>@<12 hex>', "
+                         "'fingerprint': '<64 hex>'}, the label ending in the fingerprint's first 12 hex")
+    return label, fingerprint
+
+
+def load_data(man, blob: bytes):
+    """The experiment of an init or block file under the manifest's coupling: ``universe24.experiments.from_dict`` for a
+    reference manifest; for a variant manifest a ``universe24-variant-init-v1`` file, loaded only by
+    ``research.coupling_variants_v1.from_dict`` (the table is rebuilt and validated and its recorded fingerprint
+    checked), whose table must be the manifest's: the same label and fingerprint, and not a reference table."""
+    model = variant_model(man)
+    data = json.loads(blob.decode("utf-8"))
+    if model is None:
+        return from_dict(data)
+    if not isinstance(data, dict) or data.get("format") != VARIANT_FORMAT:
+        raise ValueError(f"a variant manifest reads {VARIANT_FORMAT} files only")
+    from research.coupling_variants_v1 import from_dict as variant_from_dict
+    experiment = variant_from_dict(data)
+    table = experiment.engine.coupling
+    if not table.is_variant or (table.label, table.fingerprint) != model:
+        raise ValueError(f"the file's table {table.label} is not the manifest's variant table")
+    return experiment
+
+
+def _variant_boards(eid, man):
+    """``build(control=None, key=None)`` of a variant manifest: the board of the variant init file that the manifest
+    declares as ``compositions[key]`` (no key: ``composition``), loaded by ``load_data``.  The same refusals as
+    ``_composition`` (undeclared key, a file outside the experiment folder); a variant file declares no controls."""
+    folder = (HERE / eid).resolve()
+    cache = {}
+
+    def build(control=None, key=None):
+        if key is None:
+            file = man.get("composition")
+        elif key in (man.get("compositions") or {}):
+            file = man["compositions"][key]
+        else:
+            raise ValueError(f"{eid}: composition {key!r} is not declared in the manifest")
+        if not file:
+            raise ValueError(f"{eid}: a composition run names no composition")
+        path = (folder / file).resolve()
+        if folder not in path.parents:
+            raise ValueError(f"{eid}: composition file {file!r} is not inside the experiment folder")
+        if control is not None:
+            raise ValueError(f"{eid}: a variant board file declares no controls ({control!r})")
+        if file not in cache:
+            cache[file] = load_data(man, path.read_bytes())     # .engine (VariantEngine) and .initial
+        return cache[file]
+    return build
+
+
+def replay_variant(engine, initial, steps, log_path: Path):
+    """The variant runner on one run, in process: ``python -m research.coupling_variants_v1 --config <run>.variant.json
+    --events <log> --output <run>.final.json --summary <run>.runner.json --audit`` (VariantEngine, exact inverse,
+    local balance and signed-account identity at every update), the initial state written beside the log as a variant
+    init file (never overwriting, reload-checked).  Returns ``replay``'s integrity data and the runner's summary."""
+    from research.coupling_variants_v1 import read_checkpoint, write_init
+    from research.coupling_variants_v1.__main__ import main as runner
+    base = str(log_path)[:-len(".events.jsonl")] if str(log_path).endswith(".events.jsonl") else str(log_path)
+    config, final, record = Path(base + ".variant.json"), Path(base + ".final.json"), Path(base + ".runner.json")
+    write_init(config, engine.coupling, initial, steps)
+    t0, err = time.time(), io.StringIO()
+    try:
+        with redirect_stdout(io.StringIO()), redirect_stderr(err):
+            code = runner(["--config", str(config), "--events", str(log_path), "--output", str(final),
+                           "--summary", str(record), "--audit"])
+    except SystemExit as exc:                     # argparse refusals
+        code = exc.code
+    if code != 0:
+        raise ArithmeticError(f"variant runner failed ({code}): {err.getvalue().strip()}")
+    summary = json.loads(record.read_text(encoding="utf-8"))
+    _, state, completed = read_checkpoint(final)
+    if (summary.get("model"), summary.get("variant_fingerprint"), summary.get("audited"), completed) != \
+            ("variant", engine.coupling.fingerprint, True, steps):
+        raise ArithmeticError("the variant runner's summary is not an audited run of the model")
+    return {"final_state_sha256": state_sha256(state), "log_sha256": sha256_bytes(log_path.read_bytes()),
+            "clicks": summary["logged_arithmetic_events"], "seconds": round(time.time() - t0, 1),
+            "side": initial.cube.side,
+            "runner": {k: summary[k] for k in ("model", "coupling_label", "variant_fingerprint", "audited")}}
+
+
 def _composition(eid, man):
     """``build(control=None, key=None)``: the prepared board of one composition of the experiment, the file that the
     manifest declares as ``compositions[key]`` (no key: the manifest's ``composition``), with one of its declared
     controls applied.  An undeclared key, a file outside the experiment folder or an undeclared control is refused;
-    boards are cached per (file, control)."""
+    boards are cached per (file, control).  A variant manifest's board files are variant init files
+    (``_variant_boards``)."""
+    if (man.get("coupling") or {}).get("kind") == "variant":
+        return _variant_boards(eid, man)
     from research.matter_light_blocks_v1.registry import apply_control, compose
     folder = (HERE / eid).resolve()
     specs, cache = {}, {}
@@ -159,7 +273,7 @@ def load_run(eid, man, run, composition=None):
         blob = path.read_bytes()
         if sha256_bytes(blob) != want:
             raise ValueError(f"{eid}/{run['name']}: file hash differs ({path.name})")
-        exp = from_dict(json.loads(blob.decode("utf-8")))
+        exp = load_data(man, blob)
         engine, initial = exp.engine, exp.initial
         if exp.steps != steps:
             raise ValueError(f"{eid}/{run['name']}: file horizon {exp.steps} != manifest steps {steps}")
@@ -173,13 +287,21 @@ def load_run(eid, man, run, composition=None):
             engine, initial = prepared.engine, start
         elif start != initial or prepared.engine.coupling.fingerprint != engine.coupling.fingerprint:
             raise ValueError(f"{eid}/{run['name']}: composition does not regenerate the run's initial state")
-        notes["composition"] = "regenerated: equal initial state and coupling" + (f" ({k} exact rewinds)" if k else "")
+        notes["composition"] = ("variant board file loaded" if variant_model(man) else "regenerated") + \
+            ": equal initial state and coupling" + (f" ({k} exact rewinds)" if k else "")
         if "init" not in run and "block" not in run and not run.get("initial_state_sha256"):
             raise ValueError(f"{eid}/{run['name']}: a run made only from a composition must record initial_state_sha256")
     if initial is None:
         raise ValueError(f"{eid}/{run['name']}: run has no initial data")
     if run.get("initial_state_sha256") and state_sha256(initial) != run["initial_state_sha256"]:
         raise ValueError(f"{eid}/{run['name']}: initial-state hash differs")
+    model = variant_model(man)
+    if model is not None:                      # an explicitly separate candidate variant: its table, never a reference
+        from research.coupling_variants_v1 import VariantEngine
+        table = engine.coupling
+        if not isinstance(engine, VariantEngine) or not table.is_variant or (table.label, table.fingerprint) != model:
+            raise ValueError(f"{eid}/{run['name']}: the run's table is not the manifest's {model[0]}")
+        return engine, initial, steps, notes
     signs = list(engine.coupling.body_signs)
     if man["coupling"].get("kind") != "reference" or list(man["coupling"]["signs"]) != signs:
         raise ValueError(f"{eid}/{run['name']}: coupling {signs} differs from the manifest")
@@ -622,6 +744,9 @@ def verify(eid, fast=False, keep=None):
     layer_checks = [c for c in live if "layer" in c]
     lstat = {name: layer_status(man, name) for name in sorted({c["layer"] for c in layer_checks})}
     logs, values = {}, {}
+    variant = (man.get("coupling") or {}).get("kind") == "variant"     # its runs replay through the variant runner
+    if variant:
+        out["coupling"] = man["coupling"]
     with tempfile.TemporaryDirectory() as tmp:
         logdir = Path(keep) / eid if keep else Path(tmp)
         logdir.mkdir(parents=True, exist_ok=True)
@@ -630,9 +755,11 @@ def verify(eid, fast=False, keep=None):
             try:
                 engine, initial, steps, notes = load_run(eid, man, run, composition)
                 log = logdir / f"{run['name']}.events.jsonl"
-                got = replay(engine, initial, steps, log)
+                got = (replay_variant if variant else replay)(engine, initial, steps, log)
                 row.update(notes)
                 row.update({k: got[k] for k in ("clicks", "seconds")})
+                if variant:
+                    row["runner"] = got["runner"]
                 row["final_state"] = "ok" if got["final_state_sha256"] == run["final_state_sha256"] else "DIFFERS"
                 row["log"] = "ok" if got["log_sha256"] == run["log_sha256"] else "DIFFERS"
                 if row["final_state"] != "ok" or row["log"] != "ok":

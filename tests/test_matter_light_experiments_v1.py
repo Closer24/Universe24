@@ -7,7 +7,6 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from universe24.experiments import from_dict
 from research.matter_light_experiments_v1 import verify as X
 
 HEADINGS = ("## On the event board", "## In the clicks", "## Claim")
@@ -36,7 +35,7 @@ class Manifests(unittest.TestCase):
                     if "init" in run:
                         blob = (folder / run["init"]).read_bytes()
                         self.assertEqual(hashlib.sha256(blob).hexdigest(), run["init_sha256"])
-                        self.assertEqual(from_dict(json.loads(blob)).steps, run["steps"])
+                        self.assertEqual(X.load_data(man, blob).steps, run["steps"])   # the model's loader
                     if "block" in run:
                         path = X.ROOT / run["block_file"]
                         if run.get("pending_append") and not path.exists():
