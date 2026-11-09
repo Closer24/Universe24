@@ -1,0 +1,4328 @@
+{
+ "format": "u24-registry-v1",
+ "built_utc": "2026-11-09T02:22:20Z",
+ "registrar": "r21",
+ "spec": "research/matter_light_v1/r21/REGISTRY_SPEC.md (u24-block-card-v1)",
+ "generators": [
+  "matter_line@1",
+  "light_line@1",
+  "slot_clock@1",
+  "slow_glider@1",
+  "spin_ring_z@1",
+  "guide_net@1",
+  "pulse_train@1",
+  "phase_gate@2",
+  "all48_site@1",
+  "single_channel@1",
+  "k_core@1",
+  "light_line@2",
+  "light_line_s@1",
+  "fibre_packet@1",
+  "literal_patch@1"
+ ],
+ "blocks": [
+  {
+   "id": "atom.ring_core@1",
+   "kind": "primitive",
+   "registration": "new (see registry_v0 family)",
+   "generator": "data (published instances)",
+   "coupling": "+++",
+   "status": "E1 replayed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "ring + side core: reflect / transmit alternately",
+    "b_algebra": "joint period 68 [S]",
+    "c_clocks": "128 clicks per 68; the core clicks only on transmission"
+   }
+  },
+  {
+   "id": "atom.two_core_trap@1",
+   "kind": "assembly",
+   "registration": "new (r04)",
+   "generator": "guide_net@1 + 2 x single_channel@1 / slot_clock@1",
+   "coupling": "+++, (-,+,+)",
+   "status": "E1 replayed",
+   "flags": [
+    "custom_only (spectro_trap_*)"
+   ],
+   "parts": [
+    "light.fibre_packet@1",
+    "matter.slot_clock@1 x2"
+   ],
+   "lineage": "",
+   "card": {
+    "a_use": "atom candidate: packet bound between two silent cores; emission line 2k+2 / 2(d-k)+2; absorption P = 2d",
+    "b_algebra": "level 2d+4 [S]; which d bind [EXHAUSTIVE 1D]; no capture without emission [THEOREM N2]; release = K reverse",
+    "c_clocks": "period 16 (d=6), 40 clicks; 0 core clicks; cores tick only in the l = 0 layer"
+   }
+  },
+  {
+   "id": "charge.walled_cavity@1",
+   "kind": "assembly",
+   "registration": "new (r05)",
+   "generator": "data (glider + 2 rotors on a guide)",
+   "coupling": "+++",
+   "status": "E3 refereed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "glider between two positive-field rotors: a clock with charge-like mirror walls",
+    "b_algebra": "exact period 2D+4 for even D = 8..22 at listed phases [S]",
+    "c_clocks": "period 24 (D=10), 64 clicks; rotors never click"
+   }
+  },
+  {
+   "id": "clock.box_clock@1",
+   "kind": "primitive",
+   "registration": "new (see registry_v0 family)",
+   "generator": "data (published instances)",
+   "coupling": "+++ / -++",
+   "status": "E1 replayed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "light clock 2l+6 and matter clock 6l+2 in one box",
+    "b_algebra": "exact periods 26, 62 [S]",
+    "c_clocks": "72 clicks per period"
+   }
+  },
+  {
+   "id": "clock.clock_link@1",
+   "kind": "primitive",
+   "registration": "new (see registry_v0 family)",
+   "generator": "data (published instances)",
+   "coupling": "+++",
+   "status": "E1 replayed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "republication of clock_link_v1",
+    "b_algebra": "period 4(D+1) [THEOREM]",
+    "c_clocks": "56 clicks per 60"
+   }
+  },
+  {
+   "id": "clock.fibre_cavity@1",
+   "kind": "primitive",
+   "registration": "new (see registry_v0 family)",
+   "generator": "data (published instances)",
+   "coupling": "+++",
+   "status": "E1 replayed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "open fibre of D nodes as a clock",
+    "b_algebra": "period 2D+6 [S]",
+    "c_clocks": "80 clicks per 46 (D=20)"
+   }
+  },
+  {
+   "id": "clock.ring_emitter@1",
+   "kind": "primitive",
+   "registration": "new (r04; r08's Einstein clock)",
+   "generator": "guide_net@1 (ring + tap)",
+   "coupling": "+++",
+   "status": "E3 refereed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "clock emitting one identical packet every N = 16 updates through a degree-3 tap",
+    "b_algebra": "fan-out at the tap + guide lemma; emission interval = ring period [S]",
+    "c_clocks": "ring node gears 2->0->2 per lap; tick = C1 head click at a named exit node"
+   }
+  },
+  {
+   "id": "detect.approved_beam_splitter@1",
+   "kind": "assembly",
+   "registration": "new (r13); derived-from exp.approval_selector@1",
+   "generator": "guide_net@1 (input + degree-3 junction + arms) + 2 x phase_gate@2 + approval packet",
+   "coupling": "+++",
+   "status": "E1 replayed",
+   "flags": [
+    "physics_from_decoder (r13 80/80)"
+   ],
+   "parts": [
+    "element.fanout_junction@2",
+    "gate.phase_gate@2 x2",
+    "light.fibre_packet@1"
+   ],
+   "lineage": "",
+   "card": {
+    "a_use": "beam splitter + two detectors: one quantum -> exactly one approved detector event; afterpulse at t_q+51..52",
+    "b_algebra": "junction copy; gate law (sign-corrected, r13); approval write shifts A's window by 2; T-A factorization [THEOREM]",
+    "c_clocks": "two period-4 dark clocks; a C2/C1 burst of 8 only at the selected detector"
+   }
+  },
+  {
+   "id": "detect.quiet_tapped_absorber@1",
+   "kind": "assembly",
+   "registration": "new (r13)",
+   "generator": "guide_net@1 (tap + side fibre) + phase_gate@2",
+   "coupling": "+++",
+   "status": "E0 declared",
+   "flags": [
+    "promote to E1 when an instance file is deposited"
+   ],
+   "parts": [
+    "element.fanout_junction@2",
+    "gate.phase_gate@2"
+   ],
+   "lineage": "",
+   "card": {
+    "a_use": "non-demolition binary detector: the flash returns only after the next detector's window; repeatability 1, 1/2, 0, 1/2",
+    "b_algebra": "tap copy; gate law; flash returns after 2s+6 [S]",
+    "c_clocks": "one dark clock per detector; carry burst only at the detector"
+   }
+  },
+  {
+   "id": "element.fanout_junction@2",
+   "kind": "primitive",
+   "registration": "update-of element.fanout_junction@1 (generalizes: merge law; r13 merge_by_rewind, r12 router)",
+   "generator": "guide_net@1 (branch_of)",
+   "coupling": "+++",
+   "status": "E1 replayed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "degree 3/4: exact copy; degree 5/6: broadcast; merge: two inputs arriving at the same update leave as one on the third port",
+    "b_algebra": "copy [S, r04 30/30]; merge = JR time reverse of the copy [THEOREM S6] with exact instances (r12 E7, r13 E3)",
+    "c_clocks": "one connection carry at the junction gear per merge"
+   }
+  },
+  {
+   "id": "element.junction@1",
+   "kind": "composition rule",
+   "registration": "new (r06 rule E, r11 class rule)",
+   "generator": "crossing of matter_line@1 and light_line@1 (asserted)",
+   "coupling": "(-,+,+)",
+   "status": "E1 replayed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "class 0: light creates a glider pair; class 2: transparent; a passing glider emits 2 (class 0) or 1 (class 2) packets per direction",
+    "b_algebra": "parity theorem [THEOREM]; class table [EXHAUSTIVE, native 8 cases]; rule E [EXHAUSTIVE, model]",
+    "c_clocks": "two frozen gears linked with weight +1; creation = carries on the matter line"
+   }
+  },
+  {
+   "id": "element.light_link@1",
+   "kind": "composition rule",
+   "registration": "new",
+   "generator": "crossing of two light_line@1 (axis x and y)",
+   "coupling": "(-,+,+)",
+   "status": "E1 replayed",
+   "flags": [
+    "custom_only (station passages)"
+   ],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "light x light junction: a crossing packet is copied into the crossing line both ways (r08 W8 link)",
+    "b_algebra": "fan-out law; delay 4 per counter-propagating crossing [S]",
+    "c_clocks": "carries repeat on the crossing line"
+   }
+  },
+  {
+   "id": "element.reflector@1",
+   "kind": "primitive",
+   "registration": "new (see registry_v0 family)",
+   "generator": "data (published instances)",
+   "coupling": "+++",
+   "status": "E1 replayed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "fibre defects: total reflection, partial reflection, repeater",
+    "b_algebra": "window failure at the defect",
+    "c_clocks": "mirror_gap: 94 clicks / 50 updates"
+   }
+  },
+  {
+   "id": "gate.phase_gate@2",
+   "kind": "assembly",
+   "registration": "update-of gate.phase_gate@1 (generalizes: orbit phases 1, 3 with the history halo; r13)",
+   "generator": "phase_gate@2",
+   "coupling": "+++ (s_x = +1 triples)",
+   "status": "E4 proven",
+   "flags": [],
+   "parts": [
+    "matter.silent_monomer@1",
+    "light.fibre_packet@1"
+   ],
+   "lineage": "",
+   "card": {
+    "a_use": "dark-clock gate two sites beside a fibre: transparent at two arrival phases, absorbs at the other two (writes a click-dark 1-bit record)",
+    "b_algebra": "gate law [THEOREM]: overflow iff (t_arr + phase) mod 4 in {1,2}; onset theorem",
+    "c_clocks": "48 rotors at a frozen gear; one overflow at the shared halo channel decides; 48 l = 0 events per update"
+   }
+  },
+  {
+   "id": "gate.ring16_window@1",
+   "kind": "assembly",
+   "registration": "new (r13)",
+   "generator": "guide_net@1 (closed ring) + pulse_train@1",
+   "coupling": "+++",
+   "status": "E0 declared",
+   "flags": [
+    "promote to E1 when an instance file is deposited"
+   ],
+   "parts": [
+    "light.fibre_ring@1",
+    "light.pulse_train@1"
+   ],
+   "lineage": "",
+   "card": {
+    "a_use": "period-16 binary gate: fires iff the ring packet passes the gate node within 1 update of the quantum (window 3/16)",
+    "b_algebra": "shared-halo overflow rule (T8); window = autocorrelation law; no half-period windows [EXHAUSTIVE alphabet]",
+    "c_clocks": "the ring packet is the gear (clicks every update); the gate carry is one burst"
+   }
+  },
+  {
+   "id": "gate.shared_rotor_two_readers@1",
+   "kind": "assembly",
+   "registration": "new (r20 SR2)",
+   "generator": "2 x pulse_train@1 (channel 0 sigma +1; channel 14 sigma -1) + phase_gate@2",
+   "coupling": "+++",
+   "status": "E1 replayed",
+   "flags": [
+    "physics_from_decoder (r20 80/80)",
+    "referee pending (r10e)"
+   ],
+   "parts": [
+    "light.pulse_train@1 x2",
+    "gate.phase_gate@2"
+   ],
+   "lineage": "",
+   "card": {
+    "a_use": "exactly one of two detectors fires at every approval of a stream (the shared record W9 lacked); reads must be simultaneous; even spacings >= 14",
+    "b_algebra": "gate law S6 = -1,0,1,0 -> W1 = {1,2}, W2 = {3,0}; slip rule: D1 fires at approval k iff (t_k - 2k) mod 4 in {1,2}; delay 4 per earlier firing of the same reader; rests on T8, J, C",
+    "c_clocks": "one dark period-4 rotor; the record is channel 6's 2-quarter-turn slip; two bursts at the selected halo site"
+   }
+  },
+  {
+   "id": "light.box_lamp@1",
+   "kind": "primitive",
+   "registration": "new (see registry_v0 family)",
+   "generator": "data (published instances)",
+   "coupling": "-++",
+   "status": "E1 replayed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "glider in a box of length l with a junction: one packet pair per pass",
+    "b_algebra": "core period 6l+2 [S]",
+    "c_clocks": "1,232 clicks / 100 updates"
+   }
+  },
+  {
+   "id": "light.cw_emitter@1",
+   "kind": "primitive",
+   "registration": "new (see registry_v0 family)",
+   "generator": "data (published instances)",
+   "coupling": "---",
+   "status": "E1 replayed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "unit-speed front at a gauged fibre start",
+    "b_algebra": "front lemma; --- gauge",
+    "c_clocks": "1 click per update"
+   }
+  },
+  {
+   "id": "light.fibre_packet@1",
+   "kind": "primitive",
+   "registration": "update-of research/components GuidedPacketSource+GuideSegment (generalizes)",
+   "generator": "guide_net@1 / pulse_train@1 / fibre_packet@1 (socket form on light_line@2)",
+   "coupling": "any of the 8 (gauged)",
+   "status": "E3 refereed",
+   "flags": [],
+   "parts": [],
+   "lineage": "r04 MEDIA s1; R08-1; r27 fibre_packet@1 = this block in socket form (shape (1,-1), equal packet_state data in both directions and gauge phases)",
+   "card": {
+    "a_use": "guided light candidate: unit packet, click-front speed 1 node/update; entry at the fibre start, exit at the end (open ends reflect); head reaches node i at t = i - lead",
+    "b_algebra": "guide propagation lemma [THEOREM]: sigma_i b_i(t) = f(t+lambda-i); unit transmission; tracelessness; 18-shape alphabet [EXHAUSTIVE n<=7]",
+    "c_clocks": "node gear 2->0 (C1+) at the head, hand runs (0,1)(1,0)(0,-1)(-1,0), gear 0->2 (C2-) 4 later; 2 clicks/update; halo gears dark"
+   }
+  },
+  {
+   "id": "light.fibre_ring@1",
+   "kind": "primitive",
+   "registration": "update-of research/components periodic guided packet",
+   "generator": "guide_net@1 (closed)",
+   "coupling": "+++",
+   "status": "E1 replayed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "closed light guide; a tap makes an emitter",
+    "b_algebra": "period = unrolled channel loop (holonomy order k -> k*N); counter-packets N+8 [S]",
+    "c_clocks": "32 clicks per 16 (ring16): C1/C2 16/16"
+   }
+  },
+  {
+   "id": "light.flash@1",
+   "kind": "primitive",
+   "registration": "new; card_rev 2: r24 'A1 core' (same data family, all-48 (0,M,2))",
+   "generator": "all48_site@1 triple (0,M,2)",
+   "coupling": "+++",
+   "status": "E1 replayed",
+   "flags": [
+    "physics_from_decoder (r24: decoder v1.0 reads a front)"
+   ],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "radiation test / A1 monopole source: one burst sends the whole account into an A1 shell (r24); keep >= 3 sites from other blocks",
+    "b_algebra": "channel-uniform +++ sector invariant [THEOREM]; exact Gauss law L Phi_T = -(p_T - p_0) [THEOREM]; measured r Phi_T/(P0/4 pi) = 0.98-1.02 for 5 <= r <= T/2 [S, r24]; click front at radius t on the axes [S]",
+    "c_clocks": "core gear theta=1 with hand (0,M) turns without carry at update 1; neighbours carry q = floor((2M+2)/6), kind = M mod 3; native clicks fill the cone"
+   }
+  },
+  {
+   "id": "light.front_111@1",
+   "kind": "primitive",
+   "registration": "new",
+   "generator": "global preparation (planes n = x+y+z)",
+   "coupling": "+++",
+   "status": "E4 proven",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "exact free light: rigid C0 planes, 1 plane/update; transparent to all matter",
+    "b_algebra": "u = 3(b(n+1)+b(n-1)) == 0 mod 3, r never changes, b_t(n) = f(n-t) [THEOREM, L4]",
+    "c_clocks": "every gear frozen; every click a whole-turn C0; 0 dark ticks"
+   }
+  },
+  {
+   "id": "light.pulse_train@1",
+   "kind": "primitive",
+   "registration": "new (parameter family of light.fibre_packet; r08 W9 approval stream)",
+   "generator": "pulse_train@1",
+   "coupling": "+++ (sigma -1 = K-image fibre)",
+   "status": "E1 replayed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "approval stream: N pulses at spacing P >= 4; click-time = number of approvals seen",
+    "b_algebra": "exact translation of each pulse; pulses never interact on a straight fibre; tau_i(t) = #{k: t_arr + kP <= t}",
+    "c_clocks": "one C1+ head tick per approval at the detector node; dark gate clocks tick between approvals"
+   }
+  },
+  {
+   "id": "light.vacA_lamp@1",
+   "kind": "primitive",
+   "registration": "new",
+   "generator": "data (one channel in bg (0,0,4))",
+   "coupling": "+--, -+-, --+",
+   "status": "E1 replayed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "periodic source of speed-1 rays at a fixed core (a lamp, not matter at rest)",
+    "b_algebra": "exact core periods 5, 6, 10 [S]; C5: a lamp creates only trails",
+    "c_clocks": "core10 hand period 10 with gear 2/1; growing click word as rays leave"
+   }
+  },
+  {
+   "id": "light.vacA_ray@1",
+   "kind": "primitive",
+   "registration": "new",
+   "generator": "data (one channel in bg (0,0,4))",
+   "coupling": "+--, -+-, --+",
+   "status": "E3 refereed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "light in a uniform excitable vacuum: 1D speed-1 front along a positive body axis",
+    "b_algebra": "window theory (first step) and front lemma [THEOREM]; 0 slow movers in 909,054 windows [EXHAUSTIVE]",
+    "c_clocks": "one C1+ per step (C2 in bg 0); trail of silent period-4 rotors (dark)"
+   }
+  },
+  {
+   "id": "matter.all48_clock_r07@1",
+   "kind": "primitive",
+   "registration": "new (see registry_v0 family)",
+   "generator": "data (published instances)",
+   "coupling": "+++",
+   "status": "E1 replayed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "single-site clocks of r07's exhaustive catalog",
+    "b_algebra": "exact orbits 10..60 [S]",
+    "c_clocks": "H10: 8,640 per period"
+   }
+  },
+  {
+   "id": "matter.bg0_core@1",
+   "kind": "primitive",
+   "registration": "new (see registry_v0 family)",
+   "generator": "data (published instances)",
+   "coupling": "--- bg 0",
+   "status": "E1 replayed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "matter in the excitable theta=0 vacuum",
+    "b_algebra": "exact orbits, periods 6, 16 [S]",
+    "c_clocks": "N16: 1,440 per period, all C0"
+   }
+  },
+  {
+   "id": "matter.breather@1",
+   "kind": "primitive",
+   "registration": "new (r05)",
+   "generator": "all48_site@1 (2,2,2) / (4,4,2)",
+   "coupling": "+++",
+   "status": "E4 proven",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "clicking matter at rest, confined to the 3^3 cube (B10, B14)",
+    "b_algebra": "exact orbit; click neutrality C6",
+    "c_clocks": "B10: 8,640 clicks per period 10, time-symmetric word"
+   }
+  },
+  {
+   "id": "matter.fast_glider@1",
+   "kind": "primitive",
+   "registration": "new (see registry_v0 family)",
+   "generator": "data (published instances)",
+   "coupling": "+++",
+   "status": "E1 replayed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "speed-1 chain glider (light reference)",
+    "b_algebra": "exact translation per update [S]",
+    "c_clocks": "4 clicks per update"
+   }
+  },
+  {
+   "id": "matter.frustrated_breather@1",
+   "kind": "primitive",
+   "registration": "new (see registry_v0 family)",
+   "generator": "data (published instances)",
+   "coupling": "++-",
+   "status": "E1 replayed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "class-F matter at rest",
+    "b_algebra": "exact orbits, periods 12, 14 [S]",
+    "c_clocks": "F12: 2,112 per period (C0 768)"
+   }
+  },
+  {
+   "id": "matter.guided_mover@1",
+   "kind": "primitive",
+   "registration": "new (r06)",
+   "generator": "data (guide pattern + window)",
+   "coupling": "file triple",
+   "status": "E1 replayed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "movers at rational speeds 1/3 .. 1 set by the guide",
+    "b_algebra": "speed law T P/v = P + 2 walls [EXHAUSTIVE 36 classes]",
+    "c_clocks": "a fixed carry word per guide period"
+   }
+  },
+  {
+   "id": "matter.k_core@1",
+   "kind": "primitive",
+   "registration": "update-of research/components CompactFiveClock + LocalizedSixClock",
+   "generator": "k_core@1 / all48_site@1",
+   "coupling": "+++",
+   "status": "E4 proven",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "compact matter clocks (dimer 5, plaquette 5/6, cube 6); the 4/5 contact effect IS the dimer (k=1) law",
+    "b_algebra": "T6 [THEOREM]: u = k b, (l, r') = divmod(2kb + r, 6), halo in the T7 window",
+    "c_clocks": "D5: carries C2- at t=1 and C1+ at t=3 on all 96 channels (192/period); C6: all C0"
+   }
+  },
+  {
+   "id": "matter.planar_glider@1",
+   "kind": "primitive",
+   "registration": "new (r05)",
+   "generator": "data (two all-48 planes)",
+   "coupling": "+++",
+   "status": "E1 replayed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "the only exact mover in the uniform quiet vacuum: planar, speed 1/2",
+    "b_algebra": "S(t+2) = shift(-x) S(t) [S]; neutral dipole layer; no compact version (C5/N4)",
+    "c_clocks": "every channel clicks C2- every update"
+   }
+  },
+  {
+   "id": "matter.screw_mover@1",
+   "kind": "primitive",
+   "registration": "new (r06)",
+   "generator": "data (y-screw guide + window)",
+   "coupling": "+-+",
+   "status": "E3 refereed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "spinor-class mover: 360 deg = C-image, 720 deg = start",
+    "b_algebra": "T_C = 3L, S(2T_C) = S(0) (L8)",
+    "c_clocks": "period 72 (L=12), 96 clicks; lap 2 repeats lap 1 on the z-partner channels"
+   }
+  },
+  {
+   "id": "matter.silent_monomer@1",
+   "kind": "primitive",
+   "registration": "republication-of einstein_clock_bricks_v1 all-48 (-1,-1,0)",
+   "generator": "all48_site@1",
+   "coupling": "+++ (T4 domain)",
+   "status": "E4 proven",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "dark clock, gate clock, source of the 4/5 contact effect; ports = 6 halo sites",
+    "b_algebra": "T4 [THEOREM]: silent period 4 iff halo partial sums stay in the window; u = 0 rotor",
+    "c_clocks": "48 hands rotate (a,b)->(b,-a) at a frozen gear; 0 clicks; 1,344 dark ticks per period"
+   }
+  },
+  {
+   "id": "matter.single_channel_clock@1",
+   "kind": "primitive",
+   "registration": "republication-of staged_blocks ShieldedOrbit; stars new",
+   "generator": "single_channel@1",
+   "coupling": "any (quiet vacuum)",
+   "status": "E4 proven",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "one prepared channel: silent period 4 or a star of period 5-48",
+    "b_algebra": "star lemma and T4 [THEOREM]",
+    "c_clocks": "I6: hand (0,2)(2,0)(0,0)(0,0)(0,-2)(-2,0) at theta=1, 14 clicks per period"
+   }
+  },
+  {
+   "id": "matter.slot_clock@1",
+   "kind": "primitive",
+   "registration": "new; card_rev 2: r15 'halo core register' (same data, register role)",
+   "generator": "slot_clock@1",
+   "coupling": "(-,+,+); +++ (r04/r15 slots)",
+   "status": "E2 law-checked",
+   "flags": [
+    "physics_from_decoder (r15)"
+   ],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "dark core / recorder / register: one silent channel in a halo slot of a fibre node; arrival class 0 records (packet passes), class 2 mirrors silently, 1/3 split or multiply",
+    "b_algebra": "rotor with u = 0 whose output keeps its node in the window [EXHAUSTIVE 1D]; r15 T3 pair rule (clicks in +- pairs) and T6 no quiet store [THEOREM]",
+    "c_clocks": "one hand, period 4, frozen gear; exactly 2 clicks per class-0 passage, then the hand is inverted"
+   }
+  },
+  {
+   "id": "matter.slow_glider@1",
+   "kind": "primitive",
+   "registration": "new (r06)",
+   "generator": "slow_glider@1",
+   "coupling": "(-,*,*) chain sign -1",
+   "status": "E1 replayed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "moving matter at speed 1/3 on a class-0 matter line; emits light at junctions",
+    "b_algebra": "exact translator S(t+3) = shift S(t) [S]; odometer T v = P [EXHAUSTIVE 37 classes]; Q = D = 0 [THEOREM N4]",
+    "c_clocks": "4 clicks per 3 updates (C1+/C2- pairs)"
+   }
+  },
+  {
+   "id": "matter.x_robust@1",
+   "kind": "primitive",
+   "registration": "new (r07)",
+   "generator": "all48_site@1 (-1,-2,0)",
+   "coupling": "--- on bg (0,0,4)",
+   "status": "E3 refereed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "robust matter: all 192 single +-1 changes stay bounded and periodic",
+    "b_algebra": "exact orbit, period 12 [S]; robustness [EXHAUSTIVE]",
+    "c_clocks": "1,344 clicks per period (C0 192 / C1 576 / C2 576)"
+   }
+  },
+  {
+   "id": "medium.crystal@1",
+   "kind": "primitive",
+   "registration": "new (r04 CRYSTAL24 + r06)",
+   "generator": "data (board-spanning)",
+   "coupling": "(-,+,+)",
+   "status": "E3 refereed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "one medium carrying light (speed 1) and SLOW matter (1/3) along all axes",
+    "b_algebra": "A,B->C rule [EXHAUSTIVE]; T8 crossings all-or-nothing",
+    "c_clocks": "clicks only on light and matter labels"
+   }
+  },
+  {
+   "id": "medium.excitable_bg4@1",
+   "kind": "primitive",
+   "registration": "new (see registry_v0 family)",
+   "generator": "data (published instances)",
+   "coupling": "+++ bg 4",
+   "status": "E1 replayed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "excitable medium: first click at the Manhattan distance",
+    "b_algebra": "excitable front lemma [THEOREM]",
+    "c_clocks": "avalanche behind the front"
+   }
+  },
+  {
+   "id": "medium.light_line@1",
+   "kind": "primitive",
+   "registration": "new (r11 B-lines; r04 gauge)",
+   "generator": "light_line@1",
+   "coupling": "(-,+,+)",
+   "status": "E1 replayed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "gauged light line with its own gauge phase; node classes decide junction behaviour; +z slots host slot clocks",
+    "b_algebra": "zero-counter remainder field is a fixed point; sigma alternates (w = -1)",
+    "c_clocks": "frozen gears 0/2 alternating, invisible"
+   }
+  },
+  {
+   "id": "medium.light_line@2",
+   "kind": "primitive",
+   "registration": "update-of medium.light_line@1 (generalizes: adds packet / seed sockets; @1 unchanged)",
+   "generator": "light_line@2 (alias key light_line_s@1 = r27's name)",
+   "coupling": "(-,+,+)",
+   "status": "E1 replayed",
+   "flags": [],
+   "parts": [],
+   "lineage": "r11 B-lines; r27 light_line_s@1 (design.light_line_s)",
+   "card": {
+    "a_use": "gauged light line with a socket window: the window's nodes are left out of the rest line and must be filled by a fibre-packet or a glider-seed patch (strict finalize)",
+    "b_algebra": "with no sockets the cells equal light_line@1 exactly; socket nodes are removed only on the line's label; zero-counter remainder field is a fixed point; sigma alternates (w = -1)",
+    "c_clocks": "frozen gears 0/2 alternating, invisible; a filled socket carries the filling mover's clocks"
+   }
+  },
+  {
+   "id": "medium.light_segment@1",
+   "kind": "primitive",
+   "registration": "variant of medium.light_line@1 (length < side, no wrap)",
+   "generator": "light_line@1",
+   "coupling": "(-,+,+)",
+   "status": "E1 replayed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "light line on [XA, XB] only; bare ends reflect (r11 twins)",
+    "b_algebra": "guide lemma; reflection at a bare end (open fibre: period 2D+6) [S]; parity theorem for classes",
+    "c_clocks": "as light_line; a click track reverses at an end"
+   }
+  },
+  {
+   "id": "medium.matter_line@1",
+   "kind": "primitive",
+   "registration": "new (r06/r11 A-lines)",
+   "generator": "matter_line@1",
+   "coupling": "(-,+,+)",
+   "status": "E1 replayed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "class-0 matter line: the guide of the SLOW glider; sockets for seed windows",
+    "b_algebra": "static theta = 0 landscape; chain weight -1",
+    "c_clocks": "frozen gears, invisible"
+   }
+  },
+  {
+   "id": "resonator.coupled_rings@1",
+   "kind": "primitive",
+   "registration": "new (see registry_v0 family)",
+   "generator": "data (published instances)",
+   "coupling": "+++",
+   "status": "E1 replayed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "two rings with an odd bridge: bounded beats",
+    "b_algebra": "periods 64 / 128 [S]",
+    "c_clocks": "280 clicks per 64"
+   }
+  },
+  {
+   "id": "route.approval_router@1",
+   "kind": "assembly",
+   "registration": "new (r12)",
+   "generator": "guide_net@1: junction_Y + stem signal + inward approval",
+   "coupling": "+++",
+   "status": "E1 replayed",
+   "flags": [],
+   "parts": [
+    "element.fanout_junction@2",
+    "light.fibre_packet@1 x2"
+   ],
+   "lineage": "",
+   "card": {
+    "a_use": "one approval entering on one arm sends the signal into the other arm; approval at the mirror position (14 sites out)",
+    "b_algebra": "merge law of element.fanout_junction@2; timing window exact: only shift 0 over -3..+4 [S]",
+    "c_clocks": "a V of two tracks meeting at the junction (t = 14), then a single track on the routed arm"
+   }
+  },
+  {
+   "id": "seed.bb27_point@1",
+   "kind": "literal (found by rewind)",
+   "registration": "new (r27): the minimal-support state of the bb27 Big Bang among equal slot-clock phases (rule A2)",
+   "generator": "literal_patch@1 + data/bb27_point.json (cells_relative_to_O; seed_28_relative_to_O = the t=0 seed)",
+   "coupling": "(-,+,+) on the bb27 network junction O = A0 x B0",
+   "status": "E1 replayed",
+   "flags": [
+    "literal",
+    "physics_from_decoder"
+   ],
+   "parts": [],
+   "lineage": "r27 bb27.py rewind; A2 rule t* = -4",
+   "card": {
+    "a_use": "Big Bang point: placed at O on the dark bb27 network (fills A0 label-41 and B0 label-1 sockets), its forward run emits two light packets (+-x, speed 1) and two slow gliders (+-y, speed 1/3), which then create the hub event, two ring sources and two atom candidates (r27, decoder v1.0)",
+    "b_algebra": "S0 = JR(F^N(JR(T))), F^-1 = JR o F o JR [THEOREM S6]; N = T+4: seed* 14 cells in 3x5x3 sites; N = T: 28-cell seed = tangent shell of the 4 registered movers; the same cells for the 3 r27 variants and L = 160 / 320; not composable from registered blocks; NOT the global minimum of the history: X_-7 has 12 cells (11 sites, box [4, 3, 4]) against the dark network rewound the same N (odd clock phase; r27 notes it)",
+    "c_clocks": "seed clicks at O at t = 1-2 (r27, decoder v1.0); the emitted movers carry their own clocks"
+   }
+  },
+  {
+   "id": "select.d2_approval_selector@1",
+   "kind": "assembly",
+   "registration": "new (r15); derived-from exp.approval_selector@1",
+   "generator": "2 x pulse_train@1 + 2 x slot_clock@1 (-y slots)",
+   "coupling": "+++",
+   "status": "E1 replayed",
+   "flags": [
+    "physics_from_decoder (r15 32/32)"
+   ],
+   "parts": [
+    "light.pulse_train@1 x2",
+    "matter.slot_clock@1 x2"
+   ],
+   "lineage": "",
+   "card": {
+    "a_use": "approval -> exactly one approved event (one +- pair); the unselected copy is reflected silently",
+    "b_algebra": "complementary records after the approval [S 4/4 + controls]; joint = union; exact K reverse",
+    "c_clocks": "C1+,C2- on A's core (approval), then on the selected core; 0 detector clicks on the unselected arm"
+   }
+  },
+  {
+   "id": "select.d2j_junction_selector@1",
+   "kind": "assembly",
+   "registration": "new (r15); derived-from detect.approved_beam_splitter@1",
+   "generator": "guide_net@1 (r13 device) + 2 x slot_clock@1 (-z slots, k odd)",
+   "coupling": "+++ (and (-,+,+) by gauge)",
+   "status": "E1 replayed",
+   "flags": [
+    "physics_from_decoder (r15)",
+    "gauge-transported instances exact"
+   ],
+   "parts": [
+    "element.fanout_junction@2",
+    "matter.slot_clock@1 x2"
+   ],
+   "lineage": "",
+   "card": {
+    "a_use": "beam splitter + two 2-click detectors; the junction afterpulse is reflected silently when k is odd",
+    "b_algebra": "afterpulse phase t_q (mod 4) for odd k [S]; same-port obstruction [THEOREM]",
+    "c_clocks": "as D2; 0 detector clicks in [t_q+13, t_q+60]"
+   }
+  },
+  {
+   "id": "spin.holonomy_ring@1",
+   "kind": "assembly",
+   "registration": "new (r04/r09); W6 module variant spin_ring_z@1",
+   "generator": "guide_net@1 (2-lap closed) / spin_ring_z@1",
+   "coupling": "+++, (-,+,+)",
+   "status": "E3 refereed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "spin candidate: S(t+T) = C S(t), period 2T; the W6 junction emits a glider pair every 720 deg",
+    "b_algebra": "B^4 = z on a straight path (L8) [THEOREM]",
+    "c_clocks": "spin720: period 28, 56 clicks; channel 4 -> 34 -> 4"
+   }
+  },
+  {
+   "id": "spin.spinor_sector_seed@1",
+   "kind": "primitive",
+   "registration": "new (see registry_v0 family)",
+   "generator": "data (published instances)",
+   "coupling": "+++",
+   "status": "E1 replayed",
+   "flags": [],
+   "parts": [],
+   "lineage": "",
+   "card": {
+    "a_use": "K-invariant seeds, linear regime",
+    "b_algebra": "C(S) = J(S) at every t [THEOREM]; period 5",
+    "c_clocks": "z-partner clicks with opposite quotients"
+   }
+  },
+  {
+   "id": "store.halo_latch@1",
+   "kind": "assembly",
+   "registration": "new (r15)",
+   "generator": "slot_clock@1 + pulse_train@1",
+   "coupling": "+++",
+   "status": "E0 declared",
+   "flags": [
+    "promote to E1 when an instance file is deposited"
+   ],
+   "parts": [
+    "matter.slot_clock@1",
+    "light.pulse_train@1"
+   ],
+   "lineage": "",
+   "card": {
+    "a_use": "write / wait / confirm-iff-written latch: one +- pair per write, 0 clicks while waiting",
+    "b_algebra": "T6 no quiet store [THEOREM]",
+    "c_clocks": "W: C1+,C2-; wait: none; C: C1+,C2- iff written"
+   }
+  },
+  {
+   "id": "write.set_doublet@1",
+   "kind": "assembly",
+   "registration": "new (r15)",
+   "generator": "pulse_train@1 (count 2, period 8) + slot_clock@1",
+   "coupling": "+++",
+   "status": "E0 declared",
+   "flags": [
+    "promote to E1 when an instance file is deposited"
+   ],
+   "parts": [
+    "light.pulse_train@1",
+    "matter.slot_clock@1"
+   ],
+   "lineage": "",
+   "card": {
+    "a_use": "state-independent record write: two same-phase pulses; 2 clicks iff the record changes",
+    "b_algebra": "first pulse flips or is mirrored, the second always mirrored [S 8/8]; delay 4 per reflected pulse crossed",
+    "c_clocks": "0 or one +- pair per arm"
+   }
+  }
+ ],
+ "experiments": [
+  "exp.d1_local_atom@1",
+  "exp.twin_atoms@1",
+  "exp.einstein_created@1",
+  "exp.w9_chsh@1",
+  "exp.w9_two_detector@1",
+  "exp.approval_selector@1",
+  "exp.chsh_d2_stations@1",
+  "exp.mz_merge3_whichpath@1",
+  "exp.a1core_clock_probes@1",
+  "exp.flagship_v3@1",
+  "exp.bell_router@1",
+  "exp.bigbang_backward@1"
+ ],
+ "decisions": [
+  {
+   "proposer": "r13",
+   "proposed": "junction.merge_by_rewind@1",
+   "verdict": "update",
+   "registered_as": "element.fanout_junction@2 (merge law)",
+   "evidence": "E3_T1, E3_T2 exact"
+  },
+  {
+   "proposer": "r13",
+   "proposed": "detect.approved_beam_splitter@1",
+   "verdict": "new assembly",
+   "registered_as": "detect.approved_beam_splitter@1",
+   "evidence": "7 r13 files exact"
+  },
+  {
+   "proposer": "r13",
+   "proposed": "detect.quiet_tapped_absorber@1",
+   "verdict": "new assembly (E0)",
+   "registered_as": "detect.quiet_tapped_absorber@1",
+   "evidence": "no instance file"
+  },
+  {
+   "proposer": "r13",
+   "proposed": "interf.mz_merge3_whichpath@1",
+   "verdict": "experiment",
+   "registered_as": "exp.mz_merge3_whichpath@1",
+   "evidence": "no instance file"
+  },
+  {
+   "proposer": "r13",
+   "proposed": "gate.ring16_window@1",
+   "verdict": "new assembly (E0)",
+   "registered_as": "gate.ring16_window@1",
+   "evidence": "no instance file"
+  },
+  {
+   "proposer": "r12",
+   "proposed": "approval_router",
+   "verdict": "new assembly",
+   "registered_as": "route.approval_router@1",
+   "evidence": "4 r12 files exact (controls: halo-retaining mask)"
+  },
+  {
+   "proposer": "r20",
+   "proposed": "SR2 shared rotor, two readers",
+   "verdict": "new assembly",
+   "registered_as": "gate.shared_rotor_two_readers@1",
+   "evidence": "4 r20 files exact"
+  },
+  {
+   "proposer": "r15",
+   "proposed": "detect.halo_core_register@1",
+   "verdict": "not new: matter.slot_clock@1 (card_rev 2)",
+   "registered_as": "matter.slot_clock@1",
+   "evidence": "data identical; 27 r15 files exact"
+  },
+  {
+   "proposer": "r15",
+   "proposed": "select.d2_approval_selector@1",
+   "verdict": "new assembly",
+   "registered_as": "select.d2_approval_selector@1",
+   "evidence": "6 files exact"
+  },
+  {
+   "proposer": "r15",
+   "proposed": "select.d2j_junction_selector@1",
+   "verdict": "new assembly",
+   "registered_as": "select.d2j_junction_selector@1",
+   "evidence": "2 files exact + 3 (-,+,+) files exact by gauge transport"
+  },
+  {
+   "proposer": "r15",
+   "proposed": "store.halo_latch@1",
+   "verdict": "new assembly (E0)",
+   "registered_as": "store.halo_latch@1",
+   "evidence": "no instance file"
+  },
+  {
+   "proposer": "r15",
+   "proposed": "write.set_doublet@1",
+   "verdict": "new assembly (E0)",
+   "registered_as": "write.set_doublet@1",
+   "evidence": "no instance file; exact inside CHSH SIG"
+  },
+  {
+   "proposer": "r15",
+   "proposed": "exp.chsh_d2_stations@1",
+   "verdict": "experiment",
+   "registered_as": "exp.chsh_d2_stations@1",
+   "evidence": "16 files exact"
+  },
+  {
+   "proposer": "r24",
+   "proposed": "r24_A1_core",
+   "verdict": "not new: light.flash@1 (card_rev 2, Gauss-law algebra)",
+   "registered_as": "light.flash@1",
+   "evidence": "9 a1core files exact; the M = 1e6 files equal flash_kick up to translation"
+  },
+  {
+   "proposer": "r24",
+   "proposed": "clocksB10 probes",
+   "verdict": "experiment",
+   "registered_as": "exp.a1core_clock_probes@1",
+   "evidence": "2 files exact"
+  },
+  {
+   "proposer": "r27",
+   "proposed": "fibre_packet@1",
+   "verdict": "not new: light.fibre_packet@1 (same data, shape (1,-1)); socket-form generator fibre_packet@1",
+   "registered_as": "light.fibre_packet@1",
+   "evidence": "equal to packet_state in 4 direction/phase cases; 19 r27 files exact"
+  },
+  {
+   "proposer": "r27",
+   "proposed": "light_line_s@1",
+   "verdict": "update (new version): medium.light_line@2 = light_line@1 + sockets; light_line_s@1 = alias key",
+   "registered_as": "medium.light_line@2",
+   "evidence": "19 r27 files exact"
+  },
+  {
+   "proposer": "r27",
+   "proposed": "bb27_point@1 (seed*)",
+   "verdict": "new literal block (found by rewind)",
+   "registered_as": "seed.bb27_point@1",
+   "evidence": "12 seed/seed* files exact by composition and by recipe; minimal only among t = 0 mod 4 (X_-7: 12 cells)"
+  },
+  {
+   "proposer": "r27",
+   "proposed": "exp.bigbang_backward@1",
+   "verdict": "experiment",
+   "registered_as": "exp.bigbang_backward@1 (alias exp.bigbang_backwards@1)",
+   "evidence": "19 target/seed files exact by composition; recipe 12/12; controls 7/7"
+  }
+ ],
+ "verified_points": [
+  {
+   "file": "research/matter_light_blocks_v1/blocks/light/fiber_x_packet.json",
+   "file_sha256_prefix": "1179c7851d009e5d",
+   "spec": "fiber_x_packet",
+   "tracked": true,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_blocks_v1/blocks/light/fiber_x_control.json",
+   "file_sha256_prefix": "5d684566d3519757",
+   "spec": "fiber_x_control",
+   "tracked": true,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_blocks_v1/blocks/light/fiber_x_gauged_sx_minus.json",
+   "file_sha256_prefix": "a5f5aa3e9dc18bfb",
+   "spec": "fiber_x_gauged_sx_minus",
+   "tracked": true,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_blocks_v1/blocks/light/fiber_diag_110.json",
+   "file_sha256_prefix": "a92a497968286af9",
+   "spec": "fiber_diag_110",
+   "tracked": true,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_blocks_v1/blocks/light/ring16.json",
+   "file_sha256_prefix": "91d933666e7302ae",
+   "spec": "ring16",
+   "tracked": true,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_blocks_v1/blocks/spin/spin720_ring.json",
+   "file_sha256_prefix": "270035fdd322e7ab",
+   "spec": "spin720_ring",
+   "tracked": true,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_blocks_v1/blocks/atoms/atom_trap_d6.json",
+   "file_sha256_prefix": "64443766ccd9f75c",
+   "spec": "atom_trap_d6",
+   "tracked": true,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_blocks_v1/blocks/interaction_and_detectors/junction_Y.json",
+   "file_sha256_prefix": "bd0d9b40552461ce",
+   "spec": "approval_router_x_no_approval",
+   "tracked": true,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r12/preparations/e7_router_signal_plus_approval_x_L64.json",
+   "file_sha256_prefix": "76d7dc0880551fba",
+   "spec": "approval_router_x",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r12/preparations/e7_router_signal_plus_approval_y_L64.json",
+   "file_sha256_prefix": "917c659c8e7cdfed",
+   "spec": "approval_router_y",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r12/preparations/e7_control_approval_x_only_L64.json",
+   "file_sha256_prefix": "57b451706eef3b45",
+   "spec": "approval_router_x_approval_only",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r12/preparations/e7_control_apparatus_only_L64.json",
+   "file_sha256_prefix": "a614a8ea767132d8",
+   "spec": "approval_router_x_approval_only_no_approval",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/w9_chsh_separated_x0_y0_lam0.json",
+   "file_sha256_prefix": "3145f078f25dad7c",
+   "spec": "w9_chsh_separated_x0_y0_lam0",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/w9_chsh_separated_x0_y0_lam1.json",
+   "file_sha256_prefix": "e6e3fc1c65a95fac",
+   "spec": "w9_chsh_separated_x0_y0_lam1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/w9_chsh_separated_x0_y1_lam0.json",
+   "file_sha256_prefix": "fa90a673c9283bea",
+   "spec": "w9_chsh_separated_x0_y1_lam0",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/w9_chsh_separated_x0_y1_lam1.json",
+   "file_sha256_prefix": "3e7f05216700cdba",
+   "spec": "w9_chsh_separated_x0_y1_lam1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/w9_chsh_separated_x1_y0_lam0.json",
+   "file_sha256_prefix": "75ed6b67af2cee3a",
+   "spec": "w9_chsh_separated_x1_y0_lam0",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/w9_chsh_separated_x1_y0_lam1.json",
+   "file_sha256_prefix": "9897ce913fe9c59d",
+   "spec": "w9_chsh_separated_x1_y0_lam1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/w9_chsh_separated_x1_y1_lam0.json",
+   "file_sha256_prefix": "e326e06e32df0a2b",
+   "spec": "w9_chsh_separated_x1_y1_lam0",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/w9_chsh_separated_x1_y1_lam1.json",
+   "file_sha256_prefix": "17ebf4975a70d5a1",
+   "spec": "w9_chsh_separated_x1_y1_lam1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/w9_chsh_signal_x0_y0_lam0.json",
+   "file_sha256_prefix": "39ee0beb7a8f3b60",
+   "spec": "w9_chsh_signal_x0_y0_lam0",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/w9_chsh_signal_x0_y0_lam1.json",
+   "file_sha256_prefix": "bbc08df812ec3e63",
+   "spec": "w9_chsh_signal_x0_y0_lam1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/w9_chsh_signal_x0_y1_lam0.json",
+   "file_sha256_prefix": "866409fbdf80d305",
+   "spec": "w9_chsh_signal_x0_y1_lam0",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/w9_chsh_signal_x0_y1_lam1.json",
+   "file_sha256_prefix": "b54b628081b9e8be",
+   "spec": "w9_chsh_signal_x0_y1_lam1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/w9_chsh_signal_x1_y0_lam0.json",
+   "file_sha256_prefix": "c9a3c89b69a35042",
+   "spec": "w9_chsh_signal_x1_y0_lam0",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/w9_chsh_signal_x1_y0_lam1.json",
+   "file_sha256_prefix": "4834c7303270548d",
+   "spec": "w9_chsh_signal_x1_y0_lam1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/w9_chsh_signal_x1_y1_lam0.json",
+   "file_sha256_prefix": "e7780705d85fed83",
+   "spec": "w9_chsh_signal_x1_y1_lam0",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r08/preparations/w9_chsh_signal_x1_y1_lam1.json",
+   "file_sha256_prefix": "d9f31b3e1f6a57d4",
+   "spec": "w9_chsh_signal_x1_y1_lam1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r13/preparations/E1_F_app_tq24_selects_A.json",
+   "file_sha256_prefix": "6de16a69ef36b6c3",
+   "spec": "r13_device",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r13/preparations/E1_F_app_tq25_selects_B.json",
+   "file_sha256_prefix": "457ae6545dd72ed5",
+   "spec": "r13_device",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r13/preparations/E1_F_app_control_no_quantum.json",
+   "file_sha256_prefix": "16e289be11773b69",
+   "spec": "r13_device",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r13/preparations/E1_F_none_tq25_both.json",
+   "file_sha256_prefix": "23f94b96e509222c",
+   "spec": "r13_device",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r13/preparations/E1_F_ind_pA2_pB0_tq23_complementary.json",
+   "file_sha256_prefix": "bb1782ce3a6cb54a",
+   "spec": "r13_device",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r13/preparations/E2_R_delta0_tq23_repeat.json",
+   "file_sha256_prefix": "8a3c2211704cd0d0",
+   "spec": "r13_device",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r13/preparations/E2_R_delta2_tq23_collapse_test.json",
+   "file_sha256_prefix": "27eefede4fb00ca1",
+   "spec": "r13_device",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r13/preparations/E3_T1_single_arm_by_rewind.json",
+   "file_sha256_prefix": "c5891160ba163dba",
+   "spec": "r13_device",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r13/preparations/E3_T2_collapsed_history_by_rewind.json",
+   "file_sha256_prefix": "db259b4fa5379348",
+   "spec": "r13_device",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r11/preparations/twins_seg_q28_a3_L160.json",
+   "file_sha256_prefix": "f21117b3e317cef6",
+   "spec": "twins_seg_q28_a3_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r11/preparations/twins_seg_q28_a3_L320.json",
+   "file_sha256_prefix": "8b9d27f561116390",
+   "spec": "twins_seg_q28_a3_L320",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r11/preparations/twins_seg_q212_a3_L160.json",
+   "file_sha256_prefix": "a3d41fbcb9ddd2ea",
+   "spec": "twins_seg_q212_a3_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r11/preparations/twins_seg_q212_a3_L320.json",
+   "file_sha256_prefix": "5536162310f701bf",
+   "spec": "twins_seg_q212_a3_L320",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r20/preparations/shared_rotor_gate_S_t0_41_P16.json",
+   "file_sha256_prefix": "38e38fff02e31e42",
+   "spec": "sr2_S_41_57_73_89",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r20/preparations/shared_rotor_gate_S_t0_41_P14.json",
+   "file_sha256_prefix": "98ed44aac1298fee",
+   "spec": "sr2_S_41_55_69_83",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r20/preparations/shared_rotor_gate_I_control_t0_41_P16.json",
+   "file_sha256_prefix": "65a427eb8f7715eb",
+   "spec": "sr2_I_41_57_73_89",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r20/preparations/shared_rotor_gate_S_control_no_pulses.json",
+   "file_sha256_prefix": "3c18478c0abeb044",
+   "spec": "sr2_S_no_pulses",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/d2_approved_tq36_lambda0_q2_52.json",
+   "file_sha256_prefix": "a2f729af356b2974",
+   "spec": "d2_selector_app1_tq36",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/d2_approved_tq38_lambda1_q2_54.json",
+   "file_sha256_prefix": "5400556373940b9e",
+   "spec": "d2_selector_app1_tq38",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/d2_unapproved_tq36_q2_52_control.json",
+   "file_sha256_prefix": "4ba516a28a6ce7da",
+   "spec": "d2_selector_app0_tq36",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/d2_unapproved_tq38_q2_54_control.json",
+   "file_sha256_prefix": "4bd4fa7fca937d01",
+   "spec": "d2_selector_app0_tq38",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/d2_approved_tq37_odd_phase_negative.json",
+   "file_sha256_prefix": "c2641cdaeff3bdbe",
+   "spec": "d2_selector_app1_tq37",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/d2_control_no_cores_tq36.json",
+   "file_sha256_prefix": "49f237d4bd78282b",
+   "spec": "d2_selector_app1_tq36",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/d2j_junction_app1_lam0.json",
+   "file_sha256_prefix": "21684864dfbfaf76",
+   "spec": "d2j_selector_app1_tq40",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/d2j_junction_app1_lam1.json",
+   "file_sha256_prefix": "99e3a195b36b6db8",
+   "spec": "d2j_selector_app1_tq42",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/d2j_mpp_app1_lam0_signs-++.json",
+   "file_sha256_prefix": "48f848e8ef18431f",
+   "spec": "d2j_selector_app1_tq40",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/d2j_mpp_app1_lam1_signs-++.json",
+   "file_sha256_prefix": "940ec977e675ca4f",
+   "spec": "d2j_selector_app1_tq42",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/d2j_mpp_app0_lam0_signs-++.json",
+   "file_sha256_prefix": "10d9ebae623141d5",
+   "spec": "d2j_selector_app0_tq40",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/chsh_SEP_x0_y0_lam0.json",
+   "file_sha256_prefix": "078246a794c19c8e",
+   "spec": "chsh_d2_SEP_x0_y0_lam0",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/chsh_SEP_x0_y0_lam1.json",
+   "file_sha256_prefix": "650f438a1026922d",
+   "spec": "chsh_d2_SEP_x0_y0_lam1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/chsh_SEP_x0_y1_lam0.json",
+   "file_sha256_prefix": "50878f4ea147f4e4",
+   "spec": "chsh_d2_SEP_x0_y1_lam0",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/chsh_SEP_x0_y1_lam1.json",
+   "file_sha256_prefix": "c372a143381c7145",
+   "spec": "chsh_d2_SEP_x0_y1_lam1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/chsh_SEP_x1_y0_lam0.json",
+   "file_sha256_prefix": "95e6b13e93943c86",
+   "spec": "chsh_d2_SEP_x1_y0_lam0",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/chsh_SEP_x1_y0_lam1.json",
+   "file_sha256_prefix": "0225a81cacd74549",
+   "spec": "chsh_d2_SEP_x1_y0_lam1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/chsh_SEP_x1_y1_lam0.json",
+   "file_sha256_prefix": "650b770d02d419b5",
+   "spec": "chsh_d2_SEP_x1_y1_lam0",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/chsh_SEP_x1_y1_lam1.json",
+   "file_sha256_prefix": "8b00f1ab52779266",
+   "spec": "chsh_d2_SEP_x1_y1_lam1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/chsh_SIG_x0_y0_lam0.json",
+   "file_sha256_prefix": "078246a794c19c8e",
+   "spec": "chsh_d2_SIG_x0_y0_lam0",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/chsh_SIG_x0_y0_lam1.json",
+   "file_sha256_prefix": "650f438a1026922d",
+   "spec": "chsh_d2_SIG_x0_y0_lam1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/chsh_SIG_x0_y1_lam0.json",
+   "file_sha256_prefix": "4b7da877ad6914a2",
+   "spec": "chsh_d2_SIG_x0_y1_lam0",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/chsh_SIG_x0_y1_lam1.json",
+   "file_sha256_prefix": "ca6e97f70e335ba4",
+   "spec": "chsh_d2_SIG_x0_y1_lam1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/chsh_SIG_x1_y0_lam0.json",
+   "file_sha256_prefix": "95e6b13e93943c86",
+   "spec": "chsh_d2_SIG_x1_y0_lam0",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/chsh_SIG_x1_y0_lam1.json",
+   "file_sha256_prefix": "0225a81cacd74549",
+   "spec": "chsh_d2_SIG_x1_y0_lam1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/chsh_SIG_x1_y1_lam0.json",
+   "file_sha256_prefix": "06aff3193c37a1ec",
+   "spec": "chsh_d2_SIG_x1_y1_lam0",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r15/preparations/chsh_SIG_x1_y1_lam1.json",
+   "file_sha256_prefix": "1468dc024cda37dc",
+   "spec": "chsh_d2_SIG_x1_y1_lam1",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r24/preparations/a1core_M3_L13.json",
+   "file_sha256_prefix": "4a90b57073429a98",
+   "spec": "a1_core_M3_L13",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r24/preparations/a1core_M30_L13.json",
+   "file_sha256_prefix": "2dba3bec93604d90",
+   "spec": "a1_core_M30_L13",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r24/preparations/a1core_M30_L21.json",
+   "file_sha256_prefix": "b2c67ac60cd0b29a",
+   "spec": "a1_core_M30_L21",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r24/preparations/a1core_M1000_L17.json",
+   "file_sha256_prefix": "22647c6fc897b3eb",
+   "spec": "a1_core_M1000_L17",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r24/preparations/a1core_M1e6_L17.json",
+   "file_sha256_prefix": "1963d54b70e183c7",
+   "spec": "a1_core_M1000000_L17",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r24/preparations/a1core_M1000_L101.json",
+   "file_sha256_prefix": "1bf47c9d0a958b78",
+   "spec": "a1_core_M1000_L101",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r24/preparations/a1core_M1e6_L101.json",
+   "file_sha256_prefix": "77a7470e835bbe19",
+   "spec": "a1_core_M1000000_L101",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r24/preparations/a1core_M1000_L161.json",
+   "file_sha256_prefix": "52894733ed866440",
+   "spec": "a1_core_M1000_L161",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r24/preparations/a1core_M1e6_L161.json",
+   "file_sha256_prefix": "123ad422636ce3b1",
+   "spec": "a1_core_M1000000_L161",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r24/preparations/clocksB10_r4r6_alone_L21.json",
+   "file_sha256_prefix": "82af834dee4eb66b",
+   "spec": "a1core_clock_probes_alone",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r24/preparations/clocksB10_r4r6_core30_L21.json",
+   "file_sha256_prefix": "c40ee2d9f772c372",
+   "spec": "a1core_clock_probes",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T24_rings2_target_T24_L160.json",
+   "file_sha256_prefix": "0e6e954c65703e25",
+   "spec": "bb27_T24_rings2_target_T24_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T24_rings2_seed_L160.json",
+   "file_sha256_prefix": "35b2a6369ca64552",
+   "spec": "bb27_T24_rings2_seed_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T24_rings2_seedstar_L160.json",
+   "file_sha256_prefix": "02a7aa6f8937a34d",
+   "spec": "bb27_T24_rings2_seedstar_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T24_rings2_target_T24_L320.json",
+   "file_sha256_prefix": "49916fcf66fe6357",
+   "spec": "bb27_T24_rings2_target_T24_L320",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T24_rings2_seed_L320.json",
+   "file_sha256_prefix": "b4d178938c1ee9b1",
+   "spec": "bb27_T24_rings2_seed_L320",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T24_rings2_seedstar_L320.json",
+   "file_sha256_prefix": "ed18cd0314f199b7",
+   "spec": "bb27_T24_rings2_seedstar_L320",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T24_target_T24_L160.json",
+   "file_sha256_prefix": "3ffb17fd604d94a8",
+   "spec": "bb27_T24_target_T24_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T24_seed_L160.json",
+   "file_sha256_prefix": "5001298d12f29373",
+   "spec": "bb27_T24_seed_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T24_seedstar_L160.json",
+   "file_sha256_prefix": "714e126ef9acd23f",
+   "spec": "bb27_T24_seedstar_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T24_target_T24_L320.json",
+   "file_sha256_prefix": "9e14c237fb6aa188",
+   "spec": "bb27_T24_target_T24_L320",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T24_seed_L320.json",
+   "file_sha256_prefix": "481a8ce650d0b1cb",
+   "spec": "bb27_T24_seed_L320",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T24_seedstar_L320.json",
+   "file_sha256_prefix": "2e13e3b180bfece4",
+   "spec": "bb27_T24_seedstar_L320",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T12_target_T12_L160.json",
+   "file_sha256_prefix": "464fb58ba6c3d3d4",
+   "spec": "bb27_T12_target_T12_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T12_seed_L160.json",
+   "file_sha256_prefix": "cfdbad2bdc3565be",
+   "spec": "bb27_T12_seed_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T12_seedstar_L160.json",
+   "file_sha256_prefix": "3aa87db2ab8ac09d",
+   "spec": "bb27_T12_seedstar_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T12_target_T12_L320.json",
+   "file_sha256_prefix": "2082637ccc37f387",
+   "spec": "bb27_T12_target_T12_L320",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T12_seed_L320.json",
+   "file_sha256_prefix": "dee73a0a7050ac49",
+   "spec": "bb27_T12_seed_L320",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T12_seedstar_L320.json",
+   "file_sha256_prefix": "c67ba6ac7ae2a628",
+   "spec": "bb27_T12_seedstar_L320",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T24_focusP_target_T24_L160.json",
+   "file_sha256_prefix": "6808b0eaa8708c9f",
+   "spec": "bb27_T24_focusP_target_T24_L160",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T24_rings2_seed_L160.json",
+   "file_sha256_prefix": "35b2a6369ca64552",
+   "spec": "recipe JR(F^24(JR(T))) from bb27_target_spec",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T24_rings2_seedstar_L160.json",
+   "file_sha256_prefix": "02a7aa6f8937a34d",
+   "spec": "recipe JR(F^28(JR(T))) from bb27_target_spec",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T24_rings2_seed_L320.json",
+   "file_sha256_prefix": "b4d178938c1ee9b1",
+   "spec": "recipe JR(F^24(JR(T))) from bb27_target_spec",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T24_rings2_seedstar_L320.json",
+   "file_sha256_prefix": "ed18cd0314f199b7",
+   "spec": "recipe JR(F^28(JR(T))) from bb27_target_spec",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T24_seed_L160.json",
+   "file_sha256_prefix": "5001298d12f29373",
+   "spec": "recipe JR(F^24(JR(T))) from bb27_target_spec",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T24_seedstar_L160.json",
+   "file_sha256_prefix": "714e126ef9acd23f",
+   "spec": "recipe JR(F^28(JR(T))) from bb27_target_spec",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T24_seed_L320.json",
+   "file_sha256_prefix": "481a8ce650d0b1cb",
+   "spec": "recipe JR(F^24(JR(T))) from bb27_target_spec",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T24_seedstar_L320.json",
+   "file_sha256_prefix": "2e13e3b180bfece4",
+   "spec": "recipe JR(F^28(JR(T))) from bb27_target_spec",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T12_seed_L160.json",
+   "file_sha256_prefix": "cfdbad2bdc3565be",
+   "spec": "recipe JR(F^12(JR(T))) from bb27_target_spec",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T12_seedstar_L160.json",
+   "file_sha256_prefix": "3aa87db2ab8ac09d",
+   "spec": "recipe JR(F^16(JR(T))) from bb27_target_spec",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T12_seed_L320.json",
+   "file_sha256_prefix": "dee73a0a7050ac49",
+   "spec": "recipe JR(F^12(JR(T))) from bb27_target_spec",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T12_seedstar_L320.json",
+   "file_sha256_prefix": "c67ba6ac7ae2a628",
+   "spec": "recipe JR(F^16(JR(T))) from bb27_target_spec",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T24_rings2_t0_L160__no_Gm.json",
+   "file_sha256_prefix": "b68541655eab1e26",
+   "spec": "bb27_target_spec minus Gm, rewound T",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T24_rings2_t0_L160__no_Gp.json",
+   "file_sha256_prefix": "9231bad4d26c621d",
+   "spec": "bb27_target_spec minus Gp, rewound T",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T24_rings2_t0_L160__no_Pp.json",
+   "file_sha256_prefix": "b566d7b014c76e75",
+   "spec": "bb27_target_spec minus Pp, rewound T",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T24_rings2_t0_L160__no_Pp_Pm_Gm_Gp.json",
+   "file_sha256_prefix": "fb28f331b6948ddf",
+   "spec": "bb27_target_spec minus Pp+Pm+Gm+Gp, rewound T",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T24_t0_L160__no_Gm.json",
+   "file_sha256_prefix": "e889005513bfef0e",
+   "spec": "bb27_target_spec minus Gm, rewound T",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T24_t0_L160__no_Pp.json",
+   "file_sha256_prefix": "4caf8c207a228509",
+   "spec": "bb27_target_spec minus Pp, rewound T",
+   "tracked": false,
+   "exact": true
+  },
+  {
+   "file": "research/matter_light_v1/r27/preparations/bb27_T24_t0_L160__no_Pp_Pm_Gm_Gp.json",
+   "file_sha256_prefix": "870889c1efa60267",
+   "spec": "bb27_target_spec minus Pp+Pm+Gm+Gp, rewound T",
+   "tracked": false,
+   "exact": true
+  }
+ ],
+ "n_verified_exact": 121,
+ "published_roles": {
+  "fiber_x_packet": {
+   "family": "light.fibre_packet",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "fiber_x_gauged_sx_minus": {
+   "family": "light.fibre_packet",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "fiber_diag_110": {
+   "family": "light.fibre_packet",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "fiber_diag_111": {
+   "family": "light.fibre_packet",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "fibre_pulse_r08": {
+   "family": "light.fibre_packet",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "fiber_x_control": {
+   "family": "light.fibre_packet",
+   "family_kind": "block",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "fibre_alone_r08": {
+   "family": "light.fibre_packet",
+   "family_kind": "block",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "fiber_x_ungauged_sx_minus_control": {
+   "family": "light.fibre_packet",
+   "family_kind": "block",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "ring16": {
+   "family": "light.fibre_ring",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "guided_ring": {
+   "family": "light.fibre_ring",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "even_ring": {
+   "family": "light.fibre_ring",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "ring12_holonomy3": {
+   "family": "light.fibre_ring",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "ring16_two_counter_packets": {
+   "family": "light.fibre_ring",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "exact_front_111_box": {
+   "family": "light.front_111",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "diag_sheet": {
+   "family": "light.front_111",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "beam111_disc": {
+   "family": "light.front_111",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "flash_kick": {
+   "family": "light.flash",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "control_vacuum_L21": {
+   "family": "light.flash",
+   "family_kind": "block",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "light_ray_bg4_plus_x": {
+   "family": "light.vacA_ray",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "light_ray_bg4_minus_x": {
+   "family": "light.vacA_ray",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "light_raypair_bg4": {
+   "family": "light.vacA_ray",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "light_ray_blocker_only": {
+   "family": "light.vacA_ray",
+   "family_kind": "block",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "lamp_pmm_bg4_core10": {
+   "family": "light.vacA_lamp",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "onesided_lamp_core5": {
+   "family": "light.vacA_lamp",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "Jmirror_lamp_bg0": {
+   "family": "light.vacA_lamp",
+   "family_kind": "block",
+   "role": "J-image",
+   "of": "lamp_pmm_bg4_core10 (J)",
+   "evidence_flag": null
+  },
+  "box_lamp_l8": {
+   "family": "light.box_lamp",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "box_lamp_l12": {
+   "family": "light.box_lamp",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "cw_emitter_mmm": {
+   "family": "light.cw_emitter",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "cw_emitter_control": {
+   "family": "light.cw_emitter",
+   "family_kind": "block",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "ring16_emitter": {
+   "family": "clock.ring_emitter",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "ring16_emitter_control": {
+   "family": "clock.ring_emitter",
+   "family_kind": "block",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "ring16_delay_line": {
+   "family": "clock.ring_emitter",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "M4_silent_monomer": {
+   "family": "matter.silent_monomer",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "mat_H4_all48_silent": {
+   "family": "matter.silent_monomer",
+   "family_kind": "block",
+   "role": "alias",
+   "of": "M4_silent_monomer (same)",
+   "evidence_flag": null
+  },
+  "bound_pair_single": {
+   "family": "matter.silent_monomer",
+   "family_kind": "block",
+   "role": "alias",
+   "of": "M4_silent_monomer (same)",
+   "evidence_flag": null
+  },
+  "universality_M4_isolated_control": {
+   "family": "matter.silent_monomer",
+   "family_kind": "block",
+   "role": "alias",
+   "of": "M4_silent_monomer (same)",
+   "evidence_flag": null
+  },
+  "M4r_robust_monomer": {
+   "family": "matter.silent_monomer",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "D5_dimer": {
+   "family": "matter.k_core",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "bound_pair_4_5": {
+   "family": "matter.k_core",
+   "family_kind": "block",
+   "role": "alias",
+   "of": "D5_dimer (same)",
+   "evidence_flag": null
+  },
+  "five_dimer": {
+   "family": "matter.k_core",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "Q5_plaquette": {
+   "family": "matter.k_core",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "Q6_plaquette": {
+   "family": "matter.k_core",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "C6_cube": {
+   "family": "matter.k_core",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "six_clock": {
+   "family": "matter.k_core",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "universality_D5_isolated_control": {
+   "family": "matter.k_core",
+   "family_kind": "block",
+   "role": "alias",
+   "of": "D5_dimer (same)",
+   "evidence_flag": null
+  },
+  "I6_impulse": {
+   "family": "matter.single_channel_clock",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "universality_I6_isolated_control": {
+   "family": "matter.single_channel_clock",
+   "family_kind": "block",
+   "role": "alias",
+   "of": "I6_impulse (same)",
+   "evidence_flag": null
+  },
+  "mat_L5_single": {
+   "family": "matter.single_channel_clock",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "mat_L6_single": {
+   "family": "matter.single_channel_clock",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "mat_L12_single": {
+   "family": "matter.single_channel_clock",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "mat_L16_single_pureC0": {
+   "family": "matter.single_channel_clock",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "mat_L30_single": {
+   "family": "matter.single_channel_clock",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "mat_L48_single": {
+   "family": "matter.single_channel_clock",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "dark_orbit_pmp": {
+   "family": "matter.single_channel_clock",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "universality_B0s_isolated_control": {
+   "family": "matter.single_channel_clock",
+   "family_kind": "block",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "B10_breather": {
+   "family": "matter.breather",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "universality_B10_isolated_control": {
+   "family": "matter.breather",
+   "family_kind": "block",
+   "role": "alias",
+   "of": "B10_breather (same)",
+   "evidence_flag": null
+  },
+  "B14_breather": {
+   "family": "matter.breather",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "F12_frustrated": {
+   "family": "matter.frustrated_breather",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "F14_frustrated": {
+   "family": "matter.frustrated_breather",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "N6_minus_rho0": {
+   "family": "matter.bg0_core",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "N16_minus_rho0_C0": {
+   "family": "matter.bg0_core",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "mat_H10_all48": {
+   "family": "matter.all48_clock_r07",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "mat_H60_all48chi": {
+   "family": "matter.all48_clock_r07",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "mat_S24_dic3": {
+   "family": "matter.all48_clock_r07",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "mat_V14_vecb1": {
+   "family": "matter.all48_clock_r07",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "mat_V36_vecb1": {
+   "family": "matter.all48_clock_r07",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "mat_X12_all48_mmm_bg4": {
+   "family": "matter.x_robust",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "mat_X16_all48_mmm_bg4": {
+   "family": "matter.x_robust",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "mat_X30_all48_mmm_bg4": {
+   "family": "matter.x_robust",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "slow13_plusx_mpp": {
+   "family": "matter.slow_glider",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "slow13_plusx_mpm": {
+   "family": "matter.slow_glider",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "slow13_plusx_mmp": {
+   "family": "matter.slow_glider",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "slow13_plusx_mmm": {
+   "family": "matter.slow_glider",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "slow13_minusx_mpp": {
+   "family": "matter.slow_glider",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "light_glider_r06": {
+   "family": "matter.fast_glider",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "MV_glider_alone": {
+   "family": "matter.fast_glider",
+   "family_kind": "block",
+   "role": "alias",
+   "of": "light_glider_r06 (same)",
+   "evidence_flag": null
+  },
+  "W2_fast_glider_control": {
+   "family": "matter.fast_glider",
+   "family_kind": "block",
+   "role": "alias",
+   "of": "light_glider_r06 (same)",
+   "evidence_flag": null
+  },
+  "mover_v1of3_sm_guide0": {
+   "family": "matter.guided_mover",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "mover_v2of6_sp_guide02": {
+   "family": "matter.guided_mover",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "mover_v3of7_sp_guide002": {
+   "family": "matter.guided_mover",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "mover_v4of8_sp_guide0002": {
+   "family": "matter.guided_mover",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "mover_v5of9_sp_guide00022": {
+   "family": "matter.guided_mover",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "mover_v5of11_sm_guide00002": {
+   "family": "matter.guided_mover",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "mover_v5of13_sp_guide00202": {
+   "family": "matter.guided_mover",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "mover_v6of10_sp_guide000222": {
+   "family": "matter.guided_mover",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "mover_v1of1_sp_guide0": {
+   "family": "matter.guided_mover",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "glider_graded_guide": {
+   "family": "matter.guided_mover",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "spinor_screw": {
+   "family": "matter.screw_mover",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "screw_glider_y": {
+   "family": "matter.screw_mover",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "planar_glider_100": {
+   "family": "matter.planar_glider",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "planar_glider_100_J": {
+   "family": "matter.planar_glider",
+   "family_kind": "block",
+   "role": "J-image",
+   "of": "planar_glider_100 (J)",
+   "evidence_flag": null
+  },
+  "crystal24_rest_L12": {
+   "family": "medium.crystal",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "crystal_light_and_matter": {
+   "family": "medium.crystal",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "crystal_light_matter_L8": {
+   "family": "medium.crystal",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "A2_mover_crystal_L12": {
+   "family": "medium.crystal",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "excitable_r4": {
+   "family": "medium.excitable_bg4",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "excitable_r4_minus": {
+   "family": "medium.excitable_bg4",
+   "family_kind": "block",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "excitable_r4_control": {
+   "family": "medium.excitable_bg4",
+   "family_kind": "block",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "junction_emission_d0": {
+   "family": "element.junction",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "junction_emission_d1": {
+   "family": "element.junction",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "junction_emission_d4": {
+   "family": "element.junction",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "junction_emission_d5": {
+   "family": "element.junction",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "junction_absorption_d4": {
+   "family": "element.junction",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "fiber_light_pushes_matter": {
+   "family": "element.fibre_elements",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "fiber_coincidence_emission": {
+   "family": "element.fibre_elements",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "fiber_light_creates_glider": {
+   "family": "element.fibre_elements",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "fiber_glider_becomes_light": {
+   "family": "element.fibre_elements",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "fiber_light_absorbs_glider": {
+   "family": "element.fibre_elements",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "island_transit_6": {
+   "family": "element.fibre_elements",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "junction_Y": {
+   "family": "element.fanout_junction",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "hub6": {
+   "family": "element.fanout_junction",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "mirror_gap": {
+   "family": "element.reflector",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "mirror_gap_alone": {
+   "family": "element.reflector",
+   "family_kind": "block",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "reflector_flip": {
+   "family": "element.reflector",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "repeater_side4": {
+   "family": "element.reflector",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "atom_trap_d6": {
+   "family": "atom.two_core_trap",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "atom_trap_d10": {
+   "family": "atom.two_core_trap",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "atom_trap_d6_no_cores": {
+   "family": "atom.two_core_trap",
+   "family_kind": "block",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "atom_trap_d10_no_cores": {
+   "family": "atom.two_core_trap",
+   "family_kind": "block",
+   "role": "alias",
+   "of": "atom_trap_d6_no_cores (same)",
+   "evidence_flag": null
+  },
+  "atom_trap_d6_wrong_phases": {
+   "family": "atom.two_core_trap",
+   "family_kind": "block",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "atom_trap_d10_wrong_phases": {
+   "family": "atom.two_core_trap",
+   "family_kind": "block",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "spectro_trap_d10_tap7_atom": {
+   "family": "atom.two_core_trap",
+   "family_kind": "block",
+   "role": "control",
+   "of": null,
+   "evidence_flag": "custom_only"
+  },
+  "spectro_trap_d6_tap2_atom": {
+   "family": "atom.two_core_trap",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": "custom_only"
+  },
+  "spectro_trap_d10_tap5_atom": {
+   "family": "atom.two_core_trap",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": "custom_only"
+  },
+  "spectro_trap_d14_tap7_atom": {
+   "family": "atom.two_core_trap",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": "custom_only"
+  },
+  "spectro_trap_d10_tap7_no_cores_control": {
+   "family": "atom.two_core_trap",
+   "family_kind": "block",
+   "role": "control",
+   "of": null,
+   "evidence_flag": "custom_only"
+  },
+  "spectro_trap_d10_tap7_detuned01_control": {
+   "family": "atom.two_core_trap",
+   "family_kind": "block",
+   "role": "control",
+   "of": null,
+   "evidence_flag": "custom_only"
+  },
+  "atom_side_core": {
+   "family": "atom.ring_core",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "atom_side_core_phase1": {
+   "family": "atom.ring_core",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "atom_bridge_core": {
+   "family": "atom.ring_core",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "atom_bridge_static_mirror": {
+   "family": "atom.ring_core",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "atom_side_core_far": {
+   "family": "atom.ring_core",
+   "family_kind": "block",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "atom_side_core_alone": {
+   "family": "atom.ring_core",
+   "family_kind": "block",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "atom_bridge_core_far": {
+   "family": "atom.ring_core",
+   "family_kind": "block",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "atom_bridge_core_alone": {
+   "family": "atom.ring_core",
+   "family_kind": "block",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "molecule_two_rings_bridge3": {
+   "family": "resonator.coupled_rings",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "molecule_two_rings_bridge5": {
+   "family": "resonator.coupled_rings",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "molecule_ring16_stub2": {
+   "family": "resonator.coupled_rings",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "molecule_ring16_stub6": {
+   "family": "resonator.coupled_rings",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "spin720_ring": {
+   "family": "spin.holonomy_ring",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "spinor_ring_r09": {
+   "family": "spin.holonomy_ring",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "plain_ring_r09": {
+   "family": "spin.holonomy_ring",
+   "family_kind": "block",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "signflip_ring_3x3": {
+   "family": "spin.holonomy_ring",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "signflip_ring_3x7": {
+   "family": "spin.holonomy_ring",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "spinor_B0_lam2_ppp_L3_seed022": {
+   "family": "spin.spinor_sector_seed",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "spinor_B1_lam2_ppp_L3_seed022": {
+   "family": "spin.spinor_sector_seed",
+   "family_kind": "block",
+   "role": "alias",
+   "of": "spinor_B0_lam2_ppp_L3_seed022 (orient:3)",
+   "evidence_flag": null
+  },
+  "spinor_chiB0_lam2_ppp_L3_seed022": {
+   "family": "spin.spinor_sector_seed",
+   "family_kind": "block",
+   "role": "alias",
+   "of": "spinor_B0_lam2_ppp_L3_seed022 (orient:14)",
+   "evidence_flag": null
+  },
+  "spinor_staggeredB0_lamm2_ppp_L4_seed022": {
+   "family": "spin.spinor_sector_seed",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "spinorwave_z4_lam4_classII_L4_seed022": {
+   "family": "spin.spinor_sector_seed",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "charge_cavity_D10": {
+   "family": "charge.walled_cavity",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "charge_cavity_D14": {
+   "family": "charge.walled_cavity",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "clock_link_D14": {
+   "family": "clock.clock_link",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "box_light_clock": {
+   "family": "clock.box_clock",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "box_slow_clock": {
+   "family": "clock.box_clock",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "box_two_slow": {
+   "family": "clock.box_clock",
+   "family_kind": "block",
+   "role": "variant",
+   "of": null,
+   "evidence_flag": null
+  },
+  "cavity_fiber_D20": {
+   "family": "clock.fibre_cavity",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "toggle_write": {
+   "family": "gate.phase_gate",
+   "family_kind": "block",
+   "role": "canonical",
+   "of": null,
+   "evidence_flag": null
+  },
+  "toggle_closed": {
+   "family": "gate.phase_gate",
+   "family_kind": "block",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "toggle_object_alone": {
+   "family": "gate.phase_gate",
+   "family_kind": "block",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "A20_exchange_pair": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "A12_diagonal_pair": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "A14_adjacent_pair": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "H20_breather_monomer": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "H20c_breather_monomer_corner": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "BB10_breather_pair": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "HL22_dimer_monomer": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "HL110_dimer_monomer": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "HL22q_plaquette_monomer": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "HL6_plaquette_lock": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "A20_exchange_pair_FARCONTROL": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "A12_diagonal_pair_FARCONTROL": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "A14_adjacent_pair_FARCONTROL": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "H20_breather_monomer_FARCONTROL": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "H20c_breather_monomer_corner_FARCONTROL": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "BB10_breather_pair_FARCONTROL": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "HL22_dimer_monomer_FARCONTROL": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "HL110_dimer_monomer_FARCONTROL": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "HL22q_plaquette_monomer_FARCONTROL": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "HL6_plaquette_lock_FARCONTROL": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "Jmirror_HL6_plaquette_lock": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "J-image",
+   "of": "HL6_plaquette_lock (J)",
+   "evidence_flag": null
+  },
+  "bound_pair_sep2": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "bound_pair_sep3": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "exchange_pair_d1": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "exchange_pair_d2": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "exchange_pair_m1m14_d1": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "J-image",
+   "of": "A14_adjacent_pair (J)",
+   "evidence_flag": null
+  },
+  "exchange_pair_m1m14_d2": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "pair_minus_x_7": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "atom_H10_L48_D2": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "atom_H10_L48_D2_far": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "atom_H4_L6_D1": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "atom_H4_L6_D1_far": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "atom_H4_L16_D1": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "atom_H4_L16_D1_far": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "atom_mmm_bg4_s12_s16_D2": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "atom_mmm_bg4_s12_s16_D2_far": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "atom_mmm_bg4_X16_X16_D1": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "atom_mmm_bg4_X16_X16_D1_far": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "ray_atom_d111": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "ray_atom_far_d555": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "spin_partner_L30": {
+   "family": "exp.pair_at_distance",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "charge_like_d1": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": "same data as D5_dimer (same)",
+   "evidence_flag": null
+  },
+  "charge_unlike_d1": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "charge_like_d2": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "alias",
+   "of": "bound_pair_sep2 (same)",
+   "evidence_flag": null
+  },
+  "charge_unlike_d2": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "charge_like_d3": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "alias",
+   "of": "bound_pair_sep3 (same)",
+   "evidence_flag": null
+  },
+  "charge_unlike_d3": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "charge_like_H4_D1": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "alias",
+   "of": "D5_dimer (same)",
+   "evidence_flag": null
+  },
+  "charge_unlike_H4_D1": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "alias",
+   "of": "charge_unlike_d1 (same)",
+   "evidence_flag": null
+  },
+  "charge_unlike_S24_D1": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "charge_like_S24_D1": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "charge_unlike_L30_D1": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "CH_M4_D100_like": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "alias",
+   "of": "D5_dimer (same)",
+   "evidence_flag": null
+  },
+  "CH_M4_D100_unlike": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "alias",
+   "of": "charge_unlike_d1 (same)",
+   "evidence_flag": null
+  },
+  "CH_M4_D100_FARCONTROL": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "CH_M4_D200_like": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "alias",
+   "of": "bound_pair_sep2 (same)",
+   "evidence_flag": null
+  },
+  "CH_M4_D200_unlike": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "alias",
+   "of": "charge_unlike_d2 (same)",
+   "evidence_flag": null
+  },
+  "CH_M4_D200_FARCONTROL": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "alias",
+   "of": "CH_M4_D100_FARCONTROL (same)",
+   "evidence_flag": null
+  },
+  "CH_M4r_D100_like": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "CH_M4r_D100_unlike": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "CH_M4r_D100_FARCONTROL": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "CH_M4r_D200_like": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "CH_M4r_D200_unlike": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "CH_M4r_D200_FARCONTROL": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "alias",
+   "of": "CH_M4r_D100_FARCONTROL (same)",
+   "evidence_flag": null
+  },
+  "CH_B10_D200_like": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "alias",
+   "of": "BB10_breather_pair (same)",
+   "evidence_flag": null
+  },
+  "CH_B10_D200_unlike": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "CH_B10_D200_FARCONTROL": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "CH_D5x_D300_like": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "CH_D5x_D300_unlike": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "CH_D5x_D300_FARCONTROL": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "CH_HL22_D010_like": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "CH_HL22_D010_unlike": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "CH_HL22_D010_FARCONTROL": {
+   "family": "exp.sign_pair",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "MV_glider_posrotor_m102_phase0": {
+   "family": "exp.glider_meets_rotor",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "MV_glider_posrotor_m102_phase1": {
+   "family": "exp.glider_meets_rotor",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "MV_glider_negrotor_102_phase0": {
+   "family": "exp.glider_meets_rotor",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "MV_glider_negrotor_102_phase1": {
+   "family": "exp.glider_meets_rotor",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "W2_fast_partner_qplus": {
+   "family": "exp.glider_meets_rotor",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "W2_fast_partner_qminus": {
+   "family": "exp.glider_meets_rotor",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "universality_M4_D1_with_source": {
+   "family": "exp.clock_next_to_source",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": "same data as D5_dimer (same)",
+   "evidence_flag": null
+  },
+  "universality_M4_D3_with_source": {
+   "family": "exp.clock_next_to_source",
+   "family_kind": "experiment",
+   "role": "alias",
+   "of": "bound_pair_sep3 (same)",
+   "evidence_flag": null
+  },
+  "universality_D5_D1_with_source": {
+   "family": "exp.clock_next_to_source",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "universality_D5_D3_with_source": {
+   "family": "exp.clock_next_to_source",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "universality_B10_D1_with_source": {
+   "family": "exp.clock_next_to_source",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "universality_B10_D3_with_source": {
+   "family": "exp.clock_next_to_source",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "universality_I6_D1_with_source": {
+   "family": "exp.clock_next_to_source",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "universality_I6_D3_with_source": {
+   "family": "exp.clock_next_to_source",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "universality_B0s_D1_with_source": {
+   "family": "exp.clock_next_to_source",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "universality_B0s_D3_with_source": {
+   "family": "exp.clock_next_to_source",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "brick_4_5_with_reference": {
+   "family": "exp.clock_next_to_source",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "einstein_net_d20_sync_phaseB15": {
+   "family": "exp.einstein_sync",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "einstein_net_d30_sync_phaseB15": {
+   "family": "exp.einstein_sync",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "einstein_net_d40_sync_phaseB15": {
+   "family": "exp.einstein_sync",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "einstein_net_d50_sync_phaseB15": {
+   "family": "exp.einstein_sync",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "einstein_net_d30_unsync_phaseB11": {
+   "family": "exp.einstein_sync",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "einstein_net_detour": {
+   "family": "exp.einstein_sync",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "einstein_net_A_alone": {
+   "family": "exp.einstein_sync",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "einstein_net_B_alone": {
+   "family": "exp.einstein_sync",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "network3_equal_phases_calibration": {
+   "family": "exp.einstein_sync",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "network3_phases_0_3_9": {
+   "family": "exp.einstein_sync",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "clockrates_source_at_A": {
+   "family": "exp.rate_by_light",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "clockrates_no_source_control": {
+   "family": "exp.rate_by_light",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "clockrates_source_at_B_swapped": {
+   "family": "exp.rate_by_light",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "collider": {
+   "family": "exp.fibre_traffic",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "lamp_pair5": {
+   "family": "exp.fibre_traffic",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "lamp_pair5_far": {
+   "family": "exp.fibre_traffic",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "scatterer": {
+   "family": "exp.fibre_traffic",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "scatterer_control": {
+   "family": "exp.fibre_traffic",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "detector_clock_class0": {
+   "family": "exp.recorder_chamber",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "detector_clock_class1": {
+   "family": "exp.recorder_chamber",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "detector_clock_class2": {
+   "family": "exp.recorder_chamber",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "detector_clock_class3": {
+   "family": "exp.recorder_chamber",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "toggle_record_one_packet": {
+   "family": "exp.recorder_chamber",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "toggle_clock_alone": {
+   "family": "exp.recorder_chamber",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "click_track_21_clocks": {
+   "family": "exp.recorder_chamber",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "chamber_star": {
+   "family": "exp.recorder_chamber",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "chamber_star_no_packets": {
+   "family": "exp.recorder_chamber",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "chamber_star_no_clocks": {
+   "family": "exp.recorder_chamber",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "chamber_counter_sep0": {
+   "family": "exp.recorder_chamber",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "chamber_counter_sep6": {
+   "family": "exp.recorder_chamber",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "chamber_counter_sep12": {
+   "family": "exp.recorder_chamber",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "chamber_counter_sep14": {
+   "family": "exp.recorder_chamber",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "chamber_crossing_offset0": {
+   "family": "exp.recorder_chamber",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "chamber_crossing_offset2": {
+   "family": "exp.recorder_chamber",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "chamber_lamp_ring18": {
+   "family": "exp.recorder_chamber",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "chamber_lamp_no_clocks": {
+   "family": "exp.recorder_chamber",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "track_chamber_light_and_matter": {
+   "family": "exp.recorder_chamber",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "track_chamber_no_movers": {
+   "family": "exp.recorder_chamber",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "track_chamber_no_detectors": {
+   "family": "exp.recorder_chamber",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "interferometer_d0": {
+   "family": "exp.split_recombine",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "interferometer_d0_onlyA": {
+   "family": "exp.split_recombine",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "interferometer_d0_recA0": {
+   "family": "exp.split_recombine",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "interferometer_d0_recB0": {
+   "family": "exp.split_recombine",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "interferometer_d0_recA1": {
+   "family": "exp.split_recombine",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "interferometer_d0_Jmirror": {
+   "family": "exp.split_recombine",
+   "family_kind": "experiment",
+   "role": "J-image",
+   "of": "interferometer_d0 (J)",
+   "evidence_flag": null
+  },
+  "trap_deexcitation_t43": {
+   "family": "exp.trap_probe",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": "custom_only"
+  },
+  "trap_deexcitation_t47": {
+   "family": "exp.trap_probe",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": "custom_only"
+  },
+  "atom2_switch_on_by_time_reversal": {
+   "family": "exp.two_level_switch",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "atom2_dark_remnant_D20": {
+   "family": "exp.two_level_switch",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "atom2_core5_alone": {
+   "family": "exp.two_level_switch",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "bigbang_C3_seed_pmm_bg4": {
+   "family": "exp.bigbang_uniform",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "charge_bookkeeping_bigbang_pmm_bg4_sub3_m2m1_2_L61": {
+   "family": "exp.bigbang_uniform",
+   "family_kind": "experiment",
+   "role": "alias",
+   "of": "bigbang_C3_seed_pmm_bg4 (same)",
+   "evidence_flag": "custom_only"
+  },
+  "lamp_seed_all48_pmm_bg4": {
+   "family": "exp.bigbang_uniform",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "charge_bookkeeping_lamp_pmm_bg4_core6": {
+   "family": "exp.bigbang_uniform",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": "custom_only"
+  },
+  "charge_bookkeeping_lamp_pmm_bg4_core10": {
+   "family": "exp.bigbang_uniform",
+   "family_kind": "experiment",
+   "role": "alias",
+   "of": "lamp_pmm_bg4_core10 (same)",
+   "evidence_flag": "custom_only"
+  },
+  "charge_bookkeeping_BB_two_lamps_pmm_L61": {
+   "family": "exp.bigbang_uniform",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": "custom_only"
+  },
+  "charge_bookkeeping_BB_ray_pair_pmm_L61": {
+   "family": "exp.bigbang_uniform",
+   "family_kind": "experiment",
+   "role": "alias",
+   "of": "light_raypair_bg4 (same)",
+   "evidence_flag": "custom_only"
+  },
+  "band_bigbang_W3A": {
+   "family": "exp.bigbang_uniform",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "band_bigbang_W3B": {
+   "family": "exp.bigbang_uniform",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "band_bigbang_W3C": {
+   "family": "exp.bigbang_uniform",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "planar_bigbang_L16": {
+   "family": "exp.bigbang_uniform",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "planar_bigbang_L8": {
+   "family": "exp.bigbang_uniform",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "toy_universe_v2_main": {
+   "family": "exp.bigbang_network",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": "custom_only"
+  },
+  "toy_universe_v2_control_no_seed": {
+   "family": "exp.bigbang_network",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": "custom_only"
+  },
+  "toy_universe_v2_control_no_cores": {
+   "family": "exp.bigbang_network",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": "custom_only"
+  },
+  "toy_universe_v2_control_no_network": {
+   "family": "exp.bigbang_network",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": "custom_only"
+  },
+  "cascade_pure4pairs": {
+   "family": "exp.bigbang_network",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": "custom_only"
+  },
+  "cascade_checker_base": {
+   "family": "exp.bigbang_network",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": "custom_only"
+  },
+  "cascade_checker6": {
+   "family": "exp.bigbang_network",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": "custom_only"
+  },
+  "cascade_pure7_p32": {
+   "family": "exp.bigbang_network",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": "custom_only"
+  },
+  "cascade_pure13": {
+   "family": "exp.bigbang_network",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": "custom_only"
+  },
+  "cascade_pure7": {
+   "family": "exp.bigbang_network",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": "custom_only"
+  },
+  "w3_Vcore_S1_A2_start4_SLOW_LEFT": {
+   "family": "exp.bigbang_network",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": "custom_only"
+  },
+  "w3_Vcore_S2_B0_junction_a1_b1": {
+   "family": "exp.bigbang_network",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": "custom_only"
+  },
+  "w3_flagship_v2_F1_A0_start5_SLOW_LEFT": {
+   "family": "exp.bigbang_network",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": "custom_only"
+  },
+  "w3_flagship_v2_F2_A0_d19_a1_b1": {
+   "family": "exp.bigbang_network",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": "custom_only"
+  },
+  "w3_flagship_v2_F2_B0_junction_am1_bm1": {
+   "family": "exp.bigbang_network",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": "custom_only"
+  },
+  "recombination_R7": {
+   "family": "exp.bigbang_network",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": "custom_only"
+  },
+  "created_atoms_as_clocks_R7": {
+   "family": "exp.bigbang_network",
+   "family_kind": "experiment",
+   "role": "alias",
+   "of": "recombination_R7 (same)",
+   "evidence_flag": "custom_only"
+  },
+  "created_tracks_v2net": {
+   "family": "exp.bigbang_network",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "created_tracks_v2net_no_seed": {
+   "family": "exp.bigbang_network",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "created_tracks_v2net_uninstrumented": {
+   "family": "exp.bigbang_network",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "d1_local_atom_L100": {
+   "family": "exp.bigbang_network",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "d1_local_atom_L200": {
+   "family": "exp.bigbang_network",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "d1_control_no_seed_L100": {
+   "family": "exp.bigbang_network",
+   "family_kind": "experiment",
+   "role": "control",
+   "of": null,
+   "evidence_flag": null
+  },
+  "d1_skeleton_atom_spin_clocks_L160": {
+   "family": "exp.bigbang_network",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "spin_module_pure4pairs_L80": {
+   "family": "exp.bigbang_network",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  },
+  "einstein_created_instruments_L240": {
+   "family": "exp.bigbang_network",
+   "family_kind": "experiment",
+   "role": "instance",
+   "of": null,
+   "evidence_flag": null
+  }
+ },
+ "source": {
+  "registry_v0_sha256": "9d561c23c0f286e1434312aadcdd39ac225f8d5415d959cdf414ddd1c7b410cb",
+  "verify_sha256": "a13c42feee03ef3662cb1f2483ddea3ffdd3c1cb55b151f45d149f2f3435befb",
+  "wave3_checks_sha256": "ea466f0429f781acda06bd1e183a344244fd7672dcdcea528d7394d2f8e39075"
+ },
+ "aliases": {
+  "light_line_s@1": "light_line@2",
+  "exp.bigbang_backwards@1": "exp.bigbang_backward@1"
+ }
+}

@@ -1,0 +1,525 @@
+{
+ "format": "u24-block-card-v1 summaries",
+ "full_text": [
+  "research/matter_light_v1/r21/CARDS.md",
+  "research/matter_light_v1/r21/CARDS_WAVE2.md",
+  "research/matter_light_v1/r21/staging/registry_wave3_delta.json"
+ ],
+ "cards": {
+  "atom.ring_core@1": {
+   "a_use": "ring + side core: reflect / transmit alternately",
+   "b_algebra": "joint period 68 [S]",
+   "c_clocks": "128 clicks per 68; the core clicks only on transmission",
+   "status": "E1 replayed",
+   "flags": [],
+   "coupling": "+++",
+   "registration": "new (see registry_v0 family)"
+  },
+  "atom.two_core_trap@1": {
+   "a_use": "atom candidate: packet bound between two silent cores; emission line 2k+2 / 2(d-k)+2; absorption P = 2d",
+   "b_algebra": "level 2d+4 [S]; which d bind [EXHAUSTIVE 1D]; no capture without emission [THEOREM N2]; release = K reverse",
+   "c_clocks": "period 16 (d=6), 40 clicks; 0 core clicks; cores tick only in the l = 0 layer",
+   "status": "E1 replayed",
+   "flags": [
+    "custom_only (spectro_trap_*)"
+   ],
+   "coupling": "+++, (-,+,+)",
+   "registration": "new (r04)"
+  },
+  "charge.walled_cavity@1": {
+   "a_use": "glider between two positive-field rotors: a clock with charge-like mirror walls",
+   "b_algebra": "exact period 2D+4 for even D = 8..22 at listed phases [S]",
+   "c_clocks": "period 24 (D=10), 64 clicks; rotors never click",
+   "status": "E3 refereed",
+   "flags": [],
+   "coupling": "+++",
+   "registration": "new (r05)"
+  },
+  "clock.box_clock@1": {
+   "a_use": "light clock 2l+6 and matter clock 6l+2 in one box",
+   "b_algebra": "exact periods 26, 62 [S]",
+   "c_clocks": "72 clicks per period",
+   "status": "E1 replayed",
+   "flags": [],
+   "coupling": "+++ / -++",
+   "registration": "new (see registry_v0 family)"
+  },
+  "clock.clock_link@1": {
+   "a_use": "republication of clock_link_v1",
+   "b_algebra": "period 4(D+1) [THEOREM]",
+   "c_clocks": "56 clicks per 60",
+   "status": "E1 replayed",
+   "flags": [],
+   "coupling": "+++",
+   "registration": "new (see registry_v0 family)"
+  },
+  "clock.fibre_cavity@1": {
+   "a_use": "open fibre of D nodes as a clock",
+   "b_algebra": "period 2D+6 [S]",
+   "c_clocks": "80 clicks per 46 (D=20)",
+   "status": "E1 replayed",
+   "flags": [],
+   "coupling": "+++",
+   "registration": "new (see registry_v0 family)"
+  },
+  "clock.ring_emitter@1": {
+   "a_use": "clock emitting one identical packet every N = 16 updates through a degree-3 tap",
+   "b_algebra": "fan-out at the tap + guide lemma; emission interval = ring period [S]",
+   "c_clocks": "ring node gears 2->0->2 per lap; tick = C1 head click at a named exit node",
+   "status": "E3 refereed",
+   "flags": [],
+   "coupling": "+++",
+   "registration": "new (r04; r08's Einstein clock)"
+  },
+  "detect.approved_beam_splitter@1": {
+   "a_use": "beam splitter + two detectors: one quantum -> exactly one approved detector event; afterpulse at t_q+51..52",
+   "b_algebra": "junction copy; gate law (sign-corrected, r13); approval write shifts A's window by 2; T-A factorization [THEOREM]",
+   "c_clocks": "two period-4 dark clocks; a C2/C1 burst of 8 only at the selected detector",
+   "status": "E1 replayed",
+   "flags": [
+    "physics_from_decoder (r13 80/80)"
+   ],
+   "coupling": "+++",
+   "registration": "new (r13); derived-from exp.approval_selector@1"
+  },
+  "detect.quiet_tapped_absorber@1": {
+   "a_use": "non-demolition binary detector: the flash returns only after the next detector's window; repeatability 1, 1/2, 0, 1/2",
+   "b_algebra": "tap copy; gate law; flash returns after 2s+6 [S]",
+   "c_clocks": "one dark clock per detector; carry burst only at the detector",
+   "status": "E0 declared",
+   "flags": [
+    "promote to E1 when an instance file is deposited"
+   ],
+   "coupling": "+++",
+   "registration": "new (r13)"
+  },
+  "element.fanout_junction@2": {
+   "a_use": "degree 3/4: exact copy; degree 5/6: broadcast; merge: two inputs arriving at the same update leave as one on the third port",
+   "b_algebra": "copy [S, r04 30/30]; merge = JR time reverse of the copy [THEOREM S6] with exact instances (r12 E7, r13 E3)",
+   "c_clocks": "one connection carry at the junction gear per merge",
+   "status": "E1 replayed",
+   "flags": [],
+   "coupling": "+++",
+   "registration": "update-of element.fanout_junction@1 (generalizes: merge law; r13 merge_by_rewind, r12 router)"
+  },
+  "element.junction@1": {
+   "a_use": "class 0: light creates a glider pair; class 2: transparent; a passing glider emits 2 (class 0) or 1 (class 2) packets per direction",
+   "b_algebra": "parity theorem [THEOREM]; class table [EXHAUSTIVE, native 8 cases]; rule E [EXHAUSTIVE, model]",
+   "c_clocks": "two frozen gears linked with weight +1; creation = carries on the matter line",
+   "status": "E1 replayed",
+   "flags": [],
+   "coupling": "(-,+,+)",
+   "registration": "new (r06 rule E, r11 class rule)"
+  },
+  "element.light_link@1": {
+   "a_use": "light x light junction: a crossing packet is copied into the crossing line both ways (r08 W8 link)",
+   "b_algebra": "fan-out law; delay 4 per counter-propagating crossing [S]",
+   "c_clocks": "carries repeat on the crossing line",
+   "status": "E1 replayed",
+   "flags": [
+    "custom_only (station passages)"
+   ],
+   "coupling": "(-,+,+)",
+   "registration": "new"
+  },
+  "element.reflector@1": {
+   "a_use": "fibre defects: total reflection, partial reflection, repeater",
+   "b_algebra": "window failure at the defect",
+   "c_clocks": "mirror_gap: 94 clicks / 50 updates",
+   "status": "E1 replayed",
+   "flags": [],
+   "coupling": "+++",
+   "registration": "new (see registry_v0 family)"
+  },
+  "gate.phase_gate@2": {
+   "a_use": "dark-clock gate two sites beside a fibre: transparent at two arrival phases, absorbs at the other two (writes a click-dark 1-bit record)",
+   "b_algebra": "gate law [THEOREM]: overflow iff (t_arr + phase) mod 4 in {1,2}; onset theorem",
+   "c_clocks": "48 rotors at a frozen gear; one overflow at the shared halo channel decides; 48 l = 0 events per update",
+   "status": "E4 proven",
+   "flags": [],
+   "coupling": "+++ (s_x = +1 triples)",
+   "registration": "update-of gate.phase_gate@1 (generalizes: orbit phases 1, 3 with the history halo; r13)"
+  },
+  "gate.ring16_window@1": {
+   "a_use": "period-16 binary gate: fires iff the ring packet passes the gate node within 1 update of the quantum (window 3/16)",
+   "b_algebra": "shared-halo overflow rule (T8); window = autocorrelation law; no half-period windows [EXHAUSTIVE alphabet]",
+   "c_clocks": "the ring packet is the gear (clicks every update); the gate carry is one burst",
+   "status": "E0 declared",
+   "flags": [
+    "promote to E1 when an instance file is deposited"
+   ],
+   "coupling": "+++",
+   "registration": "new (r13)"
+  },
+  "gate.shared_rotor_two_readers@1": {
+   "a_use": "exactly one of two detectors fires at every approval of a stream (the shared record W9 lacked); reads must be simultaneous; even spacings >= 14",
+   "b_algebra": "gate law S6 = -1,0,1,0 -> W1 = {1,2}, W2 = {3,0}; slip rule: D1 fires at approval k iff (t_k - 2k) mod 4 in {1,2}; delay 4 per earlier firing of the same reader; rests on T8, J, C",
+   "c_clocks": "one dark period-4 rotor; the record is channel 6's 2-quarter-turn slip; two bursts at the selected halo site",
+   "status": "E1 replayed",
+   "flags": [
+    "physics_from_decoder (r20 80/80)",
+    "referee pending (r10e)"
+   ],
+   "coupling": "+++",
+   "registration": "new (r20 SR2)"
+  },
+  "light.box_lamp@1": {
+   "a_use": "glider in a box of length l with a junction: one packet pair per pass",
+   "b_algebra": "core period 6l+2 [S]",
+   "c_clocks": "1,232 clicks / 100 updates",
+   "status": "E1 replayed",
+   "flags": [],
+   "coupling": "-++",
+   "registration": "new (see registry_v0 family)"
+  },
+  "light.cw_emitter@1": {
+   "a_use": "unit-speed front at a gauged fibre start",
+   "b_algebra": "front lemma; --- gauge",
+   "c_clocks": "1 click per update",
+   "status": "E1 replayed",
+   "flags": [],
+   "coupling": "---",
+   "registration": "new (see registry_v0 family)"
+  },
+  "light.fibre_packet@1": {
+   "a_use": "guided light candidate: unit packet, click-front speed 1 node/update; entry at the fibre start, exit at the end (open ends reflect); head reaches node i at t = i - lead",
+   "b_algebra": "guide propagation lemma [THEOREM]: sigma_i b_i(t) = f(t+lambda-i); unit transmission; tracelessness; 18-shape alphabet [EXHAUSTIVE n<=7]",
+   "c_clocks": "node gear 2->0 (C1+) at the head, hand runs (0,1)(1,0)(0,-1)(-1,0), gear 0->2 (C2-) 4 later; 2 clicks/update; halo gears dark",
+   "status": "E3 refereed",
+   "flags": [],
+   "coupling": "any of the 8 (gauged)",
+   "registration": "update-of research/components GuidedPacketSource+GuideSegment (generalizes)"
+  },
+  "light.fibre_ring@1": {
+   "a_use": "closed light guide; a tap makes an emitter",
+   "b_algebra": "period = unrolled channel loop (holonomy order k -> k*N); counter-packets N+8 [S]",
+   "c_clocks": "32 clicks per 16 (ring16): C1/C2 16/16",
+   "status": "E1 replayed",
+   "flags": [],
+   "coupling": "+++",
+   "registration": "update-of research/components periodic guided packet"
+  },
+  "light.flash@1": {
+   "a_use": "radiation test / A1 monopole source: one burst sends the whole account into an A1 shell (r24); keep >= 3 sites from other blocks",
+   "b_algebra": "channel-uniform +++ sector invariant [THEOREM]; exact Gauss law L Phi_T = -(p_T - p_0) [THEOREM]; measured r Phi_T/(P0/4 pi) = 0.98-1.02 for 5 <= r <= T/2 [S, r24]; click front at radius t on the axes [S]",
+   "c_clocks": "core gear theta=1 with hand (0,M) turns without carry at update 1; neighbours carry q = floor((2M+2)/6), kind = M mod 3; native clicks fill the cone",
+   "status": "E1 replayed",
+   "flags": [
+    "physics_from_decoder (r24: decoder v1.0 reads a front)"
+   ],
+   "coupling": "+++",
+   "registration": "new; card_rev 2: r24 'A1 core' (same data family, all-48 (0,M,2))"
+  },
+  "light.front_111@1": {
+   "a_use": "exact free light: rigid C0 planes, 1 plane/update; transparent to all matter",
+   "b_algebra": "u = 3(b(n+1)+b(n-1)) == 0 mod 3, r never changes, b_t(n) = f(n-t) [THEOREM, L4]",
+   "c_clocks": "every gear frozen; every click a whole-turn C0; 0 dark ticks",
+   "status": "E4 proven",
+   "flags": [],
+   "coupling": "+++",
+   "registration": "new"
+  },
+  "light.pulse_train@1": {
+   "a_use": "approval stream: N pulses at spacing P >= 4; click-time = number of approvals seen",
+   "b_algebra": "exact translation of each pulse; pulses never interact on a straight fibre; tau_i(t) = #{k: t_arr + kP <= t}",
+   "c_clocks": "one C1+ head tick per approval at the detector node; dark gate clocks tick between approvals",
+   "status": "E1 replayed",
+   "flags": [],
+   "coupling": "+++ (sigma -1 = K-image fibre)",
+   "registration": "new (parameter family of light.fibre_packet; r08 W9 approval stream)"
+  },
+  "light.vacA_lamp@1": {
+   "a_use": "periodic source of speed-1 rays at a fixed core (a lamp, not matter at rest)",
+   "b_algebra": "exact core periods 5, 6, 10 [S]; C5: a lamp creates only trails",
+   "c_clocks": "core10 hand period 10 with gear 2/1; growing click word as rays leave",
+   "status": "E1 replayed",
+   "flags": [],
+   "coupling": "+--, -+-, --+",
+   "registration": "new"
+  },
+  "light.vacA_ray@1": {
+   "a_use": "light in a uniform excitable vacuum: 1D speed-1 front along a positive body axis",
+   "b_algebra": "window theory (first step) and front lemma [THEOREM]; 0 slow movers in 909,054 windows [EXHAUSTIVE]",
+   "c_clocks": "one C1+ per step (C2 in bg 0); trail of silent period-4 rotors (dark)",
+   "status": "E3 refereed",
+   "flags": [],
+   "coupling": "+--, -+-, --+",
+   "registration": "new"
+  },
+  "matter.all48_clock_r07@1": {
+   "a_use": "single-site clocks of r07's exhaustive catalog",
+   "b_algebra": "exact orbits 10..60 [S]",
+   "c_clocks": "H10: 8,640 per period",
+   "status": "E1 replayed",
+   "flags": [],
+   "coupling": "+++",
+   "registration": "new (see registry_v0 family)"
+  },
+  "matter.bg0_core@1": {
+   "a_use": "matter in the excitable theta=0 vacuum",
+   "b_algebra": "exact orbits, periods 6, 16 [S]",
+   "c_clocks": "N16: 1,440 per period, all C0",
+   "status": "E1 replayed",
+   "flags": [],
+   "coupling": "--- bg 0",
+   "registration": "new (see registry_v0 family)"
+  },
+  "matter.breather@1": {
+   "a_use": "clicking matter at rest, confined to the 3^3 cube (B10, B14)",
+   "b_algebra": "exact orbit; click neutrality C6",
+   "c_clocks": "B10: 8,640 clicks per period 10, time-symmetric word",
+   "status": "E4 proven",
+   "flags": [],
+   "coupling": "+++",
+   "registration": "new (r05)"
+  },
+  "matter.fast_glider@1": {
+   "a_use": "speed-1 chain glider (light reference)",
+   "b_algebra": "exact translation per update [S]",
+   "c_clocks": "4 clicks per update",
+   "status": "E1 replayed",
+   "flags": [],
+   "coupling": "+++",
+   "registration": "new (see registry_v0 family)"
+  },
+  "matter.frustrated_breather@1": {
+   "a_use": "class-F matter at rest",
+   "b_algebra": "exact orbits, periods 12, 14 [S]",
+   "c_clocks": "F12: 2,112 per period (C0 768)",
+   "status": "E1 replayed",
+   "flags": [],
+   "coupling": "++-",
+   "registration": "new (see registry_v0 family)"
+  },
+  "matter.guided_mover@1": {
+   "a_use": "movers at rational speeds 1/3 .. 1 set by the guide",
+   "b_algebra": "speed law T P/v = P + 2 walls [EXHAUSTIVE 36 classes]",
+   "c_clocks": "a fixed carry word per guide period",
+   "status": "E1 replayed",
+   "flags": [],
+   "coupling": "file triple",
+   "registration": "new (r06)"
+  },
+  "matter.k_core@1": {
+   "a_use": "compact matter clocks (dimer 5, plaquette 5/6, cube 6); the 4/5 contact effect IS the dimer (k=1) law",
+   "b_algebra": "T6 [THEOREM]: u = k b, (l, r') = divmod(2kb + r, 6), halo in the T7 window",
+   "c_clocks": "D5: carries C2- at t=1 and C1+ at t=3 on all 96 channels (192/period); C6: all C0",
+   "status": "E4 proven",
+   "flags": [],
+   "coupling": "+++",
+   "registration": "update-of research/components CompactFiveClock + LocalizedSixClock"
+  },
+  "matter.planar_glider@1": {
+   "a_use": "the only exact mover in the uniform quiet vacuum: planar, speed 1/2",
+   "b_algebra": "S(t+2) = shift(-x) S(t) [S]; neutral dipole layer; no compact version (C5/N4)",
+   "c_clocks": "every channel clicks C2- every update",
+   "status": "E1 replayed",
+   "flags": [],
+   "coupling": "+++",
+   "registration": "new (r05)"
+  },
+  "matter.screw_mover@1": {
+   "a_use": "spinor-class mover: 360 deg = C-image, 720 deg = start",
+   "b_algebra": "T_C = 3L, S(2T_C) = S(0) (L8)",
+   "c_clocks": "period 72 (L=12), 96 clicks; lap 2 repeats lap 1 on the z-partner channels",
+   "status": "E3 refereed",
+   "flags": [],
+   "coupling": "+-+",
+   "registration": "new (r06)"
+  },
+  "matter.silent_monomer@1": {
+   "a_use": "dark clock, gate clock, source of the 4/5 contact effect; ports = 6 halo sites",
+   "b_algebra": "T4 [THEOREM]: silent period 4 iff halo partial sums stay in the window; u = 0 rotor",
+   "c_clocks": "48 hands rotate (a,b)->(b,-a) at a frozen gear; 0 clicks; 1,344 dark ticks per period",
+   "status": "E4 proven",
+   "flags": [],
+   "coupling": "+++ (T4 domain)",
+   "registration": "republication-of einstein_clock_bricks_v1 all-48 (-1,-1,0)"
+  },
+  "matter.single_channel_clock@1": {
+   "a_use": "one prepared channel: silent period 4 or a star of period 5-48",
+   "b_algebra": "star lemma and T4 [THEOREM]",
+   "c_clocks": "I6: hand (0,2)(2,0)(0,0)(0,0)(0,-2)(-2,0) at theta=1, 14 clicks per period",
+   "status": "E4 proven",
+   "flags": [],
+   "coupling": "any (quiet vacuum)",
+   "registration": "republication-of staged_blocks ShieldedOrbit; stars new"
+  },
+  "matter.slot_clock@1": {
+   "a_use": "dark core / recorder / register: one silent channel in a halo slot of a fibre node; arrival class 0 records (packet passes), class 2 mirrors silently, 1/3 split or multiply",
+   "b_algebra": "rotor with u = 0 whose output keeps its node in the window [EXHAUSTIVE 1D]; r15 T3 pair rule (clicks in +- pairs) and T6 no quiet store [THEOREM]",
+   "c_clocks": "one hand, period 4, frozen gear; exactly 2 clicks per class-0 passage, then the hand is inverted",
+   "status": "E2 law-checked",
+   "flags": [
+    "physics_from_decoder (r15)"
+   ],
+   "coupling": "(-,+,+); +++ (r04/r15 slots)",
+   "registration": "new; card_rev 2: r15 'halo core register' (same data, register role)"
+  },
+  "matter.slow_glider@1": {
+   "a_use": "moving matter at speed 1/3 on a class-0 matter line; emits light at junctions",
+   "b_algebra": "exact translator S(t+3) = shift S(t) [S]; odometer T v = P [EXHAUSTIVE 37 classes]; Q = D = 0 [THEOREM N4]",
+   "c_clocks": "4 clicks per 3 updates (C1+/C2- pairs)",
+   "status": "E1 replayed",
+   "flags": [],
+   "coupling": "(-,*,*) chain sign -1",
+   "registration": "new (r06)"
+  },
+  "matter.x_robust@1": {
+   "a_use": "robust matter: all 192 single +-1 changes stay bounded and periodic",
+   "b_algebra": "exact orbit, period 12 [S]; robustness [EXHAUSTIVE]",
+   "c_clocks": "1,344 clicks per period (C0 192 / C1 576 / C2 576)",
+   "status": "E3 refereed",
+   "flags": [],
+   "coupling": "--- on bg (0,0,4)",
+   "registration": "new (r07)"
+  },
+  "medium.crystal@1": {
+   "a_use": "one medium carrying light (speed 1) and SLOW matter (1/3) along all axes",
+   "b_algebra": "A,B->C rule [EXHAUSTIVE]; T8 crossings all-or-nothing",
+   "c_clocks": "clicks only on light and matter labels",
+   "status": "E3 refereed",
+   "flags": [],
+   "coupling": "(-,+,+)",
+   "registration": "new (r04 CRYSTAL24 + r06)"
+  },
+  "medium.excitable_bg4@1": {
+   "a_use": "excitable medium: first click at the Manhattan distance",
+   "b_algebra": "excitable front lemma [THEOREM]",
+   "c_clocks": "avalanche behind the front",
+   "status": "E1 replayed",
+   "flags": [],
+   "coupling": "+++ bg 4",
+   "registration": "new (see registry_v0 family)"
+  },
+  "medium.light_line@1": {
+   "a_use": "gauged light line with its own gauge phase; node classes decide junction behaviour; +z slots host slot clocks",
+   "b_algebra": "zero-counter remainder field is a fixed point; sigma alternates (w = -1)",
+   "c_clocks": "frozen gears 0/2 alternating, invisible",
+   "status": "E1 replayed",
+   "flags": [],
+   "coupling": "(-,+,+)",
+   "registration": "new (r11 B-lines; r04 gauge)"
+  },
+  "medium.light_segment@1": {
+   "a_use": "light line on [XA, XB] only; bare ends reflect (r11 twins)",
+   "b_algebra": "guide lemma; reflection at a bare end (open fibre: period 2D+6) [S]; parity theorem for classes",
+   "c_clocks": "as light_line; a click track reverses at an end",
+   "status": "E1 replayed",
+   "flags": [],
+   "coupling": "(-,+,+)",
+   "registration": "variant of medium.light_line@1 (length < side, no wrap)"
+  },
+  "medium.matter_line@1": {
+   "a_use": "class-0 matter line: the guide of the SLOW glider; sockets for seed windows",
+   "b_algebra": "static theta = 0 landscape; chain weight -1",
+   "c_clocks": "frozen gears, invisible",
+   "status": "E1 replayed",
+   "flags": [],
+   "coupling": "(-,+,+)",
+   "registration": "new (r06/r11 A-lines)"
+  },
+  "resonator.coupled_rings@1": {
+   "a_use": "two rings with an odd bridge: bounded beats",
+   "b_algebra": "periods 64 / 128 [S]",
+   "c_clocks": "280 clicks per 64",
+   "status": "E1 replayed",
+   "flags": [],
+   "coupling": "+++",
+   "registration": "new (see registry_v0 family)"
+  },
+  "route.approval_router@1": {
+   "a_use": "one approval entering on one arm sends the signal into the other arm; approval at the mirror position (14 sites out)",
+   "b_algebra": "merge law of element.fanout_junction@2; timing window exact: only shift 0 over -3..+4 [S]",
+   "c_clocks": "a V of two tracks meeting at the junction (t = 14), then a single track on the routed arm",
+   "status": "E1 replayed",
+   "flags": [],
+   "coupling": "+++",
+   "registration": "new (r12)"
+  },
+  "select.d2_approval_selector@1": {
+   "a_use": "approval -> exactly one approved event (one +- pair); the unselected copy is reflected silently",
+   "b_algebra": "complementary records after the approval [S 4/4 + controls]; joint = union; exact K reverse",
+   "c_clocks": "C1+,C2- on A's core (approval), then on the selected core; 0 detector clicks on the unselected arm",
+   "status": "E1 replayed",
+   "flags": [
+    "physics_from_decoder (r15 32/32)"
+   ],
+   "coupling": "+++",
+   "registration": "new (r15); derived-from exp.approval_selector@1"
+  },
+  "select.d2j_junction_selector@1": {
+   "a_use": "beam splitter + two 2-click detectors; the junction afterpulse is reflected silently when k is odd",
+   "b_algebra": "afterpulse phase t_q (mod 4) for odd k [S]; same-port obstruction [THEOREM]",
+   "c_clocks": "as D2; 0 detector clicks in [t_q+13, t_q+60]",
+   "status": "E1 replayed",
+   "flags": [
+    "physics_from_decoder (r15)",
+    "gauge-transported instances exact"
+   ],
+   "coupling": "+++ (and (-,+,+) by gauge)",
+   "registration": "new (r15); derived-from detect.approved_beam_splitter@1"
+  },
+  "spin.holonomy_ring@1": {
+   "a_use": "spin candidate: S(t+T) = C S(t), period 2T; the W6 junction emits a glider pair every 720 deg",
+   "b_algebra": "B^4 = z on a straight path (L8) [THEOREM]",
+   "c_clocks": "spin720: period 28, 56 clicks; channel 4 -> 34 -> 4",
+   "status": "E3 refereed",
+   "flags": [],
+   "coupling": "+++, (-,+,+)",
+   "registration": "new (r04/r09); W6 module variant spin_ring_z@1"
+  },
+  "spin.spinor_sector_seed@1": {
+   "a_use": "K-invariant seeds, linear regime",
+   "b_algebra": "C(S) = J(S) at every t [THEOREM]; period 5",
+   "c_clocks": "z-partner clicks with opposite quotients",
+   "status": "E1 replayed",
+   "flags": [],
+   "coupling": "+++",
+   "registration": "new (see registry_v0 family)"
+  },
+  "store.halo_latch@1": {
+   "a_use": "write / wait / confirm-iff-written latch: one +- pair per write, 0 clicks while waiting",
+   "b_algebra": "T6 no quiet store [THEOREM]",
+   "c_clocks": "W: C1+,C2-; wait: none; C: C1+,C2- iff written",
+   "status": "E0 declared",
+   "flags": [
+    "promote to E1 when an instance file is deposited"
+   ],
+   "coupling": "+++",
+   "registration": "new (r15)"
+  },
+  "write.set_doublet@1": {
+   "a_use": "state-independent record write: two same-phase pulses; 2 clicks iff the record changes",
+   "b_algebra": "first pulse flips or is mirrored, the second always mirrored [S 8/8]; delay 4 per reflected pulse crossed",
+   "c_clocks": "0 or one +- pair per arm",
+   "status": "E0 declared",
+   "flags": [
+    "promote to E1 when an instance file is deposited"
+   ],
+   "coupling": "+++",
+   "registration": "new (r15)"
+  },
+  "medium.light_line@2": {
+   "a_use": "gauged light line with a socket window: the window's nodes are left out of the rest line and must be filled by a fibre-packet or a glider-seed patch (strict finalize)",
+   "b_algebra": "with no sockets the cells equal light_line@1 exactly; socket nodes are removed only on the line's label; zero-counter remainder field is a fixed point; sigma alternates (w = -1)",
+   "c_clocks": "frozen gears 0/2 alternating, invisible; a filled socket carries the filling mover's clocks",
+   "status": "E1 replayed",
+   "flags": [],
+   "coupling": "(-,+,+)",
+   "registration": "update-of medium.light_line@1 (generalizes: adds packet / seed sockets; @1 unchanged)"
+  },
+  "seed.bb27_point@1": {
+   "a_use": "Big Bang point: placed at O on the dark bb27 network (fills A0 label-41 and B0 label-1 sockets), its forward run emits two light packets (+-x, speed 1) and two slow gliders (+-y, speed 1/3), which then create the hub event, two ring sources and two atom candidates (r27, decoder v1.0)",
+   "b_algebra": "S0 = JR(F^N(JR(T))), F^-1 = JR o F o JR [THEOREM S6]; N = T+4: seed* 14 cells in 3x5x3 sites; N = T: 28-cell seed = tangent shell of the 4 registered movers; the same cells for the 3 r27 variants and L = 160 / 320; not composable from registered blocks; NOT the global minimum of the history: X_-7 has 12 cells (11 sites, box [4, 3, 4]) against the dark network rewound the same N (odd clock phase; r27 notes it)",
+   "c_clocks": "seed clicks at O at t = 1-2 (r27, decoder v1.0); the emitted movers carry their own clocks",
+   "status": "E1 replayed",
+   "flags": [
+    "literal",
+    "physics_from_decoder"
+   ],
+   "coupling": "(-,+,+) on the bb27 network junction O = A0 x B0",
+   "registration": "new (r27): the minimal-support state of the bb27 Big Bang among equal slot-clock phases (rule A2)"
+  }
+ }
+}
