@@ -20,13 +20,33 @@ does not.
 from __future__ import annotations
 
 from collections import Counter
+import importlib
 import json
 from pathlib import Path
 import sys
 import time
 
-from research.matter_light_v1 import harness as H
 from research.matter_light_blocks_v1 import verify as V
+
+
+def _program(module: str):
+    """A module of the program's local research folder, imported only when a build runs."""
+    try:
+        return importlib.import_module(f"research.matter_light_v1.{module}")
+    except ModuleNotFoundError as error:
+        raise SystemExit("build_from_library needs the program's local research folder "
+                         "research/matter_light_v1, which is not part of this repository") from error
+
+
+class _Lazy:
+    def __init__(self, module: str):
+        self._module = module
+
+    def __getattr__(self, name):
+        return getattr(_program(self._module), name)
+
+
+H = _Lazy("harness")
 
 SLUG = {"light": "light", "matter at rest": "matter_at_rest", "moving matter": "moving_matter",
         "atoms": "atoms", "spin": "spin", "charge": "charge", "clocks and gravity": "clocks_and_gravity",
@@ -136,7 +156,7 @@ def _finish(out: Path, entry: dict):
 
 
 def build_library(out: Path, max_cells: int, only):
-    from research.matter_light_v1.blocks import library as LIB
+    LIB = _program("blocks.library")
     source = json.loads(Path(f"{P}/blocks/catalog.json").read_text(encoding="utf-8"))
     chosen = [e for e in source["entries"] if e["cells"] <= max_cells and e.get("verified")
               and (not only or e["name"] in only)]
@@ -174,8 +194,7 @@ def build_extras(out: Path, only):
                            "t0": 51, "lap": 18, "laps": 2}]
         entry = {
             "name": spec["name"], "group": spec["group"], "what": spec["what"], "source": spec["source"],
-            "origin": spec["origin"], "status": PENDING, "signs": list(engine.coupling.signs)
-            if hasattr(engine.coupling, "signs") else json.loads(Path(spec["origin"]).read_text())["coupling_signs"],
+            "origin": spec["origin"], "status": PENDING, "signs": list(engine.coupling.body_signs),
             "background": list(initial.background), "side": initial.cube.side, "steps": spec["steps"],
             "cells": len(initial.cells), "signature": spec.get("signature", {}), "box_checks": box_checks or [],
             "controls": [], "limits": spec["limits"], "composable": False, "heavy": False, "tags": ["new"],

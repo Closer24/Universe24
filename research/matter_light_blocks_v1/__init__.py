@@ -7,7 +7,17 @@ engine does. See README.md.
     from research.matter_light_blocks_v1 import load, names
     engine, initial, steps, entry = load("fiber_x_packet")
 """
-from .verify import load, load_catalog
+
+
+def load(name: str):
+    """(engine, initial state, horizon, catalog entry) for one block."""
+    from .verify import load as _load
+    return _load(name)
+
+
+def load_catalog() -> dict:
+    from .verify import load_catalog as _load_catalog
+    return _load_catalog()
 
 
 def names(group: str | None = None) -> list[str]:

@@ -14794,7 +14794,7 @@
   {
    "name": "band_bigbang_W3A",
    "group": "seeds (big bang)",
-   "what": "uniform-vacuum 'Big Bang' as a band-resolved decay (r02 wave 3): 3x3x3 seed, M = 1e5, b = M on the 24 channels of 2T: 50% A1 light content (shell at ~0.50 site/update) + 50% A2-band massive core (0.09/update); linear-regime wave packets, nothing 'created' (UPDATE 6)",
+   "what": "uniform-vacuum 'Big Bang' as a band-resolved decay (r02 wave 3): 3x3x3 seed, M = 1e5, b = M on the 24 channels of 2T: 50% A1 light content (shell at ~0.50 site/update) + 50% A2-band gapped core (0.09/update); linear-regime wave packets, nothing 'created' (UPDATE 6)",
    "source": "r02",
    "origin": "research.matter_light_v1.r02.bigbang_bands:make(57, 'W3A', 10**5)",
    "status": "THEOREM (sector projections commute with A) + SIMULATION (native Engine, exact inverse every step) (r02: dense executor, native 2 steps; library: native 4 updates)",

@@ -34,7 +34,7 @@ print(entry["what"], entry["signature"], entry["limits"])
 
 | group | blocks | examples |
 |---|---:|---|
-| light | 26 | `fiber_x_packet` (digital light on a gauged fibre, speed 1), `exact_front_111_box` (exact (111) front, C0 clicks only), `diag_sheet` |
+| light | 26 | `fiber_x_packet` (light candidate on a gauged fibre, click-front speed 1 site/update), `exact_front_111_box` (exact (111) front, C0 clicks only), `diag_sheet` |
 | matter at rest | 31 | exact confined families, `B10_breather`, `B14_breather`, robust X12, lamps |
 | moving matter | 20 | guided gliders at speeds 1/3 … 1, `planar_glider_100` (exact planar glider at speed 1/2 in the quiet vacuum), crystal SLOW movers |
 | atoms | 74 | `atom_trap_d6`, `atom_trap_d10` (a light packet between two dark cores, level 2d+4) with controls, period-shifted pairs, `d1_local_atom_L100` |
@@ -42,11 +42,10 @@ print(entry["what"], entry["signature"], entry["limits"])
 | charge | 44 | sign rules at contact, static charges, charge bookkeeping of Big-Bang seeds |
 | clocks and gravity | 41 | Einstein networks, `charge_cavity_D10`, `created_atoms_as_clocks_R7`, `einstein_created_instruments_L240` |
 | interaction and detectors | 55 | phase gates, 1-bit records, track detectors, trap spectroscopy |
-| media | 6 | `crystal_light_and_matter` (one (−,+,+) crystal carrying light at speed 1 and matter at 1/3) |
+| media | 6 | `crystal_light_and_matter` (one (−,+,+) crystal carrying light candidates at click-front speed 1 and matter candidates at 1/3) |
 | seeds (big bang) | 28 | `toy_universe_v2_main`, `cascade_pure4pairs`, `planar_bigbang_L16`, `d1_skeleton_atom_spin_clocks_L160` |
 
-**Newest modules** (tag `new`; native and re-checked by the program manager; the
-program referee's verdicts are still pending):
+**Newest modules** (tag `new`; each entry's `status` field gives its evidence label):
 
 * `d1_local_atom_L100` / `d1_local_atom_L200` — a **locally created atom
   candidate**. One seed glider passes a class-2 junction and emits light. The light
@@ -83,6 +82,10 @@ For every block `verify.py`:
 The `custom` checks named in a signature (for example `r06_cascade`,
 `r08_einstein`) are researcher-specific. They were run by the source library when
 the block was registered and are listed for reference; `verify.py` does not re-run them.
+For 103 blocks the signature holds only `custom` checks or a prose `words` field and no
+box check: for them `verify.py` re-checks the exact replay (init file hash, inverse at
+every update, complete final-state hash), not the described behaviour. 30 of these have
+horizon 0, so only their init file hash is checked.
 
 ## Limits and caveats
 
@@ -91,11 +94,30 @@ the block was registered and are listed for reference; `verify.py` does not re-r
 * **Torus effects.** In r06's uniform-phase networks (`toy_universe_v2_*`, the R7 recombination blocks) several created gliders and atoms exist only because the seed's own light meets itself across the torus. The `d1_*` blocks are the local alternative.
 * **Not included.** Five crystal Big-Bang seeds (526,848 cells each) and other blocks over 50,000 cells are left out of this set; they stay in the program's research record.
 * **Scope.** Each block's `limits` field states its domain.
+* **Repeated preparations.** 21 entries form 10 groups with identical complete initial
+  states (for example `light_glider_r06`, `MV_glider_alone` and `W2_fast_glider_control`);
+  there are 327 distinct preparations. A name records a role in a study, not a new object.
 
 ## Provenance
 
 `build_from_library.py` produced `blocks/` and `catalog.json` from the program's
 source library (`research/matter_light_v1/blocks`) and from the researchers' init
-files, recorded in each entry's `origin`. Re-running the build needs that research
-folder; `verify.py` does not. The catalog records the build time, and each
+files, recorded in each entry's `origin`. That folder is the program's local working
+tree and is not part of this repository: `origin` is a provenance string, and re-running
+the build needs that folder. `verify.py` does not.
+
+## Catalog fields
+
+| field | meaning |
+|---|---|
+| `name`, `group`, `file`, `file_sha256` | identifier, table group, init file and its SHA-256 |
+| `what`, `limits`, `controls`, `tags` | declared behaviour, stated domain, control blocks, labels such as `new` |
+| `source`, `origin`, `status`, `library_verified` | researcher, provenance string, evidence label, registered by the source library |
+| `signs`, `background`, `side`, `steps`, `cells` | coupling triple, uniform background, board side, horizon, stored cells |
+| `signature`, `box_checks` | declared readouts re-checked by `verify.py` (`custom` and `words` are not) |
+| `final_state_sha256`, `measured` | complete final state hash; first return and native click totals |
+| `composable` | `false` for board-spanning media and sheets (not placeable as a local patch) |
+| `heavy` | large native cost; skipped by `--quick` |
+
+Block names are the source researchers' identifiers and are kept unchanged. The catalog records the build time, and each
 entry's `status` and `source` give the evidence label and the responsible researcher.
