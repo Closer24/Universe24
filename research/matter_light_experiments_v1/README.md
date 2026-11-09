@@ -41,13 +41,14 @@ cosmology or quantum behaviour is claimed. `C2` is not a selection law and `Q` i
 | [E22](E22_one_quantum_one_exit/CARD.md) | one quantum token, one exit per cycle: in builder D's CC8 router three separately prepared unit fibre packets are lit (the quantum and two escorts, which are prepared hardware) and the quantum reaches one exit only, per cycle; the run's exit is unpredictable for the detector-only observer, while the full official log shows the deciding datum (the quantum's phase) from the input line's clicks; over a uniform hidden phase P(exit B) = N_B / 14 (all 182 members replayed), a counting-fraction sawtooth (rising 1/14 per device phase step, up to ties from sampling 14 of 17 phases: D′ = 12 and 14 both give 11/14), not cos², not Born | +++ | SIMULATION | 41 of 41 pass (39 decoder, 2 log_symmetry_v1) | r10g R10G-276..281, 283, 284 CONFIRMED; 282, 286 PARTLY (wording, applied); 285 NOT CHECKED (QM-1, not in E22); fresh machine 2 QM-F4 ALL PASS | ~10 min |
 | [E23](E23_flrw_in_clicks/CARD.md) | a prescribed flat FLRW universe in clicks (r70): on a static lattice of fibre light (A-pulses) whose tape clocks carry a written a(η), every radar echo returns exactly 2χ after its departure and every reception at O comes at its fixed lag; O's dial keeps the prescribed schedule (EdS, RAD, STATIC2, CYC); in EdS every station's dial ticks with O's (E9-2); the FLRW readouts (R/χ, 1 + z, v/R, the synchronisation defect) hold by construction and are reported, not computed by the checks; prescribed a(η), not caused by matter | +++ | THEOREM + SIMULATION | 43 of 43 pass (42 decoder, 1 log_symmetry_v1) | r10zf R10ZF-1..6, 9, 11 CONFIRMED (R10ZF-7, 8 PARTLY, W1–W8 applied); fresh machine 1 GR-F8 (8/8 CONFIRMED; fixes 1–3 applied); fresh machine 2 GR-F10 (runs, dials, redshift and radar rows CONFIRMED; its two band refinements applied) | ~20 min |
 | [E25](E25_two_time_counting_rule/CARD.md) | the two-time counting rule in clicks on builder B's triple gate: a second forward run from JR of a run's final state gives the run's click log in reverse order, kinds and quotients negated (C0 stays C0, C1 ↔ C2), so the statistic k̄ equals k for the 12 replayed members (builder B's 972 + 485 runs reported); gears 2 and 3 are ε-twins; Theorem M (JR∘F∘JR = F⁻¹), the time symmetry of a reversible deterministic system, not a quantum effect | (−,+,+) | THEOREM + SIMULATION | 46 of 46 pass (38 decoder, 8 log_symmetry_v1) | r10zc R10ZC-7, 8, 9 CONFIRMED (R10ZC-10, 11 wording applied); fresh machine 2 QM-F5 ALL PASS | ~5 s |
+| [E26](E26_one_gate_two_quanta/CARD.md) | one gate, two quanta (builder B's QM-SHOW): two separately prepared fibre packets (at D = 8 K is truncated) add exactly until they meet (28 of 34 members never meet within 80 updates: the board log is the union of the branch logs); where they meet, the gate records the meeting at the update it begins and light leaves by two or three exits fixed by the prepared offset and sign; the mirror run retraces every click; classical hidden-variable behaviour, not a sum over paths | (−,+,+) | THEOREM + SIMULATION | 128 of 128 pass (44 decoder, 84 log_symmetry_v1) | r10zh R10ZH-27..32 CONFIRMED (27 with a wording fix, 28 with scope, 31 on a rerun member), R10ZH-33 PARTLY (wording fixes 1–4 applied); fresh machine 2 QM-F15: builder rerun and (a)–(d) CONFIRMED, its fixes 1–4 applied | ~10 s |
 
 E01's twin runs reference the blocks appended to `research/matter_light_blocks_v1` in dff39dc. Like E01, E07b's run
 a_A references a published block (`exact_front_111_box`).
 
 Decoder pin: `click_decoder_v1` 1.0, frozen 2026-11-09T01:29:27Z (`research/click_decoder_v1/FROZEN.json`). E15,
-E15b, E17, E18, E19, E20, E20b, E22, E23 and E25 also pin the frozen layer log_symmetry_v1, E11 the frozen layer
-beat_clock_v1 (release 1.0.3) and E21 the frozen layer gr_observer_v1 (release 1.0.5). An experiment is **ready**
+E15b, E17, E18, E19, E20, E20b, E22, E23, E25 and E26 also pin the frozen layer log_symmetry_v1, E11 the frozen
+layer beat_clock_v1 (release 1.0.3) and E21 the frozen layer gr_observer_v1 (release 1.0.5). An experiment is **ready**
 when every run replays exactly (initial-state, final-state and log hashes), every declared check passes and the
 referee's verdict is recorded as CONFIRMED or PARTLY (E13 and E16: PARTLY, with their caveats on the cards).
 
@@ -60,7 +61,7 @@ python -m research.matter_light_experiments_v1.verify E01_local_atom_twins E02_c
     E13_exchange_contact_counts E14_two_beam_interference E15_cyclic_bangs E15b_planar_cyclic_box \
     E16_bigbang_backward_v5 E17_exact_bounce_v6 E18_cyclic_universe_c3c E19_cyclic_universe_c4_variant \
     E20_one_hardware_two_outcomes E20b_one_hardware_in_c3c E21_gr_observer_clicks_only \
-    E22_one_quantum_one_exit E23_flrw_in_clicks E25_two_time_counting_rule \
+    E22_one_quantum_one_exit E23_flrw_in_clicks E25_two_time_counting_rule E26_one_gate_two_quanta \
                                                                                 # every one "ready": true
 python -m research.matter_light_experiments_v1.verify --all                     # every experiment folder present
 python -m research.matter_light_experiments_v1.verify --fast                    # only the runs marked fast
@@ -70,9 +71,9 @@ python -m unittest tests.test_matter_light_experiments_v1                       
 
 `--fast` is a smoke test, not a verification: it replays only the runs marked `fast` and reports every check that
 reads another run as "skipped (runs not selected)", so an experiment with slower runs ends with `"ok": true` and
-`"ready": false`. Only E09, E10, E11, E15, E21 and E25, whose runs are all marked fast, can be ready under `--fast`;
-E01, E04, E06, E15b, E17, E20b and E23 have no fast run. `--help` prints the usage, and an unknown flag stops with exit
-status 2.
+`"ready": false`. Only E09, E10, E11, E15, E21, E25 and E26, whose runs are all marked fast, can be ready under
+`--fast`; E01, E04, E06, E15b, E17, E20b and E23 have no fast run. `--help` prints the usage, and an unknown flag
+stops with exit status 2.
 
 ```python
 from research.matter_light_experiments_v1 import experiment
@@ -203,7 +204,7 @@ in the last column (7aac8c5 is a later snapshot of the same folder).
 | r13 G0, carry-free gates only (E07) | `r13/NOTES.md`, the entry "G0 [THEOREM, no run]"; its scope: R10E-2 | 2483837 |
 | THEOREM FF (E10) | `r22/REPORT_WAVE2.md` §3 | 2483837 |
 | r23 Lemma 2, s − 4 = R (E16) | `r23/NOTES.md`, the 02:20 theory record | 2483837 |
-| time reversal F⁻¹ = JR∘F∘JR (E15, E15b, E17, E18, E19, E20, E20b, E25) | `chapters/THEORY.md`, row S6; proved as Lemma 1 in `r36/REPORT_WAVE1.md` §1 | 2483837; 7aac8c5 |
+| time reversal F⁻¹ = JR∘F∘JR (E15, E15b, E17, E18, E19, E20, E20b, E25, E26) | `chapters/THEORY.md`, row S6; proved as Lemma 1 in `r36/REPORT_WAVE1.md` §1 | 2483837; 7aac8c5 |
 | two moments make the history periodic (E15, E18, E19, E20, E20b) | `r36/REPORT_WAVE1.md` §1 | 7aac8c5 |
 | the planar box period 4d + 4 (E15b) | `r18b/REPORT_WAVE1.md`, first section | 7aac8c5 |
 | the exact bounce of a JR-fixed s* (E17) | `r27b/REPORT_WAVE3.md`, breakthrough 1 and §1 | 7aac8c5 |
@@ -233,4 +234,7 @@ in the last column (7aac8c5 is a later snapshot of the same folder).
 | R10ZF-1..11 (E23): r70's prescribed flat FLRW universe | `r10/REVIEW_R10ZF.md` (pre-registration `r10/r10zf_NOTES.md`; own reader `r10/r10zf_readout.py`); r70's `r70/REPORT.md`, `r70/NOTES.md`, `r70/results/` | 3ee08d7 |
 | remote referee report GR-F8 (E23: EdS, STATIC2, CYC reproduced) | `remote/FRESH_MACHINE_REPORT_GRF8.md` | 3ee08d7 |
 | remote referee report GR-F10 (E23: RAD, RAD2, EdS2, EdS reproduced; the binding Hubble and synchronisation bands) | `remote/FRESH_MACHINE_REPORT_GRF10.md` | 3ee08d7 |
+| R10ZH-27..33 (E26): builder B's QM-SHOW | `r10/REVIEW_R10ZH.md` (item 4); builder B's `remote/builderB_QMSHOW/qmshow/`, `remote/builderB_QMSHOW5/qmb/grid.py` | fd49c09 |
+| remote referee report QM-F15 (E26 reproduced) | `remote/FRESH_MACHINE_REPORT_QMF15.md` | fd49c09 |
 | the exact FLRW light laws E9-1..E9-4, by construction (E23) | `r70/REPORT.md` §10; PROOF CHECKED (r68 D31: `r68/MATH_LEDGER.md`, row D31); `r10/REVIEW_R10ZF.md` (R10ZF-3..6; E9-5 is not cited, R10ZF-8) | 3ee08d7 |
+| additivity below overflow: the first non-additive update is the first quotient defect, on the same cells [THEOREM, builder B's T1] (E26) | `remote/BUILDER_B_REPORT_QMB_FULL.md`, T1 (r49 Theorem S, restated for the readout); its proof confirmed in `r10/r10x_REVIEW.md` (R10X-1, PARTLY: the proof is correct, the statement's record wording was fixed) | fd49c09 |
