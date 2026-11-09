@@ -3076,3 +3076,80 @@ def cc7m_in_c3c_spec(L=256, at=CC7M_C3C_AT, steps=960):
             "controls": [{"name": "c3c_alone", "remove": [q["name"] for q in dev]},
                          {"name": "device_alone", "remove": [q["name"] for q in base["placements"]]}],
             "steps": steps}
+
+
+# ---------------------------------------------------------------------------- WAVE 11: builder D QM-A, the CC8 device
+#: select.escort_end_junction@1 driven in flight (builder D QM-3, device CC8): CC7-M's hardware (CC7M) with a 60-node
+#: input line and both escort lines trapped below their doors (sB = sC = 65 nodes, 110-node arms above), so that every
+#: encounter falls on an 8-update lattice: the quantum returns to X every 128 updates, each escort to its door every 136.
+#: All three packets (elementary quanta of profile C = (1,-1), fibre light) are in flight at t = 0, in builder D's
+#: in-flight placements (head index counted from the bare start of the line, +1 = moving inward): the quantum on A at
+#: its hidden phase tau (14 lattice phases, the quantum's first arrival at X mod 128), escort B at a fixed phase,
+#: escort C at the device phase D' (13 realisable values; D' = 0 is a tie).
+CC8 = dict(CC7M, NA=60, sB=65, sC=65, fB=110, fC=110)
+CC8_QUANTUM = {6: (54, 1), 14: (46, 1), 22: (38, 1), 30: (30, 1), 38: (22, 1), 46: (14, 1), 54: (6, 1),
+               70: (6, -1), 78: (14, -1), 86: (22, -1), 94: (30, -1), 102: (38, -1), 110: (46, -1), 118: (54, -1)}
+CC8_ESCORT_B = (34, 1)
+CC8_ESCORT_C = {1: (26, 1), 2: (18, 1), 3: (10, 1), 6: (10, -1), 7: (18, -1), 8: (26, -1), 9: (34, -1), 10: (42, -1),
+                11: (50, -1), 12: (58, -1), 14: (58, 1), 15: (50, 1), 16: (42, 1)}
+
+
+def _cc8_packet(piece, n, head, direction, f):
+    """An in-flight packet on a guide piece of ``n`` nodes listed outward (from X or from the door to the bare end), in
+    builder D's convention: head index counted from the bare start, direction +1 = moving inward (toward X or the door)."""
+    if direction > 0:
+        return {"path": "~" + piece, "f": list(f), "lead": int(head)}
+    return {"path": piece, "f": list(f), "lead": int(n - 1 - head)}
+
+
+def cc8_router_placement(name, at, tau, Dp, quantum=True, escort_B=True, escort_C=True, f=(1, -1), signs=PPP,
+                         wrap=False):
+    """builder D's CC8 at X = ``at``: the CC7-M hardware with the CC8 lengths (gapped_guide_placement pieces of
+    guide_net@1, the doors at the vacuum) and three in-flight packets: the quantum at hidden phase ``tau``
+    (CC8_QUANTUM), escort B at CC8_ESCORT_B and escort C at device phase ``Dp`` (CC8_ESCORT_C)."""
+    paths, doors, p = _cc7m_paths(CC8, signs)
+    placement = gapped_guide_placement(name, at, paths, doors, (), signs, wrap)
+    pk = []
+    if quantum:
+        pk.append(_cc8_packet("A", p["NA"] + 1, *CC8_QUANTUM[tau], f))
+    if escort_B:
+        pk.append(_cc8_packet("eB_lo", p["sB"], *CC8_ESCORT_B, f))
+    if escort_C:
+        pk.append(_cc8_packet("eC_lo", p["sC"], *CC8_ESCORT_C[Dp], f))
+    placement["params"]["packets"] = pk
+    return placement
+
+
+def cc8_prediction(tau, Dp, Q=128, P=136, b=30):
+    """builder D's arithmetic (cc8_pred): the quantum is at X at tau + Q k, escort B at its door at b + P i, escort C at
+    (b + 8 Dp) mod P + P j; the exit is the earlier exact coincidence (B or C) and its first click comes 2 updates later
+    (fresh machine 2, QM-F4 (e)).  Returns (exit, t_coincidence)."""
+    c = (b + 8 * Dp) % P
+
+    def first(start):
+        t = tau
+        while t <= 4000:
+            if t >= start and (t - start) % P == 0:
+                return t
+            t += Q
+        return None
+    tb, tc = first(b), first(c)
+    if tb is None and tc is None:
+        return None, None
+    if tc is None or (tb is not None and tb < tc):
+        return "B", tb
+    return ("C", tc) if tb is None or tc < tb else ("TIE", tb)
+
+
+def cc8_spec(runs, L=256, at=CC7M_AT, steps=2100, name="cc8"):
+    """exp.one_quantum_one_exit@1 (builder D QM-3): ONE composition whose base is the first (tau, Dp) of ``runs`` and
+    whose controls ``tau{tau}_D{Dp}`` are the other members (packet masks over the same hardware)."""
+    tau0, d0 = runs[0]
+    base = cc8_router_placement(name, at, tau0, d0)
+    controls = [{"name": f"tau{t}_D{d}", "override": {name: {"packets": cc8_router_placement(name, at, t, d)["params"]
+                                                             ["packets"]}}} for t, d in runs]
+    return {"format": FORMAT, "id": f"cc8_L{L}", "board": _board(L, PPP), "placements": [base],
+            "timing": {"t0": 0, "declared": {"quantum_period": 128, "escort_period": 136, "lattice": 8,
+                                             "hidden_phase": "tau (CC8_QUANTUM)", "device_phase": "Dp (CC8_ESCORT_C)",
+                                             "registration_delay": 2}},
+            "controls": controls, "steps": steps}

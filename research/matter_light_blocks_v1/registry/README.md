@@ -87,7 +87,7 @@ was also checked against the program's own code:
   kind, registration new / update-of / republication-of, generator, coupling, evidence status, parts,
   lineage), the experiments and their cards (`experiment_cards`), the read-only `observers`, the
   `aliases`, the registrar's decisions on proposed cards, the verified points (init files regenerated
-  exactly, recipes and builder equalities, with SHA-256 prefixes; 488 after WAVE 10, all exact), and the
+  exactly, recipes and builder equalities, with SHA-256 prefixes; 490 after WAVE 11, all exact), and the
   role of each of the 348 published names (the 338 of 8301320, the 8 appended in dff39dc and the 2 appended with the
   candidate-coupling framework (the variant block and its reference companion): canonical, variant, control, alias,
   J-image, experiment instance).
@@ -105,8 +105,11 @@ Both files are compact JSON. Paths and modules under `research/matter_light_v1/`
 name are files of the program's working folder, archived uncurated on branch `backup/matter-light-working` at commit
 2483837, except five WAVE 5 source files (`r27b/cards_r27b.json` and the four `r27b/preparations/bb27v4_ringclock_*`
 files) and r30's `proposal_chiral_both_forces.json` (WAVE 9, the variant block), which are first archived at commit
-9f9cc64, the WAVE 6 sources at commit 39ca35f, the WAVE 7 and 8 sources at commit 7aac8c5 and the WAVE 10 sources
-(builder D's `remote/builderD_R5/` and `remote/BUILDER_D_REPORT5.md`, r10r's `r10/r10r_REVIEW.md`) at commit 96b1c0f.
+9f9cc64, the WAVE 6 sources at commit 39ca35f, the WAVE 7 and 8 sources at commit 7aac8c5, the WAVE 10 sources
+(builder D's `remote/builderD_R5/` and `remote/BUILDER_D_REPORT5.md`, r10r's `r10/r10r_REVIEW.md`) at commit 96b1c0f
+and the WAVE 11 sources (builder D's `remote/builderD_QMA_interim/`, `remote/builderD_QMA_final/` and their
+reports, fresh machine 2's `remote/FRESH_MACHINE_REPORT_QMF4.md`) at commit 6c0798c, r10g's
+`r10/REVIEW_R10G_W9.md` at commit 01790e6.
 Nothing there is needed to regenerate or verify a block or a composition; `runs/` paths are local.
 
 `compositions.py` also holds the WAVE 2 compositions: the published guide instances
@@ -203,6 +206,19 @@ exits behind the doors and escort lines bent away 4 nodes from them (`CC7M`, `cc
 write builder D's init files byte for byte, that both members have the same hardware and differ in 14 cells on escort
 B's line or its face neighbours, that the moment form is the member advanced 9 updates natively (JR-fixed), and that
 the union is C3c's seed plus the device, with disjoint supports.
+
+WAVE 11 (r67) added builder D's device CC8 (QM-3; refereed by r10g, R10G-276..286, and reproduced by fresh machine 2,
+QM-F4) as the assembly `select.escort_lattice_router@1`, a variant-of `select.escort_end_junction@1`: CC7-M's
+hardware with a 60-node input line and both escort lines trapped below their doors (`CC8`, `cc8_router_placement`),
+so that one elementary quantum and two escorts, all in flight at t = 0, meet only on an 8-update lattice. Its members
+differ only in two packets: the quantum's hidden phase τ (`CC8_QUANTUM`, 14 values) and escort C's device phase D′
+(`CC8_ESCORT_C`, 13 values); `cc8_spec(runs, L)` is one composition with one control `tau{τ}_D{D′}` per member
+(packet masks), and `cc8_prediction(τ, D′)` is builder D's coincidence arithmetic. No generator changed. They write
+the curated experiment `E22_one_quantum_one_exit`. `tests/test_matter_light_blocks_registry_wave11.py` checks that
+the representative members write builder D's init files byte for byte, that all 182 members have the same hardware
+and differ only in the quantum's and escort C's packets, that the prediction gives N_B = 1, 2, 3, 5, 6, 7, 8, 9, 10,
+11, 11, 12, 13 for D′ = 1, 2, 3, 6–12, 14–16 (no ties), and that two short native runs click first at the predicted
+exit, 2 updates after the coincidence, with all three prepared packets lit at update 1.
 
 ## Limits
 
