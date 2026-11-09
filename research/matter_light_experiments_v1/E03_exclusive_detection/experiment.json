@@ -3,8 +3,8 @@
  "id": "E03_exclusive_detection",
  "title": "Exclusive single-click detection: with one light approval exactly one of two detectors clicks (five decoded runs)",
  "card": "CARD.md",
- "composition": null,
- "composition_note": "5 runs of r13's E1 families; the alpha statistics over the full families stay in the program record until the families ship as a registry composition (r13_device_spec)",
+ "composition": "composition.json",
+ "composition_note": "one board, composition.json (r13_device_spec; registered blocks only: guide_net@1, 2 x phase_gate@2); each of the 5 runs of r13's E1 families is the control of the same name (packet arrivals and detector phases); the alpha statistics over the full families stay in the program record",
  "coupling": {
   "kind": "reference",
   "signs": [
@@ -18,8 +18,9 @@
   {
    "name": "app_tq24_selects_A",
    "role": "main",
-   "init": "init/app_tq24_selects_A.json",
-   "init_sha256": "4d24a19ac2e087a124358e41c05be1febd6d72253294ec66161929e44dce4d12",
+   "from_composition": {
+    "control": "app_tq24_selects_A"
+   },
    "source": "research/matter_light_v1/r13/preparations/E1_F_app_tq24_selects_A.json (program record; same initial state and coupling)",
    "source_sha256": "6de16a69ef36b6c3bd31d170f5a6d0dd1c22188cb8c67256642e78987006ea02",
    "steps": 94,
@@ -52,8 +53,9 @@
   {
    "name": "app_tq25_selects_B",
    "role": "main",
-   "init": "init/app_tq25_selects_B.json",
-   "init_sha256": "66bd601c6e9f06a2335a7cfe48177761fe901ad45cd46b33b6ea5d8480772a65",
+   "from_composition": {
+    "control": "app_tq25_selects_B"
+   },
    "source": "research/matter_light_v1/r13/preparations/E1_F_app_tq25_selects_B.json (program record; same initial state and coupling)",
    "source_sha256": "457ae6545dd72ed5a984c06ddfdb0cfe4794be1889b0780f084f77f00bea431e",
    "steps": 95,
@@ -86,8 +88,9 @@
   {
    "name": "none_tq25_both",
    "role": "main",
-   "init": "init/none_tq25_both.json",
-   "init_sha256": "e023a69f808d1b47afd179ab7ad5595c404f56cfa5a937cec639f09030b4d6fb",
+   "from_composition": {
+    "control": "none_tq25_both"
+   },
    "source": "research/matter_light_v1/r13/preparations/E1_F_none_tq25_both.json (program record; same initial state and coupling)",
    "source_sha256": "23f94b96e509222ccd2d33f03365f221897dd52dde8e083f748d9c3bd9dff975",
    "steps": 95,
@@ -120,8 +123,9 @@
   {
    "name": "ind_pA2_pB0_tq23_complementary",
    "role": "main",
-   "init": "init/ind_pA2_pB0_tq23_complementary.json",
-   "init_sha256": "e8240a071a7dabd41bb14d6b55d908bde2c59b802381ba86f1ca86b84863d0a8",
+   "from_composition": {
+    "control": "ind_pA2_pB0_tq23_complementary"
+   },
    "source": "research/matter_light_v1/r13/preparations/E1_F_ind_pA2_pB0_tq23_complementary.json (program record; same initial state and coupling)",
    "source_sha256": "bb1782ce3a6cb54a4f439646e268ed2b72e51858f3fb459768314a8af8148db6",
    "steps": 53,
@@ -154,8 +158,9 @@
   {
    "name": "app_control_no_quantum",
    "role": "control",
-   "init": "init/app_control_no_quantum.json",
-   "init_sha256": "4ef85beace72cb156762b79c66c16c862afbfa0e5ad03869425d54551fb35422",
+   "from_composition": {
+    "control": "app_control_no_quantum"
+   },
    "source": "research/matter_light_v1/r13/preparations/E1_F_app_control_no_quantum.json (program record; same initial state and coupling)",
    "source_sha256": "16e289be11773b698544ba3a26959d092ff73eb00cb59dd37960668fe826d447",
    "steps": 100,
@@ -274,7 +279,7 @@
   "id": "R10E-53",
   "result": "CONFIRMED"
  },
- "data_bytes": 115821,
- "built_utc": "2026-11-09T02:18:49Z",
- "builder": "research/matter_light_v1/r01b/build_experiments.py (program record)"
+ "data_bytes": 1991,
+ "built_utc": "2026-11-09T05:55:47Z",
+ "builder": "research.matter_light_blocks_v1.registry.compositions.r13_cases (published): composition.json is r13_cases()['E1_F_app_tq24_selects_A'], and each control applied to it equals r13_cases()['E1_F_' + run] (same placements and assertions); the runs were first built from init files by research/matter_light_v1/r01b/build_experiments.py (program record)"
 }

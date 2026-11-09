@@ -4,7 +4,11 @@
  "title": "Two-way Einstein synchronisation with created atom-clock candidates: t_B = (t1 + t2)/2 exactly",
  "card": "CARD.md",
  "composition": null,
- "composition_note": "main run = the published block einstein_created_instruments_L240 (referenced, not copied)",
+ "compositions": {
+  "module_L240": "compositions/module_L240.json",
+  "module_L480": "compositions/module_L480.json"
+ },
+ "composition_note": "main run = the published block einstein_created_instruments_L240 (referenced, not copied), which compositions/module_L240.json regenerates; the three controls are masks of that board (no_link, no_seed, no_cores), and the size check is the same module on side 480 (compositions/module_L480.json); registered blocks only",
  "coupling": {
   "kind": "reference",
   "signs": [
@@ -21,6 +25,10 @@
    "block": "einstein_created_instruments_L240",
    "block_file": "research/matter_light_blocks_v1/blocks/clocks_and_gravity/einstein_created_instruments_L240.json",
    "block_file_sha256": "f6af5fc53a6f2948fa5eb1f8bbf706497215ac1f6293909eb64d70f222e1bcf0",
+   "from_composition": {
+    "composition": "module_L240",
+    "control": null
+   },
    "steps": 230,
    "initial_state_sha256": "25a056bb1dfb03b06197b0619a1f6abc29a314a423f0f79784fac0957aab24f4",
    "final_state_sha256": "3f7c30f56bd43ecbd5bdc33017cc30ca7fcc78aad6f3e2c770e1c614723ae098",
@@ -98,8 +106,10 @@
   {
    "name": "size_check_L480",
    "role": "size_check",
-   "init": "init/size_check_L480.json",
-   "init_sha256": "8ecd04724992af8430f914127d3f2f82e71350395706eaad34a99ca9ab858e69",
+   "from_composition": {
+    "composition": "module_L480",
+    "control": null
+   },
    "source": "research/matter_light_v1/r08/preparations/w8_einstein_module_d20_xm32_L480.json (program record; same initial state and coupling)",
    "source_sha256": "5750b60163c54e4b91feceb93c6d61ae81074b79ec0f64ddc2eb5fad0e5412d2",
    "steps": 400,
@@ -179,8 +189,10 @@
   {
    "name": "control_no_link_L240",
    "role": "control",
-   "init": "init/control_no_link_L240.json",
-   "init_sha256": "a31e6c3a7627e916744c36be486ba6beb54418864a2cf837a12cccdbff8208d5",
+   "from_composition": {
+    "composition": "module_L240",
+    "control": "no_link"
+   },
    "source": "research/matter_light_v1/r08/preparations/w8_einstein_module_d20_xm32_L240_no_link_control.json (program record; same initial state and coupling)",
    "source_sha256": "61c33ba474a6f90b6c100cdec8e1644c235dad84f211d9412d774e8e4ce0e1b2",
    "steps": 230,
@@ -260,8 +272,10 @@
   {
    "name": "control_no_seed_L240",
    "role": "control",
-   "init": "init/control_no_seed_L240.json",
-   "init_sha256": "75ce52b240e8c559028302c055c3117c0d3510076fce3d67cb1797f973f803b0",
+   "from_composition": {
+    "composition": "module_L240",
+    "control": "no_seed"
+   },
    "source": "research/matter_light_v1/r08/preparations/w8_einstein_module_d20_xm32_L240_no_seed_control.json (program record; same initial state and coupling)",
    "source_sha256": "fbd269c484725beffbe8f36c3b7daea2828a19ffda172299ed923471eee4022e",
    "steps": 230,
@@ -275,8 +289,10 @@
   {
    "name": "control_no_cores_L240",
    "role": "control",
-   "init": "init/control_no_cores_L240.json",
-   "init_sha256": "4ca3727c227d4f4a3e655c4b08f4ccc84afe9d06817ed72d24872042d19e8380",
+   "from_composition": {
+    "composition": "module_L240",
+    "control": "no_cores"
+   },
    "source": "research/matter_light_v1/r08/preparations/w8_einstein_module_d20_xm32_L240_no_cores_control.json (program record; same initial state and coupling)",
    "source_sha256": "834802097b7ac240ab18a525355b671e25c467f77883ab6a535e9d24f93c11c0",
    "steps": 230,
@@ -421,7 +437,7 @@
   "id": "R10E-40",
   "result": "CONFIRMED"
  },
- "data_bytes": 264033,
- "built_utc": "2026-11-09T02:19:13Z",
- "builder": "research/matter_light_v1/r01b/build_experiments.py (program record)"
+ "data_bytes": 3722,
+ "built_utc": "2026-11-09T05:55:47Z",
+ "builder": "r08's wave-8 Einstein module (d20, xm32) written as placements of registered blocks (matter_line@1, 3 x light_line@1, 4 x slot_clock@1, slow_glider@1; no registry builder exists for this module): the board regenerates the published main block, and each control and the size check regenerate the init-file state recorded for that run; the manifest was first built by research/matter_light_v1/r01b/build_experiments.py (program record) from those init files and the block"
 }

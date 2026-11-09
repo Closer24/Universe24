@@ -4,7 +4,12 @@
  "title": "Moving clocks on the lattice: Einstein synchronisation of two co-moving glider clocks disagrees with the lattice simultaneity by delta = (3/8)(D + 24)",
  "card": "CARD.md",
  "composition": null,
- "composition_note": "3 of r14's 4 modules (D = 40, 64, 80) and the two single-glider controls of D = 64 (size limit); D = 48 and the other controls stay in the program record",
+ "compositions": {
+  "sync_D40": "compositions/sync_D40.json",
+  "sync_D64": "compositions/sync_D64.json",
+  "sync_D80": "compositions/sync_D80.json"
+ },
+ "composition_note": "3 of r14's 4 modules, one board file each (compositions/sync_D40, sync_D64, sync_D80 = r14_e2_sync_spec(D); registered blocks only), and the two single-glider controls of D = 64 as masks of its board (A_alone, B_alone); D = 48 and the other controls stay in the program record",
  "coupling": {
   "kind": "reference",
   "signs": [
@@ -18,8 +23,10 @@
   {
    "name": "sync_D40",
    "role": "main",
-   "init": "init/sync_D40.json",
-   "init_sha256": "c08fcd2012bc97f987ff83c98bfcbaa9566b5801842470b2412c5c380a9f919b",
+   "from_composition": {
+    "composition": "sync_D40",
+    "control": null
+   },
    "source": "research/matter_light_v1/r14/preparations/w2_e2_sync_D40_both_L640.json (program record; same initial state and coupling)",
    "source_sha256": "13acca9ccfd6fe29f37b337b3da8f95a9cbd49ee9a4968882b0c6b05a1aa6323",
    "steps": 210,
@@ -76,8 +83,10 @@
   {
    "name": "sync_D64",
    "role": "main",
-   "init": "init/sync_D64.json",
-   "init_sha256": "474b991b1a9eeb8ad12504c77f4175f6b632e97ff570349f0096a83d2d17c78f",
+   "from_composition": {
+    "composition": "sync_D64",
+    "control": null
+   },
    "source": "research/matter_light_v1/r14/preparations/w2_e2_sync_D64_both_L640.json (program record; same initial state and coupling)",
    "source_sha256": "df815da77699c500c5dca92e62c404654253e26442b0cf8813eec014de46b3fa",
    "steps": 264,
@@ -134,8 +143,10 @@
   {
    "name": "sync_D80",
    "role": "main",
-   "init": "init/sync_D80.json",
-   "init_sha256": "ad5bb7331eddafa9565d34ef7ee13d894eecb654aacda3d54860e336a60e0a91",
+   "from_composition": {
+    "composition": "sync_D80",
+    "control": null
+   },
    "source": "research/matter_light_v1/r14/preparations/w2_e2_sync_D80_both_L640.json (program record; same initial state and coupling)",
    "source_sha256": "03139ce617287739545e7277ed96f0b4708d0ec244f37731b33868c765f48a1e",
    "steps": 300,
@@ -192,8 +203,10 @@
   {
    "name": "control_D64_A_alone",
    "role": "control",
-   "init": "init/control_D64_A_alone.json",
-   "init_sha256": "9c430c153944ccb75a0a81f5b1e75f7e3ed5f4af77d288e1e355658f82270bc7",
+   "from_composition": {
+    "composition": "sync_D64",
+    "control": "A_alone"
+   },
    "source": "research/matter_light_v1/r14/preparations/w2_e2_sync_D64_A_alone_L640.json (program record; same initial state and coupling)",
    "source_sha256": "0f02d00f8ae852fe07df7f0fedc1602e96a51906398544453021ed55bd763da4",
    "steps": 264,
@@ -249,8 +262,10 @@
   {
    "name": "control_D64_B_alone",
    "role": "control",
-   "init": "init/control_D64_B_alone.json",
-   "init_sha256": "b4e7edd201fd2aafca44c8be3d2bd13769856f60438f70383b46082854cd5472",
+   "from_composition": {
+    "composition": "sync_D64",
+    "control": "B_alone"
+   },
    "source": "research/matter_light_v1/r14/preparations/w2_e2_sync_D64_B_alone_L640.json (program record; same initial state and coupling)",
    "source_sha256": "fd6a7f773ce43ebfd8f2567660a221b97b0ac2518c88b41493ebd3344eb57ad9",
    "steps": 264,
@@ -440,7 +455,7 @@
   "id": "R10E-54",
   "result": "CONFIRMED"
  },
- "data_bytes": 902493,
- "built_utc": "2026-11-09T02:20:28Z",
- "builder": "research/matter_light_v1/r01b/build_experiments.py (program record)"
+ "data_bytes": 6044,
+ "built_utc": "2026-11-09T05:55:47Z",
+ "builder": "research.matter_light_blocks_v1.registry.compositions.r14_e2_cases (published): each board file is r14_e2_sync_spec(D), and the masks A_alone and B_alone applied to sync_D64 equal r14_e2_sync_spec(64, B=False) and r14_e2_sync_spec(64, A=False) (same placements); the runs were first built from init files by research/matter_light_v1/r01b/build_experiments.py (program record)"
 }

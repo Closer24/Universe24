@@ -3,8 +3,8 @@
  "id": "E02_clicktime_chsh",
  "title": "CHSH with light approvals: board-time S = 2 versus click-time S = 4 (a PR box, not quantum)",
  "card": "CARD.md",
- "composition": null,
- "composition_note": "16 compact init files (settings x, y and hidden lambda); a composition with x, y, lambda as parameters can replace them once the gate and pulse-train generators are registered (r21 I2, L1t)",
+ "composition": "composition.json",
+ "composition_note": "one board, composition.json (registered blocks only: 2 x pulse_train@1, 2 x phase_gate@2); each of the 16 runs (settings x, y and hidden lambda) is the control of the same name, which sets the two fibres' pulse arrivals and G_A's phase; each composed initial state has the initial_state_sha256 recorded when the runs were built from init files",
  "coupling": {
   "kind": "reference",
   "signs": [
@@ -18,8 +18,9 @@
   {
    "name": "separated_x0_y0_lam0",
    "role": "main",
-   "init": "init/separated_x0_y0_lam0.json",
-   "init_sha256": "e04b6e4aca1677eff8ebc9250e24a50e99adec556a605e2903e1c2c5c60393c6",
+   "from_composition": {
+    "control": "separated_x0_y0_lam0"
+   },
    "source": "research/matter_light_v1/r08/preparations/w9_chsh_separated_x0_y0_lam0.json (program record; same initial state and coupling)",
    "source_sha256": "3145f078f25dad7c5a030be3ca2a4443940c05f379115b13e458b66e5c83beca",
    "steps": 80,
@@ -72,8 +73,9 @@
   {
    "name": "separated_x0_y0_lam1",
    "role": "main",
-   "init": "init/separated_x0_y0_lam1.json",
-   "init_sha256": "05dc1ffe250245bf267025b86535c18d8c7934a85a9834077b403c9de67d9112",
+   "from_composition": {
+    "control": "separated_x0_y0_lam1"
+   },
    "source": "research/matter_light_v1/r08/preparations/w9_chsh_separated_x0_y0_lam1.json (program record; same initial state and coupling)",
    "source_sha256": "e6e3fc1c65a95fac95ec7e6da1c34eff675e3bcf48fc136133de1cff51fdb428",
    "steps": 80,
@@ -126,8 +128,9 @@
   {
    "name": "separated_x0_y1_lam0",
    "role": "main",
-   "init": "init/separated_x0_y1_lam0.json",
-   "init_sha256": "1726d8df4188c571f899d92efcc7efadebab42b1903b179d379567cc15302fdf",
+   "from_composition": {
+    "control": "separated_x0_y1_lam0"
+   },
    "source": "research/matter_light_v1/r08/preparations/w9_chsh_separated_x0_y1_lam0.json (program record; same initial state and coupling)",
    "source_sha256": "fa90a673c9283bea546acabe224030190e99a1a6799f31c9e8f586cdab17e778",
    "steps": 80,
@@ -180,8 +183,9 @@
   {
    "name": "separated_x0_y1_lam1",
    "role": "main",
-   "init": "init/separated_x0_y1_lam1.json",
-   "init_sha256": "75bbfa08814fc58a457404046ac4d41877761f0e63326ce51c05d8df7166df95",
+   "from_composition": {
+    "control": "separated_x0_y1_lam1"
+   },
    "source": "research/matter_light_v1/r08/preparations/w9_chsh_separated_x0_y1_lam1.json (program record; same initial state and coupling)",
    "source_sha256": "3e7f05216700cdba66f6a4c1f7fa81aa6577435ad7e81bc20feaf7a880cf40f9",
    "steps": 80,
@@ -234,8 +238,9 @@
   {
    "name": "separated_x1_y0_lam0",
    "role": "main",
-   "init": "init/separated_x1_y0_lam0.json",
-   "init_sha256": "a05389d3888dddee2805f310d879f05d32d891af3c8e81e059dec50fd9876258",
+   "from_composition": {
+    "control": "separated_x1_y0_lam0"
+   },
    "source": "research/matter_light_v1/r08/preparations/w9_chsh_separated_x1_y0_lam0.json (program record; same initial state and coupling)",
    "source_sha256": "75ed6b67af2cee3a4c565a183163affd0ad9617c3c624a46f76efc4e02edd84a",
    "steps": 80,
@@ -288,8 +293,9 @@
   {
    "name": "separated_x1_y0_lam1",
    "role": "main",
-   "init": "init/separated_x1_y0_lam1.json",
-   "init_sha256": "f9e94704daae6fbfefb78fdf7b8b82c97f1d699306409a36cf683ee6fef292ae",
+   "from_composition": {
+    "control": "separated_x1_y0_lam1"
+   },
    "source": "research/matter_light_v1/r08/preparations/w9_chsh_separated_x1_y0_lam1.json (program record; same initial state and coupling)",
    "source_sha256": "9897ce913fe9c59d492ff5449e364c78d10b4a519e51a989b1e9f3e783b8c0b5",
    "steps": 80,
@@ -342,8 +348,9 @@
   {
    "name": "separated_x1_y1_lam0",
    "role": "main",
-   "init": "init/separated_x1_y1_lam0.json",
-   "init_sha256": "61600654ca1a0ad890b8323e51191d7b352d2b01ed09b06ad9bcdcf6f14380f5",
+   "from_composition": {
+    "control": "separated_x1_y1_lam0"
+   },
    "source": "research/matter_light_v1/r08/preparations/w9_chsh_separated_x1_y1_lam0.json (program record; same initial state and coupling)",
    "source_sha256": "e326e06e32df0a2b88d139d30498d4a68cf67cf88d6216939e7f20bd786def1f",
    "steps": 80,
@@ -396,8 +403,9 @@
   {
    "name": "separated_x1_y1_lam1",
    "role": "main",
-   "init": "init/separated_x1_y1_lam1.json",
-   "init_sha256": "c8b0c408495b97183061f8c6b9091430c332d563648e0583a1ab758f83f8ff73",
+   "from_composition": {
+    "control": "separated_x1_y1_lam1"
+   },
    "source": "research/matter_light_v1/r08/preparations/w9_chsh_separated_x1_y1_lam1.json (program record; same initial state and coupling)",
    "source_sha256": "17ebf4975a70d5a168a8ed3f334cfe13428e780b319865db094ce99c29825992",
    "steps": 80,
@@ -450,8 +458,9 @@
   {
    "name": "signal_x0_y0_lam0",
    "role": "main",
-   "init": "init/signal_x0_y0_lam0.json",
-   "init_sha256": "2232efd008928cb0292ef40e653398b74fcc445fd85e32404b5c09bd5cb6ab58",
+   "from_composition": {
+    "control": "signal_x0_y0_lam0"
+   },
    "source": "research/matter_light_v1/r08/preparations/w9_chsh_signal_x0_y0_lam0.json (program record; same initial state and coupling)",
    "source_sha256": "39ee0beb7a8f3b6019d0e1c2af2408eb19dd79df30f000a2e54f897e94a28eeb",
    "steps": 80,
@@ -512,8 +521,9 @@
   {
    "name": "signal_x0_y0_lam1",
    "role": "main",
-   "init": "init/signal_x0_y0_lam1.json",
-   "init_sha256": "3af2fc291acaec653b0538c16a5f8dc6e2342860c58d6ea6edda94248e73aa5b",
+   "from_composition": {
+    "control": "signal_x0_y0_lam1"
+   },
    "source": "research/matter_light_v1/r08/preparations/w9_chsh_signal_x0_y0_lam1.json (program record; same initial state and coupling)",
    "source_sha256": "bbc08df812ec3e632ed2f4ba5cd57ec493894dc8a54985483febfbd82dcdc879",
    "steps": 80,
@@ -574,8 +584,9 @@
   {
    "name": "signal_x0_y1_lam0",
    "role": "main",
-   "init": "init/signal_x0_y1_lam0.json",
-   "init_sha256": "ba80fa1535ddd1976d2d8f90258f1f0e50e48dcac736f11b8a673ff37cdfc04b",
+   "from_composition": {
+    "control": "signal_x0_y1_lam0"
+   },
    "source": "research/matter_light_v1/r08/preparations/w9_chsh_signal_x0_y1_lam0.json (program record; same initial state and coupling)",
    "source_sha256": "866409fbdf80d305530f7f250d5e6050b958e62a129873a5ae3085b6974ddb01",
    "steps": 80,
@@ -636,8 +647,9 @@
   {
    "name": "signal_x0_y1_lam1",
    "role": "main",
-   "init": "init/signal_x0_y1_lam1.json",
-   "init_sha256": "4497828ce2b436167144e774646108c2b1154ebd0b83c7f2fa54b2700465602c",
+   "from_composition": {
+    "control": "signal_x0_y1_lam1"
+   },
    "source": "research/matter_light_v1/r08/preparations/w9_chsh_signal_x0_y1_lam1.json (program record; same initial state and coupling)",
    "source_sha256": "b54b628081b9e8befb4642a8f76a25b375bf8ec3701105988df5c3aac00b2366",
    "steps": 80,
@@ -698,8 +710,9 @@
   {
    "name": "signal_x1_y0_lam0",
    "role": "main",
-   "init": "init/signal_x1_y0_lam0.json",
-   "init_sha256": "fa77c382fe8fe3eaa3412eba192db7146786c972db02caf6a478158b5bfcd95e",
+   "from_composition": {
+    "control": "signal_x1_y0_lam0"
+   },
    "source": "research/matter_light_v1/r08/preparations/w9_chsh_signal_x1_y0_lam0.json (program record; same initial state and coupling)",
    "source_sha256": "c9a3c89b69a35042041427f360b22075977b1f5028061c08d4b76f844254d1fe",
    "steps": 80,
@@ -760,8 +773,9 @@
   {
    "name": "signal_x1_y0_lam1",
    "role": "main",
-   "init": "init/signal_x1_y0_lam1.json",
-   "init_sha256": "c657b6d77b0399135c302b808acc3a1ebb096268a05e369fbcf1dca86b5ca9b6",
+   "from_composition": {
+    "control": "signal_x1_y0_lam1"
+   },
    "source": "research/matter_light_v1/r08/preparations/w9_chsh_signal_x1_y0_lam1.json (program record; same initial state and coupling)",
    "source_sha256": "4834c7303270548de42d1e22fe739c1302773cfae4a23d67549298f6f78eaaba",
    "steps": 80,
@@ -822,8 +836,9 @@
   {
    "name": "signal_x1_y1_lam0",
    "role": "main",
-   "init": "init/signal_x1_y1_lam0.json",
-   "init_sha256": "25e2f7d150ddd771f408b514c5bf76c96f01f2aa21af731235e338a1a4955b7b",
+   "from_composition": {
+    "control": "signal_x1_y1_lam0"
+   },
    "source": "research/matter_light_v1/r08/preparations/w9_chsh_signal_x1_y1_lam0.json (program record; same initial state and coupling)",
    "source_sha256": "e7780705d85fed836b2b3262fa9debeb7ab439d06912a0765c802e83c68d30f7",
    "steps": 80,
@@ -884,8 +899,9 @@
   {
    "name": "signal_x1_y1_lam1",
    "role": "main",
-   "init": "init/signal_x1_y1_lam1.json",
-   "init_sha256": "9699f4ad933ca67ef7d143410699e1c83632b2c32f11b24f2268d93829e289fd",
+   "from_composition": {
+    "control": "signal_x1_y1_lam1"
+   },
    "source": "research/matter_light_v1/r08/preparations/w9_chsh_signal_x1_y1_lam1.json (program record; same initial state and coupling)",
    "source_sha256": "d9f31b3e1f6a57d46969c5e8fe0e54ba98e6ad8175fe018ebc0f678fae6f8035",
    "steps": 80,
@@ -1148,7 +1164,7 @@
   "id": "R10E-39",
   "result": "CONFIRMED"
  },
- "data_bytes": 585782,
- "built_utc": "2026-11-09T01:41:53Z",
- "builder": "research/matter_light_v1/r01b/build_experiments.py (program record)"
+ "data_bytes": 30591,
+ "built_utc": "2026-11-09T05:55:47Z",
+ "builder": "research.matter_light_blocks_v1.registry.compositions.w9_chsh_spec (published): composition.json is w9_chsh_spec('separated', 0, 0, 0), and each control applied to it equals w9_chsh_spec(arrangement, x, y, lambda) of its run (same placements and assertions); the runs were first built from init files by research/matter_light_v1/r01b/build_experiments.py (program record)"
 }
