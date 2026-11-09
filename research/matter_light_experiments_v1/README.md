@@ -35,12 +35,14 @@ cosmology or quantum behaviour is claimed. `C2` is not a selection law and `Q` i
 | [E17](E17_exact_bounce_v6/CARD.md) | an exact bounce: one JR-fixed state s* whose contraction and expansion are mirror images in the clicks (0 of 49,830 records unpaired), on L and 2L | (−,+,+) | THEOREM + SIMULATION | 12 of 12 pass (7 decoder, 5 log_symmetry_v1) | remote FRESH4-A1..A3 CONFIRMED | ~2 min |
 | [E18](E18_cyclic_universe_c3c/CARD.md) | C3c, a cyclic universe candidate (period 320): created light, created matter at exact ∓1/3, a 720° spin ring, a ring clock at N = 3/5 and twin cavity atom candidates | (−,+,+) | THEOREM + SIMULATION | 15 of 15 pass (9 decoder, 6 log_symmetry_v1) | remote FRESH8 CONFIRMED (K6 PARTLY) | ~1 min |
 | [E19](E19_cyclic_universe_c4_variant/CARD.md) | VARIANT C4: seven prepared, non-interacting sectors on one board, sharing one bang and turnaround schedule (period 320): light, matter at exact ∓1/3 and twin cavity atom candidates created by the decoder's positional rule inside prepared modules, a 720° spin ring, a ring clock at N = 3/5, and the weak-like (32 vs 56) and EM-like signatures | VARIANT chiral-011-mpp@190301d802c5 | THEOREM + SIMULATION | 15 of 15 pass (10 decoder, 5 log_symmetry_v1) | remote FRESH11-C4, r10g R10G-111..117, 119 CONFIRMED (R10G-120 PARTLY, wording) | ~1.5 min |
+| [E20](E20_one_hardware_two_outcomes/CARD.md) | one hardware, two outcomes: two prepared initial states on identical hardware, differing only in escort B's starting end h, light only exit B and its clock (h = 0, exact cycle 90) or only exit C and its clock (h = 1, exact cycle 320); only one detector ever clicks in a cycle; for the detector-only observer the outcome is known only through the detector click, while the full official log shows h from update 1 | +++ | THEOREM + SIMULATION | 32 of 32 pass (13 decoder, 19 log_symmetry_v1) | r10r R10R-0..10, 12, 13 CONFIRMED (R10R-11 PARTLY, not claimed) | ~20 s |
+| [E20b](E20b_one_hardware_in_c3c/CARD.md) | E20's member h = 1 placed in the refereed C3c cycle without interacting with it: period 320, integer moments 160ℤ, only exit C clicks, and the union's click log is C3c's refereed log plus the device's records | (−,+,+) | THEOREM + SIMULATION | 16 of 16 pass (6 decoder, 10 log_symmetry_v1) | r10r R10R-8..10 CONFIRMED | ~40 s |
 
 E01's twin runs reference the blocks appended to `research/matter_light_blocks_v1` in dff39dc. Like E01, E07b's run
 a_A references a published block (`exact_front_111_box`).
 
 Decoder pin: `click_decoder_v1` 1.0, frozen 2026-11-09T01:29:27Z (`research/click_decoder_v1/FROZEN.json`). E15,
-E15b, E17, E18 and E19 also pin the frozen layer log_symmetry_v1, and E11 the frozen layer beat_clock_v1 (release
+E15b, E17, E18, E19, E20 and E20b also pin the frozen layer log_symmetry_v1, and E11 the frozen layer beat_clock_v1 (release
 1.0.3). An experiment is **ready** when every run replays exactly (initial-state, final-state and log hashes),
 every declared check passes and the referee's verdict is recorded as CONFIRMED or PARTLY (E13 and E16: PARTLY,
 with their caveats on the cards).
@@ -53,6 +55,7 @@ python -m research.matter_light_experiments_v1.verify E01_local_atom_twins E02_c
     E09_einstein1911_clicks E10_prescribed_schwarzschild_lattice E11_light_clock_dilation E12_planar_forces \
     E13_exchange_contact_counts E14_two_beam_interference E15_cyclic_bangs E15b_planar_cyclic_box \
     E16_bigbang_backward_v5 E17_exact_bounce_v6 E18_cyclic_universe_c3c E19_cyclic_universe_c4_variant \
+    E20_one_hardware_two_outcomes E20b_one_hardware_in_c3c \
                                                                                 # every one "ready": true
 python -m research.matter_light_experiments_v1.verify --all                     # every experiment folder present
 python -m research.matter_light_experiments_v1.verify --fast                    # only the runs marked fast
@@ -63,7 +66,7 @@ python -m unittest tests.test_matter_light_experiments_v1                       
 `--fast` is a smoke test, not a verification: it replays only the runs marked `fast` and reports every check that
 reads another run as "skipped (runs not selected)", so an experiment with slower runs ends with `"ok": true` and
 `"ready": false`. Only E09, E10, E11 and E15, whose runs are all marked fast, can be ready under `--fast`; E01,
-E04, E06, E15b and E17 have no fast run. `--help` prints the usage, and an unknown flag stops with exit status 2.
+E04, E06, E15b, E17 and E20b have no fast run. `--help` prints the usage, and an unknown flag stops with exit status 2.
 
 ```python
 from research.matter_light_experiments_v1 import experiment
@@ -193,8 +196,8 @@ in the last column (7aac8c5 is a later snapshot of the same folder).
 | r13 G0, carry-free gates only (E07) | `r13/NOTES.md`, the entry "G0 [THEOREM, no run]"; its scope: R10E-2 | 2483837 |
 | THEOREM FF (E10) | `r22/REPORT_WAVE2.md` §3 | 2483837 |
 | r23 Lemma 2, s − 4 = R (E16) | `r23/NOTES.md`, the 02:20 theory record | 2483837 |
-| time reversal F⁻¹ = JR∘F∘JR (E15, E15b, E17, E18, E19) | `chapters/THEORY.md`, row S6; proved as Lemma 1 in `r36/REPORT_WAVE1.md` §1 | 2483837; 7aac8c5 |
-| two moments make the history periodic (E15, E18, E19) | `r36/REPORT_WAVE1.md` §1 | 7aac8c5 |
+| time reversal F⁻¹ = JR∘F∘JR (E15, E15b, E17, E18, E19, E20, E20b) | `chapters/THEORY.md`, row S6; proved as Lemma 1 in `r36/REPORT_WAVE1.md` §1 | 2483837; 7aac8c5 |
+| two moments make the history periodic (E15, E18, E19, E20, E20b) | `r36/REPORT_WAVE1.md` §1 | 7aac8c5 |
 | the planar box period 4d + 4 (E15b) | `r18b/REPORT_WAVE1.md`, first section | 7aac8c5 |
 | the exact bounce of a JR-fixed s* (E17) | `r27b/REPORT_WAVE3.md`, breakthrough 1 and §1 | 7aac8c5 |
 | exact light on the body diagonals, the discrete d'Alembert law at c_s = 1/√3 [THEOREM, r03 L4; r25] (E11) | `r03/REPORT.md`, finding 2 (u a multiple of 3 on the planes n = x + y + z); `r25/REPORT_WAVE2.md` | 2483837; 9f9cc64 |
@@ -211,3 +214,5 @@ in the last column (7aac8c5 is a later snapshot of the same folder).
 | R10G-111..120 (E19) | `r10/REVIEW_R10G_W4.md`, §1 | bf2313b |
 | remote referee reports FRESH4, FRESH6 and FRESH8 | `remote/FRESH_MACHINE_REPORT4.md`, `remote/FRESH_MACHINE_REPORT6.md`, `remote/FRESH_MACHINE_REPORT8.md` | 7aac8c5 |
 | remote referee report FRESH11 (E19) | `remote/FRESH_MACHINE_REPORT11.md` | 678258e |
+| R10R-0..13 (E20, E20b): builder D's report 5 and its files | `r10/r10r_REVIEW.md` (pre-registration `r10/r10r_NOTES.md`); `remote/BUILDER_D_REPORT5.md`, `remote/builderD_R5/` | 96b1c0f |
+| remote referee report FRESH19 (E20: builder D's report 4, two different boards) | `remote/FRESH_MACHINE_REPORT19.md` | 96b1c0f |
