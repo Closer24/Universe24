@@ -3405,3 +3405,120 @@ def shapiro_chain_spec(L=800, steps=800):
     return {"format": FORMAT, "id": f"shapiro_chain_L{L}", "board": _board(L, PPP), "placements": [base],
             "controls": [{"name": "curved", "override": {}},
                          {"name": "flat", "override": {"chain": shapiro_params("flat")}}], "steps": steps}
+
+
+# ------------------------------------------------------------------------------------------------ WAVE 16 (r67)
+# r71's PRESCRIBED metric tensor read back from clicks in a DECLARED chart (refereed by r10zg, R10ZG-1..12; reproduced by
+# fresh machine 2, GR-F9), ported from r71's tensor_board.py and time_board.py (v2).  A station: a standard 16-node
+# A-pulse ring clock (E10's (4, 4) rectangle) and 26 radar arms, one along each of the 13 lattice lines and its
+# negative; arm n is a lattice-straight staircase toward n (generators.staircase_dirs; a straight fibre for the axes),
+# starting K0 = 16 staircase steps from the centre, with an A-pulse probe (lead 3), a 3-node port at arm nodes 4..6 and
+# a bare far end (the mirror, dwell 4) PORT + D(n) nodes on.  The designer assigns arm n the coordinate B n and writes
+# its node count D(n) = round(B sqrt(n^T g n)); the Manhattan control writes D(n) = sum_i |n_i| A_i (B = 100).  The
+# time board: station S (lapse N = 2/3: a 24-node ring, arms round(B_T sqrt(q) / N)) above station F (N = 1), 13 arms
+# each, each ring tapped into an exit fibre that passes the other station's receiver.  PRESCRIBED: g lives only in node
+# counts; not gravity, nothing sourced.
+TENSOR = {"port": 5, "k0": 16, "lead": 3, "lap": 16, "dwell": 4, "B": 400, "margin": 24,
+          "manhattan_axes": (100, 110, 95), "manhattan_B": 100,
+          "time": {"N_S": Fraction(2, 3), "B": 96, "dz": 200, "dy": 10, "exit_h": 160, "tap_node": 6}}
+TENSOR_G_ANISO = ((Fraction(1), Fraction(3, 20), Fraction(1, 20)),
+                  (Fraction(3, 20), Fraction(6, 5), Fraction(-1, 10)),
+                  (Fraction(1, 20), Fraction(-1, 10), Fraction(9, 10)))
+TENSOR_LINES13 = ((1, 0, 0), (0, 1, 0), (0, 0, 1), (1, 1, 0), (1, -1, 0), (1, 0, 1), (1, 0, -1), (0, 1, 1),
+                  (0, 1, -1), (1, 1, 1), (1, 1, -1), (1, -1, 1), (1, -1, -1))
+TENSOR_DIRS26 = TENSOR_LINES13 + tuple(tuple(-v for v in n) for n in TENSOR_LINES13)
+_TDIRV = ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1))
+
+
+def tensor_tag(n):
+    return "".join({1: "p", 0: "0", -1: "m"}[v] for v in n)
+
+
+def tensor_length(g, n, B, N=1):
+    """D(n) = round(B sqrt(n^T g n) / N) exactly (half up); 'manhattan': sum_i |n_i| A_i."""
+    if g == "manhattan":
+        return sum(abs(n[i]) * TENSOR["manhattan_axes"][i] for i in range(3))
+    x = Fraction(B) ** 2 * sum(Fraction(g[i][j]) * n[i] * n[j] for i in range(3) for j in range(3)) / Fraction(N) ** 2
+    m = math.isqrt(x.numerator // x.denominator)
+    while (m + 1) * (m + 1) <= x:
+        m += 1
+    return m + 1 if x >= (m + Fraction(1, 2)) ** 2 else m
+
+
+def tensor_arms(g, B, lines=TENSOR_DIRS26, N=1):
+    """[{n, tag, D, start, dirs}]: arm n with PORT + D(n) staircase steps after K0 steps from the centre."""
+    rows = []
+    for n in lines:
+        D = tensor_length(g, n, B, N)
+        steps = staircase_dirs(n, TENSOR["k0"] + TENSOR["port"] + D)
+        pos = (0, 0, 0)
+        for d in steps[:TENSOR["k0"]]:
+            pos = tuple(pos[i] + _TDIRV[d][i] for i in range(3))
+        rows.append({"n": tuple(n), "tag": tensor_tag(n), "D": D, "start": pos, "dirs": steps[TENSOR["k0"]:]})
+    return rows
+
+
+def _tensor_extent(rows):
+    ext = 0
+    for a in rows:
+        p = a["start"]
+        ext = max(ext, max(abs(v) for v in p))
+        for d in a["dirs"]:
+            p = tuple(p[i] + _TDIRV[d][i] for i in range(3))
+            ext = max(ext, max(abs(v) for v in p))
+    return ext
+
+
+def _tensor_ring(m):
+    n1, n2 = {16: (4, 4), 24: (6, 6)}[m]
+    return [-(n1 // 2), -(n2 // 2), 0], [[0, n1], [2, n2], [1, n1], [3, n2 - 1]]
+
+
+def _tensor_placements(prefix, c, rows, ring, tap=None):
+    start, dirs = _tensor_ring(ring)
+    paths = [{"name": "R", "g0": 0, "start": start, "dirs": dirs}] + ([tap] if tap else [])
+    pl = [{"name": f"{prefix}clock", "block": "guide_net@1", "at": c,
+           "params": {"paths": paths, "packets": [{"path": "R", "f": list(FLRW_A), "lead": TENSOR["lead"]}],
+                      "closed": ["R"]}}]
+    for a in rows:
+        pl.append({"name": f"{prefix}arm_{a['tag']}", "block": "guide_net@1", "at": c,
+                   "params": {"paths": [{"name": "P", "g0": 0, "start": list(a["start"]), "dirs": _rle(a["dirs"])}],
+                              "packets": [{"path": "P", "f": list(FLRW_A), "lead": TENSOR["lead"]}]}})
+    return pl
+
+
+def tensor_station_spec(name="aniso", g=TENSOR_G_ANISO, B=None):
+    """light.radar_tensor_station@1: one station at the board centre (r71's tensor_board composition; ``g`` a symmetric
+    rational 3 x 3 matrix or 'manhattan')."""
+    B = B or (TENSOR["manhattan_B"] if g == "manhattan" else TENSOR["B"])
+    rows = tensor_arms(g, B)
+    side = 2 * (_tensor_extent(rows) + TENSOR["margin"])
+    side += side % 2
+    return {"format": FORMAT, "id": f"tensor_{name}", "board": _board(side, PPP),
+            "placements": _tensor_placements("", [side // 2] * 3, rows, 16),
+            "steps": 2 + 2 * max(a["D"] for a in rows) + TENSOR["dwell"] + 24,
+            "timing": {"t0": 0, "declared": {"B": B, "metric": g if g == "manhattan" else
+                                             [[str(v) for v in r] for r in g]}}}
+
+
+def tensor_time_spec(g=TENSOR_G_ANISO, side_factor=1):
+    """The time board (r71's time_board v2): S (N = 2/3, 24-node ring, 13 arms with n_z >= 0) above F (N = 1, 16-node
+    ring, 13 arms with n_z <= 0); each ring tapped at node 6 into an L-shaped exit fibre past the other's receiver."""
+    T = TENSOR["time"]
+    up = [n if n[2] >= 0 else tuple(-v for v in n) for n in TENSOR_LINES13]
+    S = tensor_arms(g, T["B"], up, T["N_S"])
+    F = tensor_arms(g, T["B"], [tuple(-v for v in n) for n in up], 1)
+    s = 2 * (_tensor_extent(S + F) + TENSOR["margin"])
+    s += s % 2
+    side = 2 * (s // 2 + T["dz"] // 2 + T["dy"]) + 2 * TENSOR["margin"]
+    side = (side + side % 2) * side_factor
+    cF = [side // 2, side // 2 - T["dy"] // 2, side // 2 - T["dz"] // 2]
+    cS = [cF[0], cF[1] + T["dy"], cF[2] + T["dz"]]
+    pl = []
+    for st, c, m, tap_dir, h_dir, rows in (("S", cS, 24, 5, 0, S), ("F", cF, 16, 4, 1, F)):
+        tap = {"name": "X", "branch_of": "R", "at_node": T["tap_node"], "dir": tap_dir,
+               "length": T["dz"] - 8 + T["exit_h"], "dirs": [[tap_dir, T["dz"] - 9], [h_dir, T["exit_h"]]]}
+        pl += _tensor_placements(f"{st}_", c, rows, m, tap)
+    return {"format": FORMAT, "id": "tensor_time_v2", "board": _board(side, PPP), "placements": pl,
+            "steps": 2 + 2 * max(a["D"] for a in S + F) + TENSOR["dwell"] + 24,
+            "timing": {"t0": 0, "declared": {"N_S": "2/3", "B_T": T["B"]}}}

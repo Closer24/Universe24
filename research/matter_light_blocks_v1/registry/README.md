@@ -87,7 +87,7 @@ was also checked against the program's own code:
   kind, registration new / update-of / republication-of, generator, coupling, evidence status, parts,
   lineage), the experiments and their cards (`experiment_cards`), the read-only `observers`, the
   `aliases`, the registrar's decisions on proposed cards, the verified points (init files regenerated
-  exactly, recipes and builder equalities, with SHA-256 prefixes; 503 after WAVE 15, all exact), and the
+  exactly, recipes and builder equalities, with SHA-256 prefixes; 506 after WAVE 16, all exact), and the
   role of each of the 348 published names (the 338 of 8301320, the 8 appended in dff39dc and the 2 appended with the
   candidate-coupling framework (the variant block and its reference companion): canonical, variant, control, alias,
   J-image, experiment instance).
@@ -117,7 +117,9 @@ reports `remote/FRESH_MACHINE_REPORT_GRF8.md` and `GRF10.md`) at commit 3ee08d7,
 (builder B's `remote/builderB_QMSHOW/qmshow/`, `remote/builderB_QMSHOW5/qmb/grid.py`, r10zh's `r10/REVIEW_R10ZH.md`,
 fresh machine 2's `remote/FRESH_MACHINE_REPORT_QMF15.md`) at commit fd49c09, and the WAVE 15 sources (builder F's
 `remote/builderF_FINAL/`, `remote/BUILDER_F_REPORT_SWL.md`, r10zi's `r10/REVIEW_R10ZI.md`, fresh machine 2's
-`remote/FRESH_MACHINE_REPORT_GRF12.md`) at commit c2b4258.
+`remote/FRESH_MACHINE_REPORT_GRF12.md`) at commit c2b4258, and the WAVE 16 sources (r71's `r71/tensor_board.py`,
+`r71/time_board.py`, `r71/stations_*.json`, r10zg's `r10/REVIEW_R10ZG.md`, fresh machine 2's
+`remote/FRESH_MACHINE_REPORT_GRF9.md`) at commit c2b4258.
 Nothing there is needed to regenerate or verify a block or a composition; `runs/` paths are local.
 
 `compositions.py` also holds the WAVE 2 compositions: the published guide instances
@@ -270,6 +272,15 @@ builder F's init file byte for byte), and his SHAPIRO-RADIAL chain (`SHAPIRO`, `
 `shapiro_chain_spec(L)`, controls curved and flat). No generator changed. They write the curated experiment
 `E27_lapse_ladder_g00`, read by the frozen layer gr_observer_v1. `tests/test_matter_light_blocks_registry_wave15.py`
 checks the init file, the node counts 120/N, the taps and the two chains.
+
+WAVE 16 (r67) added r71's radar tensor station (refereed by r10zg, R10ZG-1..12; reproduced by fresh machine 2, GR-F9)
+as the assembly `light.radar_tensor_station@1`: a standard 16-node ring clock and 26 staircase radar arms of fibre
+light, one per lattice line and its negative, arm n assigned the coordinate B n by the designer with the node count
+round(B √(nᵀgn)) (`TENSOR`, `TENSOR_G_ANISO`, `tensor_length`, `tensor_arms`, `tensor_station_spec(name, g, B)`; the
+Manhattan control with g = 'manhattan'), and the two-station time board (`tensor_time_spec()`, r71's v2). No
+generator changed. The aniso, manhattan and time_v2 boards equal r71's init files byte for byte. They write the
+curated experiment `E24_metric_tensor_declared_chart`. `tests/test_matter_light_blocks_registry_wave16.py` checks the
+time board against r71's init file, the design lengths of aniso and manhattan, and the arm geometry.
 
 ## Limits
 
