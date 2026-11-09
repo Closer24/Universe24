@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+import tempfile
 import unittest
 
 from universe24.experiments import from_dict
@@ -39,6 +40,12 @@ class Manifests(unittest.TestCase):
                         self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), run["block_file_sha256"])
                 for check in man["checks"]:
                     self.assertTrue(check.get("not_decodable") or check["op"] in X.OPS, check["claim"])
+                    if "layer" in check and not check.get("not_decodable"):   # a listed layer and call, pinned
+                        self.assertIn(check.get("call"), X.LAYERS.get(check["layer"], {}), check["claim"])
+                        self.assertIn(check["layer"], man.get("layers", {}), check["claim"])
+                for name, pin in man.get("layers", {}).items():
+                    frozen = X.ROOT / f"research/click_decoder_v1/FROZEN_{name}.json"
+                    self.assertEqual(pin, json.loads(frozen.read_text(encoding="utf-8"))["sha256"], name)
 
     def test_compositions_regenerate_their_runs(self):
         for eid in X.experiment_ids():
@@ -192,6 +199,149 @@ class ShortDecodedRuns(unittest.TestCase):
                 evaluated = [c for c in out["checks"] if c["result"] in ("pass", "fail")]
                 self.assertTrue(evaluated)
                 self.assertTrue(all(c["result"] == "pass" for c in evaluated), out["checks"])
+
+
+class DecoderLayers(unittest.TestCase):
+    """Released decoder layers: a closed list, each pinned by its FROZEN file and by the manifest; a call reads the
+    official logs of the check's runs first, its arguments are literal or detectors.json values and never write."""
+
+    def _released(self, name):
+        from research.click_decoder_v1 import decoder as dmod
+        frozen = dmod.HERE / f"FROZEN_{name}.json"
+        if not frozen.exists():
+            self.skipTest(f"{name} is not released")
+        record = json.loads(frozen.read_text(encoding="utf-8"))
+        self.assertEqual(record["name"], name)
+        self.assertTrue((dmod.HERE / record["file"]).exists(), record["file"])
+        return record["sha256"]
+
+    @staticmethod
+    def _log(folder, name, records):              # the official record form (compact JSON)
+        path = Path(folder) / name
+        path.write_text("".join(json.dumps({"step": t, "address": [x, y, z, g], "kind": k, "quotient": q},
+                                           separators=(",", ":")) + "\n" for t, x, y, z, g, k, q in records),
+                        encoding="utf-8")
+        return path
+
+    def _results(self, checks, logs, names, detectors=None, pins=None):
+        layers = {c["layer"] for c in checks}
+        man = {"layers": pins or {n: self._released(n) for n in layers if n in X.LAYERS}}
+        lstat = {n: X.layer_status(man, n) for n in layers}
+        values = X.layer_values(checks, lstat, logs, detectors)
+        return [X.layer_result(c, lstat, values, names, detectors) for c in checks]
+
+    def test_status_closed_list_and_pins(self):
+        for name, calls in X.LAYERS.items():                # every listed layer is released with every listed call
+            with self.subTest(layer=name):
+                status, mod = X.layer_status({"layers": {name: self._released(name)}}, name)
+                self.assertEqual(status, "frozen")
+                self.assertTrue(all(callable(getattr(mod, call, None)) for call in calls), calls)
+        sha = self._released("log_symmetry_v1")
+        self.assertTrue(X.layer_status({"layers": {"log_symmetry_v1": "0" * 64}}, "log_symmetry_v1")[0]
+                        .startswith("decoder layer changed"))
+        self.assertTrue(X.layer_status({}, "log_symmetry_v1")[0].startswith("decoder layer pending"))
+        self.assertTrue(X.layer_status({"layers": {"other": sha}}, "other")[0].startswith("decoder layer pending"))
+
+    def test_arguments_and_call_shapes(self):
+        self.assertEqual(X.layer_args({"tau": 2, "lo": None}, None), {"tau": 2, "lo": None})
+        self.assertEqual(X.layer_args({"declaration": {"detectors": "/d/x"}}, {"d": {"x": [1, 2]}}),
+                         {"declaration": [1, 2]})
+        with self.assertRaises(ValueError):
+            X.layer_args({"write_prefix": "out"}, None)
+        with self.assertRaises(KeyError):
+            X.layer_args({"declaration": {"detectors": "/missing"}}, {"d": 1})
+        mirror, diff = {"layer": "log_symmetry_v1", "call": "mirror"}, {"layer": "log_symmetry_v1", "call": "record_diff"}
+        self.assertEqual(X.layer_calls({**mirror, "run": "a"}), [("a",)])
+        self.assertEqual(X.layer_calls({**mirror, "runs": ["a", "b"]}), [("a",), ("b",)])
+        self.assertEqual(X.layer_calls({**diff, "runs": ["a", "b"]}), [("a", "b")])
+        for bad in ({**mirror, "run": "a", "runs": ["b"]}, {**diff, "run": "a"}, {**diff, "runs": ["a"]},
+                    {**diff, "runs": ["a", "b", "c"]}, {**mirror}):
+            self.assertIsNone(X.layer_calls(bad), bad)
+
+    def test_log_symmetry_checks(self):
+        records = [(1, 0, 0, 0, 0, 1, 1), (4, 0, 0, 0, 0, 2, -1), (2, 1, 0, 0, 3, 1, 2), (3, 1, 0, 0, 3, 2, -2)]
+        base = {"claim": "t", "text": "t", "layer": "log_symmetry_v1"}
+        checks = [  # a is mirrored about tau = 2 (t -> 5 - t, k -> -k mod 3, q -> -q); b lacks one record
+            {**base, "run": "a", "call": "mirror", "args": {"tau": 2}, "pointer": "/unpaired", "op": "eq", "value": 0},
+            {**base, "runs": ["a", "b"], "call": "mirror", "args": {"tau": 2}, "pointer": "/unpaired", "op": "eq",
+             "value": [0, 1]},
+            {**base, "run": "b", "call": "mirror", "args": {"tau": 2}, "pointer": "/unpaired_per_update/2",
+             "op": "eq", "value": 1},                                     # the JSON form: integer keys as strings
+            {**base, "runs": ["a", "b"], "call": "record_diff", "pointers": ["/only_a", "/only_b"], "op": "eq",
+             "value": [1, 0]},
+            {**base, "runs": ["a", "b"], "call": "best_tau", "pointer": "/tau", "op": "same"},
+            {**base, "run": "a", "call": "record_diff", "pointer": "/differ", "op": "eq", "value": 0},
+            {**base, "run": "a", "call": "split", "pointer": "/0", "op": "len_eq", "value": 1},
+            {**base, "run": "a", "call": "period", "args": {"P": 2, "write_prefix": "x"}, "pointer": "/cycles",
+             "op": "ge", "value": 0},
+            {**base, "run": "c", "call": "mirror", "args": {"tau": 2}, "pointer": "/unpaired", "op": "eq", "value": 0},
+            {**base, "run": "d", "call": "mirror", "args": {"tau": 2}, "pointer": "/unpaired", "op": "eq", "value": 0},
+        ]
+        with tempfile.TemporaryDirectory() as tmp:
+            logs = {"a": self._log(tmp, "a.jsonl", records), "b": self._log(tmp, "b.jsonl", records[:3])}
+            got = [r for r, _ in self._results(checks, logs, {"a", "b", "d"})]
+            changed = self._results(checks[:1], logs, {"a"}, pins={"log_symmetry_v1": "0" * 64})[0][0]
+        self.assertEqual(got[:5], ["pass"] * 5)
+        self.assertTrue(got[5].startswith("not decodable: record_diff reads 2 logs"), got[5])
+        self.assertTrue(got[6].startswith("not decodable: log_symmetry_v1 has no call"), got[6])
+        self.assertTrue(got[7].startswith("fail: layer call failed (ValueError"), got[7])
+        self.assertEqual(got[8], "skipped (runs not selected)")
+        self.assertEqual(got[9], "fail: run did not replay")
+        self.assertEqual(changed, "decoder layer changed: re-validate")
+
+    def test_beat_clock_run_declared(self):
+        import math
+        L, steps, c, m = 32, 120, 1 / math.sqrt(3), 0.07
+        k1, k2 = 2 * math.pi / L, 4 * math.pi / L
+        w = [math.sqrt(m * m + c * c * k * k) for k in (k1, k2)]
+        records = [(t, 0, 0, z, 0, 0, q) for t in range(1, steps + 1) for z in range(L)
+                   for q in [round(sum(10 ** 6 * math.cos(k * z - wk * t) for k, wk in ((k1, w[0]), (k2, w[1]))))] if q]
+        declaration = {"side": L, "steps": steps, "channel": 0, "sites": [[0, 0, z] for z in range(L)],
+                       "clocks": [{"name": "pair", "K1": [0, 0, k1], "K2": [0, 0, k2], "axis": [0, 0, 1], "c": c}]}
+        check = {"claim": "t", "text": "t", "run": "r", "layer": "beat_clock_v1", "call": "run_declared",
+                 "args": {"declaration": {"detectors": "/decl"}}, "clock": "pair", "pointer": "/clocks/0/ratio"}
+        with tempfile.TemporaryDirectory() as tmp:          # an exactly relativistic pair: ratio 1
+            logs = {"r": self._log(tmp, "r.jsonl", records)}
+            got = self._results([{**check, "op": "approx", "value": 1.0, "tol": 1e-6},
+                                 {**check, "op": "not_approx", "value": 1.0, "tol": 1e-6}], logs, {"r"},
+                                {"decl": declaration})
+        self.assertEqual([r for r, _ in got], ["pass", "fail"])
+        self.assertAlmostEqual(got[0][1], 1.0, places=6)
+
+
+class ProjectionLayers(unittest.TestCase):
+    """A run decoded on a declared projection of its official log (r18b): the declaration is checked, the projection
+    keeps the records verbatim, and its hash is checked."""
+
+    def test_declaration_is_checked(self):
+        good = {"name": "r", "layer": {"name": "line_y0z0", "keep": {"y": 0, "z": 0}}, "layer_sha256": "0" * 64}
+        self.assertEqual(X.projection(good, 8), good["layer"])
+        self.assertIsNone(X.projection({"name": "r"}, 8))
+        for layer in ({"name": "p", "keep": {}}, {"name": "p", "keep": {"w": 0}}, {"name": "p", "keep": {"xy": 0}},
+                      {"name": "p", "keep": {"y": "0"}}, {"name": "p", "keep": {"y": True}},
+                      {"name": "p", "keep": {"y": 8}}, {"name": "p", "keep": {"y": -1}}, {"name": "", "keep": {"y": 0}},
+                      {"keep": {"y": 0}}, {"name": "p", "keep": {"y": 0}, "extra": 1}, "y0"):
+            with self.assertRaises(ValueError, msg=layer):
+                X.projection({**good, "layer": layer}, 8)
+        with self.assertRaises(ValueError):
+            X.projection({"name": "r", "layer": good["layer"]}, 8)            # no layer_sha256
+
+    def test_projection_and_its_hash(self):
+        from research import click_decoder_v1 as dec
+        records = [(1, 0, 0, 0, 0, 1, 1), (1, 2, 0, 1, 5, 1, 2), (2, 3, 0, 0, 7, 2, -1), (3, 1, 2, 0, 0, 1, 1)]
+        with tempfile.TemporaryDirectory() as tmp:
+            log = DecoderLayers._log(tmp, "r.events.jsonl", records)
+            lines = log.read_text(encoding="utf-8").splitlines(keepends=True)
+            kept = "".join(lines[i] for i in (0, 2)).encode("utf-8")             # y = 0 and z = 0
+            run = {"name": "r", "layer": {"name": "line_y0z0", "keep": {"y": 0, "z": 0}},
+                   "layer_sha256": hashlib.sha256(kept).hexdigest()}
+            report = X.decode_run(dec, log, 4, 3, run, None)
+            self.assertEqual(Path(str(log) + ".layer.jsonl").read_bytes(), kept)
+            self.assertEqual(report["input"]["layer"], "line_y0z0")
+            self.assertEqual(report["input"]["log"]["events"], 2)
+            Path(str(log) + ".layer.jsonl").unlink()
+            with self.assertRaises(ValueError):
+                X.decode_run(dec, log, 4, 3, {**run, "layer_sha256": "0" * 64}, None)
 
 
 if __name__ == "__main__":

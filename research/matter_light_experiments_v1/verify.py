@@ -19,8 +19,12 @@ For every run of an experiment's ``experiment.json``:
 4. the final full-state SHA-256 and the log SHA-256 are compared with the manifest;
 5. the pinned decoder must be the frozen one: ``click_decoder_v1`` code hashes equal to the manifest's pin and to
    the decoder's ``FROZEN.json``; otherwise every check is reported as "decoder pending" (or "decoder changed");
-6. each log is decoded by the frozen decoder (``decode``; declared detector probes through ``correlations``) and
-   every declared check is evaluated **on the decoder output only**.
+6. each log is decoded by the frozen decoder (``decode``; declared detector probes through ``correlations``; a run
+   that declares a projection ``layer`` is decoded on that declared subset of its official log, hash-checked) and
+   every declared check is evaluated **on the decoder output only**;
+7. a check that names a released decoder layer (``"layer"``, ``"call"``, ``"args"``) is evaluated on that layer's
+   result for the official logs of its runs: the layers are a closed list (``LAYERS``), each frozen by its own
+   ``FROZEN_<name>.json`` in ``research/click_decoder_v1`` and pinned by the manifest (``layers``).
 
 The complete state is used only for integrity (inverse and hashes).  The verifier writes no state and prints one
 JSON report; the exit status is 1 if any integrity step or any evaluable check fails.  Checks that the closed
@@ -45,8 +49,13 @@ from universe24.observation import clicks
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 FORMAT = "matter_light_experiments_v1-experiment-1"
-OPS = ("eq", "ne", "lt", "le", "gt", "ge", "approx", "in", "len_eq", "len_ge", "same", "diff")
+OPS = ("eq", "ne", "lt", "le", "gt", "ge", "approx", "not_approx", "in", "len_eq", "len_ge", "same", "diff")
 DERIVE = ("chsh", "alpha", "e_table", "covariant_curve", "best_chsh", "tlm", "plane_spectrum")
+# released decoder layers (click_decoder_v1, each frozen by its FROZEN_<name>.json): the calls a check may use, and the
+# number of official logs each call reads first (a one-log call reads the check's run, or each of its runs; a call of
+# n > 1 logs reads "runs" = [a, b, ...] of length n, in that order)
+LAYERS = {"log_symmetry_v1": {"mirror": 1, "best_tau": 1, "period": 1, "c_image": 1, "record_diff": 2},
+          "beat_clock_v1": {"run_declared": 1}}
 
 
 # ------------------------------------------------------------------------------------------- data and hashes
@@ -214,12 +223,54 @@ def decoder_status(man):
     return "frozen", dec
 
 
+def projection(run, side):
+    """A run's declared projection layer (decoder README, 'Projection layers'), checked: ``{"name": label, "keep":
+    {axis: coordinate}}`` with axes among x, y, z and integer coordinates on the board, plus the run's
+    ``layer_sha256``; None if the run declares none."""
+    layer = run.get("layer")
+    if layer is None:
+        return None
+    keep = layer.get("keep") if isinstance(layer, dict) else None
+    if not isinstance(layer, dict) or set(layer) != {"name", "keep"} or not isinstance(layer["name"], str) \
+            or not layer["name"] or not isinstance(keep, dict) or not keep or not set(keep) <= {"x", "y", "z"} \
+            or not all(type(v) is int and 0 <= v < side for v in keep.values()):
+        raise ValueError(f"{run['name']}: a projection layer is {{'name': label, 'keep': {{axis: coordinate}}}}, "
+                         f"axes x, y, z, coordinates 0..{side - 1}")
+    if not isinstance(run.get("layer_sha256"), str):
+        raise ValueError(f"{run['name']}: a projection layer needs its layer_sha256")
+    return layer
+
+
+def project_layer(log_path: Path, keep: dict) -> Path:
+    """The records of an official log whose address has the declared coordinates (``keep``, e.g. {"y": 0, "z": 0}),
+    verbatim and in log order, streamed into ``<log>.layer.jsonl`` (never overwriting).  It reads the official record
+    form, ``"address":[x,y,z,g]`` (compact JSON; the log's SHA-256 is checked first)."""
+    want = [("xyz".index(k), v) for k, v in keep.items()]
+    out = Path(str(log_path) + ".layer.jsonl")
+    with Path(log_path).open(encoding="utf-8") as fi, out.open("x", encoding="utf-8") as fo:
+        for line in fi:
+            j = line.index('"address":[') + 11
+            addr = line[j:line.index("]", j)].split(",")
+            if all(int(addr[i]) == v for i, v in want):
+                fo.write(line)
+    return out
+
+
 def decode_run(dec, log_path, side, steps, run, detectors):
     """Decoder report of one log, plus the declared probes: one ``correlations`` call per probe (its detector and
-    window), stored under report['probes'][name] = the decoder's detector entry."""
+    window), stored under report['probes'][name] = the decoder's detector entry.  A run that declares a projection
+    ``layer`` is decoded on that projection of its official log, whose SHA-256 must be the run's ``layer_sha256``."""
+    layer = projection(run, side)
+    if layer:
+        log_path = project_layer(log_path, layer["keep"])
+        if sha256_bytes(log_path.read_bytes()) != run["layer_sha256"]:
+            raise ValueError(f"{run['name']}: projection layer hash differs")
     events, info = dec.read_log(log_path)
+    if layer:
+        info = dict(info, path=log_path.name)
     spec = (detectors or {}).get("decode") if run.get("decode_detectors") else None   # declared correlation spec
-    report = dec.decode(events, side=side, horizon=steps, log_info=info, detectors=spec)
+    report = dec.decode(events, side=side, horizon=steps, log_info=info, detectors=spec,
+                        layer=layer["name"] if layer else "native")
     probes = {}
     for p in run.get("probes", []):
         det = detectors["detectors"][p["detector"]]
@@ -230,6 +281,116 @@ def decode_run(dec, log_path, side, steps, run, detectors):
     if probes:
         report["probes"] = probes
     return report
+
+
+# ------------------------------------------------------------------------------------------- decoder layers
+def layer_status(man, name):
+    """('frozen', module) if ``name`` is a released decoder layer: its ``FROZEN_<name>.json`` names the layer's file
+    in click_decoder_v1, and that file has the record's SHA-256 and the manifest's pin ``layers[name]``; otherwise
+    (reason, None), and every check of that layer reports the reason.  The module is imported only after the match."""
+    if name not in LAYERS:
+        return f"decoder layer pending ({name!r} is not a released layer)", None
+    try:
+        from research.click_decoder_v1 import decoder as dmod
+    except ImportError:
+        return "decoder layer pending (click_decoder_v1 not installed)", None
+    frozen = dmod.HERE / f"FROZEN_{name}.json"
+    record = json.loads(frozen.read_text(encoding="utf-8")) if frozen.exists() else {}
+    file = str(record.get("file", ""))
+    if record.get("name") != name or Path(file).name != file or not file.endswith(".py") \
+            or not (dmod.HERE / file).exists():
+        return f"decoder layer pending ({name} is not released)", None
+    pin = (man.get("layers") or {}).get(name)
+    if not pin:
+        return f"decoder layer pending (the manifest does not pin {name})", None
+    sha = sha256_bytes((dmod.HERE / file).read_bytes())
+    if sha != record.get("sha256") or sha != pin:
+        return "decoder layer changed: re-validate", None
+    import importlib
+    return "frozen", importlib.import_module(f"research.click_decoder_v1.{file[:-3]}")
+
+
+def layer_args(args, detectors):
+    """The keyword arguments of a layer call: ``{"detectors": pointer}`` stands for a value of detectors.json (for
+    example a beat-clock declaration); other values are passed as they are.  An argument that would write files is
+    refused."""
+    out = {}
+    for key, value in (args or {}).items():
+        if key.startswith("write"):
+            raise ValueError(f"layer argument {key!r} would write files")
+        if isinstance(value, dict) and set(value) == {"detectors"}:
+            value = pointer(detectors or {}, value["detectors"])
+        out[key] = value
+    return out
+
+
+def layer_calls(check):
+    """The calls of a layer check, each a tuple of the runs whose official logs it reads first, in order: a one-log
+    call reads the check's ``run``, or each of its ``runs`` (one call per run); a call of n > 1 logs reads ``runs`` =
+    [a, b, ...] of length n in one call.  None if the check does not name its runs so."""
+    n, runs = LAYERS[check["layer"]][check["call"]], check.get("runs")
+    if "run" in check:
+        return [(check["run"],)] if n == 1 and runs is None else None
+    if not isinstance(runs, list) or not runs or not all(isinstance(r, str) for r in runs):
+        return None
+    if n == 1:
+        return [(r,) for r in runs]
+    return [tuple(runs)] if len(runs) == n else None
+
+
+def _layer_key(runs, check):
+    return tuple(runs), check["layer"], check["call"], json.dumps(check.get("args"), sort_keys=True)
+
+
+def layer_values(checks, lstat, logs, detectors):
+    """{call key: result} for the layer checks whose layer is frozen and whose runs replayed (``logs``: run name ->
+    official log path).  A result is the JSON form of the call's return value, or the exception the call raised."""
+    out = {}
+    for check in checks:
+        mod = lstat[check["layer"]][1]
+        if mod is None or check.get("call") not in LAYERS[check["layer"]]:
+            continue
+        for runs in layer_calls(check) or ():
+            key = _layer_key(runs, check)
+            if key in out or not set(runs) <= set(logs):
+                continue
+            try:
+                value = getattr(mod, check["call"])(*[str(logs[r]) for r in runs],
+                                                    **layer_args(check.get("args"), detectors))
+                out[key] = json.loads(json.dumps(value))
+            except (ValueError, ArithmeticError, OSError, KeyError, IndexError, TypeError) as exc:
+                out[key] = exc
+    return out
+
+
+def layer_result(check, lstat, values, names, detectors):
+    """(result, decoded value) of one layer check (``names``: the selected runs), from ``layer_values``."""
+    status, mod = lstat[check["layer"]]
+    if mod is None:
+        return status, None
+    calls = LAYERS[check["layer"]]
+    if check.get("call") not in calls:
+        return f"not decodable: {check['layer']} has no call {check.get('call')!r}", None
+    shape = layer_calls(check)
+    if shape is None:
+        n = calls[check["call"]]
+        return ("not decodable: " + (f"{check['call']} reads one log: name its run (or runs)" if n == 1 else
+                                     f"{check['call']} reads {n} logs: name them as runs, in order")), None
+    if "derive" in check:
+        return "not decodable: derives read decoder reports only", None
+    if not _needed(check) <= names:
+        return "skipped (runs not selected)", None
+    got = [values.get(_layer_key(runs, check)) for runs in shape]
+    for value in got:
+        if value is None:
+            return "fail: run did not replay", None
+        if isinstance(value, Exception):
+            return f"fail: layer call failed ({value.__class__.__name__}: {value})", None
+    if len(shape[0]) == 1:                                   # one result per run, read like decoder reports
+        return evaluate(check, {runs[0]: value for runs, value in zip(shape, got)}, detectors, None)
+    joint = "+".join(shape[0])                               # one result of several logs, read like one report
+    one = {**{k: v for k, v in check.items() if k != "runs"}, "run": joint}
+    return evaluate(one, {joint: got[0]}, detectors, None)
 
 
 # ------------------------------------------------------------------------------------------------- checks
@@ -258,6 +419,8 @@ def _compare(op, target, value, tol=None):
         return {"lt": target < value, "le": target <= value, "gt": target > value, "ge": target >= value}[op]
     if op == "approx":
         return abs(target - value) <= tol
+    if op == "not_approx":                # the complement of approx: |target - value| > tol
+        return abs(target - value) > tol
     if op == "in":
         return any(_canon(target) == _canon(v) for v in value)
     if op == "len_eq":
@@ -453,7 +616,11 @@ def verify(eid, fast=False, keep=None):
     out = {"id": eid, "runs": [], "checks": [], "decoder": status, "ok": True}
     reports = {}
     selected = [r for r in man["runs"] if r.get("fast") or not fast]
-    wanted = set().union(*[_needed(c) for c in man["checks"] if not c.get("not_decodable")]) if man["checks"] else set()
+    live = [c for c in man["checks"] if not c.get("not_decodable")]
+    wanted = set().union(set(), *[_needed(c) for c in live if "layer" not in c])       # runs the decoder must read
+    layer_checks = [c for c in live if "layer" in c]
+    lstat = {name: layer_status(man, name) for name in sorted({c["layer"] for c in layer_checks})}
+    logs, values = {}, {}
     with tempfile.TemporaryDirectory() as tmp:
         logdir = Path(keep) / eid if keep else Path(tmp)
         logdir.mkdir(parents=True, exist_ok=True)
@@ -469,6 +636,7 @@ def verify(eid, fast=False, keep=None):
                 row["log"] = "ok" if got["log_sha256"] == run["log_sha256"] else "DIFFERS"
                 if row["final_state"] != "ok" or row["log"] != "ok":
                     out["ok"] = False
+                logs[run["name"]] = log
                 if dec is not None and run["name"] in wanted:      # only runs that a decodable check reads
                     reports[run["name"]] = decode_run(dec, log, got["side"], steps, run, detectors)
                     if keep:
@@ -479,12 +647,21 @@ def verify(eid, fast=False, keep=None):
                 row["error"] = f"{exc.__class__.__name__}: {exc}"
                 out["ok"] = False
             out["runs"].append(row)
+        values = layer_values(layer_checks, lstat, logs, detectors)     # while the official logs exist
     names = {r["name"] for r in selected}
     for check in man["checks"]:
         needed = _needed(check)
         row = {"claim": check["claim"], "text": check["text"]}
+        if "layer" in check:
+            row["layer"], row["call"] = check["layer"], check.get("call")
         if check.get("not_decodable"):
             row["result"] = "not decodable: " + check["not_decodable"]
+        elif "layer" in check:
+            row["result"], target = layer_result(check, lstat, values, names, detectors)
+            if row["result"].split(":")[0] in ("pass", "fail"):
+                row["decoded"] = target
+            if row["result"].startswith("fail"):
+                out["ok"] = False
         elif dec is None:
             row["result"] = status
         elif not needed <= names:
@@ -500,6 +677,8 @@ def verify(eid, fast=False, keep=None):
         out["checks"].append(row)
     out["summary"] = {k: sum(1 for c in out["checks"] if c["result"].startswith(k))
                       for k in ("pass", "fail", "not decodable", "decoder", "skipped")}
+    if lstat:
+        out["layers"] = {name: status_ for name, (status_, _) in lstat.items()}
     out["ready"] = out["ok"] and dec is not None and out["summary"]["pass"] == len(man["checks"]) \
         and man.get("verdict", {}).get("result") in ("CONFIRMED", "PARTLY")
     return out

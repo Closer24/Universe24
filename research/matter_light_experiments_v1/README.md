@@ -69,16 +69,45 @@ generated HTML. At most 1 MB of data per experiment.
   record `initial_state_sha256`. Every run records `steps`, `initial_state_sha256`, `final_state_sha256`,
   `log_sha256` (the official click
   log) and optional `probes` (a declared detector and window). With `"decode_detectors": true` the run's report also
-  carries the decoder's own correlations for `detectors.json["decode"]` (a decoder correlation spec).
+  carries the decoder's own correlations for `detectors.json["decode"]` (a decoder correlation spec). A run may
+  declare a projection layer (decoder README, "Projection layers"): `"layer": {"name": label, "keep": {"y": 0,
+  "z": 0}}` with `layer_sha256`. The run is then decoded on the records of its official log whose address has
+  those coordinates (axes x, y, z), verbatim and in log order, and that projection's SHA-256 must equal
+  `layer_sha256`. Decoder-layer checks (below) still read the full official log.
 * `decoder`: name, version and the pinned code SHA-256 of every decoder file; they must equal the decoder's
   `FROZEN.json`, or the verifier stops with "decoder changed: re-validate all experiments".
 * `checks`: a closed vocabulary. `pointer` (RFC 6901) into the decoder report, `pointers` (several pointers of one
-  report) or `runs` (the same pointer in several runs); `op` in `eq ne lt le gt ge approx in len_eq len_ge same diff`
+  report) or `runs` (the same pointer in several runs); `op` in
+  `eq ne lt le gt ge approx not_approx in len_eq len_ge same diff`
   (`diff`: two values, the second minus the first). A probe is one decoder `correlations` call over a declared detector
   and window; its entry is stored at `/probes/<name>` of the run's report. A claim the vocabulary cannot express is
   declared with `not_decodable` and its reason, and keeps the experiment from being "ready".
+* `layers` (when a check names a decoder layer): `{name: SHA-256}` of each released layer the checks use.
 * `verdict`: the referee, the verdict id and the result.
 * informational keys, not checked: `composition_note`, `data_bytes`, `built_utc`, `builder` (provenance of the build).
+
+## Decoder layers
+
+Some click patterns need a reading that the decoder report does not hold, for example the time mirror of a log about
+a moment or the rate of a beat clock. Such a check names a released, frozen layer of `click_decoder_v1`:
+`{"layer": name, "call": function, "args": {...}, "run" | "runs", "pointer" | "pointers", "op", "value"}`, for
+example `{"run": "bounce", "layer": "log_symmetry_v1", "call": "mirror", "args": {"tau": 240}, "pointer":
+"/unpaired", "op": "eq", "value": 0}`.
+
+* The layers are a closed list in `verify.py` (`LAYERS`, with the calls each allows): `log_symmetry_v1` (`mirror`,
+  `best_tau`, `period`, `c_image`, `record_diff`) and `beat_clock_v1` (`run_declared`). Each is frozen by
+  `research/click_decoder_v1/FROZEN_<name>.json`, which names the layer's file and its SHA-256, and the manifest
+  pins that SHA-256 under `layers`; any other file reports every check of that layer as "decoder layer changed:
+  re-validate".
+* A call reads the official click logs of the check's runs first. `record_diff` reads two, `"runs": [a, b]` in that
+  order, and the pointer reads its one result. Every other call reads one log: the check's `run`, or each of its
+  `runs` (the same pointer in each result, as in decoder checks).
+* `args` are passed as they are, except that `{"detectors": pointer}` stands for a value of `detectors.json` (for
+  example a beat-clock declaration). An argument that would write files is refused. `clock` may name the declared
+  clock that a pointer reads (informational).
+* The pointer reads the JSON form of the call's result (integer keys become strings) with the operators of the
+  decoder checks (`not_approx`: abs(target − value) > tol). Layer checks count toward "ready" like decoder checks,
+  and the report lists each layer's status.
 
 ## Derived quantities (`derive`): pure functions of decoder outputs, unit-tested
 
