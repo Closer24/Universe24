@@ -87,7 +87,7 @@ was also checked against the program's own code:
   kind, registration new / update-of / republication-of, generator, coupling, evidence status, parts,
   lineage), the experiments and their cards (`experiment_cards`), the read-only `observers`, the
   `aliases`, the registrar's decisions on proposed cards, the verified points (init files regenerated
-  exactly, recipes and builder equalities, with SHA-256 prefixes; 490 after WAVE 11, all exact), and the
+  exactly, recipes and builder equalities, with SHA-256 prefixes; 492 after WAVE 12, all exact), and the
   role of each of the 348 published names (the 338 of 8301320, the 8 appended in dff39dc and the 2 appended with the
   candidate-coupling framework (the variant block and its reference companion): canonical, variant, control, alias,
   J-image, experiment instance).
@@ -109,7 +109,9 @@ files) and r30's `proposal_chiral_both_forces.json` (WAVE 9, the variant block),
 (builder D's `remote/builderD_R5/` and `remote/BUILDER_D_REPORT5.md`, r10r's `r10/r10r_REVIEW.md`) at commit 96b1c0f
 and the WAVE 11 sources (builder D's `remote/builderD_QMA_interim/`, `remote/builderD_QMA_final/` and their
 reports, fresh machine 2's `remote/FRESH_MACHINE_REPORT_QMF4.md`) at commit 6c0798c, r10g's
-`r10/REVIEW_R10G_W9.md` at commit 01790e6.
+`r10/REVIEW_R10G_W9.md` at commit 01790e6, and the WAVE 12 sources (builder B's `remote/builderB_QMB3/qmb/`,
+`remote/builderB_QMB5/qmb8/` and the QM-B8 section of `remote/BUILDER_B_REPORT_QMB_FULL.md`, r10zc's
+`r10/r10zc_REVIEW.md`, fresh machine 2's `remote/FRESH_MACHINE_REPORT_QMF5.md`) at commit 3ca4977.
 Nothing there is needed to regenerate or verify a block or a composition; `runs/` paths are local.
 
 `compositions.py` also holds the WAVE 2 compositions: the published guide instances
@@ -219,6 +221,18 @@ the representative members write builder D's init files byte for byte, that all 
 and differ only in the quantum's and escort C's packets, that the prediction gives N_B = 1, 2, 3, 5, 6, 7, 8, 9, 10,
 11, 11, 12, 13 for D′ = 1, 2, 3, 6–12, 14–16 (no ties), and that two short native runs click first at the predicted
 exit, 2 updates after the coincidence, with all three prepared packets lit at update 1.
+
+WAVE 12 (r67) added builder B's triple gate (QM-B3 / QM-B8; refereed by r10zc, R10ZC-7..9, and reproduced by fresh
+machine 2, QM-F5) as the assembly `gate.triple_x_gate@1`, a variant-of `gate.x_gate@1`: an x-, a y- and a z-fibre
+through one vacuum gap node, (−,+,+), one unit (1,−1) packet per line (`TRIPLE_GATE_PATHS`, `triple_gate_params`: one
+`gapped_guide_placement` of `guide_net@1` paths; a J-flipped line is the same path with the opposite gauge sign; the
+gate gear g = 3, 4 one `literal_patch@1` cell). `triple_gate_spec(members, L)` is one composition with one control
+per member (Dy, Dz, sy, sz, g) (for g = 2 the gear placement is removed). No generator changed. They write the
+curated experiment `E25_two_time_counting_rule`, whose mirrored runs are init files JR(x_T) written from each run 1's
+complete final state. `tests/test_matter_light_blocks_registry_wave12.py` checks builder B's two init files byte for
+byte, the members' controls, that two mirrored runs (second forward runs) end at JR(x0) with run 1's records mirrored
+and the statistic k̄ = k, E25's init-file hashes, and the ε-twin (gears 2 and 3: identical clicks (t, x, k, q),
+finals differing only in the gate r).
 
 ## Limits
 

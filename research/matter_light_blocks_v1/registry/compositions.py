@@ -3153,3 +3153,65 @@ def cc8_spec(runs, L=256, at=CC7M_AT, steps=2100, name="cc8"):
                                              "hidden_phase": "tau (CC8_QUANTUM)", "device_phase": "Dp (CC8_ESCORT_C)",
                                              "registration_delay": 2}},
             "controls": controls, "steps": steps}
+
+
+# ------------------------------------------------------------------------- WAVE 12: builder B QM-B8, the triple gate
+#: gate.triple_x_gate@1 (builder B QM-B3 / QM-B8, the "triple gate"): an x-, a y- and a z-fibre through one vacuum gap
+#: node X (r20's X-gate shared by three fibres), (-,+,+), L = 128.  One elementary quantum of profile C = (1,-1) (fibre
+#: light) on each line, 12, 12 + Dy and 12 + Dz nodes before X and moving toward it; the y- and z-lines in the gauge
+#: sy, sz = +-1 (builder B's J image of a line = the same line with the opposite gauge sign); the gate channel (X, 1)
+#: prepared at gear g = 2 (the vacuum), 3 or 4.  Builder B's c0tri.board (QM-B8: gate gear g) in local coordinates.
+TRIPLE_GATE_AT = (40, 40, 20)
+TRIPLE_GATE_PATHS = (("X", (-20, 0, 0), 1, 0, 52), ("Y", (0, -20, 0), 23, 2, 48), ("Z", (0, 0, -20), 23, 4, 40))
+
+
+def triple_gate_params(Dy, Dz, sy, sz, packets=True):
+    """guide_net@1 params of the triple gate (gapped_guide_placement: the gate site left at the vacuum); every line
+    passes X with channel 1 and gauge -1 (sy = sz = +1), node 20 of each path."""
+    if not (-4 <= Dy <= 4 and -4 <= Dz <= 4) or sy not in (1, -1) or sz not in (1, -1):
+        raise ValueError("Dy, Dz in -4..4 and sy, sz in {+1, -1}")
+    sig = {"X": -1, "Y": -sy, "Z": -sz}
+    paths = [{"name": n, "start": list(s), "g0": g0, "sigma0": sig[n], "dirs": [[d, k]]}
+             for n, s, g0, d, k in TRIPLE_GATE_PATHS]
+    lead = {"X": 8, "Y": 8 - Dy, "Z": 8 - Dz}
+    pk = [{"path": n, "f": [1, -1], "lead": lead[n]} for n in ("X", "Y", "Z")] if packets else []
+    return gapped_guide_placement("tri", (0, 0, 0), paths, [[0, 0, 0]], pk, MPP)["params"]
+
+
+def triple_gate_placements(name, at, Dy, Dz, sy, sz, g=2, packets=True):
+    """The triple gate at X = ``at``: one guide_net@1 placement, and the gate gear as one literal_patch@1 cell (no
+    placement for g = 2, the vacuum)."""
+    if g not in (2, 3, 4):
+        raise ValueError("the gate gear g is 2 (vacuum), 3 or 4")
+    pl = [{"name": name, "block": "guide_net@1", "params": triple_gate_params(Dy, Dz, sy, sz, packets),
+           "at": list(at), "wrap": False}]
+    if g != 2:
+        pl.append({"name": name + "_gear", "block": "literal_patch@1",
+                   "params": {"kind": "literal", "cells": [[0, 0, 0, 1, 0, 0, g]]}, "at": list(at), "wrap": False})
+    return pl
+
+
+def triple_gate_key(member):
+    Dy, Dz, sy, sz, g = member
+    return f"m{Dy:+d}{Dz:+d}{'+' if sy > 0 else '-'}{'+' if sz > 0 else '-'}_g{g}"
+
+
+def triple_gate_spec(members, L=128, at=TRIPLE_GATE_AT, steps=80, name="tri"):
+    """exp.two_time_counting_rule@1 (builder B QM-B8), the prepared members (Dy, Dz, sy, sz, g): ONE composition whose
+    controls ``triple_gate_key(member)`` are the members (parameter masks; for g = 2 the gear placement is removed).
+    The base is the first member's hardware with a gear placement (g = 4 when that member has g = 2): a template, every
+    run names its control."""
+    first = members[0]
+    base = triple_gate_placements(name, at, *first[:4], g=first[4] if first[4] != 2 else 4)
+    controls = []
+    for m in members:
+        hw = triple_gate_params(*m[:4])
+        c = {"name": triple_gate_key(m), "override": {name: hw}}
+        if m[4] == 2:
+            c["remove"] = [name + "_gear"]
+        else:
+            c["override"][name + "_gear"] = {"cells": [[0, 0, 0, 1, 0, 0, m[4]]]}
+        controls.append(c)
+    return {"format": FORMAT, "id": f"triple_gate_L{L}", "board": _board(L, MPP), "placements": base,
+            "timing": {"t0": 0, "declared": {"T": steps, "gate": [*at, 1], "future_B": "+x exit occupied at T"}},
+            "controls": controls, "steps": steps}
