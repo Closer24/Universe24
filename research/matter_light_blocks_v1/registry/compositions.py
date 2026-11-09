@@ -3319,3 +3319,36 @@ def flrw_spec(runs, L=4096, version="v1", name="flrw"):
             "timing": {"t0": 0, "declared": {"T": FLRW["T"], "board_time": "conformal time eta",
                                              "tick_node_x": FLRW["X0"] + FLRW["JI"]}},
             "controls": controls, "steps": FLRW["T"]}
+
+
+# --------------------------------------------------------------- WAVE 14: builder B QM-SHOW, one gate and two quanta
+#: The single X-gate router of builder B's QM-SHOW ("the click and all the paths"; refereed r10zh R10ZH-27..33): the x-
+#: and y-lines of the triple gate (TRIPLE_GATE_PATHS X, Y) through one vacuum gap node X = (40, 40, 20), (-,+,+), L = 128;
+#: quantum Q on the x-line 12 nodes before X, quantum K on the y-line 12 + D nodes before X (D = -8..8), the y-line in the
+#: gauge s = +-1; both unit (1,-1) packets (profile C, fibre light) moving toward X.  Members (D, s): 34.
+def x_gate_pair_params(D, s, q=True, k=True):
+    """guide_net@1 params of QM-SHOW's board (gapped_guide_placement, X at the vacuum): Q and K present or masked."""
+    if not -8 <= D <= 8 or s not in (1, -1):
+        raise ValueError("D in -8..8 and s in {+1, -1}")
+    sig = {"X": -1, "Y": -s}
+    paths = [{"name": n, "start": list(st), "g0": g0, "sigma0": sig[n], "dirs": [[d, n_]]}
+             for n, st, g0, d, n_ in TRIPLE_GATE_PATHS if n in ("X", "Y")]
+    pk = [{"path": "X", "f": [1, -1], "lead": 8}] if q else []
+    pk += [{"path": "Y", "f": [1, -1], "lead": 8 - D}] if k else []
+    return gapped_guide_placement("pair", (0, 0, 0), paths, [[0, 0, 0]], pk, MPP)["params"]
+
+
+def x_gate_pair_key(D, s, q=True, k=True):
+    return f"D{D:+d}{'+' if s > 0 else '-'}" + ("" if q and k else "_Q" if q else "_K" if k else "_hw")
+
+
+def x_gate_pair_spec(members, L=128, at=TRIPLE_GATE_AT, steps=80, name="pair"):
+    """exp.gate_two_quanta@1 (builder B QM-SHOW): ONE composition (base: the s = +1 hardware without packets) and one
+    control per entry of ``members`` = [(D, s, q, k)]: (D, s) the member (the y-line gauge s is part of the control),
+    q / k whether Q / K is present (packet masks)."""
+    base = {"name": name, "block": "guide_net@1", "params": x_gate_pair_params(0, 1, False, False), "at": list(at),
+            "wrap": False}
+    controls = [{"name": x_gate_pair_key(*m), "override": {name: x_gate_pair_params(*m)}} for m in members]
+    return {"format": FORMAT, "id": f"x_gate_pair_L{L}", "board": _board(L, MPP), "placements": [base],
+            "timing": {"t0": 0, "declared": {"T": steps, "gate": [*at, 1], "exits": "x+, x-, y+, y- at distance 3"}},
+            "controls": controls, "steps": steps}

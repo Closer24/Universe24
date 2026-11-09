@@ -87,7 +87,7 @@ was also checked against the program's own code:
   kind, registration new / update-of / republication-of, generator, coupling, evidence status, parts,
   lineage), the experiments and their cards (`experiment_cards`), the read-only `observers`, the
   `aliases`, the registrar's decisions on proposed cards, the verified points (init files regenerated
-  exactly, recipes and builder equalities, with SHA-256 prefixes; 500 after WAVE 13, all exact), and the
+  exactly, recipes and builder equalities, with SHA-256 prefixes; 502 after WAVE 14, all exact), and the
   role of each of the 348 published names (the 338 of 8301320, the 8 appended in dff39dc and the 2 appended with the
   candidate-coupling framework (the variant block and its reference companion): canonical, variant, control, alias,
   J-image, experiment instance).
@@ -113,7 +113,9 @@ reports, fresh machine 2's `remote/FRESH_MACHINE_REPORT_QMF4.md`) at commit 6c07
 `remote/builderB_QMB5/qmb8/` and the QM-B8 section of `remote/BUILDER_B_REPORT_QMB_FULL.md`, r10zc's
 `r10/r10zc_REVIEW.md`, fresh machine 2's `remote/FRESH_MACHINE_REPORT_QMF5.md`) at commit 3ca4977, and the WAVE 13
 sources (r70's `r70/flrw.py`, `r70/kit70.py`, `r70/results/`, r10zf's `r10/REVIEW_R10ZF.md`, the fresh-machine
-reports `remote/FRESH_MACHINE_REPORT_GRF8.md` and `GRF10.md`) at commit 3ee08d7.
+reports `remote/FRESH_MACHINE_REPORT_GRF8.md` and `GRF10.md`) at commit 3ee08d7, and the WAVE 14 sources
+(builder B's `remote/builderB_QMSHOW/qmshow/`, `remote/builderB_QMSHOW5/qmb/grid.py`, r10zh's `r10/REVIEW_R10ZH.md`,
+fresh machine 2's `remote/FRESH_MACHINE_REPORT_QMF15.md`) at commit fd49c09.
 Nothing there is needed to regenerate or verify a block or a composition; `runs/` paths are local.
 
 `compositions.py` also holds the WAVE 2 compositions: the published guide instances
@@ -247,6 +249,17 @@ schedule. No generator changed. The composed EdS, EdS_2L, RAD, DARK, EdS2, RAD2,
 init files byte for byte. They write the curated experiment `E23_flrw_in_clicks`.
 `tests/test_matter_light_blocks_registry_wave13.py` checks the DARK board against r70's init file byte for byte,
 r70's tick schedules, the tapes' packets for every schedule and the U-path, lane and ring geometry.
+
+WAVE 14 (r67) added builder B's QM-SHOW router (refereed by r10zh, R10ZH-27..33; reproduced by fresh machine 2,
+QM-F15) as the assembly `gate.x_gate_pair_router@1`, a variant-of `gate.triple_x_gate@1`: the triple gate's x- and
+y-lines through one vacuum gap node with two separately prepared (1,−1) packets, Q 12 nodes and K 12 + D nodes before
+the gate (`x_gate_pair_params`, `x_gate_pair_key`; `x_gate_pair_spec(entries, L)`: one composition, one control per
+member and packet mask); for D = 8 (2 of the 34 members) the y-line begins at K's lead, so only K's leading cell (0,
+∓1) is placed: there K is a truncated packet, not a full (1,−1) quantum. No generator changed. All 136 composed
+boards (34 members × 4 masks) equal builder B's, and his two CLI init files are reproduced byte for byte. They write
+the curated experiment `E26_one_gate_two_quanta`. `tests/test_matter_light_blocks_registry_wave14.py` checks the two
+init files, the packet masks, and for all 8 of E26's mirror runs the init-file hashes, the return to JR(x0) and the
+mirrored records, with the exact union of the branch logs where the gate stays silent.
 
 ## Limits
 
