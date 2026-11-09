@@ -27,12 +27,13 @@ law and `Q` is not energy (AGENTS rules 10 and 12).
 | [E15b](E15b_planar_cyclic_box/CARD.md) | a cyclic planar box: the seed plane between two + planes re-bangs exactly every 4d + 4 = 16 updates | +++ | THEOREM + SIMULATION | 4 of 4 pass (log_symmetry_v1) | remote FRESH6-1, r10g R10G-74..77 CONFIRMED | ~30 s |
 | [E16](E16_bigbang_backward_v5/CARD.md) | Big Bang candidate v5, built backwards: created light, two created ring clocks (36, 22), one gate decision, a matched α_in = 1 instrument pair and a radar echo, from a 14-cell seed | (−,+,+) | SIMULATION | 20 of 20 pass | r10h R10H-1..8 PARTLY (1, 3, 4, 7 CONFIRMED) | ~2 min |
 | [E17](E17_exact_bounce_v6/CARD.md) | an exact bounce: one JR-fixed state s* whose contraction and expansion are mirror images in the clicks (0 of 49,830 records unpaired), on L and 2L | (−,+,+) | THEOREM + SIMULATION | 12 of 12 pass (7 decoder, 5 log_symmetry_v1) | remote FRESH4-A1..A3 CONFIRMED | ~2 min |
+| [E18](E18_cyclic_universe_c3c/CARD.md) | C3c, a cyclic universe candidate (period 320): created light, created matter at exact ∓1/3, a 720° spin ring, a ring clock at N = 3/5 and twin cavity atom candidates | (−,+,+) | THEOREM + SIMULATION | 15 of 15 pass (9 decoder, 6 log_symmetry_v1) | remote FRESH8 CONFIRMED (K6 PARTLY) | ~1 min |
 
 E01's twin runs reference the blocks appended to `research/matter_light_blocks_v1` in dff39dc. Like E01, E07b's run
 a_A references a published block (`exact_front_111_box`).
 
 Decoder pin: `click_decoder_v1` 1.0, frozen 2026-11-09T01:29:27Z (`research/click_decoder_v1/FROZEN.json`). E15,
-E15b and E17 also pin the frozen layer log_symmetry_v1 (release 1.0.3). An experiment is **ready** when every
+E15b, E17 and E18 also pin the frozen layer log_symmetry_v1 (release 1.0.3). An experiment is **ready** when every
 declared check passes on the decoder report and the referee's verdict is recorded.
 
 ## Commands
@@ -41,7 +42,7 @@ declared check passes on the decoder report and the referee's verdict is recorde
 python -m research.matter_light_experiments_v1.verify E01_local_atom_twins E02_clicktime_chsh E03_exclusive_detection \
     E04_einstein_created E06_moving_clocks E07_sce_collapse_entanglement E07b_sce_superposition_interference \
     E09_einstein1911_clicks E10_prescribed_schwarzschild_lattice E15_cyclic_bangs E15b_planar_cyclic_box \
-    E16_bigbang_backward_v5 E17_exact_bounce_v6 \
+    E16_bigbang_backward_v5 E17_exact_bounce_v6 E18_cyclic_universe_c3c \
                                                                                 # every one "ready": true
 python -m research.matter_light_experiments_v1.verify --all                     # every experiment folder present
 python -m research.matter_light_experiments_v1.verify --fast                    # only the runs marked fast
