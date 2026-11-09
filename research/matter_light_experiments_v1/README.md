@@ -42,15 +42,16 @@ cosmology or quantum behaviour is claimed. `C2` is not a selection law and `Q` i
 | [E23](E23_flrw_in_clicks/CARD.md) | a prescribed flat FLRW universe in clicks (r70): on a static lattice of fibre light (A-pulses) whose tape clocks carry a written a(η), every radar echo returns exactly 2χ after its departure and every reception at O comes at its fixed lag; O's dial keeps the prescribed schedule (EdS, RAD, STATIC2, CYC); in EdS every station's dial ticks with O's (E9-2); the FLRW readouts (R/χ, 1 + z, v/R, the synchronisation defect) hold by construction and are reported, not computed by the checks; prescribed a(η), not caused by matter | +++ | THEOREM + SIMULATION | 43 of 43 pass (42 decoder, 1 log_symmetry_v1) | r10zf R10ZF-1..6, 9, 11 CONFIRMED (R10ZF-7, 8 PARTLY, W1–W8 applied); fresh machine 1 GR-F8 (8/8 CONFIRMED; fixes 1–3 applied); fresh machine 2 GR-F10 (runs, dials, redshift and radar rows CONFIRMED; its two band refinements applied) | ~20 min |
 | [E25](E25_two_time_counting_rule/CARD.md) | the two-time counting rule in clicks on builder B's triple gate: a second forward run from JR of a run's final state gives the run's click log in reverse order, kinds and quotients negated (C0 stays C0, C1 ↔ C2), so the statistic k̄ equals k for the 12 replayed members (builder B's 972 + 485 runs reported); gears 2 and 3 are ε-twins; Theorem M (JR∘F∘JR = F⁻¹), the time symmetry of a reversible deterministic system, not a quantum effect | (−,+,+) | THEOREM + SIMULATION | 46 of 46 pass (38 decoder, 8 log_symmetry_v1) | r10zc R10ZC-7, 8, 9 CONFIRMED (R10ZC-10, 11 wording applied); fresh machine 2 QM-F5 ALL PASS | ~5 s |
 | [E26](E26_one_gate_two_quanta/CARD.md) | one gate, two quanta (builder B's QM-SHOW): two separately prepared fibre packets (at D = 8 K is truncated) add exactly until they meet (28 of 34 members never meet within 80 updates: the board log is the union of the branch logs); where they meet, the gate records the meeting at the update it begins and light leaves by two or three exits fixed by the prepared offset and sign; the mirror run retraces every click; classical hidden-variable behaviour, not a sum over paths | (−,+,+) | THEOREM + SIMULATION | 128 of 128 pass (44 decoder, 84 log_symmetry_v1) | r10zh R10ZH-27..32 CONFIRMED (27 with a wording fix, 28 with scope, 31 on a rerun member), R10ZH-33 PARTLY (wording fixes 1–4 applied); fresh machine 2 QM-F15: builder rerun and (a)–(d) CONFIRMED, its fixes 1–4 applied | ~10 s |
+| [E27](E27_lapse_ladder_g00/CARD.md) | a prescribed Schwarzschild-lapse ladder (g00 only), read back from clicks (builder F): five ring clocks of node counts 120/N tick with periods 120, 144, 150, 160 and 180, and a clicks-only observer given a declaration finds f_r/f_e = N_e/N_r exactly (5/6, 4/5, 3/4, 2/3 against the far ring; Pound–Rebka 5/6, 6/5, 10/9); the radii are labels and the clicks fix only period ratios (declared at their own node counts, the same logs read f_r/f_e = 1: a decoded control); a separate rounded Shapiro chain gives round trips 608 / 358 | +++ | SIMULATION | 33 of 33 pass (30 gr_observer_v1, 3 log_symmetry_v1) | r10zi R10ZI-1..12, 14, 18, 19 CONFIRMED (3, 5, 19 by construction; 14 for v2 only), R10ZI-13, 17, 20 PARTLY, R10ZI-15 REFUTED as a result, R10ZI-16 a declaration (wording fixes 1–11 applied); fresh machine 2 GR-F12 (1)–(3) CONFIRMED, its fixes 1–4 applied | ~1 min |
 
 E01's twin runs reference the blocks appended to `research/matter_light_blocks_v1` in dff39dc. Like E01, E07b's run
 a_A references a published block (`exact_front_111_box`).
 
 Decoder pin: `click_decoder_v1` 1.0, frozen 2026-11-09T01:29:27Z (`research/click_decoder_v1/FROZEN.json`). E15,
-E15b, E17, E18, E19, E20, E20b, E22, E23, E25 and E26 also pin the frozen layer log_symmetry_v1, E11 the frozen
-layer beat_clock_v1 (release 1.0.3) and E21 the frozen layer gr_observer_v1 (release 1.0.5). An experiment is **ready**
-when every run replays exactly (initial-state, final-state and log hashes), every declared check passes and the
-referee's verdict is recorded as CONFIRMED or PARTLY (E13 and E16: PARTLY, with their caveats on the cards).
+E15b, E17, E18, E19, E20, E20b, E22, E23, E25, E26 and E27 also pin the frozen layer log_symmetry_v1, E11 the frozen
+layer beat_clock_v1 (release 1.0.3) and E21 and E27 the frozen layer gr_observer_v1 (release 1.0.5). An experiment is
+**ready** when every run replays exactly (initial-state, final-state and log hashes), every declared check passes and
+the referee's verdict is recorded as CONFIRMED or PARTLY (E13 and E16: PARTLY, with their caveats on the cards).
 
 ## Commands
 
@@ -62,6 +63,7 @@ python -m research.matter_light_experiments_v1.verify E01_local_atom_twins E02_c
     E16_bigbang_backward_v5 E17_exact_bounce_v6 E18_cyclic_universe_c3c E19_cyclic_universe_c4_variant \
     E20_one_hardware_two_outcomes E20b_one_hardware_in_c3c E21_gr_observer_clicks_only \
     E22_one_quantum_one_exit E23_flrw_in_clicks E25_two_time_counting_rule E26_one_gate_two_quanta \
+    E27_lapse_ladder_g00 \
                                                                                 # every one "ready": true
 python -m research.matter_light_experiments_v1.verify --all                     # every experiment folder present
 python -m research.matter_light_experiments_v1.verify --fast                    # only the runs marked fast
@@ -236,5 +238,7 @@ in the last column (7aac8c5 is a later snapshot of the same folder).
 | remote referee report GR-F10 (E23: RAD, RAD2, EdS2, EdS reproduced; the binding Hubble and synchronisation bands) | `remote/FRESH_MACHINE_REPORT_GRF10.md` | 3ee08d7 |
 | R10ZH-27..33 (E26): builder B's QM-SHOW | `r10/REVIEW_R10ZH.md` (item 4); builder B's `remote/builderB_QMSHOW/qmshow/`, `remote/builderB_QMSHOW5/qmb/grid.py` | fd49c09 |
 | remote referee report QM-F15 (E26 reproduced) | `remote/FRESH_MACHINE_REPORT_QMF15.md` | fd49c09 |
+| R10ZI-1..20 (E27): builder F's lapse ladder and Shapiro chain | `r10/REVIEW_R10ZI.md`; builder F's `remote/BUILDER_F_REPORT_SWL.md`, `remote/builderF_FINAL/` | c2b4258 |
+| remote referee report GR-F12 (E27 reproduced) | `remote/FRESH_MACHINE_REPORT_GRF12.md` | c2b4258 |
 | the exact FLRW light laws E9-1..E9-4, by construction (E23) | `r70/REPORT.md` §10; PROOF CHECKED (r68 D31: `r68/MATH_LEDGER.md`, row D31); `r10/REVIEW_R10ZF.md` (R10ZF-3..6; E9-5 is not cited, R10ZF-8) | 3ee08d7 |
 | additivity below overflow: the first non-additive update is the first quotient defect, on the same cells [THEOREM, builder B's T1] (E26) | `remote/BUILDER_B_REPORT_QMB_FULL.md`, T1 (r49 Theorem S, restated for the readout); its proof confirmed in `r10/r10x_REVIEW.md` (R10X-1, PARTLY: the proof is correct, the statement's record wording was fixed) | fd49c09 |
