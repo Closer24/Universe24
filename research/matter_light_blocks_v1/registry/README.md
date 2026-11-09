@@ -132,9 +132,9 @@ WAVE 5 added the assemblies `gate.split_pair_reader@1` (`split_pair_reader_place
 `r28_reg9b_spec` and the created module's readers `r28_module_readers`), `parity.wu_half_cross@1`
 (`wu_half_cross_spec`), `detect.race_comparator@1` and `detect.heralded_projection_z6@1` (`r19_race_spec`,
 `r19_heralded_z6_spec`; a declared post-selection) and `clock.diagonal_light_clock@1` (`e11_main_diagonal_spec`,
-with `e11_control_generic_spec`); the builders of the curated experiments E09 (`r23_e09_cases`) and E10
-(`e10_spec_all`, ported from r22's builder, and `e10_lamp_spec`), and of the staged experiment E11
-(`r25_e11_cases`, not yet published); and r27b's cards
+with `e11_control_generic_spec`); the builders of the curated experiments E09 (`r23_e09_cases`), E10
+(`e10_spec_all`, ported from r22's builder, and `e10_lamp_spec`) and E11 (`E11_light_clock_dilation`: main board
+`e11_main_plane_light_spec` of WAVE 8, control board `r25_e11_cases`); and r27b's cards
 `clock.ring_emitter@2` (`ring_tap_placement`), `clock.ring_clock_h1@1` (`ring_clock_h1_placement`) and
 `medium.mirror_bridge@1` (`mirror_bridge_placement`). No generator changed.
 `tests/test_matter_light_blocks_registry_wave5.py` regenerates the three published planar blocks from
@@ -149,8 +149,8 @@ the seed is JR-fixed) — r36b's gravity inside the cycle (`cyclic_gravity_spec`
 the dark parts plus one moment patch per part, `R36B_MOMENTS` = `seed.cyclic_point@2`; parts `counter_ring_placement`
 = `clock.counter_ring@1`, `clock.counter_lamp@1`, `spin.box_loop_z@1`; `r36b_part_spec`) and r27b's exact bounce
 `bigbang_bounce_v6_spec`; r33's field-line bundle as the generator `field_line_bundle@1`
-(`field_line_bundle_placement`; `e13_spec` and `e13b_spec` regenerate every board of the staged experiments E13 and
-E13b, not yet published); r29's fused movers and rail pairs
+(`field_line_bundle_placement`; `e13_spec` and `e13b_spec` regenerate every board of the curated experiment
+`E13_exchange_contact_counts`, whose `created_flux` composition is E13b); r29's fused movers and rail pairs
 (`fused_mover_line_spec`, `towed_pair_spec`, `leapfrog_pair_spec`); and split guide paths for vacuum gap nodes
 shared by two fibres (`split_guide_path`, `path_through`, `gapped_guide_placement`): r20's `gate.x_gate@1`
 (`x_gate_spec`), `store.x_cavity@1` (`x_cavity_spec`) and `select.escorted_junction@1` (`escorted_junction_spec`),
