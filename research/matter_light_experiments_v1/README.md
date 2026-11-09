@@ -44,13 +44,14 @@ cosmology or quantum behaviour is claimed. `C2` is not a selection law and `Q` i
 | [E25](E25_two_time_counting_rule/CARD.md) | the two-time counting rule in clicks on builder B's triple gate: a second forward run from JR of a run's final state gives the run's click log in reverse order, kinds and quotients negated (C0 stays C0, C1 ↔ C2), so the statistic k̄ equals k for the 12 replayed members (builder B's 972 + 485 runs reported); gears 2 and 3 are ε-twins; Theorem M (JR∘F∘JR = F⁻¹), the time symmetry of a reversible deterministic system, not a quantum effect | (−,+,+) | THEOREM + SIMULATION | 46 of 46 pass (38 decoder, 8 log_symmetry_v1) | r10zc R10ZC-7, 8, 9 CONFIRMED (R10ZC-10, 11 wording applied); fresh machine 2 QM-F5 ALL PASS | ~5 s |
 | [E26](E26_one_gate_two_quanta/CARD.md) | one gate, two quanta (builder B's QM-SHOW): two separately prepared fibre packets (at D = 8 K is truncated) add exactly until they meet (28 of 34 members never meet within 80 updates: the board log is the union of the branch logs); where they meet, the gate records the meeting at the update it begins and light leaves by two or three exits fixed by the prepared offset and sign; the mirror run retraces every click; classical hidden-variable behaviour, not a sum over paths | (−,+,+) | THEOREM + SIMULATION | 128 of 128 pass (44 decoder, 84 log_symmetry_v1) | r10zh R10ZH-27..32 CONFIRMED (27 with a wording fix, 28 with scope, 31 on a rerun member), R10ZH-33 PARTLY (wording fixes 1–4 applied); fresh machine 2 QM-F15: builder rerun and (a)–(d) CONFIRMED, its fixes 1–4 applied | ~10 s |
 | [E27](E27_lapse_ladder_g00/CARD.md) | a prescribed Schwarzschild-lapse ladder (g00 only), read back from clicks (builder F): five ring clocks of node counts 120/N tick with periods 120, 144, 150, 160 and 180, and a clicks-only observer given a declaration finds f_r/f_e = N_e/N_r exactly (5/6, 4/5, 3/4, 2/3 against the far ring; Pound–Rebka 5/6, 6/5, 10/9); the radii are labels and the clicks fix only period ratios (declared at their own node counts, the same logs read f_r/f_e = 1: a decoded control); a separate rounded Shapiro chain gives round trips 608 / 358 | +++ | SIMULATION | 33 of 33 pass (30 gr_observer_v1, 3 log_symmetry_v1) | r10zi R10ZI-1..12, 14, 18, 19 CONFIRMED (3, 5, 19 by construction; 14 for v2 only), R10ZI-13, 17, 20 PARTLY, R10ZI-15 REFUTED as a result, R10ZI-16 a declaration (wording fixes 1–11 applied); fresh machine 2 GR-F12 (1)–(3) CONFIRMED, its fixes 1–4 applied | ~1 min |
+| [E28](E28_schwarzschild_radial_profile/CARD.md) | the radial static profile of a PRESCRIBED Schwarzschild relay tree (builder C's GS-2b, M = 64) read in clicks by a clicks-only observer GIVEN A DECLARATION: the ring clocks tick their node counts (N_i = 480/n_i) and every one-way light time (branch, radial, first arrival) equals its node count; r_i a DECLARED areal radius (open spiral branch fibres that encircle nothing); the masses, the curvature (GX-5 within node-rounding noise) and the 1911 twin are reported, not computed; overall GX verdict NOT REACHED | +++ | SIMULATION | 6 of 6 pass (gr_observer_v1) | r10zj R10ZJ-1, 2, 4, 5, 9, 11, 18 CONFIRMED; 3 (for S; T, S2L by hashes); 6 (with caveats); 7 (own reader, own log); 8 (arithmetic; T log not rerun); 10 (and stronger); 12 (one wording fix); 16 (shipped read); 13, 14, 17, 19 PARTLY; 15 CONFIRMED (verdicts) / PARTLY (attribution); 20 NOT REACHED; fixes 1–12 applied; fresh machine 1 GR-F11: 1, 2, 2b, 3a–3d, 4a–4c, 5 CONFIRMED, wording (a)–(e) applied | ~25 min |
 
 E01's twin runs reference the blocks appended to `research/matter_light_blocks_v1` in dff39dc. Like E01, E07b's run
 a_A references a published block (`exact_front_111_box`).
 
 Decoder pin: `click_decoder_v1` 1.0, frozen 2026-11-09T01:29:27Z (`research/click_decoder_v1/FROZEN.json`). E15,
 E15b, E17, E18, E19, E20, E20b, E22, E23, E25, E26 and E27 also pin the frozen layer log_symmetry_v1, E11 the frozen
-layer beat_clock_v1 (release 1.0.3) and E21, E24 and E27 the frozen layer gr_observer_v1 (release 1.0.5). An
+layer beat_clock_v1 (release 1.0.3) and E21, E24, E27 and E28 the frozen layer gr_observer_v1 (release 1.0.5). An
 experiment is **ready** when every run replays exactly (initial-state, final-state and log hashes), every declared
 check passes and the referee's verdict is recorded as CONFIRMED or PARTLY (E13 and E16: PARTLY, with their caveats on
 the cards).
@@ -65,7 +66,7 @@ python -m research.matter_light_experiments_v1.verify E01_local_atom_twins E02_c
     E16_bigbang_backward_v5 E17_exact_bounce_v6 E18_cyclic_universe_c3c E19_cyclic_universe_c4_variant \
     E20_one_hardware_two_outcomes E20b_one_hardware_in_c3c E21_gr_observer_clicks_only \
     E22_one_quantum_one_exit E23_flrw_in_clicks E24_metric_tensor_declared_chart E25_two_time_counting_rule \
-    E26_one_gate_two_quanta E27_lapse_ladder_g00 \
+    E26_one_gate_two_quanta E27_lapse_ladder_g00 E28_schwarzschild_radial_profile \
                                                                                 # every one "ready": true
 python -m research.matter_light_experiments_v1.verify --all                     # every experiment folder present
 python -m research.matter_light_experiments_v1.verify --fast                    # only the runs marked fast
@@ -76,8 +77,8 @@ python -m unittest tests.test_matter_light_experiments_v1                       
 `--fast` is a smoke test, not a verification: it replays only the runs marked `fast` and reports every check that
 reads another run as "skipped (runs not selected)", so an experiment with slower runs ends with `"ok": true` and
 `"ready": false`. Only E09, E10, E11, E15, E21, E25 and E26, whose runs are all marked fast, can be ready under
-`--fast`; E01, E04, E06, E15b, E17, E20b, E23 and E24 have no fast run. `--help` prints the usage, and an unknown
-flag stops with exit status 2.
+`--fast`; E01, E04, E06, E15b, E17, E20b, E23, E24 and E28 have no fast run. `--help` prints the usage, and an
+unknown flag stops with exit status 2.
 
 ```python
 from research.matter_light_experiments_v1 import experiment
@@ -244,6 +245,8 @@ in the last column (7aac8c5 is a later snapshot of the same folder).
 | remote referee report GR-F12 (E27 reproduced) | `remote/FRESH_MACHINE_REPORT_GRF12.md` | c2b4258 |
 | R10ZG-1..12 (E24): r71's metric tensor in a declared chart | `r10/REVIEW_R10ZG.md` (own scripts `r10/r10zg_*.py`, `r10/r10zg_NOTES.md`); r71's `r71/REPORT.md`, `r71/NOTES.md`, `r71/stations_*.json` | c2b4258 |
 | remote referee report GR-F9 (E24: aniso, manhattan, rot_design and time_v2 reproduced) | `remote/FRESH_MACHINE_REPORT_GRF9.md` | c2b4258 |
+| R10ZJ-1..20 (E28): builder C's GS-2b Schwarzschild relay tree | `r10/REVIEW_R10ZJ.md` (own scripts `r10/r10zj_*.py`, `r10/r10zj_NOTES.md`); builder C's `remote/BUILDER_C_REPORT_GRS.md`, `remote/builderC_GRS/grs/` | c2b4258 |
+| remote referee report GR-F11 (E28: GS2b_S reproduced, CLI log 73f73002…) | `remote/FRESH_MACHINE_REPORT_GRF11.md` | c2b4258 |
 | the exact FLRW light laws E9-1..E9-4, by construction (E23) | `r70/REPORT.md` §10; PROOF CHECKED (r68 D31: `r68/MATH_LEDGER.md`, row D31); `r10/REVIEW_R10ZF.md` (R10ZF-3..6; E9-5 is not cited, R10ZF-8) | 3ee08d7 |
 | additivity below overflow: the first non-additive update is the first quotient defect, on the same cells [THEOREM, builder B's T1] (E26) | `remote/BUILDER_B_REPORT_QMB_FULL.md`, T1 (r49 Theorem S, restated for the readout); its proof confirmed in `r10/r10x_REVIEW.md` (R10X-1, PARTLY: the proof is correct, the statement's record wording was fixed) | fd49c09 |
 | the tensor arithmetic on exact reads: LS equivariance on an O-invariant set of lines, the 2O map of logs, the permuted design lengths, Manhattan length of a monotone staircase, fixed arithmetic [THEOREM, r71 (a)–(e)] (E24) | `r71/REPORT.md` §9; `r10/REVIEW_R10ZG.md` (R10ZG-10) | c2b4258 |
