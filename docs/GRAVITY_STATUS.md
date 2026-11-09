@@ -209,8 +209,8 @@ parity alone within the unchanged Rule3.
 On L=19, for a source initialized with (-1,-1,0) on all 48 channels and
 prepared clocks A=(-1,-1,0), B=(0,-1,4), the *tested preparation* has
 regular period-five near clocks at one lattice link versus period-four
-source-free controls. At two links, A has no stable full-node period
-within the 40-step observation window; B has full-node period 20 but
+source-free controls. At two links, A has no fitted full-node period of length 1–20
+across the 41 sampled states (updates 0–40); B has full-node period 20 but
 makes five **irregular** threshold-ticks during 20 steps (the same tick
 count as the remote reference). At distances 3 through 6, both clocks
 retain period four in the specified runs. Phase and source-magnitude
