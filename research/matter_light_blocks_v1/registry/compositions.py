@@ -3215,3 +3215,107 @@ def triple_gate_spec(members, L=128, at=TRIPLE_GATE_AT, steps=80, name="tri"):
     return {"format": FORMAT, "id": f"triple_gate_L{L}", "board": _board(L, MPP), "placements": base,
             "timing": {"t0": 0, "declared": {"T": steps, "gate": [*at, 1], "future_B": "+x exit occupied at T"}},
             "controls": controls, "steps": steps}
+
+
+# ------------------------------------------------------------------- WAVE 13: r70, a prescribed flat FLRW universe
+#: r70's rung-E9 boards (research/matter_light_v1/r70/flrw.py, kit70.py): a static, comoving relay lattice of fibre light
+#: (r04 gauged fibres from channel 0, +++, A-pulses (1,0,-1) (two elementary quanta), speed 1, one-way) whose standard
+#: clocks are TAPES: a train of A-pulses on a +x fibre per station whose heads pass the
+#: tick node J0 at the scheduled updates eta_k.  The scale factor a(eta) = d tau / d eta is PRESCRIBED in the packet
+#: positions (r60's design rule E9, Theorem FLRW-1), not caused by matter; board time is the conformal time eta.
+#: Stations on the +y axis: O (four radar U-paths from its tape: lead +z h, out +y d, turn +x 6, back -y d, dump;
+#: chi = d + 3), S100, S300, S600 (one emission lane each: lead +z h, then -y past O's receiver node at y = Y0, dump),
+#: S160 (clock only); two closed 16-node light-clock rings (no tap).  Hardware v1 (dumps 470 / 470), v2 (600 / 560) and
+#: v3 (cyclic: every tape a closed 600-node ring through J0, ring index 244).  FLRW_TICKS = r70's flrw.ticks(): EdS
+#: eta_k = round(C k^(1/3)), C^3 = 25 * 1200^2; RAD eta_k = round(C k^(1/2)), C^2 = 24 * 1200; STATIC 36 k; CYC the
+#: ticks of tau = A (eta - LAM sin(2 pi eta / LAM) / (2 pi)) at tau = k - 1/2, A = 0.06, LAM = 600 (cycle 1 repeated).
+FLRW = {"L": 4096, "T": 1200, "X0": 100, "Y0": 600, "ZT": 100, "JI": 1210, "LAM": 600, "RING_TICK": 244, "U": 6,
+        "dumps": {"v1": (470, 470), "v2": (600, 560), "v3": (0, 560)},
+        "radar": ((1, 37, 6), (2, 77, 9), (3, 117, 12), (4, 157, 15)),       # (m, d_m, lead h_m): chi = 40 .. 160
+        "emit": ((100, 18), (300, 21), (600, 24)),                           # (chi, lane height above ZT)
+        "clock_only": (157,), "rings": (("ring_O", (400, 560, 140)), ("ring_S600", (400, 1240, 140)))}
+FLRW_TICKS = {
+    "EdS": (330, 416, 476, 524, 565, 600, 632, 660, 687, 711, 734, 756, 776, 796, 814, 832, 849, 865, 881, 896, 911,
+        925, 939, 952, 965, 978, 991, 1003, 1014, 1026, 1037, 1048, 1059, 1070, 1080, 1090, 1100, 1110, 1120, 1129,
+        1139, 1148, 1157, 1166, 1174, 1183, 1192, 1200),
+    "RAD": (170, 240, 294, 339, 379, 416, 449, 480, 509, 537, 563, 588, 612, 635, 657, 679, 700, 720, 740, 759, 778,
+        796, 814, 831, 849, 865, 882, 898, 914, 930, 945, 960, 975, 990, 1004, 1018, 1032, 1046, 1060, 1073, 1087,
+        1100, 1113, 1126, 1138, 1151, 1163, 1176, 1188, 1200),
+    "STATIC": (36, 72, 108, 144, 180, 216, 252, 288, 324, 360, 396, 432, 468, 504, 540, 576, 612, 648, 684, 720, 756,
+        792, 828, 864, 900, 936, 972, 1008, 1044, 1080, 1116, 1152, 1188),
+    "CYC": (78, 114, 136, 154, 169, 182, 194, 205, 216, 226, 235, 244, 253, 262, 271, 279, 287, 296, 304, 313, 321,
+        329, 338, 347, 356, 365, 374, 384, 395, 406, 418, 431, 446, 464, 486, 522, 678, 714, 736, 754, 769, 782, 794,
+        805, 816, 826, 835, 844, 853, 862, 871, 879, 887, 896, 904, 913, 921, 929, 938, 947, 956, 965, 974, 984, 995,
+        1006, 1018, 1031, 1046, 1064, 1086, 1122),
+}
+FLRW_A = (1, 0, -1)
+
+
+def _rle(dirs):
+    out = []
+    for d in dirs:
+        if out and out[-1][0] == d:
+            out[-1][1] += 1
+        else:
+            out.append([d, 1])
+    return out
+
+
+def flrw_params(version="v1", schedule="EdS"):
+    """guide_net@1 params of r70's E9 board (world coordinates; the composer places it at the origin): the tapes,
+    radar and emission branches (degree-3 fan-out junctions), the clock-only tape and the two 16-node rings; packets:
+    one A-pulse per scheduled tick on every tape (its head passes J0 at the tick) and one on each ring (lead 3); no
+    packets for schedule None (DARK)."""
+    F = FLRW
+    tdump, ldump = F["dumps"][version]
+    J0 = F["RING_TICK"] if version == "v3" else F["JI"]
+    paths, closed = [], []
+
+    def tape(name, y):
+        if version == "v3":
+            half = (F["LAM"] - 8) // 2
+            ring_a = F["X0"] + F["JI"] - F["RING_TICK"]
+            dirs = [0] * half + [5] * 4 + [1] * half + [4] * 4
+            paths.append({"name": name, "start": [ring_a, y, F["ZT"]], "g0": 0, "dirs": _rle(dirs[:-1])})
+            closed.append(name)
+        else:
+            paths.append({"name": name, "start": [F["X0"], y, F["ZT"]], "g0": 0, "dirs": [[0, F["JI"] + tdump]]})
+
+    tape("tape_O", F["Y0"])
+    for m, d, h in F["radar"]:
+        dirs = [4] * (h - 1) + [2] * d + [0] * F["U"] + [3] * d + [3] * ldump
+        paths.append({"name": f"radar{m}", "branch_of": "tape_O", "at_node": J0 + 12 * m, "dir": 4,
+                      "dirs": _rle(dirs)})
+    for chi, h in F["emit"]:
+        tape(f"tape_S{chi}", F["Y0"] + chi)
+        paths.append({"name": f"emit{chi}", "branch_of": f"tape_S{chi}", "at_node": J0, "dir": 4,
+                      "dirs": _rle([4] * (h - 1) + [3] * (chi + ldump))})
+    for dy in F["clock_only"]:
+        tape(f"tape_S{dy + 3}", F["Y0"] + dy)
+    ring_dirs = [0] * 4 + [2] * 4 + [1] * 4 + [3] * 4                      # r04 rectangle_dirs(0, 1, 4, 4)
+    for name, start in F["rings"]:
+        paths.append({"name": name, "start": list(start), "g0": 0, "dirs": _rle(ring_dirs[:-1])})
+        closed.append(name)
+    packets = []
+    if schedule is not None:
+        tk = FLRW_TICKS[schedule]
+        for p in paths:
+            if p["name"].startswith("tape_"):
+                if version == "v3":
+                    packets += [{"path": p["name"], "f": list(FLRW_A), "lead": (F["RING_TICK"] - e) % F["LAM"]}
+                                for e in tk if e < F["LAM"]]
+                else:
+                    packets += [{"path": p["name"], "f": list(FLRW_A), "lead": F["JI"] - e} for e in tk]
+        packets += [{"path": name, "f": list(FLRW_A), "lead": 3} for name, _ in F["rings"]]
+    return {"paths": paths, "packets": packets, "closed": closed}
+
+
+def flrw_spec(runs, L=4096, version="v1", name="flrw"):
+    """exp.flrw_in_clicks@1 (r70, rung E9): ONE composition per hardware version and board side: the hardware without
+    packets, and one control per schedule (packet masks): ``runs`` = [(control name, schedule or None for DARK)]."""
+    base = {"name": name, "block": "guide_net@1", "params": flrw_params(version, None), "at": [0, 0, 0], "wrap": False}
+    controls = [{"name": rn, "override": {name: {"packets": flrw_params(version, sch)["packets"]}}} for rn, sch in runs]
+    return {"format": FORMAT, "id": f"flrw_{version}_L{L}", "board": _board(L, PPP), "placements": [base],
+            "timing": {"t0": 0, "declared": {"T": FLRW["T"], "board_time": "conformal time eta",
+                                             "tick_node_x": FLRW["X0"] + FLRW["JI"]}},
+            "controls": controls, "steps": FLRW["T"]}

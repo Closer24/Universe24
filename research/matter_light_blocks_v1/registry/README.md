@@ -87,7 +87,7 @@ was also checked against the program's own code:
   kind, registration new / update-of / republication-of, generator, coupling, evidence status, parts,
   lineage), the experiments and their cards (`experiment_cards`), the read-only `observers`, the
   `aliases`, the registrar's decisions on proposed cards, the verified points (init files regenerated
-  exactly, recipes and builder equalities, with SHA-256 prefixes; 492 after WAVE 12, all exact), and the
+  exactly, recipes and builder equalities, with SHA-256 prefixes; 500 after WAVE 13, all exact), and the
   role of each of the 348 published names (the 338 of 8301320, the 8 appended in dff39dc and the 2 appended with the
   candidate-coupling framework (the variant block and its reference companion): canonical, variant, control, alias,
   J-image, experiment instance).
@@ -111,7 +111,9 @@ and the WAVE 11 sources (builder D's `remote/builderD_QMA_interim/`, `remote/bui
 reports, fresh machine 2's `remote/FRESH_MACHINE_REPORT_QMF4.md`) at commit 6c0798c, r10g's
 `r10/REVIEW_R10G_W9.md` at commit 01790e6, and the WAVE 12 sources (builder B's `remote/builderB_QMB3/qmb/`,
 `remote/builderB_QMB5/qmb8/` and the QM-B8 section of `remote/BUILDER_B_REPORT_QMB_FULL.md`, r10zc's
-`r10/r10zc_REVIEW.md`, fresh machine 2's `remote/FRESH_MACHINE_REPORT_QMF5.md`) at commit 3ca4977.
+`r10/r10zc_REVIEW.md`, fresh machine 2's `remote/FRESH_MACHINE_REPORT_QMF5.md`) at commit 3ca4977, and the WAVE 13
+sources (r70's `r70/flrw.py`, `r70/kit70.py`, `r70/results/`, r10zf's `r10/REVIEW_R10ZF.md`, the fresh-machine
+reports `remote/FRESH_MACHINE_REPORT_GRF8.md` and `GRF10.md`) at commit 3ee08d7.
 Nothing there is needed to regenerate or verify a block or a composition; `runs/` paths are local.
 
 `compositions.py` also holds the WAVE 2 compositions: the published guide instances
@@ -233,6 +235,18 @@ complete final state. `tests/test_matter_light_blocks_registry_wave12.py` checks
 byte, the members' controls, that two mirrored runs (second forward runs) end at JR(x0) with run 1's records mirrored
 and the statistic k̄ = k, E25's init-file hashes, and the ε-twin (gears 2 and 3: identical clicks (t, x, k, q),
 finals differing only in the gate r).
+
+WAVE 13 (r67) added r70's rung-E9 boards (refereed by r10zf, R10ZF-1..11; reproduced by fresh machines 1 and 2, GR-F8
+and GR-F10) as the assembly `light.flrw_relay_lattice@1`: a static, comoving relay lattice of fibre light whose
+standard clocks are tapes, trains of A-pulses passing each station's tick node at prescribed updates, so that a(η) is
+written into the packet positions (prescribed, not caused by matter). `flrw_params(version, schedule)` gives one
+`guide_net@1` placement (tapes; the radar and emission branches as degree-3 fan-out junctions; closed 16-node rings;
+for v3 closed 600-node tape rings) with the data `FLRW` and `FLRW_TICKS` (r70's tick schedules), and `flrw_spec(runs,
+L, version)` one composition per hardware version and board side, the hardware without packets and one control per
+schedule. No generator changed. The composed EdS, EdS_2L, RAD, DARK, EdS2, RAD2, STATIC2 and CYC boards equal r70's
+init files byte for byte. They write the curated experiment `E23_flrw_in_clicks`.
+`tests/test_matter_light_blocks_registry_wave13.py` checks the DARK board against r70's init file byte for byte,
+r70's tick schedules, the tapes' packets for every schedule and the U-path, lane and ring geometry.
 
 ## Limits
 
