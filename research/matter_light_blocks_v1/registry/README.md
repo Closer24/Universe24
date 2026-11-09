@@ -82,11 +82,14 @@ was also checked against the program's own code:
   kind, registration new / update-of / republication-of, generator, coupling, evidence status, parts,
   lineage), the experiments and their cards (`experiment_cards`), the read-only `observers`, the
   `aliases`, the registrar's decisions on proposed cards, the verified points (init files regenerated
-  exactly, recipes and builder equalities, with SHA-256 prefixes; 291 after WAVE 4, all exact), and the
+  exactly, recipes and builder equalities, with SHA-256 prefixes; 376 after WAVE 5, all exact), and the
   role of each of the 346 published names (the 338 of 8301320 and the 8 appended in dff39dc: canonical,
   variant, control, alias, J-image, experiment instance).
-* [`data/cards.json`](data/cards.json): the (a) use, (b) algebra and (c) clocks summary of every block;
-  the full cards are kept by the registrar (r21).
+* [`data/cards.json`](data/cards.json): one card per block. Card format: (a) use = purpose, interface, timing,
+  coupling and composability; (b) algebra = the law with its evidence label; (c) clocks = gears and click signature.
+
+Both files are compact JSON. Provenance paths under `research/matter_light_v1/` are archived at 2483837; files
+made later are recorded by SHA-256 only; `runs/` paths are local.
 
 `compositions.py` also holds the WAVE 2 compositions: the published guide instances
 (`published_guide_specs`), r08's W9 devices, r03's Q1c selector, r12's approval router, r13's beam-splitter
@@ -107,6 +110,17 @@ Wu seed (`r18_planar_spec`, `r18_wu_seed_spec`), r14's co-moving Einstein module
 (`sce_e07_spec`, `sce_e07b_spec`). `tests/test_matter_light_blocks_registry_wave4.py` regenerates the three
 published clock-rate blocks and the eight appended published blocks (`published_appended_specs`) exactly,
 and checks the WAVE 4 generators and composer additions.
+
+WAVE 5 added the assemblies `gate.split_pair_reader@1` (`split_pair_reader_placement`; r28's isolated boards
+`r28_reg9b_spec` and the created module's readers `r28_module_readers`), `parity.wu_half_cross@1`
+(`wu_half_cross_spec`), `detect.race_comparator@1` and `detect.heralded_projection_z6@1` (`r19_race_spec`,
+`r19_heralded_z6_spec`; a declared post-selection) and `clock.diagonal_light_clock@1` (`e11_main_diagonal_spec`,
+with `e11_control_generic_spec`); the builders of the curated experiments E09 (`r23_e09_cases`), E10
+(`e10_spec_all`, ported from r22's builder, and `e10_lamp_spec`) and E11 (`r25_e11_cases`); and r27b's cards
+`clock.ring_emitter@2` (`ring_tap_placement`), `clock.ring_clock_h1@1` (`ring_clock_h1_placement`) and
+`medium.mirror_bridge@1` (`mirror_bridge_placement`). No generator changed.
+`tests/test_matter_light_blocks_registry_wave5.py` regenerates the three published planar blocks from
+`all48_planes@1` and checks the WAVE 5 builders against their assertions and recorded initial-state hashes.
 
 ## Limits
 

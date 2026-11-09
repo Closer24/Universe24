@@ -1317,3 +1317,434 @@ def published_appended_specs():
             "d1_skeleton_atom_spin_clocks_L320": d1_skeleton_spec(320, 2),
             "d1_skeleton_atom_spin_clocks_L160_control_no_seed": apply_control(
                 d1_skeleton_spec(160), {"name": "no_seed", "remove": ["seed"], "unfill_sockets": True})}
+
+
+# ===================================================================== WAVE 5 (r21; r16b ARCHITECT_REPORT2 s3 fixes)
+import math
+from fractions import Fraction
+
+from universe24 import Coupling
+
+from . import guides as G
+
+# ---------------------------------------------------------------------------- r28 split-pair reader / r27b ring tap
+W6_DIRS = {"z": [[0, 3], [4, 4], [1, 3], [5, 4]], "h1": [[0, 4], [4, 3], [1, 4], [5, 3]]}   # one lap from K = J + x
+H1_BACK_DIRS = [[4, 3], [0, 4], [5, 3], [1, 3]]     # the h1 loop traversed backwards from K (closed)
+
+
+def w6_node(J, kind, i, signs=MPP):
+    """(site, channel, sigma) of node i of r04's W6 ring at junction J (first lap; sigma0 = +1 at K = J + x);
+    kind 'z' (= 'hz', spin_ring_z@1) or 'h1' (spin.holonomy_ring_h1@1)."""
+    c = Coupling(tuple(signs))
+    K = (J[0] + 1, J[1], J[2])
+    return G.channel_path(c, K, c.ports[0][41], G.expand_dirs(W6_DIRS["z" if kind == "hz" else kind]), None,
+                          sigma0=1)[i]
+
+
+def ring_tap_placement(name, J, kind="h1", node=9, exit_dir=4, length=200, holes=(), signs=MPP, path_name="T"):
+    """clock.ring_emitter@2 (update-of clock.ring_emitter@1; r27b ring_tap@1): the r04 B13 tap on a W6 ring at
+    junction J -- a straight exit fibre leaving ring node ``node`` through port ``exit_dir``, its gauge continued
+    from the ring (sigma = sigma_node * w); ``holes`` = leading fibre nodes left out (the emitter-masked control).
+    The ring is the host's block."""
+    c = Coupling(tuple(signs))
+    s, g, sig = w6_node(J, kind, node, signs)
+    fib = G.channel_path(c, G.add(s, exit_dir), c.ports[exit_dir][g], [exit_dir] * (length - 1), None,
+                         sigma0=sig * c.weights[exit_dir][g])
+    k = len(holes)
+    if tuple(holes) != tuple(range(k)):
+        raise ValueError("only leading holes (0, 1, ...) are supported")
+    s0, g0, sg0 = fib[k]
+    return {"name": name, "block": "guide_net@1",
+            "params": {"paths": [{"name": path_name, "start": list(s0), "g0": g0, "sigma0": sg0,
+                                  "dirs": [[exit_dir, length - 1 - k]]}]},
+            "at": [0, 0, 0], "wrap": True}
+
+
+def split_pair_reader_placement(name, J, kind, length=100, direction=4, signs=MPP):
+    """gate.split_pair_reader@1 (r28 I4): the ring tap at node 7 -- the antipode of K = J + x -- of a W6 ring
+    leaving through ``direction`` (+z; r28 falls back to +x where the network halo is not clean)."""
+    return ring_tap_placement(name, J, kind, 7, direction, length, (), signs, path_name="X")
+
+
+def r28_reg9b_spec(config="Zr", L=128, J=(0, 40, 5), start=52, length=60, direction=4):
+    """r28 REG-9b isolated boards (wave2.w6_parts + reader_fibre): a label-41 matter line through J with a SLOW
+    glider (start 52) feeding the W6 ring at J (Z*: spin_ring_z@1, H*: the holonomy-1 ring), plus the reader
+    (Zr, Hr). Zrot is the C-image of Z0 plus the reader (a recipe)."""
+    kind = "z" if config[0] == "Z" else "h1"
+    pl = [{"name": "A0", "block": "matter_line@1", "params": {"length": L, "sockets": [(start - k) % L for k in (2, 1, 0)]},
+           "at": [0, 0, J[2]], "wrap": True},
+          ({"name": "ring", "block": "spin_ring_z@1", "params": {}, "at": list(J), "wrap": True} if kind == "z"
+           else h1_ring_placement("ring", J)),
+          {"name": "G", "block": "slow_glider@1", "params": {"start": start, "hit": "SLOW"}, "at": [0, 0, J[2]],
+           "wrap": True}]
+    if config in ("Zr", "Hr"):
+        pl.append(split_pair_reader_placement("reader", J, kind, length, direction))
+    return {"format": FORMAT, "id": f"r28_reg9b_{config}_L{L}", "board": _board(L, MPP), "placements": pl,
+            "steps": 150, "timing": {"t0": 0, "declared": {"reader_site": "exit node 3",
+                                                           "z_ring": "one passage per lap (18)",
+                                                           "h1_ring": "one merged passage per lighting"}}}
+
+
+def r28_module_readers(L, length=100, direction=4):
+    """The created split-pair module (r28 module.r27_split_pair_module): readers on r27's lower z-ring
+    (J_lo = (0, -16, 3)) and upper h1 ring (J_up = (0, 16, 3)); placed on an r27 bb27v3_h1 board."""
+    return [split_pair_reader_placement("Rlo", (0, (-16) % L, 3), "z", length, direction),
+            split_pair_reader_placement("Rup", (0, 16, 3), "h1", length, direction)]
+
+
+def ring_clock_h1_placement(name, J, leads=(3,), back_leads=(), f=(1, -1), signs=MPP):
+    """clock.ring_clock_h1@1 (r27b ring_clock_h1@1; variant-of light.fibre_ring@1): the spin.holonomy_ring_h1@1
+    path (closed, 14 nodes from K = J + x) carrying prepared packets of shape f; back_leads on the same loop
+    traversed backwards. One packet: the free ring clock (period 14); leads (3,) + back_leads (3,): period 22."""
+    g0 = _ports(signs)[0][41]
+    paths = [{"name": "R", "start": [1, 0, 0], "g0": g0, "dirs": H1_RING_DIRS, "sigma0": 1}]
+    closed = ["R"]
+    pk = [{"path": "R", "f": list(f), "lead": int(v)} for v in leads]
+    if back_leads:
+        paths.append({"name": "Q", "start": [1, 0, 0], "g0": g0, "dirs": H1_BACK_DIRS, "sigma0": 1})
+        closed.append("Q")
+        pk += [{"path": "Q", "f": list(f), "lead": int(v)} for v in back_leads]
+    return {"name": name, "block": "guide_net@1", "params": {"paths": paths, "packets": pk, "closed": closed},
+            "at": list(J), "wrap": True}
+
+
+def ring_clock_h1_spec(L=64, back_leads=(), steps=100):
+    """r27b's ring-clock calibration boards: matter line A0 + the ring clock at J = (0, L/2, 3)."""
+    return {"format": FORMAT, "id": f"bb27v4_ringclock_{'two' if back_leads else 'one'}_L{L}", "board": _board(L, MPP),
+            "placements": [{"name": "A0", "block": "matter_line@1", "params": {"length": L, "sockets": []},
+                            "at": [0, 0, 3], "wrap": True},
+                           ring_clock_h1_placement("clock", (0, L // 2, 3), (3,), back_leads)],
+            "steps": steps}
+
+
+def mirror_bridge_placement(name, node_at, node_r, runs=((4, 4), (3, 24)), label=1, signs=MPP, wrap=False):
+    """medium.mirror_bridge@1 (r27b bridge@1; variant-of medium.guide_bridge@1): a gauged light path leaving the
+    light-line node at ``node_at`` (rest remainder node_r) through the run-length directions ``runs``, the node
+    itself excluded and its gauge continued; it ends open (a mirror) instead of descending to the other line."""
+    c = Coupling(tuple(signs))
+    if node_r not in (0, 4):
+        raise ValueError("a light-line node rests at r = 0 or 4")
+    nodes = G.channel_path(c, (0, 0, 0), label, G.expand_dirs(runs), None, sigma0=1 if node_r == 4 else -1)
+    s1, g1, sg1 = nodes[1]
+    rest = [[int(d), int(n)] for d, n in runs]
+    rest[0][1] -= 1
+    return {"name": name, "block": "guide_net@1",
+            "params": {"paths": [{"name": "B", "start": list(s1), "g0": g1, "sigma0": sg1,
+                                  "dirs": [r for r in rest if r[1] > 0]}]},
+            "at": list(node_at), "wrap": wrap}
+
+
+# ---------------------------------------------------------------------------- r30 wu_half_cross
+def wu_half_cross_spec(signs, b=1, variant="V2", side=24, parent=True, steps=20):
+    """parity.wu_half_cross@1 (r30 wucross.spec3): +x arm = light_line@1 label 3, +y arm = light_line@1 label 37
+    (gauge phase 1), parent = single_channel@1 label 11 at o = (c, c, c) with (0, b, 2). V2: half arms from o;
+    V1: full lines (they cross at (c-1, c-1, c); decoder v1.0 mis-assigns tracks there)."""
+    c = side // 2
+    if variant == "V1":
+        lx = {"length": side, "label": 3, "axis": "x", "gauge_phase": 1}, [0, c - 1, c]
+        ly = {"length": side, "label": 37, "axis": "y", "gauge_phase": 1}, [c - 1, 0, c]
+    else:
+        lx = {"length": side - c, "label": 3, "axis": "x", "gauge_phase": 1}, [c, c - 1, c]
+        ly = {"length": side - c, "label": 37, "axis": "y", "gauge_phase": 1}, [c - 1, c, c]
+    pl = [{"name": "light_x", "block": "light_line@1", "params": lx[0], "at": lx[1]},
+          {"name": "light_y", "block": "light_line@1", "params": ly[0], "at": ly[1]}]
+    if parent:
+        pl.append({"name": "parent", "block": "single_channel@1", "params": {"channel": 11, "triple": [0, b, 2]},
+                   "at": [c, c, c]})
+    tag = "".join("+" if s > 0 else "-" for s in signs)
+    return {"format": FORMAT, "id": f"wu_{variant}_{tag}_b{b:+d}_L{side}", "placements": pl, "assertions": {},
+            "board": {"side": side, "background": [0, 0, 2], "coupling": {"signs": list(signs), "variant": None}},
+            "steps": steps}
+
+
+def r30_cases():
+    out = {}
+    for tag, signs in (("-+-", (-1, 1, -1)), ("--+", (-1, -1, 1)), ("-++", (-1, 1, 1)), ("---", (-1, -1, -1))):
+        for b in (1, -1):
+            out[f"wu_V2_{tag}_b{b:+d}_L24"] = wu_half_cross_spec(signs, b, "V2")
+    for tag, signs in (("-++", (-1, 1, 1)), ("-+-", (-1, 1, -1))):
+        out[f"wu_V1_{tag}_b+1_L24"] = wu_half_cross_spec(signs, 1, "V1")
+    return out
+
+
+# ---------------------------------------------------------------------------- r19 race comparator / heralded Z6
+def _race_fibre(name, y, z, xlen, approval_head, threshold_head):
+    """One race (r19 W2-A): channel-0 fibre x in [1, xlen] (+++), approval = unit pulse moving +x with head at x,
+    threshold = its mirror image moving -x with head at x (on '~P': index counted from x = xlen)."""
+    return {"name": name, "block": "guide_net@1",
+            "params": {"paths": [{"name": "P", "g0": 0, "dirs": [[0, xlen - 1]]}],
+                       "packets": [{"path": "P", "f": F, "lead": approval_head - 1},
+                                   {"path": "~P", "f": F, "lead": xlen - threshold_head}]},
+            "at": [1, y, z]}
+
+
+def r19_race_spec(Hh=10, spacing=3):
+    """detect.race_comparator@1 board (r19 W2-A, race.main): races (proj, t in -H..H), one fibre each on a
+    (2H+1)^2 transverse grid; they meet at x = M + proj + t at update D + t - proj (decision click kind 2, q = +1)."""
+    D = 2 * Hh + 6
+    M = D + 2 * Hh + 6
+    xlen, n = 2 * M, 2 * Hh + 1
+    side = max(xlen + 2, spacing * n + 4)
+    races = [(p, t) for p in range(-Hh, Hh + 1) for t in range(-Hh, Hh + 1)]
+    pl = [_race_fibre(f"r{k}", 2 + spacing * (k % n), 2 + spacing * (k // n), xlen, M - D + 2 * p, M + D + 2 * t)
+          for k, (p, t) in enumerate(races)]
+    return {"format": FORMAT, "id": f"r19_race_H{Hh}", "board": _board(side, PPP), "placements": pl,
+            "steps": D + 2 * Hh + 8,
+            "timing": {"t0": 0, "declared": {"outcome": "sgn(proj + t)", "E(proj)": "2 proj / (2H + 1)"}}}
+
+
+TWO_COS = [2, 1, -1, -2, -1, 1]
+
+
+def r19_heralded_z6_spec(D=10, M=20, spacing=3, trials=None):
+    """detect.heralded_projection_z6@1 board (r19 W3, heralded_z6.main): 432 trials (alpha, beta, phi in Z6,
+    t in {0,1}), three races each (A: proj_A, threshold 0; B1 / B2: proj_B, thresholds -t / +t) = 1,296 races on
+    one board; heralded on Bob's detections (a declared post-selection). ``trials`` = a subset (default: all)."""
+    trials = trials if trials is not None else [(al, be, phi, t) for al in range(6) for be in range(6)
+                                               for phi in range(6) for t in (0, 1)]
+    races = []
+    for al, be, phi, t in trials:
+        pa, pb = TWO_COS[(al - phi) % 6], TWO_COS[(be - phi) % 6]
+        races += [(pa, 0), (pb, -t), (pb, t)]
+    n = math.ceil(math.sqrt(len(races)))
+    side = max(2 * M + 4, spacing * n + 4)
+    pl = [_race_fibre(f"r{j}", 2 + spacing * (j % n), 2 + spacing * (j // n), 2 * M, M - D + 2 * p, M + D + 2 * th)
+          for j, (p, th) in enumerate(races)]
+    return {"format": FORMAT, "id": "r19_heralded_z6", "board": _board(side, PPP), "placements": pl, "steps": D + 8,
+            "timing": {"t0": 0, "declared": {"heralded_E": "-cos(60 deg (alpha - beta))", "heralded_fraction": "2/3"}}}
+
+
+# ---------------------------------------------------------------------------- r25 E11 light clocks
+FAMILIES = {"d1": (1, 1, 1), "d2": (1, 1, -1), "d3": (1, -1, 1), "d4": (-1, 1, 1)}
+E11_CLOCKS = {"d1": (2, 1), "d2": (1, 1), "d3": (1, 2), "d4": (2, 2)}
+
+
+def _profile(j, L):
+    vals = [2 * math.cos(2 * math.pi * j * n / L) for n in range(L)]
+    out = [round(v) for v in vals]
+    if any(abs(v - o) > 1e-12 for v, o in zip(vals, out)):
+        raise ValueError("profile is not an exact integer cosine on this side")
+    return out
+
+
+def _a1_sites(name, L, scalar, steps):
+    pl = [_site(f"s{x}_{y}_{z}", (x, y, z), (a, b, r)) for (x, y, z), (a, b, r) in sorted(scalar.items())
+          if (a, b, r) != (0, 0, 2)]
+    return {"format": FORMAT, "id": name, "board": _board(L, PPP), "placements": pl, "steps": steps}
+
+
+def e11_main_diagonal_spec(side=6, clocks=None, steps=24):
+    """E11 main (r25 preparations_e11.main_diagonal; clock.diagonal_light_clock@1): four exact diagonal light
+    clocks, a forward f(n - t) and a backward g(n + t) wave per body-diagonal family n = s.x, f, g = 2 cos(2 pi j n
+    / 6), all 48 channels of every site in one triple (A1 light; all48_site@1 placements)."""
+    clocks = clocks or E11_CLOCKS
+    L = side
+    scalar = {}
+    for x in range(L):
+        for y in range(L):
+            for z in range(L):
+                a = b = 0
+                for nm, (jf, jb) in clocks.items():
+                    s = FAMILIES[nm]
+                    n = (s[0] * x + s[1] * y + s[2] * z) % L
+                    f, g = _profile(jf, L), _profile(jb, L)
+                    b += f[n] + g[n]
+                    a += f[(n + 1) % L] + g[(n - 1) % L]
+                scalar[(x, y, z)] = (a, b, 2)
+    return _a1_sites("e11_main_diagonal", L, scalar, steps)
+
+
+def e11_control_generic_spec(side=5, n1=1, n2=2, M=1000, steps=24):
+    """E11 control (preparations_e11.generic_clock): a y-uniform light clock along z under a transverse standing
+    wave cos(2 pi x / 5) (lattice-scale k, rounding active: not an exact family)."""
+    L = side
+    kap = 2 * math.pi / L
+    k1, k2 = n1 * kap, n2 * kap
+    w = [math.acos((2 * math.cos(kap) + 2 + 2 * math.cos(k)) / 6) for k in (k1, k2)]
+    scalar = {}
+    for x in range(L):
+        for y in range(L):
+            for z in range(L):
+                b = round(M * math.cos(kap * x) * (math.cos(k1 * z) + math.cos(k2 * z)))
+                a = round(M * math.cos(kap * x) * (math.cos(k1 * z + w[0]) + math.cos(k2 * z + w[1])))
+                scalar[(x, y, z)] = (a, b, 2)
+    return _a1_sites("e11_control_generic", L, scalar, steps)
+
+
+def r25_e11_cases():
+    return {"main_diagonal_L6": e11_main_diagonal_spec(), "control_generic_L5": e11_control_generic_spec()}
+
+
+# ---------------------------------------------------------------------------- r23 E09 Einstein 1911
+def e09_line_spec(L=160, k=0, P=8, x_first=60, probe=None, steps=150):
+    """E09 Shapiro / river board (r23 e09_build.line_board): gravity.counter_flux_link@1 with an inbound ('in',
+    head x, moving +x) or co-moving ('co', head x, moving -x) probe."""
+    y0 = L // 2
+    bwd = [(L - 2) - (x_first + j * P) for j in range(k)]
+    fwd = []
+    if probe is not None:
+        kind, x = probe
+        if kind == "in":
+            fwd = [x - 1]
+        else:
+            bwd = bwd + [(L - 2) - x]
+    return {"format": FORMAT, "id": f"e09_line_k{k}", "board": _board(L, PPP),
+            "placements": [_x_fibre("F", L, y0, y0, fwd=fwd, bwd=bwd)], "steps": steps}
+
+
+def e09_y_spec(L=160, J=18, lenA=106, lenB=118, k=0, P=8, s_first=60, probe=True, start=(2, 32, 32), steps=170):
+    """E09 bending board (e09_build.y_board): main fibre along +x (input + arm A), r04 degree-3 junction at main
+    node J with the branch (arm B) along +y; k flux packets on arm A moving toward the junction."""
+    n_main = J + lenA
+    pk = [{"path": "main", "f": F, "lead": 4}] if probe else []
+    pk += [{"path": "~main", "f": F, "lead": (n_main - 1) - (J + s_first + j * P)} for j in range(k)]
+    return {"format": FORMAT, "id": f"e09_y_k{k}", "board": _board(L, PPP), "steps": steps,
+            "placements": [{"name": "Y", "block": "guide_net@1",
+                            "params": {"paths": [{"name": "main", "g0": 0, "dirs": [[0, n_main - 1]]},
+                                                 {"name": "armB", "branch_of": "main", "at_node": J, "dir": 2,
+                                                  "length": lenB}],
+                                       "packets": pk}, "at": list(start)}]}
+
+
+def e09_emitter_spec(L=200, M=160, counter=False, clock=True, start=(10, 10, 70), jnode=6, exit_dir=5, steps=220,
+                     counter_lead=4):
+    """E09 redshift board (r23 e09_make.emitter, the runs' builder): clock.ring_emitter@1 (4 x 4 ring, tap at node 6,
+    exit fibre of M nodes along -z) with its clock packet (lead 3) and optionally one counter-circulating packet at
+    reversed-ring lead 4 (two pulses per 24 at the exit)."""
+    ring = _ring("E", start, 4, 4, leads=(3,) if clock else (), counter_leads=[counter_lead] if counter else [],
+                 tap=(jnode, exit_dir, M))
+    return {"format": FORMAT, "id": f"e09_emitter_c{int(counter)}_k{int(clock)}", "board": _board(L, PPP),
+            "placements": [ring], "steps": steps}
+
+
+def r23_e09_cases():
+    """E09's runs (r23 e09_make.runs_spec) as compositions; redshift_flux_check_16 is dropped (it equals
+    redshift_clock_in_flux: same init, final-state and log hashes; r16b)."""
+    out = {}
+    for k in range(7):
+        out[f"shapiro_k{k}"] = e09_line_spec(k=k, probe=("in", 5))
+    out["shapiro_flux_only"] = e09_line_spec(k=6)
+    out["river_comoving"] = e09_line_spec(k=6, probe=("co", 150))
+    out["river_comoving_no_flux"] = e09_line_spec(k=0, probe=("co", 150))
+    for k in range(6):
+        out[f"bending_k{k}"] = e09_y_spec(k=k)
+    out["bending_flux_only"] = e09_y_spec(k=5, probe=False)
+    out["redshift_far_clock"] = e09_emitter_spec(counter=False)
+    out["redshift_clock_in_flux"] = e09_emitter_spec(counter=True)
+    out["redshift_no_packets"] = e09_emitter_spec(counter=False, clock=False)
+    return out
+
+
+# ---------------------------------------------------------------------------- r22 E10 prescribed relay lattice
+E10_L, E10_STEPS, E10_B = 256, 200, 16
+E10_KT = {"far": Fraction(1), "near": Fraction(3, 2)}
+E10_RECT = {16: (4, 4), 24: (6, 6), 36: (8, 10)}         # rings that close after one lap (+++)
+E10_EXIT_LEN = 200
+E10_OFFSET = {"E": 0, "T": 85, "F": 170}                 # lattice offsets in y on the one board
+E10_ZST = 220                                            # station plane
+E10_RAYS = (8, 16, 24, 40)
+
+
+def e10_kappa(v, shell, radial):
+    t = E10_KT[shell]
+    return Fraction(1) if v == "F" else (t if v == "T" else (t * t if radial else t))
+
+
+def _e10_link_dirs(n, w=4):
+    e = n - E10_B
+    if e < 0 or e % 2:
+        raise ValueError(f"link node count {n} must be {E10_B} + an even number")
+    if e == 0:
+        return [[0, E10_B]]
+    a = (E10_B - w) // 2
+    return [[0, a], [4, e // 2], [0, w], [5, e // 2], [0, E10_B - w - a]]
+
+
+def _e10_meander(counts, tail):
+    out = []
+    for n in counts:
+        out += _e10_link_dirs(int(n))
+    return out + [[0, tail]]
+
+
+def e10_ray_counts(v, b):
+    out = []
+    for k in range(8):
+        xm = -64 + 16 * k + 8
+        r = math.hypot(xm, b)
+        shell = "near" if r < 32 else "far"
+        radial = abs(xm) / r > 1 / math.sqrt(2)
+        out.append(int(E10_B * e10_kappa(v, shell, radial)))
+    return out
+
+
+def e10_route_counts(v):
+    return [int(E10_B * e10_kappa(v, s, True)) for s in ("far", "near", "near", "far")], [E10_B] * 6
+
+
+def _e10_guide(name, at, paths, packets=(), closed=()):
+    return {"name": name, "block": "guide_net@1", "at": list(at),
+            "params": {"paths": paths, "packets": list(packets), "closed": list(closed)}}
+
+
+def e10_lattice(v):
+    """One lattice of r22's E10 (variant 'E': kappa_r = kappa_t^2, 'T': the 1911 twin kappa_r = kappa_t, 'F': flat)
+    at its y offset (r22 e10_build.lattice, ported): ring clocks with taps, cavities, a radial probe, four rays and
+    two routes, every fibre a guide_net@1 path whose coarse links carry 16 kappa nodes (z-bump meanders)."""
+    pl, y0, zst = [], E10_OFFSET[v], E10_ZST
+    for i, (key, shell, radial) in enumerate((("ring_t_far", "far", False), ("ring_t_near", "near", False),
+                                             ("ring_r_far", "far", True), ("ring_r_near", "near", True))):
+        N = int(16 * e10_kappa(v, shell, radial))
+        pl.append(_e10_guide(f"{v}_{key}", (10 + 20 * i, y0 + 50, zst),
+                             [{"name": "R", "g0": 0, "dirs": _rect(*E10_RECT[N])},
+                              {"name": "X", "branch_of": "R", "at_node": 6, "dir": 5, "length": E10_EXIT_LEN}],
+                             [{"path": "R", "f": F, "lead": 3}], ["R"]))
+    for key, shell, radial, x, dy in (("cav_t_far", "far", False, 90, 52), ("cav_r_far", "far", True, 90, 60),
+                                      ("cav_t_near", "near", False, 110, 52), ("cav_r_near", "near", True, 110, 60)):
+        D = int(8 * e10_kappa(v, shell, radial))
+        pl.append(_e10_guide(f"{v}_{key}", (x, y0 + dy, zst), [{"name": "C", "g0": 0, "dirs": [[0, D - 1]]}],
+                             [{"path": "C", "f": F, "lead": 3}]))
+    pl.append(_e10_guide(f"{v}_radial_probe", (10, y0 + 16, 80),
+                         [{"name": "P", "g0": 0, "dirs": _e10_meander([int(E10_B * e10_kappa(v, "near", True)),
+                                                                     int(E10_B * e10_kappa(v, "far", True))], 40)}],
+                         [{"path": "P", "f": F, "lead": 3}]))
+    for b in E10_RAYS:
+        pl.append(_e10_guide(f"{v}_ray_b{b}", (10, y0 + b, 20),
+                             [{"name": "P", "g0": 0, "dirs": _e10_meander(e10_ray_counts(v, b), 10)}],
+                             [{"path": "P", "f": F, "lead": 3}]))
+    ra, rb = e10_route_counts(v)
+    pl.append(_e10_guide(f"{v}_route_A", (10, y0 + 8, 50), [{"name": "P", "g0": 0, "dirs": _e10_meander(ra, 20)}],
+                         [{"path": "P", "f": F, "lead": 3}]))
+    pl.append(_e10_guide(f"{v}_route_B", (10, y0 + 24, 50), [{"name": "P", "g0": 0, "dirs": _e10_meander(rb, 20)}],
+                         [{"path": "P", "f": F, "lead": 3}]))
+    return pl
+
+
+def e10_spec_all():
+    """E10 (r22 e10_build.spec_all, ported): ONE board holding three lattices side by side (E at y 0, T at y 85, F at
+    y 170); control 'dark' = all packets removed. A PRESCRIBED, non-dynamical geometry, not sourced gravity. Equals
+    E10's composition.json exactly."""
+    pl = e10_lattice("E") + e10_lattice("T") + e10_lattice("F")
+    guides = [p["name"] for p in pl]
+    return {"format": FORMAT, "id": "e10_schwarzschild_ETF",
+            "board": {"side": E10_L, "background": [0, 0, 2], "coupling": {"signs": [1, 1, 1], "variant": None}},
+            "placements": pl, "assertions": {},
+            "timing": {"t0": 0, "declared": {"label": "PRESCRIBED non-dynamical geometry, not sourced gravity",
+                                              "lattices": {"E": "kappa_r = kappa_t^2 (y offset 0)",
+                                                           "T": "1911 twin, kappa_r = kappa_t (y 85)",
+                                                           "F": "flat (y 170)"},
+                                              "base_link": E10_B, "kappa_t": {"far": "1", "near": "3/2"}}},
+            "controls": [{"name": "dark", "override": {g: {"packets": []} for g in guides}}],
+            "steps": E10_STEPS}
+
+
+def e10_lamp_spec():
+    """E10 lamp control (r22 e10_build.lamp_spec): an all-48 (-1,-1,0) lamp touching its fibre (on-site clock,
+    blind to the prescribed geometry)."""
+    return {"format": FORMAT, "id": "e10_lamp", "board": _board(128, PPP),
+            "placements": [{"name": "lamp_fibre", "block": "guide_net@1",
+                            "params": {"paths": [{"name": "P", "g0": 0, "dirs": [[0, 100]]}]}, "at": [14, 40, 40]},
+                           {"name": "lamp", "block": "all48_site@1", "params": {"triple": [-1, -1, 0], "halo": True},
+                            "at": [64, 41, 40]}],
+            "assertions": {}, "timing": {"t0": 0, "declared": {"note": "on-site clock: blind to the prescribed geometry"}},
+            "steps": 90}
