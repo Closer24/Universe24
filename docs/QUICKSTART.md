@@ -98,7 +98,7 @@ interpreter. Node.js is optional: two presenter tests use it and are skipped wit
 
 The curated matter/light packages have their own verifiers (about 15 minutes together):
 `python -m research.matter_light_experiments_v1.verify` (every experiment),
-`python -m research.matter_light_blocks_v1.verify --quick` (all 346 blocks without
+`python -m research.matter_light_blocks_v1.verify --quick` (all 348 blocks without
 `--quick`), and the decoder's set-A rerun in
 [its README](../research/click_decoder_v1/README.md#validation-one-score-table-v10-against-v11).
 The first two print their usage with `--help`.

@@ -88,8 +88,15 @@ was also checked against the program's own code:
   lineage), the experiments and their cards (`experiment_cards`), the read-only `observers`, the
   `aliases`, the registrar's decisions on proposed cards, the verified points (init files regenerated
   exactly, recipes and builder equalities, with SHA-256 prefixes; 485 after WAVE 8, all exact), and the
-  role of each of the 346 published names (the 338 of 8301320 and the 8 appended in dff39dc: canonical,
-  variant, control, alias, J-image, experiment instance).
+  role of each of the 348 published names (the 338 of 8301320, the 8 appended in dff39dc and the 2 appended with the
+  candidate-coupling framework (the variant block and its reference companion): canonical, variant, control, alias,
+  J-image, experiment instance).
+* `variant_couplings` in [`data/registry.json`](data/registry.json): the five explicitly separate candidate tables
+  that r16 reviewed (program record), each with its label, construction, review and files. They are records only:
+  the composer composes reference boards, so a variant block is a variant init file of
+  [`research/coupling_variants_v1`](../../coupling_variants_v1/README.md) (`interaction.chiral_two_sector_board@1`,
+  published as `chiral_two_sector_board_L192` beside its reference companion).
+  `tests/test_matter_light_blocks_registry_variants.py` rebuilds the five tables from their constructions.
 * [`data/cards.json`](data/cards.json): one card per block. Card format: (a) use = purpose, interface, timing,
   coupling and composability; (b) algebra = the law with its evidence label; (c) clocks = gears and click signature.
   From WAVE 6 a block's card text is kept here only (its `registry.json` entry carries no second copy).
@@ -97,9 +104,9 @@ was also checked against the program's own code:
 Both files are compact JSON. Paths and modules under `research/matter_light_v1/` that the registry's code or data
 name are files of the program's working folder, archived uncurated on branch `backup/matter-light-working` at commit
 2483837, except five WAVE 5 source files (`r27b/cards_r27b.json` and the four `r27b/preparations/bb27v4_ringclock_*`
-files), which are first archived at commit 9f9cc64, the WAVE 6 sources at commit 39ca35f and the WAVE 7 and 8
-sources at commit 7aac8c5. Nothing there is needed to regenerate or verify a block or a composition; `runs/` paths
-are local.
+files) and r30's `proposal_chiral_both_forces.json` (WAVE 9, the variant block), which are first archived at commit
+9f9cc64, the WAVE 6 sources at commit 39ca35f and the WAVE 7 and 8 sources at commit 7aac8c5. Nothing there is
+needed to regenerate or verify a block or a composition; `runs/` paths are local.
 
 `compositions.py` also holds the WAVE 2 compositions: the published guide instances
 (`published_guide_specs`), r08's W9 devices, r03's Q1c selector, r12's approval router, r13's beam-splitter
@@ -170,6 +177,17 @@ plane waves along the body diagonals; `plane_light_placement`). It writes r26b's
 with the seven runs as beam masks), r25's E11 main board (`e11_main_plane_light_spec`, the same state as
 `e11_main_diagonal_spec`) and the published `diag_sheet`. `tests/test_matter_light_blocks_registry_wave8.py` checks
 them against the recorded initial-state hashes and the published block.
+
+WAVE 9 added the registry records of the explicitly separate candidate couplings, as data only (no generator or
+composition changed; the composer still composes reference boards only): `variant_couplings`, the five reviewed
+tables, and the block record `interaction.chiral_two_sector_board@1` of the published variant block
+`chiral_two_sector_board_L192`, a `universe24-variant-init-v1` file of
+[`research/coupling_variants_v1`](../../coupling_variants_v1/README.md) (generator none) with two prepared,
+non-interacting sectors on one board (R10G-44, R10G-73), beside its reference companion
+`chiral_two_sector_board_L192_control_reference` ((−,+,+)). The block's catalog entry declares its table as
+`{"kind": "variant", "label", "fingerprint"}`; its record and card name the same label.
+`tests/test_matter_light_blocks_registry_variants.py` rebuilds the five tables from their constructions with the
+framework and checks that the variant block carries exactly its table.
 
 ## Limits
 
