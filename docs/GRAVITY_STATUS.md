@@ -23,6 +23,7 @@ six spatial inputs, fixed pre-run coupling and the same integer Rule3.
 | Exact variational Rule3 | The full-48 chart `(b,p,epsilon)` has a nearest-neighbor discrete generating action for every signed tensor. Its auxiliary symplectic embedding is not physical spacetime or conserved energy. |
 | Newtonian spatial operator | The 48-channel-uniform `+++` sector yields the 3D scalar Laplacian with a `1/(4*pi*r)` Green tail, but no self-sustained mass source or force has been derived. |
 | Einstein clock-signal gate | A nonconstant static conformal lapse with unchanged *physical* coordinate null cones cannot be a vacuum Einstein solution at Lambda=0. Present pulse fronts are not calibrated photons, so no PPN gamma is extracted. |
+| Event-wave and parity milestone | Exact all-channel second-order event-wave identity with bounded-remainder term; independently inert remainder-parity bit. Clock-rate source-distance and phase controls give a negative test for a universal radial law in the specified preparation. |
 
 The first four results are documented in the existing
 [all-48-channel prerequisites](../research/einstein_clock_bricks_v1/README.md).
@@ -153,3 +154,108 @@ In a stationary, zero-shift *physical* ansatz `ds²=-N²c²dt²+H² dx_i dx_i`, 
 In weak-field isotropic PPN coordinates, `N≈1-U/c²` and `v_null/c≈1-(1+gamma)U/c²`. GR requires `gamma=1` and thus the log-slope `d ln(v_null/c)/d ln(N)≈2` for a calibrated signal family; an unchanged physical coordinate null speed would instead imply `gamma=-1`. These are **prospective model-discrimination tests**, not fitted model results. The specified source perturbs two prepared clock types by the same ratio `4/5`, but its influence is confined and seeded midpoint pulse arrival depends on amplitude/sign; no long-range mass profile, universal clock or physical null cone is established.
 
 **Reproduce:** `python -m research.variational_gravity_gate_v1.audit`, `python -m research.variational_gravity_gate_v1.signal_gate`; optional NumPy `python -m research.variational_gravity_gate_v1.newtonian_kernel`, optional SymPy `python -m research.variational_gravity_gate_v1.check_einstein_symbolic`, and `python -m unittest discover -s tests -p test_variational_gravity_gate.py -v`. The pinned five unmodified core blobs originate from `c5a23743`; local clean-tree checks passed seven regressions. Detailed observations, serialized receipts and limitations are in the linked research package. Neither the core nor the Presenter nor the observation classifier is altered.
+
+## Milestone 2026-11-09: exact event-wave and clock radius gates
+
+The [three-track all-48 research package](../research/gravity_event_clocks_v1/README.md)
+and the [open Einstein-gravity milestone tracker](https://github.com/Closer24/Universe24/issues/17)
+extend the earlier variational and clock-rate studies. The package contains
+reproducible full-state Rule3 runs and externally known Einstein targets; it
+does **not** derive gravity, a physical Lorentzian metric, a material mass,
+physical energy, an autonomous photon, or Einstein's equations.
+
+### Exact local identity and scope
+
+With the *original* fixed signed operator A_sigma and L_sigma=6I-A_sigma,
+a_n=b_(n-1) and the retained remainder r_n imply, **for every channel
+and every state**, the exact integer event-wave identity
+
+~~~text
+6*(b_(n+1)-2*b_n+b_(n-1)) + 2*(L_sigma b_n) + (r_(n+1)-r_n) = 0.
+~~~
+
+This is a state identity, not a physical wave equation with a verified
+stress-energy source. Together with the existing coordinate
+p_n=3*(b_n-a_n)+floor(r_n/2)-1, it gives the exact telescoping law
+
+~~~text
+p_(n+1)-p_n = -L_sigma*b_n,
+L_sigma*mean_T(b) = -(p_T-p_0)/T.
+~~~
+
+For any complete periodic orbit, the right-hand side vanishes. For a
+trajectory whose a and b stay bounded, the right-hand side tends to zero
+as T grows. Thus mean b alone cannot provide a nonuniform persistent
+static 1/r field on the connected positive-coupling graph. This is a
+**restriction on this observable and regime**, not a no-go theorem against
+all phase- or correlation-dependent gravitational interpretations.
+
+### Exact per-channel parity decoupling
+
+Writing r=2*theta+epsilon gives
+
+~~~text
+ell = floor((u+theta)/3), theta'=(u+theta) mod 3, epsilon'=epsilon.
+~~~
+
+Therefore epsilon is a dynamically inert per-address parity label: changing
+only epsilon cannot change a, b or theta at any future step. 72,576
+full-state comparisons over eight fixed signed couplings corroborate this
+exact algebraic conclusion. A gravity source cannot be encoded by remainder
+parity alone within the unchanged Rule3.
+
+### Source distance and clock-readout controls
+
+On L=19, for a source initialized with (-1,-1,0) on all 48 channels and
+prepared clocks A=(-1,-1,0), B=(0,-1,4), the *tested preparation* has
+regular period-five near clocks at one lattice link versus period-four
+source-free controls. At two links, A has no stable full-node period
+within the 40-step observation window; B has full-node period 20 but
+makes five **irregular** threshold-ticks during 20 steps (the same tick
+count as the remote reference). At distances 3 through 6, both clocks
+retain period four in the specified runs. Phase and source-magnitude
+controls do not produce a universal, smooth radial N(r,M) law.
+Neither initial counter amplitude nor recurrence period is independently
+established as physical mass or proper time. A longer recurrence is **not**
+by itself an additional gravitational time dilation measurement.
+
+### Einstein-facing comparison and spectrum
+
+The exact +++ 48-channel zero-momentum coupling characteristic polynomial is
+
+~~~text
+lambda^8*(lambda-6)*(lambda-4)^8*(lambda-2)^14*
+(lambda+2)*(lambda^2-4*lambda-2)^8.
+~~~
+
+The unique lambda=6 mode is channel-uniform/scalar; there is no second
+nonuniform zero-frequency internal mode in the specific *frozen-remainder
+linear comparison*. This does **not** rule out nonperturbative emergent
+spin-2 sectors. The microscopic Manhattan causal support is not the
+physical speed of light, and the scalar lattice Laplacian is isotropic
+only to leading long-wavelength order.
+
+A changing clock lapse is compatible with flat Rindler spacetime, so it
+does not establish curvature. The external Schwarzschild-isotropic
+**conditional** relation for a calibrated physical photon is
+v_coordinate/c=N*(1+N)^2/4. At the illustrative value N=4/5 it is
+81/125, not a measurement in this automaton. The PPN requirement
+gamma=1 (equivalently the stated weak-field log-slope 2) is also a
+future physical test, not a fitted Universe24 parameter.
+
+### Verification and next gate
+
+The locally rerun research module reproduces its four prior results
+**byte-for-byte**, with 34,944 full-channel wave/balance checks and
+72,576 parity comparisons, 24 source on/off clock-distance runs plus
+48 phase controls, exact inverses, an exact 48-channel spectrum, and
+three small native-core regression tests. Earlier local evidence used
+three parallel **Python computational workers**, not three autonomous
+AI agents. The scripts now import the real repository core directly
+instead of bundling another implementation. Core, coupling, state,
+observer and Presenter remain untouched.
+
+**Next acceptance gate:** independently calibrated proper-time clocks,
+a minimally invasive stable physical carrier, a source mass measured
+independently of its clock effect, and a shared metric predicting held-out
+signal and moving-body observations. No current run passes these GR gates.
