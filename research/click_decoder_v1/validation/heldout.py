@@ -7,7 +7,10 @@ events, light turning back), H3 r14 peak-arrival light (layer equality, c-light)
 box, H5/H7 planar Big Bang and planar glider (E05), H6 E01, H8 E06, H9 r24's quotient field.
 Every target is decoded with v1.0 and v1.1. Logs that are not already in the program record are made
 with the official CLI; their SHA-256 are checked against the manifests where these record them. The
-truth comes from the owners' reports and manifests and is used only here. Writes heldout_v1.1.json.
+truth comes from the owners' reports and manifests and is used only here. Writes
+runs/click_decoder_v1/heldout/heldout_v1.1.json (never into the package) and compares it, target by target and
+timing ignored, with the recorded validation/heldout_v1.1.json (release 1.0.4). Needs the program's working folder:
+its logs under runs/matter_light_v1/ and its r15 and r24 modules.
 """
 from __future__ import annotations
 
@@ -21,7 +24,7 @@ import sys
 import time
 
 from research.click_decoder_v1 import decoder as D10, decoder_v11 as D11, layers
-from research.click_decoder_v1.validation.run import _watchdog
+from research.click_decoder_v1.validation.run import _watchdog, report_recorded
 
 ROOT = Path(__file__).resolve().parents[3]
 HERE = Path(__file__).resolve().parent
@@ -365,10 +368,11 @@ def main():
                     ("H1_r06b_flagship_v3", h1), ("H5_planar_bigbang", h_planar), ("H7_E05", h_e05), ("H6_E01", h_e01),
                     ("H8_E06", h_e06)):
         res[key] = fn()
-        (HERE / "heldout_v1.1.json").write_text(json.dumps(res, indent=1, sort_keys=True, default=str) + "\n")
+        (OUT / "heldout_v1.1.json").write_text(json.dumps(res, indent=1, sort_keys=True, default=str) + "\n")
     res["seconds"] = round(time.time() - t, 1)
-    (HERE / "heldout_v1.1.json").write_text(json.dumps(res, indent=1, sort_keys=True, default=str) + "\n")
+    (OUT / "heldout_v1.1.json").write_text(json.dumps(res, indent=1, sort_keys=True, default=str) + "\n")
     print("done", res["seconds"], "s")
+    return report_recorded(res, HERE / "heldout_v1.1.json", OUT / "heldout_v1.1.json")
 
 
 if __name__ == "__main__":

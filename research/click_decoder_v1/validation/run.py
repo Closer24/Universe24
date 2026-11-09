@@ -10,7 +10,8 @@ Set B: r08's wave-6 test set with r08's reference truth (validation/r08_referenc
 Set C: the l = 0 layer (change observer minus native) of r08's wave-7 logs.
 Logs, per-case reports and scores go to runs/click_decoder_v1/ (not versioned); nothing is written into the
 package. score and extra compare their scores with the recorded files next to this file (results_v<version>.json,
-results_v<version>_extra.json) and stop with an error if a recorded value is not reproduced.
+results_v<version>_extra.json) and stop with an error if a recorded value is not reproduced. Without --sets A,
+each command first checks the program's local logs and stops with one line if one is missing (release 1.0.4).
 The truth is used only here, never by the decoder.
 """
 from __future__ import annotations
@@ -552,8 +553,73 @@ def extra():
     _record(out, f"results_v{D.VERSION}_extra.json", f"results_v{D.VERSION}_extra.json", t)
 
 
+# ------------------------------------------------------------------ local inputs and recorded files (release 1.0.4)
+def local_inputs(command, sets="ABC"):
+    """The program's local files (not in the repository) that a command reads besides set A: set C's observer logs
+    (logs), set B's logs and set C's layers (score), set D's logs and set C's reports (extra)."""
+    if sets == "A":
+        return []
+    if command == "logs":
+        return [OBS / f"{n}.{k}.jsonl" for n in SET_C if not (RUNS / "setC" / f"{n}.L0.jsonl").exists() for k in "CN"]
+    if command == "score":
+        ref = json.loads((HERE / "r08_reference.json").read_text())
+        return [ROOT / c["log"] for c in ref["cases"]] + [RUNS / "setC" / f"{n}.L0.jsonl" for n in SET_C]
+    if command == "extra":
+        logs_d = [ROOT / f"runs/matter_light_v1/r08/clicklogs/spectro_d{d}_atom_alone.{x}" for d in SET_D
+                  for x in ("jsonl", "summary.json")]
+        return logs_d + [RUNS / f"v{D.VERSION}" / "setC" / f"{n}.json" for n in SET_C]
+    return []
+
+
+def require_local_inputs(command, sets="ABC"):
+    """Stop with one line, before any decoding, if a local input of the command is missing."""
+    missing = [p for p in local_inputs(command, sets) if not Path(p).exists()]
+    if missing:
+        first = Path(missing[0])
+        first = first.relative_to(ROOT) if first.is_relative_to(ROOT) else first
+        hint = "set D and the set-C coverage have no tracked-data mode" if command == "extra" else "use --sets A"
+        raise SystemExit(f"{command}: sets B-D need the program's local logs ({len(missing)} missing, first {first}); "
+                         f"{hint}")
+
+
+def compare_recorded(cur, rec):
+    """Per top-level key of a rerun and of its recorded file, timing ignored: "equal", "reproduces_recorded" (every
+    recorded value reproduced), "DIFFERS", "not recorded" or "not rerun"."""
+    out = {}
+    for k in sorted(set(cur) | set(rec)):
+        if k == "seconds":
+            continue
+        if k not in rec:
+            out[k] = "not recorded"
+        elif k not in cur:
+            out[k] = "not rerun"
+        elif _no_timing(cur[k]) == _no_timing(rec[k]):
+            out[k] = "equal"
+        else:
+            out[k] = "reproduces_recorded" if _reproduces(cur[k], rec[k]) else "DIFFERS"
+    return out
+
+
+def report_recorded(cur, recorded, written):
+    """Print how a rerun written under runs/click_decoder_v1/ compares with its recorded file in validation/; stop
+    with an error if a key that both hold is not reproduced."""
+    status = compare_recorded(json.loads(json.dumps(cur, default=str)), json.loads(Path(recorded).read_text()))
+    written = Path(written)
+    print(json.dumps({"written": str(written.relative_to(ROOT) if written.is_relative_to(ROOT) else written),
+                      "recorded": f"validation/{Path(recorded).name}", "keys": status}, indent=1))
+    if "DIFFERS" in status.values():
+        raise SystemExit(f"results differ from validation/{Path(recorded).name}")
+    return status
+
+
+COMMANDS = ("logs", "score", "extra")
+
 if __name__ == "__main__":
+    if len(sys.argv) < 2 or sys.argv[1] not in COMMANDS:
+        raise SystemExit("usage: python -m research.click_decoder_v1.validation.run {logs,score,extra} [--sets A] "
+                         "[--version 1.1]")
     SETS = sys.argv[sys.argv.index("--sets") + 1] if "--sets" in sys.argv else "ABC"
     if SETS not in ("A", "ABC") or (SETS == "A" and sys.argv[1] == "extra"):
         raise SystemExit("--sets: use --sets A with logs or score (sets B, C and D need the program's local logs)")
+    require_local_inputs(sys.argv[1], SETS)
     {"logs": lambda: logs(SETS), "score": lambda: score(SETS), "extra": extra}[sys.argv[1]]()   # also: --version 1.1

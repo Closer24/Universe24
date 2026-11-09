@@ -4,6 +4,8 @@
 """
 from __future__ import annotations
 
+import contextlib
+import io
 import json
 from pathlib import Path
 import subprocess
@@ -146,6 +148,69 @@ class OfficialLog(unittest.TestCase):
                            check=True, capture_output=True, cwd=ROOT)
             ev, _ = read_log(o)
         self.assertEqual(sorted({e[0] for e in ev}), [6, 8])
+
+
+class ValidationScripts(unittest.TestCase):
+    """Release 1.0.4: the validation scripts write only under runs/click_decoder_v1/, compare their results with the
+    recorded files, and stop with one line, before any decoding, when the program's local logs are missing."""
+
+    def test_missing_local_logs_stop_with_one_line(self):
+        from research.click_decoder_v1.validation import run as R
+        saved = R.ROOT, R.RUNS, R.OBS
+        with tempfile.TemporaryDirectory() as tmp:
+            R.ROOT, R.RUNS, R.OBS = Path(tmp), Path(tmp) / "runs/click_decoder_v1", Path(tmp) / "obs"
+            try:
+                for cmd in ("logs", "score", "extra"):
+                    self.assertEqual(R.local_inputs(cmd, "A"), [])
+                    self.assertTrue(R.local_inputs(cmd))
+                    with self.assertRaises(SystemExit) as stop:
+                        R.require_local_inputs(cmd)
+                    message = str(stop.exception.code)
+                    self.assertEqual(len(message.splitlines()), 1, message)
+                    self.assertIn("sets B-D need the program's local logs", message)
+                R.require_local_inputs("score", "A")         # set A reads tracked data only
+            finally:
+                R.ROOT, R.RUNS, R.OBS = saved
+
+    def test_usage_line(self):
+        for argv in ([], ["bogus"]):
+            r = subprocess.run([sys.executable, "-m", "research.click_decoder_v1.validation.run", *argv], cwd=ROOT,
+                               capture_output=True, text=True)
+            self.assertEqual(r.returncode, 1, r.stderr)
+            self.assertTrue(r.stderr.startswith("usage: python -m research.click_decoder_v1.validation.run"), r.stderr)
+
+    def test_compare_recorded(self):
+        from research.click_decoder_v1.validation import run as R
+        rec = {"a": {"x": 1, "seconds": 2.0}, "b": [1, 2], "c": {"x": 1}, "d": 0, "seconds": 9}
+        cur = {"a": {"x": 1, "seconds": 3.5}, "b": [1, 3], "c": {"x": 1, "y": 2}, "e": 1, "seconds": 1}
+        self.assertEqual(R.compare_recorded(cur, rec), {"a": "equal", "b": "DIFFERS", "c": "reproduces_recorded",
+                                                        "d": "not rerun", "e": "not recorded"})
+
+    def test_heldout_writes_under_runs_and_compares(self):
+        from research.click_decoder_v1.validation import heldout as H
+        recorded_file = H.HERE / "heldout_v1.1.json"
+        before = recorded_file.read_bytes()
+        recorded = json.loads(before)
+        targets = {"h9": "H9_quotient_field", "h2": "H2_r15_d2j", "h3": "H3_r14_peak_light", "h4": "H4_set_A_c_image_box",
+                   "h1": "H1_r06b_flagship_v3", "h_planar": "H5_planar_bigbang", "h_e05": "H7_E05", "h_e01": "H6_E01",
+                   "h_e06": "H8_E06"}
+        saved = {name: getattr(H, name) for name in targets}, H.OUT
+        with tempfile.TemporaryDirectory() as tmp:
+            H.OUT = Path(tmp)
+            for name, key in targets.items():                # each target returns its recorded value
+                setattr(H, name, lambda key=key: recorded.get(key, {"rerun": key}))
+            try:
+                with contextlib.redirect_stdout(io.StringIO()):
+                    status = H.main()
+                self.assertTrue((Path(tmp) / "heldout_v1.1.json").exists())
+            finally:
+                for name, fn in saved[0].items():
+                    setattr(H, name, fn)
+                H.OUT = saved[1]
+        self.assertEqual(recorded_file.read_bytes(), before)   # the recorded file is never rewritten
+        self.assertEqual(status["H8_E06"], "not recorded")         # recorded as H8_E06_as_registered and H8b_...
+        self.assertEqual(status["H8_E06_as_registered"], "not rerun")
+        self.assertTrue(all(status[key] == "equal" for key in targets.values() if key != "H8_E06"), status)
 
 
 if __name__ == "__main__":

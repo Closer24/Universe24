@@ -3,7 +3,8 @@
 One decoder, frozen and versioned, that reads **only click logs** and reports what can be
 seen in them: tracks with speeds, periodic sources (clocks, lamps), bound or periodic
 composites, emission and creation events, spectra, kind statistics and joint statistics
-of declared detectors. Under the owner's rule (BRIEF UPDATE 8) every physics claim must
+of declared detectors. Under the owner's rule (BRIEF UPDATE 8: UPDATE 8 of the program
+brief `research/matter_light_v1/BRIEF_COMMON.md`, program record) every physics claim must
 come from this decoder's output, run unchanged on the experiment's click log, with the
 decoder version recorded. The board itself is not read.
 
@@ -14,6 +15,7 @@ click patterns, not claims about physical photons, mass or atoms.
 ## Quick use
 
 ```sh
+mkdir -p runs                                                    # runs/ is ignored and absent from a fresh clone
 python -m universe24 --config research/matter_light_blocks_v1/blocks/atoms/atom_trap_d6.json \
     --steps 64 --events runs/trap.jsonl
 python -m research.click_decoder_v1 decode runs/trap.jsonl --side 96 --horizon 64 --out runs/trap.report.json
@@ -92,7 +94,7 @@ click records, never a fit.
    `emitted` (split from a linked track, or an earlier click of another object within
    `emit_radius + dt` sites in the `emit_lookback` = 3 updates before); `isolated` (no
    earlier click in that causal neighbourhood: a birth with no visible cause).
-   **Created** (UPDATE 6, positional): born after the seed updates and more than
+   **Created** (BRIEF UPDATE 6, positional): born after the seed updates and more than
    `create_radius` = 4 sites from the seed footprint. `after_wrap_bound` marks births at
    or after first click + L/2, when click signals may have met themselves across the
    torus. A **lamp** is a source with >= 2 movers born within 4 sites of its core after
@@ -144,7 +146,7 @@ before v1.1 existed) and freeze records: `validation/PREREGISTRATION.md`. Scores
 | held out | r24: quotient field equal to r24's observer (7 logs) | - | 7/7 |
 | held out | r20: sign layers byte-identical, counts exact (34 settings; CLI log 280 / 0 / 3) | - | 34/34; yes |
 | held out | planar Big Bang: two exact sheets +-1/2 (14 and 18 updates) | 0/2 | 1/2 |
-| held out | E05 / E01 / E06 checks (as registered) | 1/3; 15/15; 2/3 | 3/3; 15/15; 2/3 |
+| held out | E05 (program record) / E01 / E06 checks (as registered) | 1/3; 15/15; 2/3 | 3/3; 15/15; 2/3 |
 
 v1.0's scores are blind. v1.1's scores on sets A-C are post hoc (v1.0's failures there motivated v1.1); set D and
 the held-out targets were blind for v1.1. **v1.1 fails two of its pre-registered acceptance rules** (bold above):
@@ -165,7 +167,7 @@ nice -n 10 python -m research.click_decoder_v1.validation.run score --sets A    
 nice -n 10 python -m research.click_decoder_v1.validation.run score --sets A --version 1.1  # the same with v1.1
 ```
 
-These commands write only under `runs/click_decoder_v1/` (logs, per-case reports and
+These commands write only under `runs/click_decoder_v1/` (logs, about 350 MB for set A, per-case reports and
 `v<version>/results_setA.json`). `score` compares each set with the recorded `validation/results_v<version>.json`
 (timing ignored), reports per set whether it is `equal` and whether it `reproduces_recorded` (every recorded value
 reproduced; the scorer gained one set-A metric after v1.0's results were recorded), and stops with an error if a
@@ -176,22 +178,28 @@ Paths under `research/matter_light_v1/` named in this package (provenance, held-
 program's working folder, archived uncurated on branch `backup/matter-light-working` at commit 2483837; logs
 under `runs/` are local and recorded here by SHA-256 only.
 
-Reproduce all sets (needs those local logs) with
+Reproduce all sets (needs those local logs; `heldout` also imports the working folder's code, its `r15` and `r24`
+modules) with
 
 ```sh
 nice -n 10 python -m research.click_decoder_v1.validation.run logs    # official CLI logs (set A), l = 0 layers (set C)
 nice -n 10 python -m research.click_decoder_v1.validation.run score   # sets A, B, C; compared with results_v1.0.json
 nice -n 10 python -m research.click_decoder_v1.validation.run extra   # set D, set-C coverage; vs results_v1.0_extra.json
 nice -n 10 python -m research.click_decoder_v1.validation.run score --version 1.1   # the same with v1.1 (also extra)
-nice -n 10 python -m research.click_decoder_v1.validation.heldout       # v1.1 held-out targets (needs the owners' logs)
+nice -n 10 python -m research.click_decoder_v1.validation.heldout       # v1.1 held-out (working-folder code and logs)
 nice -n 10 python -m research.click_decoder_v1.validation.heldout_sign  # r20's sign-layer counts
 python -m research.click_decoder_v1.validation.table                  # print the tables
 python -m unittest tests.test_click_decoder_v1 tests.test_click_decoder_v11 tests.test_click_decoder_layers
 ```
 
-`run` writes its scores under `runs/click_decoder_v1/v<version>/`, never into the package. `heldout` and
-`heldout_sign` still rewrite their recorded files `validation/heldout_v1.1.json` and
-`validation/heldout_sign_split_v1.json`.
+`run` writes its scores under `runs/click_decoder_v1/v<version>/`, and `heldout` and `heldout_sign` write
+`runs/click_decoder_v1/heldout/heldout_v1.1.json` and `.../heldout/heldout_sign_split_v1.json`, never into the
+package. `heldout` and `heldout_sign` then compare each top-level entry with the recorded
+`validation/heldout_v1.1.json` and `validation/heldout_sign_split_v1.json` (timing ignored: equal, reproduced,
+not recorded or not rerun) and stop with an error if an entry that both hold differs. The recorded H8 entries
+(`H8_E06_as_registered`, `H8b_E06_moving_clocks_descriptive`) do not match the script's `H8_E06` key, so they are
+listed, not compared. Without `--sets A`, `logs`, `score` and `extra` first check the program's local logs and stop
+with one line, before any decoding, if one is missing.
 
 Set A uses the declared signatures of `research/matter_light_blocks_v1/catalog.json`
 (period, translation, silence, clicks and kinds per period, box checks), pinned through a
@@ -233,7 +241,7 @@ layer of r08's wave-7 logs. Set D is r08's three trap-atom logs.
   merged movers, a site passed by two trains (not "fed"), fragments of one mover. Binding
   ("bound composite") is recognised from click structure only; that the binding is caused
   by the interaction needs a declared control run, decoded separately.
-* **"Created" is positional** (UPDATE 6). It also fires for fragments re-born mid-flight
+* **"Created" is positional** (BRIEF UPDATE 6). It also fires for fragments re-born mid-flight
   and for torus self-encounters; read `origin`, `parent` and `after_wrap_bound` with it.
 
 ## Version 1.1 (`decoder_v11.py`, `config_v1.1.json`, `FROZEN_v1.1.json`)
@@ -318,26 +326,29 @@ option, compares complete JSON records. `beat_clock_v1` uses `step`, `address` a
   inside an optional declared box: image steps and plain repeats.
 * `split(log, t)`, `shift(log, dt)`, `record_diff(a, b)`.
 
-**`beat_clock_v1`** (byte-identical to r25's observer, whose hash experiment E11 pins): `beat_clock(events, side,
-steps, channel, clock, sites)` and `run_declared(log, declaration)` read the rates of declared beat clocks (two
+**`beat_clock_v1`** (byte-identical to r25's observer, whose hash the staged experiment E11 pins): `beat_clock(events,
+side, steps, channel, clock, sites)` and `run_declared(log, declaration)` read the rates of declared beat clocks (two
 wavevectors, an axis, a declared c) from Fourier projections of the click quotients: chord speed u, clock rate
 Omega, rest frequency w' and the ratio Omega / Omega_SR.
 
 **Freeze and validation** (`validation/PREREGISTRATION_*_v1.md`, `validation/results_*_v1.json`):
 * `log_symmetry_v1`: pre-registered 04:20 UTC, frozen 04:21:49, validated 04:22; for this release re-frozen at
   04:38:46 after a docstring-only change (the pre-registration pointer and the usage line), and re-run identical.
-  r27b's bounce (L = 640, 1280): 49,830 records, 0 unpaired at tau = 240, the unique best tau. r36's cyclic bangs:
-  C1 period 48 (6 identical cycles of 316 records), C2 period 164 (4 of 1372), each cycle mirrored with 0 unpaired;
-  blind C3a: period 164, 4 identical cycles of 2612, C image on 82/82 steps of the ring box. Equal to r36's own
+  r27b's bounce (L = 640, 1280): 49,830 records, 0 unpaired at tau = 240, the unique best tau. r36's cyclic bangs
+  CB1, CB2 and CB3a (named C1, C2 and C3a by r36, in E15 and in the pre-registration; not the click classes C1, C2):
+  CB1 period 48 (6 identical cycles of 316 records), CB2 period 164 (4 of 1372), each cycle mirrored with 0 unpaired;
+  blind CB3a: period 164, 4 identical cycles of 2612, C image on 82/82 steps of the ring box. Equal to r36's own
   observers on all 28 cycle files. Controls as predicted (the unsymmetrized bounce leaves 78,572 of 97,636 records
   unpaired; an asymmetric seed breaks period 48; a log without the ring has no records in its box); 8 synthetic cases.
-* `beat_clock_v1`: pre-registered 04:24 UTC, frozen 04:25:11. On three logs that E11 does not use: u/c = +-1/3
-  with ratio 1 within 2e-16 and Omega = pi/3, 2 pi/3 (L = 12 with doubled wavenumbers; L = 6 with the clocks
-  swapped); the generic clock control gives 1.0945; r25's 5 synthetic cases.
+* `beat_clock_v1`: pre-registered 04:24 UTC, frozen 04:25:11. On three logs that the staged experiment E11 does not
+  use: u/c = +-1/3 with ratio 1 within 2e-16 and Omega = pi/3, 2 pi/3 (L = 12 with doubled wavenumbers; L = 6 with
+  the clocks swapped); the generic clock control gives 1.0945; r25's 5 synthetic cases.
 
 **Provenance.** The pre-registrations stay byte-identical (their hashes are pinned). Logs under `runs/` named in
 them are local and recorded by SHA-256 only; their `research/matter_light_v1/` paths are files of the program's
 working folder, archived uncurated on branch `backup/matter-light-working` at commit 9f9cc64.
+`validation/results_beat_clock_v1.json` records its three logs (made under `runs/matter_light_v1/r17/beat_clock/`)
+by file name and `log_sha256`; release 1.0.4 replaced their local absolute paths by the file names.
 
 **Limits.** `log_symmetry_v1` compares click records only: dark parts are invisible to it, and a mirrored or
 periodic click record does not by itself show a mirrored or periodic board state. `beat_clock_v1` uses floating
@@ -348,5 +359,7 @@ d'Alembert law, not an independent time-dilation factor.
 
 v1.0 frozen 2026-11-09 01:29:27 UTC (`FROZEN.json`); v1.1 frozen 02:07:53 UTC (`FROZEN_v1.1.json`, which also
 re-records v1.0's hashes). Layers: sign_split_v1 frozen 02:23:10 UTC; log_symmetry_v1 04:21:49 UTC, re-frozen
-04:38:46 UTC for release 1.0.3; beat_clock_v1 04:25:11 UTC. Any v1.x is re-run on all earlier validation cases;
+04:38:46 UTC for release 1.0.3; beat_clock_v1 04:25:11 UTC. Release 1.0.4 changes only the validation scripts,
+the log names in `validation/results_beat_clock_v1.json` and this README (`RELEASE.json`). Any v1.x is re-run on all
+earlier validation cases;
 the results of every version are kept (`validation/results_v<version>.json`, `validation/heldout_v1.1.json`).

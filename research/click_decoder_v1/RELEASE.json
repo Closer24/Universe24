@@ -1,7 +1,7 @@
 {
  "package": "research/click_decoder_v1",
- "release": "1.0.3",
- "release_utc": "2026-11-09T04:42:21Z",
+ "release": "1.0.4",
+ "release_utc": "2026-11-09T07:14:05Z",
  "default_version": "1.0",
  "versions": {
   "1.0": "FROZEN.json",
@@ -11,27 +11,19 @@
   "beat_clock_v1 layer": "FROZEN_beat_clock_v1.json"
  },
  "change": {
-  "files_added": [
-   "log_symmetry_v1.py",
-   "beat_clock_v1.py",
-   "FROZEN_log_symmetry_v1.json",
-   "FROZEN_beat_clock_v1.json",
-   "validation/PREREGISTRATION_log_symmetry_v1.md",
-   "validation/PREREGISTRATION_beat_clock_v1.md",
-   "validation/results_log_symmetry_v1.json",
-   "validation/results_beat_clock_v1.json"
-  ],
   "files_changed": [
-   "README.md"
+   "README.md",
+   "validation/heldout.py",
+   "validation/heldout_sign.py",
+   "validation/results_beat_clock_v1.json",
+   "validation/run.py"
   ],
-  "tests_added": [
-   "tests/test_click_decoder_layers.py"
+  "tests_changed": [
+   "tests/test_click_decoder_v1.py"
   ],
-  "what": "two frozen read-only layers: log_symmetry_v1 (time-mirror pairing about a moment, best moment, exact periods over cycles, C and K images on a region, split, shift, record difference) and beat_clock_v1 (rates of declared beat clocks from Fourier projections of the click quotients; byte-identical to r25's observer, the hash E11 pins), each with its pre-registration, FROZEN file and recorded validation; the layer tests are merged into one test file; README: a layer section (functions, input contract, mirror convention, z = 14 table, freeze times, validation summary, provenance, limits) and the layers' freeze times under Versions",
-  "log_symmetry_v1_refreeze": "docstring only (the pre-registration pointer and the usage line name the package paths): first freeze 9e11b207... at 04:21:49Z, re-frozen 61f5ba8e... at 04:38:46Z; the 8 synthetic tests and P1-P5, N1-N3 re-run identical at 04:40:24Z",
-  "left_out": "click_mirror_v1 (superseded, not released), the preparation scripts of the control logs and the two validators",
-  "reason": "architect review of the layers: approved with fixes as release 1.0.3 (a release that only adds layers)",
-  "unchanged": "decoders, configs, the FROZEN files of v1.0, v1.1 and sign_split_v1, the scorer, every recorded result and every other package file are byte-identical to release 1.0.2; no score changes; the default decoder stays 1.0"
+  "what": "validation scripts and records only: heldout and heldout_sign write their results under runs/click_decoder_v1/heldout/ (never into the package) and compare each top-level entry with the recorded validation/heldout_v1.1.json and validation/heldout_sign_split_v1.json, timing ignored, stopping with an error if an entry that both hold differs; run's logs, score and extra (without --sets A) check the program's local logs first and stop with one line, before any decoding, if one is missing, and run without a known command prints a usage line; results_beat_clock_v1.json names its three logs by file name (the absolute local paths in report.log replaced; log_sha256 unchanged); README: the quick-use mkdir, provenance pointers, the cyclic-bang names CB1, CB2, CB3a, and the held-out and local-log behaviour; four tests of the validation scripts in tests/test_click_decoder_v1.py",
+  "reason": "release audit r48 (S7, S14, N8) and the fresh-clone referee FRESH2 report 3 (item 2); staged by r01h for the architect",
+  "unchanged": "decoders, configs, layers, every FROZEN file and every code hash they pin, the pre-registrations and every recorded score; results_beat_clock_v1.json differs from release 1.0.3 only in the three report.log strings; the default decoder stays 1.0"
  },
  "previous_releases": [
   {
@@ -57,13 +49,21 @@
    "README.md": "4ca8e41506a43b821db0238e957c2c57a3c6f144e5fa37a1e024dcf7014a9cdc",
    "RELEASE.json": "214ab95f7da03f63d1052d73f67f87a54439746b2854253c62b2eaba2c870d3a",
    "verification": "set-A rerun on a clean checkout and full validation with the local logs, recorded in RELEASE.json at d97d7f5; both still hold, because no decoder, config, scorer or recorded result changed in 1.0.3"
+  },
+  {
+   "release": "1.0.3",
+   "release_utc": "2026-11-09T04:42:21Z",
+   "commit": "6a07ea1",
+   "README.md": "0cc8a0eef7fe86948ceb77af34c580296b6ae73e896b28ea4fd17c9109c16b78",
+   "RELEASE.json": "ebcc9e7e891009c302bee37cf59d50e1f98aed9e26d16110aeaabe9fa53a661d",
+   "note": "release 1.0.3: frozen layers log_symmetry_v1 and beat_clock_v1; cores unchanged"
   }
  ],
  "tests": {
   "commands": "python -m unittest tests.test_click_decoder_v1 tests.test_click_decoder_v11 tests.test_click_decoder_layers",
-  "result": "39/39 OK",
+  "result": "43/43 OK",
   "sha256": {
-   "tests/test_click_decoder_v1.py": "fb9f2df93c348c9a9f6f2f58948763f3b3fa7cdcac66896bebcda70cb209d745",
+   "tests/test_click_decoder_v1.py": "638b6a226f495a13b68e3ac1bb47911755bb0d88e6aac45e9dab3edd99f2aa75",
    "tests/test_click_decoder_v11.py": "821bed98472c3e8fe85ba0d0301821d0db6732028c21128750573b489711dbb4",
    "tests/test_click_decoder_layers.py": "65b103ac50c32ac0317964ab7600dfc0ebdb043583cc1942aec060853595a052"
   }
@@ -74,7 +74,7 @@
   "FROZEN_log_symmetry_v1.json": "e725ebdae0494d65728f47f5621edb1af5a3dcce8c05bddcf5ba96fb7daabf37",
   "FROZEN_sign_split_v1.json": "8f717548f3cf42b55b6bcf8de9ac2ad561f2fa523153aff12e0375835a43d929",
   "FROZEN_v1.1.json": "573d5181c973d5dc5c84f4121360e234ab6036cef30d8de2d10a1788d1668c27",
-  "README.md": "0cc8a0eef7fe86948ceb77af34c580296b6ae73e896b28ea4fd17c9109c16b78",
+  "README.md": "3de3c901020a54ceff51c0f5bb612090fe475e59eb7e8cd3e35669fb0ccd7fe3",
   "__init__.py": "6d3e6b520fff7dc1572c05616f53503c33e5674943f7651af6987571a28bb4a5",
   "__main__.py": "740eb796cb8e2c6c40995074506b36b5c359f33d670366ada804dab791548340",
   "beat_clock_v1.py": "05d9d49565c148468c59aea4d575ea03220784d0cc4e76bc2d6480298294699b",
@@ -90,20 +90,20 @@
   "validation/PREREGISTRATION_beat_clock_v1.md": "e615c3be6391cbc68d9e3c01bfa842b6a3883a749354713cc35186544ab88f7b",
   "validation/PREREGISTRATION_log_symmetry_v1.md": "68b96bcd6a790c9ada71693bb708900f16f7d71a9eeda77945222612d7bed408",
   "validation/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-  "validation/heldout.py": "1ec4c672ff03adfe40b8d6d3a67e140b2f61e0174ba3fad40b17953671c9c324",
-  "validation/heldout_sign.py": "abdc081a711d62854a4453c9b6546ec2ebc76057b7a5da5e956efb93909380cb",
+  "validation/heldout.py": "cfbfc32d6860a474543fcc6b0ac9d73c60fdab042e16a7ee970241f06942e5af",
+  "validation/heldout_sign.py": "1bbd8d41eb5806b8fba118576ae9d1d627de17c0de866ad77a0c214bdb03a6d1",
   "validation/heldout_sign_split_v1.json": "43f9bfc162f0dc33500de06fa5aadf73c35f2c2be2ad95f93382d3af52212ca8",
   "validation/heldout_v1.1.json": "91d9643edb918b8443dc7dfeccbd094c4b5b452ca21def8c29d44b1e303833d6",
   "validation/r08_reference.json": "30ff4a86ca46e73c2271ba7d0dd96aa83472224152ae7edfd399be5d1cf991cd",
-  "validation/results_beat_clock_v1.json": "16dcd420ab715102cfbca86953b4bb663b4ad2ceb0ff24f33177fafeea04a8d4",
+  "validation/results_beat_clock_v1.json": "3ad668d9c232fe8e3fb914b7f4c106c793f1331f28d8726efbe1bab6c6a3ae6e",
   "validation/results_log_symmetry_v1.json": "f88e519511f0a202fc2066f8ed111d6796520363c74d7288c50ef64324cf32f8",
   "validation/results_v1.0.json": "f6392f23f00d070951d1c4729c724b01159fb9dfefe532aafa270030851d8431",
   "validation/results_v1.0_extra.json": "f68f42cb1c1aeb909f4cb0de036936acb7b12a1553c29eb4305112264e734d31",
   "validation/results_v1.1.json": "1ca12b08db8c9d7b4cdb68e34785129626e957f042106ffb9ec95504eae34557",
   "validation/results_v1.1_extra.json": "1af847e201c999fb620f94c590b06e2c6ac4ba49a400e08d3b875b245c6cf081",
-  "validation/run.py": "79de05c382c552e0b3621f70a3f9f8c258cbbfb588559cf697d5027e94eb45a4",
+  "validation/run.py": "f04487d167d4be14ebb7271269f25e20ae00042deb484aa5d5a9768da2749204",
   "validation/snapshot_r08.py": "a105f1165831d20e7dd7f6a319fe3244175963f720fbf2a0d90fbf39e68fde3d",
   "validation/table.py": "eb7ce6cb980098afe3a1d4d4ebb9e27dff4434718b1890933897f29c0bf5a0da"
  },
- "note": "release 1.0.3 for the architect's final check before the push; supersedes release 1.0.2. No file of this package is edited after this time."
+ "note": "release 1.0.4: the validation scripts write only under runs/ and stop with one line when the program's local logs are missing; results_beat_clock_v1.json names its logs by file name; decoders, layers, FROZEN files and recorded scores unchanged"
 }

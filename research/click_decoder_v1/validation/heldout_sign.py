@@ -5,7 +5,8 @@
 For each of r20's 34 settings (runs/matter_light_v1/r20/phase_element/, truth: r20's phase_element.json)
 and the official CLI log (phase_element_cli/, truth 280 / 0 / 3): split the native log into the P and M
 layers, compare them with r20's files, decode each layer with v1.1 and r20's detector declaration, and
-count the comparators exactly as r20 does. Writes validation/heldout_sign_split_v1.json.
+count the comparators exactly as r20 does. Writes runs/click_decoder_v1/heldout/heldout_sign_split_v1.json (never
+into the package) and compares it with the recorded validation/heldout_sign_split_v1.json (release 1.0.4).
 """
 from __future__ import annotations
 
@@ -15,6 +16,7 @@ from pathlib import Path
 
 from research.click_decoder_v1 import decoder_v11 as D
 from research.click_decoder_v1.sign_layer import sign_split
+from research.click_decoder_v1.validation.run import report_recorded
 
 ROOT = Path(__file__).resolve().parents[3]
 HERE = Path(__file__).resolve().parent
@@ -60,8 +62,10 @@ def main():
            "equal": [got["+"], got["-"], got["0"]] == [280, 0, 3]}
     out = {"layer": "sign_split_v1", "decoder": D.VERSION, "settings_equal": [ok, len(rows)], "cli": cli, "rows": rows,
            "layer_files_equal": sum(1 for x in rows if all(x["layers_equal_r20"].values()))}
-    (HERE / "heldout_sign_split_v1.json").write_text(json.dumps(out, indent=1, sort_keys=True) + "\n")
+    written = OUT.parent / "heldout_sign_split_v1.json"
+    written.write_text(json.dumps(out, indent=1, sort_keys=True) + "\n")
     print(json.dumps({"settings_equal": out["settings_equal"], "layer_files_equal": out["layer_files_equal"], "cli": cli}))
+    return report_recorded(out, HERE / "heldout_sign_split_v1.json", written)
 
 
 if __name__ == "__main__":
