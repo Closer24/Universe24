@@ -1,0 +1,59 @@
+{
+ "amp_2^12": {
+  "continuity": 0,
+  "lorenz_constant": 0,
+  "lorenz_C_nonzero": 0,
+  "gauss_step": 0,
+  "noether_global": 0,
+  "node_updates": 12960,
+  "sigma": 262144,
+  "undressed_gauss_drift_rel": 0.0005249053271898754,
+  "rewind_exact": true,
+  "max_abs": 133260,
+  "stats": {
+   "int64_steps": 60,
+   "pyint_steps": 0,
+   "inverse_int64_steps": 60,
+   "inverse_pyint_steps": 0
+  }
+ },
+ "amp_2^16": {
+  "continuity": 0,
+  "lorenz_constant": 0,
+  "lorenz_C_nonzero": 0,
+  "gauss_step": 0,
+  "noether_global": 0,
+  "node_updates": 12960,
+  "sigma": 1024,
+  "undressed_gauss_drift_rel": 4.32558142524459e-05,
+  "rewind_exact": true,
+  "max_abs": 133167,
+  "stats": {
+   "int64_steps": 60,
+   "pyint_steps": 0,
+   "inverse_int64_steps": 60,
+   "inverse_pyint_steps": 0
+  }
+ },
+ "amp_2^20": {
+  "continuity": 0,
+  "lorenz_constant": 0,
+  "lorenz_C_nonzero": 0,
+  "gauss_step": 0,
+  "noether_global": 0,
+  "node_updates": 12960,
+  "sigma": 4,
+  "undressed_gauss_drift_rel": 2.775158425836287e-06,
+  "rewind_exact": true,
+  "max_abs": 1186299,
+  "stats": {
+   "int64_steps": 60,
+   "pyint_steps": 0,
+   "inverse_int64_steps": 60,
+   "inverse_pyint_steps": 0
+  }
+ },
+ "verdict": "PASS",
+ "test": "EM-T5a_T6",
+ "written": "Tue Nov 10 10:06:47 UTC 2026"
+}

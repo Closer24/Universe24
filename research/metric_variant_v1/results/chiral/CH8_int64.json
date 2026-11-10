@@ -1,0 +1,11 @@
+{
+ "stats": {
+  "int64_steps": 30,
+  "pyint_steps": 0,
+  "inverse_int64_steps": 0,
+  "inverse_pyint_steps": 0
+ },
+ "max_abs_state_after_10": 76,
+ "written": "Tue Nov 10 13:24:36 UTC 2026",
+ "Q": 8589934593
+}

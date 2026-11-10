@@ -1,0 +1,86 @@
+{
+ "test": "T0.13_3_reference_reversors",
+ "written_utc": "Tue Nov 10 10:10:54 UTC 2026",
+ "cases": {
+  "Q1_seed1_M": {
+   "reversor": true,
+   "clicks": 30190,
+   "kinds": "kept"
+  },
+  "Q1_seed1_Mp": {
+   "reversor": true,
+   "clicks": 30190,
+   "kinds": "kept"
+  },
+  "Q1_seed1_JR": {
+   "reversor": true,
+   "clicks": 30190,
+   "kinds": "C1<->C2, quotient negated"
+  },
+  "Q1_seed1_JM": {
+   "reversor": true,
+   "clicks": 30190,
+   "kinds": "C1<->C2, quotient negated"
+  },
+  "Q1_seed2_M": {
+   "reversor": true,
+   "clicks": 30186,
+   "kinds": "kept"
+  },
+  "Q1_seed2_Mp": {
+   "reversor": true,
+   "clicks": 30186,
+   "kinds": "kept"
+  },
+  "Q1_seed2_JR": {
+   "reversor": true,
+   "clicks": 30186,
+   "kinds": "C1<->C2, quotient negated"
+  },
+  "Q1_seed2_JM": {
+   "reversor": true,
+   "clicks": 30186,
+   "kinds": "C1<->C2, quotient negated"
+  },
+  "Q7_seed1_M": {
+   "reversor": true,
+   "clicks": 30190,
+   "kinds": "kept"
+  },
+  "Q7_seed1_Mp": {
+   "reversor": true,
+   "clicks": 30190,
+   "kinds": "kept"
+  },
+  "Q7_seed1_JR": {
+   "reversor": true,
+   "clicks": 30190,
+   "kinds": "C1<->C2, quotient negated"
+  },
+  "Q7_seed1_JM": {
+   "reversor": true,
+   "clicks": 30190,
+   "kinds": "C1<->C2, quotient negated"
+  },
+  "Q7_seed2_M": {
+   "reversor": true,
+   "clicks": 30186,
+   "kinds": "kept"
+  },
+  "Q7_seed2_Mp": {
+   "reversor": true,
+   "clicks": 30186,
+   "kinds": "kept"
+  },
+  "Q7_seed2_JR": {
+   "reversor": true,
+   "clicks": 30186,
+   "kinds": "C1<->C2, quotient negated"
+  },
+  "Q7_seed2_JM": {
+   "reversor": true,
+   "clicks": 30186,
+   "kinds": "C1<->C2, quotient negated"
+  }
+ }
+}

@@ -1,0 +1,78 @@
+{
+ "stamp_start": "Tue Nov 10 13:19:52 UTC 2026",
+ "L": 4,
+ "T": 20000,
+ "detune_h00": false,
+ "info_gravity_source": {
+  "law": "HYBRID (owner decision 2, 13:09; NEW LAW, designated one-way)",
+  "g": 2681,
+  "designated_source_monomials": 688,
+  "beta_fix_A": true,
+  "beta_already_detuned_by_default": true,
+  "detune_h00": false,
+  "R-a datum": "use hybrid_datum(): the exact two-time total of the source at t = 0"
+ },
+ "beta_form": "detuned",
+ "seed": "S2* A=2^16 at (1,1,1) + L0 S-symmetrised band seed x 2^6 at (3,3,3)",
+ "datum_total": 57234734186496,
+ "rows": [
+  {
+   "t": 0,
+   "U_mean": 0.0,
+   "U_pi": 0.0,
+   "max_abs_G": 0,
+   "max_abs_F_over_2P": 0.0,
+   "bits": 40,
+   "wall_s": 0.4
+  },
+  {
+   "t": 100,
+   "U_mean": 0.00146397203207016,
+   "U_pi": 0.0008988305926322937,
+   "max_abs_G": 19,
+   "max_abs_F_over_2P": 0.002533435821533203,
+   "bits": 40,
+   "wall_s": 5.1
+  },
+  {
+   "t": 200,
+   "U_mean": 0.019883662462234497,
+   "U_pi": 0.0021876245737075806,
+   "max_abs_G": 192,
+   "max_abs_F_over_2P": 0.02231311798095703,
+   "bits": 40,
+   "wall_s": 10.1
+  },
+  {
+   "t": 300,
+   "U_mean": 0.06453567743301392,
+   "U_pi": 0.0030257701873779297,
+   "max_abs_G": 1013,
+   "max_abs_F_over_2P": 0.06764650344848633,
+   "bits": 40,
+   "wall_s": 14.7
+  },
+  {
+   "t": 400,
+   "U_mean": 0.1439165696501732,
+   "U_pi": 0.0038543716073036194,
+   "max_abs_G": 2483,
+   "max_abs_F_over_2P": 0.14803791046142578,
+   "bits": 40,
+   "wall_s": 19.3
+  },
+  {
+   "t": 500,
+   "U_mean": 0.293587788939476,
+   "U_pi": 0.004710301756858826,
+   "max_abs_G": 8871,
+   "max_abs_F_over_2P": 0.2984962463378906,
+   "bits": 40,
+   "wall_s": 24.2
+  }
+ ],
+ "runaway_t": 500,
+ "stamp_end": "Tue Nov 10 13:20:16 UTC 2026",
+ "bounded": false,
+ "seconds": 24.2
+}

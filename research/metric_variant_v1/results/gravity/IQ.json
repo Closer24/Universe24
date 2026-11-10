@@ -1,0 +1,22 @@
+{
+ "Q": 536870913,
+ "P": 1048576,
+ "k": 256,
+ "G": 73,
+ "monomials": 681,
+ "rank": 3,
+ "stages": 4,
+ "vacuum_fixed_10": true,
+ "rewind_10_exact": true,
+ "engine_stats": {
+  "int64_steps": 20,
+  "pyint_steps": 0,
+  "inverse_int64_steps": 10,
+  "inverse_pyint_steps": 0
+ },
+ "reciprocity_ok": true,
+ "checked": 579,
+ "designated": 64,
+ "two_time_skipped": 38,
+ "written_utc": "Tue Nov 10 10:39:24 UTC 2026"
+}

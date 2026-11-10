@@ -40,6 +40,7 @@ assignments. Functional composition requires a new controlled native run.
 | Matter and light building blocks | [Published set](matter_light_blocks_v1/README.md); 348 data-only preparations (light, matter, atoms, spin, charge, clocks, media, seeds; one block under an explicitly separate candidate variant, beside its reference companion), each replayed natively with the exact inverse; candidate names, prepared media, stated limits |
 | Matter and light experiments | [Curated experiments](matter_light_experiments_v1/README.md); each experiment is data (compositions of registered blocks, init files or published blocks; declared detectors; a card), replayed by one generic verifier with the exact inverse, with every claim read only from the frozen click decoder; candidate names, prepared media, stated limits |
 | Click decoder | [Generic click decoder](click_decoder_v1/README.md); frozen v1.0 (the default) and v1.1 and released read-only layers; reads click logs only, never a board |
+| Metric variant (separate candidate variant; not the reference engine) | [metric_variant_v1](metric_variant_v1/README_v1_draft.md): one divisor 6Q and one fixed rank-4 tensor; hands ON (FIX-i), GRAV-FIX A, the ONE version with a cosmic-clock layer, route B opt-in; [full-picture documents](metric_variant_v1/full_picture_2026-11-10/README.md) |
 
 The [current claim addendum](clock_selection/invariant_families_claims.md)
 supplements the [earlier register](clock_selection/claim_register.md); it does

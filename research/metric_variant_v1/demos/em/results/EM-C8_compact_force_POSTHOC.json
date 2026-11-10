@@ -1,0 +1,34 @@
+{
+ "r=6": {
+  "a1": 5.217387400640564e-05,
+  "mean_dtheta": 0.004871645790073551,
+  "pred_abs": 6.057840516473675e-05,
+  "ratio_abs": 0.8612619276543207,
+  "sign_a1": 1.0,
+  "sign_dtheta": 1.0
+ },
+ "r=8": {
+  "a1": 2.9638444660293663e-05,
+  "mean_dtheta": 0.0024271708089129186,
+  "pred_abs": 3.0181614797599797e-05,
+  "ratio_abs": 0.9820032777918387,
+  "sign_a1": 1.0,
+  "sign_dtheta": 1.0
+ },
+ "r=10": {
+  "a1": 1.3694956180262269e-05,
+  "mean_dtheta": 0.001021787659730165,
+  "pred_abs": 1.270582253118357e-05,
+  "ratio_abs": 1.077848848167924,
+  "sign_a1": 1.0,
+  "sign_dtheta": 1.0
+ },
+ "summary": {
+  "slope_a": -2.587621187138579,
+  "slope_pred": -3.0275586217310027,
+  "label": "POST-HOC diagnostic"
+ },
+ "started": "Tue Nov 10 10:13:32 UTC 2026",
+ "demo": "EM-C8_compact_force_POSTHOC",
+ "written": "Tue Nov 10 10:13:32 UTC 2026"
+}

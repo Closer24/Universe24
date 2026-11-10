@@ -1,0 +1,465 @@
+{
+ "runs": [
+  {
+   "A": 1,
+   "c": 0,
+   "Q": 4,
+   "D": 24,
+   "rows": [
+    {
+     "s": 0,
+     "P(+|s)": "1",
+     "P(+|s,W1)": "1",
+     "P(+|s,W2)": "1"
+    },
+    {
+     "s": 1,
+     "P(+|s)": "1/2",
+     "P(+|s,W1)": "1",
+     "P(+|s,W2)": "0"
+    },
+    {
+     "s": 2,
+     "P(+|s)": "0",
+     "P(+|s,W1)": "0",
+     "P(+|s,W2)": "0"
+    },
+    {
+     "s": 3,
+     "P(+|s)": "1/2",
+     "P(+|s,W1)": "1",
+     "P(+|s,W2)": "0"
+    }
+   ],
+   "I(s;exit)": 0.5,
+   "I(s;exit,record)": 0.8113,
+   "one_W_and_one_exit_click": true,
+   "rewind": true,
+   "M_F2_M_F2_id": true,
+   "recip": {
+    "ok": true,
+    "checked": 0,
+    "designated": 28,
+    "justifications": [
+     "observer detector with the D12b gated readout of the kicked arm (P_dec, rank 4): records without back-action on the arms (Study 5 D3); the 90-degree kick is in the readout (P_dec's declared equivalence)",
+     "observer detector: records without back-action (Study 5 D3)"
+    ],
+    "violations": 0,
+    "two_time_skipped": 0,
+    "rank": 4,
+    "support_violations": 0,
+    "a_read_monomials": []
+   }
+  },
+  {
+   "A": 1,
+   "c": 1,
+   "Q": 4,
+   "D": 24,
+   "rows": [
+    {
+     "s": 0,
+     "P(+|s)": "1/2",
+     "P(+|s,W1)": "1",
+     "P(+|s,W2)": "0"
+    },
+    {
+     "s": 1,
+     "P(+|s)": "1/2",
+     "P(+|s,W1)": "1",
+     "P(+|s,W2)": "0"
+    },
+    {
+     "s": 2,
+     "P(+|s)": "1/2",
+     "P(+|s,W1)": "1",
+     "P(+|s,W2)": "0"
+    },
+    {
+     "s": 3,
+     "P(+|s)": "1/2",
+     "P(+|s,W1)": "0",
+     "P(+|s,W2)": "1"
+    }
+   ],
+   "I(s;exit)": 0.0,
+   "I(s;exit,record)": 0.8113,
+   "one_W_and_one_exit_click": true,
+   "rewind": true,
+   "M_F2_M_F2_id": true,
+   "recip": {
+    "ok": true,
+    "checked": 0,
+    "designated": 28,
+    "justifications": [
+     "observer detector with the D12b gated readout of the kicked arm (P_dec, rank 4): records without back-action on the arms (Study 5 D3); the 90-degree kick is in the readout (P_dec's declared equivalence)",
+     "observer detector: records without back-action (Study 5 D3)"
+    ],
+    "violations": 0,
+    "two_time_skipped": 0,
+    "rank": 4,
+    "support_violations": 0,
+    "a_read_monomials": []
+   }
+  },
+  {
+   "A": 1,
+   "c": 2,
+   "Q": 4,
+   "D": 24,
+   "rows": [
+    {
+     "s": 0,
+     "P(+|s)": "0",
+     "P(+|s,W1)": "0",
+     "P(+|s,W2)": "0"
+    },
+    {
+     "s": 1,
+     "P(+|s)": "1/2",
+     "P(+|s,W1)": "1",
+     "P(+|s,W2)": "0"
+    },
+    {
+     "s": 2,
+     "P(+|s)": "1",
+     "P(+|s,W1)": "1",
+     "P(+|s,W2)": "1"
+    },
+    {
+     "s": 3,
+     "P(+|s)": "1/2",
+     "P(+|s,W1)": "1",
+     "P(+|s,W2)": "0"
+    }
+   ],
+   "I(s;exit)": 0.5,
+   "I(s;exit,record)": 0.8113,
+   "one_W_and_one_exit_click": true,
+   "rewind": true,
+   "M_F2_M_F2_id": true,
+   "recip": {
+    "ok": true,
+    "checked": 0,
+    "designated": 28,
+    "justifications": [
+     "observer detector with the D12b gated readout of the kicked arm (P_dec, rank 4): records without back-action on the arms (Study 5 D3); the 90-degree kick is in the readout (P_dec's declared equivalence)",
+     "observer detector: records without back-action (Study 5 D3)"
+    ],
+    "violations": 0,
+    "two_time_skipped": 0,
+    "rank": 4,
+    "support_violations": 0,
+    "a_read_monomials": []
+   }
+  },
+  {
+   "A": 2,
+   "c": 0,
+   "Q": 16,
+   "D": 96,
+   "rows": [
+    {
+     "s": 0,
+     "P(+|s)": "1",
+     "P(+|s,W1)": "1",
+     "P(+|s,W2)": "1"
+    },
+    {
+     "s": 1,
+     "P(+|s)": "1/2",
+     "P(+|s,W1)": "1",
+     "P(+|s,W2)": "0"
+    },
+    {
+     "s": 2,
+     "P(+|s)": "0",
+     "P(+|s,W1)": "0",
+     "P(+|s,W2)": "0"
+    },
+    {
+     "s": 3,
+     "P(+|s)": "1/2",
+     "P(+|s,W1)": "1",
+     "P(+|s,W2)": "0"
+    }
+   ],
+   "I(s;exit)": 0.5,
+   "I(s;exit,record)": 0.8113,
+   "one_W_and_one_exit_click": true,
+   "rewind": true,
+   "M_F2_M_F2_id": true,
+   "recip": {
+    "ok": true,
+    "checked": 0,
+    "designated": 28,
+    "justifications": [
+     "observer detector with the D12b gated readout of the kicked arm (P_dec, rank 4): records without back-action on the arms (Study 5 D3); the 90-degree kick is in the readout (P_dec's declared equivalence)",
+     "observer detector: records without back-action (Study 5 D3)"
+    ],
+    "violations": 0,
+    "two_time_skipped": 0,
+    "rank": 4,
+    "support_violations": 0,
+    "a_read_monomials": []
+   }
+  },
+  {
+   "A": 2,
+   "c": 1,
+   "Q": 16,
+   "D": 96,
+   "rows": [
+    {
+     "s": 0,
+     "P(+|s)": "1/2",
+     "P(+|s,W1)": "1",
+     "P(+|s,W2)": "0"
+    },
+    {
+     "s": 1,
+     "P(+|s)": "1/2",
+     "P(+|s,W1)": "1",
+     "P(+|s,W2)": "0"
+    },
+    {
+     "s": 2,
+     "P(+|s)": "1/2",
+     "P(+|s,W1)": "1",
+     "P(+|s,W2)": "0"
+    },
+    {
+     "s": 3,
+     "P(+|s)": "1/2",
+     "P(+|s,W1)": "0",
+     "P(+|s,W2)": "1"
+    }
+   ],
+   "I(s;exit)": 0.0,
+   "I(s;exit,record)": 0.8113,
+   "one_W_and_one_exit_click": true,
+   "rewind": true,
+   "M_F2_M_F2_id": true,
+   "recip": {
+    "ok": true,
+    "checked": 0,
+    "designated": 28,
+    "justifications": [
+     "observer detector with the D12b gated readout of the kicked arm (P_dec, rank 4): records without back-action on the arms (Study 5 D3); the 90-degree kick is in the readout (P_dec's declared equivalence)",
+     "observer detector: records without back-action (Study 5 D3)"
+    ],
+    "violations": 0,
+    "two_time_skipped": 0,
+    "rank": 4,
+    "support_violations": 0,
+    "a_read_monomials": []
+   }
+  },
+  {
+   "A": 2,
+   "c": 2,
+   "Q": 16,
+   "D": 96,
+   "rows": [
+    {
+     "s": 0,
+     "P(+|s)": "0",
+     "P(+|s,W1)": "0",
+     "P(+|s,W2)": "0"
+    },
+    {
+     "s": 1,
+     "P(+|s)": "1/2",
+     "P(+|s,W1)": "1",
+     "P(+|s,W2)": "0"
+    },
+    {
+     "s": 2,
+     "P(+|s)": "1",
+     "P(+|s,W1)": "1",
+     "P(+|s,W2)": "1"
+    },
+    {
+     "s": 3,
+     "P(+|s)": "1/2",
+     "P(+|s,W1)": "1",
+     "P(+|s,W2)": "0"
+    }
+   ],
+   "I(s;exit)": 0.5,
+   "I(s;exit,record)": 0.8113,
+   "one_W_and_one_exit_click": true,
+   "rewind": true,
+   "M_F2_M_F2_id": true,
+   "recip": {
+    "ok": true,
+    "checked": 0,
+    "designated": 28,
+    "justifications": [
+     "observer detector with the D12b gated readout of the kicked arm (P_dec, rank 4): records without back-action on the arms (Study 5 D3); the 90-degree kick is in the readout (P_dec's declared equivalence)",
+     "observer detector: records without back-action (Study 5 D3)"
+    ],
+    "violations": 0,
+    "two_time_skipped": 0,
+    "rank": 4,
+    "support_violations": 0,
+    "a_read_monomials": []
+   }
+  },
+  {
+   "A": 3,
+   "c": 0,
+   "Q": 36,
+   "D": 216,
+   "rows": [
+    {
+     "s": 0,
+     "P(+|s)": "1",
+     "P(+|s,W1)": "1",
+     "P(+|s,W2)": "1"
+    },
+    {
+     "s": 1,
+     "P(+|s)": "1/2",
+     "P(+|s,W1)": "1",
+     "P(+|s,W2)": "0"
+    },
+    {
+     "s": 2,
+     "P(+|s)": "0",
+     "P(+|s,W1)": "0",
+     "P(+|s,W2)": "0"
+    },
+    {
+     "s": 3,
+     "P(+|s)": "1/2",
+     "P(+|s,W1)": "1",
+     "P(+|s,W2)": "0"
+    }
+   ],
+   "I(s;exit)": 0.5,
+   "I(s;exit,record)": 0.8113,
+   "one_W_and_one_exit_click": true,
+   "rewind": true,
+   "M_F2_M_F2_id": true,
+   "recip": {
+    "ok": true,
+    "checked": 0,
+    "designated": 28,
+    "justifications": [
+     "observer detector with the D12b gated readout of the kicked arm (P_dec, rank 4): records without back-action on the arms (Study 5 D3); the 90-degree kick is in the readout (P_dec's declared equivalence)",
+     "observer detector: records without back-action (Study 5 D3)"
+    ],
+    "violations": 0,
+    "two_time_skipped": 0,
+    "rank": 4,
+    "support_violations": 0,
+    "a_read_monomials": []
+   }
+  },
+  {
+   "A": 3,
+   "c": 1,
+   "Q": 36,
+   "D": 216,
+   "rows": [
+    {
+     "s": 0,
+     "P(+|s)": "1/2",
+     "P(+|s,W1)": "1",
+     "P(+|s,W2)": "0"
+    },
+    {
+     "s": 1,
+     "P(+|s)": "1/2",
+     "P(+|s,W1)": "1",
+     "P(+|s,W2)": "0"
+    },
+    {
+     "s": 2,
+     "P(+|s)": "1/2",
+     "P(+|s,W1)": "1",
+     "P(+|s,W2)": "0"
+    },
+    {
+     "s": 3,
+     "P(+|s)": "1/2",
+     "P(+|s,W1)": "0",
+     "P(+|s,W2)": "1"
+    }
+   ],
+   "I(s;exit)": 0.0,
+   "I(s;exit,record)": 0.8113,
+   "one_W_and_one_exit_click": true,
+   "rewind": true,
+   "M_F2_M_F2_id": true,
+   "recip": {
+    "ok": true,
+    "checked": 0,
+    "designated": 28,
+    "justifications": [
+     "observer detector with the D12b gated readout of the kicked arm (P_dec, rank 4): records without back-action on the arms (Study 5 D3); the 90-degree kick is in the readout (P_dec's declared equivalence)",
+     "observer detector: records without back-action (Study 5 D3)"
+    ],
+    "violations": 0,
+    "two_time_skipped": 0,
+    "rank": 4,
+    "support_violations": 0,
+    "a_read_monomials": []
+   }
+  },
+  {
+   "A": 3,
+   "c": 2,
+   "Q": 36,
+   "D": 216,
+   "rows": [
+    {
+     "s": 0,
+     "P(+|s)": "0",
+     "P(+|s,W1)": "0",
+     "P(+|s,W2)": "0"
+    },
+    {
+     "s": 1,
+     "P(+|s)": "1/2",
+     "P(+|s,W1)": "1",
+     "P(+|s,W2)": "0"
+    },
+    {
+     "s": 2,
+     "P(+|s)": "1",
+     "P(+|s,W1)": "1",
+     "P(+|s,W2)": "1"
+    },
+    {
+     "s": 3,
+     "P(+|s)": "1/2",
+     "P(+|s,W1)": "1",
+     "P(+|s,W2)": "0"
+    }
+   ],
+   "I(s;exit)": 0.5,
+   "I(s;exit,record)": 0.8113,
+   "one_W_and_one_exit_click": true,
+   "rewind": true,
+   "M_F2_M_F2_id": true,
+   "recip": {
+    "ok": true,
+    "checked": 0,
+    "designated": 28,
+    "justifications": [
+     "observer detector with the D12b gated readout of the kicked arm (P_dec, rank 4): records without back-action on the arms (Study 5 D3); the 90-degree kick is in the readout (P_dec's declared equivalence)",
+     "observer detector: records without back-action (Study 5 D3)"
+    ],
+    "violations": 0,
+    "two_time_skipped": 0,
+    "rank": 4,
+    "support_violations": 0,
+    "a_read_monomials": []
+   }
+  }
+ ],
+ "_started": "Tue Nov 10 10:36:21 UTC 2026",
+ "_finished": "Tue Nov 10 10:36:21 UTC 2026"
+}

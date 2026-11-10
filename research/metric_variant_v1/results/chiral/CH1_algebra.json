@@ -1,0 +1,15 @@
+{
+ "checks": {
+  "G5 = -P_x P_y P_z": true,
+  "t_a quaternion units (t1 t2 = t3, t_a^2 = -1)": true,
+  "t_a antisymmetric": true,
+  "t_a commute with P_d, W0, J, Jp, G5, V": true,
+  "PiW^2 = 2 PiW, symmetric": true,
+  "W0 PiW = PiS W0 (mass/Wilson flip the weak half)": true,
+  "PiW commutes with P_d, J, Jp": true,
+  "G5 anticommutes only with W0 (checked: W0)": true
+ },
+ "default_on": false,
+ "written": "Tue Nov 10 13:24:34 UTC 2026",
+ "Q": 8589934593
+}

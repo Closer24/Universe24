@@ -1,0 +1,30 @@
+{
+ "started": "Tue Nov 10 10:52:25 UTC 2026",
+ "L": 96,
+ "T": 160,
+ "U3": 0.04,
+ "window": [
+  45,
+  160
+ ],
+ "tau_retardation": 29,
+ "vg": 0.5222329622075463,
+ "w_atF": 0.5327722719073099,
+ "w_lightF": 0.5163506944007233,
+ "w_emitter_retarded": 0.5175843906909912,
+ "w_atN": 0.517682610752676,
+ "freq_conservation_w_LF/w_E-1": -0.0023835654870132394,
+ "redshift_via_light w_atF/w_LF": 1.0318031479083134,
+ "prediction <N_F>/<N_N>_ret": 1.028343604497446,
+ "redshift_dev": 0.003364190136192935,
+ "half_angle_reading": 0.0026408663164145807,
+ "g": 1048576,
+ "w_emitter": 0.517607815526435,
+ "w_atN_retarded": 0.517660045578989,
+ "R_light (w_atF/w_LF)(w_E/w_atN), retarded": 1.0316523521259122,
+ "R_light_dev": 0.003217550645518985,
+ "R_light_half_angle_dev": 0.0024976187738618982,
+ "light_crossings_F": 21,
+ "elapsed_s": 252.5332634449005,
+ "written_utc": "Tue Nov 10 10:56:53 UTC 2026"
+}

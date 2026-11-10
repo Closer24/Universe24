@@ -1,0 +1,21 @@
+{
+ "F0": 20972,
+ "U0": "5243/524288",
+ "flat": {
+  "neighbour": [
+   8589934592
+  ],
+  "onsite": 6
+ },
+ "lapse": {
+  "neighbour": [
+   8246329344
+  ],
+  "onsite": 2061631494
+ },
+ "law_neighbour_(Q-1)(1-2F0/P)": 8246329344,
+ "law_onsite": 2061631494,
+ "exact": true,
+ "c2_factor": "125829/131072",
+ "stamp_utc": "Tue Nov 10 13:32:46 UTC 2026"
+}

@@ -1,0 +1,146 @@
+{
+ "wilson=0": {
+  "G": 22,
+  "monomials": 501,
+  "rank": 3,
+  "census": {
+   "node": 205,
+   "link": 296,
+   "by_degree": [
+    0,
+    149,
+    352,
+    0
+   ]
+  },
+  "constants": 0,
+  "a_read_patterns": {
+   "em.Phi <- (('em.A_x', (-1, 0, 0), 'a'),)": 1,
+   "em.Phi <- (('em.A_x', (0, 0, 0), 'a'),)": 1,
+   "em.Phi <- (('em.A_y', (0, -1, 0), 'a'),)": 1,
+   "em.Phi <- (('em.A_y', (0, 0, 0), 'a'),)": 1,
+   "em.Phi <- (('em.A_z', (0, 0, -1), 'a'),)": 1,
+   "em.Phi <- (('em.A_z', (0, 0, 0), 'a'),)": 1,
+   "matter <- (('matter', (0, 0, 0), 'b'), ('em.A_x', (-1, 0, 0), 'a'))": 16,
+   "matter <- (('matter', (0, 0, 0), 'b'), ('em.A_x', (0, 0, 0), 'a'))": 16,
+   "matter <- (('matter', (0, 0, 0), 'b'), ('em.A_y', (0, -1, 0), 'a'))": 16,
+   "matter <- (('matter', (0, 0, 0), 'b'), ('em.A_y', (0, 0, 0), 'a'))": 16,
+   "matter <- (('matter', (0, 0, 0), 'b'), ('em.A_z', (0, 0, -1), 'a'))": 16,
+   "matter <- (('matter', (0, 0, 0), 'b'), ('em.A_z', (0, 0, 0), 'a'))": 16,
+   "matter <- (('matter', (0, 0, 0), 'b'), ('em.Phi', (0, 0, 0), 'a'))": 16
+  },
+  "a_read_total": 118,
+  "support_wider_than_link": 18,
+  "support_patterns": [
+   "em.A_x <- ['em.A_x']",
+   "em.A_y <- ['em.A_y']",
+   "em.A_z <- ['em.A_z']"
+  ],
+  "designated": 247,
+  "designated_vs_force_term_coincidences": 0,
+  "od3_max_distinct_gears_per_face_neighbour": 1,
+  "stages": [
+   [
+    "em.A_x",
+    "em.A_y",
+    "em.A_z",
+    "lapse.N",
+    "drive.S"
+   ],
+   [
+    "em.Phi"
+   ],
+   [
+    "matter.X0",
+    "matter.X1",
+    "matter.X2",
+    "matter.X3",
+    "matter.X4",
+    "matter.X5",
+    "matter.X6",
+    "matter.X7",
+    "matter.Y0",
+    "matter.Y1",
+    "matter.Y2",
+    "matter.Y3",
+    "matter.Y4",
+    "matter.Y5",
+    "matter.Y6",
+    "matter.Y7"
+   ]
+  ]
+ },
+ "wilson=16777216": {
+  "G": 22,
+  "monomials": 645,
+  "rank": 3,
+  "census": {
+   "node": 205,
+   "link": 440,
+   "by_degree": [
+    0,
+    245,
+    400,
+    0
+   ]
+  },
+  "constants": 0,
+  "a_read_patterns": {
+   "em.Phi <- (('em.A_x', (-1, 0, 0), 'a'),)": 1,
+   "em.Phi <- (('em.A_x', (0, 0, 0), 'a'),)": 1,
+   "em.Phi <- (('em.A_y', (0, -1, 0), 'a'),)": 1,
+   "em.Phi <- (('em.A_y', (0, 0, 0), 'a'),)": 1,
+   "em.Phi <- (('em.A_z', (0, 0, -1), 'a'),)": 1,
+   "em.Phi <- (('em.A_z', (0, 0, 0), 'a'),)": 1,
+   "matter <- (('matter', (0, 0, 0), 'b'), ('em.A_x', (-1, 0, 0), 'a'))": 16,
+   "matter <- (('matter', (0, 0, 0), 'b'), ('em.A_x', (0, 0, 0), 'a'))": 16,
+   "matter <- (('matter', (0, 0, 0), 'b'), ('em.A_y', (0, -1, 0), 'a'))": 16,
+   "matter <- (('matter', (0, 0, 0), 'b'), ('em.A_y', (0, 0, 0), 'a'))": 16,
+   "matter <- (('matter', (0, 0, 0), 'b'), ('em.A_z', (0, 0, -1), 'a'))": 16,
+   "matter <- (('matter', (0, 0, 0), 'b'), ('em.A_z', (0, 0, 0), 'a'))": 16,
+   "matter <- (('matter', (0, 0, 0), 'b'), ('em.Phi', (0, 0, 0), 'a'))": 16
+  },
+  "a_read_total": 118,
+  "support_wider_than_link": 18,
+  "support_patterns": [
+   "em.A_x <- ['em.A_x']",
+   "em.A_y <- ['em.A_y']",
+   "em.A_z <- ['em.A_z']"
+  ],
+  "designated": 295,
+  "designated_vs_force_term_coincidences": 0,
+  "od3_max_distinct_gears_per_face_neighbour": 2,
+  "stages": [
+   [
+    "em.A_x",
+    "em.A_y",
+    "em.A_z",
+    "lapse.N",
+    "drive.S"
+   ],
+   [
+    "em.Phi"
+   ],
+   [
+    "matter.X0",
+    "matter.X1",
+    "matter.X2",
+    "matter.X3",
+    "matter.X4",
+    "matter.X5",
+    "matter.X6",
+    "matter.X7",
+    "matter.Y0",
+    "matter.Y1",
+    "matter.Y2",
+    "matter.Y3",
+    "matter.Y4",
+    "matter.Y5",
+    "matter.Y6",
+    "matter.Y7"
+   ]
+  ]
+ },
+ "demo": "EM-census",
+ "written": "Tue Nov 10 09:48:53 UTC 2026"
+}

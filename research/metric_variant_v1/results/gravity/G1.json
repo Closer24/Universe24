@@ -1,0 +1,76 @@
+{
+ "test": "G1",
+ "written_utc": "Tue Nov 10 10:37:43 UTC 2026",
+ "S_GR": {
+  "G": 65,
+  "monomials": 415,
+  "rank": 3,
+  "vacuum_fixed_20": true,
+  "raw_clicks_new_gears": 0,
+  "deviation_ref_mismatches": 0,
+  "deviation_new_gear_deviations": 0
+ },
+ "S_1911": {
+  "G": 65,
+  "monomials": 415,
+  "rank": 3,
+  "vacuum_fixed_20": true,
+  "raw_clicks_new_gears": 0,
+  "deviation_ref_mismatches": 0,
+  "deviation_new_gear_deviations": 0
+ },
+ "S_beta_recip": {
+  "G": 66,
+  "monomials": 461,
+  "rank": 3,
+  "vacuum_fixed_20": true,
+  "raw_clicks_new_gears": 0,
+  "deviation_ref_mismatches": 0,
+  "deviation_new_gear_deviations": 0
+ },
+ "S_beta_oneway": {
+  "G": 66,
+  "monomials": 454,
+  "rank": 3,
+  "vacuum_fixed_20": true,
+  "raw_clicks_new_gears": 0,
+  "deviation_ref_mismatches": 0,
+  "deviation_new_gear_deviations": 0
+ },
+ "S_beta_rank4": {
+  "G": 63,
+  "monomials": 479,
+  "rank": 4,
+  "vacuum_fixed_20": true,
+  "raw_clicks_new_gears": 0,
+  "deviation_ref_mismatches": 0,
+  "deviation_new_gear_deviations": 0
+ },
+ "ND_rank3": {
+  "G": 55,
+  "monomials": 458,
+  "rank": 3,
+  "vacuum_fixed_20": true,
+  "raw_clicks_new_gears": 0,
+  "deviation_ref_mismatches": 0,
+  "deviation_new_gear_deviations": 0
+ },
+ "ND_rank4": {
+  "G": 54,
+  "monomials": 512,
+  "rank": 4,
+  "vacuum_fixed_20": true,
+  "raw_clicks_new_gears": 0,
+  "deviation_ref_mismatches": 0,
+  "deviation_new_gear_deviations": 0
+ },
+ "OD2": {
+  "G": 60,
+  "monomials": 442,
+  "rank": 3,
+  "vacuum_fixed_20": true,
+  "raw_clicks_new_gears": 0,
+  "deviation_ref_mismatches": 0,
+  "deviation_new_gear_deviations": 0
+ }
+}

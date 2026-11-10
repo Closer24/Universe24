@@ -1,0 +1,140 @@
+{
+ "1": {
+  "N": 1,
+  "mode": "exhaustive",
+  "configs": 30,
+  "Q": 40,
+  "D": 240,
+  "V_ens": 0.808,
+  "V_single": 0.915,
+  "V_eraser": 0.915,
+  "V_1": 0.915,
+  "P_ens": [
+   0.9,
+   0.75,
+   0.35,
+   0.1,
+   0.25,
+   0.65
+  ],
+  "rewind_checked_batches_ok": true,
+  "recip": {
+   "ok": true,
+   "checked": 8,
+   "designated": 20,
+   "justifications": [
+    "observer detector: records without back-action (Study 5 D3); read once, gated by a flash (rank 4)",
+    "which-path gear (Study 5 M2-2, S5-P2R): reads arm 1 at weight 3Q/Q_W and kicks it by one unit (3Q); the multi-divisor 3:3 symmetry is 3:3Q_W under ONE divisor, so not a gradient; kept for exact reproduction"
+   ],
+   "violations": 0,
+   "two_time_skipped": 0,
+   "rank": 4,
+   "support_violations": 0,
+   "a_read_monomials": []
+  }
+ },
+ "2": {
+  "N": 2,
+  "mode": "exhaustive",
+  "configs": 900,
+  "Q": 40,
+  "D": 240,
+  "V_ens": 0.833,
+  "V_single": 0.975,
+  "V_eraser": 0.975,
+  "V_1": 0.944,
+  "P_ens": [
+   0.675,
+   0.6,
+   0.3,
+   0.075,
+   0.15,
+   0.45
+  ],
+  "rewind_checked_batches_ok": true,
+  "recip": {
+   "ok": true,
+   "checked": 8,
+   "designated": 22,
+   "justifications": [
+    "observer detector: records without back-action (Study 5 D3); read once, gated by a flash (rank 4)",
+    "which-path gear (Study 5 M2-2, S5-P2R): reads arm 1 at weight 3Q/Q_W and kicks it by one unit (3Q); the multi-divisor 3:3 symmetry is 3:3Q_W under ONE divisor, so not a gradient; kept for exact reproduction"
+   ],
+   "violations": 0,
+   "two_time_skipped": 0,
+   "rank": 4,
+   "support_violations": 0,
+   "a_read_monomials": []
+  }
+ },
+ "3": {
+  "N": 3,
+  "mode": "sample",
+  "configs": 2000,
+  "Q": 40,
+  "D": 240,
+  "V_ens": 0.65,
+  "V_single": 0.917,
+  "V_eraser": 0.917,
+  "V_1": 0.816,
+  "P_ens": [
+   0.596,
+   0.5266,
+   0.3019,
+   0.1321,
+   0.2015,
+   0.4262
+  ],
+  "rewind_checked_batches_ok": true,
+  "recip": {
+   "ok": true,
+   "checked": 8,
+   "designated": 24,
+   "justifications": [
+    "observer detector: records without back-action (Study 5 D3); read once, gated by a flash (rank 4)",
+    "which-path gear (Study 5 M2-2, S5-P2R): reads arm 1 at weight 3Q/Q_W and kicks it by one unit (3Q); the multi-divisor 3:3 symmetry is 3:3Q_W under ONE divisor, so not a gradient; kept for exact reproduction"
+   ],
+   "violations": 0,
+   "two_time_skipped": 0,
+   "rank": 4,
+   "support_violations": 0,
+   "a_read_monomials": []
+  }
+ },
+ "6": {
+  "N": 6,
+  "mode": "sample",
+  "configs": 2000,
+  "Q": 40,
+  "D": 240,
+  "V_ens": 0.262,
+  "V_single": 0.986,
+  "V_eraser": 0.986,
+  "V_1": 0.57,
+  "P_ens": [
+   0.4259,
+   0.4236,
+   0.3434,
+   0.2609,
+   0.2752,
+   0.3487
+  ],
+  "rewind_checked_batches_ok": true,
+  "recip": {
+   "ok": true,
+   "checked": 8,
+   "designated": 30,
+   "justifications": [
+    "observer detector: records without back-action (Study 5 D3); read once, gated by a flash (rank 4)",
+    "which-path gear (Study 5 M2-2, S5-P2R): reads arm 1 at weight 3Q/Q_W and kicks it by one unit (3Q); the multi-divisor 3:3 symmetry is 3:3Q_W under ONE divisor, so not a gradient; kept for exact reproduction"
+   ],
+   "violations": 0,
+   "two_time_skipped": 0,
+   "rank": 4,
+   "support_violations": 0,
+   "a_read_monomials": []
+  }
+ },
+ "_started": "Tue Nov 10 10:35:59 UTC 2026",
+ "_finished": "Tue Nov 10 10:36:21 UTC 2026"
+}

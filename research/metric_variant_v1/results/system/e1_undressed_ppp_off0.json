@@ -1,0 +1,398 @@
+{
+ "mode": "e1_undressed_ppp_off0",
+ "kwargs": {
+  "em": "e1"
+ },
+ "info": {
+  "Q": 536870913,
+  "D": 3221225478,
+  "l0_offset": 0,
+  "body_signs": [
+   1,
+   1,
+   1
+  ],
+  "em": "e1",
+  "gauge": true,
+  "gravity": true,
+  "lapse": "wave",
+  "lapse_field": "metric.h00",
+  "background": true,
+  "beta": true,
+  "l0_lapse": null,
+  "choice": {
+   "router_kappa": 201326592,
+   "P_none_per_readout": "1/536870913",
+   "readers": "odd-Q near-matched router (rank 3) + ONE-SHOT gated exit pair (rank 4, gate fibre)",
+   "not_included": "F7 (taxicab light-cone choice), drive, sequential router"
+  },
+  "P": 1048576,
+  "k": 256,
+  "sigma_dressed": 16777216,
+  "matter": {
+   "hop": 134217728,
+   "wilson": 16777216,
+   "mass": 1610612736,
+   "species": "pair"
+  },
+  "conflicts": [],
+  "file_hashes": {
+   "layers/reference.py": "6d1d89a2362628102a485817f0d2191c822d8ca864bfb4975a5690940fc61e25",
+   "layers/gauge.py": "9fbce17969759d789f56c4a295028131789a06f0819a89658cd2c679effab635",
+   "layers/matter.py": "078f38405fa67d1d0b2cb22d229d8ff725b9dfbb89bdf7ce320d0f6e9e25e1a2",
+   "layers/em.py": "9c13b9b87ca4563741e5bb70a93d976659185aaf3247645b159a9abfdea94b6b",
+   "layers/em_compact.py": "c7ce8d5db79672bd235edc0b07a598961c21f1bc23ad67d8870fb1111f7ff0f2",
+   "layers/gravity.py": "d75f48026915577316c4030766d0fa8aaac425c88a26d8fa33a43bc7d5b6d39e",
+   "layers/choice.py": "6e28fe434ab1f53fa6adde238eccf8d0b492f614db9ee7e914f8122914c0bf3b",
+   "layers/choice_oddq.py": "46d56f0347efdfa8e64cf4fae5a242e4cf84737c8775a59589a1b5f67acadd7f",
+   "layers/em_dressed.py": "ef8457514737c2437214f37886f78ee5cb8943b9eafa56a12f4cfa1aac6dc3aa",
+   "core/tensor.py": "ebb01379168b64eb277caeedce47a3b03c16ebaa19b0863ae0721ab3f6c7327b",
+   "core/engine.py": "9dc8f53db4c8c91c2226fb7ebc4139bf103ecebbedb621adf17dc22e327a6dc9",
+   "core/reversors.py": "858797b3b076ad1937cc8382ef0ff09cbf659976d3674c84141f4bf101b78a45"
+  },
+  "gauge_regime": {
+   "Q": 536870913,
+   "A": 16384,
+   "kappa": 16384,
+   "mass": 536870916,
+   "use_P": true,
+   "kappa_P": 256,
+   "c_P": 0,
+   "beta": 2684354566,
+   "lam": 4
+  },
+  "matter_spec": {
+   "name": "matter",
+   "order": 1,
+   "n_site": 8,
+   "n_hops": 96
+  },
+  "gravity_open": "uniform-mode drift O(U^2 t^2) (+0.08 at U3 = 0.02, t = 700; passes at 4x weaker load, F4e); root cause: the non-conserved b-only stress; an exactly conserved first-order stress is OPEN (B1-GRAV)",
+  "gravity_note": "ONE lapse = metric.h00 (reciprocal wave lapse); OD2 stress OFF (B1-GRAV: b-only first-order stress is not conserved)"
+ },
+ "X1_one_Q": {
+  "tensor_Q": 536870913,
+  "blocks_Q": [
+   536870913
+  ],
+  "pass": true
+ },
+ "X2_q_lattice_violations": 0,
+ "structure": {
+  "G": 319,
+  "monomials": 8149,
+  "rank": 4,
+  "stages": [
+   [
+    "ref.R00",
+    "ref.R01",
+    "ref.R02",
+    "ref.R03",
+    "..."
+   ],
+   [
+    "em.Phi"
+   ],
+   [
+    "matter.X0",
+    "matter.X1",
+    "matter.X2",
+    "matter.X3",
+    "..."
+   ]
+  ]
+ },
+ "X3_vacuum_frozen": {
+  "vacuum_changed_updates": 0,
+  "frozen": {
+   "steps": 20,
+   "base_mismatches": 0,
+   "extra_deviations": 0,
+   "frozen": true,
+   "G_base": 48,
+   "G_full": 319,
+   "monomials_base": 288,
+   "monomials_full": 8149
+  },
+  "offset_embedding_ok": null
+ },
+ "X4_rewind": true,
+ "X5_joint_mirror": {
+  "declared_X_FnXFn_eq_N": [
+   true,
+   true
+  ],
+  "X_fixes_vacuum": true,
+  "N_fixes_vacuum": true,
+  "control_plain_Mp_on_matter": false
+ },
+ "X6_identities": {
+  "su2": {
+   "checks": 486,
+   "failures": 0,
+   "max_abs_J": 79616433831990732,
+   "max_abs_remainder_term": 185049740034666
+  },
+  "su3": {
+   "checks": 1458,
+   "failures": 0,
+   "max_abs_J": 170135623911574422,
+   "max_abs_remainder_term": 350582074898130
+  },
+  "u1": {
+   "checks": 162,
+   "failures": 0,
+   "max_abs_J": 52907359313311668,
+   "max_abs_remainder_term": 123936650266050
+  },
+  "e1_with_gravity": {
+   "continuity": 162,
+   "lorenz_constant": 0,
+   "gauss_step": 162,
+   "noether_global": 0,
+   "node_updates": 162
+  }
+ },
+ "X7_reciprocity": {
+  "ok": true,
+  "checked": 7309,
+  "skipped_constants": 0,
+  "skipped_two_time": 118,
+  "n_designated": 722,
+  "designations": {
+   "beta=1 auxiliary G read by matter (clock factor +G/P, link factor +(17/8)(G_x+G_y)/P): a reciprocal partner would source G with the matter energy, giving G = F^2/(2P) - F at FIRST order and destroying the lapse; no rank-3 reciprocal form exists (the reciprocal equivalent is the OD4 quartic, build_beta_rank4)": 400,
+   "E1 on-site alpha.A (and the div A part of the centred potential): its lattice transpose (an on-site current) is NOT the exactly conserved current; the conserved current of on-site-coupled matter is the A-free link hopping current (s4 A4). The literal transpose of that current (linear Peierls) adds a rank-4 diamagnetic current and loses exact continuity/Gauss (s4 D4: 57,718/58,000); no finite rank closes. Unavoidable in E1; reciprocal in the continuum.": 160,
+   "E1 centred potential read (s4 A7/P-iv): the matter reads the Lorenz ACCUMULATOR Phi, which has no matter source by design (the charge reaches Phi only through the exact current -> A -> D_t Phi = -div A); a lattice transpose (Phi sourced by the on-site density) would break the exact Lorenz C == 0 (s4 A6). Unavoidable in E1; reciprocal in the continuum (Newton III via CF-1).": 16,
+   "E1 source = the EXACT free hopping current of the matter (s4 A4): exact continuity, Lorenz and dressed Gauss. Its literal partner (Peierls action) breaks them (D4). It is the continuum transpose of the on-site alpha.A action; Newton III needs only a species-independent source/action ratio (CF-1).": 96,
+   "Lorenz ACCUMULATOR (first-order-in-time relation D_t Phi = -div A, rounding-free, s4 A6): Phi is slaved to A; a reciprocal partner would add grad Phi to the A wave equation and leave Lorenz gauge.": 6,
+   "R-a: the declared uniform k = 0 background (-kappa E/N per node, Study 6 D(d)) as a prescribed static gear B feeding -b_B into the lapse field; B holds its value and does not feel F (data, one-way)": 1,
+   "beta=1 auxiliary G sourced by -k Lap(F^2) (exact discrete Leibniz) with F not reading G: the agreed S1 X1 form (one-way); its reciprocal completion is reciprocal_source=True": 7,
+   "observer detector: records without back-action (Study 5 D3)": 18,
+   "observer detector: records without back-action (Study 5 D3); read once, gated by a flash (rank 4)": 18
+  },
+  "violations": [],
+  "missing_partners": []
+ },
+ "X8_B3": {
+  "composed": true,
+  "support_violations": 2916
+ },
+ "X9_census": {
+  "ref": {
+   "by_degree": [
+    0,
+    288,
+    0,
+    0
+   ],
+   "deg3_designated": 0,
+   "deg3_force": 0,
+   "a_reads": 0,
+   "constants": 0,
+   "support_wider_than_link": 0,
+   "deg3_force_targets": []
+  },
+  "su2": {
+   "by_degree": [
+    0,
+    208,
+    453,
+    48
+   ],
+   "deg3_designated": 0,
+   "deg3_force": 48,
+   "a_reads": 0,
+   "constants": 0,
+   "support_wider_than_link": 384,
+   "deg3_force_targets": [
+    "Ux",
+    "Uy",
+    "Uz"
+   ]
+  },
+  "su3": {
+   "by_degree": [
+    0,
+    888,
+    2871,
+    1404
+   ],
+   "deg3_designated": 0,
+   "deg3_force": 1404,
+   "a_reads": 0,
+   "constants": 0,
+   "support_wider_than_link": 2376,
+   "deg3_force_targets": [
+    "Ux",
+    "Uy",
+    "Uz"
+   ]
+  },
+  "u1": {
+   "by_degree": [
+    0,
+    104,
+    117,
+    12
+   ],
+   "deg3_designated": 0,
+   "deg3_force": 12,
+   "a_reads": 0,
+   "constants": 0,
+   "support_wider_than_link": 120,
+   "deg3_force_targets": [
+    "Ux",
+    "Uy",
+    "Uz"
+   ]
+  },
+  "matter": {
+   "by_degree": [
+    0,
+    208,
+    1088,
+    0
+   ],
+   "deg3_designated": 0,
+   "deg3_force": 0,
+   "a_reads": 112,
+   "constants": 0,
+   "support_wider_than_link": 0,
+   "deg3_force_targets": []
+  },
+  "em": {
+   "by_degree": [
+    0,
+    34,
+    96,
+    0
+   ],
+   "deg3_designated": 0,
+   "deg3_force": 0,
+   "a_reads": 6,
+   "constants": 0,
+   "support_wider_than_link": 18,
+   "deg3_force_targets": []
+  },
+  "metric": {
+   "by_degree": [
+    0,
+    71,
+    200,
+    0
+   ],
+   "deg3_designated": 0,
+   "deg3_force": 0,
+   "a_reads": 0,
+   "constants": 0,
+   "support_wider_than_link": 18,
+   "deg3_force_targets": []
+  },
+  "beta": {
+   "by_degree": [
+    0,
+    7,
+    7,
+    0
+   ],
+   "deg3_designated": 0,
+   "deg3_force": 0,
+   "a_reads": 0,
+   "constants": 0,
+   "support_wider_than_link": 0,
+   "deg3_force_targets": []
+  },
+  "bgk": {
+   "by_degree": [
+    0,
+    1,
+    0,
+    0
+   ],
+   "deg3_designated": 0,
+   "deg3_force": 0,
+   "a_reads": 0,
+   "constants": 0,
+   "support_wider_than_link": 0,
+   "deg3_force_targets": []
+  },
+  "arm1": {
+   "by_degree": [
+    0,
+    3,
+    0,
+    0
+   ],
+   "deg3_designated": 0,
+   "deg3_force": 0,
+   "a_reads": 0,
+   "constants": 0,
+   "support_wider_than_link": 0,
+   "deg3_force_targets": []
+  },
+  "arm2": {
+   "by_degree": [
+    0,
+    3,
+    0,
+    0
+   ],
+   "deg3_designated": 0,
+   "deg3_force": 0,
+   "a_reads": 0,
+   "constants": 0,
+   "support_wider_than_link": 0,
+   "deg3_force_targets": []
+  },
+  "router": {
+   "by_degree": [
+    0,
+    0,
+    18,
+    0
+   ],
+   "deg3_designated": 0,
+   "deg3_force": 0,
+   "a_reads": 0,
+   "constants": 0,
+   "support_wider_than_link": 0,
+   "deg3_force_targets": []
+  },
+  "gate": {
+   "by_degree": [
+    0,
+    2,
+    0,
+    0
+   ],
+   "deg3_designated": 0,
+   "deg3_force": 0,
+   "a_reads": 0,
+   "constants": 0,
+   "support_wider_than_link": 0,
+   "deg3_force_targets": []
+  },
+  "exit": {
+   "by_degree": [
+    0,
+    0,
+    0,
+    18
+   ],
+   "deg3_designated": 18,
+   "deg3_force": 0,
+   "a_reads": 0,
+   "constants": 0,
+   "support_wider_than_link": 0,
+   "deg3_force_targets": []
+  }
+ },
+ "X10_collisions": {
+  "designated_and_force": 0,
+  "designated_and_force_examples": [],
+  "written_by_several_blocks": 0,
+  "written_by_several_blocks_examples": []
+ },
+ "seconds": 1.5,
+ "stamp_utc": "Tue Nov 10 11:05:05 UTC 2026"
+}

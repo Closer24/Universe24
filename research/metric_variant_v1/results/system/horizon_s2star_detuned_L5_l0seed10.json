@@ -1,0 +1,110 @@
+{
+ "beta_form": "detuned",
+ "L": 5,
+ "c2": false,
+ "l0seed": true,
+ "A_l0": 1024,
+ "c2_params": null,
+ "A": 65536,
+ "x0": [
+  2,
+  2,
+  2
+ ],
+ "T": 2000,
+ "status": "BOUNDED",
+ "max_abs_G_pi_overall": 2.84,
+ "final": {
+  "t": 2000,
+  "max_abs_G_pi": 2.84,
+  "U_mean": 0.1836834831237793,
+  "max_bits": 26,
+  "seconds": 119.7
+ },
+ "samples": [
+  {
+   "t": 0,
+   "max_abs_G_pi": 0.0,
+   "U_mean": 0.0,
+   "max_bits": 17,
+   "seconds": 0.2
+  },
+  {
+   "t": 200,
+   "max_abs_G_pi": 0.0,
+   "U_mean": 0.0013900337219238282,
+   "max_bits": 23,
+   "seconds": 2.1
+  },
+  {
+   "t": 400,
+   "max_abs_G_pi": 0.008,
+   "U_mean": 0.005756904602050781,
+   "max_bits": 24,
+   "seconds": 3.9
+  },
+  {
+   "t": 600,
+   "max_abs_G_pi": 0.064,
+   "U_mean": 0.013561687469482421,
+   "max_bits": 24,
+   "seconds": 5.4
+  },
+  {
+   "t": 800,
+   "max_abs_G_pi": 0.288,
+   "U_mean": 0.02507501220703125,
+   "max_bits": 25,
+   "seconds": 12.0
+  },
+  {
+   "t": 1000,
+   "max_abs_G_pi": 0.272,
+   "U_mean": 0.04056681442260742,
+   "max_bits": 25,
+   "seconds": 30.3
+  },
+  {
+   "t": 1200,
+   "max_abs_G_pi": 0.384,
+   "U_mean": 0.06055987548828125,
+   "max_bits": 25,
+   "seconds": 49.6
+  },
+  {
+   "t": 1400,
+   "max_abs_G_pi": 0.08,
+   "U_mean": 0.08490895462036133,
+   "max_bits": 26,
+   "seconds": 66.6
+  },
+  {
+   "t": 1600,
+   "max_abs_G_pi": 1.384,
+   "U_mean": 0.11344377136230469,
+   "max_bits": 26,
+   "seconds": 83.5
+  },
+  {
+   "t": 1800,
+   "max_abs_G_pi": 1.912,
+   "U_mean": 0.14628800201416015,
+   "max_bits": 26,
+   "seconds": 100.7
+  },
+  {
+   "t": 2000,
+   "max_abs_G_pi": 2.84,
+   "U_mean": 0.1836834831237793,
+   "max_bits": 26,
+   "seconds": 119.7
+  }
+ ],
+ "engine_stats": {
+  "int64_steps": 745,
+  "pyint_steps": 1255,
+  "inverse_int64_steps": 0,
+  "inverse_pyint_steps": 0
+ },
+ "stamp_utc": "Tue Nov 10 13:16:51 UTC 2026"
+}

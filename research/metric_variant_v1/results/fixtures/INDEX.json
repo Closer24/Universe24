@@ -1,0 +1,77 @@
+{
+ "written_utc": "Tue Nov 10 09:24:53 UTC 2026",
+ "fixtures": [
+  {
+   "file": "ref_Q1_L4.json",
+   "Q": 1,
+   "L": 4,
+   "G": 48,
+   "monomials": 288,
+   "rank": 2,
+   "stages": 1,
+   "steps": 12,
+   "final_sha256": "9e89568babf32aac023b0a3f28fdc7d9bfaed91e5a6a5940e8af61bab01c95a0",
+   "rewind_returns_initial": true
+  },
+  {
+   "file": "ref_Q7_L4.json",
+   "Q": 7,
+   "L": 4,
+   "G": 48,
+   "monomials": 288,
+   "rank": 2,
+   "stages": 1,
+   "steps": 12,
+   "final_sha256": "9335ffe0fbfd57f693c57c5f38c25b89238b15a896cf11a65d1cfdd36c05313f",
+   "rewind_returns_initial": true
+  },
+  {
+   "file": "rand_b_only_seed10_L4.json",
+   "Q": 1000000,
+   "L": 4,
+   "G": 6,
+   "monomials": 37,
+   "rank": 4,
+   "stages": 1,
+   "steps": 20,
+   "final_sha256": "40a2b13aa98fc1ea9d898821ec778074800531b296339f2840606a768a59b3e3",
+   "rewind_returns_initial": true
+  },
+  {
+   "file": "rand_a_reads_seed11_L4.json",
+   "Q": 1000000,
+   "L": 4,
+   "G": 6,
+   "monomials": 48,
+   "rank": 4,
+   "stages": 5,
+   "steps": 20,
+   "final_sha256": "1004e75591ebbaa4b8c0cb2a82c064d037f50e8a68af96fc0a8119b8c7eb523c",
+   "rewind_returns_initial": true
+  },
+  {
+   "file": "cubic_Q1_bigint_seed32_L4.json",
+   "Q": 1,
+   "L": 4,
+   "G": 5,
+   "monomials": 41,
+   "rank": 4,
+   "stages": 3,
+   "steps": 6,
+   "final_sha256": "a2899adfcd4160064f971868866377850be0bf66dcb612735c2e824dd97d66af",
+   "rewind_returns_initial": true
+  },
+  {
+   "file": "ref7_plus_32_new_coupled_L4.json",
+   "Q": 7,
+   "L": 4,
+   "G": 80,
+   "monomials": 455,
+   "rank": 4,
+   "stages": 3,
+   "steps": 6,
+   "final_sha256": "caba7dc6c9c82ae6df61524a20d67dff211522550093962d5e644d0f3abfb46c",
+   "rewind_returns_initial": true
+  }
+ ]
+}

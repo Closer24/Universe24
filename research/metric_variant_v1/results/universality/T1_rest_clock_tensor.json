@@ -1,0 +1,84 @@
+{
+ "site/u1": {
+  "regime": "default",
+  "M": 34359738368,
+  "cos_w0": "17179869184/25769803779",
+  "checks": 54,
+  "mismatches_2P_u(F0)_vs_(2P-F0)_u(0)": 0,
+  "u(0)_neq_M_psi": 0,
+  "N_law": "1 - F0/(2P) = 519045/524288"
+ },
+ "site/su2": {
+  "regime": "default",
+  "M": 34359738368,
+  "cos_w0": "17179869184/25769803779",
+  "checks": 108,
+  "mismatches_2P_u(F0)_vs_(2P-F0)_u(0)": 0,
+  "u(0)_neq_M_psi": 0,
+  "N_law": "1 - F0/(2P) = 519045/524288"
+ },
+ "site/su3": {
+  "regime": "default",
+  "M": 34359738368,
+  "cos_w0": "17179869184/25769803779",
+  "checks": 162,
+  "mismatches_2P_u(F0)_vs_(2P-F0)_u(0)": 0,
+  "u(0)_neq_M_psi": 0,
+  "N_law": "1 - F0/(2P) = 519045/524288"
+ },
+ "cov/u1": {
+  "regime": "cov",
+  "M": 34359738368,
+  "cos_w0": "17179869184/25769803779",
+  "checks": 54,
+  "mismatches_2P_u(F0)_vs_(2P-F0)_u(0)": 0,
+  "u(0)_neq_M_psi": 0,
+  "N_law": "1 - F0/(2P) = 519045/524288"
+ },
+ "cov/su2": {
+  "regime": "cov",
+  "M": 34359738368,
+  "cos_w0": "17179869184/25769803779",
+  "checks": 108,
+  "mismatches_2P_u(F0)_vs_(2P-F0)_u(0)": 0,
+  "u(0)_neq_M_psi": 0,
+  "N_law": "1 - F0/(2P) = 519045/524288"
+ },
+ "cov/su3": {
+  "regime": "cov",
+  "M": 34359738368,
+  "cos_w0": "17179869184/25769803779",
+  "checks": 162,
+  "mismatches_2P_u(F0)_vs_(2P-F0)_u(0)": 0,
+  "u(0)_neq_M_psi": 0,
+  "N_law": "1 - F0/(2P) = 519045/524288"
+ },
+ "vac/u1": {
+  "regime": "default",
+  "M": 34359738368,
+  "cos_w0": "17179869184/25769803779",
+  "checks": 54,
+  "mismatches_2P_u(F0)_vs_(2P-F0)_u(0)": 0,
+  "u(0)_neq_M_psi": 0,
+  "N_law": "1 - F0/(2P) = 519045/524288"
+ },
+ "vac/su2": {
+  "regime": "default",
+  "M": 34359738368,
+  "cos_w0": "17179869184/25769803779",
+  "checks": 108,
+  "mismatches_2P_u(F0)_vs_(2P-F0)_u(0)": 0,
+  "u(0)_neq_M_psi": 0,
+  "N_law": "1 - F0/(2P) = 519045/524288"
+ },
+ "vac/su3": {
+  "regime": "default",
+  "M": 34359738368,
+  "cos_w0": "17179869184/25769803779",
+  "checks": 162,
+  "mismatches_2P_u(F0)_vs_(2P-F0)_u(0)": 0,
+  "u(0)_neq_M_psi": 0,
+  "N_law": "1 - F0/(2P) = 519045/524288"
+ },
+ "stamp_utc": "Tue Nov 10 13:32:39 UTC 2026"
+}

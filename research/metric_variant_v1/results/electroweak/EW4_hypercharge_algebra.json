@@ -1,0 +1,15 @@
+{
+ "global_sums_<grad,XB>": {
+  "R3": 0,
+  "BL": 0,
+  "Q": 0
+ },
+ "local_L3_max_abs_per_node": 0,
+ "Q_annihilates_vev": true,
+ "Y_acts_on_Higgs (R3 part nonzero on vev)": true,
+ "Q_on_matter_equals_2Jp_on_matter_and_0_on_matter2": true,
+ "E1_route": "NOT built: Y acts on the second-order Higgs and Q on the W links; Study 4 A1: a second-order gear cannot feel A0 (no carrier) -> E1 cannot gauge Y exactly; compact U(1)_Y is the route",
+ "photon_on_matter_is_4Jp_on_pair1_and_0_on_pair2 (X_Q = 4Q)": true,
+ "written": "Tue Nov 10 13:24:45 UTC 2026",
+ "Q": 8589934593
+}

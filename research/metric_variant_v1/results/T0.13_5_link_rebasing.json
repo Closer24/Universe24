@@ -1,0 +1,11 @@
+{
+ "test": "T0.13_5_link_rebasing",
+ "written_utc": "Tue Nov 10 10:10:54 UTC 2026",
+ "L4_P_node(2, 1, 0)": true,
+ "L4_P_cube(1, 1, 0)+1/2": true,
+ "L4_control_without_rebasing_commutes": false,
+ "L5_P_node(2, 1, 0)": true,
+ "L5_P_cube(1, 1, 0)+1/2": true,
+ "L5_control_without_rebasing_commutes": false,
+ "monomials": 49
+}

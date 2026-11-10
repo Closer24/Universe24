@@ -1,0 +1,25 @@
+{
+ "Q": 5,
+ "configs": 180,
+ "clicking": 72,
+ "silent": 108,
+ "silent_bit_identical": 108,
+ "clicking_changed": 72,
+ "min_final_disturbance_clicking": 2,
+ "rewind": true,
+ "recip": {
+  "ok": true,
+  "checked": 6,
+  "designated": 2,
+  "justifications": [
+   "which-path gear (Study 5 M2-2, S5-P2R): reads arm 1 at weight 3Q/Q_W and kicks it by one unit (3Q); the multi-divisor 3:3 symmetry is 3:3Q_W under ONE divisor, so not a gradient; kept for exact reproduction"
+  ],
+  "violations": 0,
+  "two_time_skipped": 0,
+  "rank": 2,
+  "support_violations": 0,
+  "a_read_monomials": []
+ },
+ "_started": "Tue Nov 10 10:35:58 UTC 2026",
+ "_finished": "Tue Nov 10 10:35:59 UTC 2026"
+}

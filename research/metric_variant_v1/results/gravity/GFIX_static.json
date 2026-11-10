@@ -1,0 +1,41 @@
+{
+ "default": {
+  "static_law_max_change_one_update": 0,
+  "max_G_static": 80000,
+  "vacuum_fixed": true,
+  "rewind_20_exact": true,
+  "reciprocity_ok": true,
+  "designated": 7,
+  "rank": 3,
+  "params": {}
+ },
+ "A": {
+  "static_law_max_change_one_update": 0,
+  "max_G_static": 80000,
+  "vacuum_fixed": true,
+  "rewind_20_exact": true,
+  "reciprocity_ok": true,
+  "designated": 7,
+  "rank": 3,
+  "params": {
+   "w_G": 4294967296,
+   "k_G": 2048,
+   "detune": "1/2"
+  }
+ },
+ "B": {
+  "static_law_max_change_one_update": 0,
+  "max_G_static": 80000,
+  "vacuum_fixed": true,
+  "rewind_20_exact": true,
+  "reciprocity_ok": true,
+  "designated": 7,
+  "rank": 3,
+  "params": {
+   "w_G": 6442450944,
+   "k_G": 3072,
+   "detune": "3/4"
+  }
+ },
+ "written_utc": "Tue Nov 10 12:23:15 UTC 2026"
+}

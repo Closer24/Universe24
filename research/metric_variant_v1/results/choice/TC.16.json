@@ -1,0 +1,32 @@
+{
+ "E_by_(a-b)": [
+  [
+   "1/2"
+  ],
+  [
+   "1/4"
+  ],
+  [
+   "-1/4"
+  ],
+  [
+   "-1/2"
+  ],
+  [
+   "-1/4"
+  ],
+  [
+   "1/4"
+  ]
+ ],
+ "maxS": "5/4",
+ "Bob_marginals": [
+  "0"
+ ],
+ "one_click_each_at_update_1": true,
+ "no_front_at_Bob": true,
+ "spacelike": "both clicks at update 1 -> 2, |x_B - x_A|_1 = 5",
+ "rewind_all_runs": true,
+ "_started": "Tue Nov 10 10:42:06 UTC 2026",
+ "_finished": "Tue Nov 10 10:43:00 UTC 2026"
+}

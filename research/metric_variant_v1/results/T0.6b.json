@@ -1,0 +1,14 @@
+{
+ "test": "T0.6b",
+ "written_utc": "Tue Nov 10 10:10:49 UTC 2026",
+ "Q": 7,
+ "L": 5,
+ "steps": 100,
+ "G": 80,
+ "monomials": 451,
+ "new_gear_component_deviations": 0,
+ "official_clicks_new": 0,
+ "raw_rows_new": 0,
+ "reference_mismatches_vs_universe24": 0,
+ "reference_official_clicks": 582892
+}

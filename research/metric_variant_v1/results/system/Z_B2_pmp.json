@@ -1,0 +1,250 @@
+{
+ "arm": "B2",
+ "body_signs": [
+  1,
+  -1,
+  1
+ ],
+ "Q": 8589934593,
+ "L": 4,
+ "lam": 4,
+ "A": 32768,
+ "kappa": 262144,
+ "port_weight": "Q-1",
+ "stiffness_over_D": "34359738368/25769803779",
+ "monomials": 4776,
+ "runs": {
+  "1": {
+   "status": "RUNAWAY",
+   "t_runaway": 510,
+   "amp": 256,
+   "seconds": 1.6,
+   "engine_stats": {
+    "int64_steps": 577,
+    "pyint_steps": 5,
+    "inverse_int64_steps": 20,
+    "inverse_pyint_steps": 0
+   },
+   "samples": [
+    {
+     "t": 0,
+     "max_W_over_A": 0.0,
+     "max_component_dev_over_A": {
+      "eps0": 0.0,
+      "eps_i": 0.0,
+      "eps_j": 0.0,
+      "eps_k": 0.0,
+      "H": 0.0
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.0,
+      "eps_i": 0.0,
+      "eps_j": 0.0,
+      "eps_k": 0.0
+     },
+     "max_L0_b_over_amp": 1.0,
+     "max_bits": 9
+    },
+    {
+     "t": 500,
+     "max_W_over_A": 1.0008544921875,
+     "max_component_dev_over_A": {
+      "eps0": 0.208649,
+      "eps_i": 0.010559,
+      "eps_j": 0.004639,
+      "eps_k": 0.004761,
+      "H": 0.006233
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.208649,
+      "eps_i": 0.010559,
+      "eps_j": 0.004639,
+      "eps_k": 0.004761
+     },
+     "max_L0_b_over_amp": 6.08984375,
+     "max_bits": 16
+    },
+    {
+     "t": 510,
+     "max_W_over_A": Infinity,
+     "max_component_dev_over_A": {
+      "eps0": Infinity,
+      "eps_i": 0.013397,
+      "eps_j": 0.004608,
+      "eps_k": 0.005188,
+      "H": 0.00459
+     },
+     "eps_unitarity_defect": {
+      "eps0": Infinity,
+      "eps_i": 0.013397,
+      "eps_j": 0.004608,
+      "eps_k": 0.005188
+     },
+     "max_L0_b_over_amp": Infinity,
+     "max_bits": 2616
+    }
+   ],
+   "worst": {
+    "max_W_over_A": Infinity,
+    "max_L0_b_over_amp": Infinity
+   }
+  },
+  "2": {
+   "status": "RUNAWAY",
+   "t_runaway": 840,
+   "amp": 256,
+   "seconds": 2.5,
+   "engine_stats": {
+    "int64_steps": 1412,
+    "pyint_steps": 10,
+    "inverse_int64_steps": 20,
+    "inverse_pyint_steps": 0
+   },
+   "samples": [
+    {
+     "t": 0,
+     "max_W_over_A": 0.0,
+     "max_component_dev_over_A": {
+      "eps0": 0.0,
+      "eps_i": 0.0,
+      "eps_j": 0.0,
+      "eps_k": 0.0,
+      "H": 0.0
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.0,
+      "eps_i": 0.0,
+      "eps_j": 0.0,
+      "eps_k": 0.0
+     },
+     "max_L0_b_over_amp": 1.0,
+     "max_bits": 9
+    },
+    {
+     "t": 500,
+     "max_W_over_A": 0.99932861328125,
+     "max_component_dev_over_A": {
+      "eps0": 0.015808,
+      "eps_i": 0.009766,
+      "eps_j": 0.006348,
+      "eps_k": 0.004089,
+      "H": 0.004627
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.015808,
+      "eps_i": 0.009766,
+      "eps_j": 0.006348,
+      "eps_k": 0.004089
+     },
+     "max_L0_b_over_amp": 2.29296875,
+     "max_bits": 15
+    },
+    {
+     "t": 840,
+     "max_W_over_A": Infinity,
+     "max_component_dev_over_A": {
+      "eps0": Infinity,
+      "eps_i": 0.017883,
+      "eps_j": 0.006409,
+      "eps_k": 0.006805,
+      "H": 0.005625
+     },
+     "eps_unitarity_defect": {
+      "eps0": Infinity,
+      "eps_i": 0.017883,
+      "eps_j": 0.006409,
+      "eps_k": 0.006805
+     },
+     "max_L0_b_over_amp": Infinity,
+     "max_bits": 1869
+    }
+   ],
+   "worst": {
+    "max_W_over_A": Infinity,
+    "max_L0_b_over_amp": Infinity
+   }
+  },
+  "3": {
+   "status": "RUNAWAY",
+   "t_runaway": 870,
+   "amp": 256,
+   "seconds": 4.3,
+   "engine_stats": {
+    "int64_steps": 2274,
+    "pyint_steps": 18,
+    "inverse_int64_steps": 20,
+    "inverse_pyint_steps": 0
+   },
+   "samples": [
+    {
+     "t": 0,
+     "max_W_over_A": 0.0,
+     "max_component_dev_over_A": {
+      "eps0": 0.0,
+      "eps_i": 0.0,
+      "eps_j": 0.0,
+      "eps_k": 0.0,
+      "H": 0.0
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.0,
+      "eps_i": 0.0,
+      "eps_j": 0.0,
+      "eps_k": 0.0
+     },
+     "max_L0_b_over_amp": 1.0,
+     "max_bits": 9
+    },
+    {
+     "t": 500,
+     "max_W_over_A": 0.9912109375,
+     "max_component_dev_over_A": {
+      "eps0": 0.013977,
+      "eps_i": 0.010132,
+      "eps_j": 0.00473,
+      "eps_k": 0.006775,
+      "H": 0.006273
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.013977,
+      "eps_i": 0.010132,
+      "eps_j": 0.00473,
+      "eps_k": 0.006775
+     },
+     "max_L0_b_over_amp": 2.3671875,
+     "max_bits": 15
+    },
+    {
+     "t": 870,
+     "max_W_over_A": Infinity,
+     "max_component_dev_over_A": {
+      "eps0": Infinity,
+      "eps_i": 0.014709,
+      "eps_j": 0.00531,
+      "eps_k": 0.004517,
+      "H": 0.006489
+     },
+     "eps_unitarity_defect": {
+      "eps0": Infinity,
+      "eps_i": 0.014709,
+      "eps_j": 0.00531,
+      "eps_k": 0.004517
+     },
+     "max_L0_b_over_amp": Infinity,
+     "max_bits": 42856
+    }
+   ],
+   "worst": {
+    "max_W_over_A": Infinity,
+    "max_L0_b_over_amp": Infinity
+   }
+  }
+ },
+ "vacuum_fixed_20": true,
+ "exactness": {
+  "rewind20": true,
+  "Mp_mirror_n6": true,
+  "local_Q8_covariance_10": true
+ },
+ "stamp_utc": "Tue Nov 10 11:30:05 UTC 2026"
+}
