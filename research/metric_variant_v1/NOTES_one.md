@@ -43,14 +43,17 @@ click. ONE contains no hold and no freeze (the zero-time hold is excluded, §7).
    Theta.
 3. **Born weights are seed data.** p/S_L is put in by the loads; the Born ledger (max deviation 3.2e-7) verifies the
    mechanism. It does not derive the probabilities.
-- Scale of the approved coupling (§4, the default): 27,040 monomials and 17,856 designations, against 18,592 and 736 in ONE v1. That is how
+- Scale of the coupling (§4; opt-in only, REJECTED by the owner): 27,040 monomials and 17,856 designations, against 18,592 and 736 in ONE v1. That is how
   far reciprocity is given up there (every Theta-scaled entry is one-way).
 
-**THE APPROVED DEFAULT (owner 15:4x UTC, "1 yes"):** one_system() is the COUPLED ONE: **APPROVED NEW LAW (owner 15:4x UTC):
-one-way first-order doublet x hand; E1 not scaled; approximate echoes** (§4; run C1, dynamics fingerprint 593753fa...). Bangs start
-NEW seeds, information is never lost (exact bijection), there is no freeze. one_system(couple_doublet=False) is ONE v1, the
-block-diagonal version on which T1 - T4 were pre-registered and run (fingerprint 77f6d251...). Option C2 (Theta0 = 256 with the
-package mass 4916 * 2^22) stays an OPTION only: a mass change the owner has not approved.
+**THE DEFAULT (owner decision received about 16:13 UTC, `date -u`: matter must NOT read the cosmic clock; Study 33 switch):**
+one_system() is ONE v1 (couple_doublet=False), the block-diagonal version on which T1 - T4 were pre-registered and run (dynamics
+fingerprint 77f6d251...). Bangs start NEW seeds, information is never lost (exact bijection), there is no freeze. The coupled
+build C1 (one-way first-order doublet x hand; E1 not scaled; approximate echoes; dynamics fingerprint 593753fa...) is an explicit
+opt-in only, couple_doublet=True: **NEW LAW candidate, REJECTED by the owner (matter must not read the clock); measured
+runaway at L = 6 t ≈ 1,547–1,554 and L = 4 t ≈ 662 (Study 30); kept for the record** (§4). It had been approved at 15:26:41 UTC
+("owner 15:4x UTC" in earlier text). Option C2 (Theta0 = 256 with the package mass 4916 * 2^22) is a coupled doublet too and
+stays unapproved.
 
 ## 1. What ONE is (layers/one.py: one_system)
 ONE v1 = default_system(Q) + block "cosmic", at ONE odd Q = 2^33 + 1 (D = 6Q), on ONE periodic L^3 cube with six faces.
@@ -75,7 +78,8 @@ ONE v1 = default_system(Q) + block "cosmic", at ONE odd Q = 2^33 + 1 (D = 6Q), o
 - Seed (prepare/one.py, data only): J-pure (norm-matched as in s17E emerge_run) or S2* package bang; the hand at rest at Theta0
   INCLUDING the remainder 3Q - 1; CC-A's neutral packet A_c = 2^10; static loads; tokens. All R*-fixed about the bang centre.
 - Hooks: route_b (ONE v2: EW-BUILDER's compose_electroweak_b on the hands-OFF base; EW-BUILDER verified one_system(route_b=True)
-  composes exactly, G 444), families (ONE v3: raises), couple_doublet (§4: APPROVED, DEFAULT ON; couple_doublet=False = ONE v1).
+  composes exactly, G 444), families (ONE v3: raises), couple_doublet (§4: opt-in only, a NEW LAW candidate REJECTED by
+  the owner; the default couple_doublet=False is ONE v1).
 
 ## 2. Rank census
 - Package: rank 4 (OD4 springs, E1's dressed source, chiral entries, 706 designations). Cosmic: hand 3, readers 3, pair 4 (the
@@ -99,8 +103,14 @@ monomials cross the package/cosmic boundary; the package evolves bit-identically
 do NOT read Theta (and do not fold): every package sector** — L0, both Dirac pairs, weak links, Higgs, gauge sectors (su2, su3,
 u1), E1, gravity (metric, beta, background), the choice observers.
 
-## 4. The coupling: APPROVED NEW LAW (owner 15:4x UTC), DEFAULT ON (manager 15:06 / 15:45)
-one_system() (couple_doublet ON by default; not designed for route B): the doublet's FIRST-ORDER potential (blocks matter, matter2, the chiral entries touching
+## 4. The coupling: NEW LAW candidate, REJECTED by the owner; opt-in only, DEFAULT OFF (Study 33)
+**Status:** NEW LAW candidate, REJECTED by the owner (matter must not read the clock); measured runaway at L = 6
+t ≈ 1,547–1,554 and L = 4 t ≈ 662 (Study 30); kept for the record. Times by `date -u`: the owner decisions were received at
+15:24:47 and 15:26:41 UTC (the coupling was approved in the second; "owner 15:4x UTC" in earlier text was a relay stamp) and
+the rejection at about 16:13 UTC. one_system() is ONE v1 (couple_doublet=False, 77f6d251...). couple_doublet=True
+(run_one --couple) still builds C1 bit for bit: dynamics fingerprint 593753fa... (pinned by tests/test_one.py O12) and
+canonical fingerprint 1a3f998e..., both unchanged.
+one_system(couple_doublet=True) (opt-in only; not designed for route B): the doublet's FIRST-ORDER potential (blocks matter, matter2, the chiral entries touching
 matter, gwb) is multiplied by the hand as ONE common factor (theta_scale_block; link-averaged on link entries; designated
 one-way, no hand source); E1 is NOT scaled; second-order self terms (Higgs inertia/spring, links) are NOT scaled (no inverted
 oscillator at Theta < 0). Only Theta0 <= 64 is integral at today's constants. Law checks: rank 4, 27,040 monomials, vacuum,
@@ -110,17 +120,27 @@ gwb caps it there); a larger Q only helps if every matter constant is re-derived
 distance is 0.038 at t = 192 and 0.037 at t = 386 (uncoupled T3 at the same times: 0.21 and 1.64), then 0.20, 0.16, 0.52;
 cosmic echoes 0.0097, 0.0090, 0.042, 0.0175, 0.043; bounded 24 bits, rewind of 1200 exact, all ledgers 0 failures. The echoes
 are approximate and degrade: E1 (on "matter") and the (C) fields are not time-reversed, and the 64-level hand splits by
-0.2 - 0.9 Theta0 at its zeros. The coherent coupled ONE exists today and is the APPROVED DEFAULT (owner 15:4x UTC);
-ONE v1 (couple_doublet=False) stays available and block-diagonal.
+0.2 - 0.9 Theta0 at its zeros. The coupled build is exact as a map, but it is NOT the default (status above); ONE v1
+(couple_doublet=False) is the default and block-diagonal.
 
-- **Cost of the approved coupling (ONE-B OB5, measured; manager doc edit 2026-11-10, post-freeze, doc only):** E1 is not scaled and sources
+**Measured runaway (Study 30; NUMERIC, ONE-LONG, signed 16:10 UTC; research record s30/runs/, a scratchpad path, not a
+repository file):** C1 with the J-pure seed is bounded for 1,200 updates at L = 6 (rng 1, 2, 3: max 24 bits), then runs away at
+t ≈ 1,547–1,554 (rng 13: 433 bits at t = 1,554, where run_one's 200-bit guard stops the driver); at L = 4 it runs away at
+t ≈ 662. The chiral/Higgs sector grows first. The rewind stays exact (all 1,554 updates at L = 6, all 667 at L = 4) and the
+cosmic ledgers report 0 failures at L = 6: the map is still a bijection, and the runaway is growth of the integers, not a loss of
+information. ONE v1 does not run away in the same tests: L = 4 to t = 720; L = 6 to t = 2,600+ with 27 bits (the run continues),
+though its uniform lapse drifts as t^2 (OPEN).
+- OPEN (Study 34, s34/): a generic replacement through the clocks only.
+
+- **Cost of the coupling (ONE-B OB5, measured; manager doc edit 2026-11-10, post-freeze, doc only):** E1 is not scaled and sources
   from the unscaled hopping current, so its dressed-continuity residual grows up to ~475x the hands-ON baseline (L = 4, 200 updates),
   tracking (1 − Θ̄); the map stays exact (bijection, rewind), but E1 is not physically coherent with the Θ-scaled doublet (OPEN).
   The hand grain Θ0 = 64 is below the 2^8 bar (ONE-B OB6); C2 (mass 4916·2^22, Θ0 = 256) is an option needing an owner decision.
 
 ## 5. NEW LAW list (owner decisions)
 1. WIND hand (decision 8). 2. L-Theta readers = CC-A's species. 3. Matched pairs loaded by the readers' abs(psi)^2 (narrow kind,
-decision 4). 4. The Theta-coupled doublet (§4): APPROVED (owner 15:4x UTC), DEFAULT ON. FIX-i is a coefficient choice, not a new law.
+decision 4). 4. The Theta-coupled doublet (§4): approved 15:26:41 UTC, then REJECTED by the owner (about 16:13 UTC, `date -u`);
+not a law of ONE, opt-in only, kept for the record. FIX-i is a coefficient choice, not a new law.
 
 ## 6. Results (pre-registered T1-T4; NUMERIC unless stated)
 - T1 PASS: rank 4, B3, Q odd, designations 706 + 30, vacuum fixed (L = 3, 4, 6), rewind exact, decoupling bit-exact.
@@ -148,3 +168,6 @@ decision 4). 4. The Theta-coupled doublet (§4): APPROVED (owner 15:4x UTC), DEF
 - Route B: EW-BUILDER's build (frozen 15:06:51), reachable by route_b=True, OFF by default.
 - FIX-C+: two tuned lapse counter-terms; tuned counter-terms are not solutions (owner rule).
 - Cosmic matter <-> lapse (universality for the readers): legal at rank 4 (Theta x F x b' is narrow) but a (C)-field defect; OPEN.
+- The Theta-coupled doublet (matter reads the clock): NEW LAW candidate, REJECTED by the owner (matter must not read the
+  clock); measured runaway at L = 6 t ≈ 1,547–1,554 and L = 4 t ≈ 662 (Study 30); kept for the record, as the opt-in
+  couple_doublet=True (§4).

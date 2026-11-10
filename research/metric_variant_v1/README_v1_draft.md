@@ -5,8 +5,11 @@ Updated by DOC-UPDATER, Tue Nov 10 2026, 15:18 UTC: owner decisions v8 (approved
 FIX-i as the default, the gravity source, the ONE version (section 7e, per NOTES_one.md of 15:15), route B (section 7d)
 and the binding owner rules (section 0). REV-ARCH's review fixes of 15:16 are included.
 Second DOC-UPDATER update, 15:33 UTC: the owner decisions relayed by the manager (received 15:28 UTC) are folded in.
-They are the coupled ONE default (section 7e, per NOTES_one.md of 15:33), rank 4 final, a new seed at each bang, no
+They are the coupled ONE default (section 7e, per NOTES_one.md of 15:33; superseded at about 16:13 UTC: ONE v1 is the default, see §0 and §7e), rank 4 final, a new seed at each bang, no
 freeze and light route A (section 0). Section 10 now lists the 13 results that carry pre-FIX-i values (REV-VERIFY).
+Study 33 patch (ONE-SWITCH, prepared 16:21 UTC, `date -u`): the owner rejected the coupled ONE (decision received about
+16:13 UTC: matter must not read the cosmic clock). `one_system()` is ONE v1; the coupled build is an opt-in kept for the record
+(sections 0, 7e).
 
 This is the algebraic description of the composed default system `layers.system.default_system()`. Each statement
 points to code and evidence (section 10). `universe24/` is untouched. The signed account Q (the divisor scale) and the
@@ -50,9 +53,10 @@ posted by hand: no forcing, no fakes, no circularity. No-signalling must follow 
 
 **Owner decisions after Studies 22-23 (relayed by the manager; received 15:28 UTC, `date -u`).**
 
-* **The coupled ONE is the default.** Connecting the cosmic clock to matter is an APPROVED NEW LAW: the one-way
-  first-order doublet x the hand, at today's mass (Θ0 = 64). `one_system()` defaults to `couple_doublet=True`. E1 is not
-  scaled, so the echoes are approximate. C2 (mass 4916 * 2^22, Θ0 = 256) is an option only (section 7e).
+* **Matter must NOT read the cosmic clock** (owner decision received about 16:13 UTC, `date -u`). It reverses the
+  coupling approved at 15:26:41 UTC (the coupled ONE as default). `one_system()` defaults to ONE v1
+  (`couple_doublet=False`). The coupled doublet is a NEW LAW candidate, REJECTED by the owner, kept for the record as an
+  opt-in only (section 7e). C2 (mass 4916 * 2^22, Θ0 = 256) is a coupled doublet too and stays unapproved.
 * **Rank 4 is FINAL.** Rank 5 was considered and rejected (Study 23, s23/AGREE_R5.md).
 * **Bangs do not return to the seed.** Each bang starts a NEW seed, the state at the turn. Information is never lost,
   because Rule3 on one tensor is an exact bijection. Echoes are data, not the goal.
@@ -502,27 +506,31 @@ retires E1 and adds one U(2) link per face. `EWB_DEFAULT_ON = False`, so the def
 ## 7e. ONE version (Study 22; NOTES_one.md)
 
 ONE is one tensor, one Q, one seed and one run: the package default (hands ON + FIX-i + GRAV-FIX A) plus the cosmic
-clock layer (owner decision v8-8: the WIND hand, matched choice pairs and Θ-reading matter). By default the doublet is
-coupled to the hand.
+clock layer (owner decision v8-8: the WIND hand, matched choice pairs and Θ-reading matter). The doublet is NOT coupled to
+the hand: `one_system()` is ONE v1. The coupling is a NEW LAW candidate, REJECTED by the owner (matter must not read the
+clock); measured runaway at L = 6 t ≈ 1,547–1,554 and L = 4 t ≈ 662 (Study 30); kept for the record as the opt-in
+`couple_doublet=True` (fingerprint 593753fa..., unchanged).
 
 The account, the tests and the results are in NOTES_one.md; ONE-B's marks are in s22/AGREE_ONE.md.
 
 * Code (new files, ONE-A): `layers/one.py` (`one_system`), `prepare/one.py` (the seed, data only), `observe/one.py`,
-  `demos/one/` and `tests/test_one.py`. The cosmic layer and the coupling are NEW LAWs approved by the owner.
-* **Default: the coupled ONE**, `one_system()`; `couple_doublet` is ON unless route B is chosen. It is an APPROVED NEW
-  LAW: the one-way first-order doublet x the hand, at today's mass (Θ0 = 64).
+  `demos/one/` and `tests/test_one.py`. The cosmic layer is a NEW LAW approved by the owner; the coupling was approved,
+  then rejected (opt-in only).
+* **Opt-in only: the coupled ONE (C1)**, `one_system(couple_doublet=True)` (demo flag `--couple`). Approved 15:26:41 UTC,
+  REJECTED by the owner about 16:13 UTC (`date -u`): the one-way first-order doublet x the hand, at today's mass (Θ0 = 64).
   * The doublet's first-order potential (matter, matter2, the chiral entries touching matter, gwb) carries the hand as
     one common factor. E1 and the second-order self terms are not scaled, so the echoes are approximate.
   * Tensor: dynamics fingerprint 593753fa..., G 382, rank 4, 27,040 monomials, 17,856 designations.
   * Rank-4 terms (ONE-B OB9): 18,254 degree-3 terms. The 1,528 undesignated ones are the pre-existing OD4 springs; all
     others are designated one-way. 17,120 package terms read Θ, all designated, and E1 reads Θ nowhere.
-  * Cost of the approved coupling (ONE-B OB5, measured): E1 is not scaled and sources from the unscaled hopping
+  * Cost of the coupling (ONE-B OB5, measured): E1 is not scaled and sources from the unscaled hopping
     current. Its dressed-continuity residual therefore grows up to ~475x the hands-ON baseline (L = 4, 200 updates),
     tracking (1 - Θ̄). The map stays exact (bijection, rewind), but E1 is not physically coherent with the Θ-scaled
     doublet (OPEN).
   * Θ0 = 64 is below the 2^8 grain bar (ONE-B OB6). C2 (Θ0 = 256 with the package mass 4916 * 2^22) meets the bar but
     is an option only: a mass change the owner has not approved.
-* **ONE v1**, `one_system(couple_doublet=False)`: the block-diagonal version (the package ⊕ the clock).
+* **ONE v1 (the default)**, `one_system()` = `one_system(couple_doublet=False)`: the block-diagonal version (the package ⊕
+  the clock).
   * Fingerprint 77f6d251..., G 382, rank 4, 18,592 monomials, 736 designations (706 + 30).
   * 0 monomials cross the package/cosmic boundary, and the package evolves bit-identically to `default_system()`.
   * No package sector is an exact Θ reader at today's integer grain (ONE-B's verification; NOTES_one.md section 3).
@@ -644,7 +652,7 @@ The account, the tests and the results are in NOTES_one.md; ONE-B's marks are in
 * Gravity source: no exact reversor is known for the HYBRID source at today's integers (NOTES_gravity_hybrid.md).
   "Action = reaction" in gravity remains a prediction (v8-2).
 * Route B: ONE LIGHT is OPEN; the photon is at most 0.41 c_Q (section 7d).
-* ONE: the coupled default (approved NEW LAW) is not an exact Θ reader, because E1 and the second-order fields are not
+* ONE: the coupled build (opt-in, REJECTED by the owner) is not an exact Θ reader, because E1 and the second-order fields are not
   scaled. Its echoes are approximate (data, not the goal), and E1 is not physically coherent with the Θ-scaled doublet
   (ONE-B OB5). An exact coupling that includes E1 is impossible at any Q (OB6), and it stays OPEN. Θ0 = 64 is below
   the 2^8 grain bar; C2 meets the bar but needs a mass change the owner has not approved (section 7e).
@@ -691,7 +699,7 @@ The account, the tests and the results are in NOTES_one.md; ONE-B's marks are in
 | FIX-i graviweak (default, v8-1) | `layers/electroweak.py` (`compose_electroweak`: `gwb_lam_H = gwb_lam_L = 0`) | s18/AGREE_STAB.md (external working record; rows R2, R9-R11, addenda A1, A7), NOTES_system.md (owner decision v8-1 paragraph) |
 | HYBRID gravity source (candidate, default OFF; v8-2) | `layers/gravity_hybrid.py`, `prepare/gravity_hybrid.py` | `tests/test_gravity_hybrid.py`, NOTES_gravity_hybrid.md (H2 reversor: FAIL) |
 | route B (opt-in, default OFF) | `layers/electroweak_b.py`, `observe/electroweak_b.py` | `tests/test_electroweak_b.py` -> `results/electroweak_b/`, NOTES_electroweak_b.md |
-| ONE version (Study 22): coupled default (approved NEW LAW); ONE v1 = `couple_doublet=False` | `layers/one.py`, `prepare/one.py`, `observe/one.py`, `demos/one/` | `tests/test_one.py`, NOTES_one.md, s22/AGREE_ONE.md (OB5, OB6, OB9), s22/ONE-A_work/runs/ |
+| ONE version (Study 22): ONE v1 = `one_system()` (default); coupled C1 = `couple_doublet=True`, opt-in only (NEW LAW candidate, REJECTED by the owner) | `layers/one.py`, `prepare/one.py`, `observe/one.py`, `demos/one/` | `tests/test_one.py`, NOTES_one.md, s22/AGREE_ONE.md (OB5, OB6, OB9), s22/ONE-A_work/runs/, s30/runs/ (C1 runaway) |
 | rank 4 final (rank 5 rejected) | - | s23/AGREE_R5.md (Study 23 joint verdict) |
 | mass lock check | `demos/system/mass_lock_check.py` | `results/system/mass_lock.json` |
 | matter lapse C (R1 default) | `layers/matter_lapse_c.py`, `demos/system/dirac_formc_check.py` | `results/system/DIRAC_C.json`, `L0C_clock.json`, `v2_matter_split_contrast.json` |

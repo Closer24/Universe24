@@ -6,7 +6,8 @@ driver may only STOP iterating (horizon / wall budget). Outputs go to --out (nev
 
 usage: python -m research.metric_variant_v1.demos.one.run_one --L 6 --bang jpure --rng 13 --tmax 1200 --budget 1500
                                                               --tag T3_main --out DIR [--rewind] [--compare OTHER.json]
-       [--uncoupled (ONE v1, as run for T3/T4) | --couple (default)] [--theta0 N] [--mass_m M]
+       [--uncoupled (ONE v1: the default, as run for T3/T4) | --couple (C1, OPT-IN ONLY: NEW LAW candidate, REJECTED
+        by the owner; runaway measured in Study 30; kept for the record)] [--theta0 N] [--mass_m M]
 """
 from __future__ import annotations
 
@@ -24,7 +25,7 @@ import numpy as np
 
 from ...core.engine import Engine, OBJ
 from ...core.tensor import compose
-from ...layers.one import COSMIC_NS, one_system
+from ...layers.one import COSMIC_NS, COUPLING_STATUS, one_system
 from ...observe.one import (CosmicLedger, CosmicView, flat, flat_ab, knz, namespace_bits, rel_distance,
                             state_hash)
 from ...prepare.one import one_seed
@@ -279,8 +280,10 @@ def main(argv=None):
     ap.add_argument("--out", required=True)
     ap.add_argument("--rewind", action="store_true")
     ap.add_argument("--compare", default=None)
-    ap.add_argument("--couple", action="store_true", help="coupled doublet (the default of one_system since owner 15:4x)")
-    ap.add_argument("--uncoupled", action="store_true", help="ONE v1: block-diagonal (couple_doublet=False)")
+    ap.add_argument("--couple", action="store_true",
+                    help=f"C1, opt-in only: couple_doublet=True ({COUPLING_STATUS})")
+    ap.add_argument("--uncoupled", action="store_true",
+                    help="ONE v1: block-diagonal (couple_doublet=False); the default of one_system, same as no flag")
     ap.add_argument("--theta0", type=int, default=0)
     ap.add_argument("--mass_m", type=int, default=0, help="package matter mass = m * 2^22 (default: the package's 4915)")
     args = ap.parse_args(argv)

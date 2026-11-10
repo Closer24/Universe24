@@ -1,7 +1,9 @@
 """ONE (Study 22, ONE-A) fast unit tests, L = 3. Nothing is written to disk.
 
-The DEFAULT one_system() is the COUPLED ONE (APPROVED NEW LAW, owner 15:4x UTC: the doublet's first-order potential x the
-hand, Theta0 = 64); one_system(couple_doublet=False) is ONE v1 (block-diagonal).
+The DEFAULT one_system() is ONE v1 (block-diagonal, dynamics fingerprint 77f6d251...; test O12). The coupled build C1,
+one_system(couple_doublet=True) (the doublet's first-order potential x the hand, Theta0 = 64; 593753fa...), is OPT-IN ONLY:
+a NEW LAW candidate, REJECTED by the owner (matter must not read the clock; received about 16:13 UTC, date -u), kept for
+the record after its measured runaway (Study 30). Its exactness tests (O4 - O11) are kept unchanged on the explicit opt-in.
 Run ONLY in a scratch mirror (manager 14:57 UTC), ONE core, e.g. from the mirror root:
     OMP_NUM_THREADS=1 nice -n 19 python -m unittest research.metric_variant_v1.tests.test_one -v
 """
@@ -17,7 +19,8 @@ import numpy as np
 
 from ..core.engine import OBJ, Engine, State
 from ..core.tensor import compose
-from ..layers.one import (COSMIC_NS, COUPLED_THETA0, build_cosmic, cosmic_params, one_system, theta_reading_census)
+from ..layers.one import (COSMIC_NS, COUPLED_THETA0, THETA0_DEFAULT, build_cosmic, cosmic_params, one_system,
+                          theta_reading_census)
 from ..layers.system import default_system
 from ..observe.one import CosmicLedger, CosmicView
 from ..observe.seed import r_star_hands_on
@@ -26,6 +29,8 @@ from ..prepare.system import random_system_state, system_vacuum
 
 L = 3
 FIX_I_FINGERPRINT = "b51d3f2c862fb0094c7691ad38c6acc259686cdda48a4d00645330183cbfc8e8"   # s18 STAB-B FIX_S_built
+ONE_V1_FINGERPRINT = "77f6d251a8adfb2e4727bd2bd5ffeaa0e2ae3538aac393fe95c497fce754acf6"  # the DEFAULT one_system() (ONE v1)
+C1_FINGERPRINT = "593753fa2d42f63d840d36c18cc24288f32d81ea71d0afa5b2ccb1a9f172cb27"      # couple_doublet=True (opt-in C1)
 
 
 def _h(state) -> str:
@@ -38,12 +43,12 @@ def _h(state) -> str:
 class TestOne(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.S = one_system()                                 # the COUPLED default
+        cls.S = one_system(couple_doublet=True)              # C1: the coupled build, OPT-IN ONLY (rejected candidate)
         cls.T = compose(*cls.S.blocks)
         cls.E = Engine(cls.T, cls.S.Q)
         cls.cp = cls.S.info["one"]["cosmic_params"]
         cls.s0, cls.rep = one_seed(cls.S, cls.T, L)
-        cls.S1 = one_system(couple_doublet=False)            # ONE v1, block-diagonal
+        cls.S1 = one_system(couple_doublet=False)            # ONE v1, block-diagonal (= the DEFAULT, test O12)
         cls.T1 = compose(*cls.S1.blocks)
 
     # ------------------------------------------------------------------ law
@@ -86,7 +91,7 @@ class TestOne(unittest.TestCase):
         for ns in ("ref", "matter", "matter2"):
             self.assertIn("cannot read Theta", cen["per_namespace"][ns]["verdict"])
 
-    # ------------------------------------------------------------------ exactness (coupled default)
+    # ------------------------------------------------------------------ exactness (coupled opt-in build C1)
     def test_O4_vacuum_rewind(self):
         S, T, E = self.S, self.T, self.E
         vac = system_vacuum(S, T, L)
@@ -169,19 +174,19 @@ class TestOne(unittest.TestCase):
         with self.assertRaises(NotImplementedError):
             one_system(route_b=lambda base: base, couple_doublet=True)
 
-    # ------------------------------------------------------------------ the approved coupling (default)
-    def test_O10_coupling_default(self):
-        """Coupled default: legal (rank 4), only package -> hand reads cross the boundary, E1 untouched, Theta0 grain."""
+    # ------------------------------------------------------------------ the coupling (opt-in only; rejected candidate)
+    def test_O10_coupling_opt_in(self):
+        """Coupled opt-in C1: legal (rank 4), only package -> hand reads cross the boundary, E1 untouched, Theta0 grain."""
         cen = theta_reading_census(self.T)
         self.assertEqual(cen["cross_reads"]["cosmic_reads_package"], 0)
         self.assertGreater(cen["cross_reads"]["package_reads_cosmic"], 0)
         em0 = {t[:3] for t in self.S1.by_name("em").terms}
         self.assertEqual({t[:3] for t in self.S.by_name("em").terms}, em0)
         with self.assertRaises(ValueError):
-            one_system(theta0=128)                               # beyond today's Yukawa grain 2^6 * 6451
+            one_system(theta0=128, couple_doublet=True)          # beyond today's Yukawa grain 2^6 * 6451
 
     def test_O11_t3_noether_with_nonuniform_hand(self):
-        """Local SU(2) Noether: t3 exact with a random NON-uniform hand (coupled default); E1 breaks t1, t2 as before."""
+        """Local SU(2) Noether: t3 exact with a random NON-uniform hand (coupled opt-in C1); E1 breaks t1, t2 as before."""
         from ..observe.chiral import ChiralView
         S, T, E = self.S, self.T, self.E
         view = ChiralView(T, S.by_name("chiral"), S.by_name("wsu2"))
@@ -207,6 +212,20 @@ class TestOne(unittest.TestCase):
             rhs = view.remainder_term2(hist[t], hist[t + 1], 2)
             fails += int(np.sum(lhs != rhs))
         self.assertEqual(fails, 0)
+
+    # ------------------------------------------------------------------ the default switch (Study 33)
+    def test_O12_default_is_v1_and_c1_opt_in_unchanged(self):
+        """DEFAULT one_system() = ONE v1 (77f6d251..., = couple_doublet=False bit for bit); the explicit opt-in
+        couple_doublet=True still builds C1 exactly (593753fa...)."""
+        S0 = one_system()
+        T0 = compose(*S0.blocks)
+        self.assertEqual(T0.dynamics_fingerprint, ONE_V1_FINGERPRINT)
+        self.assertEqual(self.T1.dynamics_fingerprint, ONE_V1_FINGERPRINT)
+        self.assertEqual(T0.fingerprint, self.T1.fingerprint)
+        self.assertNotIn("couple_doublet", S0.info["one"])
+        self.assertEqual(S0.info["one"]["cosmic_params"]["theta0"], THETA0_DEFAULT)
+        self.assertEqual(self.T.dynamics_fingerprint, C1_FINGERPRINT)
+        self.assertEqual(self.S.info["one"]["couple_doublet"]["theta0"], COUPLED_THETA0)
 
 
 if __name__ == "__main__":

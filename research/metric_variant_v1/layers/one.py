@@ -41,11 +41,16 @@ Which package sectors read Theta?  NONE (exact census: theta_reading_census). A 
   neither reads nor is read by any package gear: the tensor is BLOCK-DIAGONAL between the package and the cosmic clock.
   The package sectors do not read Theta and will not fold; the cosmic matter folds approximately (THEOREM O (b)-(d)).
 
-COUPLING (couple_doublet; APPROVED NEW LAW, owner 15:4x UTC, DEFAULT ON; manager 15:06/15:45 UTC): the doublet's FIRST-ORDER potential
+COUPLING (couple_doublet=True; OPT-IN ONLY, DEFAULT OFF): NEW LAW candidate, REJECTED by the owner (matter must not read
+  the clock); measured runaway at L = 6 t ~ 1,547-1,554 and L = 4 t ~ 662 (Study 30); kept for the record. Time labels
+  (date -u): the owner decisions were received at 15:24:47 / 15:26:41 UTC (the coupling was approved in the second; the
+  older "owner 15:4x UTC" stamps were relay stamps), the rejection at about 16:13 UTC. The opt-in build is bit-identical to
+  Study 22's run C1 (dynamics fingerprint 593753fa...): the doublet's FIRST-ORDER potential
   (blocks matter, matter2, the chiral entries touching matter, gwb) carries the hand as ONE common factor (theta_scale_block),
   E1 unscaled, second-order self terms unscaled. Integral only for Theta0 <= 64 at today's constants (Yukawa on-site entries
   2^6 * 6451); Theta0 = 256 with the package mass m * 2^22, 4 | m. It is not an exact (A) reader (E1, (C) fields): the package
-  bang then recurs APPROXIMATELY (Study 22 run C1). couple_doublet=False is ONE v1, BLOCK-DIAGONAL (described above).
+  bang then recurs APPROXIMATELY (Study 22 run C1). The DEFAULT, couple_doublet=False, is ONE v1, BLOCK-DIAGONAL (described
+  above; dynamics fingerprint 77f6d251...).
 
 Hooks: route_b (ONE v2: EW-BUILDER's layers/electroweak_b.compose_electroweak_b on the hands-OFF base, or any callable
   base -> System), families (ONE v3: three families / Pauli copies, NOT approved: raises).
@@ -81,10 +86,16 @@ WHY_LTHETA = ("NEW LAW (owner decision 8, L-Theta; s13 CC-A): the matter reads t
 WHY_PAIR = ("NEW LAW (owner decision 8, matched shared-remainder pair, CC-B form): loaded by the intensity of "
             "Theta-reading matter times its static Born load; the matter does not feel the pair (one-way: THEOREM O (a))")
 
+# WHY_COUPLE is TENSOR METADATA: theta_scale_block writes it into every Theta-scaled (designated) entry and
+# Tensor.fingerprint hashes it. It is kept VERBATIM so that one_system(couple_doublet=True) stays bit-identical to Study 22's
+# C1 (dynamics fingerprint 593753fa..., canonical fingerprint 1a3f998e...). Its "APPROVED ... owner 15:4x UTC" is historical:
+# approved 15:26:41 UTC, REJECTED by the owner at about 16:13 UTC (date -u). The current status is COUPLING_STATUS.
 WHY_COUPLE = ("APPROVED NEW LAW (owner 15:4x UTC; Study 22 coupling, manager 15:06): the package Dirac doublet's FIRST-ORDER potential "
               "(free Wilson-Dirac pairs, chiral transport / Yukawa / Wilson-Yukawa, FIX-i singlet-half lapse hop) carries the "
               "cosmic hand as ONE common factor (link-averaged on link terms); the hand does not feel it (one-way: THEOREM O "
               "row Theta). E1 entries are NOT scaled (integer grain: g_A = 1 on links).")
+COUPLING_STATUS = ("NEW LAW candidate, REJECTED by the owner (matter must not read the clock); measured runaway at L = 6 "
+                   "t ~ 1,547-1,554 and L = 4 t ~ 662 (Study 30); kept for the record")
 
 NEW_LAWS = (
     "WIND hand Th: per-node gear, no bare spring, rigid face coupling kTh, stiffness -g_w Delta Theta (owner decision 8)",
@@ -92,8 +103,6 @@ NEW_LAWS = (
     "matched shared-remainder choice pair (dp, dm) loaded by |psi|^2 of the Theta readers, with static Born loads "
     "(Lp, Lm) (owner decision 8; narrow rank-4 kind, owner decision 4)",
     "FIX-i (owner decision v8-1): coefficient choice lam_H = lam_L = 0 in gwb; NOT a new law (existing parameters)",
-    "Theta-coupled doublet (APPROVED, owner 15:4x UTC; DEFAULT): the doublet's first-order potential x the hand, one-way, "
-    "E1 not scaled, Theta0 = 64 (today's mass); approximate echoes",
 )
 EXCLUDED = {
     "zero-time hold (ZT)": "a posted schedule; its tensor generation is OPEN, and the owner rule forbids hand-placed "
@@ -105,6 +114,7 @@ EXCLUDED = {
     "package sectors as Theta readers": "integer grain + rank 5 / non-narrow (theta_reading_census); NOT possible",
     "cosmic matter <-> lapse (universality for the Theta readers)": "legal at rank 4 (Theta x F x b' is narrow) but a "
                                                                      "(C)-field defect and a new coupling: OPEN, not built",
+    "Theta-coupled doublet (matter reads the clock; opt-in couple_doublet=True)": COUPLING_STATUS,
 }
 
 
@@ -316,21 +326,20 @@ def theta_reading_census(tensor, theta0: int = THETA0_DEFAULT, exclude=(COSMIC_N
 # ======================================================================== the ONE composer
 def one_system(Q: int = Q_DEFAULT, *, fix_i: bool = True, cosmic: bool = True, route_b=False, families: int = 1,
                theta0: int | None = None, h: int | None = None, k_theta: int = K_THETA_DEFAULT,
-               g_w: int = G_W_DEFAULT, c_pair: int | None = None, couple_doublet: bool | None = None,
+               g_w: int = G_W_DEFAULT, c_pair: int | None = None, couple_doublet: bool = False,
                package_kw: dict | None = None) -> System:
     """THE composed ONE system (module docstring). fix_i=False rebuilds the earlier L2(b) gwb (contrast only: it runs
     away, s18/AGREE_STAB). route_b: False (default), True (layers/electroweak_b.compose_electroweak_b on the hands-OFF
     base; ONE v2) or a callable base -> System. families: 1 only (ONE v3 hook). cosmic=False: the package alone.
-    couple_doublet (APPROVED NEW LAW, owner 15:4x UTC, DEFAULT ON for route A; None = ON unless route_b): the doublet blocks
-    matter, matter2, chiral (matter entries only) and gwb are Theta-scaled (theta_scale_block) with theta0 = COUPLED_THETA0 =
-    64 (today's mass) unless given; E1 is not scaled. couple_doublet=False gives ONE v1 (block-diagonal). The coupling is not
-    designed for route B (explicit couple_doublet=True with route_b raises). theta0 None -> 64 when coupled, else
+    couple_doublet: False (DEFAULT) gives ONE v1 (block-diagonal, dynamics fingerprint 77f6d251...). True is OPT-IN ONLY
+    (COUPLING_STATUS: NEW LAW candidate, REJECTED by the owner; runaway measured in Study 30; kept for the record) and
+    builds Study 22's C1 bit-identically (593753fa...): the doublet blocks matter, matter2, chiral (matter entries only)
+    and gwb are Theta-scaled (theta_scale_block) with theta0 = COUPLED_THETA0 = 64 (today's mass) unless given; E1 is not
+    scaled. The coupling is not designed for route B (explicit couple_doublet=True with route_b raises). theta0 None -> 64 when coupled, else
     THETA0_DEFAULT; h None -> (D // 24) // theta0. Option C2: theta0=256 with package_kw={"mass": 4916 << 22} (a mass change
     the owner has NOT approved)."""
     if families != 1:
         raise NotImplementedError("ONE v3 (three families / Pauli copies / configuration space): NEW LAWs not approved")
-    if couple_doublet is None:
-        couple_doublet = not route_b
     if couple_doublet and route_b:
         raise NotImplementedError("the Theta coupling is designed for route A only (ONE v2 with route B: not designed)")
     if theta0 is None:
@@ -377,9 +386,9 @@ def one_system(Q: int = Q_DEFAULT, *, fix_i: bool = True, cosmic: bool = True, r
         if couple_doublet:
             blocks = [theta_scale_block(b, theta0, select=(None if b.name != "chiral" else _is_doublet_term))
                       if b.name in DOUBLET_BLOCKS else b for b in blocks]
-            one["coupling"] = ("COUPLED (APPROVED NEW LAW, default): the doublet's first-order potential carries the hand; "
-                               "E1 not scaled; the cosmic pairs are loaded by the cosmic matter only")
-            one["couple_doublet"] = {"theta0": theta0, "blocks": DOUBLET_BLOCKS, "why": WHY_COUPLE}
+            one["coupling"] = ("COUPLED (opt-in couple_doublet=True; " + COUPLING_STATUS + "): the doublet's first-order "
+                               "potential carries the hand; E1 not scaled; the cosmic pairs are loaded by the cosmic matter only")
+            one["couple_doublet"] = {"theta0": theta0, "blocks": DOUBLET_BLOCKS, "why": WHY_COUPLE, "status": COUPLING_STATUS}
         blocks.append(blk)
         one["cosmic_params"] = blk.params
         one["theta_readers"] = "the cosmic matter (M1, M2) only; no package sector (layers.one.theta_reading_census)"
@@ -388,6 +397,6 @@ def one_system(Q: int = Q_DEFAULT, *, fix_i: bool = True, cosmic: bool = True, r
     return System(Q, tuple(blocks), info)
 
 
-__all__ = ["theta_scale_block", "COUPLED_THETA0", "DOUBLET_BLOCKS", "WHY_COUPLE", "default_pair_c", "LOAD_HEADROOM", "COSMIC_NS", "COSMIC_GEARS", "THETA0_DEFAULT", "H_DEFAULT", "K_THETA_DEFAULT", "G_W_DEFAULT",
+__all__ = ["theta_scale_block", "COUPLED_THETA0", "DOUBLET_BLOCKS", "WHY_COUPLE", "COUPLING_STATUS", "default_pair_c", "LOAD_HEADROOM", "COSMIC_NS", "COSMIC_GEARS", "THETA0_DEFAULT", "H_DEFAULT", "K_THETA_DEFAULT", "G_W_DEFAULT",
            "A_COSMIC_DEFAULT", "ONE_VERSION", "NEW_LAWS", "EXCLUDED", "WHY_WIND", "WHY_LTHETA", "WHY_PAIR",
            "cosmic_params", "build_cosmic", "theta_reading_census", "one_system"]
