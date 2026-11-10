@@ -1,0 +1,84 @@
+{
+ "started": "Tue Nov 10 10:49:02 UTC 2026",
+ "Q": 8193,
+ "P": 1024,
+ "k": 4,
+ "reciprocal_L0_lapse": {
+  "ok": true,
+  "checked": 1927,
+  "designated": 0
+ },
+ "build_lapse_on_weightQ_L0": "refused: lapse: non-integer coefficient -8193/2048 for target 'bg.F' with factors (('ref.R00', (-1, 0, 0)), ('ref.R00', (0, 0, 0)",
+ "mode_R": {
+  "U0": 0.0498046875,
+  "w": {
+   "L0": 0.8847689508888761,
+   "weyl": 0.8848741299005404,
+   "atom": 0.5548995684170036
+  },
+  "w_at_U0=0": {
+   "L0": 0.8410684575256843,
+   "weyl": 0.8411777619486012,
+   "atom": 0.5856485285494138
+  },
+  "N_click_L0": 0.9502022191023376,
+  "N_pred_L0": 0.95020139143171,
+  "dev_L0": 8.710475853934696e-07,
+  "N_click_weyl": 0.9501962629113492,
+  "dev_weyl_vs_1-U": 1.0002273602705003e-06,
+  "universality_L0/weyl-1": 6.26837972417249e-06,
+  "N_click_atom(half-angle)": 0.9488890275192731,
+  "atom_vs_sqrt(1-2U)-1": -1.324167185901004e-07,
+  "atom_vs_L0 (U^2/2 expected)": -0.001382012751249051,
+  "meta": {
+   "mu": 4.0,
+   "F0": 102,
+   "U0": 0.0498046875,
+   "L0_channel": 35,
+   "stats": {
+    "int64_steps": 600,
+    "pyint_steps": 0,
+    "inverse_int64_steps": 40,
+    "inverse_pyint_steps": 0
+   }
+  }
+ },
+ "mode_W": {
+  "U0": 0.0498046875,
+  "w": {
+   "L0": 0.8848741290915558,
+   "weyl": 0.8848741299005404,
+   "atom": 0.5548995684170036
+  },
+  "w_at_U0=0": {
+   "L0": 0.8411777563772893,
+   "weyl": 0.8411777619486012,
+   "atom": 0.5856485285494138
+  },
+  "N_click_L0": 0.9501962579305027,
+  "N_pred_L0": 0.9501953125,
+  "dev_L0": 9.949854415935988e-07,
+  "N_click_weyl": 0.9501962629113492,
+  "dev_weyl_vs_1-U": 1.0002273602705003e-06,
+  "universality_L0/weyl-1": -5.241913347830973e-09,
+  "N_click_atom(half-angle)": 0.9488890275192731,
+  "atom_vs_sqrt(1-2U)-1": -1.324167185901004e-07,
+  "atom_vs_L0 (U^2/2 expected)": -0.0013757477998036505,
+  "meta": {
+   "mu": 4.0,
+   "F0": 102,
+   "U0": 0.0498046875,
+   "L0_channel": 35,
+   "stats": {
+    "int64_steps": 600,
+    "pyint_steps": 0,
+    "inverse_int64_steps": 40,
+    "inverse_pyint_steps": 0
+   }
+  }
+ },
+ "vacuum_fixed_10": true,
+ "rewind_20_exact": true,
+ "elapsed_s": 3.9226667881011963,
+ "written_utc": "Tue Nov 10 10:49:06 UTC 2026"
+}

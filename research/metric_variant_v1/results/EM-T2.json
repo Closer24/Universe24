@@ -1,0 +1,55 @@
+{
+ "rank": 3,
+ "stages": [
+  [
+   "em.A_x",
+   "em.A_y",
+   "em.A_z"
+  ],
+  [
+   "em.Phi"
+  ],
+  [
+   "matter.X0",
+   "matter.X1",
+   "matter.X2",
+   "matter.X3",
+   "matter.X4",
+   "matter.X5",
+   "matter.X6",
+   "matter.X7",
+   "matter.Y0",
+   "matter.Y1",
+   "matter.Y2",
+   "matter.Y3",
+   "matter.Y4",
+   "matter.Y5",
+   "matter.Y6",
+   "matter.Y7"
+  ]
+ ],
+ "stages_ok": true,
+ "phi_rounding_free": true,
+ "od3_max_gears_per_face": {
+  "0": 1,
+  "1": 2
+ },
+ "deviation_form": true,
+ "support_violations": 18,
+ "support_violations_are_A_stencil": true,
+ "census": {
+  "node": 186,
+  "link": 296,
+  "by_degree": [
+   0,
+   146,
+   336,
+   0
+  ]
+ },
+ "monomials": 482,
+ "G": 20,
+ "verdict": "PASS",
+ "test": "EM-T2",
+ "written": "Tue Nov 10 10:06:49 UTC 2026"
+}

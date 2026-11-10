@@ -1,0 +1,18 @@
+{
+ "2^8": {
+  "max|phi|/v after 1 update": 3.0517578125e-05,
+  "max|W|/A after 1 update": 0.0
+ },
+ "2^10": {
+  "max|phi|/v after 1 update": 0.000762939453125,
+  "max|W|/A after 1 update": 6.103515625e-05
+ },
+ "2^12": {
+  "max|phi|/v after 1 update": 0.0084686279296875,
+  "max|W|/A after 1 update": 0.0008544921875
+ },
+ "2^14": {
+  "max|phi|/v after 1 update": 0.1707611083984375,
+  "max|W|/A after 1 update": 0.0185699462890625
+ }
+}

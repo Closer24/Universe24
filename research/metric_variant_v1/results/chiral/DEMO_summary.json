@@ -1,0 +1,59 @@
+{
+ "started": "Tue Nov 10 12:07:05 UTC 2026",
+ "Q": 8589934593,
+ "L": 6,
+ "a_J_readout": {
+  "seed_report": {
+   "A": 4096,
+   "L": 6,
+   "float_projection_Rstar_error": 5.551115123125783e-16,
+   "exact_Rstar_fixed_matter": true,
+   "J_minus_fraction": 8.57646873838331e-08,
+   "N_J": -112287842977876231968,
+   "nonzero_integers": 6912
+  },
+  "runs": {
+   "J+ seed": {
+    "N_J(0)": -112287842977876231968,
+    "N_J(7)": -112293371013103687932,
+    "W_J per update": [
+     1479543275,
+     1479203495,
+     1479208889,
+     1479502350,
+     1479738386,
+     1479665339
+    ],
+    "W_J sign": [
+     1
+    ]
+   },
+   "J- image (Mp)": {
+    "N_J(0)": 112287842977876231968,
+    "N_J(7)": 112293371013103687932,
+    "W_J per update": [
+     -1479543275,
+     -1479203495,
+     -1479208889,
+     -1479502350,
+     -1479738386,
+     -1479665339
+    ],
+    "W_J sign": [
+     -1
+    ]
+   }
+  }
+ },
+ "b_click_CP_P": {
+  "CP": {
+   "official_clicks_in_image_run": 60237,
+   "unpaired_click_entries": 0
+  },
+  "P": {
+   "official_clicks_in_image_run": 57002,
+   "unpaired_click_entries": 104381
+  }
+ },
+ "finished": "Tue Nov 10 12:07:10 UTC 2026"
+}

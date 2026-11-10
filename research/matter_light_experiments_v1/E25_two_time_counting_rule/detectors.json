@@ -1,0 +1,1 @@
+{"note":"declared by r67 before decoding, from builder B's QM-B8 registration: the declared site is the gate channel (40, 40, 20, 1) of the triple gate; run 1's statistic k is its first gate click, the mirrored run's k-bar is its last gate click read back through the mirror (t -> T + 1 - t, kind -> -kind mod 3); T = 80","detectors":{"gate":{"sites":[[40,40,20]],"channels":[1]}}}

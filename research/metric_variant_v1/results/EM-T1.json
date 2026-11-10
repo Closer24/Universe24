@@ -1,0 +1,24 @@
+{
+ "verdict": "PASS",
+ "checks": {
+  "P_antisymmetric": true,
+  "W0_symmetric_involution": true,
+  "J_complex_structure": true,
+  "J_commutes_with_P_W0": true,
+  "Jp_complex_structure": true,
+  "Jp_commutes_with_P_W0": true,
+  "J_Jp_commute": true,
+  "V_symmetric": true,
+  "PJp_symmetric": true,
+  "couplings_commute_with_J_and_Jp": true,
+  "signed_permutations": true,
+  "K_anticommutes_J": true,
+  "K_commutes_Jp_P_W0": true,
+  "K_squared_minus_one_Kramers": true,
+  "C_flips_Jp": true,
+  "C_commutes_J_P_W0": true,
+  "single_block_commutant_J_only": true
+ },
+ "test": "EM-T1",
+ "written": "Tue Nov 10 10:06:49 UTC 2026"
+}

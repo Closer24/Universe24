@@ -1,0 +1,67 @@
+{
+ "beta_form": "detuned",
+ "L": 5,
+ "c2": true,
+ "l0seed": true,
+ "A_l0": 1024,
+ "c2_params": {
+  "A": 16384,
+  "kappa": 524288,
+  "lam": 2,
+  "port_weight": 8589934592,
+  "note": "late ~2e4-update rounding-heating limit common to both sign classes (Study 7); remedy: scale the spring or A with the run length"
+ },
+ "A": 65536,
+ "x0": [
+  2,
+  2,
+  2
+ ],
+ "T": 600,
+ "status": "BOUNDED",
+ "max_abs_G_pi_overall": 0.44,
+ "final": {
+  "t": 600,
+  "max_abs_G_pi": 0.44,
+  "U_mean": 0.01303778076171875,
+  "max_bits": 24,
+  "seconds": 6.6
+ },
+ "samples": [
+  {
+   "t": 0,
+   "max_abs_G_pi": 0.0,
+   "U_mean": 0.0,
+   "max_bits": 17,
+   "seconds": 0.3
+  },
+  {
+   "t": 200,
+   "max_abs_G_pi": 0.0,
+   "U_mean": 0.0013615264892578125,
+   "max_bits": 23,
+   "seconds": 2.5
+  },
+  {
+   "t": 400,
+   "max_abs_G_pi": 0.08,
+   "U_mean": 0.0055556526184082035,
+   "max_bits": 24,
+   "seconds": 4.6
+  },
+  {
+   "t": 600,
+   "max_abs_G_pi": 0.44,
+   "U_mean": 0.01303778076171875,
+   "max_bits": 24,
+   "seconds": 6.6
+  }
+ ],
+ "engine_stats": {
+  "int64_steps": 600,
+  "pyint_steps": 0,
+  "inverse_int64_steps": 0,
+  "inverse_pyint_steps": 0
+ },
+ "stamp_utc": "Tue Nov 10 13:14:59 UTC 2026"
+}

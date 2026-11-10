@@ -1,0 +1,77 @@
+{
+ "drive": {
+  "w": 5,
+  "c": 1,
+  "K_per_update": 10,
+  "r+ == r- every update": true,
+  "visited_over_24_birth_times": true,
+  "both_detectors_identical": true,
+  "rewind": true,
+  "recip": {
+   "ok": true,
+   "checked": 7,
+   "designated": 20,
+   "justifications": [
+    "common drive: the DC source sets the pair's shared remainder (token born from the vacuum, Study 5 B6/T4); it does not read the detectors",
+    "observer detector: records without back-action (Study 5 D3)"
+   ],
+   "violations": 0,
+   "two_time_skipped": 0,
+   "rank": 3,
+   "support_violations": 0,
+   "a_read_monomials": []
+  }
+ },
+ "unstaged": {
+  "r+ == r- every update": true,
+  "exactly one click every update": true,
+  "N+ over any D consecutive updates == 6 I+": true,
+  "rows": [
+   {
+    "s": 0,
+    "I+": 8,
+    "P(+) over D readout times (every r0)": [
+     "1"
+    ]
+   },
+   {
+    "s": 1,
+    "I+": 6,
+    "P(+) over D readout times (every r0)": [
+     "3/4"
+    ]
+   },
+   {
+    "s": 2,
+    "I+": 2,
+    "P(+) over D readout times (every r0)": [
+     "1/4"
+    ]
+   },
+   {
+    "s": 3,
+    "I+": 0,
+    "P(+) over D readout times (every r0)": [
+     "0"
+    ]
+   },
+   {
+    "s": 4,
+    "I+": 2,
+    "P(+) over D readout times (every r0)": [
+     "1/4"
+    ]
+   },
+   {
+    "s": 5,
+    "I+": 6,
+    "P(+) over D readout times (every r0)": [
+     "3/4"
+    ]
+   }
+  ],
+  "rewind": true
+ },
+ "_started": "Tue Nov 10 10:34:21 UTC 2026",
+ "_finished": "Tue Nov 10 10:34:21 UTC 2026"
+}

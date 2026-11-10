@@ -1,0 +1,50 @@
+{
+ "Q": 33554433,
+ "G": 276,
+ "monomials": 6393,
+ "reciprocal": true,
+ "designated": 0,
+ "c2_or_c1_gears": 0,
+ "q_lattice_violations": 0,
+ "lam": [
+  4,
+  4,
+  4
+ ],
+ "vacuum_fixed_20": true,
+ "gauss": {
+  "su2": {
+   "checks": 810,
+   "failures": 0,
+   "max_abs_J": 322312609108512,
+   "max_abs_remainder_term": 2734015200840
+  },
+  "su3": {
+   "checks": 2430,
+   "failures": 0,
+   "max_abs_J": 495182296461006,
+   "max_abs_remainder_term": 5118930080748
+  },
+  "u1": {
+   "checks": 270,
+   "failures": 0,
+   "max_abs_J": 248857794521820,
+   "max_abs_remainder_term": 2350085378454
+  }
+ },
+ "rewind": true,
+ "joint_mirror": true,
+ "joint_mirror_fixes_vacuum": true,
+ "local_covariance_all_three": true,
+ "reference_sector_unchanged_by_gauge_layers": {
+  "steps": 20,
+  "base_mismatches": 0,
+  "extra_deviations": 0,
+  "frozen": true,
+  "G_base": 48,
+  "G_full": 276,
+  "monomials_base": 288,
+  "monomials_full": 6393
+ },
+ "stamp_utc": "Tue Nov 10 10:34:01 UTC 2026"
+}

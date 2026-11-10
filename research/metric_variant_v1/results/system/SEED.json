@@ -1,0 +1,290 @@
+{
+ "Q": 8589934593,
+ "L": 6,
+ "A": 4096,
+ "x0": [
+  2,
+  2,
+  2
+ ],
+ "default": {
+  "body_signs": [
+   1,
+   -1,
+   1
+  ],
+  "l0_offset": 8589934592,
+  "l0_lapse": "W",
+  "em": "e1d",
+  "lapse": "wave"
+ },
+ "SD1_SD2_SD3": {
+  "S2*": {
+   "non_vacuum_integers": 2,
+   "lorenz_C_nonzero": 0,
+   "charge_density_nonzero": 0,
+   "E1_after_one_update_nonvacuum": 0,
+   "gauss_Y_nonzero": 0,
+   "R*_fixed": true,
+   "rewind10": true
+  },
+  "node_R*": {
+   "non_vacuum_integers": 2,
+   "lorenz_C_nonzero": 0,
+   "charge_density_nonzero": 0,
+   "E1_after_one_update_nonvacuum": 0,
+   "gauss_Y_nonzero": 0,
+   "R*_fixed": true,
+   "rewind10": true
+  },
+  "L0_rstar_e0": {
+   "non_vacuum_integers": 16,
+   "lorenz_C_nonzero": 0,
+   "charge_density_nonzero": 0,
+   "E1_after_one_update_nonvacuum": 0,
+   "gauss_Y_nonzero": 0,
+   "R*_fixed": true,
+   "rewind10": true
+  },
+  "L0_rstar_band": {
+   "non_vacuum_integers": 96,
+   "lorenz_C_nonzero": 0,
+   "charge_density_nonzero": 0,
+   "E1_after_one_update_nonvacuum": 0,
+   "gauss_Y_nonzero": 0,
+   "R*_fixed": true,
+   "rewind10": true
+  }
+ },
+ "SD6_bounce_full_default": {
+  "S2*": {
+   "F^-t = R* F^t (with L0 relabelling), t = 1..6": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "OLD declared R* (no relabelling), t = 1..6 (report)": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ]
+  },
+  "L0_rstar_e0": {
+   "F^-t = R* F^t (with L0 relabelling), t = 1..6": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "OLD declared R* (no relabelling), t = 1..6 (report)": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ]
+  },
+  "L0_rstar_band": {
+   "F^-t = R* F^t (with L0 relabelling), t = 1..6": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "OLD declared R* (no relabelling), t = 1..6 (report)": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ]
+  },
+  "L0_one_channel_e0 (report)": {
+   "R*_fixed_with_relabelling": false
+  },
+  "L0_relabelling": {
+   "order": 8,
+   "fixed_dim": 6,
+   "n_solutions": 8,
+   "P": [
+    1,
+    33,
+    35,
+    7,
+    9,
+    11,
+    12,
+    0,
+    42,
+    37,
+    36,
+    38,
+    17,
+    40,
+    23,
+    25,
+    13,
+    10,
+    28,
+    29,
+    24,
+    31,
+    32,
+    3,
+    5,
+    41,
+    21,
+    20,
+    4,
+    15,
+    39,
+    6,
+    16,
+    43,
+    44,
+    27,
+    26,
+    46,
+    2,
+    47,
+    8,
+    30,
+    45,
+    14,
+    18,
+    22,
+    34,
+    19
+   ],
+   "chi": [
+    -1,
+    1,
+    1,
+    -1,
+    -1,
+    -1,
+    -1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ]
+  },
+  "L0_rstar_band_index": 2
+ },
+ "SD7_handsON": {
+  "S2*": {
+   "R*_on_fixed": true,
+   "F^-t = R*_on F^t, t = 1..6": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ]
+  },
+  "L0_rstar_e0 (report)": {
+   "R*_on_fixed": true,
+   "F^-t = R*_on F^t, t = 1..6": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ]
+  }
+ },
+ "REPORT_handsON_S2star": {
+  "R*_fixed": true,
+  "F^-t = R* F^t, t = 1..3 (integrator R*, no chiral maps)": [
+   true,
+   false,
+   false
+  ],
+  "legal_lorenz_C_nonzero": 0,
+  "rewind10": true
+ },
+ "SD4_bounce_matter_E1": {
+  "S2*": {
+   "R*_fixed": true,
+   "F^-t = R* F^t, t = 1..6": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ]
+  },
+  "node_R*": {
+   "R*_fixed": true,
+   "F^-t = R* F^t, t = 1..6": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ]
+  }
+ },
+ "SD5": {
+  "bgk_static_5": true,
+  "offset_rows_changed": [
+   "metric.h00"
+  ]
+ },
+ "seconds": 24.7,
+ "stamp_utc": "Tue Nov 10 13:27:55 UTC 2026"
+}

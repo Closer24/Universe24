@@ -1,0 +1,60 @@
+{
+ "lie_nonzero_nodes": {
+  "t1": 0,
+  "t2": 0,
+  "t3": 0,
+  "Y": 0
+ },
+ "noether": {
+  "t1": {
+   "checks": 162,
+   "failures": 0,
+   "max_abs_J2": 10596041988162083334
+  },
+  "t2": {
+   "checks": 162,
+   "failures": 0,
+   "max_abs_J2": 5897914838913174822
+  },
+  "t3": {
+   "checks": 162,
+   "failures": 0,
+   "max_abs_J2": 8767455882105987414
+  },
+  "Y": {
+   "checks": 162,
+   "failures": 0,
+   "max_abs_J2": 19527746198599384794
+  }
+ },
+ "continuous_gauss_jitter": {
+  "t1": {
+   "max_abs_remainder_term": 19131244627491810,
+   "max_abs_J2": 10596041988162083334,
+   "relative": 0.0018055085709234892
+  },
+  "t2": {
+   "max_abs_remainder_term": 23862838299354000,
+   "max_abs_J2": 5897914838913174822,
+   "relative": 0.004045978782520243
+  },
+  "t3": {
+   "max_abs_remainder_term": 22050705697614720,
+   "max_abs_J2": 8767455882105987414,
+   "relative": 0.0025150632058062923
+  },
+  "Y": {
+   "max_abs_remainder_term": 32838254797149468,
+   "max_abs_J2": 19527746198599384794,
+   "relative": 0.001681620319271907
+  }
+ },
+ "negative_controls_Y": {
+  "e_R charge 1": 27,
+  "B not rotated": 27,
+  "Xi phase omitted": 27
+ },
+ "nodes": 27,
+ "written": "Tue Nov 10 15:06:36 UTC 2026",
+ "Q": 8589934593
+}

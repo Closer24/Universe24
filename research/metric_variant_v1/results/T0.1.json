@@ -1,0 +1,77 @@
+{
+ "test": "T0.1",
+ "written_utc": "Tue Nov 10 10:10:40 UTC 2026",
+ "L": 5,
+ "steps": 25,
+ "states": [
+  {
+   "name": "dense_seed1",
+   "component_comparisons": 450000,
+   "mismatches": 0,
+   "official_clicks": 148093,
+   "click_step_mismatches": 0,
+   "raw_rows_dropped_as_unchanged": 1,
+   "inverse_vs_rewind_mismatches": 0
+  },
+  {
+   "name": "dense_seed2",
+   "component_comparisons": 450000,
+   "mismatches": 0,
+   "official_clicks": 148193,
+   "click_step_mismatches": 0,
+   "raw_rows_dropped_as_unchanged": 4,
+   "inverse_vs_rewind_mismatches": 0
+  },
+  {
+   "name": "dense_seed3",
+   "component_comparisons": 450000,
+   "mismatches": 0,
+   "official_clicks": 148244,
+   "click_step_mismatches": 0,
+   "raw_rows_dropped_as_unchanged": 2,
+   "inverse_vs_rewind_mismatches": 0
+  },
+  {
+   "name": "dense_big2^80",
+   "component_comparisons": 450000,
+   "mismatches": 0,
+   "official_clicks": 150000,
+   "click_step_mismatches": 0,
+   "raw_rows_dropped_as_unchanged": 0,
+   "inverse_vs_rewind_mismatches": 0
+  },
+  {
+   "name": "sparse_seed4",
+   "component_comparisons": 450000,
+   "mismatches": 0,
+   "official_clicks": 105539,
+   "click_step_mismatches": 0,
+   "raw_rows_dropped_as_unchanged": 414,
+   "inverse_vs_rewind_mismatches": 0
+  },
+  {
+   "name": "sparse_seed5",
+   "component_comparisons": 450000,
+   "mismatches": 0,
+   "official_clicks": 109558,
+   "click_step_mismatches": 0,
+   "raw_rows_dropped_as_unchanged": 372,
+   "inverse_vs_rewind_mismatches": 0
+  },
+  {
+   "name": "sparse_bg005_seed6",
+   "component_comparisons": 450000,
+   "mismatches": 0,
+   "official_clicks": 129416,
+   "click_step_mismatches": 0,
+   "raw_rows_dropped_as_unchanged": 792,
+   "inverse_vs_rewind_mismatches": 0
+  }
+ ],
+ "engine_stats": {
+  "int64_steps": 150,
+  "pyint_steps": 25,
+  "inverse_int64_steps": 150,
+  "inverse_pyint_steps": 25
+ }
+}

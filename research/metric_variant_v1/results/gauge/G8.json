@@ -1,0 +1,55 @@
+{
+ "ZQ8": {
+  "gauss": {
+   "checks": 810,
+   "failures": 0
+  },
+  "rewind": true,
+  "M": true,
+  "max_abs_value_bits": 17404,
+  "max_bits_per_update": [
+   1,
+   2,
+   4,
+   9,
+   25,
+   73,
+   216,
+   646,
+   1935,
+   5802,
+   17404
+  ],
+  "local_Q8_seed1": true,
+  "local_Q8_seed2": true
+ },
+ "H": {
+  "gauss": {
+   "checks": 810,
+   "failures": 0
+  },
+  "rewind": true,
+  "M": true,
+  "max_abs_value_bits": 25859,
+  "max_bits_per_update": [
+   1,
+   2,
+   4,
+   12,
+   36,
+   107,
+   320,
+   958,
+   2874,
+   8620,
+   25859
+  ],
+  "global_i": true,
+  "global_j": true,
+  "global_k": true,
+  "global_-1": true,
+  "local_centre": true,
+  "local_noncentral_integer": false
+ },
+ "stamp_utc": "Tue Nov 10 10:34:16 UTC 2026"
+}

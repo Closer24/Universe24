@@ -1,0 +1,17 @@
+{
+ "vacuum_fixed_20_updates": true,
+ "updates_with_change": 0,
+ "frozen_equivalence": {
+  "steps": 20,
+  "base_mismatches": 0,
+  "extra_deviations": 0,
+  "frozen": true,
+  "G_base": 48,
+  "G_full": 68,
+  "monomials_base": 288,
+  "monomials_full": 770
+ },
+ "verdict": "PASS",
+ "test": "EM-T4",
+ "written": "Tue Nov 10 10:06:49 UTC 2026"
+}

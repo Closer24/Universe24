@@ -1,0 +1,102 @@
+{
+ "decoder": {
+  "code_sha256": {
+   "config_v1.1.json": "3b1e104b7e77d0f28fea0fc594625b572bee4b59529730edbc8f3b021d5f6e6d",
+   "correlate.py": "d4860ec57e1ba92484e9e49f3ad0f6eb43a325435486929ad2c2bee7597cad51",
+   "decoder.py": "36f8b088e104b9223150150b120a38a080d848b8b42ab0daeee96d146210792c",
+   "decoder_v11.py": "0a4984e5ef2fdd0884c2af19797f52d9d014a705fe6784c499608b9d5bdc12a3",
+   "layers.py": "a68412f653a0920432c0e63aeb2feecc7be29e9bf2602aefb4e575d04da3ea2b"
+  },
+  "version": "1.1"
+ },
+ "set_C_coverage_posthoc": {
+  "covered": {
+   "n": 33,
+   "of": 34,
+   "rate": 0.971
+  },
+  "not_covered": [
+   {
+    "case": "crystal_g17_36",
+    "covered": false,
+    "what": "r06 crystal (prepared): own clicks = clicks off the glider line y=z=14"
+   }
+  ],
+  "rule": "dark object at rest covered by some l = 0 source site within Chebyshev max(1, own radius) (many-to-one)"
+ },
+ "set_D": {
+  "cases": [
+   {
+    "d": 6,
+    "found_composite": true,
+    "found_period": true,
+    "sources": [
+     [
+      "S0",
+      16,
+      5,
+      true,
+      [
+       "internal motion"
+      ],
+      "oscillating",
+      4.0
+     ]
+    ],
+    "tracks": {},
+    "truth_period": 16
+   },
+   {
+    "d": 10,
+    "found_composite": true,
+    "found_period": true,
+    "sources": [
+     [
+      "S0",
+      24,
+      9,
+      true,
+      [
+       "internal motion"
+      ],
+      "oscillating",
+      8.0
+     ]
+    ],
+    "tracks": {},
+    "truth_period": 24
+   },
+   {
+    "d": 14,
+    "found_composite": true,
+    "found_period": true,
+    "sources": [
+     [
+      "S0",
+      32,
+      13,
+      true,
+      [
+       "internal motion"
+      ],
+      "oscillating",
+      12.0
+     ]
+    ],
+    "tracks": {},
+    "truth_period": 32
+   }
+  ],
+  "period": {
+   "n": 3,
+   "of": 3,
+   "rate": 1.0
+  },
+  "period_and_composite": {
+   "n": 3,
+   "of": 3,
+   "rate": 1.0
+  },
+  "pre_registered": "validation/PREREGISTRATION.md (set D, 01:40)"
+ }
+}

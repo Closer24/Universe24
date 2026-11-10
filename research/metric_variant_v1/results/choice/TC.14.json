@@ -1,0 +1,195 @@
+{
+ "audits": [
+  {
+   "experiment": "router opposite",
+   "designated_terms": 18,
+   "force_terms": 6,
+   "designated_coinciding_with_force": [],
+   "partners_present": [],
+   "rank4_designated": 0,
+   "rank4_purposes": []
+  },
+  {
+   "experiment": "router mirror",
+   "designated_terms": 18,
+   "force_terms": 6,
+   "designated_coinciding_with_force": [],
+   "partners_present": [],
+   "rank4_designated": 0,
+   "rank4_purposes": []
+  },
+  {
+   "experiment": "token + drive",
+   "designated_terms": 20,
+   "force_terms": 7,
+   "designated_coinciding_with_force": [],
+   "partners_present": [],
+   "rank4_designated": 0,
+   "rank4_purposes": []
+  },
+  {
+   "experiment": "sequential",
+   "designated_terms": 1,
+   "force_terms": 2,
+   "designated_coinciding_with_force": [],
+   "partners_present": [],
+   "rank4_designated": 0,
+   "rank4_purposes": []
+  },
+  {
+   "experiment": "parallel",
+   "designated_terms": 3,
+   "force_terms": 6,
+   "designated_coinciding_with_force": [],
+   "partners_present": [],
+   "rank4_designated": 0,
+   "rank4_purposes": []
+  },
+  {
+   "experiment": "F7",
+   "designated_terms": 48,
+   "force_terms": 23,
+   "designated_coinciding_with_force": [],
+   "partners_present": [],
+   "rank4_designated": 18,
+   "rank4_purposes": [
+    "choice-front imprint (F7): P2R's two-update kick q*(b_C - a_C), -q*a_C, gated by the photon marker on the neighbour link; one-way, the front does not push back on Alice's detectors or setting clock"
+   ]
+  },
+  {
+   "experiment": "F7 gated Bob (odd Q = 3)",
+   "designated_terms": 48,
+   "force_terms": 25,
+   "designated_coinciding_with_force": [],
+   "partners_present": [],
+   "rank4_designated": 30,
+   "rank4_purposes": [
+    "choice-front imprint (F7): P2R's two-update kick q*(b_C - a_C), -q*a_C, gated by the photon marker on the neighbour link; one-way, the front does not push back on Alice's detectors or setting clock",
+    "observer detector: records without back-action (Study 5 D3); read once, gated by a flash (rank 4)"
+   ]
+  },
+  {
+   "experiment": "all-or-nothing",
+   "designated_terms": 2,
+   "force_terms": 6,
+   "designated_coinciding_with_force": [],
+   "partners_present": [
+    {
+     "designated": "u[arm1.X0] += 15 * ...",
+     "partner": "u[W.W0] += 3 * b[arm1.X0](0, 0, 0)",
+     "partner_designated": true
+    },
+    {
+     "designated": "u[W.W0] += 3 * ...",
+     "partner": "u[arm1.X0] += 15 * b[W.W0](0, 0, 0)",
+     "partner_designated": true
+    }
+   ],
+   "rank4_designated": 0,
+   "rank4_purposes": []
+  },
+  {
+   "experiment": "M2-2 N=6",
+   "designated_terms": 30,
+   "force_terms": 8,
+   "designated_coinciding_with_force": [],
+   "partners_present": [
+    {
+     "designated": "u[arm1.X0] += 120 * ...",
+     "partner": "u[W.W0] += 24 * b[arm1.X0](0, 0, 0)",
+     "partner_designated": true
+    },
+    {
+     "designated": "u[arm1.X0] += 120 * ...",
+     "partner": "u[W.W3] += 24 * b[arm1.X0](0, 0, 0)",
+     "partner_designated": true
+    },
+    {
+     "designated": "u[arm1.X1] += 120 * ...",
+     "partner": "u[W.W1] += 24 * b[arm1.X1](0, 0, 0)",
+     "partner_designated": true
+    },
+    {
+     "designated": "u[arm1.X1] += 120 * ...",
+     "partner": "u[W.W4] += 24 * b[arm1.X1](0, 0, 0)",
+     "partner_designated": true
+    },
+    {
+     "designated": "u[arm1.X2] += 120 * ...",
+     "partner": "u[W.W2] += 24 * b[arm1.X2](0, 0, 0)",
+     "partner_designated": true
+    },
+    {
+     "designated": "u[arm1.X2] += 120 * ...",
+     "partner": "u[W.W5] += 24 * b[arm1.X2](0, 0, 0)",
+     "partner_designated": true
+    },
+    {
+     "designated": "u[W.W0] += 24 * ...",
+     "partner": "u[arm1.X0] += 120 * b[W.W0](0, 0, 0)",
+     "partner_designated": true
+    },
+    {
+     "designated": "u[W.W1] += 24 * ...",
+     "partner": "u[arm1.X1] += 120 * b[W.W1](0, 0, 0)",
+     "partner_designated": true
+    },
+    {
+     "designated": "u[W.W2] += 24 * ...",
+     "partner": "u[arm1.X2] += 120 * b[W.W2](0, 0, 0)",
+     "partner_designated": true
+    },
+    {
+     "designated": "u[W.W3] += 24 * ...",
+     "partner": "u[arm1.X0] += 120 * b[W.W3](0, 0, 0)",
+     "partner_designated": true
+    },
+    {
+     "designated": "u[W.W4] += 24 * ...",
+     "partner": "u[arm1.X1] += 120 * b[W.W4](0, 0, 0)",
+     "partner_designated": true
+    },
+    {
+     "designated": "u[W.W5] += 24 * ...",
+     "partner": "u[arm1.X2] += 120 * b[W.W5](0, 0, 0)",
+     "partner_designated": true
+    }
+   ],
+   "rank4_designated": 18,
+   "rank4_purposes": [
+    "observer detector: records without back-action (Study 5 D3); read once, gated by a flash (rank 4)"
+   ]
+  },
+  {
+   "experiment": "D12b c=1",
+   "designated_terms": 28,
+   "force_terms": 0,
+   "designated_coinciding_with_force": [],
+   "partners_present": [],
+   "rank4_designated": 24,
+   "rank4_purposes": [
+    "observer detector with the D12b gated readout of the kicked arm (P_dec, rank 4): records without back-action on the arms (Study 5 D3); the 90-degree kick is in the readout (P_dec's declared equivalence)"
+   ]
+  },
+  {
+   "experiment": "back-action g=6",
+   "designated_terms": 0,
+   "force_terms": 90,
+   "designated_coinciding_with_force": [],
+   "partners_present": [],
+   "rank4_designated": 0,
+   "rank4_purposes": []
+  },
+  {
+   "experiment": "back-action complete spring lam=1",
+   "designated_terms": 0,
+   "force_terms": 140,
+   "designated_coinciding_with_force": [],
+   "partners_present": [],
+   "rank4_designated": 0,
+   "rank4_purposes": []
+  }
+ ],
+ "_started": "Tue Nov 10 10:36:39 UTC 2026",
+ "_finished": "Tue Nov 10 10:36:39 UTC 2026"
+}

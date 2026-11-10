@@ -2,8 +2,9 @@
 
 **Status:** the reference engine implements the fixed body-action choice
 `m=(0,1,3)` with eight sign triples. The broader axial-action family below is a
-separate algebraic candidate, not an implemented or simulated extension. This
-document changes no engine, coupling, preparation or recorded result.
+separate algebraic candidate that the reference engine does not implement; an
+explicitly separate executor is described [at the end](#separate-candidate-executor).
+This document changes no engine, coupling, preparation or recorded result.
 
 ## State, preparation and structural choices
 
@@ -111,3 +112,15 @@ preparation; they do not prove that assembled components retain their intended
 behavior. A change of body actions belongs to an explicitly named candidate
 with its own provenance and tests. The [reference contract](../AGENTS.md) and
 [current model](MODEL.md) remain unchanged.
+
+## Separate candidate executor
+
+[`research/coupling_variants_v1`](../research/coupling_variants_v1/README.md) runs any
+reciprocal, 2O-covariant table with unit weights as an explicitly separate variant.
+Covariance, `P[R(h)d]` acting on `h g` as `h` acts on `P[d]`, holds exactly for the
+body-action form `f_d(g)=g B_v`, `w_d(g)=w_v`. Reciprocity then pairs each body direction
+`v` with `-R(B_v)^(-1)v != v`. This gives 15 pairings with 16 choices per pair:
+61,440 labelled tables, of which the axial pairing contributes the 4,096 above. The
+executor imports `rule3.forward` and `rule3.inverse`, equals the engine bit for bit on
+the eight reference tables and labels every other table. It derives no physical
+selection of any member.

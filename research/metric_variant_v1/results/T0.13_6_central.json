@@ -1,0 +1,40 @@
+{
+ "test": "T0.13_6_central",
+ "written_utc": "Tue Nov 10 10:10:54 UTC 2026",
+ "KM_complex_linear": {
+  "n": 12,
+  "states": 4,
+  "identity": 0,
+  "central": {
+   "J": 4
+  },
+  "failures": 0,
+  "ok": true
+ },
+ "M": {
+  "n": 12,
+  "states": 4,
+  "identity": 4,
+  "central": {},
+  "failures": 0,
+  "ok": true
+ },
+ "KM_without_central": {
+  "n": 12,
+  "states": 4,
+  "identity": 0,
+  "central": {},
+  "failures": 4,
+  "ok": false
+ },
+ "KM_real_linear_control": {
+  "n": 12,
+  "states": 4,
+  "identity": 0,
+  "central": {
+   "J": 0
+  },
+  "failures": 4,
+  "ok": false
+ }
+}

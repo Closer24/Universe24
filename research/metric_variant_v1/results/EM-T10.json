@@ -1,0 +1,22 @@
+{
+ "reciprocity_ok": true,
+ "designated": 0,
+ "carrier_noether_failures": 0,
+ "node_updates": 2560,
+ "kramers_reversor": {
+  "n": 40,
+  "states": 1,
+  "identity": 0,
+  "central": {
+   "Jp": 1
+  },
+  "failures": 0,
+  "ok": true
+ },
+ "vacuum_fixed": true,
+ "rewind_exact": true,
+ "od3_max": 2,
+ "verdict": "PASS",
+ "test": "EM-T10",
+ "written": "Tue Nov 10 10:06:49 UTC 2026"
+}

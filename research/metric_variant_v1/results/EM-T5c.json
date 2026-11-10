@@ -1,0 +1,10 @@
+{
+ "peierls_continuity_failures": 4092,
+ "peierls_gauss_failures": 4092,
+ "drop_R_failures": 4264,
+ "drop_rA_failures": 4264,
+ "node_updates": 4320,
+ "verdict": "PASS",
+ "test": "EM-T5c",
+ "written": "Tue Nov 10 10:06:47 UTC 2026"
+}

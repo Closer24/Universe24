@@ -1,0 +1,212 @@
+{
+ "test": "G2",
+ "written_utc": "Tue Nov 10 10:37:44 UTC 2026",
+ "S_GR/small": {
+  "steps": 20,
+  "returned_exactly": true,
+  "inverse_mismatches": 0,
+  "stages": 1,
+  "max_bits_final": 7,
+  "stats": {
+   "int64_steps": 20,
+   "pyint_steps": 0,
+   "inverse_int64_steps": 20,
+   "inverse_pyint_steps": 0
+  }
+ },
+ "S_GR/registered_amplitudes_5": {
+  "steps": 5,
+  "returned_exactly": true,
+  "inverse_mismatches": 0,
+  "stages": 1,
+  "max_bits_final": 270,
+  "stats": {
+   "int64_steps": 2,
+   "pyint_steps": 3,
+   "inverse_int64_steps": 2,
+   "inverse_pyint_steps": 3
+  }
+ },
+ "S_1911/small": {
+  "steps": 20,
+  "returned_exactly": true,
+  "inverse_mismatches": 0,
+  "stages": 1,
+  "max_bits_final": 6,
+  "stats": {
+   "int64_steps": 20,
+   "pyint_steps": 0,
+   "inverse_int64_steps": 20,
+   "inverse_pyint_steps": 0
+  }
+ },
+ "S_1911/registered_amplitudes_5": {
+  "steps": 5,
+  "returned_exactly": true,
+  "inverse_mismatches": 0,
+  "stages": 1,
+  "max_bits_final": 249,
+  "stats": {
+   "int64_steps": 2,
+   "pyint_steps": 3,
+   "inverse_int64_steps": 2,
+   "inverse_pyint_steps": 3
+  }
+ },
+ "S_beta_recip/small": {
+  "steps": 20,
+  "returned_exactly": true,
+  "inverse_mismatches": 0,
+  "stages": 1,
+  "max_bits_final": 7,
+  "stats": {
+   "int64_steps": 20,
+   "pyint_steps": 0,
+   "inverse_int64_steps": 20,
+   "inverse_pyint_steps": 0
+  }
+ },
+ "S_beta_recip/registered_amplitudes_5": {
+  "steps": 5,
+  "returned_exactly": true,
+  "inverse_mismatches": 0,
+  "stages": 1,
+  "max_bits_final": 325,
+  "stats": {
+   "int64_steps": 1,
+   "pyint_steps": 4,
+   "inverse_int64_steps": 1,
+   "inverse_pyint_steps": 4
+  }
+ },
+ "S_beta_oneway/small": {
+  "steps": 20,
+  "returned_exactly": true,
+  "inverse_mismatches": 0,
+  "stages": 1,
+  "max_bits_final": 7,
+  "stats": {
+   "int64_steps": 20,
+   "pyint_steps": 0,
+   "inverse_int64_steps": 20,
+   "inverse_pyint_steps": 0
+  }
+ },
+ "S_beta_oneway/registered_amplitudes_5": {
+  "steps": 5,
+  "returned_exactly": true,
+  "inverse_mismatches": 0,
+  "stages": 1,
+  "max_bits_final": 321,
+  "stats": {
+   "int64_steps": 1,
+   "pyint_steps": 4,
+   "inverse_int64_steps": 1,
+   "inverse_pyint_steps": 4
+  }
+ },
+ "S_beta_rank4/small": {
+  "steps": 8,
+  "returned_exactly": true,
+  "inverse_mismatches": 0,
+  "stages": 1,
+  "max_bits_final": 6,
+  "stats": {
+   "int64_steps": 8,
+   "pyint_steps": 0,
+   "inverse_int64_steps": 8,
+   "inverse_pyint_steps": 0
+  }
+ },
+ "S_beta_rank4/registered_amplitudes_5": {
+  "steps": 5,
+  "returned_exactly": true,
+  "inverse_mismatches": 0,
+  "stages": 1,
+  "max_bits_final": 2095,
+  "stats": {
+   "int64_steps": 1,
+   "pyint_steps": 4,
+   "inverse_int64_steps": 1,
+   "inverse_pyint_steps": 4
+  }
+ },
+ "ND_rank3/small": {
+  "steps": 8,
+  "returned_exactly": true,
+  "inverse_mismatches": 0,
+  "stages": 1,
+  "max_bits_final": 86,
+  "stats": {
+   "int64_steps": 6,
+   "pyint_steps": 2,
+   "inverse_int64_steps": 6,
+   "inverse_pyint_steps": 2
+  }
+ },
+ "ND_rank3/registered_amplitudes_5": {
+  "steps": 5,
+  "returned_exactly": true,
+  "inverse_mismatches": 0,
+  "stages": 1,
+  "max_bits_final": 27,
+  "stats": {
+   "int64_steps": 5,
+   "pyint_steps": 0,
+   "inverse_int64_steps": 5,
+   "inverse_pyint_steps": 0
+  }
+ },
+ "ND_rank4/small": {
+  "steps": 8,
+  "returned_exactly": true,
+  "inverse_mismatches": 0,
+  "stages": 1,
+  "max_bits_final": 116,
+  "stats": {
+   "int64_steps": 6,
+   "pyint_steps": 2,
+   "inverse_int64_steps": 6,
+   "inverse_pyint_steps": 2
+  }
+ },
+ "ND_rank4/registered_amplitudes_5": {
+  "steps": 5,
+  "returned_exactly": true,
+  "inverse_mismatches": 0,
+  "stages": 1,
+  "max_bits_final": 24,
+  "stats": {
+   "int64_steps": 5,
+   "pyint_steps": 0,
+   "inverse_int64_steps": 5,
+   "inverse_pyint_steps": 0
+  }
+ },
+ "OD2/small": {
+  "steps": 12,
+  "returned_exactly": true,
+  "inverse_mismatches": 0,
+  "stages": 4,
+  "max_bits_final": 26,
+  "stats": {
+   "int64_steps": 12,
+   "pyint_steps": 0,
+   "inverse_int64_steps": 12,
+   "inverse_pyint_steps": 0
+  }
+ },
+ "OD2/registered_amplitudes_5": {
+  "steps": 5,
+  "returned_exactly": true,
+  "inverse_mismatches": 0,
+  "stages": 4,
+  "max_bits_final": 141,
+  "stats": {
+   "int64_steps": 3,
+   "pyint_steps": 2,
+   "inverse_int64_steps": 3,
+   "inverse_pyint_steps": 2
+  }
+ }
+}

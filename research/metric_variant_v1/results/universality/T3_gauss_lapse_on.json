@@ -1,0 +1,246 @@
+{
+ "site/u1": {
+  "regime": "default",
+  "L": 3,
+  "updates_requested": 20,
+  "updates_done": 20,
+  "amps": {
+   "amp_matter": 64,
+   "amp_noise": 8,
+   "amp_path": 16
+  },
+  "max_abs_final_bits": 18,
+  "checks": 540,
+  "failures": 0,
+  "max_abs_J": 182560093198633656,
+  "max_abs_remainder_term": 6795239558484510,
+  "local_covariance_bit_exact_8_updates": [
+   true,
+   true
+  ],
+  "engine_stats": {
+   "int64_steps": 52,
+   "pyint_steps": 0,
+   "inverse_int64_steps": 0,
+   "inverse_pyint_steps": 0
+  },
+  "seconds": 0.1
+ },
+ "site/su2": {
+  "regime": "default",
+  "L": 3,
+  "updates_requested": 20,
+  "updates_done": 20,
+  "amps": {
+   "amp_matter": 64,
+   "amp_noise": 8,
+   "amp_path": 16
+  },
+  "max_abs_final_bits": 18,
+  "checks": 1620,
+  "failures": 0,
+  "max_abs_J": 148986368201631528,
+  "max_abs_remainder_term": 6923624720911488,
+  "local_covariance_bit_exact_8_updates": [
+   true,
+   true
+  ],
+  "engine_stats": {
+   "int64_steps": 52,
+   "pyint_steps": 0,
+   "inverse_int64_steps": 0,
+   "inverse_pyint_steps": 0
+  },
+  "seconds": 0.2
+ },
+ "site/su3": {
+  "regime": "default",
+  "L": 3,
+  "updates_requested": 12,
+  "updates_done": 12,
+  "amps": {
+   "amp_matter": 64,
+   "amp_noise": 8,
+   "amp_path": 16
+  },
+  "max_abs_final_bits": 18,
+  "checks": 2916,
+  "failures": 0,
+  "max_abs_J": 384933145413928788,
+  "max_abs_remainder_term": 13696341470893152,
+  "local_covariance_bit_exact_8_updates": [
+   true,
+   true
+  ],
+  "engine_stats": {
+   "int64_steps": 44,
+   "pyint_steps": 0,
+   "inverse_int64_steps": 0,
+   "inverse_pyint_steps": 0
+  },
+  "seconds": 1.9
+ },
+ "cov/u1": {
+  "regime": "cov",
+  "L": 3,
+  "updates_requested": 20,
+  "updates_done": 20,
+  "amps": {
+   "amp_matter": 8,
+   "amp_noise": 2,
+   "amp_path": 2
+  },
+  "max_abs_final_bits": 14,
+  "checks": 540,
+  "failures": 0,
+  "max_abs_J": 851692014895950,
+  "max_abs_remainder_term": 106583908429944,
+  "local_covariance_bit_exact_8_updates": [
+   true,
+   true
+  ],
+  "engine_stats": {
+   "int64_steps": 52,
+   "pyint_steps": 0,
+   "inverse_int64_steps": 0,
+   "inverse_pyint_steps": 0
+  },
+  "seconds": 0.1
+ },
+ "cov/su2": {
+  "regime": "cov",
+  "L": 3,
+  "updates_requested": 20,
+  "updates_done": 20,
+  "amps": {
+   "amp_matter": 8,
+   "amp_noise": 2,
+   "amp_path": 2
+  },
+  "max_abs_final_bits": 14,
+  "checks": 1620,
+  "failures": 0,
+  "max_abs_J": 1271739816493650,
+  "max_abs_remainder_term": 108800111554938,
+  "local_covariance_bit_exact_8_updates": [
+   true,
+   true
+  ],
+  "engine_stats": {
+   "int64_steps": 52,
+   "pyint_steps": 0,
+   "inverse_int64_steps": 0,
+   "inverse_pyint_steps": 0
+  },
+  "seconds": 0.3
+ },
+ "cov/su3": {
+  "regime": "cov",
+  "L": 3,
+  "updates_requested": 12,
+  "updates_done": 12,
+  "amps": {
+   "amp_matter": 8,
+   "amp_noise": 2,
+   "amp_path": 2
+  },
+  "max_abs_final_bits": 14,
+  "checks": 2916,
+  "failures": 0,
+  "max_abs_J": 3485675198755098,
+  "max_abs_remainder_term": 215332480377324,
+  "local_covariance_bit_exact_8_updates": [
+   true,
+   true
+  ],
+  "engine_stats": {
+   "int64_steps": 44,
+   "pyint_steps": 0,
+   "inverse_int64_steps": 0,
+   "inverse_pyint_steps": 0
+  },
+  "seconds": 1.6
+ },
+ "vac/u1": {
+  "regime": "default",
+  "L": 3,
+  "updates_requested": 20,
+  "updates_done": 20,
+  "amps": {
+   "amp_matter": 64,
+   "amp_noise": 8,
+   "amp_path": 16
+  },
+  "max_abs_final_bits": 18,
+  "checks": 540,
+  "failures": 540,
+  "max_abs_J": 182556279267674364,
+  "max_abs_remainder_term": 6801624338924806,
+  "local_covariance_bit_exact_8_updates": [
+   false,
+   false
+  ],
+  "engine_stats": {
+   "int64_steps": 52,
+   "pyint_steps": 0,
+   "inverse_int64_steps": 0,
+   "inverse_pyint_steps": 0
+  },
+  "seconds": 0.1
+ },
+ "vac/su2": {
+  "regime": "default",
+  "L": 3,
+  "updates_requested": 20,
+  "updates_done": 20,
+  "amps": {
+   "amp_matter": 64,
+   "amp_noise": 8,
+   "amp_path": 16
+  },
+  "max_abs_final_bits": 18,
+  "checks": 1620,
+  "failures": 1620,
+  "max_abs_J": 148985131251050136,
+  "max_abs_remainder_term": 6919553155394172,
+  "local_covariance_bit_exact_8_updates": [
+   false,
+   false
+  ],
+  "engine_stats": {
+   "int64_steps": 52,
+   "pyint_steps": 0,
+   "inverse_int64_steps": 0,
+   "inverse_pyint_steps": 0
+  },
+  "seconds": 0.2
+ },
+ "vac/su3": {
+  "regime": "default",
+  "L": 3,
+  "updates_requested": 12,
+  "updates_done": 12,
+  "amps": {
+   "amp_matter": 64,
+   "amp_noise": 8,
+   "amp_path": 16
+  },
+  "max_abs_final_bits": 18,
+  "checks": 2916,
+  "failures": 2916,
+  "max_abs_J": 384936340869597384,
+  "max_abs_remainder_term": 13695971255755830,
+  "local_covariance_bit_exact_8_updates": [
+   false,
+   false
+  ],
+  "engine_stats": {
+   "int64_steps": 44,
+   "pyint_steps": 0,
+   "inverse_int64_steps": 0,
+   "inverse_pyint_steps": 0
+  },
+  "seconds": 1.6
+ },
+ "stamp_utc": "Tue Nov 10 13:32:46 UTC 2026"
+}

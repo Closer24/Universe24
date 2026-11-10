@@ -1,0 +1,24 @@
+{
+ "XQ_on_vacuum_nonzero_components": {},
+ "global_2Q_change_equals_remainder": true,
+ "t3_on_vacuum_nonzero": {
+  "ewb.H_k": 131072,
+  "ewb.Xx_ui": 8192,
+  "ewb.Yx_ui": 8192,
+  "ewb.Xy_ui": 8192,
+  "ewb.Yy_ui": 8192,
+  "ewb.Xz_ui": 8192,
+  "ewb.Yz_ui": 8192
+ },
+ "Y_on_vacuum_nonzero": {
+  "ewb.H_k": -131072,
+  "ewb.Xx_ui": -8192,
+  "ewb.Yx_ui": -8192,
+  "ewb.Xy_ui": -8192,
+  "ewb.Yy_ui": -8192,
+  "ewb.Xz_ui": -8192,
+  "ewb.Yz_ui": -8192
+ },
+ "written": "Tue Nov 10 15:06:36 UTC 2026",
+ "Q": 8589934593
+}

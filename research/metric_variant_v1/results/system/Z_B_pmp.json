@@ -1,0 +1,839 @@
+{
+ "arm": "B",
+ "body_signs": [
+  1,
+  -1,
+  1
+ ],
+ "Q": 8589934593,
+ "L": 4,
+ "lam": 4,
+ "A": 16384,
+ "kappa": 524288,
+ "port_weight": "Q-1",
+ "stiffness_over_D": "8589934592/25769803779",
+ "monomials": 4776,
+ "runs": {
+  "1": {
+   "status": "RUNAWAY",
+   "t_runaway": 2000,
+   "amp": 128,
+   "seconds": 55.8,
+   "engine_stats": {
+    "int64_steps": 2062,
+    "pyint_steps": 10,
+    "inverse_int64_steps": 20,
+    "inverse_pyint_steps": 0
+   },
+   "samples": [
+    {
+     "t": 0,
+     "max_W_over_A": 0.0,
+     "max_component_dev_over_A": {
+      "eps0": 0.0,
+      "eps_i": 0.0,
+      "eps_j": 0.0,
+      "eps_k": 0.0,
+      "H": 0.0
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.0,
+      "eps_i": 0.0,
+      "eps_j": 0.0,
+      "eps_k": 0.0
+     },
+     "max_L0_b_over_amp": 1.0,
+     "max_bits": 8
+    },
+    {
+     "t": 500,
+     "max_W_over_A": 0.99078369140625,
+     "max_component_dev_over_A": {
+      "eps0": 0.00354,
+      "eps_i": 0.005737,
+      "eps_j": 0.007141,
+      "eps_k": 0.006836,
+      "H": 0.008617
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.00354,
+      "eps_i": 0.005737,
+      "eps_j": 0.007141,
+      "eps_k": 0.006836
+     },
+     "max_L0_b_over_amp": 2.21875,
+     "max_bits": 14
+    },
+    {
+     "t": 1000,
+     "max_W_over_A": 0.99993896484375,
+     "max_component_dev_over_A": {
+      "eps0": 0.005005,
+      "eps_i": 0.009338,
+      "eps_j": 0.012634,
+      "eps_k": 0.010376,
+      "H": 0.01569
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.005005,
+      "eps_i": 0.009338,
+      "eps_j": 0.012634,
+      "eps_k": 0.010376
+     },
+     "max_L0_b_over_amp": 2.4765625,
+     "max_bits": 14
+    },
+    {
+     "t": 1500,
+     "max_W_over_A": 0.9989013671875,
+     "max_component_dev_over_A": {
+      "eps0": 0.007874,
+      "eps_i": 0.01001,
+      "eps_j": 0.014832,
+      "eps_k": 0.014954,
+      "H": 0.021374
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.007874,
+      "eps_i": 0.01001,
+      "eps_j": 0.014832,
+      "eps_k": 0.014954
+     },
+     "max_L0_b_over_amp": 2.3125,
+     "max_bits": 14
+    },
+    {
+     "t": 2000,
+     "max_W_over_A": Infinity,
+     "max_component_dev_over_A": {
+      "eps0": Infinity,
+      "eps_i": 0.010132,
+      "eps_j": 0.010864,
+      "eps_k": 0.013489,
+      "H": 0.021788
+     },
+     "eps_unitarity_defect": {
+      "eps0": Infinity,
+      "eps_i": 0.010132,
+      "eps_j": 0.010864,
+      "eps_k": 0.013489
+     },
+     "max_L0_b_over_amp": Infinity,
+     "max_bits": 459053
+    }
+   ],
+   "worst": {
+    "max_W_over_A": Infinity,
+    "max_L0_b_over_amp": Infinity
+   }
+  },
+  "2": {
+   "status": "RUNAWAY",
+   "t_runaway": 6330,
+   "amp": 128,
+   "seconds": 12.6,
+   "engine_stats": {
+    "int64_steps": 8390,
+    "pyint_steps": 12,
+    "inverse_int64_steps": 20,
+    "inverse_pyint_steps": 0
+   },
+   "samples": [
+    {
+     "t": 0,
+     "max_W_over_A": 0.0,
+     "max_component_dev_over_A": {
+      "eps0": 0.0,
+      "eps_i": 0.0,
+      "eps_j": 0.0,
+      "eps_k": 0.0,
+      "H": 0.0
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.0,
+      "eps_i": 0.0,
+      "eps_j": 0.0,
+      "eps_k": 0.0
+     },
+     "max_L0_b_over_amp": 1.0,
+     "max_bits": 8
+    },
+    {
+     "t": 500,
+     "max_W_over_A": 0.99853515625,
+     "max_component_dev_over_A": {
+      "eps0": 0.003357,
+      "eps_i": 0.004333,
+      "eps_j": 0.006958,
+      "eps_k": 0.008728,
+      "H": 0.012449
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.003357,
+      "eps_i": 0.004333,
+      "eps_j": 0.006958,
+      "eps_k": 0.008728
+     },
+     "max_L0_b_over_amp": 2.7578125,
+     "max_bits": 14
+    },
+    {
+     "t": 1000,
+     "max_W_over_A": 0.99725341796875,
+     "max_component_dev_over_A": {
+      "eps0": 0.005127,
+      "eps_i": 0.006897,
+      "eps_j": 0.016113,
+      "eps_k": 0.012634,
+      "H": 0.01678
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.005127,
+      "eps_i": 0.006897,
+      "eps_j": 0.016113,
+      "eps_k": 0.012634
+     },
+     "max_L0_b_over_amp": 2.328125,
+     "max_bits": 14
+    },
+    {
+     "t": 1500,
+     "max_W_over_A": 0.98663330078125,
+     "max_component_dev_over_A": {
+      "eps0": 0.004639,
+      "eps_i": 0.008179,
+      "eps_j": 0.012451,
+      "eps_k": 0.013367,
+      "H": 0.026631
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.004639,
+      "eps_i": 0.008179,
+      "eps_j": 0.012451,
+      "eps_k": 0.013367
+     },
+     "max_L0_b_over_amp": 2.6953125,
+     "max_bits": 14
+    },
+    {
+     "t": 2000,
+     "max_W_over_A": 0.98236083984375,
+     "max_component_dev_over_A": {
+      "eps0": 0.005981,
+      "eps_i": 0.008972,
+      "eps_j": 0.009094,
+      "eps_k": 0.012268,
+      "H": 0.023605
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.005981,
+      "eps_i": 0.008972,
+      "eps_j": 0.009094,
+      "eps_k": 0.012268
+     },
+     "max_L0_b_over_amp": 2.328125,
+     "max_bits": 14
+    },
+    {
+     "t": 2500,
+     "max_W_over_A": 0.98272705078125,
+     "max_component_dev_over_A": {
+      "eps0": 0.006226,
+      "eps_i": 0.007385,
+      "eps_j": 0.010925,
+      "eps_k": 0.009705,
+      "H": 0.033512
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.006226,
+      "eps_i": 0.007385,
+      "eps_j": 0.010925,
+      "eps_k": 0.009705
+     },
+     "max_L0_b_over_amp": 2.0390625,
+     "max_bits": 14
+    },
+    {
+     "t": 3000,
+     "max_W_over_A": 0.98529052734375,
+     "max_component_dev_over_A": {
+      "eps0": 0.006714,
+      "eps_i": 0.008423,
+      "eps_j": 0.011658,
+      "eps_k": 0.011658,
+      "H": 0.025874
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.006714,
+      "eps_i": 0.008423,
+      "eps_j": 0.011658,
+      "eps_k": 0.011658
+     },
+     "max_L0_b_over_amp": 2.5625,
+     "max_bits": 14
+    },
+    {
+     "t": 3500,
+     "max_W_over_A": 0.994140625,
+     "max_component_dev_over_A": {
+      "eps0": 0.006653,
+      "eps_i": 0.007935,
+      "eps_j": 0.01178,
+      "eps_k": 0.014038,
+      "H": 0.036557
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.006653,
+      "eps_i": 0.007935,
+      "eps_j": 0.01178,
+      "eps_k": 0.014038
+     },
+     "max_L0_b_over_amp": 2.703125,
+     "max_bits": 14
+    },
+    {
+     "t": 4000,
+     "max_W_over_A": 0.9886474609375,
+     "max_component_dev_over_A": {
+      "eps0": 0.006958,
+      "eps_i": 0.00885,
+      "eps_j": 0.01001,
+      "eps_k": 0.011292,
+      "H": 0.030525
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.006958,
+      "eps_i": 0.00885,
+      "eps_j": 0.01001,
+      "eps_k": 0.011292
+     },
+     "max_L0_b_over_amp": 2.609375,
+     "max_bits": 14
+    },
+    {
+     "t": 4500,
+     "max_W_over_A": 0.9884033203125,
+     "max_component_dev_over_A": {
+      "eps0": 0.00708,
+      "eps_i": 0.007751,
+      "eps_j": 0.012268,
+      "eps_k": 0.014526,
+      "H": 0.033468
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.00708,
+      "eps_i": 0.007751,
+      "eps_j": 0.012268,
+      "eps_k": 0.014526
+     },
+     "max_L0_b_over_amp": 2.7265625,
+     "max_bits": 14
+    },
+    {
+     "t": 5000,
+     "max_W_over_A": 0.9755859375,
+     "max_component_dev_over_A": {
+      "eps0": 0.007629,
+      "eps_i": 0.007996,
+      "eps_j": 0.016785,
+      "eps_k": 0.01416,
+      "H": 0.034581
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.007629,
+      "eps_i": 0.007996,
+      "eps_j": 0.016785,
+      "eps_k": 0.01416
+     },
+     "max_L0_b_over_amp": 2.5546875,
+     "max_bits": 14
+    },
+    {
+     "t": 5500,
+     "max_W_over_A": 0.99615478515625,
+     "max_component_dev_over_A": {
+      "eps0": 0.018799,
+      "eps_i": 0.009705,
+      "eps_j": 0.011658,
+      "eps_k": 0.014587,
+      "H": 0.035462
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.018799,
+      "eps_i": 0.009705,
+      "eps_j": 0.011658,
+      "eps_k": 0.014587
+     },
+     "max_L0_b_over_amp": 3.171875,
+     "max_bits": 14
+    },
+    {
+     "t": 6000,
+     "max_W_over_A": 1.196044921875,
+     "max_component_dev_over_A": {
+      "eps0": 2.50415,
+      "eps_i": 0.010132,
+      "eps_j": 0.013672,
+      "eps_k": 0.013672,
+      "H": 0.040426
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.994507,
+      "eps_i": 0.010132,
+      "eps_j": 0.013672,
+      "eps_k": 0.013672
+     },
+     "max_L0_b_over_amp": 66.2109375,
+     "max_bits": 15
+    },
+    {
+     "t": 6330,
+     "max_W_over_A": 5.23361116941599e+32,
+     "max_component_dev_over_A": {
+      "eps0": 4.186888935532792e+33,
+      "eps_i": 0.014282,
+      "eps_j": 0.01123,
+      "eps_k": 0.014709,
+      "H": 0.041255
+     },
+     "eps_unitarity_defect": {
+      "eps0": 4.186888935532792e+33,
+      "eps_i": 0.014282,
+      "eps_j": 0.01123,
+      "eps_k": 0.014709
+     },
+     "max_L0_b_over_amp": 1.669015014235353e+17,
+     "max_bits": 123
+    }
+   ],
+   "worst": {
+    "max_W_over_A": 5.23361116941599e+32,
+    "max_L0_b_over_amp": 1.669015014235353e+17
+   }
+  },
+  "3": {
+   "status": "BOUNDED",
+   "t_runaway": null,
+   "amp": 128,
+   "seconds": 21.4,
+   "engine_stats": {
+    "int64_steps": 18390,
+    "pyint_steps": 12,
+    "inverse_int64_steps": 20,
+    "inverse_pyint_steps": 0
+   },
+   "samples": [
+    {
+     "t": 0,
+     "max_W_over_A": 0.0,
+     "max_component_dev_over_A": {
+      "eps0": 0.0,
+      "eps_i": 0.0,
+      "eps_j": 0.0,
+      "eps_k": 0.0,
+      "H": 0.0
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.0,
+      "eps_i": 0.0,
+      "eps_j": 0.0,
+      "eps_k": 0.0
+     },
+     "max_L0_b_over_amp": 1.0,
+     "max_bits": 8
+    },
+    {
+     "t": 500,
+     "max_W_over_A": 1.00146484375,
+     "max_component_dev_over_A": {
+      "eps0": 0.002808,
+      "eps_i": 0.005005,
+      "eps_j": 0.005676,
+      "eps_k": 0.006531,
+      "H": 0.010562
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.002808,
+      "eps_i": 0.005005,
+      "eps_j": 0.005676,
+      "eps_k": 0.006531
+     },
+     "max_L0_b_over_amp": 2.2421875,
+     "max_bits": 15
+    },
+    {
+     "t": 1000,
+     "max_W_over_A": 0.9903564453125,
+     "max_component_dev_over_A": {
+      "eps0": 0.004395,
+      "eps_i": 0.006958,
+      "eps_j": 0.011719,
+      "eps_k": 0.013184,
+      "H": 0.014636
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.004395,
+      "eps_i": 0.006958,
+      "eps_j": 0.011719,
+      "eps_k": 0.013184
+     },
+     "max_L0_b_over_amp": 2.109375,
+     "max_bits": 14
+    },
+    {
+     "t": 1500,
+     "max_W_over_A": 0.997314453125,
+     "max_component_dev_over_A": {
+      "eps0": 0.004333,
+      "eps_i": 0.009399,
+      "eps_j": 0.012329,
+      "eps_k": 0.011719,
+      "H": 0.017537
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.004333,
+      "eps_i": 0.009399,
+      "eps_j": 0.012329,
+      "eps_k": 0.011719
+     },
+     "max_L0_b_over_amp": 2.5859375,
+     "max_bits": 14
+    },
+    {
+     "t": 2000,
+     "max_W_over_A": 0.991455078125,
+     "max_component_dev_over_A": {
+      "eps0": 0.00592,
+      "eps_i": 0.00885,
+      "eps_j": 0.009277,
+      "eps_k": 0.010376,
+      "H": 0.019606
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.00592,
+      "eps_i": 0.00885,
+      "eps_j": 0.009277,
+      "eps_k": 0.010376
+     },
+     "max_L0_b_over_amp": 2.3046875,
+     "max_bits": 14
+    },
+    {
+     "t": 2500,
+     "max_W_over_A": 1.0125732421875,
+     "max_component_dev_over_A": {
+      "eps0": 0.006531,
+      "eps_i": 0.008118,
+      "eps_j": 0.010559,
+      "eps_k": 0.010742,
+      "H": 0.027535
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.006531,
+      "eps_i": 0.008118,
+      "eps_j": 0.010559,
+      "eps_k": 0.010742
+     },
+     "max_L0_b_over_amp": 2.9609375,
+     "max_bits": 15
+    },
+    {
+     "t": 3000,
+     "max_W_over_A": 0.982666015625,
+     "max_component_dev_over_A": {
+      "eps0": 0.005981,
+      "eps_i": 0.007812,
+      "eps_j": 0.009033,
+      "eps_k": 0.011658,
+      "H": 0.031862
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.005981,
+      "eps_i": 0.007812,
+      "eps_j": 0.009033,
+      "eps_k": 0.011658
+     },
+     "max_L0_b_over_amp": 2.46875,
+     "max_bits": 14
+    },
+    {
+     "t": 3500,
+     "max_W_over_A": 0.99017333984375,
+     "max_component_dev_over_A": {
+      "eps0": 0.006592,
+      "eps_i": 0.007996,
+      "eps_j": 0.009155,
+      "eps_k": 0.009094,
+      "H": 0.033426
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.006592,
+      "eps_i": 0.007996,
+      "eps_j": 0.009155,
+      "eps_k": 0.009094
+     },
+     "max_L0_b_over_amp": 2.3515625,
+     "max_bits": 14
+    },
+    {
+     "t": 4000,
+     "max_W_over_A": 0.99609375,
+     "max_component_dev_over_A": {
+      "eps0": 0.007935,
+      "eps_i": 0.009155,
+      "eps_j": 0.012268,
+      "eps_k": 0.013245,
+      "H": 0.031724
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.007935,
+      "eps_i": 0.009155,
+      "eps_j": 0.012268,
+      "eps_k": 0.013245
+     },
+     "max_L0_b_over_amp": 2.5546875,
+     "max_bits": 14
+    },
+    {
+     "t": 4500,
+     "max_W_over_A": 0.98590087890625,
+     "max_component_dev_over_A": {
+      "eps0": 0.00824,
+      "eps_i": 0.008728,
+      "eps_j": 0.012268,
+      "eps_k": 0.010132,
+      "H": 0.030703
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.00824,
+      "eps_i": 0.008728,
+      "eps_j": 0.012268,
+      "eps_k": 0.010132
+     },
+     "max_L0_b_over_amp": 2.265625,
+     "max_bits": 14
+    },
+    {
+     "t": 5000,
+     "max_W_over_A": 0.9686279296875,
+     "max_component_dev_over_A": {
+      "eps0": 0.008972,
+      "eps_i": 0.010254,
+      "eps_j": 0.020752,
+      "eps_k": 0.010864,
+      "H": 0.038318
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.008972,
+      "eps_i": 0.010254,
+      "eps_j": 0.020752,
+      "eps_k": 0.010864
+     },
+     "max_L0_b_over_amp": 2.6875,
+     "max_bits": 14
+    },
+    {
+     "t": 5500,
+     "max_W_over_A": 0.98834228515625,
+     "max_component_dev_over_A": {
+      "eps0": 0.008484,
+      "eps_i": 0.00946,
+      "eps_j": 0.020386,
+      "eps_k": 0.011963,
+      "H": 0.037055
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.008484,
+      "eps_i": 0.00946,
+      "eps_j": 0.020386,
+      "eps_k": 0.011963
+     },
+     "max_L0_b_over_amp": 2.3203125,
+     "max_bits": 14
+    },
+    {
+     "t": 6000,
+     "max_W_over_A": 0.9468994140625,
+     "max_component_dev_over_A": {
+      "eps0": 0.00708,
+      "eps_i": 0.009644,
+      "eps_j": 0.017517,
+      "eps_k": 0.012817,
+      "H": 0.039861
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.00708,
+      "eps_i": 0.009644,
+      "eps_j": 0.017517,
+      "eps_k": 0.012817
+     },
+     "max_L0_b_over_amp": 2.484375,
+     "max_bits": 14
+    },
+    {
+     "t": 6500,
+     "max_W_over_A": 0.9844970703125,
+     "max_component_dev_over_A": {
+      "eps0": 0.008484,
+      "eps_i": 0.011475,
+      "eps_j": 0.013,
+      "eps_k": 0.013062,
+      "H": 0.038083
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.008484,
+      "eps_i": 0.011475,
+      "eps_j": 0.013,
+      "eps_k": 0.013062
+     },
+     "max_L0_b_over_amp": 2.703125,
+     "max_bits": 14
+    },
+    {
+     "t": 7000,
+     "max_W_over_A": 0.99267578125,
+     "max_component_dev_over_A": {
+      "eps0": 0.009094,
+      "eps_i": 0.01355,
+      "eps_j": 0.015076,
+      "eps_k": 0.016663,
+      "H": 0.03461
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.009094,
+      "eps_i": 0.01355,
+      "eps_j": 0.015076,
+      "eps_k": 0.016663
+     },
+     "max_L0_b_over_amp": 2.6328125,
+     "max_bits": 14
+    },
+    {
+     "t": 7500,
+     "max_W_over_A": 0.99212646484375,
+     "max_component_dev_over_A": {
+      "eps0": 0.008545,
+      "eps_i": 0.011169,
+      "eps_j": 0.017456,
+      "eps_k": 0.013,
+      "H": 0.04038
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.008545,
+      "eps_i": 0.011169,
+      "eps_j": 0.017456,
+      "eps_k": 0.013
+     },
+     "max_L0_b_over_amp": 2.5234375,
+     "max_bits": 14
+    },
+    {
+     "t": 8000,
+     "max_W_over_A": 0.99713134765625,
+     "max_component_dev_over_A": {
+      "eps0": 0.009338,
+      "eps_i": 0.010681,
+      "eps_j": 0.015137,
+      "eps_k": 0.015503,
+      "H": 0.039989
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.009338,
+      "eps_i": 0.010681,
+      "eps_j": 0.015137,
+      "eps_k": 0.015503
+     },
+     "max_L0_b_over_amp": 3.34375,
+     "max_bits": 14
+    },
+    {
+     "t": 8500,
+     "max_W_over_A": 0.9693603515625,
+     "max_component_dev_over_A": {
+      "eps0": 0.010559,
+      "eps_i": 0.01355,
+      "eps_j": 0.018188,
+      "eps_k": 0.013184,
+      "H": 0.047703
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.010559,
+      "eps_i": 0.01355,
+      "eps_j": 0.018188,
+      "eps_k": 0.013184
+     },
+     "max_L0_b_over_amp": 2.453125,
+     "max_bits": 14
+    },
+    {
+     "t": 9000,
+     "max_W_over_A": 0.985107421875,
+     "max_component_dev_over_A": {
+      "eps0": 0.012634,
+      "eps_i": 0.01416,
+      "eps_j": 0.016907,
+      "eps_k": 0.012268,
+      "H": 0.038285
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.012634,
+      "eps_i": 0.01416,
+      "eps_j": 0.016907,
+      "eps_k": 0.012268
+     },
+     "max_L0_b_over_amp": 2.6796875,
+     "max_bits": 14
+    },
+    {
+     "t": 9500,
+     "max_W_over_A": 0.9794921875,
+     "max_component_dev_over_A": {
+      "eps0": 0.010376,
+      "eps_i": 0.013184,
+      "eps_j": 0.017883,
+      "eps_k": 0.012146,
+      "H": 0.049281
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.010376,
+      "eps_i": 0.013184,
+      "eps_j": 0.017883,
+      "eps_k": 0.012146
+     },
+     "max_L0_b_over_amp": 2.640625,
+     "max_bits": 14
+    },
+    {
+     "t": 10000,
+     "max_W_over_A": 0.95941162109375,
+     "max_component_dev_over_A": {
+      "eps0": 0.011719,
+      "eps_i": 0.013733,
+      "eps_j": 0.015503,
+      "eps_k": 0.016846,
+      "H": 0.04061
+     },
+     "eps_unitarity_defect": {
+      "eps0": 0.011719,
+      "eps_i": 0.013733,
+      "eps_j": 0.015503,
+      "eps_k": 0.016846
+     },
+     "max_L0_b_over_amp": 2.9609375,
+     "max_bits": 14
+    }
+   ],
+   "worst": {
+    "max_W_over_A": 1.0125732421875,
+    "max_L0_b_over_amp": 3.34375
+   }
+  }
+ },
+ "vacuum_fixed_20": true,
+ "exactness": {
+  "rewind20": true,
+  "Mp_mirror_n6": true,
+  "local_Q8_covariance_10": true
+ },
+ "stamp_utc": "Tue Nov 10 11:28:18 UTC 2026"
+}

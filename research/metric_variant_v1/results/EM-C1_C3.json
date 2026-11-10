@@ -1,0 +1,48 @@
+{
+ "random_kw=0": {
+  "gauss_failures": 0,
+  "global_failures": 0,
+  "node_updates": 1920,
+  "rewind_exact": true,
+  "Mp_mirror_30_30": true,
+  "F_vac_fixed": true,
+  "Mp_vac_fixed": true,
+  "max_abs": 33712,
+  "stats": {
+   "int64_steps": 61,
+   "pyint_steps": 0,
+   "inverse_int64_steps": 30,
+   "inverse_pyint_steps": 0
+  },
+  "ok": true
+ },
+ "random_kw=1024": {
+  "gauss_failures": 0,
+  "global_failures": 0,
+  "node_updates": 1920,
+  "rewind_exact": true,
+  "Mp_mirror_30_30": true,
+  "F_vac_fixed": true,
+  "Mp_vac_fixed": true,
+  "max_abs": 33724,
+  "stats": {
+   "int64_steps": 61,
+   "pyint_steps": 0,
+   "inverse_int64_steps": 30,
+   "inverse_pyint_steps": 0
+  },
+  "ok": true
+ },
+ "pair_prepared": {
+  "gauss_failures": 0,
+  "global_failures": 0,
+  "node_updates": 8640,
+  "rewind_exact": true,
+  "initial_gauss_residual_rel": 0.042501517911353974,
+  "link_norm_dev_final": 0.0002963944933808138,
+  "ok": true
+ },
+ "verdict": "PASS",
+ "test": "EM-C1_C3",
+ "written": "Tue Nov 10 10:06:50 UTC 2026"
+}

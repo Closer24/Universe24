@@ -1,0 +1,26 @@
+{
+ "test": "T0.7",
+ "written_utc": "Tue Nov 10 10:10:53 UTC 2026",
+ "Q": 7,
+ "L": 16,
+ "gears_per_node": 80,
+ "monomials": 628,
+ "rank": 3,
+ "timed_updates": 40,
+ "seconds": 1.3322582099999636,
+ "updates_per_second": 30.024209796388565,
+ "gear_updates_per_second": 9838333.066080606,
+ "forward_stats": {
+  "int64_steps": 43,
+  "pyint_steps": 0,
+  "inverse_int64_steps": 0,
+  "inverse_pyint_steps": 0
+ },
+ "max_abs_end": 14502625644,
+ "rewind_exact": true,
+ "threads_env": {
+  "OMP_NUM_THREADS": "2",
+  "OPENBLAS_NUM_THREADS": null,
+  "MKL_NUM_THREADS": null
+ }
+}

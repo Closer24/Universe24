@@ -1,0 +1,46 @@
+{
+ "su2:same_order": {
+  "far_corner_b(t=2)": [
+   0,
+   0,
+   0,
+   -3641
+  ],
+  "max_abs": 3641,
+  "wilson_xy_at_x0": 281474976710656
+ },
+ "su2:swapped_order": {
+  "far_corner_b(t=2)": [
+   0,
+   0,
+   0,
+   0
+  ],
+  "max_abs": 0,
+  "wilson_xy_at_x0": -281474976710656
+ },
+ "u1:same_order": {
+  "far_corner_b(t=2)": [
+   0,
+   3641
+  ],
+  "max_abs": 3641,
+  "wilson_xy_at_x0": 281474976710656
+ },
+ "u1:swapped_order": {
+  "far_corner_b(t=2)": [
+   0,
+   3641
+  ],
+  "max_abs": 3641,
+  "wilson_xy_at_x0": 281474976710656
+ },
+ "verdict": {
+  "su2_same_over_swapped": 3641.0,
+  "u1_same_equals_swapped": true,
+  "PASS": true
+ },
+ "note": "same link multiset on the plaquette; only the ORDER along path B differs. SU(2): (j i + i j) = 0 -> the two paths cancel at the far corner; U(1) phases commute, swapping changes nothing. Wilson loop (gauge-invariant integer) shown for each configuration.",
+ "stamp_utc": "Tue Nov 10 09:55:34 UTC 2026",
+ "seconds": 0.0
+}

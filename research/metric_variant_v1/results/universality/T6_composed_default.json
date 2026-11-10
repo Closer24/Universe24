@@ -1,0 +1,57 @@
+{
+ "G_default": 375,
+ "G_universality": 375,
+ "monomials_default": 18623,
+ "monomials_universality": 18743,
+ "rank": 4,
+ "new_blocks": {
+  "ulapse_su2": 8,
+  "ulapse_su3": 12,
+  "ulapse_u1": 4,
+  "ulight": 96
+ },
+ "designated_default": 706,
+ "designated_universality": 706,
+ "reciprocal_ok": true,
+ "violations": 0,
+ "vacuum_12_bit_exact_L3": true,
+ "engine_stats": {
+  "int64_steps": 12,
+  "pyint_steps": 0,
+  "inverse_int64_steps": 0,
+  "inverse_pyint_steps": 0
+ },
+ "info": {
+  "status": "DECLARED CANDIDATE, DEFAULT OFF (UNIV-BUILDER)",
+  "gauge_form": "site",
+  "photon": true,
+  "gauge_mass": {
+   "su2": {
+    "mass_default": 8589934596,
+    "mass_universality": 8589934592,
+    "M": 34359738368,
+    "cos_w0": "17179869184/25769803779"
+   },
+   "su3": {
+    "mass_default": 8589934596,
+    "mass_universality": 8589934592,
+    "M": 34359738368,
+    "cos_w0": "17179869184/25769803779"
+   },
+   "u1": {
+    "mass_default": 8589934596,
+    "mass_universality": 8589934592,
+    "M": 34359738368,
+    "cos_w0": "17179869184/25769803779"
+   }
+  },
+  "blocks": [
+   "ulapse_su2",
+   "ulapse_su3",
+   "ulapse_u1",
+   "ulight"
+  ],
+  "open": "gauge-matter transport link factor (form cov) not integral at kappa = 2^16, P = 2^20; E1 Gauss exact only for a uniform lapse; gauge-link (W/gluon) energy neither reads nor sources the lapse"
+ },
+ "stamp_utc": "Tue Nov 10 13:32:56 UTC 2026"
+}

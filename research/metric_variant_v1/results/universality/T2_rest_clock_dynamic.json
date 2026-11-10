@@ -1,0 +1,72 @@
+{
+ "site/u1": {
+  "regime": "default",
+  "updates": 1200,
+  "L": 3,
+  "amp": 1024,
+  "cos_w0_law": 0.6666666665890565,
+  "raw_cos_F0": 0.6606636195845321,
+  "raw_cos_0": 0.6671116049999671,
+  "raw_ratio": 0.9903344727222436,
+  "raw_deviation": 0.00033470160407955696,
+  "PREREG_pass_raw_1e-5": false,
+  "exact_u_cos_F0": 0.6600010176198711,
+  "exact_u_cos_0": 0.6666675288133295,
+  "exact_u_ratio": 0.990000246141694,
+  "exact_u_deviation_POSTHOC": 4.7502352995554276e-07,
+  "law_1_minus_U0": 0.9899997711181641,
+  "engine_stats": {
+   "int64_steps": 2400,
+   "pyint_steps": 0,
+   "inverse_int64_steps": 0,
+   "inverse_pyint_steps": 0
+  }
+ },
+ "site/su2": {
+  "regime": "default",
+  "updates": 1200,
+  "L": 3,
+  "amp": 1024,
+  "cos_w0_law": 0.6666666665890565,
+  "raw_cos_F0": 0.6606636195845321,
+  "raw_cos_0": 0.6671116049999671,
+  "raw_ratio": 0.9903344727222436,
+  "raw_deviation": 0.00033470160407955696,
+  "PREREG_pass_raw_1e-5": false,
+  "exact_u_cos_F0": 0.6600068874517987,
+  "exact_u_cos_0": 0.6666717637215178,
+  "exact_u_ratio": 0.9900027620301267,
+  "exact_u_deviation_POSTHOC": 2.9909119626525538e-06,
+  "law_1_minus_U0": 0.9899997711181641,
+  "engine_stats": {
+   "int64_steps": 2400,
+   "pyint_steps": 0,
+   "inverse_int64_steps": 0,
+   "inverse_pyint_steps": 0
+  }
+ },
+ "site/su3": {
+  "regime": "default",
+  "updates": 1200,
+  "L": 3,
+  "amp": 1024,
+  "cos_w0_law": 0.6666666665890565,
+  "raw_cos_F0": 0.6598805656231808,
+  "raw_cos_0": 0.6668825912172626,
+  "raw_ratio": 0.9895003623032039,
+  "raw_deviation": -0.0004994088149601339,
+  "PREREG_pass_raw_1e-5": false,
+  "exact_u_cos_F0": 0.6600073959910753,
+  "exact_u_cos_0": 0.6666710672405347,
+  "exact_u_ratio": 0.9900045591043248,
+  "exact_u_deviation_POSTHOC": 4.787986160770252e-06,
+  "law_1_minus_U0": 0.9899997711181641,
+  "engine_stats": {
+   "int64_steps": 2400,
+   "pyint_steps": 0,
+   "inverse_int64_steps": 0,
+   "inverse_pyint_steps": 0
+  }
+ },
+ "stamp_utc": "Tue Nov 10 13:33:15 UTC 2026"
+}

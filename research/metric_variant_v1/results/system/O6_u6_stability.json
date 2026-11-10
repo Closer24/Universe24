@@ -1,0 +1,17 @@
+{
+ "amp4000": {
+  "worst_frobenius_dev": 11.493220857243498,
+  "runaway_at": 5,
+  "series(t,dev,unitarity_defect)": [],
+  "seconds": 0.5,
+  "pyint_steps": 0
+ },
+ "amp8000": {
+  "worst_frobenius_dev": 3.895420268295898,
+  "runaway_at": 4,
+  "series(t,dev,unitarity_defect)": [],
+  "seconds": 0.1,
+  "pyint_steps": 0
+ },
+ "stamp_utc": "Tue Nov 10 10:55:50 UTC 2026"
+}
