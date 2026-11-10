@@ -1,8 +1,0 @@
-{
-  "format": "universe24-invariant-evidence-verification-v1",
-  "manifest_sha256": "80dcf5c01c0336c3e274d467cc1d70e92658c6d413937f659bcfe447d7aa51f1",
-  "verified_files": 238,
-  "verified_bytes": 25173623,
-  "read_only": true,
-  "native_evolution_executed": false
-}

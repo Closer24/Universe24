@@ -1,9 +1,0 @@
-{
-  "format": "universe24-clock-evidence-materialization-v1",
-  "archive_sha256": "b6f82241d8dc6fac82d191695bd2e2ddef94924b12640afea1ff877245b51811",
-  "check_only": false,
-  "verified_files": 2422,
-  "restored_files": 2322,
-  "unchanged_files": 100,
-  "live_runtime_files_written": 0
-}

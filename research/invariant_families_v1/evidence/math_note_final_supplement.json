@@ -1,9 +1,0 @@
-{
-  "current_math_note_sha256": "68e4cc51347f30acf0265b51faff05e5c2db351741e27e9427a02ecfee8b4d62",
-  "current_preflight_source_sha256": "50cdcb4b85ab6e5da2033751c7da04e56f542cc37efcad948cf10b96e12b01d3",
-  "new_native_trajectories": 0,
-  "passed": true,
-  "previous_preflight_sha256": "9d84b61227419f8b8244410e45ffa65cf4ceeeeaeba0dd2fbf6f60f807269640",
-  "retained_previous_preflight_source_sha256": "d34a0bfa8279df926227e8f05f02de1a7c260b0645736bbcc70a44444f3954f7",
-  "review": "Only a final observation-scope paragraph was added to the algebra note after the first preflight. It correctly says the state encoding does not independently define a new coefficient model click classifier. Baseline raw C guard and classes remain fixed. No formula, pattern, native protocol or producer changed. The prior preparation certificate remains authoritative; current-note preflight uses a new output path rather than replacing it."
-}

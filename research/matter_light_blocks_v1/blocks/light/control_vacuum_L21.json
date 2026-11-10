@@ -1,9 +1,0 @@
-{
- "side": 21,
- "coupling_signs": [1,1,1],
- "background": [0,0,2],
- "steps": 10,
- "seed_changes": [
-
- ]
-}

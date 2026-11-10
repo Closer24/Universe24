@@ -1,53 +1,40 @@
-name: Reliability
+name: ONE reliability
 on:
   pull_request:
   push:
-    branches: ['main', 'research/reliability-2026-11-07', 'research/clock-selection-2026-11-08']
+    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
-  exact-checks:
+  one:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 120
     strategy:
       fail-fast: false
       matrix:
         python: ['3.11', '3.12']
+    env:
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      GAUGE_LONG: '1'
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
-          fetch-depth: 0
-      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
           python-version: ${{ matrix.python }}
-      - name: Install pinned research arithmetic and test solver
-        run: python -m pip install --disable-pip-version-check -r research/clock_selection/requirements.txt -r research/clock_selection/requirements-solver.txt
-      - name: Exact tests and evidence bundle
-        run: |
-          python -m research.experiments.materialize_evidence
-          python -m research.experiments.materialize_evidence --check-only
-          python -m research.clock_selection.archive materialize
-          python -m research.clock_selection.archive materialize --check-only
-          python -m research.invariant_families_v1.verify_evidence
-          python -m research.reproducibility.run --output runs/first
-      - name: Independent rerun of deterministic experiment outputs
-        run: |
-          python -m research.reproducibility.run --output runs/second --skip-tests
-          python -m research.reproducibility.run --compare runs/first runs/second --compare-experiments
-      - name: Reusable family component evidence
-        run: python -m research.component_families.verify --output runs/component-families
-      - name: Clock-rate prerequisites and independent reconstructions
-        run: |
-          python research/einstein_clock_bricks_v1/audit.py > runs/einstein-clock-prerequisites.json
-          python -m research.collective_clock_geometry.audit --output runs/collective-clock-geometry
-          python -m research.clock_link_v1.audit --output runs/clock-link.json
-      - name: Evidence and failures
+      - name: Install ONE and validation dependencies
+        run: python -m pip install '.[validation]'
+      - name: Complete ONE test suite
+        run: python -m unittest discover -s universe24/tests -t . -v
+      - name: Default ONE forward run and exact rewind
+        run: python -m universe24 --L 3 --tmax 20 --budget 120 --out runs/smoke --tag ci --rewind
+      - name: Test evidence
         if: always()
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
-          name: reliability-python-${{ matrix.python }}
+          name: one-python-${{ matrix.python }}
           path: runs/
           if-no-files-found: warn
-          retention-days: 30

@@ -1,8 +1,0 @@
-{
-  "tested_staged_tree": "2244a3f86d2bcbc266a55a64af6a03de1f93fe7f",
-  "baseline_commit": "ff89e2ff661c8b60af84aff738f9040ad7f15bcc",
-  "fresh_checkout": "/workspace/scratch/1966445260ce/Universe24-clock-selection-verify",
-  "exact_git_blob_files_verified": 3441,
-  "source_tar_bytes": 559646720,
-  "unrelated_temporary_directory_present": false
-}

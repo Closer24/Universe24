@@ -1,6 +1,0 @@
-{
-  "format": "universe24-presenter-environment-attempt-v1",
-  "first_attempt": "Default NODE_PATH had no jsdom; module resolution stopped before page parsing or evidence output.",
-  "corrected_dependency_path": "/workspace/scratch/1966445260ce/presenter-dom-deps/node_modules",
-  "scientific_evolution_executed": false
-}

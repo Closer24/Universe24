@@ -1,9 +1,0 @@
-{
-  "G00": "-Derivative(omega(z), z)**2 - 2*Derivative(omega(z), (z, 2))",
-  "G11": "Derivative(omega(z), z)**2 + 2*Derivative(omega(z), (z, 2))",
-  "G22": "Derivative(omega(z), z)**2 + 2*Derivative(omega(z), (z, 2))",
-  "G33": "3*Derivative(omega(z), z)**2",
-  "Ricci_scalar": "6*(-Derivative(omega(z), z)**2 - Derivative(omega(z), (z, 2)))*exp(-2*omega(z))",
-  "proof_of_static_vacuum_obstruction": "G11+G22+G33+2 G00 =3(omega_z)^2; vacuum => omega_z=0",
-  "SymPy_version": "1.14.0"
-}

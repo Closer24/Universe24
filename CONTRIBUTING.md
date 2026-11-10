@@ -1,52 +1,7 @@
-# Contributing to Universe24
+# Contributing to ONE
 
-This repository is a **research reference engine**. Contributions should increase reproducibility, mathematical clarity and test coverage without silently changing the model.
+Read [AGENTS.md](AGENTS.md) and [the model](docs/MODEL.md). Submit a focused change on a branch, with the exact tensor configuration, seed, observation definition and validation commands needed to reproduce the result.
 
-## Before changing code
+Preserve complete integer state traces for refactors. For mathematical changes, explain which assumptions changed and include an inverse proof or a precise limitation. A new tensor is a change to the model even if the scalar Rule3 function is unchanged.
 
-Read [AGENTS.md](AGENTS.md), [the mathematical model](docs/MODEL.md), [architecture](docs/ARCHITECTURE.md), and [research status](docs/RESEARCH_STATUS.md).
-
-## Non-negotiable default-model constraints
-
-- Exactly **one board**, with **48 channels** at each spatial site.
-- A periodic cube of side `L >= 3`; every channel has exactly **six spatial inputs**, no on-site coupling.
-- The 48 labels and fixed coupling matrices are derived from `2O`.
-- All state-changing dynamics use `(ell,r')=divmod(2*u+r,6), a'=b, b'=ell-a`, with no per-experiment law.
-- The complete state, including `r`, is retained and invertible.
-- Seeds and three body-axis signs are fixed before execution; no runtime rewriting or live injection.
-- Observations, click categories, diagnostics and logs are **read-only**.
-
-A scientifically interesting but incompatible rule is welcome only as an **explicitly separate model** with its own stated assumptions; it must not replace this reference engine without a declared model revision.
-
-## Contribution checklist
-
-1. State which mathematical or implementation claim is being tested.
-2. Provide exact input configuration(s), baseline and controls, including failure cases.
-3. Follow [full research validation](docs/QUICKSTART.md#full-research-validation), including pinned dependencies and evidence restoration, before running the full tests.
-4. Test exact one-step and multi-step inverse, all six spatial ports, signed coupling reciprocity, arithmetic with negative/large integers, and observer independence where applicable.
-5. Explain whether a change affects the **law**, **static coupling**, **seed**, **external observation**, or **only documentation**.
-6. Update the appropriate docs and report known scientific limitations. All project documentation must be written in English.
-
-## What belongs where?
-
-- Small engine seed examples: `examples/`; reusable initial preparations and study producers: `research/` (see [the research index](research/README.md)).
-- External statistics, plots and additional click readouts: `universe24/observation/` or research observers, strictly read-only.
-- Generic mathematical proof/audit tests: `tests/`.
-- Node updates: only `universe24/core/rule3.py` for the **reference** law; any proposed new law must be a separately named variant.
-
-## Reporting evidence
-
-Do not describe a local oscillation as an atom, a pulse as a photon, an arithmetic event as an observed quantum measurement, or an exact balance identity as physical energy conservation without the relevant derivations and quantitative tests.
-
-Document numerical seed, `L`, signs, steps, code version and a full-state checkpoint if appropriate. Event logs alone are insufficient to reconstruct full microscopic states.
-
-## Reliability gate
-
-Run the clean-source [reliability bundle](docs/RELIABILITY.md) before proposing
-changes. It includes all unittest regressions and independently reconstructed
-algebra/routing/evolution. Preserve protocol and source identities, explicit
-negative outcomes, and first-difference artifacts.
-Research reference code must not import production algebra or coupling tables.
-Do not update expected output to hide a failed comparison. Any necessary change
-to the core or click semantics requires a separate explicit review. All code
-changes belong on a branch and in a PR; merging requires the initiator's approval.
+Run the commands in [README](README.md#verification). Use `runs/` for generated output. Keep current claims separate from historical notes and optional experiments; a passing test of an expected failure is not evidence for the rejected physical claim.

@@ -1,9 +1,0 @@
-{
- "side": 7,
- "coupling_signs": [1,-1,1],
- "background": [0,0,2],
- "steps": 12,
- "seed_changes": [
-  {"position":[3,3,3],"channel":5,"state":[1,1,3]}
- ]
-}

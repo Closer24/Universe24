@@ -1,5 +1,0 @@
-{"audited":1,"total":4}
-{"audited":2,"total":4}
-{"audited":3,"total":4}
-{"audited":4,"total":4}
-{"auditor_cpu_seconds_before_serialization_including_imports":3.052268424,"failure":null,"passed":true}

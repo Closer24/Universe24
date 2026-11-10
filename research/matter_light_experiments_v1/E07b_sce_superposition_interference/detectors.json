@@ -1,1 +1,0 @@
-{"note":"screen planes z = const (box, all channels) and the dark clock's site; declared W2 01:44 / 02:05","detectors":{"z00":{"box":[[0,5],[0,5],[0,0]]},"z01":{"box":[[0,5],[0,5],[1,1]]},"z02":{"box":[[0,5],[0,5],[2,2]]},"z03":{"box":[[0,5],[0,5],[3,3]]},"z04":{"box":[[0,5],[0,5],[4,4]]},"z05":{"box":[[0,5],[0,5],[5,5]]},"CLOCK":{"sites":[[3,3,3]]}}}
