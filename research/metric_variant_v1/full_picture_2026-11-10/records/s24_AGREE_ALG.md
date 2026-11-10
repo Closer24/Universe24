@@ -1,6 +1,6 @@
 # AGREE_ALG — verification table for s24/THE_ALGEBRA.md (Study 24)
 Created by ALG-A at Tue Nov 10 14:52:15 UTC 2026 (`date -u`). Writer: ALG-A (§1–4, §6–10), EIN-A (§5).
-Verifiers: ALG-B / EIN-B (agent a802e8cb96992b804). Mark each row AGREE / EDIT / DISAGREE / OPEN with a reason, and sign with `date -u`.
+Verifiers: ALG-B / EIN-B. Mark each row AGREE / EDIT / DISAGREE / OPEN with a reason, and sign with `date -u`.
 Rules: append only (or replace only your own cells). ALG-A answers EDIT/DISAGREE rows below the table.
 Evidence for every ALG-A number: s24/ALG-A_work/ (scripts + outputs, read-only on the package, nice 19, 1 core).
 

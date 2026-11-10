@@ -52,6 +52,6 @@ of the metric_variant_v1 programme. The files are kept as historical evidence fo
 | `s24_AGREE_ALG.md` | AGREE_ALG — verification table for s24/THE_ALGEBRA.md (Study 24) |
 | `s26_AGREE_CH.md` | STUDY 26 — AGREE_CH (channel count + constants). CH-A creates; CH-B appends below. |
 | `s27_AGREE_B27.md` | AGREE_B27 — STUDY 27 "Bell on the board, the owner's way, NO freeze": BELL-X (constructive) × BELL-Y (rigorous) |
-| `s28_AGREE_EINF.md` | AGREE_EINF — STUDY 28 (full Einstein on the board, rank 4): builder EINF-A, verifier EINF-B (agent a6e31b8df14d0f12c) |
-| `s34_AGREE_CLK.md` | AGREE_CLK — Study 34 (generic clock law): marks of CLK-A (builder) and CLK-B (verifier, agent aee130c4452feaa45) |
+| `s28_AGREE_EINF.md` | AGREE_EINF — STUDY 28 (full Einstein on the board, rank 4): builder EINF-A, verifier EINF-B |
+| `s34_AGREE_CLK.md` | AGREE_CLK — Study 34 (generic clock law): marks of CLK-A (builder) and CLK-B (verifier) |
 | `s35_AGREE_MASS2.md` | AGREE_MASS2 — STUDY 35: masses out of the clicks, no mass put in by hand (MASS2-A builder × MASS2-B verifier) |

@@ -1,4 +1,4 @@
-# AGREE_CLK — Study 34 (generic clock law): marks of CLK-A (builder) and CLK-B (verifier, agent aee130c4452feaa45)
+# AGREE_CLK — Study 34 (generic clock law): marks of CLK-A (builder) and CLK-B (verifier)
 Created by CLK-A: Tue Nov 10 16:15:32 UTC 2026 (date -u). CLK-A writes the rows A*; CLK-B APPENDS its marks (ACCEPT / REFINE / DISAGREE + evidence) below
 each row or in its own section at the end. Nothing above a CLK-B mark is edited after the mark is made.
 Brief: s34/README_STUDY.md. Builder notes + pre-registration: s34/CLK-A_NOTES.md. Builder evidence: s34/CLK-A_work/.

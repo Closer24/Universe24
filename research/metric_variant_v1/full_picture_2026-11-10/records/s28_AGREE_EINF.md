@@ -1,4 +1,4 @@
-# AGREE_EINF — STUDY 28 (full Einstein on the board, rank 4): builder EINF-A, verifier EINF-B (agent a6e31b8df14d0f12c)
+# AGREE_EINF — STUDY 28 (full Einstein on the board, rank 4): builder EINF-A, verifier EINF-B
 Created by EINF-A: Tue Nov 10 15:33:17 UTC 2026. EINF-B appends below (append-only). Pre-registration: s28/EINF-A_NOTES.md.
 Rules: rank 4 FINAL; B3 (six faces); exact integers; reversible; nothing posted / forced / faked / circular; default OFF.
 

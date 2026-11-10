@@ -208,7 +208,7 @@ The labels are those of [the sections below](#the-local-node); the evidence is i
   one-way term per node, `u[metric.h00] += Θ·F`. No matter gear reads Θ, and a turn reaches matter only through the
   lapse, as a common clock-rate pulse felt by every clock that reads the lapse. At `L = 6` (J-pure, to t = 8,900) it
   keeps |U| ≤ 4.1·10⁻³, also after v1's sign change near t ≈ 6,050, while v1 reaches −0.070 at t = 8,000; with S2* it
-  turns the lapse back near t ≈ 1,004 (maximum |U| = 0.0197), while v1 reaches 0.0368 and accelerates [NUMERIC]. Its
+  turns the lapse back near t ≈ 1,004 (maximum |U| = 0.0197), while v1 reaches −0.0368 and accelerates [NUMERIC]. Its
   identity checks have 0 failures, its bits match v1's, and its rewinds are exact over 1,200 updates (`L = 6`, S2*),
   2,000 (`L = 4`), 400 and 1,000 [NUMERIC]. Both pre-registered absolute bounds (1.5·10⁻³ and 3·10⁻³) FAIL as worded.
   Limits: at `L = 8` the lapse is pumped (its extrema grow ×5.86, then ×7.07 per hand period); at `L = 4` the spring

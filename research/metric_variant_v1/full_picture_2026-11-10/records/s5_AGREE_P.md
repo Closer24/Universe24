@@ -1,6 +1,6 @@
 # AGREE_P — Study 5 twin physicists: S5-P (local) | S5-P2R (remote, relayed by the manager)
 FINAL v7 by S5-P, 07:12–07:43 UTC 2026-11-10 (`date -u`). S5-P2R's columns are quoted from s5/P2R_INTERIM.md (relayed 06:48,
-06:52, 07:03, 07:04) the manager's relays of 07:11, 07:21 and 07:28 (F7), and P2R's sections of 07:30–07:31. Codes: S5-P = s5/P_*.py, pre-registered in s5/P_NOTES.md. S5-P2R = /tmp/u24_s5/*.py (remote).
+06:52, 07:03, 07:04) the manager's relays of 07:11, 07:21 and 07:28 (F7), and P2R's sections of 07:30–07:31. Codes: S5-P = s5/P_*.py, pre-registered in s5/P_NOTES.md. S5-P2R = a remote scratch copy of the s5 scripts.
 Verdicts:
 - AGREE: same claim, same numbers or the same exact fractions.
 - AGREE (geometry): same claim, with numbers that differ only by a declared setup difference.

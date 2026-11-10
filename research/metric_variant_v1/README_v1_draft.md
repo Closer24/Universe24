@@ -552,6 +552,25 @@ The account, the tests and the results are in NOTES_one.md; ONE-B's marks are in
   three families, FIX-C+, and the cosmic matter's coupling to the lapse (OPEN). Route B is reachable with
   `one_system(route_b=True)`, OFF by default; the coupling is not designed for it.
 
+## 7f. Opt-in layers added after the ONE freeze (default OFF)
+
+* Linearised Einstein layer (Study 28; `layers/einstein.py`, `einstein_system(base=None, on=False)`; NOTES_einstein.md). It puts the
+  ten metric gears in the integer DeWitt basis and couples them to L0 in the diagonal sector, reciprocally plus a one-way beta read.
+  - With it on, gamma = 1 is derived for dust, given the layer's CHOSEN board reader. Board light bending and Shapiro delay come out
+    at 2.08-2.16x and 2.02-2.06x Newton, measured with one-way test lights; E1 does not read the metric.
+  - The source is not conserved.
+  - The full Einstein equations remain impossible at rank 4 (THEOREM walls).
+  - Signed: s28/AGREE_EINF.md, copied to full_picture_2026-11-10/records/.
+* Clock law CG2 (Study 34; `layers/clockgen.py`, `one_system_clock(law="CG2", theta0_log2=21)`; NOTES_clockgen.md). It adds one
+  designated one-way term per node, u[h00] += Theta*F. No package matter gear reads the hand; whether the cosmic block's own
+  readers M1/M2 count as matter is an open owner question.
+  - Theta0 = 2^21 is CHOSEN (window-fitted, owner-approved), not forced.
+  - At L = 6 it holds the uniform lapse to |U| <= 4.1e-3 up to t = 8,900.
+  - It is valid only inside CLOCK_VALIDITY (L <= 6); it fails at L = 7 and 8.
+  - Not safe as the default.
+  - Signed: s34/AGREE_CLK.md, copied to full_picture_2026-11-10/records/.
+* The final synthesis is full_picture_2026-11-10/FULL_PICTURE_FINAL.md; the open problems are in FOLLOW_UP_RESEARCH.md.
+
 ## 8. Deviations, predictions and no-go theorems
 
 * **E1 (OWNER decision 4: a PREDICTION, not an exception).** E1 gives:
@@ -701,6 +720,8 @@ The account, the tests and the results are in NOTES_one.md; ONE-B's marks are in
 | route B (opt-in, default OFF) | `layers/electroweak_b.py`, `observe/electroweak_b.py` | `tests/test_electroweak_b.py` -> `results/electroweak_b/`, NOTES_electroweak_b.md |
 | ONE version (Study 22): ONE v1 = `one_system()` (default); coupled C1 = `couple_doublet=True`, opt-in only (NEW LAW candidate, REJECTED by the owner) | `layers/one.py`, `prepare/one.py`, `observe/one.py`, `demos/one/` | `tests/test_one.py`, NOTES_one.md, s22/AGREE_ONE.md (OB5, OB6, OB9), s22/ONE-A_work/runs/, s30/runs/ (C1 runaway) |
 | rank 4 final (rank 5 rejected) | - | s23/AGREE_R5.md (Study 23 joint verdict) |
+| opt-in linearised Einstein layer (Study 28, default OFF) | `layers/einstein.py`, `observe/einstein.py`, `demos/einstein/` | `tests/test_einstein.py` (17), NOTES_einstein.md, full_picture_2026-11-10/records/s28_AGREE_EINF.md |
+| opt-in clock law CG2 (Study 34, default OFF, L <= 6) | `layers/clockgen.py`, `observe/clockgen.py` | `tests/test_clockgen.py` (11), NOTES_clockgen.md, full_picture_2026-11-10/records/s34_AGREE_CLK.md |
 | mass lock check | `demos/system/mass_lock_check.py` | `results/system/mass_lock.json` |
 | matter lapse C (R1 default) | `layers/matter_lapse_c.py`, `demos/system/dirac_formc_check.py` | `results/system/DIRAC_C.json`, `L0C_clock.json`, `v2_matter_split_contrast.json` |
 | gravity source of lapse C | `demos/system/gravity_source_check.py` | `results/system/gravity_source.json` |
