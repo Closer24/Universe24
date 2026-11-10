@@ -1,8 +1,26 @@
 # metric_variant_v1: candidate variant, Stage 0 (core engine)
 
-> **Current status (2026-11-10).** This page describes Stage 0. The current description of the package is
-> [README_v1_draft.md](README_v1_draft.md): hands ON with FIX-i, GRAV-FIX A, the ONE version with the cosmic-clock layer,
-> and route B (opt-in). The full-picture documents are in [full_picture_2026-11-10/](full_picture_2026-11-10/README.md).
+> **Current status (2026-11-10).** The current version of this package is the **ONE version** (Study 22): one tensor,
+> one odd Q, one seed and one run. `one_system()` in [layers/one.py](layers/one.py) composes the package's default
+> system, `default_system()` in [layers/system.py](layers/system.py) (hands ON, FIX-i, GRAV-FIX A), with the
+> cosmic-clock layer (the WIND hand). By default it is ONE v1, block-diagonal: the hand reads no matter, and no
+> package gear reads the hand. The doublet-reads-the-hand coupling (Study 22) was rejected by the owner: matter must
+> not read the clock; it also runs away (Study 30); it is kept as an explicit opt-in (`couple_doublet=True`) for the
+> record. ONE v1 shows no runaway in what could be run (to t = 9,869 at L = 6), but it is not quiet: E1, β and the
+> metric grow slowly, and its uniform lapse has no restoring force and reaches U = −0.186 by t = 9,869: the main OPEN
+> stability problem of the default (Study 30); Study 34's clock law CG2 (`one_system_clock`, layers/clockgen.py) is an
+> opt-in candidate fix, default OFF and valid only for L ≤ 6; it is not a size-independent law. The other owner
+> decisions behind the version: rank 4 is final (rank 5 was studied and rejected in Study 23); bangs do not return to
+> the seed: each turn of the cosmic clock starts a new seed, and no information is lost, because Rule3 on one tensor
+> is an exact bijection; there is no freeze or hold on the board; light follows route A (E1, with hypercharge global),
+> and route B is opt-in and OFF; FIX-i is the hands-ON default. The departures from AGENTS.md now cover items 1, 2, 4,
+> 5, 6 and 8, all in declared layers. Start with
+> [full_picture_2026-11-10/FULL_PICTURE_FINAL.md](full_picture_2026-11-10/FULL_PICTURE_FINAL.md), the final synthesis
+> (Study 36); then [ONE_EXPLAINED.md](ONE_EXPLAINED.md) (the node, the algebra, the clocks, the seed and the tensor),
+> [README_v1_draft.md](README_v1_draft.md), the detailed package description, [NOTES_one.md](NOTES_one.md) for the ONE
+> version, and [full_picture_2026-11-10/](full_picture_2026-11-10/README.md), beginning with the signed
+> THE_ALGEBRA.md. Where the full-picture documents differ from README_v1_draft.md, that README and the code govern.
+> The rest of this page describes Stage 0, the core engine, and is kept as history.
 
 This is a **separate candidate variant** of Universe24. It is not the reference model. The reference engine in
 [`universe24/`](../../universe24/) is not modified. This package imports it read-only, to build the reference block

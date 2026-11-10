@@ -1,6 +1,7 @@
 # THE ALGEBRA OF EVERYTHING — Universe24 as one law, derived step by step (Study 24)
 Writer: ALG-A (§1–§4, §6–§10); EIN-A (§5, merged verbatim). Verifiers: ALG-B / EIN-B (s24/AGREE_ALG.md).
-Draft opened Tue Nov 10 14:59 UTC 2026 (`date -u`). Base text: s17/GRAND_UNIFICATION.md (GU; merged and signed by CUBE-A and CUBE-B;
+Opened Tue Nov 10 14:59 UTC 2026; FINAL v1 frozen 15:45:34 UTC (`date -u`); verified in s24/AGREE_ALG.md (ALG-B / EIN-B: all rows
+ACCEPT, 0 DISAGREE). Base text: s17/GRAND_UNIFICATION.md (GU; merged and signed by CUBE-A and CUBE-B;
 §00–§11, AGREE table, circularity rows X1–X36). This document adds step-by-step derivations, small exact worked examples, and
 one label on every line. It makes NO new physical claim: anything not in a signed file or an exact check below is marked OPEN.
 
