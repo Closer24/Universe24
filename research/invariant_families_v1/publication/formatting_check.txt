@@ -1,3 +1,0 @@
-research/invariant_families_v1/evidence/executed_review_sources/research/component_review/audit.py:202: new blank line at EOF.
-
-Frozen executed reviewer source preserves its original terminal blank line; no archived source bytes were altered for formatting.

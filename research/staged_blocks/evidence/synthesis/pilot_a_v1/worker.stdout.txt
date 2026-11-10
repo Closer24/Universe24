@@ -1,1 +1,0 @@
-{"accepted":false,"cpu_seconds":597.182276529,"format":"universe24-staged-synthesis-result-v1","peak_resident_bytes":1995116544,"physical_light_or_approval_established":false,"pilot":"A","reason":"timeout","scope":"Only the frozen22-remainder apparatus family, fixed complete tensor, source and horizon12","status":"inconclusive_solver","wall_seconds":597.8885721219995}

@@ -1,4 +1,0 @@
-tests/test_clock_selection_carrier_memory.py:29: trailing whitespace.
-+    
-tests/test_clock_selection_carrier_memory.py:30: trailing whitespace.
-+    

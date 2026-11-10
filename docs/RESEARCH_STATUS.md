@@ -1,59 +1,35 @@
-# Research status, boundaries and acceptance criteria
+# ONE research status
 
-## Present implementation
+The active default is ONE v1, the result of `one_system()`. The implementation is a candidate model. A successful software check is evidence for its precise assertion, not for every physical interpretation in a research note.
 
-This repository specifies a **single-board mathematical dynamical system**, with exact integer state, 48 group-labelled channels per node, fixed signed six-spatial-neighbor coupling and one Rule3 recurrence. It includes a pure executor, explicit algebraic inverse, seed/checkpoint loading, external arithmetic event readouts, and automated contract tests.
+## Established construction properties
 
-The algebraic law and the static coupling definition are reproducible. Passing tests is evidence of **implementation consistency**, not of empirical physical correctness.
+- One shared exact Rule3 recurrence and divisor; fixed integer polynomial input.
+- Local support validation and acyclic old-a dependency validation.
+- A constructive inverse for every accepted tensor under these conditions.
+- Complete-state regression, exact rewind, remainder parity and quotient ledger checks.
+- Cube and binary-octahedral algebra, plus explicitly constructed field representations.
+- Prepared clock, router, field and detector experiments with recorded controls.
 
-## Results within the scope of this repository
+## Physical targets still open
 
-| Property | Scope |
-| --- | --- |
-| Full-state invertibility | Exact constructive inverse, with complete state and same fixed coupling |
-| Six spatial connections | One signed input per face direction, per channel, by construction |
-| Finite cube covariance | Group-derived 24 proper spatial rotations with 48 double-cover channel labels |
-| Three remainder classes | Algebraic `C0,C1,C2` transition classification, passive readout |
-| Local balance identity | Exact arithmetic residual of Rule3 |
-| Signed account `Q` | Conserved in the positive reference case on the periodic graph; generally changes for other sign choices |
-| Clock/packet preparations | Candidate examples and research testbeds, not identified physical particles |
-| Restricted clock-rate coincidence | Two specified all-48-channel probes have local periods 4 without and 5 with the same neighboring source, with a period-4 reference; not universal gravitational redshift |
-| Collective activity | Exact quadratic identity and balance update; no derived clock-slowing function of the activity tensor alone |
-| Autonomous finite-guide link | Prepared source, propagated phase front, endpoint reflection and cyclic local records; not permanent memory or physical time |
+- Long-time and large-board stability, including the uniform lapse mode. Long gauge tests reproduce strong-drive runaway (G6) and two bounded but over-threshold calibrated cases (G6b). Their original stability criteria remain failed; regression tests explicitly preserve the negative results.
+- Universal gravitational clock and matter response. The visible doublet lacks the required rest-lapse coupling in the default.
+- A complete interacting particle model; several gauge sectors remain isolated from the proposed physical core.
+- General quantum statistics, a fresh-remainder mechanism, Bell-consistent measurement predictions and no-signalling under declared assumptions.
+- Physical time and observer calibration independent of a global computational schedule.
+- An autonomous, measured preference for greater persistent organization. C2 readout does not implement a complexity optimizer.
 
-These results should not be conflated with claims from other prototype graphs or prior experimental variants. In particular, a previous prototype with two on-site and four spatial contacts **is not** the topology implemented here.
+## Optional and rejected constructions
 
-The [clock and gravity status](GRAVITY_STATUS.md) links the exact proofs,
-scoped computational results and remaining metric/Einstein tests. In particular,
-the restricted `4/5` coincidence is positive evidence about two preparations;
-other clocks respond differently, so a common physical proper-time law remains
-unproved.
+`couple_doublet=True` is a rejected experiment retained to reproduce its exactness and measured runaway. It is off by default. The Einstein and CG2 layers are optional constructions with limited tested regimes; the default does not inherit their proposed conclusions.
 
-## Not yet demonstrated
+ONE's default cosmic block and package are block diagonal. The cosmic M1/M2 readers read the cosmic hand; package matter does not. There are no runtime resets or random seed injections at a hand zero crossing.
 
-- A physical detector click, detector readiness and irreversible-looking yet full-state-reversible records.
-- A universal choice/selection rule based on a specified complexity functional.
-- Self-generated, addressed cancellation signals that enforce exclusive outcomes against late competitors.
-- An autonomous physical clock independent of the simulator's synchronized reference updates.
-- Physical identification and exact balance of **energy**, **momentum**, **charge** and **total angular momentum**, including detector recoil and interaction contributions.
-- Derivation of physical mirror/parity violation in a particular interaction. Signed/frustrated loops do not suffice.
-- Photons, electromagnetic polarization, stable atoms/nuclei/electrons, spin-1/2 measurement, Bell statistics, the Born rule, Lorentz covariance, gravity or Einstein's field equations.
+## Evidence provenance
 
-The ordinary double-cover labels `g,-g` represent the **same proper spatial cube rotation**, not 24 rotations plus 24 literal mirror reflections. A signed link is **not automatically a chiral interaction**.
+The files under `universe24/results/`, `universe24/full_picture_2026-11-10/` and the `NOTES*` / manifest files preserve ONE research records, including negative results and superseded hypotheses. Their original timestamps and configuration descriptions are evidence metadata, not the current public specification.
 
-## Explicit research tests
+The former standalone 48-channel runtime and unrelated experiment trees remain available at [the pre-migration commit](https://github.com/Closer24/Universe24/tree/d73f78e827e3d7b15c06f729c52fa3c2cc241ed2). They are not an active second implementation or evidence that the corresponding claims hold in ONE.
 
-1. Compare fixed `[1,1,1]` and `[1,-1,1]` couplings with the same seed and measure full-state behavior, not only projected `b` patterns.
-2. Search for reproducible spatially extended oscillators and wave packets with exact periods/shifts including remainders. Report dependence on boundary size `L`.
-3. Propose **one readout fixed before testing** and distinguish ordinary atomic-like events from detector confirmations. Do not redefine `C2` after seeing data.
-4. Implement, if possible, a spatially propagating confirmation/cancellation protocol **inside the generic state**, then test delayed signals, simultaneous candidates, ties and full inverse.
-5. Define a quantitative structured-complexity functional (normalization, domain, tie rule) and test whether measured selection actually follows it; raw number of oscillators is not enough.
-6. Search for physical candidate invariants with explicit local storage/flux and correct detector accounting. A mathematical `Q` is not energy.
-7. Check the physical mirror transformation on both spatial positions and internal observables before claiming parity breaking.
-8. Quantitatively compare with independent physical data, including null detections, timing and correlations, using one fixed protocol.
-
-## Failure reporting
-
-Failures are first-class results. Report the exact seed, coupling signs, cube side, full time interval, initial state, any diagnostic tolerance (normally **zero** for exact integer identities), and a counterexample when a conjecture fails.
-
-Do not turn an externally observed event into an internal command. If a new physics hypothesis requires changing the transition law, publish it as a **clearly named variant** with a separate implementation and fresh correctness tests; do not overwrite the generic Rule3 model.
+See [MODEL](MODEL.md) for the algebra and [VALIDATION](VALIDATION.md) for the actual migration checks.

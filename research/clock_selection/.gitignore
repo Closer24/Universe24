@@ -1,4 +1,0 @@
-# Expanded evidence is restored from the pinned parts archive. Small selected
-# verdicts and manifests may be force-added for review; live files are retained.
-evidence/
-__pycache__/

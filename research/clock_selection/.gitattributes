@@ -1,3 +1,0 @@
-# New invariant-family proofs and protocol are referenced by exact hashes.
-invariant_families* -text
-invariant_overlap_protocol.json -text

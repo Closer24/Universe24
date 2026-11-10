@@ -1,0 +1,36 @@
+[
+  {
+    "L": 3,
+    "seed": 13,
+    "dynamics": "77f6d251a8adfb2e4727bd2bd5ffeaa0e2ae3538aac393fe95c497fce754acf6",
+    "hashes": [
+      "4bbfb962103c90e84437a27d21d727beeeb890ab1eaf85ed558ca1091c2bd29f",
+      "f40dbc7a33b20bf843fa933ab61d2f2eaecb399a43a15e7a88da7002fb7e2ff2",
+      "b9e58178bca70c6c6d477f6da5c93f386708fa7d01539a49c8fa2bb19c7c3989",
+      "cfb03df171daef46926669fa8526c334f5729c4bccfedc95bbdd661d25fae65f",
+      "9d0670eb9791fbbd747fcb8d826c69ed72e73866909ff8b3337160a691696b34",
+      "5ebdfebde213eff07d1ab7f5a37f89aea5c696306b5c8216c2697a49ac1a28c9",
+      "b9658188b80f23bd5bc5fc749577f2a4805a1e4cc12bc2dc524291abdf2420cc"
+    ],
+    "G": 382,
+    "terms": 18592,
+    "designations": 736
+  },
+  {
+    "L": 4,
+    "seed": 17,
+    "dynamics": "77f6d251a8adfb2e4727bd2bd5ffeaa0e2ae3538aac393fe95c497fce754acf6",
+    "hashes": [
+      "8df90b597867f685f317268e25f6ba7b392fc6cbfa9a936b0233455eb7354836",
+      "804a83397d9e55a06e68ad62fce18b763952f9dcaf8a588d69fd0599abfea233",
+      "d1c5e85bf590a853be7b5cab2769c43753ac4ccdb2f40b3eb08cb32c3fc8a000",
+      "d09f83a9b1ff17404e57f8013241b26bffa3a3c4b753e11e49a77a3a0358844f",
+      "f2eef6c99c01a11ad79c6d762ae5fa4748ff57fec14fc6a781789112597e76c4",
+      "8f3ae18ada14f3c9335bb60cbabac90cea89078887a4b6cb32b8095b5f23c543",
+      "68953c75d4e3a09cee5615dc2366357dbeec0fd374f35ec1de77b518335147a4"
+    ],
+    "G": 382,
+    "terms": 18592,
+    "designations": 736
+  }
+]

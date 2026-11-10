@@ -1,7 +1,0 @@
-{
- "name": "sign_split_v1",
- "file": "sign_layer.py",
- "sha256": "9eb55d1ad47edf680e7518102177a4efb91073ae3b705dee227574d376b5bad7",
- "frozen_utc": "2026-11-09T02:23:10Z",
- "note": "declared observer layer outside the frozen decoder cores (FROZEN.json, FROZEN_v1.1.json unchanged); frozen before it was run on r20's held-out logs (r17 NOTES addendum 3)"
-}

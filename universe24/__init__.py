@@ -1,4 +1,2 @@
-"""Universe24: exact generic reference engine, not a validated physical theory."""
-from .core import Channel,Coupling,Cube,Engine,State,VACUUM
-__version__="0.1.0"
-__all__=["Channel","Coupling","Cube","Engine","State","VACUUM"]
+"""Universe24 ONE: one exact Rule3 engine, one fixed polynomial tensor and one complete seed."""
+__version__ = "0.2.0"

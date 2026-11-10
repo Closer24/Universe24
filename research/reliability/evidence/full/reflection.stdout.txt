@@ -1,1 +1,0 @@
-Rotations PASS. All 24 improper maps admit signed lifts, for all 8 coupling choices. Mirror lift order: 4.
