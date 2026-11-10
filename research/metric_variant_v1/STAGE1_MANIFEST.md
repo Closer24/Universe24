@@ -42,7 +42,7 @@
 ## STAGE 1-EM (frozen Tue Nov 10 10:38:02 UTC 2026, `date -u`) — rolling stage-1 snapshot
 - Builder: B1-EM (FREEZE-READY 10:36). Matter (16-ch Dirac pair, Wilson parameter) + E1 (designated cross terms, documented variant) + compact-U(1) route (EM-C1–C3).
 - Builder-declared sha256 of the 9 code files verified by the manager (0 mismatches). Builder run: 13/13 OK (10:06:45–10:06:50). Suite: `OMP_NUM_THREADS=2 nice -n 10 python -m unittest research.metric_variant_v1.tests.test_em research.metric_variant_v1.tests.test_em_compact -v`.
-- Status at freeze: compact route EM-C1 dressed Gauss 0 failures, C2 0 designations, C3 rewind + M′ exact, C4 Coulomb signs PASS; C5 Newton III FAIL (−0.50; early window −0.96); C6 no link wave in the gauge regime FAIL → compact U(1) NOT yet the EM block (owner approval ז was conditional); E1 remains the working EM.
+- Status at freeze: compact route EM-C1 dressed Gauss 0 failures, C2 0 designations, C3 rewind + M′ exact, C4 Coulomb signs PASS; C5 Newton III FAIL (−0.50; early window −0.96); C6 no link wave in the gauge regime FAIL → compact U(1) NOT yet the EM block (the owner approval of this option was conditional); E1 remains the working EM.
 - NOTES_em.md still open (docs; hashed at the final freeze). New work only in new files.
 
 | file | sha256 | bytes |
