@@ -6,6 +6,9 @@ electromagnetic stress tensor. The source is a plane radiation field; no massive
 matter distribution or general reciprocal matter-gravity solver is claimed.
 The default ONE tensor and common Engine are unchanged.
 
+The [tensor-board observer](TENSOR_BOARD.md) reads these stored histories and
+exposes the full metric, Riemann, Ricci, Einstein, Maxwell stress and Weyl tensors.
+
 ## Reproduction
 
 ```sh

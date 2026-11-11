@@ -202,6 +202,8 @@ and full-state rewind. The eight scoped tests and 13 existing quick tests passed
 The follow-up [Einstein-Maxwell experiment](EINSTEIN_MAXWELL_EXPERIMENT.md)
 adds an independently computed nonzero electromagnetic source and charged
 test particles, with a separate negative test for naive reciprocal completion.
+The [tensor-board observer](TENSOR_BOARD.md) exposes complete geometric tensor
+components at every site and time of the recorded n=2 histories.
 
 This completes a restricted chain: exact prepared integer transport, a declared
 full nonlinear vacuum metric, symbolic Einstein/Riemann verification, and an
