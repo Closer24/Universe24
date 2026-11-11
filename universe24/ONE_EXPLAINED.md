@@ -1,3 +1,5 @@
+> **Historical research record.** This text describes its original configuration and contains superseded paths, defaults and interpretations. For the executable current construction and evidence boundaries, use the [system map](../docs/SYSTEM_MAP.md) and its linked algebra. Claims marked THEOREM or DERIVED below retain their original stated assumptions; they are not a certificate that the current default derives physical laws.
+
 # The ONE version explained: the local node, the full algebra, the clocks, the seed and the tensor
 
 This page is the long version of the ONE-version sections of the [root README](../../README.md). It describes the

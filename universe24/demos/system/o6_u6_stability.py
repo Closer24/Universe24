@@ -1,5 +1,8 @@
 import sys, time, json, random
-sys.path.insert(0, '/home/user/Universe24')
+from pathlib import Path
+ROOT = Path(__file__).resolve().parents[3]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 from datetime import datetime, timezone
 from universe24.layers.onematter import build_one_matter
 from universe24.core.tensor import compose
@@ -30,4 +33,8 @@ for amp in AMPS:
     out[f"amp{amp}"]={"worst_frobenius_dev":worst,"runaway_at":run,"series(t,dev,unitarity_defect)":series,"seconds":round(time.time()-t0,1),"pyint_steps":E.stats["pyint_steps"]}
     print(amp, out[f"amp{amp}"], flush=True)
 out["stamp_utc"]=datetime.now(timezone.utc).strftime("%a %b %d %H:%M:%S UTC %Y")
-json.dump(out, open('/home/user/Universe24/universe24/results/system/O6_u6_stability_A' + str(A) + '_lam' + str(LAM) + '_' + SPRING + '_' + '_'.join(map(str, AMPS)) + '_T' + __import__('os').environ.get('U6_STEPS', '500') + '.json','w'), indent=1)
+output_dir = Path('runs/demos/system')
+output_dir.mkdir(parents=True, exist_ok=True)
+output_name = ('O6_u6_stability_A' + str(A) + '_lam' + str(LAM) + '_' + SPRING + '_'
+               + '_'.join(map(str, AMPS)) + '_T' + __import__('os').environ.get('U6_STEPS', '500') + '.json')
+(output_dir / output_name).write_text(json.dumps(out, indent=1) + '\n')

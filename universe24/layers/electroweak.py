@@ -1,6 +1,7 @@
-"""ELECTROWEAK extensions of the chiral candidate (EW-BUILDER = HAND-M1): DECLARED CANDIDATES, DEFAULT OFF; every piece
-is active only together with the chiral block (layers/chiral.py, itself DEFAULT OFF). TENSOR BLOCKS ONLY. NEW file;
-no existing package file (layers/chiral.py included) is modified.
+"""Electroweak research-candidate extensions, enabled in the current default_system.
+
+The standalone compose_electroweak helper defaults to on=False; the root
+composition explicitly enables it. All terms are constructed before a run.
 
 L3  Higgs hop (W mass): Psi = kH sum_{x,d} <Phi(x), U(x,d) Phi(x+e_d)>  - (cPhi/2) sum_x |Phi|^2 - (cW/2) sum_links |U|^2,
     cPhi = 6 kH A, cW = kH v^2 / A (exact vacuum balance: no linear term). Exactly SU(2)-covariant (Phi -> g Phi,
@@ -77,7 +78,7 @@ def build_higgs_hop(*, coupling: Block, links: Block, kH: int = KH_DEFAULT, name
     return Block((), tuple(terms), name=name, Q=Q,
                  params={"Q": Q, "kH": kH, "v": v, "A": A, "cPhi": cPhi, "cW": cW, "coupling": coupling.name,
                          "links": links.name, "predicted_dcos_w_W": str(Fraction(-cW, D)),
-                         "candidate": "DECLARED CANDIDATE, DEFAULT OFF (needs the chiral block)"},
+                         "candidate": "research candidate; needs the chiral block; enabled in default_system"},
                  doc="L3 covariant Higgs hop <Phi, U Phi'> + exact vacuum balance (W mass term -(cW/2)|U|^2)")
 
 
@@ -128,7 +129,7 @@ def build_graviweak_b(*, coupling: Block, links: Block, matter_blocks, field: st
     return Block((), tuple(terms), name=name, Q=Q,
                  params={"Q": Q, "P": P, "field": field, "cF": cF, "cL": cL, "lam_H": lam_H, "lam_L": lam_L,
                          "oneway": oneway, "option": "(b): lapse x |Phi|^2, link factor x |U|^2, singlet-half hop",
-                         "candidate": "DECLARED CANDIDATE, DEFAULT OFF (needs the chiral block)"},
+                         "candidate": "research candidate; needs the chiral block; enabled in default_system"},
                  doc="L2(b) graviweak: SU(2)-invariant rank-3 lapse couplings (Higgs sets the clocks)")
 
 
@@ -180,9 +181,12 @@ def compose_electroweak(system, *, on: bool = EW_DEFAULT_ON, higgs_hop: bool = T
                                         oneway=(system.info.get("lapse") == "od2")))
         info["electroweak_fix_i"] = {"gwb_lam_H": gwb_lam_H, "gwb_lam_L": gwb_lam_L,
                                      "record": "owner decision v8-1, 14:37 UTC, FIX-i per s18/AGREE_STAB.md"}
-        info["electroweak_lapse"] = ("L2(b): lapse x |Phi|^2 and link factor x |U|^2 + singlet-half hop factor; "
-                                     "default mlapse/mbeta of 'matter' removed; beta read of the doublet OPEN")
-    info["electroweak"] = {"status": "DECLARED CANDIDATE, DEFAULT OFF", "higgs_hop": higgs_hop, "kH": kH,
+        actual = blocks[-1].params
+        info["electroweak_lapse"] = (
+            f"L2(b): lam_H={actual['lam_H']}, lam_L={actual['lam_L']} "
+            "(zero disables the corresponding Higgs/link-norm dressing); singlet-half hop retained; "
+            "default mlapse/mbeta of 'matter' removed; beta read of the doublet OPEN")
+    info["electroweak"] = {"status": "research candidate enabled in this composition", "higgs_hop": higgs_hop, "kH": kH,
                            "graviweak": graviweak, "hypercharge": "analysis only (E1 cannot gauge Y: NOTES)"}
     return System(system.Q, tuple(blocks), info)
 

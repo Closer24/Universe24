@@ -2,7 +2,7 @@
 CONTROL, and redshift via light; MECHANISM load + prepared static field.
 
 Usage (repository root): OMP_NUM_THREADS=2 nice -n 10 python universe24/demos/gravity/d2_light.py
-Writes results/gravity/D2.json.
+Writes runs/demos/gravity/D2.json.
 """
 from __future__ import annotations
 
@@ -25,7 +25,7 @@ from universe24.observe import gravity as og
 from universe24.prepare import gravity as pg
 from universe24.prepare import vacuum_state
 
-OUT = ROOT / "universe24/results/gravity"
+OUT = Path("runs/demos/gravity")
 
 
 def stamp():

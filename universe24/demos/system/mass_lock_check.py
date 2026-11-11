@@ -1,7 +1,7 @@
 """Weak-field rounding-lock check of the default mass (pre-registered in NOTES_system.md, "PRE-REGISTRATION LOCK").
 Method of R-P1's review/phys1/stage1em/p1e_weakfield_lock.py (own script, default parameters at Q = 2^33 + 1).
 Run: OMP_NUM_THREADS=1 nice -n 10 python -m universe24.demos.system.mass_lock_check
-Writes results/system/mass_lock.json."""
+Writes runs/demos/system/mass_lock.json."""
 from __future__ import annotations
 
 import json
@@ -19,7 +19,7 @@ from ...prepare import vacuum_state, with_gears
 Q = Q_DEFAULT
 D = 6 * Q
 G_PHI = 4
-OUT = Path(__file__).resolve().parents[2] / "results" / "system"
+OUT = Path("runs/demos/system")
 
 
 def joint_vec():

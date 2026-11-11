@@ -17,7 +17,7 @@ from universe24.layers import build_reference
 from universe24.layers import gravity as gr
 from universe24.prepare import vacuum_state
 
-OUT = ROOT / "universe24/results/gravity"
+OUT = Path("runs/demos/gravity")
 
 
 def main():

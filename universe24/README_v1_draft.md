@@ -1,3 +1,5 @@
+> **Historical research record.** This text describes its original configuration and contains superseded paths, defaults and interpretations. For the executable current construction and evidence boundaries, use the [system map](../docs/SYSTEM_MAP.md) and its linked algebra. Claims marked THEOREM or DERIVED below retain their original stated assumptions; they are not a certificate that the current default derives physical laws.
+
 # metric_variant_v1: the composed system (DRAFT for the final freeze; README.md is replaced only by the manager)
 
 Status: INTEGRATOR draft, Tue Nov 10 2026, ~12:30 UTC (R1 + R2 + RC2 batch 1 folded in).

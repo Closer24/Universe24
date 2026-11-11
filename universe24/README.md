@@ -1,6 +1,6 @@
 # ONE implementation and research records
 
-The current entry point, installation, defaults and validation commands are in the [repository README](../README.md). The current mathematical specification is [docs/MODEL.md](../docs/MODEL.md).
+The current entry point, installation, defaults and validation commands are in the [repository README](../README.md). The current mathematical specification is [docs/MODEL.md](../docs/MODEL.md). The [system map](../docs/SYSTEM_MAP.md) gives the module inventory, actual interconnections, proof assumptions and physical limitations.
 
 All runtime code in this directory belongs to ONE. `ref` / L0 denotes the 48-gear algebraic block inside ONE; it does not select another engine. `core/engine.py` is the sole forward engine.
 

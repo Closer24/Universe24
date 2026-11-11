@@ -3,7 +3,7 @@ chosen in the PREPARATION so that U >= 0 (N <= 1) everywhere; dynamic test with 
 a noisy headroom light field; control without the offset.
 
 Usage: OMP_NUM_THREADS=1 nice -n 10 python universe24/demos/gravity/d7_slows.py
-Writes results/gravity/D7.json.
+Writes runs/demos/gravity/D7.json.
 """
 from __future__ import annotations
 
@@ -26,7 +26,7 @@ from universe24.observe import gravity as og
 from universe24.prepare import gravity as pg
 from universe24.prepare import vacuum_state
 
-OUT = ROOT / "universe24/results/gravity"
+OUT = Path("runs/demos/gravity")
 
 
 def stamp():

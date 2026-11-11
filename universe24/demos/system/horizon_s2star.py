@@ -2,7 +2,7 @@
 detuned beta) with the S2* seed (A = 2^16, i = 0, x0 = (2,2,2)), L = 6, 2,000 updates. Samples every 200 updates:
 max |G_pi| (beta.G corner Fourier amplitude |Sum_x (-1)^(x+y+z) G(x)| / N), U_mean = mean(metric.h00)/(2P), max bits.
 Run: OMP_NUM_THREADS=1 nice -n 10 python -m universe24.demos.system.horizon_s2star [T] [beta_form] [L] [c2]
-Writes results/system/horizon_s2star_<beta_form>[_L<L>][_c2].json."""
+Writes runs/demos/system/horizon_s2star_<beta_form>[_L<L>][_c2].json."""
 from __future__ import annotations
 
 import json
@@ -19,7 +19,7 @@ from ...layers.system import default_system
 from ...prepare.seed import l0_dark_seed, l0_rstar_vector, s2_star
 from ...prepare.system import system_vacuum
 
-OUT = Path(__file__).resolve().parents[2] / "results" / "system"
+OUT = Path("runs/demos/system")
 L, A, X0 = 6, 1 << 16, (2, 2, 2)
 
 

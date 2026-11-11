@@ -2,7 +2,10 @@
 wider than one link, OD3 placement, designated reads vs force terms (no coincidence), constants, rank."""
 from collections import Counter
 
-from emlib import Q0, HOP0, MASS0, save
+if __package__:
+    from .emlib import Q0, HOP0, MASS0, save
+else:
+    from emlib import Q0, HOP0, MASS0, save
 from universe24.core import compose
 from universe24.layers.em import build_current_driver, build_em
 from universe24.layers.matter import build_matter, build_static_lapse_mechanism

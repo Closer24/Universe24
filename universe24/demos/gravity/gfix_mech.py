@@ -23,7 +23,7 @@ from universe24.prepare.gravity_ra import ra_two_time
 from universe24.prepare.seed import ra_background, s2_star
 from universe24.prepare.system import system_vacuum
 
-OUT = ROOT / "universe24/results/gravity"
+OUT = Path("runs/demos/gravity")
 
 
 def stamp():

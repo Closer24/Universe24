@@ -10,7 +10,10 @@ import time
 
 import numpy as np
 
-from emlib import Q0, accel, em_system, phi_of, save, stamp
+if __package__:
+    from .emlib import Q0, accel, em_system, phi_of, save, stamp
+else:
+    from emlib import Q0, accel, em_system, phi_of, save, stamp
 from universe24.observe import em as oem
 from universe24.prepare import vacuum_state
 from universe24.prepare import em as pem

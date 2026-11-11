@@ -1,6 +1,6 @@
 """H3 LONG RUN of the HYBRID gravity source (pre-registered in NOTES_gravity_hybrid.md). NEW FILE.
 Run: OMP_NUM_THREADS=1 nice -n 19 python -m universe24.demos.gravity.hybrid_long [T] [detune_h00 0/1]
-Writes results/gravity_hybrid/LONG_<tag>.json (checkpoint every 500 updates; final at the end or at a runaway)."""
+Writes runs/demos/gravity_hybrid/LONG_<tag>.json (checkpoint every 500 updates; final at the end or at a runaway)."""
 from __future__ import annotations
 
 import json
@@ -19,7 +19,7 @@ from ...prepare.gravity_hybrid import hybrid_source_total, with_hybrid_datum
 from ...prepare.seed import l0_dark_seed, l0_rstar_vector, m0_band_vector, s2_star
 from ...prepare.system import system_vacuum
 
-OUT = Path(__file__).resolve().parents[2] / "results" / "gravity_hybrid"
+OUT = Path("runs/demos/gravity_hybrid")
 L = 4
 
 

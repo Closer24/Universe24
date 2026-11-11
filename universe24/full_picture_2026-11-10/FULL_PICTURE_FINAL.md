@@ -1,3 +1,5 @@
+> **Historical research record.** This text describes its original configuration and contains superseded paths, defaults and interpretations. For the executable current construction and evidence boundaries, use the [system map](../../docs/SYSTEM_MAP.md) and its linked algebra. Claims marked THEOREM or DERIVED below retain their original stated assumptions; they are not a certificate that the current default derives physical laws.
+
 # FULL PICTURE — Universe24 through its clocks (final synthesis, Study 36)
 
 Writer: SYN (Study 36). Skeleton written Tue Nov 10 16:29 UTC 2026 (`date -u`); final: Tue Nov 10 17:43:11 UTC 2026 (`date -u`).

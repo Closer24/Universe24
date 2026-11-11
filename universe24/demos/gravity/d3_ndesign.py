@@ -2,7 +2,7 @@
 exact isotropic Schwarzschild lapse) plus clocks reading A; MECHANISM source (prescribed static density gear n).
 
 Usage (repository root): OMP_NUM_THREADS=1 nice -n 10 python universe24/demos/gravity/d3_ndesign.py
-Writes results/gravity/D3.json.
+Writes runs/demos/gravity/D3.json.
 """
 from __future__ import annotations
 
@@ -25,7 +25,7 @@ from universe24.observe import gravity as og
 from universe24.prepare import gravity as pg
 from universe24.prepare import vacuum_state
 
-OUT = ROOT / "universe24/results/gravity"
+OUT = Path("runs/demos/gravity")
 
 
 def stamp():

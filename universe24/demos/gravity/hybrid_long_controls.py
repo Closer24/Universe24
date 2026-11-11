@@ -18,7 +18,7 @@ from ...prepare.gravity_hybrid import with_hybrid_datum
 from ...prepare.seed import l0_dark_seed, l0_rstar_vector, m0_band_vector, s2_star
 from ...prepare.system import system_vacuum
 
-OUT = Path(__file__).resolve().parents[2] / "results" / "gravity_hybrid"
+OUT = Path("runs/demos/gravity_hybrid")
 L = 4
 FINE_AFTER = 10 ** 9
 

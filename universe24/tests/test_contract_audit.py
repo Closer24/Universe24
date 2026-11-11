@@ -46,6 +46,48 @@ class ContractRegression(unittest.TestCase):
         e = Engine(t, Q); s = e.vacuum(3, [0]); n = e.step(s)
         np.testing.assert_array_equal(kinds(t, e.D, s, n, 'g'), np.full(27, 2))
 
+    def test_clicks_survive_large_divisor_snapshot_reload(self):
+        import json
+        Q = 1 << 80
+        # Zero and nonzero remainders, positive and negative carries, and an
+        # empty event set must all retain identical records across serialization.
+        for coeff in (0, 3*Q, 4*Q, -4*Q):
+            t = Tensor(['g'], [('g', coeff, ())], Q=Q)
+            e = Engine(t, Q); s = e.vacuum(3, [0]); n = e.step(s)
+            before, after = [State.from_dict(json.loads(json.dumps(v.to_dict()))) for v in (s,n)]
+            for stream in ('raw', 'official'):
+                self.assertEqual(e.clicks(before,after,stream=stream).rows(),
+                                 e.clicks(s,n,stream=stream).rows())
+
+    def test_rewind_rejects_invalid_horizons(self):
+        e = Engine(Tensor(['g'], [], Q=1), 1)
+        s = e.vacuum(3, [0])
+        self.assertTrue(e.rewind(s,0).same_as(s))
+        self.assertTrue(e.rewind(e.run(s,2),2).same_as(s))
+        for steps in (-1, True, 1.5, '1'):
+            with self.assertRaises(ValueError): e.rewind(s,steps)
+
+    def test_engine_ignores_names_labels_link_metadata_and_field_signs(self):
+        # Identical indexed polynomials with deliberately different physical
+        # names and observer metadata must produce the same complete history.
+        source = Tensor(['first','second'], [
+            ('first',2,(('first',ZERO,'b'),('second',(1,0,0),'b'))),
+            ('second',-1,(('first',ZERO,'a'),)),
+        ],Q=7)
+        renamed = Tensor([
+            GearType('gravity',label='audit',link=0,sign=-1,sign_why='metadata control'),
+            GearType('photon',label='official',link=2),
+        ],source.monomials,Q=7)
+        a=np.arange(54).reshape(2,27)%5-2
+        initial=State(3,a,a+1,(a+2)%42)
+        e,f=Engine(source,7),Engine(renamed,7)
+        left=right=initial
+        for _ in range(8):
+            left,right=e.step(left),f.step(right)
+            self.assertTrue(left.same_as(right))
+        self.assertTrue(e.rewind(left,8).same_as(initial))
+        self.assertTrue(f.rewind(right,8).same_as(initial))
+
     def test_tensor_cannot_change_under_compiled_engine(self):
         t = Tensor(['g'], [('g', 2, (('g', ZERO, 'b'),))], Q=1)
         e = Engine(t, 1); s = e.vacuum(3, [0]); e.step(s)

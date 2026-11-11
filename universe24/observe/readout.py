@@ -1,9 +1,10 @@
 """READOUT LABELS (passive; OWNER decision 2, manager 11:2x). Read-only: classifies which gears' clicks are OFFICIAL
 and which are AUDIT-ONLY. A label never changes a state; it is not a law.
 
-Under the HANDED class (body_signs != (1, 1, 1)) L0 is the DARK sector (neutral, massive: M0 = 6 - Sum W_d has no
-zero mode; Kramers): its clicks are AUDIT-ONLY, the same OD1-type label B1-GRAV gives metric/potential clicks
-(layers/gravity.py: readout label "audit"). Under +++ L0 clicks stay official (today's board).
+Under the HANDED class (body_signs != (1, 1, 1)), L0 clicks are AUDIT-ONLY, the same label used for metric/potential
+diagnostics. The default uses (1, -1, 1); +++ is an alternative with official L0 labels. The handed linear operator's
+gap and Kramers structure motivate a proposed dark-sector interpretation; they do not establish physical mass,
+neutrality or dark matter. Labels control observation only, not any interaction or physical detection efficiency.
 """
 from __future__ import annotations
 
@@ -13,14 +14,14 @@ import numpy as np
 
 from ..core.tensor import Tensor
 
-DARK_WHY = ("handed class: L0 = dark sector (neutral, massive, Kramers); its clicks are AUDIT-ONLY (OD1-type passive "
-            "label, not a law)")
+DARK_WHY = ("handed L0: proposed dark-sector interpretation of gap/Kramers algebra; clicks are AUDIT-ONLY "
+            "by a passive observation convention, not a derived physical invisibility law")
 
 
 def readout_class(tensor: Tensor, gear_name: str) -> str:
     """'official' or 'audit' for one qualified gear name: the TENSOR's own GearType label (ARCH F-R, RC2: the earlier
     namespace rule marked 220 gauge-link / EM-potential gears 'official' against their 'audit' tensor labels). Under the
-    handed class the default builds L0 with label 'audit' (the dark sector); see dark_l0_violations."""
+    handed class the default builds L0 with label 'audit'; see dark_l0_violations."""
     return tensor.gears[tensor.gear_index(gear_name)].label
 
 

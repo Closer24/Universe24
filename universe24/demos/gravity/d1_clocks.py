@@ -2,7 +2,7 @@
 species, beta = 1 atoms, field profile; MECHANISM load (prepared circulating clock pairs + anti-load at the antipode).
 
 Usage (repository root):  OMP_NUM_THREADS=2 nice -n 10 python universe24/demos/gravity/d1_clocks.py
-Writes results/gravity/D1.json.
+Writes runs/demos/gravity/D1.json.
 """
 from __future__ import annotations
 
@@ -25,7 +25,7 @@ from universe24.observe import gravity as og
 from universe24.prepare import gravity as pg
 from universe24.prepare import vacuum_state
 
-OUT = ROOT / "universe24/results/gravity"
+OUT = Path("runs/demos/gravity")
 
 
 def stamp():

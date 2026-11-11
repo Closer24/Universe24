@@ -1,6 +1,6 @@
 """Census of the gravity blocks (manager rule 4): per block, monomials by degree, every monomial with an `a` factor,
 constants, rank-4 (degree-3) monomials with their potential sign, designations, support facts. Writes
-results/gravity/census.json. Usage: python universe24/demos/gravity/census.py"""
+runs/demos/gravity/census.json. Usage: python universe24/demos/gravity/census.py"""
 from __future__ import annotations
 
 import json
@@ -15,7 +15,7 @@ from universe24.core import Block, compose
 from universe24.observe import gravity as og
 from universe24.tests import test_gravity as tg
 
-OUT = ROOT / "universe24/results/gravity"
+OUT = Path("runs/demos/gravity")
 
 
 def block_census(blocks, blk):

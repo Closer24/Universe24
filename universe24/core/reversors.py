@@ -12,10 +12,12 @@ A map is a ``StateMap``: ``X(state) -> State``; ``X @ Y`` is the composition X o
       "JM"  J o M  = (-b, -a, r)             (the "JR" of CLICK_TAXONOMY)
       "Jp"  (-a, -b, R'(r))                  parity-preserving negation (the J_D of CLICK_TAXONOMY)
       "rhoL0" (b, a, rho(r)), rho(r) = 4Q + 2 (r mod 2Q) - r: the Q-scaled universe24 time_reverse for the L0
-            (reference) gears (R-M2): an involution of 0..D-1 that fixes the L0 vacuum 2Q; the time mirror of an
-            L0 gear is exact iff its input K = 2u is = 0 mod 2Q, i.e. every term targeting it has a u-coefficient
-            = 0 mod Q (validator: compose(..., q_lattice=...)); R' fixes the new layers' vacuum 3Q-1 (odd Q) but
-            sends 2Q to 4Q-2.
+            (reference) gears (R-M2): an involution of 0..D-1 that fixes the L0 vacuum 2Q. For b-only inputs,
+            K = 2u divisible by 2Q gives the corresponding time-mirror identity. Termwise u-coefficients
+            divisible by Q are a sufficient certificate, not a necessary one: integer-valued polynomial
+            identities may also supply divisibility. The validator compose(..., q_lattice=...) checks that
+            sufficient condition, not a mirror theorem for old-a couplings. R' fixes the new layers' vacuum
+            3Q-1 (odd Q) but sends 2Q to 4Q-2.
     ``GearwiseMap(tensor, Q, {gear_name: map_name, ...}, default="id")``; ``uniform(tensor, Q, name)``.
 (b) ``GroupLinearMap(tensor, Q, gears, matrix, r_rule=None, neg_r="M")``: at every node, the (a, b) values of the
     listed gear types are replaced by matrix @ (a, b) (the same integer matrix on a and on b). Remainders: target i
@@ -58,6 +60,10 @@ GEAR_MAPS = {            # name: (swap a<->b, negate, remainder map applied AFTE
 
 def remainder_map(name: str, r: np.ndarray, D: int) -> np.ndarray:
     """Exact remainder maps on 0..D-1 (D even). "JR" is (D-1) - R'(r) = r xor 1."""
+    # A seed or reloaded state may store small r as int64 even for an arbitrary
+    # precision divisor. Promote before subtracting or taking a large modulus.
+    if D >= LIMIT:
+        r = _cast(r, OBJ)
     if name == "id":
         return r.copy()
     if name == "M":
@@ -129,7 +135,8 @@ class GearwiseMap(StateMap):
             raise ValueError("state does not match the tensor")
         dtype = OBJ if OBJ in (state.a.dtype, state.b.dtype) else I64     # a and b rows may be swapped
         A0, B0 = _cast(state.a, dtype), _cast(state.b, dtype)
-        a, b, r = A0.copy(), B0.copy(), state.r.copy()
+        r_dtype = OBJ if self.D >= LIMIT or state.r.dtype == OBJ else I64
+        a, b, r = A0.copy(), B0.copy(), _cast(state.r, r_dtype).copy()
         for g, m in enumerate(self.per):
             swap, neg, rm = GEAR_MAPS[m]
             ag, bg = (B0[g], A0[g]) if swap else (A0[g], B0[g])
@@ -179,7 +186,8 @@ class GroupLinearMap(StateMap):
         big = max(_maxabs_rows(state.a[rows]) + _maxabs_rows(state.b[rows]) + [0])
         dtype = I64 if (state.a.dtype == I64 and state.b.dtype == I64 and self.rowsum * big < LIMIT
                         and self.rowsum < LIMIT) else OBJ
-        a, b, r = _cast(state.a, dtype).copy(), _cast(state.b, dtype).copy(), state.r.copy()
+        r_dtype = OBJ if self.D >= LIMIT or state.r.dtype == OBJ else I64
+        a, b, r = _cast(state.a, dtype).copy(), _cast(state.b, dtype).copy(), _cast(state.r, r_dtype).copy()
         A0, B0 = _cast(state.a, dtype), _cast(state.b, dtype)
         for i, gi in enumerate(rows):
             acc_a = np.zeros(state.N, dtype=dtype)

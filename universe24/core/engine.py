@@ -292,7 +292,11 @@ def extract_clicks(tensor: Tensor, D: int, before: State, after: State, step: in
         hit &= np.asarray(changed, dtype=bool)
     # order rows by (node, gear) == (x, y, z, gear)
     node_idx, gear_idx = np.nonzero(hit.T)
-    delta = (after.r[gear_idx, node_idx] - before.r[gear_idx, node_idx]) % D
+    # Reloading small remainders compacts them to int64 even when D is much
+    # larger. Cast before subtracting/modulo so readout is storage-independent.
+    r_dtype = OBJ if D >= LIMIT else I64
+    delta = (_cast(after.r[gear_idx, node_idx], r_dtype)
+             - _cast(before.r[gear_idx, node_idx], r_dtype)) % D
     kind = handedness_kind(delta, D)
     labels = tensor.labels
     return ClickLog(step, before.L, stream, gear_idx, node_idx, kind, quot[gear_idx, node_idx],
@@ -407,14 +411,17 @@ class Engine:
         return State._raw(state.L, a_old, b_old, r_old)
 
     def rewind(self, state: State, steps: int) -> State:
+        if type(steps) is not int or steps < 0:
+            raise ValueError("steps must be a non-negative int")
         for _ in range(steps):
             state = self.inverse_step(state)
         return state
 
     def mirror(self, state: State) -> State:
-        """Per-gear time mirror M(a, b, r) = (b, a, D - 1 - r)."""
+        """M(a,b,r)=(b,a,D-1-r); a reversor for b-only inputs, not general old-a tensors."""
         self._check(state)
-        return State._raw(state.L, state.b.copy(), state.a.copy(), (self.D - 1) - state.r)
+        r = _cast(state.r, OBJ if self.D >= LIMIT else I64)
+        return State._raw(state.L, state.b.copy(), state.a.copy(), (self.D - 1) - r)
 
     # ------------------------------------------------------------------ preparation helpers (initial data only)
     def vacuum(self, L: int, r0) -> State:

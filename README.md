@@ -11,6 +11,8 @@ a_next, b_next = b, ell - a
 
 This is an executable mathematical model, **not a demonstrated derivation of quantum mechanics or general relativity**. See [the algebra and limits](docs/MODEL.md) and [research status](docs/RESEARCH_STATUS.md).
 
+The [system map and claim audit](docs/SYSTEM_MAP.md) explain the generic node, prove the inverse under its assumptions, list every module's role and show what actually communicates. The default tensor has six independent namespace groups; its present cosmic detector choices do not select different future clock trajectories under the declared preparation.
+
 ## Install and run
 
 Python 3.11 or newer:
@@ -37,6 +39,8 @@ python -m universe24 --L 3 --tmax 20 --budget 120 --out runs/demo --tag demo --r
 | Default cosmic coupling | Block diagonal: package and cosmic block do not read one another |
 | Dynamics fingerprint | `77f6d251a8adfb2e4727bd2bd5ffeaa0e2ae3538aac393fe95c497fce754acf6` |
 
+The compatibility name `dynamics_fingerprint` hashes the indexed coefficient template, excluding Q. Identify the complete update law by this hash **together with Q**, or use the full tensor fingerprint for the default tensor, which records Q.
+
 Choose the tensor configuration, board size and seed **before** a run. The seed then evolves deterministically. Reversibility retains the information underlying a coarse observed outcome; it does not erase alternate full states or prove a maximum-complexity selection law.
 
 Optional builders are experiments within the same ONE engine. The coupled-doublet option is rejected because of observed runaway and is **off by default**. Einstein and CG2 constructions are also optional, not established properties of default ONE. The old standalone 48-channel implementation and its experiment trees are no longer present on the active branch; they remain in Git history.
@@ -61,7 +65,10 @@ Optional builders are experiments within the same ONE engine. The coupled-double
 python -m unittest universe24.tests.test_one universe24.tests.test_migration -v
 
 # Complete suite, with package context for relative imports
-OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 python -m unittest discover -s universe24/tests -t . -v
+GAUGE_LONG=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 python -m unittest discover -s universe24/tests -t . -v
+
+# Connectivity and block inventory derived from live tensor entries
+python -m universe24.tools.system_inventory --out runs/system-inventory.json
 ```
 
 Tests write fresh evidence to ignored `runs/tests/`. Checked-in `universe24/results/` and research notes are historical ONE experiment records, not a declaration that all physical targets passed. Some tests deliberately verify negative findings or failure of a physical hypothesis. A green suite means the stated assertions passed.
