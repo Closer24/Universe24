@@ -288,6 +288,37 @@ requested growth between bursts. This gate remains open.
 
 ## Sources and reproduction
 
+### Eight-review algebra and formulation follow-up
+
+The source-only [eight-review report](research_eight/README.md) investigates
+the two remaining #47 costs and the underlying evolution formulation. It
+proves the current positive projective denominator's exponential bit-length
+lower bound, records exact shifted-product/native-lattice identities, and
+adds executable positive and negative controls. None is an installed model.
+
+An exact principal-symbol audit of the actual full and triangular frame RHS
+finds off-constraint Jordan chains around flat space. A separately compiled
+full-frame constraint-added proposal has a square-free all-direction flat
+principal-symbol identity and fits the stated matter in **45 projective
+channels**. This is a new research law, not an equivalence assertion about
+the old off-constraint trajectories. Its three-step complete-state audit
+does not establish nonlinear constraint propagation, general metric
+positivity, stable time discretization or efficient integer growth; the old
+projective denominator cost remains. The triangular protected44 determinant
+proof cannot be transferred to this full-frame allocation.
+
+Native Rule3 coordinates expose an alternative denominator-free kick/drift
+search space without adding retained state. Generic nonseparable kinetics,
+rational refinement and a budgeted multi-tick compiler remain unimplemented.
+The matter clock work establishes a gauge-invariant diagnostic port and
+global phase-equivariance checks, not operational proper-clock or click-only
+acceptance. General gates C–F remain open.
+
+Run `python -m validation.research_eight.run_all` for the eight independent
+audits. Fresh logs, source hashes and expected physical failures remain in
+`runs/research_eight/`. The complete proposal and its precise domains are
+coordinated in #40, with apparatus-specific results in #41.
+
 The mathematical source ledger and derivations are preserved in
 [Frame48 research](FRAME48_RESEARCH.md), [integer ADM](INTEGER_ADM.md),
 [compact FLRW](COMPACT_FLRW_CLOCKS.md), [compact null wave](COMPACT_NULL_WAVE.md),
