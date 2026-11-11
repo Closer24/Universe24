@@ -1,0 +1,618 @@
+{
+  "construction": {
+    "kind": "single-physical-edge experiment",
+    "source_fingerprint": "115379ac323c1e423885da605bc22daa12c2c0910bc4f2e7ecd96f048889fc80",
+    "source_gears": 382,
+    "stiffness": 8589934593,
+    "link_mediators": [
+      [
+        "su2.Ux_1",
+        "edgehub.su2.Ux_1"
+      ],
+      [
+        "su2.Ux_i",
+        "edgehub.su2.Ux_i"
+      ],
+      [
+        "su2.Ux_j",
+        "edgehub.su2.Ux_j"
+      ],
+      [
+        "su2.Ux_k",
+        "edgehub.su2.Ux_k"
+      ],
+      [
+        "su2.Uy_1",
+        "edgehub.su2.Uy_1"
+      ],
+      [
+        "su2.Uy_i",
+        "edgehub.su2.Uy_i"
+      ],
+      [
+        "su2.Uy_j",
+        "edgehub.su2.Uy_j"
+      ],
+      [
+        "su2.Uy_k",
+        "edgehub.su2.Uy_k"
+      ],
+      [
+        "su2.Uz_1",
+        "edgehub.su2.Uz_1"
+      ],
+      [
+        "su2.Uz_i",
+        "edgehub.su2.Uz_i"
+      ],
+      [
+        "su2.Uz_j",
+        "edgehub.su2.Uz_j"
+      ],
+      [
+        "su2.Uz_k",
+        "edgehub.su2.Uz_k"
+      ],
+      [
+        "su3.Ux_00r",
+        "edgehub.su3.Ux_00r"
+      ],
+      [
+        "su3.Ux_00i",
+        "edgehub.su3.Ux_00i"
+      ],
+      [
+        "su3.Ux_01r",
+        "edgehub.su3.Ux_01r"
+      ],
+      [
+        "su3.Ux_01i",
+        "edgehub.su3.Ux_01i"
+      ],
+      [
+        "su3.Ux_02r",
+        "edgehub.su3.Ux_02r"
+      ],
+      [
+        "su3.Ux_02i",
+        "edgehub.su3.Ux_02i"
+      ],
+      [
+        "su3.Ux_10r",
+        "edgehub.su3.Ux_10r"
+      ],
+      [
+        "su3.Ux_10i",
+        "edgehub.su3.Ux_10i"
+      ],
+      [
+        "su3.Ux_11r",
+        "edgehub.su3.Ux_11r"
+      ],
+      [
+        "su3.Ux_11i",
+        "edgehub.su3.Ux_11i"
+      ],
+      [
+        "su3.Ux_12r",
+        "edgehub.su3.Ux_12r"
+      ],
+      [
+        "su3.Ux_12i",
+        "edgehub.su3.Ux_12i"
+      ],
+      [
+        "su3.Ux_20r",
+        "edgehub.su3.Ux_20r"
+      ],
+      [
+        "su3.Ux_20i",
+        "edgehub.su3.Ux_20i"
+      ],
+      [
+        "su3.Ux_21r",
+        "edgehub.su3.Ux_21r"
+      ],
+      [
+        "su3.Ux_21i",
+        "edgehub.su3.Ux_21i"
+      ],
+      [
+        "su3.Ux_22r",
+        "edgehub.su3.Ux_22r"
+      ],
+      [
+        "su3.Ux_22i",
+        "edgehub.su3.Ux_22i"
+      ],
+      [
+        "su3.Uy_00r",
+        "edgehub.su3.Uy_00r"
+      ],
+      [
+        "su3.Uy_00i",
+        "edgehub.su3.Uy_00i"
+      ],
+      [
+        "su3.Uy_01r",
+        "edgehub.su3.Uy_01r"
+      ],
+      [
+        "su3.Uy_01i",
+        "edgehub.su3.Uy_01i"
+      ],
+      [
+        "su3.Uy_02r",
+        "edgehub.su3.Uy_02r"
+      ],
+      [
+        "su3.Uy_02i",
+        "edgehub.su3.Uy_02i"
+      ],
+      [
+        "su3.Uy_10r",
+        "edgehub.su3.Uy_10r"
+      ],
+      [
+        "su3.Uy_10i",
+        "edgehub.su3.Uy_10i"
+      ],
+      [
+        "su3.Uy_11r",
+        "edgehub.su3.Uy_11r"
+      ],
+      [
+        "su3.Uy_11i",
+        "edgehub.su3.Uy_11i"
+      ],
+      [
+        "su3.Uy_12r",
+        "edgehub.su3.Uy_12r"
+      ],
+      [
+        "su3.Uy_12i",
+        "edgehub.su3.Uy_12i"
+      ],
+      [
+        "su3.Uy_20r",
+        "edgehub.su3.Uy_20r"
+      ],
+      [
+        "su3.Uy_20i",
+        "edgehub.su3.Uy_20i"
+      ],
+      [
+        "su3.Uy_21r",
+        "edgehub.su3.Uy_21r"
+      ],
+      [
+        "su3.Uy_21i",
+        "edgehub.su3.Uy_21i"
+      ],
+      [
+        "su3.Uy_22r",
+        "edgehub.su3.Uy_22r"
+      ],
+      [
+        "su3.Uy_22i",
+        "edgehub.su3.Uy_22i"
+      ],
+      [
+        "su3.Uz_00r",
+        "edgehub.su3.Uz_00r"
+      ],
+      [
+        "su3.Uz_00i",
+        "edgehub.su3.Uz_00i"
+      ],
+      [
+        "su3.Uz_01r",
+        "edgehub.su3.Uz_01r"
+      ],
+      [
+        "su3.Uz_01i",
+        "edgehub.su3.Uz_01i"
+      ],
+      [
+        "su3.Uz_02r",
+        "edgehub.su3.Uz_02r"
+      ],
+      [
+        "su3.Uz_02i",
+        "edgehub.su3.Uz_02i"
+      ],
+      [
+        "su3.Uz_10r",
+        "edgehub.su3.Uz_10r"
+      ],
+      [
+        "su3.Uz_10i",
+        "edgehub.su3.Uz_10i"
+      ],
+      [
+        "su3.Uz_11r",
+        "edgehub.su3.Uz_11r"
+      ],
+      [
+        "su3.Uz_11i",
+        "edgehub.su3.Uz_11i"
+      ],
+      [
+        "su3.Uz_12r",
+        "edgehub.su3.Uz_12r"
+      ],
+      [
+        "su3.Uz_12i",
+        "edgehub.su3.Uz_12i"
+      ],
+      [
+        "su3.Uz_20r",
+        "edgehub.su3.Uz_20r"
+      ],
+      [
+        "su3.Uz_20i",
+        "edgehub.su3.Uz_20i"
+      ],
+      [
+        "su3.Uz_21r",
+        "edgehub.su3.Uz_21r"
+      ],
+      [
+        "su3.Uz_21i",
+        "edgehub.su3.Uz_21i"
+      ],
+      [
+        "su3.Uz_22r",
+        "edgehub.su3.Uz_22r"
+      ],
+      [
+        "su3.Uz_22i",
+        "edgehub.su3.Uz_22i"
+      ],
+      [
+        "u1.Ux_re",
+        "edgehub.u1.Ux_re"
+      ],
+      [
+        "u1.Ux_im",
+        "edgehub.u1.Ux_im"
+      ],
+      [
+        "u1.Uy_re",
+        "edgehub.u1.Uy_re"
+      ],
+      [
+        "u1.Uy_im",
+        "edgehub.u1.Uy_im"
+      ],
+      [
+        "u1.Uz_re",
+        "edgehub.u1.Uz_re"
+      ],
+      [
+        "u1.Uz_im",
+        "edgehub.u1.Uz_im"
+      ],
+      [
+        "em.A_x",
+        "edgehub.em.A_x"
+      ],
+      [
+        "em.A_y",
+        "edgehub.em.A_y"
+      ],
+      [
+        "em.A_z",
+        "edgehub.em.A_z"
+      ],
+      [
+        "metric.h0x",
+        "edgehub.metric.h0x"
+      ],
+      [
+        "metric.h0y",
+        "edgehub.metric.h0y"
+      ],
+      [
+        "metric.h0z",
+        "edgehub.metric.h0z"
+      ],
+      [
+        "wsu2.Ux_1",
+        "edgehub.wsu2.Ux_1"
+      ],
+      [
+        "wsu2.Ux_i",
+        "edgehub.wsu2.Ux_i"
+      ],
+      [
+        "wsu2.Ux_j",
+        "edgehub.wsu2.Ux_j"
+      ],
+      [
+        "wsu2.Ux_k",
+        "edgehub.wsu2.Ux_k"
+      ],
+      [
+        "wsu2.Uy_1",
+        "edgehub.wsu2.Uy_1"
+      ],
+      [
+        "wsu2.Uy_i",
+        "edgehub.wsu2.Uy_i"
+      ],
+      [
+        "wsu2.Uy_j",
+        "edgehub.wsu2.Uy_j"
+      ],
+      [
+        "wsu2.Uy_k",
+        "edgehub.wsu2.Uy_k"
+      ],
+      [
+        "wsu2.Uz_1",
+        "edgehub.wsu2.Uz_1"
+      ],
+      [
+        "wsu2.Uz_i",
+        "edgehub.wsu2.Uz_i"
+      ],
+      [
+        "wsu2.Uz_j",
+        "edgehub.wsu2.Uz_j"
+      ],
+      [
+        "wsu2.Uz_k",
+        "edgehub.wsu2.Uz_k"
+      ]
+    ],
+    "seed_lift": "H.a,b,r copied once from U.a,b,r; independent thereafter",
+    "equivalent_to_source_dynamics": false,
+    "physical_acceptance": "not accepted as a physics-preserving replacement; see physics_gate"
+  },
+  "tensor": {
+    "gears": 472,
+    "rank": 4,
+    "max_input_degree": 3,
+    "shared_Q": 8589934593,
+    "shared_D": 51539607558,
+    "monomials": 19042,
+    "census": {
+      "node": 3726,
+      "link": 15316,
+      "by_degree": [
+        0,
+        2788,
+        14320,
+        1934
+      ]
+    },
+    "storage_local": true,
+    "inverse_stage_sizes": [
+      455,
+      1,
+      16
+    ],
+    "link_gear_types": 90,
+    "strict_one_link_physical_support_violations": 0,
+    "physical_support_max_manhattan_diameter": 1,
+    "physical_violations_by_output": {},
+    "dynamics_fingerprint": "43f17c20d9852ffe5520edc78e99eaec3e992638e80452c920ee84442e2512b6",
+    "full_tensor_fingerprint": "d3c2e5676b9f78858fd6ebb1f58fa60fee1fda7289e04570fbe9eb51ce5ee3e2"
+  },
+  "scalar_oracle": {
+    "gear_transitions": 2832,
+    "ordinary_and_bigint": true,
+    "mismatches": 0
+  },
+  "forward_cone": {
+    "L": 7,
+    "origin": [
+      3,
+      3,
+      3
+    ],
+    "perturbation": "em.A_x b += 1024 in initial state only",
+    "steps": [
+      {
+        "step": 1,
+        "changed_sites": 2,
+        "outside_cone": 0
+      },
+      {
+        "step": 2,
+        "changed_sites": 12,
+        "outside_cone": 0
+      },
+      {
+        "step": 3,
+        "changed_sites": 38,
+        "outside_cone": 0
+      }
+    ]
+  },
+  "run": {
+    "L": 4,
+    "steps": 38,
+    "requested_steps": 120,
+    "rng_seed": 13,
+    "seed_report": {
+      "bang": {
+        "kind": "J-pure (prepare.chiral.jpure_seed, rng 31, width 6), norm-matched (emerge_run)",
+        "norm_ratio_at_2^16": 102.09198433998972,
+        "A_J": 8192,
+        "report": {
+          "A": 8192,
+          "L": 4,
+          "float_projection_Rstar_error": 8.881784197001252e-16,
+          "exact_Rstar_fixed_matter": true,
+          "J_minus_fraction": 8.51148242803071e-09,
+          "N_J": -322360881844730459400,
+          "nonzero_integers": 2048
+        }
+      },
+      "cosmic": {
+        "c2": [
+          0,
+          0,
+          0
+        ],
+        "theta0": 16777216,
+        "A_c": 1024,
+        "rng_seed": 13,
+        "x0": [
+          0,
+          0,
+          0
+        ],
+        "packet": {
+          "M1": {
+            "b": [
+              [
+                0,
+                0,
+                0
+              ]
+            ],
+            "a": [
+              [
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          "M2": {
+            "b": [
+              [
+                1,
+                0,
+                0
+              ]
+            ],
+            "a": [
+              [
+                3,
+                0,
+                0
+              ]
+            ]
+          }
+        },
+        "sum_I0": 2097152,
+        "load_sum": 14245331,
+        "loads": "p in [S_L/8, 7 S_L/8), p(c2 - x) = p(x)",
+        "tokens": "tok(c2 - x) = R'(tok(x))"
+      },
+      "c2": [
+        0,
+        0,
+        0
+      ]
+    },
+    "peak_state_bits": 282,
+    "bit_limit": 128,
+    "stopped_for_growth": true,
+    "initial_hash": "a119ed5b96582475a7c74d7244579bf5dc6a0b575b5d840b2e2443b81ce5c962",
+    "final_hash": "6630727d61f0677f9b90e419eda829aa0ae8dec9c71f4e84d0f3601b17cd082d",
+    "hash_format": "universe24-state-values-v2",
+    "exact_rewind": true,
+    "observers_passive": true,
+    "tensor_unchanged": true,
+    "remainder_parity": true
+  },
+  "clicks": {
+    "saved_event_decoder_matches": true,
+    "official_records": 47998,
+    "by_namespace": {
+      "matter": 38905,
+      "cosmic": 9093
+    },
+    "by_class": {
+      "1": 24060,
+      "2": 23938
+    },
+    "signed_quotient_sum_by_namespace": {
+      "matter": -360254809293974866053276834557849292847544561613,
+      "cosmic": 13167515
+    },
+    "records_per_update": [
+      1040,
+      1092,
+      1172,
+      1242,
+      1273,
+      1279,
+      1280,
+      1280,
+      1279,
+      1280,
+      1280,
+      1280,
+      1280,
+      1280,
+      1280,
+      1278,
+      1280,
+      1276,
+      1276,
+      1278,
+      1280,
+      1280,
+      1278,
+      1279,
+      1278,
+      1277,
+      1280,
+      1280,
+      1280,
+      1280,
+      1280,
+      1280,
+      1280,
+      1260,
+      1280,
+      1261,
+      1280,
+      1280
+    ],
+    "excluded_raw_audit_rows": 69189,
+    "excluded_official_fixed_point_carries": 0,
+    "decoder_inputs": "official click records, tensor names and computational step indices only"
+  },
+  "clock": {
+    "gear": "cosmic.M1",
+    "node": [
+      0,
+      0,
+      0
+    ],
+    "events": 36,
+    "sign_crossings": 21,
+    "angular_rate_per_update": 1.9511305348591308,
+    "interpretation": "diagnostic frequency; no proper-time or physical-unit calibration"
+  },
+  "state_only_diagnostics": {
+    "cosmic_ledger_failures": {
+      "events": 0,
+      "lock": 0,
+      "born": 0,
+      "N_J": 0
+    },
+    "carry_weight_frequencies": {
+      "nodes_with_min_events": 64,
+      "min_events": 10000,
+      "max_abs_dev": 1.324007658121129e-06,
+      "mean_abs_dev": 4.578106368750487e-07,
+      "total_events": 82714795,
+      "N_plus_total": 47941194
+    },
+    "interpretation": "uses hidden state and quotient weights; NOT click-record probabilities"
+  },
+  "physics_status": "local reversible dynamics and candidate observable patterns; QM/GR not established",
+  "saved_input_replay": {
+    "exact": true,
+    "steps": 38,
+    "tensor": "43f17c20d9852ffe5520edc78e99eaec3e992638e80452c920ee84442e2512b6"
+  }
+}

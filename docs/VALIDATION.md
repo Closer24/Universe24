@@ -1,5 +1,23 @@
 # Implementation validation
 
+## Single-edge experiment
+
+The optional construction and its exact equations are in [SINGLE_EDGE_IMPLEMENTATION](SINGLE_EDGE_IMPLEMENTATION.md). It is not the default. Core Rule3 and default tensor coefficients are unchanged.
+
+| Check actually run | Outcome |
+|---|---|
+| Affected core, ONE, migration and audit suite with the first six new strict-edge tests | 38 passed in 48.661 seconds |
+| Final strict-edge and audit suite, including passive mapping and physical controls | 17 passed in 6.845 seconds |
+| Full 472-type tensor physical-support check | Zero violations; rank four; maximum support diameter one edge |
+| Independent original-polynomial and endpoint-force comparison | Every row at all 27 sites agrees |
+| Arbitrary extended-state inverse, including large integers | Exact; does not assume H=U |
+| L=4, 120 updates at k=33,554,432 | Exact rewind/replay; 152,617 official records decoded consistently; peak state length 36 bits |
+| k=Q strong-coupling control | Growth limit exceeded at update 38; the recorded prefix remains exactly invertible |
+| Inherited electromagnetic identity, 40 updates | Baseline passes; unadapted new readout fails from update 2; explicit source-coordinate view passes |
+| Metric perturbation / clock control, 40 updates | 9,605 cosmic records identical in each paired comparison; no tensor dependency path from metric sector to cosmic clocks |
+
+The readout mismatch is repaired by an explicit passive map, not by changing the evolution. The gravity-independent cosmic clock remains a physical obstruction if interpreted as a universal proper-time clock. The complete prior suite was not rerun locally because the common engine, default builders and default seed are unchanged; affected checks include the full-state default migration fixture. CI also runs the full discovery and short baseline/strict audits. No physical-equivalence or Einstein-spacetime certificate is implied.
+
 ## Tensor, seed and click audit
 
 The [contract audit](CLICK_CONTRACT_AUDIT.md) records the current numerical results and physical limitations. The scalar recurrence and default polynomial coefficients were not changed.

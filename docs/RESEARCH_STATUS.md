@@ -26,6 +26,8 @@ The active default is ONE v1, the result of `one_system()`. The implementation i
 
 ONE's default cosmic block and package are block diagonal. The cosmic M1/M2 readers read the cosmic hand; package matter does not. There are no runtime resets or random seed injections at a hand zero crossing.
 
+The [single-edge mediator experiment](SINGLE_EDGE_IMPLEMENTATION.md) satisfies strict geometric support, rank four and exact inversion. It retains 90 physical link types and adds 90 node types. A passive source-coordinate map restores the electromagnetic Lorenz identity that fails under the unadapted readout. The dynamics has additional forces, physical equivalence remains unproved, and a strong-coupling control grows rapidly. The baseline and experiment both have a closed cosmic subsystem, so its clock records cannot respond to the proposed metric sector. Passing local algebra checks does not establish Einstein spacetime on the board or in its observable clicks.
+
 ## Evidence provenance
 
 The files under `universe24/results/`, `universe24/full_picture_2026-11-10/` and the `NOTES*` / manifest files preserve ONE research records, including negative results and superseded hypotheses. Their original timestamps and configuration descriptions are evidence metadata, not the current public specification.
