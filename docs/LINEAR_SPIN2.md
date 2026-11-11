@@ -25,7 +25,7 @@ The chosen single-index curl is
 
     (A T)_ij=epsilon_i k l delta_k T_lj.
 
-It is ordinary vector curl applied to each column. This full-nine-component extension is deliberate. Let D=6Q and use only the fixed inputs
+It is ordinary vector curl applied to each column. This full-nine-component extension is deliberate. Let D=6 and use only the fixed inputs
 
     u_E=(D/2) A b_B,   u_B=(D/2) A b_E.
 
@@ -115,11 +115,10 @@ Zero mean avoids the simplest periodic zero-mode obstruction to later metric rec
 
 | Preparation | Steps checked | Peak counter | Full-state period | Official records |
 |---|---:|---:|---:|---:|
-|z profiles, Q=1|56|3|28|120736|
-|z profiles, Q=7|56|3|28|120736|
-|Three axis sectors, Q=7|56|5|28|258720|
+|z profiles, divisor six|56|3|28|120736|
+|Three axis sectors, divisor six|56|5|28|258720|
 
-Every symmetry, trace and divergence residual on both a and b remained exactly zero. Every remainder was constant and every full state rewound exactly. A separate Q=1 versus Q=2^70 comparison gives identical counter histories and official quotient records despite different allowed initial remainder phases.
+Every symmetry, trace and divergence residual on both a and b remained exactly zero. Every remainder was constant and every full state rewound exactly. A separate amplitude multiplication by 2^70 exercises arbitrary-precision arithmetic for 28 updates at the same fixed divisor. It gives exactly multiplied counter histories and exact rewind.
 
 All official events in this sector are arithmetic kind C0 because the remainder does not move. Their signed quotients still carry a nontrivial travelling pattern. Counting these events or naming them C0 does not make them physical graviton detections.
 
@@ -139,7 +138,7 @@ The experiment supplies an integer TT seed combining f(x+y) and f(x+y+z) on L=5.
 
 Central differences also vanish at Nyquist components on even grids. There the divergence constraint rank changes and extra static/doubler sectors exist. Two propagating polarizations describe generic nonzero-symbol TT modes, not every lattice mode or arbitrary full 18-gear seed.
 
-Dividing A by a chosen integer generally reintroduces componentwise carries and may spoil the exact constraint identities. A global resolution lift scales numerator and divisor together and does not change this spectral ratio. Any proposed smaller-step remedy needs a separate arithmetic or retiming proof.
+Dividing A by a chosen integer generally reintroduces componentwise carries and may spoil the exact constraint identities. The removed variable-divisor workflow is not an available smaller-step remedy. Any proposed smaller-step remedy needs a separate arithmetic or retiming proof.
 
 ## 6. Why the original doubled curl was replaced
 
@@ -211,11 +210,10 @@ X=Y instead gives a staircase when only one bank is read.
 [retimed_tensor_wave.py](../experiments/geometry/retimed_tensor_wave.py) checks
 the actual Engine against an independent fine-ring oracle. The
 [checked evidence](evidence/retimed_tensor_wave.json) covers all three separate
-axis choices at Q=4 and Q=2^72: six histories of 56 updates, each with peak
+axis choices at the fixed divisor six: three histories of 56 updates, each with peak
 counter 3, complete state period 14, constant remainders and exact reversal.
 The reconstructed planar tensors obey symmetry, trace and divergence
-constraints on both retained states in each bank. Counter histories and
-official C0 records agree across the two divisors. Rotating the chosen axis
+constraints on both retained states in each bank. The histories produce 30,184 official C0 records per axis. Rotating the chosen axis
 selects a different fixed tensor; this is not a proof of one isotropic
 three-dimensional propagation law.
 
@@ -229,7 +227,7 @@ in the separate metric-shaped probe. A scalar stencil
 
     u_chi=D chi+w Delta chi,   w=D/8
 
-has long-wave speed sqrt(2w/D)=1/2; w is integral when Q is divisible by four.
+would have long-wave speed sqrt(2w/D)=1/2, but w=3/4 is not an allowed integer coefficient at the fixed divisor six. It is only a continuum comparison; a valid fixed-six realization requires a proved multi-register or retimed encoding.
 Its complete linear dispersion is
 
     cos(omega)=1-(1/2) sum_i sin(k_i/2)^2,

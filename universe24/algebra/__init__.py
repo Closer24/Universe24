@@ -1,1 +1,1 @@
-"""Exact cube / binary-octahedral algebra used by ONE builders; no update engine."""
+"""Exact cube / binary-octahedral algebra used by Universe24 builders; no update engine."""

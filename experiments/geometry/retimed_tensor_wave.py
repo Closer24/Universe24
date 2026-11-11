@@ -25,8 +25,8 @@ PROFILES = ((3, -2, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
             (2, 0, 0, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0))
 
 
-def build(Q, axis):
-    D = 6 * Q
+def build(axis):
+    D = 6
     zero = (0, 0, 0)
     plus = tuple(int(i == axis) for i in range(3))
     minus = tuple(-v for v in plus)
@@ -36,7 +36,7 @@ def build(Q, axis):
             terms.append((f"{pol}.X", D // 2, ((f"{pol}.Y", offset, "b"),)))
         for offset in (zero, plus):
             terms.append((f"{pol}.Y", D // 2, ((f"{pol}.X", offset, "b"),)))
-    return Tensor(NAMES, terms, Q=Q, strict_support=True)
+    return Tensor(NAMES, terms, strict_support=True)
 
 
 def expected_counters(L, axis, tick):
@@ -47,12 +47,12 @@ def expected_counters(L, axis, tick):
                      for profile in PROFILES for bank in (0, 1)], dtype=object)
 
 
-def seed_state(Q, axis, L=7):
+def seed_state(axis, L=7):
     b = expected_counters(L, axis, 0)
     a = expected_counters(L, axis, -1)
     indices = np.arange(b.size, dtype=np.int64).astype(object).reshape(b.shape)
     # An explicit nonuniform phase preparation, independent of wave amplitude.
-    r = (indices * 17 + 5) % (6 * Q)
+    r = (indices * 17 + 5) % 6
     return State(L, a, b, r)
 
 
@@ -74,11 +74,11 @@ def assert_TT(counters, axis, lat):
         assert np.all(sum(delta(h[k], k, lat) for k in range(3)) == 0)
 
 
-def run_case(Q, axis, steps=56):
-    tensor = build(Q, axis)
+def run_case(axis, steps=56):
+    tensor = build(axis)
     assert check_reciprocity(tensor).ok
-    engine = Engine(tensor, Q)
-    seed = seed_state(Q, axis)
+    engine = Engine(tensor)
+    seed = seed_state(axis)
     state = seed
     first_period = None
     peak = 0
@@ -104,7 +104,7 @@ def run_case(Q, axis, steps=56):
     assert first_period == 14
     assert peak == 3
     assert engine.rewind(state, steps).same_as(seed)
-    return dict(Q=Q, D=6 * Q, L=7, axis=axis, steps=steps, gears=tensor.G,
+    return dict(D=6, L=7, axis=axis, steps=steps, gears=tensor.G,
                 monomials=len(tensor.monomials), rank=tensor.rank,
                 tensor_fingerprint=tensor.fingerprint, reciprocal=True,
                 strict_single_edge_support=True, exact_fine_shift_every_update=True,
@@ -118,12 +118,12 @@ def run_case(Q, axis, steps=56):
 
 def unprepared_control():
     """Reversibility alone does not bound states off the prepared graph."""
-    Q, L, steps = 4, 3, 16
-    tensor = build(Q, 2)
-    engine = Engine(tensor, Q)
+    L, steps = 3, 16
+    tensor = build(2)
+    engine = Engine(tensor)
     shape = (4, L ** 3)
     seed = State(L, np.ones(shape, dtype=object), np.zeros(shape, dtype=object),
-                 np.full(shape, 7, dtype=object))
+                 np.full(shape, 1, dtype=object))
     state = seed
     for tick in range(1, steps + 1):
         state = engine.step(state)
@@ -131,7 +131,7 @@ def unprepared_control():
         assert np.all(state.b == -tick)
         assert np.array_equal(state.r, seed.r)
     assert engine.rewind(state, steps).same_as(seed)
-    return dict(Q=Q, L=L, steps=steps, initial_a=1, initial_b=0, initial_r=7,
+    return dict(D=6, L=L, steps=steps, initial_a=1, initial_b=0, initial_r=1,
                 exact_formula="a_t=1-t, b_t=-t in every gear and node",
                 unbounded_by_formula=True, exact_rewind=True,
                 meaning="The all-time bound requires a=R^-1 b; arbitrary seeds need not be bounded.")
@@ -141,10 +141,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, default=ROOT / "runs/geometry/retimed_tensor_wave.json")
     args = parser.parse_args()
-    cases = [run_case(Q, axis) for Q in (4, 2 ** 72) for axis in range(3)]
-    for axis in range(3):
-        assert cases[axis]["counter_history_sha256"] == cases[axis + 3]["counter_history_sha256"]
-        assert cases[axis]["official_history_sha256"] == cases[axis + 3]["official_history_sha256"]
+    cases = [run_case(axis) for axis in range(3)]
     dispersion = []
     for k in (math.pi / 16, math.pi / 8, math.pi / 4, math.pi / 2):
         dispersion.append(dict(coarse_wave_number=k, retimed_frequency=k / 2,
@@ -156,9 +153,9 @@ def main():
                   seed="b_pX=f_p(2z), b_pY=f_p(2z+1), likewise q; a=R^-1 b; r=(17*flat_index+5) mod D",
                   retiming="R(X,Y)=(Y,SX), R^-1(X,Y)=(S^-1Y,X), u=(D/2)(R+R^-1)b",
                   exact_speed_in_coarse_sites_per_update="1/2",
-                  cases=cases, common_divisor_counter_and_official_histories_equal=True,
+                  cases=cases,
                   off_preparation_control=unprepared_control(),
-                  candidate_scalar_probe=dict(implemented_here=False, w="D/8 (requires Q divisible by 4)",
+                  candidate_scalar_probe=dict(implemented_here=False, w="3/4 (not an allowed integer coefficient at divisor six)",
                       low_wave_number_speed="1/2", cosine_frequency_range=[-0.5, 1],
                       dispersion="cos(omega)=1-(1/2)*sum_i sin(k_i/2)^2",
                       axis_comparison=dispersion),

@@ -102,7 +102,7 @@ def run():
             "The Bianchi and torus identities follow algebraically for all periodic h; random h is only an executable control.",
             "A shifted/staggered stress could repair pointwise stress conservation; none is supplied here.",
             "The checkerboard source preserves raw planar TT shape, not the metric phase decoder, sourced Einstein equations, or positive metric signature.",
-            "Neither Q nor a coefficient resolution lift changes these compatibility identities."
+            "Changing coefficient resolution does not change these compatibility identities."
         ],
     }
 

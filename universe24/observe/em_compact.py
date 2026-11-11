@@ -45,6 +45,8 @@ def _end_shift(arr, kind, ks):
 
 def gauss_G(state: State, tensor: Tensor, u1_params: dict, D: int, matter_ns: str = "matter", ns: str = "u1"):
     """Exact integer Gauss/Noether density G_y (see the module docstring)."""
+    if type(D) is not int or D != 6:
+        raise ValueError('this observer requires the fixed divisor six')
     L = state.L
     A, P0 = u1_params["A"], u1_params.get("P0", 0)
     G = charge_density(state, tensor, D, matter_ns)
@@ -75,6 +77,8 @@ def gauss_dressing(before: State, after: State, tensor: Tensor, u1_params: dict,
 
 def gauss_step_residual(before, after, tensor, u1_params, D, matter_ns="matter", ns="u1"):
     """G(after) - G(before) - dressing: exactly 0 at every node."""
+    if type(D) is not int or D != 6:
+        raise ValueError('this observer requires the fixed divisor six')
     return (gauss_G(after, tensor, u1_params, D, matter_ns, ns) - gauss_G(before, tensor, u1_params, D, matter_ns, ns)
             - gauss_dressing(before, after, tensor, u1_params, matter_ns, ns))
 

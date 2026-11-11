@@ -1,15 +1,14 @@
 {
   "scope": "Optional signed-reciprocal local-flux transport candidate; no Einstein or boundedness claim",
-  "source_sha256": "96f302383bf50c99406cc7227f71bbb131fb896a340dc93a1ea44342854233e9",
-  "engine_sha256": "c97037bb0e34c676b775b4c6db24d5ffb889d837db52bcb32c7b412bd0b87d67",
+  "source_sha256": "69bf1fe60f4f1ee9754cfd1891c57888e9e672f4a6aa1a30d1446d431e6be28f",
+  "engine_sha256": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
   "law": {
-    "Q": 1,
     "D": 6,
     "gears": 32,
     "monomials": 158,
     "rank": 3,
     "max_input_degree": 2,
-    "fingerprint": "be869a538307e4f1e1c3d7edac6b41468bd5e920f85faeb340a4c529d29c5ca8",
+    "fingerprint": "9e25ea67b369ba40611d5ae96e117b6135b93fb65071cef81bf60e164fb6a1cd",
     "strict_physical_support": true,
     "support_violations": 0,
     "reciprocal": true,
@@ -407,7 +406,6 @@
   "algebra": {
     "integer_potential": "Phi0=sum_s [D/2*(f_s^2+sum_i j_si^2)+g*f_s*sum_i delta_i j_si]; Phi_int=kappa*sum_matter [sum_i Hii*ji^2+2*sum_i<j Hij*ji*jj]",
     "constants": {
-      "Q": 1,
       "D": 6,
       "g": 1,
       "kappa": 1
@@ -419,9 +417,9 @@
     "passive_frozen_metric_relation": "cos(omega)-1=-(g^2/D)*v^T*[D*(cos(omega)+1)*I+2*kappa*H]^-1*v, v_i=2*sin(k_i)",
     "passive_low_frequency_contravariant_spatial_coefficient": "inverse(I+(kappa/D)*H), relative to c0^2=(2*g/D)^2",
     "passive_low_frequency_covariant_spatial_candidate": "I+(kappa/D)*H, conditional on unit lapse, zero shift and a separate physical time calibration; no measured spacetime metric is established",
-    "passive_frozen_background_instability": "For a spatially uniform matter flux along a positive eigenvalue h of fixed H, lambda=-D-2*kappa*h<-D when kappa*h>0. The carry-suppressed linear recurrence has a root outside the unit circle; at Q=1,kappa=h=1, z+z^-1=-8/3. This is a passive frozen-coefficient instability, not an extra runtime with frozen fields.",
+    "passive_frozen_background_instability": "For a spatially uniform matter flux along a positive eigenvalue h of fixed H, lambda=-D-2*kappa*h<-D when kappa*h>0. The carry-suppressed linear recurrence has a root outside the unit circle; at divisor six,kappa=h=1, z+z^-1=-8/3. This is a passive frozen-coefficient instability, not an extra runtime with frozen fields.",
     "auxiliary_warning": "The j_i are independent node fields. No instantaneous gradient/constitutive graph or its exact preservation is asserted.",
-    "fourier_warning": "These symbols linearize the polynomial input and suppress carries. Real Q=1 Engine runs include remainder changes; equal flat blocks alone do not prove measured universal propagation."
+    "fourier_warning": "These symbols linearize the polynomial input and suppress carries. Fixed-six Engine runs include remainder changes; equal flat blocks alone do not prove measured universal propagation."
   },
   "limitations": [
     "Flux signs are negative in signed reciprocity; an all-positive-potential realization is not supplied.",

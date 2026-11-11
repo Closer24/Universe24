@@ -67,7 +67,7 @@ def inventory(tensor):
     gear_components = components(range(tensor.G),edges)
     return dict(schema='universe24-system-inventory-v1',
         dynamics_fingerprint=tensor.dynamics_fingerprint,tensor_fingerprint=tensor.fingerprint,
-        Q=tensor.Q,D=None if tensor.Q is None else 6*tensor.Q,
+        D=6,
         gear_types=tensor.G,retained_integer_counters_per_node=2*tensor.G,
         retained_remainders_per_node=tensor.G,rank=tensor.rank,
         monomials=len(tensor.monomials),designations=len(tensor.designations),

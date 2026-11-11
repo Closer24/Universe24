@@ -13,7 +13,7 @@ class SystemInventoryTests(unittest.TestCase):
             ('right.c',1,(('middle.b',ZERO,'b'),)),
             ('isolated.d',2,(('left.a',ZERO,'b'),)),
             ('isolated.d',-2,(('left.a',ZERO,'b'),)),
-        ],Q=1)
+        ])
         report=inventory(t)
         n={r['name']:r for r in report['namespaces']}
         self.assertEqual(n['left']['can_reach_namespaces'],['middle','right'])
@@ -22,19 +22,18 @@ class SystemInventoryTests(unittest.TestCase):
         self.assertEqual(report['independent_namespace_groups'],[['isolated'],['left','middle','right']])
         self.assertEqual(report['factor_reads_by_field'],{'a':1,'b':1})
 
-    def test_default_components_are_not_a_fully_connected_physics_model(self):
+    def test_default_reference_has_explicit_structural_census(self):
         report=default_inventory()
-        self.assertEqual(report['gear_types'],382)
-        self.assertEqual(report['rank'],4)
-        self.assertEqual(report['monomials'],18592)
-        self.assertEqual(report['independent_namespace_groups'],[
-            ['arm1','arm2','exit','gate','router'],
-            ['beta','bgk','chiral','em','matter','matter2','metric','ref','wsu2'],
-            ['cosmic'],['su2'],['su3'],['u1'],
-        ])
-        blocks={b['name']:b for b in report['builder_blocks']}
-        self.assertEqual(len(blocks),22)
-        self.assertEqual(blocks['ehop']['declared_gear_types'],0)
-        self.assertGreater(blocks['ehop']['raw_terms'],0)
-        self.assertEqual(sum(b['declared_gear_types'] for b in blocks.values()),382)
-        self.assertEqual(sum(c['size'] for c in report['gear_dependency_components']),382)
+        self.assertEqual(report['D'],6)
+        self.assertEqual(report['gear_types'],48)
+        self.assertEqual(report['rank'],2)
+        self.assertEqual(report['monomials'],288)
+        self.assertEqual(report['independent_namespace_groups'],[['ref']])
+        self.assertEqual(report['strict_physical_support_violations'],0)
+        self.assertEqual(report['designations'],0)
+        blocks=report['builder_blocks']
+        self.assertEqual(len(blocks),1)
+        self.assertEqual(blocks[0]['name'],'ref')
+        self.assertEqual(blocks[0]['declared_gear_types'],48)
+        self.assertEqual(blocks[0]['raw_terms'],288)
+        self.assertEqual([row['size'] for row in report['gear_dependency_components']],[48])

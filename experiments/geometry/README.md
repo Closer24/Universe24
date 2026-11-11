@@ -1,112 +1,62 @@
-# Geometry experiments and controls
+# Fixed-six geometry experiments and controls
 
-These are optional, reproducible experiments. They do not modify the default
-ONE tensor, `Engine.step`, the click definition, or a running state. A declared
-tensor and complete integer seed are fixed before each run; observations are
-passive. Outputs go under ignored `runs/` by default.
+These optional constructions use the shared scalar engine with the fixed
+divisor six. Each run declares a fixed integer tensor and complete seed before
+its first update. Observations are passive. They are separate mathematical
+examples, not assertions that the default reference tensor already produces
+physical gravity.
 
-## Restricted conformal construction
+## Active experiments
 
-The two conformal scripts choose a **new** four-gear reciprocal rank-four
-tensor. They are not tests asserting that the default tensor already realizes
-a spacetime metric. The scalar conformal factor is updated through the same
-Rule3 as the matter and signal gears, including its reciprocal source.
+Run from the repository root:
 
-From the repository root:
-
-```bash
-PYTHONPATH=. python experiments/geometry/conformal_metric_probe.py
-PYTHONPATH=. python experiments/geometry/conformal_nonlinear_clock.py
-```
-
-Each command runs two initial backgrounds at each declared refinement
-`N=8,16,32,64`: eight forward histories and eight complete inverse histories.
-Use `--refinements 8 16` for a subset, or `--out runs/geometry/custom.json` for
-a different report path. Refinements define separate fixed preparations;
-coefficients and normalization never change during a run.
-
-The independent-clock experiment measures signed **official quotient**
-crossings for two scalar clocks. It checks the complete massless canonical
-signal history across backgrounds, positive conformal factor at every update,
-strict local support, reciprocity, and exact rewind. The nonlinear experiment
-adds a reciprocal quartic interaction and compares the same fixed official
-readout at the analytically determined update pairing `n` and `2n-1`.
-It reports exact error fractions and a bound on the mismatch from nominal
-constant-background proper time. Neither decoder fits a time shift or uses
-board values as replacement samples; raw quotient equality is a separate
-audit. Missing click rows retain their zero-valued time slots.
-
-Results include source, tensor, seed, final-state and trace hashes. Published
-evidence is [conformal_metric.json](../../docs/evidence/conformal_metric.json)
-and [conformal_nonlinear_clock.json](../../docs/evidence/conformal_nonlinear_clock.json).
-The [algebra and finite-time proof](../../docs/CONFORMAL_METRIC_EXPERIMENT.md)
-explain the normalization, positive scalar kinetic sign, rounding bounds and
-second-order clock comparison.
-
-The interpretation is restricted to conformally coupled scalars in a
-controlled temporal-continuum and weak-probe limit. `L=3` is fixed: this is
-not a spatial continuum convergence test. Canonical signal equality is not
-an executed emitter-to-receiver redshift experiment. The conformal ansatz is
-not general Einstein geometry, cannot produce generic Weyl curvature, and
-does not derive particles or quantum statistics. Finite histories and the
-conditional finite-time estimate do not prove all-seed, all-time stability.
-
-## Independent checks and obstructions
-
-The [integer reciprocal candidates](../../docs/INTEGER_RECIPROCAL_GEOMETRY.md)
-use Q=1 and explicit integer seeds. They demonstrate prepared periodic
-coupling and reciprocal spatial responses, while retaining failures of
-stability and Einstein constraints. They introduce no additional runtime
-rule and do not modify the default. Reproduce them with:
-
-```bash
-python experiments/geometry/reciprocal_metric_candidate.py
-python experiments/geometry/metric_transport_candidate.py
-python experiments/geometry/exact_constraint_audit.py
-```
-
-The last script is passive exact algebra. Its [constraint
-analysis](../../docs/DYNAMICAL_GEOMETRY_CONSTRAINTS.md) separates a
-reciprocal potential from a conserved Einstein source, and identifies the
-mean-source obstruction for a periodic flat linearized target.
-
-The separate [integer curl-wave experiment](../../docs/LINEAR_SPIN2.md) uses
-18 gears and a reciprocal linear tensor. It proves bounded propagation and
-exact constraints for prepared travelling profiles and checks all 24 proper
-cube rotations. Its general three-dimensional instability control remains
-explicit. Run `python experiments/geometry/linear_spin2_check.py`; the checked
-record is [linear_spin2.json](../../docs/evidence/linear_spin2.json). It supplies
-a linear tensor-wave building block, not a measured Einstein metric.
-
-These scripts test narrower existing or proposed algebraic claims. Their
-definitions and limitations are recorded in the linked research notes.
-
-| Script | What it checks | Explanation |
+| Command | What it tests | Derivation |
 |---|---|---|
-| `linear_spin2_check.py` | Exact bounded integer travelling profiles, TT constraints, cube rotations and a separate three-dimensional instability control | [Integer curl waves](../../docs/LINEAR_SPIN2.md) |
-| `retimed_tensor_wave.py` | Exact bounded two-bank translation at half a coarse site per update; a separate unprepared growth control | [Retiming control](../../docs/LINEAR_SPIN2.md#8-separate-exact-retiming-control) |
-| `link_metric_check.py` | Local reciprocal clock/link coefficients and operational metric conditions | [Geometry research](../../docs/GEOMETRY_RESEARCH.md) |
-| `metric_obstruction_check.py` | An exact invisibility control and source defect for a proposed Einstein extension | [Geometry research](../../docs/GEOMETRY_RESEARCH.md) |
-| `planar_tt_sector.py` | Preserved linear trace/divergence constraints on a prepared planar vacuum sector; audit-only activity | [Geometry research](../../docs/GEOMETRY_RESEARCH.md) |
-| `phase_metric_probe.py` | Local metric polynomial and actual official one-way probe response; unequal speeds retained | [Local metric experiment](../../docs/PHASE_METRIC_EXPERIMENT.md) |
-| `linear_metric_reconstruction.py` | Exact linearized lattice Ricci tensor and constraints for the prepared travelling metric | [Local metric experiment](../../docs/PHASE_METRIC_EXPERIMENT.md) |
-| `carry_locked_metric.py` | Exact two-sublattice reduction, long finite carry-locked drift and complete reversal | [Metric-source audit](../../docs/METRIC_SOURCE_AUDIT.md) |
-| `palatini_constraint_checks.py` | Declared Palatini constraint targets and explicit algebraic controls | [Palatini target](../../docs/PALATINI_TARGET.md) |
+| `python experiments/geometry/reciprocal_metric_candidate.py` | Prepared coupled integer clock cycles and unbounded controls | [Integer reciprocal examples](../../docs/INTEGER_RECIPROCAL_GEOMETRY.md) |
+| `python experiments/geometry/metric_transport_candidate.py` | Local tensor/flux response and explicit failed geometric criteria | [Integer reciprocal examples](../../docs/INTEGER_RECIPROCAL_GEOMETRY.md) |
+| `python experiments/geometry/exact_constraint_audit.py` | Exact source and constraint obstructions | [Constraint analysis](../../docs/DYNAMICAL_GEOMETRY_CONSTRAINTS.md) |
+| `python experiments/geometry/linear_spin2_check.py` | Prepared constrained travelling waves and general instability | [Integer curl waves](../../docs/LINEAR_SPIN2.md) |
+| `python experiments/geometry/retimed_tensor_wave.py` | Two-bank half-speed translation and off-preparation growth | [Retiming proof](../../docs/LINEAR_SPIN2.md#8-separate-exact-retiming-control) |
+| `python experiments/geometry/palatini_constraint_checks.py` | Palatini polynomial targets and exact failure controls | [Palatini target](../../docs/PALATINI_TARGET.md) |
+| `python experiments/geometry/ppwave_palatini_local.py` | Known vacuum coframe/connection family, interior success and seam failure | [Local pp-wave algebra](../../docs/PPWAVE_PALATINI_LOCAL.md) |
+| `python experiments/geometry/ppwave_geodesic_clock.py` | A chosen one-axis worldline with a calibrated event decoder | [Geodesic proof](../../docs/PPWAVE_OPERATIONAL_ROUTE.md) |
+| `python experiments/geometry/ppwave_geodesic_audit.py` | Independent symbolic metric/geodesic audit; requires SymPy | [Geodesic proof](../../docs/PPWAVE_OPERATIONAL_ROUTE.md) |
 
-```bash
-python experiments/geometry/linear_spin2_check.py
-python experiments/geometry/retimed_tensor_wave.py
-python experiments/geometry/link_metric_check.py
-python experiments/geometry/metric_obstruction_check.py
-python experiments/geometry/planar_tt_sector.py
-python experiments/geometry/phase_metric_probe.py
-python experiments/geometry/linear_metric_reconstruction.py
-python experiments/geometry/carry_locked_metric.py --steps 1000000
-python experiments/geometry/palatini_constraint_checks.py
-```
+The passive `linear_metric_reconstruction.py` checks a declared linearized
+geometry; it does not advance a new runtime law. The optional
+`plot_geodesic_clock.py` displays checked records using Matplotlib. Floating
+arithmetic in a plot is separate from the exact integer evolution.
 
-The carry-locked example is a fast checkerboard preparation of a different
-stencil. It exposes a limit of a remainder-free stability inference; it is
-not a no-go theorem for the separately controlled smooth conformal limit.
-Constraint checks define research targets and counterexamples, not a
-completed derivation of the Einstein equations.
+Fresh output goes under ignored `runs/` by default. Checked evidence is under
+[`docs/evidence`](../../docs/evidence); use the records associated with the
+current source, not old files with a different divisor or tensor. The migration
+comparison is [fixed_six_experiment_migration.json](../../docs/evidence/fixed_six_experiment_migration.json).
+
+## Scope of the pp-wave examples
+
+The local Palatini example has 48 integer registers. Actual Rule3 steps
+transport its prepared coframe and connection, and the declared interior
+residuals vanish. The transverse periodic seams fail. Its uncoupled clocks
+do not respond to the metric.
+
+The follow-up keeps 48 registers and uses an order-four tensor to drive four
+worldline registers from the geometric state. Its selected trajectory has an
+exact continuum geodesic interpretation and a prepared-sector decoder from
+actual official records. Those coordinates remain inside one carrier node.
+There is no transported board packet, universal clock apparatus or matter
+backreaction, and different norm sectors can share the same official records.
+
+## Retired presets
+
+The former `conformal_metric_probe`, `conformal_nonlinear_clock`,
+`phase_metric_probe`, `link_metric_check`, `carry_locked_metric`,
+`planar_tt_sector`, and `metric_obstruction_check` runners depended on the
+removed variable-divisor field assembly. Their entrypoints now state that
+retirement instead of silently running an altered model. Old convergence,
+clock-rate and long-run evidence stays in the
+[historical archive](../../docs/archive/pre-fixed-six/README.md).
+
+A replacement needs an explicit fixed-six integer tensor, complete seed and
+new validation. Renaming a scale, rounding a coefficient or preserving a plot
+does not establish that replacement. The [geometry requirements](../../docs/GEOMETRY_RESEARCH.md)
+state the physical targets still to be met.

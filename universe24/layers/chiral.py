@@ -40,180 +40,134 @@ Standalone-block limitations (NOTES_chiral.md; the complete default adds ehop an
 This block does not read any lapse; it composes identically with matter lapse "C" (default) or "split".
 """
 from __future__ import annotations
-
 from fractions import Fraction
-
 import numpy as np
-
 from ..core.tensor import Block, GearType
 from .gauge import Poly, build_gauge, default_regime, deviation_terms
 from .matter import algebra, build_matter, matter_names
-
-CHIRAL_DEFAULT_ON = False                  # DECLARED CANDIDATE: OWNER decision 5 is CONDITIONAL (manager 11:58)
-Q_DEFAULT = (1 << 33) + 1
-HOP, WILSON, MASS = 1 << 31, 1 << 30, 4915 << 22      # the v2 default matter (layers/system.py)
-A_LINK = 1 << 16                           # weak-link vacuum norm (B1-GAUGE default_regime at Q = 2^33 + 1)
-V_HIGGS = 1 << 16                          # Higgs vev (integer); w = WILSON / v, y = MASS / (2 v)
+CHIRAL_DEFAULT_ON = False
+HOP, WILSON, MASS = (2147483648, 1073741824, 20615004160)
+A_LINK = 65536
+V_HIGGS = 65536
 LAM_HIGGS = 4
-AXES = ("x", "y", "z")
+AXES = ('x', 'y', 'z')
 ZERO = (0, 0, 0)
 UNIT = ((1, 0, 0), (0, 1, 0), (0, 0, 1))
-HIGGS = ("H_1", "H_i", "H_j", "H_k")
+HIGGS = ('H_1', 'H_i', 'H_j', 'H_k')
+REVERSOR_CHIRAL = {'R* (CPT; kept)': "inversion o [matter: W0 J' K per pair (neg_r = Mp)] o [links/2-paths: conjugate (+ re-base, 2-path (k1,k2) -> (k2,k1))] o [Higgs: identity] o Mp on every gear; involution", 'T_phys = C K o Mp': 'matter C K per pair (Kramers: X^2 = -1 on matter), links/Higgs (w0, w1, -w2, -w3)', "board 'T' = K o M": '= C.T physically; NOT a reversor of this block (expected FAIL)', 'CP forward': 'inversion o [matter C W0 per pair] o [links (w0, -w1, w2, w3) + re-base] o [Higgs (p0, p1, -p2, -p3)]', 'P, C forward': 'BROKEN by design (P-odd, C-odd)'}
 
-REVERSOR_CHIRAL = {
-    "R* (CPT; kept)": "inversion o [matter: W0 J' K per pair (neg_r = Mp)] o [links/2-paths: conjugate (+ re-base, 2-path "
-                      "(k1,k2) -> (k2,k1))] o [Higgs: identity] o Mp on every gear; involution",
-    "T_phys = C K o Mp": "matter C K per pair (Kramers: X^2 = -1 on matter), links/Higgs (w0, w1, -w2, -w3)",
-    "board 'T' = K o M": "= C.T physically; NOT a reversor of this block (expected FAIL)",
-    "CP forward": "inversion o [matter C W0 per pair] o [links (w0, -w1, w2, w3) + re-base] o [Higgs (p0, p1, -p2, -p3)]",
-    "P, C forward": "BROKEN by design (P-odd, C-odd)"}
-
-
-# ======================================================================================== algebra
 def chiral_algebra() -> dict:
     """Integer matrices (numpy int64) of the doublet: P (32x32, x3), W0, J, Jp, K, C, G5, V, PiW, PiS, t (x3)."""
-    alg = algebra("pair")
+    alg = algebra('pair')
     I2 = np.eye(2, dtype=np.int64)
     SZ = np.diag([1, -1]).astype(np.int64)
     SX = np.array([[0, 1], [1, 0]], np.int64)
     EPS = np.array([[0, 1], [-1, 0]], np.int64)
     G5_16 = np.kron(I2, np.kron(np.eye(4, dtype=np.int64), SZ))
-    V16 = alg["V"]
+    V16 = alg['V']
     E16 = np.eye(16, dtype=np.int64)
     lift = lambda M: np.kron(I2, M)
-    out = {"P": [lift(p) for p in alg["P"]], "W0": lift(alg["W0"]), "J": lift(alg["J"]), "Jp": lift(alg["Jp"]),
-           "K": lift(alg["K"]), "C": lift(alg["C"]), "G5": lift(G5_16), "V": lift(V16),
-           "PiW": lift(E16 - G5_16 @ V16), "PiS": lift(E16 + G5_16 @ V16),
-           "t": [np.kron(EPS, E16), np.kron(SX, alg["Jp"]), np.kron(SZ, alg["Jp"])],
-           "G5_16": G5_16, "PiW16": E16 - G5_16 @ V16}
+    out = {'P': [lift(p) for p in alg['P']], 'W0': lift(alg['W0']), 'J': lift(alg['J']), 'Jp': lift(alg['Jp']), 'K': lift(alg['K']), 'C': lift(alg['C']), 'G5': lift(G5_16), 'V': lift(V16), 'PiW': lift(E16 - G5_16 @ V16), 'PiS': lift(E16 + G5_16 @ V16), 't': [np.kron(EPS, E16), np.kron(SX, alg['Jp']), np.kron(SZ, alg['Jp'])], 'G5_16': G5_16, 'PiW16': E16 - G5_16 @ V16}
     return out
-
 
 def check_chiral_algebra() -> dict:
     """Exact integer checks (AGREE_H A1, E1)."""
     A = chiral_algebra()
     E = np.eye(32, dtype=np.int64)
-    t = A["t"]
+    t = A['t']
     comm = lambda X, Y: not (X @ Y - Y @ X).any()
     acomm = lambda X, Y: not (X @ Y + Y @ X).any()
     ok = {}
-    ok["G5 = -P_x P_y P_z"] = bool(np.array_equal(A["G5"], -(A["P"][0] @ A["P"][1] @ A["P"][2])))
-    ok["t_a quaternion units (t1 t2 = t3, t_a^2 = -1)"] = bool(
-        np.array_equal(t[0] @ t[1], t[2]) and all(np.array_equal(x @ x, -E) for x in t))
-    ok["t_a antisymmetric"] = all(np.array_equal(x.T, -x) for x in t)
-    ok["t_a commute with P_d, W0, J, Jp, G5, V"] = all(comm(x, Y) for x in t
-                                                       for Y in A["P"] + [A["W0"], A["J"], A["Jp"], A["G5"], A["V"]])
-    ok["PiW^2 = 2 PiW, symmetric"] = bool(np.array_equal(A["PiW"] @ A["PiW"], 2 * A["PiW"])
-                                         and np.array_equal(A["PiW"].T, A["PiW"]))
-    ok["W0 PiW = PiS W0 (mass/Wilson flip the weak half)"] = bool(np.array_equal(A["W0"] @ A["PiW"],
-                                                                                A["PiS"] @ A["W0"]))
-    ok["PiW commutes with P_d, J, Jp"] = all(comm(A["PiW"], Y) for Y in A["P"] + [A["J"], A["Jp"]])
-    ok["G5 anticommutes only with W0 (checked: W0)"] = bool(acomm(A["G5"], A["W0"]))
+    ok['G5 = -P_x P_y P_z'] = bool(np.array_equal(A['G5'], -(A['P'][0] @ A['P'][1] @ A['P'][2])))
+    ok['t_a quaternion units (t1 t2 = t3, t_a^2 = -1)'] = bool(np.array_equal(t[0] @ t[1], t[2]) and all((np.array_equal(x @ x, -E) for x in t)))
+    ok['t_a antisymmetric'] = all((np.array_equal(x.T, -x) for x in t))
+    ok['t_a commute with P_d, W0, J, Jp, G5, V'] = all((comm(x, Y) for x in t for Y in A['P'] + [A['W0'], A['J'], A['Jp'], A['G5'], A['V']]))
+    ok['PiW^2 = 2 PiW, symmetric'] = bool(np.array_equal(A['PiW'] @ A['PiW'], 2 * A['PiW']) and np.array_equal(A['PiW'].T, A['PiW']))
+    ok['W0 PiW = PiS W0 (mass/Wilson flip the weak half)'] = bool(np.array_equal(A['W0'] @ A['PiW'], A['PiS'] @ A['W0']))
+    ok['PiW commutes with P_d, J, Jp'] = all((comm(A['PiW'], Y) for Y in A['P'] + [A['J'], A['Jp']]))
+    ok['G5 anticommutes only with W0 (checked: W0)'] = bool(acomm(A['G5'], A['W0']))
     return {k: bool(v) for k, v in ok.items()}
-
 
 def _rho(t, q):
     E = np.eye(32, dtype=np.int64)
     return q[0] * E + q[1] * t[0] + q[2] * t[1] + q[3] * t[2]
 
-
-# ======================================================================================== builders
-def chiral_params(Q: int = Q_DEFAULT, *, hop: int = HOP, wilson: int = WILSON, mass: int = MASS, A: int = A_LINK,
-                  v: int = V_HIGGS, lam_H: int = LAM_HIGGS) -> dict:
+def chiral_params(*, hop: int=HOP, wilson: int=WILSON, mass: int=MASS, A: int=A_LINK, v: int=V_HIGGS, lam_H: int=LAM_HIGGS) -> dict:
     """Integer parameters with the vacuum identities hop = kappa A, wilson = w v, mass = 2 y v (raise otherwise)."""
-    for nm, x in (("Q", Q), ("hop", hop), ("wilson", wilson), ("mass", mass), ("A", A), ("v", v), ("lam_H", lam_H)):
+    for nm, x in (('hop', hop), ('wilson', wilson), ('mass', mass), ('A', A), ('v', v), ('lam_H', lam_H)):
         if type(x) is not int:
-            raise TypeError(f"{nm} must be a Python int")
-    if Q < 3 or Q % 2 == 0:
-        raise ValueError("ONE ODD Q (vacuum 3Q - 1 is R'-fixed only for odd Q)")
+            raise TypeError(f'{nm} must be a Python int')
+    raise ValueError('Fixed-six integer construction. Historical normalization-dependent calibration is not asserted; select integer coefficients explicitly.')
     if hop % A or wilson % v or mass % (2 * v):
-        raise ValueError("need hop = kappa A, wilson = w v, mass = 2 y v with integers kappa, w, y")
-    kappa, w, y = hop // A, wilson // v, mass // (2 * v)
+        raise ValueError('need hop = kappa A, wilson = w v, mass = 2 y v with integers kappa, w, y')
+    kappa, w, y = (hop // A, wilson // v, mass // (2 * v))
     if kappa % 2 or w % 2:
-        raise ValueError("kappa and w must be even (Pi_W = 2 P_W carries a factor 1/2)")
-    return {"Q": Q, "D": 6 * Q, "hop": hop, "wilson": wilson, "mass": mass, "A": A, "kappa": kappa, "v": v, "w": w,
-            "y": y, "ytot": y + 3 * w, "lam_H": lam_H}
+        raise ValueError('kappa and w must be even (Pi_W = 2 P_W carries a factor 1/2)')
+    return {'D': 6, 'hop': hop, 'wilson': wilson, 'mass': mass, 'A': A, 'kappa': kappa, 'v': v, 'w': w, 'y': y, 'ytot': y + 3 * w, 'lam_H': lam_H}
 
-
-def build_partner(Q: int = Q_DEFAULT, *, hop: int = HOP, wilson: int = WILSON, mass: int = MASS,
-                  name: str = "matter2") -> Block:
+def build_partner(*, hop: int=HOP, wilson: int=WILSON, mass: int=MASS, name: str='matter2') -> Block:
     """The doublet partner: a second free Dirac pair with the SAME parameters (build_matter, read-only)."""
-    return build_matter(Q=Q, hop=hop, mass=mass, wilson=wilson, species="pair", name=name)
+    return build_matter(hop=hop, mass=mass, wilson=wilson, species='pair', name=name)
 
-
-def build_weak_links(Q: int = Q_DEFAULT, *, A: int = A_LINK, name: str = "wsu2", use_P: bool = True,
-                     lam: int = 4) -> Block:
+def build_weak_links(*, A: int=A_LINK, name: str='wsu2', use_P: bool=True, lam: int=4) -> Block:
     """B1-GAUGE's su2 link block at its default family (2-path gears, OD4 spring) WITHOUT its psi gears (kappa = mass =
     0 decouples them; they are then removed, as layers/em_compact.build_u1_links does for u1)."""
     try:
-        reg = default_regime(Q)
+        reg = default_regime()
     except ValueError:
         reg = None
-    if reg is not None and reg["A"] == A:
-        kP, cP, beta = reg["kappa_P"], reg["c_P"], reg["beta"]
+    if reg is not None and reg['A'] == A:
+        kP, cP, beta = (reg['kappa_P'], reg['c_P'], reg['beta'])
     else:
-        kP, cP, beta = (256, 0, 6 * Q - 2 * A * A) if use_P else (0, 0, 0)
-    blk = build_gauge(group="su2", Q=Q, A=A, kappa=0, mass=0, lam=lam, use_P=use_P, kappa_P=kP if use_P else 0,
-                      c_P=cP if use_P else 0, beta=beta if use_P else 0, name=name)
-    keep = tuple(g for g in blk.gears if not g.name.startswith("psi_"))
-    terms = tuple(t for t in blk.terms if not str(t[0]).startswith("psi_")
-                  and not any(str(f[0]).startswith("psi_") for f in t[2]))
-    params = dict(blk.params, source="layers.gauge.build_gauge(group='su2', kappa=0, mass=0) minus its psi gears",
-                  role="weak SU(2) links of the chiral candidate")
-    return Block(keep, terms, name=name, vacuum={g.name: blk.vacuum[g.name] for g in keep}, params=params,
-                 doc=blk.doc + " [psi gears removed by CHIRAL-BUILDER]", Q=Q)
+        kP, cP, beta = (256, 0, 6 - 2 * A * A) if use_P else (0, 0, 0)
+    blk = build_gauge(group='su2', A=A, kappa=0, mass=0, lam=lam, use_P=use_P, kappa_P=kP if use_P else 0, c_P=cP if use_P else 0, beta=beta if use_P else 0, name=name)
+    keep = tuple((g for g in blk.gears if not g.name.startswith('psi_')))
+    terms = tuple((t for t in blk.terms if not str(t[0]).startswith('psi_') and (not any((str(f[0]).startswith('psi_') for f in t[2])))))
+    params = dict(blk.params, source="layers.gauge.build_gauge(group='su2', kappa=0, mass=0) minus its psi gears", role='weak SU(2) links of the chiral candidate')
+    return Block(keep, terms, name=name, vacuum={g.name: blk.vacuum[g.name] for g in keep}, params=params, doc=blk.doc + ' [psi gears removed by CHIRAL-BUILDER]')
 
-
-def build_chiral_coupling(*, Q: int = Q_DEFAULT, matter: Block, partner: Block, links: Block, name: str = "chiral",
-                          hop: int = HOP, wilson: int = WILSON, mass: int = MASS, v: int = V_HIGGS,
-                          lam_H: int = LAM_HIGGS, label: str = "audit") -> Block:
+def build_chiral_coupling(*, matter: Block, partner: Block, links: Block, name: str='chiral', hop: int=HOP, wilson: int=WILSON, mass: int=MASS, v: int=V_HIGGS, lam_H: int=LAM_HIGGS, label: str='audit') -> Block:
     """The chiral coupling block (Higgs gears + all matter-W and matter-phi couplings; see the module docstring)."""
-    mp, pp, lp = matter.params, partner.params, links.params
+    mp, pp, lp = (matter.params, partner.params, links.params)
     for p_ in (mp, pp):
-        if p_.get("species") != "pair":
-            raise ValueError("the doublet is made of two 16-channel pairs")
-        if (p_["hop"], p_["wilson"], p_["mass"]) != (hop, wilson, mass):
+        if p_.get('species') != 'pair':
+            raise ValueError('the doublet is made of two 16-channel pairs')
+        if (p_['hop'], p_['wilson'], p_['mass']) != (hop, wilson, mass):
             raise ValueError("matter and partner must carry the block's (hop, wilson, mass): vacuum identity")
-        if p_["Q"] != Q:
-            raise ValueError("ONE divisor")
-    if lp["Q"] != Q or lp.get("group") != "su2":
-        raise ValueError("links must be the su2 link block at the same Q")
-    prm = chiral_params(Q, hop=hop, wilson=wilson, mass=mass, A=lp["A"], v=v, lam_H=lam_H)
-    D, kappa, w, ytot = prm["D"], prm["kappa"], prm["w"], prm["ytot"]
+    if lp.get('group') != 'su2':
+        raise ValueError('Fixed-six integer construction. Historical normalization-dependent calibration is not asserted; select integer coefficients explicitly.')
+    prm = chiral_params(hop=hop, wilson=wilson, mass=mass, A=lp['A'], v=v, lam_H=lam_H)
+    D, kappa, w, ytot = (prm['D'], prm['kappa'], prm['w'], prm['ytot'])
     A = chiral_algebra()
-    P, W0, PiW, t = A["P"], A["W0"], A["PiW"], A["t"]
-    mnames = [matter.qualify(x) for x in matter_names("pair")] + [partner.qualify(x) for x in matter_names("pair")]
-    lnames = {k: [links.qualify(f"U{AXES[k]}_{c}") for c in ("1", "i", "j", "k")] for k in range(3)}
-    hq = [f"{name}.{h}" for h in HIGGS]          # qualified Higgs names (this block's namespace)
+    P, W0, PiW, t = (A['P'], A['W0'], A['PiW'], A['t'])
+    mnames = [matter.qualify(x) for x in matter_names('pair')] + [partner.qualify(x) for x in matter_names('pair')]
+    lnames = {k: [links.qualify(f'U{AXES[k]}_{c}') for c in ('1', 'i', 'j', 'k')] for k in range(3)}
+    hq = [f'{name}.{h}' for h in HIGGS]
     x0 = {hq[0]: v}
 
     def b(off):
         return [Poly.var(g, off) for g in mnames]
 
-    def bil(left, M, right):                      # left^T M right, M integer 32x32 (sparse)
+    def bil(left, M, right):
         out = Poly()
         rows, cols = np.nonzero(M)
         for i, j in zip(rows, cols):
             out = out + left[i] * right[j] * int(M[i, j])
         return out
-
     rho_c = [np.eye(32, dtype=np.int64)] + list(t)
     conj = (1, -1, -1, -1)
     phi = Poly()
     b0 = b(ZERO)
-    # transport through the weak link (W part only): (kappa/2) b(x+e)^T P_d rho(conj W) PiW b(x)
     for k in range(3):
         be = b(UNIT[k])
         for c in range(4):
             M = P[k] @ rho_c[c] @ PiW
             phi = phi + Poly.var(lnames[k][c]) * bil(be, M, b0) * Fraction(kappa * conj[c], 2)
-    # Higgs (physical Phi = v + phi): Yukawa phi-part, on-site
-    Hp = lambda off: [Poly.var(h, off) for h in hq]          # deviation phi (no shift) for the couplings
+    Hp = lambda off: [Poly.var(h, off) for h in hq]
     H0 = Hp(ZERO)
     for c in range(4):
         M = rho_c[c] @ PiW @ W0
         phi = phi + H0[c] * (bil(b0, M, b0) + bil(b0, M.T, b0)) * Fraction(ytot, 2)
-    # Wilson-Yukawa phi-part, link: -(w/2) b(x+e)^T [rho(phi(x+e)) PiW W0 + W0 PiW rho(phi(x))^T] b(x)
     for k in range(3):
         be = b(UNIT[k])
         He = Hp(UNIT[k])
@@ -221,7 +175,6 @@ def build_chiral_coupling(*, Q: int = Q_DEFAULT, matter: Block, partner: Block, 
             M1 = rho_c[c] @ PiW @ W0
             M2 = W0 @ PiW @ rho_c[c].T
             phi = phi + He[c] * bil(be, M1, b0) * Fraction(-w, 2) + H0[c] * bil(be, M2, b0) * Fraction(-w, 2)
-    # Higgs inertia (D/2)|Phi|^2 and OD4 spring -(lam/4)(|Phi|^2 - v^2)^2, physical Phi = v + phi
     Hs = [Poly.var(h, ZERO, x0.get(h, 0)) for h in hq]
     nrm = Poly()
     for h in Hs:
@@ -232,34 +185,23 @@ def build_chiral_coupling(*, Q: int = Q_DEFAULT, matter: Block, partner: Block, 
         phi = phi - dn * dn * Fraction(lam_H, 4)
     terms = deviation_terms(phi, D, x0)
     gears = [GearType(h, label) for h in HIGGS]
-    r0 = 3 * Q - 1
-    params = dict(prm, matter=matter.name, partner=partner.name, links=links.name, label=label,
-                  potential=("(kappa/2) b'^T P_d rho(conj W) PiW b + Yukawa/Wilson-Yukawa phi-parts + Higgs inertia "
-                             "+ OD4 spring; vacuum parts are build_matter's"),
-                  reversor=REVERSOR_CHIRAL, candidate="DECLARED CANDIDATE (OWNER decision 5 CONDITIONAL)",
-                  default_on=CHIRAL_DEFAULT_ON)
-    return Block(tuple(gears), tuple(terms), name=name, vacuum={h: r0 for h in HIGGS}, params=params,
-                 doc="chiral Gamma5.V weak SU(2) coupling + Higgs (research candidate; enabled in default_system)", Q=Q)
+    r0 = 2
+    params = dict(prm, matter=matter.name, partner=partner.name, links=links.name, label=label, potential="(kappa/2) b'^T P_d rho(conj W) PiW b + Yukawa/Wilson-Yukawa phi-parts + Higgs inertia + OD4 spring; vacuum parts are build_matter's", reversor=REVERSOR_CHIRAL, candidate='DECLARED CANDIDATE (OWNER decision 5 CONDITIONAL)', default_on=CHIRAL_DEFAULT_ON)
+    return Block(tuple(gears), tuple(terms), name=name, vacuum={h: r0 for h in HIGGS}, params=params, doc='chiral Gamma5.V weak SU(2) coupling + Higgs (research candidate; enabled in default_system)')
 
-
-def chiral_blocks(Q: int = Q_DEFAULT, *, matter: Block | None = None, include_matter: bool = False,
-                  hop: int = HOP, wilson: int = WILSON, mass: int = MASS, A: int = A_LINK, v: int = V_HIGGS,
-                  lam_H: int = LAM_HIGGS, use_P: bool = True, link_lam: int = 4,
-                  names=("matter", "matter2", "wsu2", "chiral")) -> tuple:
+def chiral_blocks(*, matter: Block | None=None, include_matter: bool=False, hop: int=HOP, wilson: int=WILSON, mass: int=MASS, A: int=A_LINK, v: int=V_HIGGS, lam_H: int=LAM_HIGGS, use_P: bool=True, link_lam: int=4, names=('matter', 'matter2', 'wsu2', 'chiral')) -> tuple:
     """The candidate's blocks. ``matter``: the existing first doublet member (e.g. default_system's "matter"); if None
     it is built here (name names[0]). Returns (matter2, wsu2, chiral), preceded by matter if include_matter=True (the
     stand-alone chiral system)."""
     if matter is None:
-        matter = build_matter(Q=Q, hop=hop, mass=mass, wilson=wilson, species="pair", name=names[0])
-    partner = build_partner(Q, hop=hop, wilson=wilson, mass=mass, name=names[1])
-    links = build_weak_links(Q, A=A, name=names[2], use_P=use_P, lam=link_lam)
-    coup = build_chiral_coupling(Q=Q, matter=matter, partner=partner, links=links, name=names[3], hop=hop,
-                                 wilson=wilson, mass=mass, v=v, lam_H=lam_H)
+        matter = build_matter(hop=hop, mass=mass, wilson=wilson, species='pair', name=names[0])
+    partner = build_partner(hop=hop, wilson=wilson, mass=mass, name=names[1])
+    links = build_weak_links(A=A, name=names[2], use_P=use_P, lam=link_lam)
+    coup = build_chiral_coupling(matter=matter, partner=partner, links=links, name=names[3], hop=hop, wilson=wilson, mass=mass, v=v, lam_H=lam_H)
     out = (partner, links, coup)
-    return ((matter,) + out) if include_matter else out
+    return (matter,) + out if include_matter else out
 
-
-def compose_with_default(system, *, on: bool = CHIRAL_DEFAULT_ON, partner_lapse: bool = True, **kw):
+def compose_with_default(system, *, on: bool=CHIRAL_DEFAULT_ON, partner_lapse: bool=True, **kw):
     """Return a NEW layers.system.System with the chiral candidate appended (``on=True``), else ``system`` unchanged.
 
     This helper defaults to on=False for explicit standalone composition. The
@@ -271,35 +213,24 @@ def compose_with_default(system, *, on: bool = CHIRAL_DEFAULT_ON, partner_lapse:
     if not on:
         return system
     from .system import System
-    Q = system.Q
-    matter = system.by_name("matter")
+    matter = system.by_name('matter')
     blocks = list(system.blocks)
-    new = chiral_blocks(Q, matter=matter, hop=matter.params["hop"], wilson=matter.params["wilson"],
-                        mass=matter.params["mass"], **kw)
+    new = chiral_blocks(matter=matter, hop=matter.params['hop'], wilson=matter.params['wilson'], mass=matter.params['mass'], **kw)
     blocks += list(new)
     info = dict(system.info)
-    info["chiral"] = {"status": "DECLARED CANDIDATE (OWNER decision 5 CONDITIONAL)", "blocks": [b.name for b in new],
-                      "params": {k: new[-1].params[k] for k in ("A", "kappa", "v", "w", "y", "ytot", "lam_H")}}
-    if partner_lapse and system.info.get("gravity") and system.info.get("matter_lapse") == "C":
+    info['chiral'] = {'status': 'DECLARED CANDIDATE (OWNER decision 5 CONDITIONAL)', 'blocks': [b.name for b in new], 'params': {k: new[-1].params[k] for k in ('A', 'kappa', 'v', 'w', 'y', 'ytot', 'lam_H')}}
+    if partner_lapse and system.info.get('gravity') and (system.info.get('matter_lapse') == 'C'):
         from .gravity_select import ONEWAY_LAPSE_WHY
         from .matter_lapse_c import build_matter_beta_read_c, build_matter_lapse_c
-        P = system.info["P"]
-        field = system.info["lapse_field"]
+        P = system.info['P']
+        field = system.info['lapse_field']
         partner = new[0]
-        blocks.append(build_matter_lapse_c(Q=Q, P=P, field=field, matter=partner,
-                                           oneway=(system.info.get("lapse") == "od2"), name="mlapse2",
-                                           why=ONEWAY_LAPSE_WHY))
-        if system.info.get("beta"):
-            blocks.append(build_matter_beta_read_c(Q=Q, P=P, G="beta.G", matter=partner, name="mbeta2"))
-        info["chiral"]["partner_lapse"] = "matter_lapse C (mlapse2, mbeta2)"
-    elif partner_lapse and system.info.get("gravity"):
-        info["chiral"]["partner_lapse"] = ("NOT added: matter_lapse is not 'C' (split form rebuilds gravity_blocks); "
-                                           "matter2 is then un-lapsed (EP violation for the partner): integrator item")
-    info["pending_owner"] = [p for p in info.get("pending_owner", []) if "chirality" not in p] + [
-        "chirality law (decision 5): CANDIDATE composed (layers/chiral.py), CONDITIONAL"]
-    return System(Q, tuple(blocks), info)
-
-
-__all__ = ["CHIRAL_DEFAULT_ON", "Q_DEFAULT", "HOP", "WILSON", "MASS", "A_LINK", "V_HIGGS", "LAM_HIGGS", "HIGGS",
-           "REVERSOR_CHIRAL", "chiral_algebra", "check_chiral_algebra", "chiral_params", "build_partner",
-           "build_weak_links", "build_chiral_coupling", "chiral_blocks", "compose_with_default"]
+        blocks.append(build_matter_lapse_c(P=P, field=field, matter=partner, oneway=system.info.get('lapse') == 'od2', name='mlapse2', why=ONEWAY_LAPSE_WHY))
+        if system.info.get('beta'):
+            blocks.append(build_matter_beta_read_c(P=P, G='beta.G', matter=partner, name='mbeta2'))
+        info['chiral']['partner_lapse'] = 'matter_lapse C (mlapse2, mbeta2)'
+    elif partner_lapse and system.info.get('gravity'):
+        info['chiral']['partner_lapse'] = "NOT added: matter_lapse is not 'C' (split form rebuilds gravity_blocks); matter2 is then un-lapsed (EP violation for the partner): integrator item"
+    info['pending_owner'] = [p for p in info.get('pending_owner', []) if 'chirality' not in p] + ['chirality law (decision 5): CANDIDATE composed (layers/chiral.py), CONDITIONAL']
+    return System(tuple(blocks), info)
+__all__ = ['CHIRAL_DEFAULT_ON', 'HOP', 'WILSON', 'MASS', 'A_LINK', 'V_HIGGS', 'LAM_HIGGS', 'HIGGS', 'REVERSOR_CHIRAL', 'chiral_algebra', 'check_chiral_algebra', 'chiral_params', 'build_partner', 'build_weak_links', 'build_chiral_coupling', 'chiral_blocks', 'compose_with_default']

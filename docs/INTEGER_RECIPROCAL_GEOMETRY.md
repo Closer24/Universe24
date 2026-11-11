@@ -1,7 +1,6 @@
 # Integer reciprocal geometry candidates
 
-These optional experiments keep the scalar engine unchanged and set **Q=1,
-D=6**. Tensor coefficients, complete initial states, intermediate inputs,
+These optional experiments use the shared scalar engine with the **fixed divisor six**. Tensor coefficients, complete initial states, intermediate inputs,
 quotients and remainders are integers. There are no fractional registers or
 floating-point seed calculations. Each run fixes its tensor before its first
 update. The examples establish particular interactions and obstructions,

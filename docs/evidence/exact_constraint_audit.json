@@ -41,7 +41,7 @@
     "The Bianchi and torus identities follow algebraically for all periodic h; random h is only an executable control.",
     "A shifted/staggered stress could repair pointwise stress conservation; none is supplied here.",
     "The checkerboard source preserves raw planar TT shape, not the metric phase decoder, sourced Einstein equations, or positive metric signature.",
-    "Neither Q nor a coefficient resolution lift changes these compatibility identities."
+    "Changing coefficient resolution does not change these compatibility identities."
   ],
-  "script_sha256": "7136b914f007c309974a1e307b4bac7e5711fb0b5541ade5d22972df11ff0819"
+  "script_sha256": "f7479a584424fddc487a5cddf71a4bad8770872952afd2ee06a1f371586148f7"
 }

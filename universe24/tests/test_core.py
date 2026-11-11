@@ -1,8 +1,8 @@
-"""Stage-0 acceptance tests T0.1-T0.7 of universe24 (pre-registered in NOTES.md).
+"""Fixed-divisor-six arithmetic, reference, locality and performance tests.
 
 Run from the repository root:
     python -m unittest universe24.tests.test_core -v
-Each test writes its numbers to universe24/results/<test>.json (stamp from `date -u`).
+Each test writes its current measurements to runs/tests/<test>.json.
 """
 from __future__ import annotations
 
@@ -81,30 +81,30 @@ def official_rows(log):
     return [((*xyz, g), k, q) for _, xyz, g, k, q, _lab in log.rows()]
 
 
-def full_state_from_ref(ref: RefState, Q: int) -> State:
-    return State(ref.cube.side, *reference_arrays(ref, Q))
+def full_state_from_ref(ref: RefState) -> State:
+    return State(ref.cube.side, *reference_arrays(ref))
 
 
 class T01ReferenceIdentity(unittest.TestCase):
     def test_reference_block_is_reciprocal_and_matches_receiver_form(self):
-        sender = build(reference_block(1))
-        receiver = build(reference_block_receiver_form(1))
+        sender = build(reference_block())
+        receiver = build(reference_block_receiver_form())
         self.assertEqual(sender, receiver)
         self.assertEqual(sender.census(), {"node": 0, "link": 288, "by_degree": [0, 288, 0, 0]})
 
     def test_T01(self):
-        tensor = build(reference_block(1))
-        eng = Engine(tensor, 1)
+        tensor = build(reference_block())
+        eng = Engine(tensor)
         ref = RefEngine()
         out = {"L": L01, "steps": STEPS01, "states": []}
         for name, seed, lo, hi, sparse, bg in T01_STATES:
             rs = ref_random_state(seed, L01, lo, hi, sparse, bg)
-            st = full_state_from_ref(rs, 1)
+            st = full_state_from_ref(rs)
             n_cmp = n_bad = n_clicks = n_click_bad = n_dropped = n_rewind_bad = 0
             for k in range(1, STEPS01 + 1):
                 rs2 = ref.advance(rs)
                 st2 = eng.step(st)
-                a, b, r = reference_arrays(rs2, 1)
+                a, b, r = reference_arrays(rs2)
                 bad = int(np.sum(st2.a != a) + np.sum(st2.b != b) + np.sum(st2.r != r))
                 n_cmp += 3 * a.size
                 n_bad += bad
@@ -115,7 +115,7 @@ class T01ReferenceIdentity(unittest.TestCase):
                 raw = eng.clicks(st, st2, k, stream="raw")
                 n_dropped += int(np.sum(~raw.changed))
                 back = eng.inverse_step(st2)
-                ref_back = full_state_from_ref(ref.rewind(rs2), 1)
+                ref_back = full_state_from_ref(ref.rewind(rs2))
                 n_rewind_bad += 0 if (back.same_as(st) and back.same_as(ref_back)) else 1
                 rs, st = rs2, st2
             out["states"].append({"name": name, "component_comparisons": n_cmp, "mismatches": n_bad,
@@ -131,8 +131,8 @@ class T01ReferenceIdentity(unittest.TestCase):
 
     def test_T01_fixed_point_row(self):
         """a = b = 1 with six +1 inputs: ell = 2 but the triple is unchanged -> no official click (universe24 rule)."""
-        tensor = build(reference_block(1))
-        eng = Engine(tensor, 1)
+        tensor = build(reference_block())
+        eng = Engine(tensor)
         from universe24.algebra.coupling import Coupling
         c = Coupling((1, 1, 1))
         L, y, h = 5, (1, 1, 3), 0
@@ -144,7 +144,7 @@ class T01ReferenceIdentity(unittest.TestCase):
             cells[(*nb, c.ports[d][h])] = Channel(0, 1, 2)
         rs = RefState(Cube(L), VACUUM, cells)
         rs2 = RefEngine().advance(rs)
-        st = full_state_from_ref(rs, 1)
+        st = full_state_from_ref(rs)
         st2 = eng.step(st)
         n = lattice(L).index(*y)
         self.assertEqual(st2.gear(h, n), (1, 1, 2))
@@ -159,27 +159,38 @@ class T01ReferenceIdentity(unittest.TestCase):
                                     "universe24_rows": len(theirs), "raw_row_present_unchanged": True})
 
 
-class T02QScaling(unittest.TestCase):
-    def test_T02(self):
-        base = Engine(build(reference_block(1)), 1)
-        out = {"L": L01, "steps": STEPS01, "runs": []}
-        for Q in (7, 50):
-            eng = Engine(build(reference_block(Q)), Q)
-            for name, seed, lo, hi, sparse, bg in T01_STATES[:6]:
-                rs = ref_random_state(seed, L01, lo, hi, sparse, bg)
-                s1 = full_state_from_ref(rs, 1)
-                sq = full_state_from_ref(rs, Q)
-                bad = clickbad = 0
-                for k in range(1, STEPS01 + 1):
-                    s1n, sqn = base.step(s1), eng.step(sq)
-                    bad += int(np.sum(sqn.a != s1n.a) + np.sum(sqn.b != s1n.b) + np.sum(sqn.r != Q * s1n.r))
-                    if official_rows(base.clicks(s1, s1n, k)) != official_rows(eng.clicks(sq, sqn, k)):
-                        clickbad += 1
-                    s1, sq = s1n, sqn
-                out["runs"].append({"Q": Q, "state": name, "mismatches": bad, "click_step_mismatches": clickbad})
-                self.assertEqual(bad, 0, (Q, name))
-                self.assertEqual(clickbad, 0, (Q, name))
-        record("T0.2", out)
+class T02FixedDivisor(unittest.TestCase):
+    def test_fixed_divisor_and_roundtrip(self):
+        tensor = build(reference_block())
+        engine = Engine(tensor)
+        self.assertEqual(engine.D, 6)
+        self.assertFalse(hasattr(engine, "Q"))
+        self.assertFalse(hasattr(tensor, "Q"))
+        with self.assertRaises(TypeError):
+            Engine(tensor, 2)
+        self.assertEqual(Tensor.from_json(tensor.to_json()), tensor)
+        self.assertNotIn("Q", tensor.to_dict())
+        with self.assertRaises(ValueError):
+            Tensor.from_dict(dict(tensor.to_dict(), Q=1))
+        from universe24.core.engine import extract_clicks, handedness_kind
+        state = engine.vacuum(3, [2] * tensor.G)
+        with self.assertRaises(ValueError):
+            extract_clicks(tensor, 12, state, state)
+        with self.assertRaises(ValueError):
+            handedness_kind(np.array([0, 2, 4]), 12)
+
+    def test_legacy_nonunit_law_is_rejected(self):
+        tensor = build(reference_block())
+        legacy = tensor.to_dict()
+        legacy["format"] = "metric_variant_v1/tensor/1"
+        legacy["Q"] = 1
+        self.assertEqual(Tensor.from_dict(legacy), tensor)
+        for scale in (None, 0, 2, True, 8589934593):
+            with self.subTest(scale=scale), self.assertRaises(ValueError):
+                Tensor.from_dict(dict(legacy, Q=scale))
+        del legacy["Q"]
+        with self.assertRaises(ValueError):
+            Tensor.from_dict(legacy)
 
 
 def _nonlinear_subtensor(tensor: Tensor) -> Tensor:
@@ -187,10 +198,8 @@ def _nonlinear_subtensor(tensor: Tensor) -> Tensor:
 
 
 class T03ExactRewind(unittest.TestCase):
-    Q = 10 ** 6
-
-    def _run(self, tensor, Q, s0, steps):
-        eng = Engine(tensor, Q)
+    def _run(self, tensor, s0, steps):
+        eng = Engine(tensor)
         hist = eng.run(s0, steps, history=True)
         ell_nonzero = 0
         for k in range(steps):
@@ -201,19 +210,19 @@ class T03ExactRewind(unittest.TestCase):
             s = eng.inverse_step(s)
             if not s.same_as(hist[k - 1]):
                 back_bad += 1
-        nl = Engine(_nonlinear_subtensor(tensor), Q)
+        nl = Engine(_nonlinear_subtensor(tensor))
         nl_nonzero = sum(int(np.sum(nl.inputs(h) != 0)) for h in hist[:: max(1, steps // 5)])
         return eng, hist, s, ell_nonzero, back_bad, nl_nonzero
 
     def test_T03_random(self):
-        out = {"Q": self.Q, "runs": []}
+        out = {"divisor": 6, "steps": 5, "runs": []}
         for seed in range(10, 16):
             L = (4, 5, 6)[(seed - 10) % 3]
             for fam, a_reads in (("A_b_only", False), ("B_a_reads", True)):
-                tensor = build(randgen.random_tensor_block(seed, G=6, Q=self.Q, a_reads=a_reads))
+                tensor = build(randgen.random_tensor_block(seed, G=6, a_reads=a_reads))
                 self.assertEqual(tensor.b_only, not a_reads)
-                s0 = randgen.random_state(1000 + seed, tensor.G, L, 6 * self.Q, -20, 20)
-                eng, hist, s, ell_nz, back_bad, nl_nz = self._run(tensor, self.Q, s0, 50)
+                s0 = randgen.random_state(1000 + seed, tensor.G, L, 6, -2, 2)
+                eng, hist, s, ell_nz, back_bad, nl_nz = self._run(tensor, s0, 5)
                 row = {"seed": seed, "family": fam, "L": L, "monomials": len(tensor), "rank": tensor.rank,
                        "stages": len(tensor.stages), "returned_exactly": s.same_as(s0),
                        "inverse_step_mismatches": back_bad, "ell_nonzero_events": ell_nz,
@@ -231,19 +240,19 @@ class T03ExactRewind(unittest.TestCase):
     def test_T03_bigint_and_guard_switch(self):
         out = {"cases": []}
         # (a) |a|, |b| ~ 2^70, degree-3 tensor with a-reads: Python-int path, 6 forward + 6 back
-        tensor = build(randgen.random_tensor_block(31, G=5, Q=10 ** 6, a_reads=True))
-        s0 = randgen.random_state(2031, tensor.G, 4, 6 * 10 ** 6, -2 ** 70, 2 ** 70)
-        eng, hist, s, ell_nz, back_bad, nl_nz = self._run(tensor, 10 ** 6, s0, 6)
+        tensor = build(randgen.random_tensor_block(31, G=5, a_reads=True))
+        s0 = randgen.random_state(2031, tensor.G, 4, 6, -2 ** 70, 2 ** 70)
+        eng, hist, s, ell_nz, back_bad, nl_nz = self._run(tensor, s0, 6)
         out["cases"].append({"case": "bigint_2^70", "returned_exactly": s.same_as(s0), "inverse_step_mismatches":
                              back_bad, "max_bits": max(h.max_abs() for h in hist).bit_length(), "stats": eng.stats})
         self.assertTrue(s.same_as(s0))
         self.assertEqual(back_bad, 0)
         self.assertEqual(eng.stats["int64_steps"], 0)
-        # (b) Q = 1, cubic growth from small values crosses the int64 limit mid-run: 8 forward + 8 back
-        tensor = build(randgen.random_tensor_block(32, G=5, Q=1, a_reads=True, small=5))
+        # (b) Cubic growth from small values crosses the int64 limit mid-run: 8 forward + 8 back
+        tensor = build(randgen.random_tensor_block(32, G=5, a_reads=True, small=5))
         s0 = randgen.random_state(2032, tensor.G, 4, 6, -3, 3)
-        eng, hist, s, ell_nz, back_bad, nl_nz = self._run(tensor, 1, s0, 8)
-        out["cases"].append({"case": "Q1_cubic_crossing", "returned_exactly": s.same_as(s0),
+        eng, hist, s, ell_nz, back_bad, nl_nz = self._run(tensor, s0, 8)
+        out["cases"].append({"case": "divisor_six_cubic_crossing", "returned_exactly": s.same_as(s0),
                              "inverse_step_mismatches": back_bad,
                              "max_bits_per_step": [h.max_abs().bit_length() for h in hist], "stats": eng.stats})
         self.assertTrue(s.same_as(s0))
@@ -255,16 +264,15 @@ class T03ExactRewind(unittest.TestCase):
 
 class T04Mirror(unittest.TestCase):
     def test_T04(self):
-        Q = 10 ** 6
-        out = {"Q": Q, "n": 30, "runs": []}
+        out = {"divisor": 6, "n": 5, "runs": []}
         for seed in range(20, 25):
             L = (4, 5, 6)[(seed - 20) % 3]
-            tensor = build(randgen.random_tensor_block(seed, G=6, Q=Q, a_reads=False))
+            tensor = build(randgen.random_tensor_block(seed, G=6, a_reads=False))
             self.assertTrue(tensor.b_only)
-            eng = Engine(tensor, Q)
-            s0 = randgen.random_state(3000 + seed, tensor.G, L, 6 * Q, -20, 20)
-            hist = eng.run(s0, 30, history=True)
-            s = eng.run(eng.mirror(hist[-1]), 30)
+            eng = Engine(tensor)
+            s0 = randgen.random_state(3000 + seed, tensor.G, L, 6, -2, 2)
+            hist = eng.run(s0, 5, history=True)
+            s = eng.run(eng.mirror(hist[-1]), 5)
             s = eng.mirror(s)
             fmf_bad = sum(0 if eng.step(eng.mirror(eng.step(h))).same_as(eng.mirror(h)) else 1 for h in hist)
             row = {"seed": seed, "L": L, "monomials": len(tensor), "MFnMFn_identity": s.same_as(s0),
@@ -330,10 +338,10 @@ class T05Locality(unittest.TestCase):
 
 
 class T06Vacuum(unittest.TestCase):
-    Q, L, STEPS = 7, 5, 100
+    L, STEPS = 5, 100
 
     def _system(self, seed, deviation):
-        ref = reference_block(self.Q)
+        ref = reference_block()
         new, back = randgen.coupled_new_block(seed, reference_names(), deviation=deviation)
         tensor = build(ref, new, Block((), tuple(back)))
         self.assertFalse(tensor.has_constant)
@@ -341,12 +349,12 @@ class T06Vacuum(unittest.TestCase):
 
     def _r0(self, seed, tensor):
         rng = random.Random(seed)
-        D = 6 * self.Q
-        return {n: (REFERENCE_VACUUM_R * self.Q if n.startswith("R") else rng.randrange(D)) for n in tensor.names}
+        D = 6
+        return {n: (REFERENCE_VACUUM_R if n.startswith("R") else rng.randrange(D)) for n in tensor.names}
 
     def test_T06a_vacuum(self):
         tensor, new = self._system(61, deviation=False)
-        eng = Engine(tensor, self.Q)
+        eng = Engine(tensor)
         s0 = eng.vacuum(self.L, self._r0(161, tensor))
         s = s0
         ref = RefEngine()
@@ -361,10 +369,10 @@ class T06Vacuum(unittest.TestCase):
             raw = eng.clicks(s, s2, k, "raw")
             clicks_new += int(np.isin(off.gear, new_idx).sum())
             raw_new += int(np.isin(raw.gear, new_idx).sum())
-            a, b, r = reference_arrays(rs, self.Q)
+            a, b, r = reference_arrays(rs)
             refbad += int(np.sum(s2.a[:48] != a) + np.sum(s2.b[:48] != b) + np.sum(s2.r[:48] != r))
             s = s2
-        out = {"Q": self.Q, "L": self.L, "steps": self.STEPS, "G": tensor.G, "monomials": len(tensor),
+        out = {"divisor": 6, "L": self.L, "steps": self.STEPS, "G": tensor.G, "monomials": len(tensor),
                "steps_with_any_change": changed, "official_clicks_new": clicks_new, "raw_rows_new": raw_new,
                "reference_mismatches_vs_universe24": refbad}
         record("T0.6a", out)
@@ -374,11 +382,11 @@ class T06Vacuum(unittest.TestCase):
 
     def test_T06b_deviation_form(self):
         tensor, new = self._system(62, deviation=True)
-        eng = Engine(tensor, self.Q)
+        eng = Engine(tensor)
         rs = ref_random_state(62, self.L, -20, 20)
         r0 = self._r0(162, tensor)
         vac = eng.vacuum(self.L, r0)
-        a, b, r = reference_arrays(rs, self.Q)
+        a, b, r = reference_arrays(rs)
         A, B, R = vac.a.astype(OBJ), vac.b.astype(OBJ), vac.r.astype(OBJ)
         A[:48], B[:48], R[:48] = a, b, r
         s = State(self.L, A, B, R)
@@ -395,10 +403,10 @@ class T06Vacuum(unittest.TestCase):
             clicks_new += int(np.isin(off.gear, new_idx).sum())
             raw_new += int(np.isin(raw.gear, new_idx).sum())
             ref_clicks_total += len(off)
-            a, b, r = reference_arrays(rs, self.Q)
+            a, b, r = reference_arrays(rs)
             refbad += int(np.sum(s2.a[:48] != a) + np.sum(s2.b[:48] != b) + np.sum(s2.r[:48] != r))
             s = s2
-        out = {"Q": self.Q, "L": self.L, "steps": self.STEPS, "G": tensor.G, "monomials": len(tensor),
+        out = {"divisor": 6, "L": self.L, "steps": self.STEPS, "G": tensor.G, "monomials": len(tensor),
                "new_gear_component_deviations": newbad, "official_clicks_new": clicks_new, "raw_rows_new": raw_new,
                "reference_mismatches_vs_universe24": refbad, "reference_official_clicks": ref_clicks_total}
         record("T0.6b", out)
@@ -410,12 +418,12 @@ class T06Vacuum(unittest.TestCase):
 
 class T07Performance(unittest.TestCase):
     def test_T07(self):
-        Q, L, warm, timed = 7, 16, 3, int(os.environ.get("MV1_T07_STEPS", "40"))
-        tensor = build(reference_block(Q), randgen.perf_new_block(71, reference_names(), Q=Q))
-        eng = Engine(tensor, Q)
+        L, warm, timed = 16, 3, int(os.environ.get("MV1_T07_STEPS", "40"))
+        tensor = build(reference_block(), randgen.perf_new_block(71, reference_names()))
+        eng = Engine(tensor)
         rs = ref_random_state(71, L, -20, 20)
-        a, b, r = reference_arrays(rs, Q)
-        new = randgen.random_state(171, 32, L, 6 * Q, -20, 20)
+        a, b, r = reference_arrays(rs)
+        new = randgen.random_state(171, 32, L, 6, -2, 2)
         s0 = State(L, np.concatenate([a, new.a.astype(OBJ)]), np.concatenate([b, new.b.astype(OBJ)]),
                    np.concatenate([r, new.r.astype(OBJ)]))
         s = eng.run(s0, warm)
@@ -425,14 +433,19 @@ class T07Performance(unittest.TestCase):
         dt = time.perf_counter() - t0
         stats = dict(eng.stats)
         back = eng.rewind(s, timed)
-        out = {"Q": Q, "L": L, "gears_per_node": tensor.G, "monomials": len(tensor), "rank": tensor.rank,
+        out = {"divisor": 6, "L": L, "gears_per_node": tensor.G, "monomials": len(tensor), "rank": tensor.rank,
                "timed_updates": timed, "seconds": dt, "updates_per_second": timed / dt,
                "gear_updates_per_second": timed * tensor.G * L ** 3 / dt, "forward_stats": stats,
                "max_abs_end": s.max_abs(), "rewind_exact": back.same_as(start_state),
                "threads_env": {k: os.environ.get(k) for k in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS",
                                                               "MKL_NUM_THREADS")}}
         record("T0.7", out)
-        self.assertEqual(stats["pyint_steps"], 0, "int64 path must hold")
+        self.assertEqual(stats["int64_steps"] + stats["pyint_steps"], warm + timed)
+        self.assertGreater(stats["int64_steps"], 0)
+        # The fixed-six law can outgrow int64. Promotion preserves the exact
+        # trajectory; an old large-divisor stability claim does not apply.
+        if s.max_abs() > np.iinfo(np.int64).max:
+            self.assertGreater(stats["pyint_steps"], 0)
         self.assertTrue(out["rewind_exact"])
         print(f"\nT0.7: {out['updates_per_second']:.2f} updates/s, "
               f"{out['gear_updates_per_second']:.3e} gear-updates/s (L={L}, G={tensor.G}, M={len(tensor)})")

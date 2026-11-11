@@ -41,10 +41,8 @@ class Prep:
     """Mutable builder of ONE initial State (Python-int object arrays). ``set(gear, nodes, a, b, r)`` writes
     per-node values (scalars or arrays aligned with ``nodes``, flat node indices). ``state()`` returns the State."""
 
-    def __init__(self, tensor: Tensor, Q: int, L: int, *blocks, default_r: int = 0):
-        self.tensor, self.Q, self.L, self.D = tensor, Q, L, 6 * Q
-        if tensor.Q is not None and tensor.Q != Q:
-            raise ValueError("ONE Q: the tensor was built with a different Q")
+    def __init__(self, tensor: Tensor, L: int, *blocks, default_r: int = 0):
+        self.tensor, self.L, self.D = tensor, L, 6
         lat = lattice(L)
         self.N = lat.N
         r0 = vacuum_map(*blocks)

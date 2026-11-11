@@ -1,0 +1,89 @@
+{
+  "schema": "universe24/fixed-divisor-migration/1",
+  "version": "0.3.0",
+  "previous_source_commit": "1d18ef9",
+  "law": {
+    "scalar": "quotient,remainder=divmod(2*input_sum+remainder,6); previous,current=current,quotient-previous",
+    "divisor": 6,
+    "adjustable_divisor_scale": false
+  },
+  "default_tensor": {
+    "gears": 48,
+    "rank": 2,
+    "max_input_degree": 1,
+    "shared_D": 6,
+    "monomials": 288,
+    "census": {
+      "node": 0,
+      "link": 288,
+      "by_degree": [
+        0,
+        288,
+        0,
+        0
+      ]
+    },
+    "storage_local": true,
+    "inverse_stage_sizes": [
+      48
+    ],
+    "link_gear_types": 0,
+    "strict_one_link_physical_support_violations": 0,
+    "physical_support_max_manhattan_diameter": 1,
+    "physical_violations_by_output": {},
+    "dynamics_fingerprint": "e6c911849a53b6046fde538a38ddb9fc7f4ea193b018fb216ebc5f5a97985412",
+    "full_tensor_fingerprint": "b84ddee525ad22ce903b6183fd9b9bf88a754d0c967a1d3af58f7d840f46941b"
+  },
+  "default_seed": {
+    "kind": "pulse",
+    "rng_seed": 13,
+    "gear": "ref.R16",
+    "origin": [
+      1,
+      1,
+      1
+    ],
+    "amplitude": 3,
+    "all_seed_arithmetic": "integers",
+    "c2": [
+      0,
+      0,
+      0
+    ],
+    "interpretation": "generic reference-lattice preparation; no particle or cosmological identification"
+  },
+  "full_suite": {
+    "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 python -m unittest discover -s universe24/tests -t . -v",
+    "tests": 118,
+    "result": "OK",
+    "seconds": 42.864,
+    "log_sha256": "448feaad359a85d8117cbf1c30f35b246393c803168013650d4b3ad9a50e1856"
+  },
+  "smoke": {
+    "command": "python -m universe24 --L 3 --tmax 20 --budget 120 --out runs/fixed-six-final-smoke --tag migration --rewind",
+    "steps": 20,
+    "official_records": 75,
+    "rewind_exact": true,
+    "initial_state_hash": "74bae50055fdd349aaf91a60003d4cb467f2a450c49b77118172a00d2a136089",
+    "final_state_hash": "f6cd32aa9f0ced48c21dfdea53b655a97f74a1c84e54ccc6b8019e68af22d168"
+  },
+  "scalar_oracle": {
+    "gear_transitions": 288,
+    "ordinary_and_bigint": true,
+    "mismatches": 0
+  },
+  "saved_input_replay": {
+    "exact": true,
+    "steps": 12,
+    "tensor": "e6c911849a53b6046fde538a38ddb9fc7f4ea193b018fb216ebc5f5a97985412"
+  },
+  "experiment_history_comparison": "fixed_six_experiment_migration.json",
+  "source_sha256": {
+    "universe24/core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+    "universe24/core/tensor.py": "e8af57caaf5a920b0efdf9e5399609fbd3ae49bfd1e37f7d465e545b37780c7d",
+    "universe24/layers/system.py": "99b4f90b341d51a116aa83fc2c933a4cc2b7d83194b68f48226b21ed8c951f84",
+    "universe24/layers/one.py": "f3e668193e872308c4652676f623cc198f35ef9a85a81cb9b2c61212a71e881d",
+    "universe24/prepare/one.py": "67517de718dba8b4cc833b171e229492b5e421fbbb70b24d35b2ebf2969a7db0"
+  },
+  "scope": "Breaking model migration. The former 382-channel large-divisor assembly, calibrated demos and 12 associated physics test files are retired. Passing tests cover the current law and declared examples; they do not establish physical GR, QM or maximum-complexity selection. Historical records remain under docs/archive/pre-fixed-six."
+}

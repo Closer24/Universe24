@@ -1,4 +1,4 @@
-"""Stage 0.2 test T0.13: generic reversor building blocks (core/reversors.py); pre-registered in NOTES.md.
+"""Stage 0.2 test T0.13: generic reversor building blocks (core/reversors.py); fixed-divisor six regression suite.
 
 Run from the repository root:
     python -m unittest universe24.tests.test_stage02 -v
@@ -31,8 +31,8 @@ from universe24.tests.l0_oracle import time_reverse
 MAPS = ("M", "Mp", "J", "JR", "JM", "Jp")
 
 
-def rstate(seed, G, L, Q, lo=-30, hi=30):
-    return randgen.random_state(seed, G, L, 6 * Q, lo, hi)
+def rstate(seed, G, L, lo=-30, hi=30):
+    return randgen.random_state(seed, G, L, 6, lo, hi)
 
 
 def official(eng, s, s2, k):
@@ -63,10 +63,10 @@ def inversion_relabelings(ports, weights):
     return sols
 
 
-def perm_map(tensor, Q, names, sigma, name):
+def perm_map(tensor, names, sigma, name):
     """Gear relabeling: the new gear names[h] takes the values of the old gear names[sigma(h)]."""
     k = len(names)
-    return GroupLinearMap(tensor, Q, names, [[1 if j == sigma[i] else 0 for j in range(k)] for i in range(k)],
+    return GroupLinearMap(tensor, names, [[1 if j == sigma[i] else 0 for j in range(k)] for i in range(k)],
                           name=name)
 
 
@@ -75,65 +75,65 @@ class T13Reversors(unittest.TestCase):
         out = {}
         tensor = Tensor([GearType("n0"), GearType("n1"), GearType("Lx", link=0), GearType("Ly", link=1),
                          GearType("Lz", link=2)], [])
-        for Q in (1, 7, 50):
+        for trial in (1, 7, 50):
             for L in (4, 5):
-                s = rstate(13 + Q + L, tensor.G, L, Q)
-                maps = [uniform(tensor, Q, m) for m in MAPS]
-                rng = random.Random(Q * 100 + L)
-                maps.append(GearwiseMap(tensor, Q, {n: rng.choice(list(GEAR_MAPS)) for n in tensor.names}))
+                s = rstate(13 + trial + L, tensor.G, L)
+                maps = [uniform(tensor, m) for m in MAPS]
+                rng = random.Random(trial * 100 + L)
+                maps.append(GearwiseMap(tensor, {n: rng.choice(list(GEAR_MAPS)) for n in tensor.names}))
                 maps += [inversion_about_node(tensor, (1, 2, 0)), inversion_about_cube_centre(tensor, (0, 1, 2)),
                          inversion_about_box_centre(tensor, L)]
-                maps.append(GroupLinearMap(tensor, Q, ["n0", "n1"], [[0, -1], [-1, 0]], name="swap_neg"))
+                maps.append(GroupLinearMap(tensor, ["n0", "n1"], [[0, -1], [-1, 0]], name="swap_neg"))
                 for X in maps:
                     ok = (X @ X)(s).same_as(s)
-                    out[f"Q{Q}_L{L}_{X.name}"] = ok
+                    out[f"trial{trial}_L{L}_{X.name}"] = ok
                     self.assertTrue(ok, X.name)
                 # unimodular integer matrix and its inverse (explicit remainder rules)
-                A = GroupLinearMap(tensor, Q, ["n0", "n1"], [[2, 1], [1, 1]], r_rule=[(0, "id"), (1, "id")])
-                Ai = GroupLinearMap(tensor, Q, ["n0", "n1"], [[1, -1], [-1, 2]], r_rule=[(0, "id"), (1, "id")])
+                A = GroupLinearMap(tensor, ["n0", "n1"], [[2, 1], [1, 1]], r_rule=[(0, "id"), (1, "id")])
+                Ai = GroupLinearMap(tensor, ["n0", "n1"], [[1, -1], [-1, 2]], r_rule=[(0, "id"), (1, "id")])
                 self.assertTrue((Ai @ A)(s).same_as(s))
                 t = A(s)
                 self.assertTrue(np.array_equal(t.a[0], 2 * s.a[0] + s.a[1]) and np.array_equal(t.b[1], s.b[0] + s.b[1]))
                 # K^2 = J on the block
-                K = GroupLinearMap(tensor, Q, ["n0", "n1"], [[0, -1], [1, 0]], name="K")
-                J01 = GearwiseMap(tensor, Q, {"n0": "J", "n1": "J"})
+                K = GroupLinearMap(tensor, ["n0", "n1"], [[0, -1], [1, 0]], name="K")
+                J01 = GearwiseMap(tensor, {"n0": "J", "n1": "J"})
                 self.assertTrue((K @ K)(s).same_as(J01(s)))
         out["unimodular_inverse_and_K2=J"] = True
         record("T0.13_1_involutions", {"cases": out})
 
     def test_2_Mp_equals_universe24_time_reverse(self):
-        tensor = build(reference_block(1))
-        Mp = uniform(tensor, 1, "Mp")
+        tensor = build(reference_block())
+        Mp = uniform(tensor, "Mp")
         n = 0
         for seed in (1, 2, 3):
             rs = ref_random_state(500 + seed, 5, -40, 40)
-            mine = Mp(State(5, *reference_arrays(rs, 1)))
-            theirs = State(5, *reference_arrays(time_reverse(rs), 1))
+            mine = Mp(State(5, *reference_arrays(rs)))
+            theirs = State(5, *reference_arrays(time_reverse(rs)))
             self.assertTrue(mine.same_as(theirs))
             n += 1
         record("T0.13_2_Mp_vs_time_reverse", {"states": n, "equal": True})
 
     def test_3_reference_reversors_and_kinds(self):
         out = {}
-        for Q in (1, 7):
-            tensor = build(reference_block(Q))
-            eng = Engine(tensor, Q)
+        for trial in (1, 7):
+            tensor = build(reference_block())
+            eng = Engine(tensor)
             for seed in (1, 2):
-                s0 = State(4, *reference_arrays(ref_random_state(600 + seed, 4, -40, 40), Q))
+                s0 = State(4, *reference_arrays(ref_random_state(600 + trial + seed, 4, -40, 40)))
                 hist = eng.run(s0, 10, history=True)
                 fwd = [official(eng, hist[k - 1], hist[k], k) for k in range(1, 11)]
                 for mname in ("M", "Mp", "JR", "JM"):
-                    X = uniform(tensor, Q, mname)
+                    X = uniform(tensor, mname)
                     chk = reversor_check(X, eng, [s0], 10)
-                    self.assertTrue(chk["ok"] and chk["identity"] == 1, (Q, mname, chk))
+                    self.assertTrue(chk["ok"] and chk["identity"] == 1, (trial, mname, chk))
                     mh = eng.run(X(hist[-1]), 10, history=True)
                     back = [official(eng, mh[k - 1], mh[k], k) for k in range(1, 11)]
                     swap = mname in ("JR", "JM")
                     for k in range(10):          # mirrored update k+1 retraces original update 10-k
                         exp = sorted((addr, (0, 2, 1)[kind] if swap else kind, -q if swap else q)
                                      for addr, kind, q in fwd[9 - k])
-                        self.assertEqual(sorted(back[k]), exp, (Q, mname, k))
-                    out[f"Q{Q}_seed{seed}_{mname}"] = {"reversor": True, "clicks": sum(len(f) for f in fwd),
+                        self.assertEqual(sorted(back[k]), exp, (trial, mname, k))
+                    out[f"trial{trial}_seed{seed}_{mname}"] = {"reversor": True, "clicks": sum(len(f) for f in fwd),
                                                        "kinds": "C1<->C2, quotient negated" if swap else "kept"}
         record("T0.13_3_reference_reversors", {"cases": out})
 
@@ -148,16 +148,15 @@ class T13Reversors(unittest.TestCase):
         self.assertEqual(out["relabelings_(1, 1, -1)"], 0)
         c = Coupling((1, 1, 1))
         sols = inversion_relabelings(c.ports, c.weights)
-        Q = 7
-        tensor = build(reference_block(Q))
-        eng = Engine(tensor, Q)
+        tensor = build(reference_block())
+        eng = Engine(tensor)
         names = tensor.names
         n_ok = 0
         for L in (4, 5):
-            s = State(L, *reference_arrays(ref_random_state(700 + L, L, -40, 40), Q))
+            s = State(L, *reference_arrays(ref_random_state(700 + L, L, -40, 40)))
             for P in (inversion_about_node(tensor, (1, 0, 2)), inversion_about_cube_centre(tensor, (0, 2, 1))):
                 for i, sigma in enumerate(sols):
-                    X = P @ perm_map(tensor, Q, names, sigma, f"sigma{i}")
+                    X = P @ perm_map(tensor, names, sigma, f"sigma{i}")
                     self.assertTrue(eng.step(X(s)).same_as(X(eng.step(s))), (L, P.name, i))
                     n_ok += 1
                 self.assertFalse(eng.step(P(s)).same_as(P(eng.step(s))), "plain inversion must fail")
@@ -191,11 +190,10 @@ class T13Reversors(unittest.TestCase):
             return out
         sym = pot + [(c, invert(P)) for c, P in pot]
         tensor = Tensor(gears, gradient_terms(sym))
-        Q = 10 ** 6
-        eng = Engine(tensor, Q)
+        eng = Engine(tensor)
         res = {}
         for L in (4, 5):
-            s = rstate(800 + L, tensor.G, L, Q, -20, 20)
+            s = rstate(800 + L, tensor.G, L, -20, 20)
             for P in (inversion_about_node(tensor, (2, 1, 0)), inversion_about_cube_centre(tensor, (1, 1, 0))):
                 ok = eng.step(P(s)).same_as(P(eng.step(s)))
                 res[f"L{L}_{P.name}"] = ok
@@ -210,20 +208,20 @@ class T13Reversors(unittest.TestCase):
         record("T0.13_5_link_rebasing", res)
 
     def test_6_central_detection(self):
-        L, Q = 4, 7
+        L = 4
         gears = [GearType("X"), GearType("Y")]
         lam = [(3, 1), (2, -1)]          # complex coefficients alpha + i beta, on-site and +x hop (with reciprocal -x)
         terms = []
         for (al, be), offs in zip(lam, [[ZERO], [DIRECTIONS[0], DIRECTIONS[1]]]):
             for o in offs:
-                terms += [("X", al * Q, (("X", o, "b"),)), ("X", -be * Q, (("Y", o, "b"),)),
-                          ("Y", be * Q, (("X", o, "b"),)), ("Y", al * Q, (("Y", o, "b"),))]
+                terms += [("X", al, (("X", o, "b"),)), ("X", -be, (("Y", o, "b"),)),
+                          ("Y", be, (("X", o, "b"),)), ("Y", al, (("Y", o, "b"),))]
         cl = Tensor(gears, terms)
-        eng = Engine(cl, Q)
-        K = GroupLinearMap(cl, Q, ["X", "Y"], [[0, -1], [1, 0]], name="K")
-        M = uniform(cl, Q, "M")
-        J = uniform(cl, Q, "J")
-        states = [rstate(900 + i, 2, L, Q, -15, 15) for i in range(4)]
+        eng = Engine(cl)
+        K = GroupLinearMap(cl, ["X", "Y"], [[0, -1], [1, 0]], name="K")
+        M = uniform(cl, "M")
+        J = uniform(cl, "J")
+        states = [rstate(900 + i, 2, L, -15, 15) for i in range(4)]
         km = reversor_check(K @ M, eng, states, 12, central=[("J", J)])
         m = reversor_check(M, eng, states, 12)
         self.assertEqual(km["central"]["J"], 4)
@@ -231,22 +229,22 @@ class T13Reversors(unittest.TestCase):
         self.assertEqual(m["identity"], 4)
         km_strict = reversor_check(K @ M, eng, states, 12)
         self.assertEqual(km_strict["failures"], 4)
-        real = Tensor(gears, [("X", 2 * Q, (("X", ZERO, "b"),)), ("Y", 5 * Q, (("Y", ZERO, "b"),)),
-                              ("X", Q, (("Y", DIRECTIONS[0], "b"),)), ("Y", Q, (("X", DIRECTIONS[1], "b"),))])
-        ctrl = reversor_check(K @ M, Engine(real, Q), states, 12, central=[("J", J)])
+        real = Tensor(gears, [("X", 2, (("X", ZERO, "b"),)), ("Y", 5, (("Y", ZERO, "b"),)),
+                              ("X", 1, (("Y", DIRECTIONS[0], "b"),)), ("Y", 1, (("X", DIRECTIONS[1], "b"),))])
+        ctrl = reversor_check(K @ M, Engine(real), states, 12, central=[("J", J)])
         self.assertGreater(ctrl["failures"], 0)
         record("T0.13_6_central", {"KM_complex_linear": km, "M": m, "KM_without_central": km_strict,
                                    "KM_real_linear_control": ctrl})
 
     def test_7_is_fixed(self):
-        Q, L = 7, 4
-        tensor = build(reference_block(Q))
-        vac = Engine(tensor, Q).vacuum(L, [2 * Q] * 48)
+        L = 4
+        tensor = build(reference_block())
+        vac = Engine(tensor).vacuum(L, [2] * 48)
         names = tensor.names
         res = {"P_node": is_fixed(inversion_about_node(tensor, (1, 1, 1)), vac),
                "P_cube": is_fixed(inversion_about_cube_centre(tensor), vac),
-               "perm": is_fixed(perm_map(tensor, Q, names, list(range(1, 48)) + [0], "cycle"), vac),
-               "M": is_fixed(uniform(tensor, Q, "M"), vac)}
+               "perm": is_fixed(perm_map(tensor, names, list(range(1, 48)) + [0], "cycle"), vac),
+               "M": is_fixed(uniform(tensor, "M"), vac)}
         self.assertEqual(res, {"P_node": True, "P_cube": True, "perm": True, "M": False})
         record("T0.13_7_is_fixed", res)
 

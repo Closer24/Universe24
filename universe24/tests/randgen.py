@@ -48,14 +48,14 @@ def symmetric_linear_terms(rng, names, scale, rowsum, pairs):
     return terms
 
 
-def random_tensor_block(seed: int, G: int = 6, Q: int = 10 ** 6, a_reads: bool = False, max_degree: int = 3,
+def random_tensor_block(seed: int, G: int = 6, a_reads: bool = False, max_degree: int = 3,
                         nonlinear=(2, 4), small: int = 5, constants: bool = True, prefix: str = "g",
                         rowsum: int = 6, labels=("official", "audit")) -> Block:
-    """T0.3/T0.4 family: symmetric Q-weighted linear part + small nonlinear terms (+ constants) (+ acyclic a-reads)."""
+    """T0.3/T0.4 family: symmetric integer linear part + small nonlinear terms (+ constants) (+ acyclic a-reads)."""
     rng = random.Random(seed)
     names = [f"{prefix}{i}" for i in range(G)]
     gears = tuple(GearType(n, labels[i % len(labels)]) for i, n in enumerate(names))
-    terms = symmetric_linear_terms(rng, names, Q, rowsum, pairs=2 * G)
+    terms = symmetric_linear_terms(rng, names, 1, rowsum, pairs=2 * G)
     order = names[:]
     rng.shuffle(order)
     pos = {n: p for p, n in enumerate(order)}
@@ -81,7 +81,7 @@ def random_tensor_block(seed: int, G: int = 6, Q: int = 10 ** 6, a_reads: bool =
             if k >= 3 and rng.random() < 0.5:
                 facs[-1] = (rng.choice(earlier), offs[-1], "a")
             terms.append((t, rng.choice([v for v in range(-3, 4) if v]), tuple(facs)))
-    return Block(gears, tuple(terms), Q=Q)
+    return Block(gears, tuple(terms))
 
 
 def random_state(seed: int, G: int, L: int, D: int, lo: int, hi: int) -> State:
@@ -132,14 +132,15 @@ def coupled_new_block(seed: int, ref_names, n_new: int = 32, max_degree: int = 3
     return Block(gears, tuple(terms)), back_terms
 
 
-def perf_new_block(seed: int, ref_names, n_new: int = 32, Q: int = 7, prefix: str = "p") -> Block:
+def perf_new_block(seed: int, ref_names, n_new: int = 32, prefix: str = "p") -> Block:
     """T0.7: a random rank-3 (degree <= 2) block for 32 new gears, reading the reference and each other.
-    Linear new-new couplings are symmetric and Q-weighted (bounded); quadratic terms read reference b's and at most
-    one new gear that comes earlier in a random order (no quadratic feedback loop), so the values stay in int64."""
+    Linear new-new couplings are symmetric; quadratic terms read reference b's and at most
+    one new gear that comes earlier in a random order. Values may grow beyond int64,
+    exercising the engine's exact arbitrary-precision fallback."""
     rng = random.Random(seed)
     names = [f"{prefix}{i:02d}" for i in range(n_new)]
     gears = tuple(GearType(n, "audit" if i % 2 else "official") for i, n in enumerate(names))
-    terms = symmetric_linear_terms(rng, names, Q, 6, pairs=2 * n_new)
+    terms = symmetric_linear_terms(rng, names, 1, 6, pairs=2 * n_new)
     order = names[:]
     rng.shuffle(order)
     pos = {n: p for p, n in enumerate(order)}
@@ -156,4 +157,4 @@ def perf_new_block(seed: int, ref_names, n_new: int = 32, Q: int = 7, prefix: st
             else:
                 f2 = (rng.choice(ref_names), offs[1], "b")
             terms.append((t, rng.choice((-2, -1, 1, 2)), (f1, f2)))
-    return Block(gears, tuple(terms), Q=Q)
+    return Block(gears, tuple(terms))

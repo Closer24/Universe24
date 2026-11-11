@@ -1,23 +1,28 @@
-# Universe24 ONE
+# Universe24
 
-ONE is the sole active implementation in this repository. It is a research candidate for constructing observable events from exact, local, reversible integer dynamics. Its current default is **ONE v1**, built by `one_system()`.
-
-Every gear uses the same scalar Rule3 recurrence. A fixed polynomial tensor supplies the input; the complete initial state supplies the seed. The forward loop never changes the tensor, injects a signal, selects a branch, or applies a click callback.
+Universe24 is a research project for testing whether exact local integer
+dynamics can generate useful physical descriptions. Its active runtime uses
+one scalar Rule3 operation with the **fixed divisor six**:
 
 ```python
-ell, r_next = divmod(2 * u + r, D)
-a_next, b_next = b, ell - a
+quotient, remainder = divmod(2 * input_sum + remainder, 6)
+previous, current = current, quotient - previous
 ```
 
-This is an executable mathematical model, **not a demonstrated derivation of quantum mechanics or general relativity**. See [the algebra and limits](docs/MODEL.md) and [research status](docs/RESEARCH_STATUS.md).
+A fixed local integer tensor supplies each input. A complete initial state
+supplies both retained histories and every remainder. The forward loop never
+replaces the tensor, injects signals, selects an outcome, or invokes an
+observer to change a state.
 
-The [system map and claim audit](docs/SYSTEM_MAP.md) explain the generic node, prove the inverse under its assumptions, list every module's role and show what actually communicates. The default tensor has six independent namespace groups; its present cosmic detector choices do not select different future clock trajectories under the declared preparation.
+The default `one_system()` is the **48-channel cube-group reference
+construction**. The former 382-channel variable-divisor assembly has been
+retired. This is a deliberate change of model; its old physical calibrations,
+state hashes and long-run results are not claims about the new default.
 
-The optional [connected-clock research](docs/CLOCK_RESEARCH.md) adds reciprocal clock and record couplings as fixed tensor entries, with exact resolution lifting and unchanged Rule3. These are experimental builders, not the default law or established gravity/entanglement. Long runs also expose instability in the original default preparation; bounded shorter runs must not be extrapolated to arbitrary times or seeds.
-
-A separate [bounded-circuit example](docs/BOUNDED_CIRCUITS.md) proves exact routing and periodic clocks for all time on a prepared Boolean invariant sector. It uses the same engine, but a different fixed tensor; its proof is not a stability theorem for the default field model.
-
-The [geometry research](docs/GEOMETRY_RESEARCH.md) derives the clock/link reconstruction requirements and the missing Einstein constraints. Isolated [geometry experiments](experiments/geometry/README.md) include a restricted conformal clock construction, an invariant linear tensor-wave sector and exact counterexamples. They are research examples, kept outside the default runtime.
+This repository does **not** demonstrate general relativity, quantum
+mechanics, particle physics or a law selecting maximum-complexity paths.
+See [the algebra](docs/MODEL.md), [research status](docs/RESEARCH_STATUS.md)
+and [the migration note](docs/DIVISOR_AUDIT.md).
 
 ## Install and run
 
@@ -30,91 +35,86 @@ python -m pip install '.[validation]'
 python -m universe24 --L 3 --tmax 20 --budget 120 --out runs/demo --tag demo --rewind
 ```
 
-`--out` is required. The run writes diagnostics and hashes there. `--rewind` checks recovery of the complete seed after the forward run; it is an audit, not a stage of forward dynamics. Larger boards and longer runs can be expensive. `--budget` may stop a run early; inspect the reported completed horizon.
+The default seed is a declared local pulse of integer amplitude three. The CLI also supports a standing
+preparation and the empty preparation. `--rewind` checks recovery of the
+complete initial state; it is an audit, not part of the forward dynamics.
+`--budget` may stop a run early, so inspect the completed horizon.
 
-## What is fixed, and what is chosen?
+## What defines a run?
 
-| Item | Current default |
+| Item | Current contract |
 |---|---|
-| Space | Periodic cube of side `L >= 3`; six face neighbors |
-| Elementary state | Exact integer triple `(a, b, r)` per gear and node |
-| Gear types per node | **382**; the 48-gear `2O` block is one part |
-| Shared scale | `Q = 2**33 + 1`; divisor `D = 6*Q` |
-| Input | One fixed integer polynomial tensor; degree at most 3 |
-| Tensor census | 18,592 live monomials; 736 designated one-way terms |
-| Default cosmic coupling | Block diagonal: package and cosmic block do not read one another |
-| Dynamics fingerprint | `77f6d251a8adfb2e4727bd2bd5ffeaa0e2ae3538aac393fe95c497fce754acf6` |
+| Storage graph | Periodic cube with six face neighbors |
+| Local state | Integer `(a,b,r)` per gear, with `0 <= r < 6` |
+| Default gear types | 48 group-labelled reference channels |
+| Default coupling | 288 linear terms; actual tensor order two |
+| Scalar divisor | Constant six; no scale argument |
+| Input law | Fixed integer polynomial of degree at most three |
+| Tensor order | At most four, including the output index |
+| Forward reads | One complete old snapshot |
+| Inverse | Exact, with acyclic old-history dependencies |
+| Observation | Passive official clicks and explicitly declared decoders |
 
-The compatibility name `dynamics_fingerprint` hashes the indexed coefficient template, excluding Q. Identify the complete update law by this hash **together with Q**, or use the full tensor fingerprint for the default tensor, which records Q.
+The matrices and polynomial tensor entries define the couplings; they remain
+fixed during a run. An effective link response can change through products
+of evolving registers. That does not make the graph, metric interpretation
+or quantum measurement behavior automatic.
 
-Choose the tensor configuration, board size and seed **before** a run. The seed then evolves deterministically. Reversibility retains the information underlying a coarse observed outcome; it does not erase alternate full states or prove a maximum-complexity selection law.
-
-Optional builders are experiments within the same ONE engine. The coupled-doublet option is rejected because of observed runaway and is **off by default**. Einstein and CG2 constructions are also optional, not established properties of default ONE. The old standalone 48-channel implementation and its experiment trees are no longer present on the active branch; they remain in Git history.
-
-## Code map
+## Code and research examples
 
 | Location | Responsibility |
 |---|---|
-| [`core/engine.py`](universe24/core/engine.py) | One exact forward engine and staged inverse |
-| [`core/tensor.py`](universe24/core/tensor.py) | Polynomial input, locality and inverse-dependency validation |
-| [`algebra/`](universe24/algebra) | Cube rotations, binary-octahedral group and fixed L0 matrices |
-| [`layers/one.py`](universe24/layers/one.py) | Default complete ONE construction |
-| [`layers/clock_network.py`](universe24/layers/clock_network.py), [`clock_bridge.py`](universe24/layers/clock_bridge.py) | Optional fixed reciprocal interactions and record feedback |
-| [`layers/involution_clock.py`](universe24/layers/involution_clock.py) | Exact prepared-sector routing experiment |
-| [`prepare/one.py`](universe24/prepare/one.py) | Initial data only |
-| [`observe/`](universe24/observe) | Passive measurements and audit identities |
-| [`demos/one/run_one.py`](universe24/demos/one/run_one.py) | Reproducible run and reporting |
-| [`tests/`](universe24/tests) | Exact arithmetic, locality, reversibility and scoped research tests |
+| [`core/engine.py`](universe24/core/engine.py) | Shared scalar evolution and exact inverse |
+| [`core/tensor.py`](universe24/core/tensor.py) | Integer tensor, locality and dependency validation |
+| [`algebra/`](universe24/algebra) | Cube rotations, quaternions and fixed group matrices |
+| [`layers/one.py`](universe24/layers/one.py) | Fixed-six reference construction |
+| [`prepare/`](universe24/prepare) | Complete initial states only |
+| [`observe/`](universe24/observe) | Passive diagnostics and records |
+| [`experiments/geometry/`](experiments/geometry/README.md) | Optional, separately declared constructions |
+
+The [bounded-circuit example](docs/BOUNDED_CIRCUITS.md) proves routing and
+periodic clocks on a prepared finite sector. The [integer reciprocal
+examples](docs/INTEGER_RECIPROCAL_GEOMETRY.md) show exact coupled cycles and
+explicit unbounded controls. Neither is a generic stability theorem.
+
+The [local pp-wave experiment](docs/PPWAVE_PALATINI_LOCAL.md) embeds a chosen
+vacuum geometry and records its boundary failures. Its [geodesic extension](docs/PPWAVE_OPERATIONAL_ROUTE.md)
+encodes selected one-axis worldlines and calibrated time readouts. Those
+coordinates stay inside a carrier node; no general packet propagation,
+backreaction or universal operational metric has been established.
 
 ## Verification
 
 ```bash
-# Quick checks of the default construction and preserved state traces
+# Default construction and fixed-six regression fixtures
 python -m unittest universe24.tests.test_one universe24.tests.test_migration -v
 
-# Complete suite, with package context for relative imports
-GAUGE_LONG=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 python -m unittest discover -s universe24/tests -t . -v
+# Complete discovery, with package context
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 python -m unittest discover -s universe24/tests -t . -v
 
-# Connectivity and block inventory derived from live tensor entries
+# Live tensor connectivity and support
 python -m universe24.tools.system_inventory --out runs/system-inventory.json
-```
 
-Tests write fresh evidence to ignored `runs/tests/`. Checked-in `universe24/results/` and research notes are historical ONE experiment records, not a declaration that all physical targets passed. Some tests deliberately verify negative findings or failure of a physical hypothesis. A green suite means the stated assertions passed.
-
-See [validation scope](docs/VALIDATION.md), [contribution rules](CONTRIBUTING.md), and [the research proposal](https://docs.google.com/document/d/1NDPfeFj9vldgb0RMSSvx2lBSmOo__E-F3t2cZwfjOjI/edit).
-
-## Reproduce the optional clock research
-
-```bash
-# Autonomous candidate, explicit initial state, exact rewind
-python -m universe24.tools.connected_clocks --L 3 --steps 1000 --out runs/connected/report.json
-
-# Paired controls change only a declared initial source; the tensor stays fixed
-python -m universe24.tools.connected_clocks --control forward --L 4 --steps 300 --out runs/connected/forward.json
-python -m universe24.tools.connected_clocks --control reverse --L 3 --steps 1200 --out runs/connected/reverse.json
-python -m universe24.tools.connected_clocks --control off --L 3 --steps 300 --out runs/connected/off.json
-
-# Distinguish hand crossings, reader echoes and complete-state recurrence
-python -m universe24.tools.clock_epochs --L 3 --steps 1000 --matter-divisor 16 --out runs/epochs/report.json
-
-# Raw official-click clock ratios in prescribed backgrounds; includes failed physical criteria
-python -m universe24.tools.metric_clock_gate --out runs/metric-clock-gate/report.json
-
-# Exact finite-sector proof fixtures and replay of committed evidence
-python -m unittest universe24.tests.test_involution_clock -v
-```
-
-Inspect the actual completed horizon, per-sector bounds, inverse result and physical acceptance fields. A successful command means the experiment ran; it does not turn a failed physical criterion into a pass. The metric-clock gate's faster clocks fail its declared universal-dilation tolerance even though all histories rewind exactly. The reference packet and long field runs also expose growing metric amplitudes.
-
-## Tensor and click audit
-
-See [the audit and measured limitations](docs/CLICK_CONTRACT_AUDIT.md). Export a complete tensor, seed and official event stream, then replay the saved inputs:
-
-```bash
+# Export and replay the actual tensor, seed and event stream
 python -m universe24.tools.audit_contract --L 4 --steps 120 --out runs/contract
 python -m universe24.tools.audit_contract --replay runs/contract
 ```
 
-All register reads are on-site or at a face neighbor. Including both endpoints of link gears, some terms span two lattice edges; the stricter single-physical-link condition is not satisfied. Official event counts are distinct from signed quotient weights.
+The migrated full suite passes 118 tests. A size-three, 20-update default
+run emits 75 official records and rewinds exactly; [validation](docs/VALIDATION.md)
+records the scope and current tensor fingerprint.
 
-An explicit [single-edge experiment](docs/SINGLE_EDGE_IMPLEMENTATION.md) adds 90 node mediators and meets the stronger condition with the same engine. It changes dynamics and requires a declared observation map; physical equivalence is unproved, so it is not the default. Run `python -m universe24.tools.physics_gate` to reproduce the electromagnetic readout comparison and the gravity-independent cosmic-clock control. Neither construction establishes Einstein spacetime; the board is the proposed substrate and clicks are its observable records.
+A passing negative-control test records the failure of the associated
+physical claim. It does not turn that claim into a successful result.
+Fresh runs belong under `runs/`; [validation scope](docs/VALIDATION.md)
+describes what the checks can establish.
+
+## Historical results
+
+The [pre-migration archive](docs/archive/pre-fixed-six/README.md) preserves
+superseded notes, configurations and evidence. Their large-divisor presets
+are unavailable in the active engine. They must be interpreted with the
+corresponding version of the source, available in Git history, and must not
+be silently replayed as fixed-six laws.
+
+See [contribution rules](CONTRIBUTING.md) and the [research proposal](docs/RESEARCH_PROPOSAL.md).

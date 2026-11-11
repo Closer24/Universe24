@@ -1,23 +1,8 @@
-"""SEED preparations as DATA ONLY (AGENTS item 9; INTEGRATOR, manager 11:0x). Nothing here is a law, a gear or a run:
-every function returns a NEW State (the seed enters only as initial data on the joint vacuum).
+"""Explicit integer initial-data templates and finite matrix orbit sums.
 
-Sources: s6/AGREE_M.md (a)/F2 (twin-agreed Study 6 seed), B1-GRAV F4d (R-a background, k = 0 offset).
-  S2*      b(x0) = A e_i,  a(x0 + e_y) = A Gamma e_i,   Gamma = J' K W0 (= W0 G, G = J'K; K = 1_2 (x) R_j (x) 1_2 Kramers,
-           W0 = beta = Pi the mass/parity matrix) on the 16-channel Dirac pair "matter"; every other gear at the joint
-           vacuum. Two integers. Fixed by R* about the link midpoint (observe/seed.py). y-link for J'R_j (the C2
-           direction rule: J'R_k needs a z-link).
-  node R*  b(x0) = A e_i,  a(x0) = A Gamma e_i  (the node-centred alternative; Wilson-dependent generativity).
-  R-a      the declared uniform k = 0 background: the bgk.B gear held at (v, v) (u_B = 6Q b keeps it static).
-  k = 0 offset   a constant added to the lapse field's a and b (the prepared offset of F4d).
-  L0 dark  (OWNER decision 2, handed class) a SEPARATE datum beside S2*: a(x0) = b(x0) = A v on the 48 L0 gears,
-           v an integer vector (default: one L0 channel; or a rounded eigenvector of M0 = 6 - Sum W_d, a dark band at
-           rest). a = b is the turning point of the clock; fixed by R* about the node x0 (L0 has no Gauss law).
-           Its clicks are AUDIT-ONLY under the handed class (observe/readout.py).
-  weak-field rule (R-P1/R-P2): when a seed is meant to feel a weak potential, amplitude x field >= D/(8 g_phi)
-           (System.info["weak_field_min"]); below it a rest clock can be rounding-locked.
-  P+ seed  HOOK ONLY (TODO): the positive-energy projected seed with an R*-symmetric integer flux network
-           (s6/M1_work/M1_t29_S12_legal_Pplus.py) is NOT ported: it needs its own normalisation (dd = hn = PF) and a
-           float FFT projector followed by an integer flux routing; see pplus_seed_hook.
+Names such as dark, matter, and lapse identify experimental register groups;
+they are not a physical identification. No preparation runs the update.
+Rounded eigenvector and calibrated background presets are retired.
 """
 from __future__ import annotations
 
@@ -77,7 +62,7 @@ def node_rstar(state: State, tensor: Tensor, x0, A: int, i: int = 0, ns: str = "
 
 
 def ra_background(state: State, tensor: Tensor, value: int, gear: str = "bgk.B") -> State:
-    """R-a datum: the background gear held at (value, value) at every node (static: u_B = 6Q b)."""
+    """R-a datum: the background gear held at (value, value) at every node (static: u_B = 6 b)."""
     g = tensor.gear_index(gear)
     a, b, r = state.a.astype(OBJ), state.b.astype(OBJ), state.r.astype(OBJ)
     a[g] = value
@@ -98,7 +83,10 @@ def l0_dark_seed(state: State, tensor: Tensor, x0, A: int, v=None, ns: str = "re
     """L0 (dark) seed: a(x0) = b(x0) = A v on the 48 L0 gears (v integer, default e_0). Returns a NEW state."""
     lat = lattice(state.L)
     n0 = lat.index(*x0)
-    vv = [0] * 48 if v is None else [int(x) for x in v]
+    vv = [0] * 48 if v is None else list(v)
+    if any(type(x) is bool or not isinstance(x, (int, np.integer)) for x in vv):
+        raise TypeError("v needs exact integer entries")
+    vv = [int(x) for x in vv]
     if v is None:
         vv[0] = 1
     if len(vv) != 48:
@@ -113,14 +101,8 @@ def l0_dark_seed(state: State, tensor: Tensor, x0, A: int, v=None, ns: str = "re
 
 
 def m0_band_vector(body_signs=(1, -1, 1), band: int = 0, scale: int = 64) -> list[int]:
-    """A rounded integer eigenvector of L0's mass matrix M0 (band = index of the distinct eigenvalue, ascending)."""
-    from ..layers.gravity_l0c import m0_matrix
-    M0 = m0_matrix(body_signs).astype(float)
-    vals, vecs = np.linalg.eigh(M0)
-    distinct = sorted(set(np.round(vals, 9)))
-    idx = int(np.argmin(np.abs(vals - distinct[band])))
-    v = vecs[:, idx]
-    return [int(round(scale * x / np.max(np.abs(v)))) for x in v]
+    """Retired rounded or scale-dependent preset; use explicit integer initial data."""
+    raise NotImplementedError("This initial-data preset is retired; supply explicit integer initial data")
 
 
 def l0_rstar_vector(body_signs=(1, -1, 1), base=None) -> list[int]:
@@ -129,12 +111,14 @@ def l0_rstar_vector(body_signs=(1, -1, 1), base=None) -> list[int]:
     from ..observe.seed import l0_relabelling
     rel = l0_relabelling(body_signs)
     S = rel["S"]
-    v0 = np.zeros(48, dtype=np.int64)
+    v0 = np.zeros(48, dtype=object)
     if base is None:
         v0[0] = 1
     else:
+        if len(base) != 48 or any(type(x) is bool or not isinstance(x, (int, np.integer)) for x in base):
+            raise TypeError("base needs 48 exact integer entries")
         v0[:] = [int(x) for x in base]
-    v, cur = np.zeros(48, dtype=np.int64), v0.copy()
+    v, cur = np.zeros(48, dtype=object), v0.copy()
     for _ in range(rel["order"]):
         v += cur
         cur = S @ cur
@@ -144,10 +128,7 @@ def l0_rstar_vector(body_signs=(1, -1, 1), base=None) -> list[int]:
 
 
 def ra_free_mean(engine, state, field: str = "metric.h00", bg: str = "bgk.B", t_avg: int = 4000):
-    """R-a datum from the EXACT first-order time mean of the lapse source per Fourier mode (wraps B1-GRAV's
-    prepare/gravity_ra.ra_free_mean; data only: the tensor is evaluated, nothing is run). For seeds that excite L0
-    (pi/2-carrier and form-C L0 sources have a nonzero first-order mean). For S2* the first-order mean is exactly 0; its
-    positive mean source is NONLINEAR, so no cancellation is claimed. Returns (new state, diagnostics)."""
+    """Compatibility entry point that explicitly rejects the retired background calibration."""
     from .gravity_ra import ra_free_mean as _ra
     return _ra(engine, state, field=field, bg=bg, t_avg=t_avg)
 
