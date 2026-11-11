@@ -1,7 +1,11 @@
 # Research status after the fixed-six migration
 
 The active engine has one scalar update with divisor six. The default is the
-48-channel group-reference construction. The earlier 382-channel field and
+54-channel construction: 48 reference channels and six local message lanes.
+Prepared messages travel along face edges and drive a local receiver. No node
+carries a shared cosmic clock; [the transport proof](LOCAL_COMMUNICATION.md)
+states the preparation and one-way reception assumptions. The former
+48-channel reference law remains an explicit comparison mode. The earlier 382-channel field and
 cosmic assembly, its variable-divisor calibrations and associated physical
 presets are retired. This change does not preserve their old trajectories.
 

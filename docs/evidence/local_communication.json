@@ -1,0 +1,170 @@
+{
+  "base_commit": "8d3f15074d3f9a9344ec587dbab0222243505187",
+  "model_change": true,
+  "comparison": "New local communication default; old reference law and its original seed remain explicit. No trajectory equivalence is asserted.",
+  "python": "3.12.14",
+  "source_sha256": {
+    "universe24/core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+    "universe24/core/tensor.py": "e8af57caaf5a920b0efdf9e5399609fbd3ae49bfd1e37f7d465e545b37780c7d",
+    "universe24/layers/communication.py": "6b3353d641dd733d4e203637c95aa4584bc075fde4daee03dc3bc613c440d5af",
+    "universe24/prepare/communication.py": "7c3a3063c92554f907fb92d1a73c5ab07cd7a270cc563794280954b41f360eb7",
+    "universe24/observe/communication.py": "a984196868a4388cc375ffc4a4447ee80cc621c45bb07a227ba273b744a74350",
+    "universe24/layers/one.py": "2e6512fc9681904e500107cd03476680126ef0142f6556e2275fdb8fdb80c1fa",
+    "universe24/prepare/one.py": "6d8091371689d46f413d144eeafaec9a359be2b53eca26124f8be015bfaf832a",
+    "universe24/demos/one/run_one.py": "747e41b72e20131c5a60e58463b884387f89db6096b4f48c8b28ce057f93fc6c",
+    "universe24/tests/test_communication.py": "1cfcbd6a48368706001f78885bf408d410907557f46334a37fac928e131a358d",
+    "universe24/tools/audit_contract.py": "1329e6ca99e434f5432217d19c34212355e80797eb36fb9c9080dc56d6f3dae3",
+    "universe24/tools/export_fixtures.py": "7068ef39ace02bbce63d36f0fca0cbfa81e48487d8510ab3950a294d5f6d7c04"
+  },
+  "checks": {
+    "full_discovery_tests": 125,
+    "full_discovery_passed": true,
+    "transport_tests": 7,
+    "coverage": [
+      "signed and arbitrary-precision payloads in all six directions",
+      "exact prepared transport across periodic seams",
+      "empty network silence",
+      "local receiver response with disconnected control",
+      "finite propagation of reference response",
+      "passive edge message readout",
+      "off-preparation histories are not projected away",
+      "full retained-state rewind"
+    ],
+    "scalar_oracle": {
+      "gear_transitions": 324,
+      "ordinary_and_bigint": true,
+      "mismatches": 0
+    },
+    "strict_support_violations": 0,
+    "saved_input_replay": {
+      "exact": true,
+      "steps": 12,
+      "tensor": "f424f8ebd6878db7d0c0ae57306c7a1d83d162302182ee89c30e2808dcaf88dd"
+    }
+  },
+  "communication": {
+    "model": "fixed-six-local-communication",
+    "G": 54,
+    "rank": 2,
+    "monomials": 306,
+    "fingerprint": "fc3076f34ff0240e5069ae786b745c3a33c0c528867d0b20ef4ceff46b72f0ce",
+    "dynamics_fingerprint": "f424f8ebd6878db7d0c0ae57306c7a1d83d162302182ee89c30e2808dcaf88dd",
+    "initial_state_hash": "325f0c0d6413fc404287b80b8f91985de6eb922fae1da0d041a0f88b935bbb3f",
+    "seed": {
+      "kind": "pulse",
+      "origin": [
+        1,
+        1,
+        1
+      ],
+      "amplitude": 3,
+      "packets": [
+        {
+          "lane": "px",
+          "origin": [
+            1,
+            1,
+            1
+          ],
+          "payload": 3
+        },
+        {
+          "lane": "nx",
+          "origin": [
+            1,
+            1,
+            1
+          ],
+          "payload": 3
+        },
+        {
+          "lane": "py",
+          "origin": [
+            1,
+            1,
+            1
+          ],
+          "payload": 3
+        },
+        {
+          "lane": "ny",
+          "origin": [
+            1,
+            1,
+            1
+          ],
+          "payload": 3
+        },
+        {
+          "lane": "pz",
+          "origin": [
+            1,
+            1,
+            1
+          ],
+          "payload": 3
+        },
+        {
+          "lane": "nz",
+          "origin": [
+            1,
+            1,
+            1
+          ],
+          "payload": 3
+        }
+      ],
+      "rng_seed": 13,
+      "rng_seed_used": false,
+      "all_seed_arithmetic": "integers",
+      "interpretation": "initial local messages; no cosmic age or carried clock"
+    },
+    "completed_updates": 20,
+    "official_records": 11685,
+    "message_records": 120,
+    "final_state_hash": "2f70bda7cc1fb55b84817a14528939dace15c2b4ceb6cb484efd1c5a6a2aa02d",
+    "exact_rewind": true,
+    "maximum_counter_bits": 5
+  },
+  "previous_reference": {
+    "model": "fixed-six-reference",
+    "G": 48,
+    "rank": 2,
+    "monomials": 288,
+    "fingerprint": "b84ddee525ad22ce903b6183fd9b9bf88a754d0c967a1d3af58f7d840f46941b",
+    "dynamics_fingerprint": "e6c911849a53b6046fde538a38ddb9fc7f4ea193b018fb216ebc5f5a97985412",
+    "initial_state_hash": "74bae50055fdd349aaf91a60003d4cb467f2a450c49b77118172a00d2a136089",
+    "seed": {
+      "kind": "pulse",
+      "rng_seed": 13,
+      "gear": "ref.R16",
+      "origin": [
+        1,
+        1,
+        1
+      ],
+      "amplitude": 3,
+      "all_seed_arithmetic": "integers",
+      "c2": [
+        0,
+        0,
+        0
+      ],
+      "interpretation": "generic reference-lattice preparation; no particle or cosmological identification"
+    },
+    "completed_updates": 20,
+    "official_records": 75,
+    "message_records": 0,
+    "final_state_hash": "f6cd32aa9f0ced48c21dfdea53b655a97f74a1c84e54ccc6b8019e68af22d168",
+    "exact_rewind": true,
+    "maximum_counter_bits": 2
+  },
+  "commands": [
+    "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 python -m unittest discover -s universe24/tests -t . -v",
+    "python -m universe24 --L 3 --tmax 20 --budget 120 --out runs/communication --tag communication --rewind",
+    "python -m universe24 --model reference --L 3 --tmax 20 --budget 120 --out runs/reference --tag reference --rewind",
+    "python -m universe24.tools.audit_contract --L 3 --steps 12 --out runs/contract",
+    "python -m universe24.tools.audit_contract --replay runs/contract",
+    "python -m universe24.tools.export_fixtures runs/communication-fixtures"
+  ]
+}

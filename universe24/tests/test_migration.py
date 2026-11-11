@@ -38,7 +38,7 @@ def scalar_step(tensor, state):
 
 class TestMigration(unittest.TestCase):
     def test_fixed_six_default_has_no_scale_parameter(self):
-        _,tensor,engine,initial,report=build(3,'pulse',13)
+        _,tensor,engine,initial,report=build(3,'pulse',13,model='reference')
         self.assertEqual((tensor.G,len(tensor),engine.D),(48,288,6))
         self.assertEqual(report['kind'],'pulse')
         self.assertNotIn('Q',tensor.to_dict())
@@ -55,7 +55,7 @@ class TestMigration(unittest.TestCase):
                          state_hash(engine.run(initial,20),np.arange(48)))
 
     def test_scalar_oracle_matches_negative_and_bigint_full_states(self):
-        _,tensor,engine,_,_=build(3,'none',13)
+        _,tensor,engine,_,_=build(3,'none',13,model='reference')
         rng=np.random.default_rng(59)
         a=rng.integers(-6,7,size=(tensor.G,27)).astype(object)
         b=rng.integers(-6,7,size=a.shape).astype(object)
@@ -72,4 +72,4 @@ class TestMigration(unittest.TestCase):
 
     def test_old_seed_preset_is_not_silently_reinterpreted(self):
         with self.assertRaises(ValueError):
-            build(3,'jpure',13)
+            build(3,'jpure',13,model='reference')

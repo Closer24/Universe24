@@ -2,7 +2,7 @@
 
 The system consists of a fixed storage graph, a local integer coupling tensor,
 a complete seed, and one scalar Rule3 operation. The default construction has
-48 group-labelled channels. Optional experiments can declare different
+48 group-labelled channels and six directed message lanes. Optional experiments can declare different
 channel sets without introducing a second engine.
 
 ## Generic transition and inverse
@@ -32,6 +32,13 @@ The default reference matrices route channels to six neighboring sites.
 They do not automatically make all representation sectors interact or make
 all structures form bound systems. Use the live inventory tool to inspect
 actual dependencies of a selected tensor.
+
+An initial message is transported along successive face edges. The local
+receiver reads an upstream message in the same update as its arrival; it does
+not consult a global phase or carry a cosmic clock. Empty message lanes remain
+empty. See the [exact transport construction](LOCAL_COMMUNICATION.md). The
+synchronous simulator index is bookkeeping and never a message payload or
+input to the tensor.
 
 ## Preparation, evolution and observation
 

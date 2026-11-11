@@ -1,7 +1,10 @@
 # Universe24 fixed-divisor development contract
 
 The active runtime is the generic scalar Rule3 engine. The default construction
-is selected by `universe24.layers.one.one_system()`.
+is selected by `universe24.layers.one.one_system()`: 48 reference channels plus
+six local message lanes. Keep message reception local; do not introduce a
+global cosmic age, copied node clocks, or an update-index input to the tensor.
+`one_system(communication=False)` preserves the earlier reference construction.
 
 1. Preserve exactly `ell,r_next = divmod(2*u+r,6); a_next=b; b_next=ell-a`. The divisor is fixed at six. Do not add a divisor-scale parameter, per-gear numerator/denominator, or hidden normalization knob.
 2. Every forward output reads the same complete old snapshot. Never insert runtime injections, vetoes, branch selectors, detector callbacks, or unrecorded state.

@@ -1,4 +1,4 @@
-"""Run Universe24, the fixed-divisor-six model with a complete seed and passive records.
+"""Run Universe24 local communication with a complete seed and passive records.
 
 Every forward update is Engine.step. A resource gate may stop the run after a
 complete step; it never modifies state. Previous field/cosmic presets are not
@@ -20,6 +20,7 @@ from ...core.tensor import compose
 from ...layers.one import one_system
 from ...observe.one import state_hash
 from ...prepare.one import one_seed
+from ...observe.communication import incoming_messages
 
 
 def forward(engine, state, steps):
@@ -28,8 +29,11 @@ def forward(engine, state, steps):
         yield tick, state
 
 
-def build(L, bang="pulse", rng_seed=13, system_kw=None):
-    system = one_system(**(system_kw or {}))
+def build(L, bang="pulse", rng_seed=13, system_kw=None, *, model="communication"):
+    if model not in ("communication", "reference"):
+        raise ValueError("model must be communication or reference")
+    options = {"communication": model == "communication", **(system_kw or {})}
+    system = one_system(**options)
     tensor = compose(*system.blocks)
     engine = Engine(tensor)
     seed, preparation = one_seed(system, tensor, L, bang=bang, rng_seed=rng_seed)
@@ -39,8 +43,8 @@ def build(L, bang="pulse", rng_seed=13, system_kw=None):
 def run(args):
     if args.tmax < 1 or not math.isfinite(args.budget) or args.budget <= 0 or args.max_bits < 1:
         raise ValueError("positive horizon, finite wall budget and bit limit required")
-    system, tensor, engine, seed, preparation = build(args.L, args.bang, args.rng)
-    rows, events, hashes = [], [], []
+    system, tensor, engine, seed, preparation = build(args.L, args.bang, args.rng, model=getattr(args, "model", "communication"))
+    rows, events, hashes, messages = [], [], [], []
     state, completed = seed, 0
     peak_bits = seed.max_abs().bit_length()
     indices = np.arange(tensor.G)
@@ -50,6 +54,8 @@ def run(args):
     if stop == "requested_horizon":
         for tick, following in forward(engine, seed, args.tmax):
             completed = tick
+            if system.info.get("communication"):
+                messages.extend(dict(update=tick, **message) for message in incoming_messages(state, tensor))
             log = engine.clicks(state, following, tick).select("official")
             ell = following.b.astype(object) + state.a.astype(object)
             if not np.array_equal(6*ell, 2*engine.inputs(state)+state.r-following.r):
@@ -75,7 +81,7 @@ def run(args):
         rewind = dict(exact=engine.rewind(state,completed).same_as(seed), updates=completed)
         if not rewind["exact"]:
             raise AssertionError("complete seed was not recovered")
-    return dict(meta=dict(project="Universe24",tag=args.tag,model="fixed-divisor-six reference construction",D=6,
+    return dict(meta=dict(project="Universe24",tag=args.tag,model=system.info["implementation"],D=6,
                     L=args.L,G=tensor.G,rank=tensor.rank,monomials=len(tensor.monomials),
                     designations=len(tensor.designations),fingerprint=tensor.fingerprint,
                     dynamics_fingerprint=tensor.dynamics_fingerprint,
@@ -84,7 +90,8 @@ def run(args):
                 t_end=completed, requested_steps=args.tmax, stop_reason=stop,
                 wall_forward_s=elapsed, maximum_counter_bits=peak_bits,rewind=rewind,
                 final_state_hash=state_hash(state,indices), engine_stats=dict(engine.stats),
-                rows=rows,hashes=hashes,_events=events,
+                rows=rows,hashes=hashes,_events=events,_messages=messages,
+                communication_records=len(messages),
                 physics_status="No quantum, gravitational, particle or cosmological claim follows from this run.")
 
 
@@ -99,6 +106,7 @@ def compare(left,right):
 
 def main(argv=None):
     parser=argparse.ArgumentParser(prog="universe24", description=__doc__)
+    parser.add_argument("--model", choices=("communication", "reference"), default="communication")
     parser.add_argument("--L",type=int,default=3)
     parser.add_argument("--bang",choices=("pulse","standing","none"),default="pulse",
                         help="initial preparation; this name does not assert a cosmological bang")
@@ -115,10 +123,13 @@ def main(argv=None):
     directory=Path(args.out)
     directory.mkdir(parents=True,exist_ok=True)
     events=result.pop("_events")
+    messages=result.pop("_messages")
     if args.compare:
         result["comparison"]=compare(json.loads(Path(args.compare).read_text()),result)
     with gzip.open(directory/(args.tag+"_events.json.gz"),"wt") as handle:
         json.dump(events,handle)
+    with gzip.open(directory/(args.tag+"_messages.json.gz"),"wt") as handle:
+        json.dump(messages,handle)
     (directory/(args.tag+".json")).write_text(json.dumps(result,indent=2)+"\n")
     print(json.dumps({key:result[key] for key in ("t_end","stop_reason","maximum_counter_bits","rewind")},indent=2))
     return result

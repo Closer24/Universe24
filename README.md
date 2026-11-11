@@ -14,8 +14,11 @@ supplies both retained histories and every remainder. The forward loop never
 replaces the tensor, injects signals, selects an outcome, or invokes an
 observer to change a state.
 
-The default `one_system()` is the **48-channel cube-group reference
-construction**. The former 382-channel variable-divisor assembly has been
+The default `one_system()` has **48 cube-group reference channels and six
+local message lanes**. An initial pulse travels between neighboring nodes and
+drives a local receiver; nodes carry no shared cosmic clock. See the
+[transport proof and protocol](docs/LOCAL_COMMUNICATION.md).
+The previous 48-channel law remains available with `--model reference`. The former 382-channel variable-divisor assembly has been
 retired. This is a deliberate change of model; its old physical calibrations,
 state hashes and long-run results are not claims about the new default.
 
@@ -35,8 +38,10 @@ python -m pip install '.[validation]'
 python -m universe24 --L 3 --tmax 20 --budget 120 --out runs/demo --tag demo --rewind
 ```
 
-The default seed is a declared local pulse of integer amplitude three. The CLI also supports a standing
-preparation and the empty preparation. `--rewind` checks recovery of the
+The default seed declares six outgoing integer messages of payload three at
+one origin, including their complete previous snapshots. The CLI also supports
+the empty preparation; standing preparation requires `--model reference`.
+Each run saves separate message and official-click logs. `--rewind` checks recovery of the
 complete initial state; it is an audit, not part of the forward dynamics.
 `--budget` may stop a run early, so inspect the completed horizon.
 
@@ -46,8 +51,8 @@ complete initial state; it is an audit, not part of the forward dynamics.
 |---|---|
 | Storage graph | Periodic cube with six face neighbors |
 | Local state | Integer `(a,b,r)` per gear, with `0 <= r < 6` |
-| Default gear types | 48 group-labelled reference channels |
-| Default coupling | 288 linear terms; actual tensor order two |
+| Default gear types | 48 reference channels + 6 message lanes |
+| Default coupling | 306 linear terms; actual tensor order two |
 | Scalar divisor | Constant six; no scale argument |
 | Input law | Fixed integer polynomial of degree at most three |
 | Tensor order | At most four, including the output index |
@@ -67,7 +72,8 @@ or quantum measurement behavior automatic.
 | [`core/engine.py`](universe24/core/engine.py) | Shared scalar evolution and exact inverse |
 | [`core/tensor.py`](universe24/core/tensor.py) | Integer tensor, locality and dependency validation |
 | [`algebra/`](universe24/algebra) | Cube rotations, quaternions and fixed group matrices |
-| [`layers/one.py`](universe24/layers/one.py) | Fixed-six reference construction |
+| [`layers/one.py`](universe24/layers/one.py) | Reference dynamics with local message reception |
+| [`layers/communication.py`](universe24/layers/communication.py) | Six directed transport lanes and receiver wiring |
 | [`prepare/`](universe24/prepare) | Complete initial states only |
 | [`observe/`](universe24/observe) | Passive diagnostics and records |
 | [`experiments/geometry/`](experiments/geometry/README.md) | Optional, separately declared constructions |
@@ -87,7 +93,7 @@ backreaction or universal operational metric has been established.
 
 ```bash
 # Default construction and fixed-six regression fixtures
-python -m unittest universe24.tests.test_one universe24.tests.test_migration -v
+python -m unittest universe24.tests.test_communication universe24.tests.test_one universe24.tests.test_migration -v
 
 # Complete discovery, with package context
 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 python -m unittest discover -s universe24/tests -t . -v
@@ -100,9 +106,10 @@ python -m universe24.tools.audit_contract --L 4 --steps 120 --out runs/contract
 python -m universe24.tools.audit_contract --replay runs/contract
 ```
 
-The migrated full suite passes 118 tests. A size-three, 20-update default
-run emits 75 official records and rewinds exactly; [validation](docs/VALIDATION.md)
-records the scope and current tensor fingerprint.
+The previous 48-channel reference fixture still emits 75 official records in
+20 updates and rewinds exactly. The communication default has a new tensor
+and seed; [validation](docs/VALIDATION.md) records its separate results and
+source provenance.
 
 A passing negative-control test records the failure of the associated
 physical claim. It does not turn that claim into a successful result.

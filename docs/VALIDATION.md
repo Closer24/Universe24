@@ -1,21 +1,42 @@
 # Fixed-six implementation validation
 
+The default now uses local message transport and reception, with 54 channels
+and 306 linear terms. [Local communication](LOCAL_COMMUNICATION.md) gives the
+proof and controls. Fresh results and source hashes are recorded separately in
+[local_communication.json](evidence/local_communication.json). The 48-channel
+checks below belong to the explicit `--model reference` construction.
+
+
 The common scalar divisor is now six. Validation must identify the current
 tensor and complete initial state; old variable-divisor hashes or physical
 calibrations are not acceptable substitutes. The migration intentionally
 retires the earlier 382-channel assembly and its dependent research presets.
 
-## Verified migration results
+## Local communication validation
+
+The current complete suite passes **125 tests**, including seven transport
+and reception checks. The size-three, 20-update communication pulse records
+**120 edge messages** and **11685 official clicks**, and rewinds the
+complete seed exactly. The independent scalar oracle checks **324** transitions
+without mismatch; strict support has zero violations, and the saved 12-update
+run replays exactly. Both message and official-click logs are passive.
+
+The new tensor fingerprint is
+`fc3076f34ff0240e5069ae786b745c3a33c0c528867d0b20ef4ceff46b72f0ce`.
+The [evidence record](evidence/local_communication.json) includes source hashes,
+commands, complete seed metadata and the explicit prior-reference comparison.
+
+## Verified earlier fixed-six migration results
 
 The migrated full suite completed **118 tests** successfully. All 74 non-test
-modules imported and all 33 exported layer names resolved. The public default
+modules imported and all 33 exported layer names resolved. The explicit reference mode
 uses 48 channels, 288 linear terms, actual tensor order two, and fingerprint
 `b84ddee525ad22ce903b6183fd9b9bf88a754d0c967a1d3af58f7d840f46941b`.
 
 The [migration evidence record](evidence/fixed_divisor_repository_migration.json)
 includes the tested source hashes, commands and current default census.
 
-A size-three default pulse run completed 20 updates with 75 official records
+A size-three reference pulse run completed 20 updates with 75 official records
 and exact rewind. The independent scalar oracle checked 288 transitions with
 no mismatch; the support audit found no strict-locality violations, and a
 12-update saved-input replay matched exactly. These are reproducible software
@@ -48,7 +69,7 @@ software test of a negative scientific result.
 
 ```bash
 python -m pip install '.[validation]'
-python -m unittest universe24.tests.test_one universe24.tests.test_migration -v
+python -m unittest universe24.tests.test_communication universe24.tests.test_one universe24.tests.test_migration -v
 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 python -m unittest discover -s universe24/tests -t . -v
 python -m universe24 --L 3 --tmax 20 --budget 120 --out runs/demo --tag demo --rewind
 python -m universe24.tools.audit_contract --L 4 --steps 120 --out runs/contract

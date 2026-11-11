@@ -1,6 +1,6 @@
 """Public fixed-six system constructor and optional tensor composition helpers.
 
-The default has 48 reference channels. Historical cosmic/electroweak assembly
+The default has 48 reference channels and six local message lanes. Historical cosmic/electroweak assembly
 calibrations are not reinterpreted as equivalent models at this divisor.
 """
 from __future__ import annotations
@@ -11,7 +11,7 @@ from .system import System, default_system
 ZERO = (0, 0, 0)
 COSMIC_NS = 'cosmic'
 COSMIC_GEARS = ('Th', 'M1', 'M2', 'Lp', 'Lm', 'dp', 'dm')
-ONE_VERSION = 'fixed-six'
+ONE_VERSION = 'fixed-six-communication'
 WHY_COUPLE = 'Explicit one-way clock modulation chosen as tensor data; the clock does not receive the reciprocal response.'
 
 def cosmic_params(**options):
@@ -136,8 +136,24 @@ def theta_reading_census(tensor, theta0: int=1, exclude=(COSMIC_NS,)) -> dict:
         (readers if rec['verdict'] == 'CAN read Theta' else non_readers).append(ns)
     return {'theta0': theta0, 'D': D, 'per_namespace': per, 'readers': readers, 'non_readers': non_readers, 'first_order_gear_types': len(first), 'cross_reads': cross, 'block_diagonal': cross['cosmic_reads_package'] == 0 and cross['package_reads_cosmic'] == 0}
 
-def one_system(*, body_signs=(1, -1, 1), label='official', extra_blocks=(), **retired_options) -> System:
-    """Return the fixed-six reference baseline; optional blocks are explicit."""
-    system = default_system(body_signs=body_signs, label=label, extra_blocks=tuple(extra_blocks), **retired_options)
-    system.info['one'] = {'version': 'fixed-six', 'default': '48-channel reference', 'cosmic': False, 'coupled_doublet': False, 'law': 'fixed tensor and initial state; scalar divisor six'}
+def one_system(*, body_signs=(1, -1, 1), label='official', extra_blocks=(),
+               communication: bool = True, **retired_options) -> System:
+    """Reference dynamics with local message reception; no global clock.
+
+    communication=False selects the previous 48-channel reference law and
+    its original preparation explicitly, for historical regression checks.
+    """
+    if type(communication) is not bool:
+        raise TypeError('communication must be a bool')
+    from .communication import build_communication
+    extra = tuple(extra_blocks)
+    if communication:
+        extra = (build_communication(label=label),) + extra
+    system = default_system(body_signs=body_signs, label=label, extra_blocks=extra, **retired_options)
+    model = 'local-communication' if communication else 'reference'
+    system.info.update(implementation='fixed-six-' + model, communication=communication,
+                       default_gear_count=54 if communication else 48)
+    system.info['one'] = {'version': ONE_VERSION if communication else 'fixed-six',
+                         'default': model, 'cosmic': False, 'coupled_doublet': False,
+                         'law': 'fixed tensor and initial state; scalar divisor six'}
     return system

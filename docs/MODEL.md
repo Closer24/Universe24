@@ -64,7 +64,7 @@ The reference block labels one channel by each element of `2O`. Multiplying
 a group label gives a fixed permutation of the 48 coordinates. Neighbor
 transport is represented by six fixed integer matrices `P_d`, each 48 by 48,
 with the selected signs and direction conventions supplied by the builder.
-The current default uses `body_signs=(1,-1,1)`, 288 nonzero linear terms
+The reference component uses `body_signs=(1,-1,1)`, 288 nonzero linear terms
 and actual tensor order two; the format also permits order-four examples:
 
     u_x = sum_(six directions d) P_d b_(x+d).
@@ -78,6 +78,22 @@ The same coupling may be stored sparsely as nonzero matrix/tensor entries.
 That storage choice does not add a lookup-dependent update law. The global
 operator is assembled from these local blocks and the six spatial shifts;
 a node never evaluates a dense global matrix.
+
+### A3a. Local message timing in the current default
+
+Six additional lanes carry messages between adjacent nodes. For each direction
+`d`, choose `u_d(x)=3[b_d(x-d)+b_d(x+d)]` and prepare
+`a_d(x)=b_d(x+d)`. Rule3 then translates `b_d` one edge along `d` per update
+and keeps its remainder fixed. The receiver `ref.R00` reads the upstream
+messages through six fixed terms `u_receiver(x) += 3 b_d(x-d)`.
+
+The full default has 54 channels and 306 linear terms. An empty communication
+network has no autonomous ticks. There is no per-node cosmic age or common
+phase register. Reception is one-way and explicitly designated as such.
+The synchronous update counter is still computational ordering, not a derived
+physical clock. [Local communication](LOCAL_COMMUNICATION.md) proves the
+prepared-sector invariant, describes the complete seed and states the limits.
+The earlier 48-channel reference law is `one_system(communication=False)`.
 
 ### A4. Representations and the role of an ideal
 

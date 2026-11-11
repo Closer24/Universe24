@@ -9,7 +9,7 @@ from universe24.prepare.one import one_seed
 
 class DefaultTests(unittest.TestCase):
     def test_default_is_explicit_reference_only(self):
-        system=one_system(); tensor=compose(*system.blocks)
+        system=one_system(communication=False); tensor=compose(*system.blocks)
         self.assertEqual(tensor.G,48)
         self.assertEqual(len(tensor),288)
         self.assertEqual([b.name for b in system.blocks],['ref'])
@@ -20,7 +20,7 @@ class DefaultTests(unittest.TestCase):
         self.assertEqual(tensor.fingerprint,compose(build_reference(body_signs=(1,-1,1))).fingerprint)
 
     def test_integer_seed_and_inverse(self):
-        system=one_system(); tensor=compose(*system.blocks); engine=Engine(tensor)
+        system=one_system(communication=False); tensor=compose(*system.blocks); engine=Engine(tensor)
         for bang in ('pulse','standing','none'):
             seed,_=one_seed(system,tensor,3,bang=bang)
             self.assertTrue(np.all((seed.r>=0)&(seed.r<6)))

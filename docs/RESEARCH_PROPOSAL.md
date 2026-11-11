@@ -6,7 +6,7 @@ Research Grant Opportunity for a Mathematician or Theoretical Physicist
 
 Universe24 asks whether one elementary local mechanism can generate the diversity of nature. The final objective is to derive quantitative laws of physics in observable events, called clicks, rather than merely produce familiar-looking internal patterns. The project seeks a dedicated researcher, supported through a research grant, to develop the mathematical construction and confront it with physical requirements.
 
-The public repository implements one scalar Rule3 update with the fixed divisor six, a local integer polynomial coupling tensor, and a complete initial state. The current default is a 48-channel cube-group reference construction. The former larger field assembly and its adjustable divisor have been retired. These implementation choices are examples to investigate, not necessary consequences of the foundational postulates.
+The public repository implements one scalar Rule3 update with the fixed divisor six, a local integer polynomial coupling tensor, and a complete initial state. The current default combines a 48-channel cube-group reference construction with six directed message lanes. Local reception supplies communication from the initial preparation instead of a copied cosmic clock; the synchronous simulator index remains bookkeeping. The former larger field assembly and its adjustable divisor have been retired. These implementation choices are examples to investigate, not necessary consequences of the foundational postulates.
 
 The research proceeds in both directions: infer constraints on the underlying board from desired click-level observations, and calculate click predictions from a precisely specified board. The algebra in Section 7 describes the fixed-six implementation contract. Mathematical identities, numerical results, proposed mechanisms and unproved physical interpretations are distinguished throughout.
 
@@ -100,7 +100,7 @@ The current simulation uses six face neighbors, plus local factors at the target
 
 ### H3. One board with different internal roles
 
-The default board contains 48 group-labelled channels carrying the regular representation of the binary octahedral group. Its current coupling has 288 linear terms, so its actual tensor order is two. Optional examples use other channel counts and polynomial inputs up to order four. The count, coupling and interpretation are construction choices; the group does not determine an inventory of physical species.
+The default board contains 48 group-labelled channels carrying the regular representation of the binary octahedral group. This reference component has 288 linear terms. The default adds six message lanes and 18 transport/reception terms, for 54 channels and 306 linear terms of tensor order two. No node carries a shared cosmic age or clock hand; the [communication construction](LOCAL_COMMUNICATION.md) describes local message arrivals and their effect on a receiver. Optional examples use other channel counts and polynomial inputs up to order four. The count, coupling and interpretation are construction choices; the group does not determine an inventory of physical species.
 
 ### H4. Complete seed and reversible history
 
@@ -168,8 +168,9 @@ Determine why a successful model would have quantum-like observable probabilitie
 
 ### The default and the model migration
 
-The current default is the 48-channel group-reference tensor selected by
-`one_system()`. All channels use the fixed divisor six. The previous
+The current default selected by `one_system()` contains the 48-channel
+reference tensor plus six local message lanes and their receiver wiring.
+`one_system(communication=False)` selects the prior reference-only tensor. All channels use the fixed divisor six. The previous
 382-channel variable-divisor assembly is retired, so its physical
 calibrations and state histories are not evidence about this new default.
 The [current algebra](MODEL.md) defines the supported law.
@@ -333,7 +334,7 @@ The reference block labels one channel by each element of `2O`. Multiplying
 a group label gives a fixed permutation of the 48 coordinates. Neighbor
 transport is represented by six fixed integer matrices `P_d`, each 48 by 48,
 with the selected signs and direction conventions supplied by the builder.
-The current default uses `body_signs=(1,-1,1)`, 288 nonzero linear terms
+The reference component uses `body_signs=(1,-1,1)`, 288 nonzero linear terms
 and actual tensor order two; the format also permits order-four examples:
 
     u_x = sum_(six directions d) P_d b_(x+d).

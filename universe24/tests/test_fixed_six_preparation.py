@@ -19,7 +19,7 @@ from universe24.prepare.system import random_system_state
 class FixedSixPreparationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.system = one_system()
+        cls.system = one_system(communication=False)
         cls.tensor = compose(*cls.system.blocks)
         cls.engine = Engine(cls.tensor)
 
