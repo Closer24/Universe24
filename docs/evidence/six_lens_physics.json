@@ -1,0 +1,2453 @@
+{
+  "schema": "Universe24-six-lens-audit-v1",
+  "investigated_main_sha": "7d238e84a2167a4d3fe7bc7942da0cbf97bd29b2",
+  "investigated_main_tree": "fdb374b9a84381be26022f2358a1c59e377c8278",
+  "active_snapshot_files_verified": 280,
+  "omitted_scope": {
+    "archived_pre_fixed_six_files": 405,
+    "historical_png": 1
+  },
+  "production_files_changed": false,
+  "independent_agents": 6,
+  "validation": {
+    "full_suite": {
+      "tests": 221,
+      "seconds": "240.751",
+      "passed": true,
+      "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 python -m unittest discover -s universe24/tests -t . -v"
+    },
+    "focused_tests_overlap_full_suite": true,
+    "unified_cli": {
+      "all_arithmetic_registers_verified": true,
+      "complete_rewind_exact": true,
+      "no_support_violations": true,
+      "engine_ticks": 96,
+      "gears": 4834
+    }
+  },
+  "findings": {
+    "clocks": {
+      "compiler_clock": {
+        "G": 7,
+        "ticks": 2,
+        "period": 5,
+        "clock_channels": 5,
+        "uniform_initial_clock_a_b": true,
+        "clock_terms_have_only_zero_spatial_offsets": true,
+        "trajectory": [
+          {
+            "microtick": 0,
+            "normal_node0": "0",
+            "phase_delayed_node0": "0",
+            "phase_delayed_node1": "0"
+          },
+          {
+            "microtick": 1,
+            "normal_node0": "4",
+            "phase_delayed_node0": "0",
+            "phase_delayed_node1": "4"
+          },
+          {
+            "microtick": 2,
+            "normal_node0": "4",
+            "phase_delayed_node0": "0",
+            "phase_delayed_node1": "4"
+          },
+          {
+            "microtick": 3,
+            "normal_node0": "4",
+            "phase_delayed_node0": "4",
+            "phase_delayed_node1": "4"
+          },
+          {
+            "microtick": 4,
+            "normal_node0": "4",
+            "phase_delayed_node0": "4",
+            "phase_delayed_node1": "4"
+          },
+          {
+            "microtick": 5,
+            "normal_node0": "4",
+            "phase_delayed_node0": "4",
+            "phase_delayed_node1": "4"
+          },
+          {
+            "microtick": 6,
+            "normal_node0": "8",
+            "phase_delayed_node0": "4",
+            "phase_delayed_node1": "8"
+          },
+          {
+            "microtick": 7,
+            "normal_node0": "8",
+            "phase_delayed_node0": "4",
+            "phase_delayed_node1": "8"
+          }
+        ],
+        "both_complete_rewinds_exact": true,
+        "zero_clock_output_at_horizon": "0",
+        "zero_clock_rewind_exact": true,
+        "interpretation": "Clock gears propagate around an internal gear ring at every spatial node; prepared phases match, but one node can be delayed independently. Repeated wraps reapply the finite arithmetic program; they are outside its declared horizon."
+      },
+      "assembly": {
+        "G": 96,
+        "monomials": 389,
+        "cross_component_monomials": 0,
+        "interpretation": "Exact ownership inspection of UniverseProgram constructors. Optional wave/communication/probe states cannot read ADM metric or drive ADM; they are isolated research components."
+      },
+      "FLRW": [
+        {
+          "dust_A": 1,
+          "frames": [
+            {
+              "microtick": 0,
+              "q": 2,
+              "proper_time": "14/3",
+              "scale_factor": "6",
+              "null_affine_parameter": "256/15"
+            },
+            {
+              "microtick": 1,
+              "q": 3,
+              "proper_time": "27/2",
+              "scale_factor": "12",
+              "null_affine_parameter": "981/10"
+            },
+            {
+              "microtick": 2,
+              "q": 4,
+              "proper_time": "88/3",
+              "scale_factor": "20",
+              "null_affine_parameter": "5312/15"
+            },
+            {
+              "microtick": 3,
+              "q": 5,
+              "proper_time": "325/6",
+              "scale_factor": "30",
+              "null_affine_parameter": "5875/6"
+            },
+            {
+              "microtick": 4,
+              "q": 6,
+              "proper_time": "90",
+              "scale_factor": "42",
+              "null_affine_parameter": "11376/5"
+            },
+            {
+              "microtick": 5,
+              "q": 7,
+              "proper_time": "833/6",
+              "scale_factor": "56",
+              "null_affine_parameter": "140287/30"
+            },
+            {
+              "microtick": 6,
+              "q": 8,
+              "proper_time": "608/3",
+              "scale_factor": "72",
+              "null_affine_parameter": "131584/15"
+            },
+            {
+              "microtick": 7,
+              "q": 9,
+              "proper_time": "567/2",
+              "scale_factor": "90",
+              "null_affine_parameter": "153333/10"
+            },
+            {
+              "microtick": 8,
+              "q": 10,
+              "proper_time": "1150/3",
+              "scale_factor": "110",
+              "null_affine_parameter": "76000/3"
+            }
+          ],
+          "classes": {
+            "0": 864,
+            "1": 0,
+            "2": 0
+          },
+          "rewind_exact": true
+        },
+        {
+          "dust_A": 2,
+          "frames": [
+            {
+              "microtick": 0,
+              "q": 2,
+              "proper_time": "22/3",
+              "scale_factor": "10",
+              "null_affine_parameter": "664/15"
+            },
+            {
+              "microtick": 1,
+              "q": 3,
+              "proper_time": "45/2",
+              "scale_factor": "21",
+              "null_affine_parameter": "1422/5"
+            },
+            {
+              "microtick": 2,
+              "q": 4,
+              "proper_time": "152/3",
+              "scale_factor": "36",
+              "null_affine_parameter": "16448/15"
+            },
+            {
+              "microtick": 3,
+              "q": 5,
+              "proper_time": "575/6",
+              "scale_factor": "55",
+              "null_affine_parameter": "9500/3"
+            },
+            {
+              "microtick": 4,
+              "q": 6,
+              "proper_time": "162",
+              "scale_factor": "78",
+              "null_affine_parameter": "37944/5"
+            },
+            {
+              "microtick": 5,
+              "q": 7,
+              "proper_time": "1519/6",
+              "scale_factor": "105",
+              "null_affine_parameter": "239414/15"
+            },
+            {
+              "microtick": 6,
+              "q": 8,
+              "proper_time": "1120/3",
+              "scale_factor": "136",
+              "null_affine_parameter": "457216/15"
+            },
+            {
+              "microtick": 7,
+              "q": 9,
+              "proper_time": "1053/2",
+              "scale_factor": "171",
+              "null_affine_parameter": "270216/5"
+            },
+            {
+              "microtick": 8,
+              "q": 10,
+              "proper_time": "2150/3",
+              "scale_factor": "210",
+              "null_affine_parameter": "271000/3"
+            }
+          ],
+          "classes": {
+            "0": 864,
+            "1": 0,
+            "2": 0
+          },
+          "rewind_exact": true
+        }
+      ],
+      "transported_probe": {
+        "common_metric_validated": false,
+        "cases": [
+          {
+            "curvature": 0,
+            "x": 0,
+            "y": 0,
+            "exact_rewind": true,
+            "assessment": {
+              "actual_board_transport": true,
+              "timelike": true,
+              "metric_norm_per_macrostep": -3,
+              "predicted_proper_rate_squared": {
+                "numerator": 3,
+                "denominator": 4
+              },
+              "transverse_geodesic_residual": [
+                {
+                  "numerator": 0,
+                  "denominator": 1
+                },
+                {
+                  "numerator": 0,
+                  "denominator": 1
+                },
+                {
+                  "numerator": 0,
+                  "denominator": 1
+                },
+                {
+                  "numerator": 0,
+                  "denominator": 1
+                }
+              ],
+              "geodesic_matches": true,
+              "interior_chart": true,
+              "transverse_profile_hessian_diagonal": [
+                0,
+                0
+              ],
+              "nonflat_at_probe": false,
+              "coframe_inverse_certificate": true,
+              "clocks": {
+                "control": {
+                  "tick_steps": [
+                    0,
+                    8,
+                    16,
+                    24
+                  ],
+                  "intervals": [
+                    8,
+                    8,
+                    8
+                  ],
+                  "calibration": "4*sqrt(3) proper-time units per full cycle",
+                  "measured_rate_squared": [
+                    {
+                      "numerator": 3,
+                      "denominator": 4
+                    },
+                    {
+                      "numerator": 3,
+                      "denominator": 4
+                    },
+                    {
+                      "numerator": 3,
+                      "denominator": 4
+                    }
+                  ],
+                  "matches_metric": true,
+                  "insufficient_ticks": false
+                },
+                "candidate": {
+                  "tick_steps": [
+                    0,
+                    12,
+                    24
+                  ],
+                  "intervals": [
+                    12,
+                    12
+                  ],
+                  "calibration": "6*sqrt(3) proper-time units per full cycle",
+                  "measured_rate_squared": [
+                    {
+                      "numerator": 3,
+                      "denominator": 4
+                    },
+                    {
+                      "numerator": 3,
+                      "denominator": 4
+                    }
+                  ],
+                  "matches_metric": true,
+                  "insufficient_ticks": false
+                }
+              },
+              "common_metric_passes": true
+            }
+          },
+          {
+            "curvature": 0,
+            "x": 1,
+            "y": 0,
+            "exact_rewind": true,
+            "assessment": {
+              "actual_board_transport": true,
+              "timelike": true,
+              "metric_norm_per_macrostep": -3,
+              "predicted_proper_rate_squared": {
+                "numerator": 3,
+                "denominator": 4
+              },
+              "transverse_geodesic_residual": [
+                {
+                  "numerator": 0,
+                  "denominator": 1
+                },
+                {
+                  "numerator": 0,
+                  "denominator": 1
+                },
+                {
+                  "numerator": 0,
+                  "denominator": 1
+                },
+                {
+                  "numerator": 0,
+                  "denominator": 1
+                }
+              ],
+              "geodesic_matches": true,
+              "interior_chart": true,
+              "transverse_profile_hessian_diagonal": [
+                0,
+                0
+              ],
+              "nonflat_at_probe": false,
+              "coframe_inverse_certificate": true,
+              "clocks": {
+                "control": {
+                  "tick_steps": [
+                    0,
+                    8,
+                    16,
+                    24
+                  ],
+                  "intervals": [
+                    8,
+                    8,
+                    8
+                  ],
+                  "calibration": "4*sqrt(3) proper-time units per full cycle",
+                  "measured_rate_squared": [
+                    {
+                      "numerator": 3,
+                      "denominator": 4
+                    },
+                    {
+                      "numerator": 3,
+                      "denominator": 4
+                    },
+                    {
+                      "numerator": 3,
+                      "denominator": 4
+                    }
+                  ],
+                  "matches_metric": true,
+                  "insufficient_ticks": false
+                },
+                "candidate": {
+                  "tick_steps": [
+                    0,
+                    12,
+                    24
+                  ],
+                  "intervals": [
+                    12,
+                    12
+                  ],
+                  "calibration": "6*sqrt(3) proper-time units per full cycle",
+                  "measured_rate_squared": [
+                    {
+                      "numerator": 3,
+                      "denominator": 4
+                    },
+                    {
+                      "numerator": 3,
+                      "denominator": 4
+                    }
+                  ],
+                  "matches_metric": true,
+                  "insufficient_ticks": false
+                }
+              },
+              "common_metric_passes": true
+            }
+          },
+          {
+            "curvature": 1,
+            "x": 0,
+            "y": 0,
+            "exact_rewind": true,
+            "assessment": {
+              "actual_board_transport": true,
+              "timelike": true,
+              "metric_norm_per_macrostep": -3,
+              "predicted_proper_rate_squared": {
+                "numerator": 3,
+                "denominator": 4
+              },
+              "transverse_geodesic_residual": [
+                {
+                  "numerator": 0,
+                  "denominator": 1
+                },
+                {
+                  "numerator": 0,
+                  "denominator": 1
+                },
+                {
+                  "numerator": 0,
+                  "denominator": 1
+                },
+                {
+                  "numerator": 0,
+                  "denominator": 1
+                }
+              ],
+              "geodesic_matches": true,
+              "interior_chart": true,
+              "transverse_profile_hessian_diagonal": [
+                2,
+                -2
+              ],
+              "nonflat_at_probe": true,
+              "coframe_inverse_certificate": true,
+              "clocks": {
+                "control": {
+                  "tick_steps": [
+                    0,
+                    8,
+                    16,
+                    24
+                  ],
+                  "intervals": [
+                    8,
+                    8,
+                    8
+                  ],
+                  "calibration": "4*sqrt(3) proper-time units per full cycle",
+                  "measured_rate_squared": [
+                    {
+                      "numerator": 3,
+                      "denominator": 4
+                    },
+                    {
+                      "numerator": 3,
+                      "denominator": 4
+                    },
+                    {
+                      "numerator": 3,
+                      "denominator": 4
+                    }
+                  ],
+                  "matches_metric": true,
+                  "insufficient_ticks": false
+                },
+                "candidate": {
+                  "tick_steps": [
+                    0,
+                    12,
+                    24
+                  ],
+                  "intervals": [
+                    12,
+                    12
+                  ],
+                  "calibration": "6*sqrt(3) proper-time units per full cycle",
+                  "measured_rate_squared": [
+                    {
+                      "numerator": 3,
+                      "denominator": 4
+                    },
+                    {
+                      "numerator": 3,
+                      "denominator": 4
+                    }
+                  ],
+                  "matches_metric": true,
+                  "insufficient_ticks": false
+                }
+              },
+              "common_metric_passes": true
+            }
+          },
+          {
+            "curvature": 1,
+            "x": 1,
+            "y": 0,
+            "exact_rewind": true,
+            "assessment": {
+              "actual_board_transport": true,
+              "timelike": true,
+              "metric_norm_per_macrostep": -1,
+              "predicted_proper_rate_squared": {
+                "numerator": 1,
+                "denominator": 4
+              },
+              "transverse_geodesic_residual": [
+                {
+                  "numerator": 0,
+                  "denominator": 1
+                },
+                {
+                  "numerator": -2,
+                  "denominator": 1
+                },
+                {
+                  "numerator": 0,
+                  "denominator": 1
+                },
+                {
+                  "numerator": 0,
+                  "denominator": 1
+                }
+              ],
+              "geodesic_matches": false,
+              "interior_chart": true,
+              "transverse_profile_hessian_diagonal": [
+                2,
+                -2
+              ],
+              "nonflat_at_probe": true,
+              "coframe_inverse_certificate": true,
+              "clocks": {
+                "control": {
+                  "tick_steps": [
+                    0,
+                    8,
+                    16,
+                    24
+                  ],
+                  "intervals": [
+                    8,
+                    8,
+                    8
+                  ],
+                  "calibration": "4*sqrt(3) proper-time units per full cycle",
+                  "measured_rate_squared": [
+                    {
+                      "numerator": 3,
+                      "denominator": 4
+                    },
+                    {
+                      "numerator": 3,
+                      "denominator": 4
+                    },
+                    {
+                      "numerator": 3,
+                      "denominator": 4
+                    }
+                  ],
+                  "matches_metric": false,
+                  "insufficient_ticks": false
+                },
+                "candidate": {
+                  "tick_steps": [
+                    0,
+                    6,
+                    12,
+                    18,
+                    24
+                  ],
+                  "intervals": [
+                    6,
+                    6,
+                    6,
+                    6
+                  ],
+                  "calibration": "6*sqrt(3) proper-time units per full cycle",
+                  "measured_rate_squared": [
+                    {
+                      "numerator": 3,
+                      "denominator": 1
+                    },
+                    {
+                      "numerator": 3,
+                      "denominator": 1
+                    },
+                    {
+                      "numerator": 3,
+                      "denominator": 1
+                    },
+                    {
+                      "numerator": 3,
+                      "denominator": 1
+                    }
+                  ],
+                  "matches_metric": false,
+                  "insufficient_ticks": false
+                }
+              },
+              "common_metric_passes": false
+            }
+          },
+          {
+            "curvature": 1,
+            "x": 0,
+            "y": 1,
+            "exact_rewind": true,
+            "assessment": {
+              "actual_board_transport": true,
+              "timelike": true,
+              "metric_norm_per_macrostep": -5,
+              "predicted_proper_rate_squared": {
+                "numerator": 5,
+                "denominator": 4
+              },
+              "transverse_geodesic_residual": [
+                {
+                  "numerator": 0,
+                  "denominator": 1
+                },
+                {
+                  "numerator": 0,
+                  "denominator": 1
+                },
+                {
+                  "numerator": 2,
+                  "denominator": 1
+                },
+                {
+                  "numerator": 0,
+                  "denominator": 1
+                }
+              ],
+              "geodesic_matches": false,
+              "interior_chart": true,
+              "transverse_profile_hessian_diagonal": [
+                2,
+                -2
+              ],
+              "nonflat_at_probe": true,
+              "coframe_inverse_certificate": true,
+              "clocks": {
+                "control": {
+                  "tick_steps": [
+                    0,
+                    8,
+                    16,
+                    24
+                  ],
+                  "intervals": [
+                    8,
+                    8,
+                    8
+                  ],
+                  "calibration": "4*sqrt(3) proper-time units per full cycle",
+                  "measured_rate_squared": [
+                    {
+                      "numerator": 3,
+                      "denominator": 4
+                    },
+                    {
+                      "numerator": 3,
+                      "denominator": 4
+                    },
+                    {
+                      "numerator": 3,
+                      "denominator": 4
+                    }
+                  ],
+                  "matches_metric": false,
+                  "insufficient_ticks": false
+                },
+                "candidate": {
+                  "tick_steps": [
+                    0
+                  ],
+                  "intervals": [],
+                  "calibration": "6*sqrt(3) proper-time units per full cycle",
+                  "measured_rate_squared": [],
+                  "matches_metric": false,
+                  "insufficient_ticks": true
+                }
+              },
+              "common_metric_passes": false
+            }
+          }
+        ]
+      },
+      "coordinate_calibration_counterexample": {
+        "tangent": [
+          1,
+          1,
+          0,
+          0
+        ],
+        "norm_at_alpha1": "0",
+        "proper_rate_squared_at_alpha2": "3",
+        "meaning": "A unit coordinate-speed signal is null in the first chart and timelike in the second. This is an illustrative metric identity, not a calibrated trajectory claim for computational microticks."
+      }
+    },
+    "clicks": {
+      "scalar_period": 3,
+      "scalar_C2_events_per_node_in_48_updates": 32,
+      "scalar_transitions_checked": 78,
+      "packet_sweep_cases": 36,
+      "sequential_detector_clicks": [
+        3,
+        6
+      ],
+      "return_arrivals": [
+        3,
+        16,
+        29,
+        42
+      ],
+      "return_clicks": [
+        3,
+        29,
+        42
+      ],
+      "all_rewinds_exact": true,
+      "no_backreaction_on_packets": true
+    },
+    "born": {
+      "scope": "Existing laws, declared initial-data controls; no production edits or Born feedback.",
+      "scaling_interpretation": "Common rescaling represents the same quantum ray only under a normalized single-particle amplitude encoding. If registers encode classical field strength or occupation, rescaling can change the physical preparation. These runs diagnose the missing encoding/calibration, not all possible quantum interpretations.",
+      "extended_emissions": 396,
+      "binary_detector_law_for_this_preparation": "P(click | nonnegative integer I, uniform r in 0..5, a=b=0)=min(1,I/3)",
+      "generic_norm_control": {
+        "prepared_directed_transport_relation": false,
+        "trace": [
+          {
+            "tick": 0,
+            "a_norm2": 0,
+            "b_norm2": 1,
+            "a_b_norm2": 1
+          },
+          {
+            "tick": 1,
+            "a_norm2": 1,
+            "b_norm2": 2,
+            "a_b_norm2": 3
+          },
+          {
+            "tick": 2,
+            "a_norm2": 2,
+            "b_norm2": 3,
+            "a_b_norm2": 5
+          },
+          {
+            "tick": 3,
+            "a_norm2": 3,
+            "b_norm2": 4,
+            "a_b_norm2": 7
+          }
+        ],
+        "rewind_exact": true,
+        "interpretation": "The ordinary squared register norm is not preserved on arbitrary complete states. This does not rule out a different invariant or a restricted emergent quantum encoding."
+      },
+      "matter_algebra_checks": {
+        "P_antisymmetric": true,
+        "W0_symmetric_involution": true,
+        "J_complex_structure": true,
+        "J_commutes_with_P_W0": true,
+        "Jp_complex_structure": true,
+        "Jp_commutes_with_P_W0": true,
+        "J_Jp_commute": true,
+        "V_symmetric": true,
+        "PJp_symmetric": true,
+        "couplings_commute_with_J_and_Jp": true,
+        "signed_permutations": true,
+        "K_anticommutes_J": true,
+        "K_commutes_Jp_P_W0": true,
+        "K_squared_minus_one_Kramers": true,
+        "C_flips_Jp": true,
+        "C_commutes_J_P_W0": true,
+        "single_block_commutant_J_only": true
+      },
+      "born_rule_derived": false,
+      "existing_calibration_emissions": 144,
+      "extended_cases": [
+        {
+          "case": "scale_1",
+          "arm_a": [
+            2,
+            0
+          ],
+          "arm_b": [
+            1,
+            0
+          ],
+          "input_weights": [
+            9,
+            1
+          ],
+          "born_reference_probabilities": [
+            "9/10",
+            "1/10"
+          ],
+          "emissions": 36,
+          "actual_click_counts": [
+            36,
+            12
+          ],
+          "actual_C2_counts": [
+            0,
+            0
+          ],
+          "actual_click_probability_per_emission": [
+            "1",
+            "1/3"
+          ],
+          "click_shares": [
+            "3/4",
+            "1/4"
+          ],
+          "double_clicks": 12,
+          "no_clicks": 0,
+          "transport_norm_preserved": true,
+          "rewind_exact": true,
+          "no_early_click": true
+        },
+        {
+          "case": "scale_2",
+          "arm_a": [
+            4,
+            0
+          ],
+          "arm_b": [
+            2,
+            0
+          ],
+          "input_weights": [
+            36,
+            4
+          ],
+          "born_reference_probabilities": [
+            "9/10",
+            "1/10"
+          ],
+          "emissions": 36,
+          "actual_click_counts": [
+            36,
+            36
+          ],
+          "actual_C2_counts": [
+            0,
+            0
+          ],
+          "actual_click_probability_per_emission": [
+            "1",
+            "1"
+          ],
+          "click_shares": [
+            "1/2",
+            "1/2"
+          ],
+          "double_clicks": 36,
+          "no_clicks": 0,
+          "transport_norm_preserved": true,
+          "rewind_exact": true,
+          "no_early_click": true
+        },
+        {
+          "case": "scale_3",
+          "arm_a": [
+            6,
+            0
+          ],
+          "arm_b": [
+            3,
+            0
+          ],
+          "input_weights": [
+            81,
+            9
+          ],
+          "born_reference_probabilities": [
+            "9/10",
+            "1/10"
+          ],
+          "emissions": 36,
+          "actual_click_counts": [
+            36,
+            36
+          ],
+          "actual_C2_counts": [
+            0,
+            0
+          ],
+          "actual_click_probability_per_emission": [
+            "1",
+            "1"
+          ],
+          "click_shares": [
+            "1/2",
+            "1/2"
+          ],
+          "double_clicks": 36,
+          "no_clicks": 0,
+          "transport_norm_preserved": true,
+          "rewind_exact": true,
+          "no_early_click": true
+        },
+        {
+          "case": "scale_5",
+          "arm_a": [
+            10,
+            0
+          ],
+          "arm_b": [
+            5,
+            0
+          ],
+          "input_weights": [
+            225,
+            25
+          ],
+          "born_reference_probabilities": [
+            "9/10",
+            "1/10"
+          ],
+          "emissions": 36,
+          "actual_click_counts": [
+            36,
+            36
+          ],
+          "actual_C2_counts": [
+            0,
+            0
+          ],
+          "actual_click_probability_per_emission": [
+            "1",
+            "1"
+          ],
+          "click_shares": [
+            "1/2",
+            "1/2"
+          ],
+          "double_clicks": 36,
+          "no_clicks": 0,
+          "transport_norm_preserved": true,
+          "rewind_exact": true,
+          "no_early_click": true
+        },
+        {
+          "case": "global_i",
+          "arm_a": [
+            0,
+            2
+          ],
+          "arm_b": [
+            0,
+            1
+          ],
+          "input_weights": [
+            9,
+            1
+          ],
+          "born_reference_probabilities": [
+            "9/10",
+            "1/10"
+          ],
+          "emissions": 36,
+          "actual_click_counts": [
+            36,
+            12
+          ],
+          "actual_C2_counts": [
+            0,
+            0
+          ],
+          "actual_click_probability_per_emission": [
+            "1",
+            "1/3"
+          ],
+          "click_shares": [
+            "3/4",
+            "1/4"
+          ],
+          "double_clicks": 12,
+          "no_clicks": 0,
+          "transport_norm_preserved": true,
+          "rewind_exact": true,
+          "no_early_click": true
+        },
+        {
+          "case": "phase_5_0",
+          "arm_a": [
+            5,
+            0
+          ],
+          "arm_b": [
+            5,
+            0
+          ],
+          "input_weights": [
+            100,
+            0
+          ],
+          "born_reference_probabilities": [
+            "1",
+            "0"
+          ],
+          "emissions": 36,
+          "actual_click_counts": [
+            36,
+            0
+          ],
+          "actual_C2_counts": [
+            0,
+            0
+          ],
+          "actual_click_probability_per_emission": [
+            "1",
+            "0"
+          ],
+          "click_shares": [
+            "1",
+            "0"
+          ],
+          "double_clicks": 0,
+          "no_clicks": 0,
+          "transport_norm_preserved": true,
+          "rewind_exact": true,
+          "no_early_click": true
+        },
+        {
+          "case": "phase_3_4",
+          "arm_a": [
+            5,
+            0
+          ],
+          "arm_b": [
+            3,
+            4
+          ],
+          "input_weights": [
+            80,
+            20
+          ],
+          "born_reference_probabilities": [
+            "4/5",
+            "1/5"
+          ],
+          "emissions": 36,
+          "actual_click_counts": [
+            36,
+            36
+          ],
+          "actual_C2_counts": [
+            36,
+            36
+          ],
+          "actual_click_probability_per_emission": [
+            "1",
+            "1"
+          ],
+          "click_shares": [
+            "1/2",
+            "1/2"
+          ],
+          "double_clicks": 36,
+          "no_clicks": 0,
+          "transport_norm_preserved": true,
+          "rewind_exact": true,
+          "no_early_click": true
+        },
+        {
+          "case": "phase_0_5",
+          "arm_a": [
+            5,
+            0
+          ],
+          "arm_b": [
+            0,
+            5
+          ],
+          "input_weights": [
+            50,
+            50
+          ],
+          "born_reference_probabilities": [
+            "1/2",
+            "1/2"
+          ],
+          "emissions": 36,
+          "actual_click_counts": [
+            36,
+            36
+          ],
+          "actual_C2_counts": [
+            36,
+            36
+          ],
+          "actual_click_probability_per_emission": [
+            "1",
+            "1"
+          ],
+          "click_shares": [
+            "1/2",
+            "1/2"
+          ],
+          "double_clicks": 36,
+          "no_clicks": 0,
+          "transport_norm_preserved": true,
+          "rewind_exact": true,
+          "no_early_click": true
+        },
+        {
+          "case": "phase_-3_4",
+          "arm_a": [
+            5,
+            0
+          ],
+          "arm_b": [
+            -3,
+            4
+          ],
+          "input_weights": [
+            20,
+            80
+          ],
+          "born_reference_probabilities": [
+            "1/5",
+            "4/5"
+          ],
+          "emissions": 36,
+          "actual_click_counts": [
+            36,
+            36
+          ],
+          "actual_C2_counts": [
+            36,
+            36
+          ],
+          "actual_click_probability_per_emission": [
+            "1",
+            "1"
+          ],
+          "click_shares": [
+            "1/2",
+            "1/2"
+          ],
+          "double_clicks": 36,
+          "no_clicks": 0,
+          "transport_norm_preserved": true,
+          "rewind_exact": true,
+          "no_early_click": true
+        },
+        {
+          "case": "phase_-5_0",
+          "arm_a": [
+            5,
+            0
+          ],
+          "arm_b": [
+            -5,
+            0
+          ],
+          "input_weights": [
+            0,
+            100
+          ],
+          "born_reference_probabilities": [
+            "0",
+            "1"
+          ],
+          "emissions": 36,
+          "actual_click_counts": [
+            0,
+            36
+          ],
+          "actual_C2_counts": [
+            0,
+            0
+          ],
+          "actual_click_probability_per_emission": [
+            "0",
+            "1"
+          ],
+          "click_shares": [
+            "0",
+            "1"
+          ],
+          "double_clicks": 0,
+          "no_clicks": 0,
+          "transport_norm_preserved": true,
+          "rewind_exact": true,
+          "no_early_click": true
+        },
+        {
+          "case": "common_rational_phase",
+          "arm_a": [
+            6,
+            8
+          ],
+          "arm_b": [
+            3,
+            4
+          ],
+          "input_weights": [
+            225,
+            25
+          ],
+          "born_reference_probabilities": [
+            "9/10",
+            "1/10"
+          ],
+          "emissions": 36,
+          "actual_click_counts": [
+            36,
+            36
+          ],
+          "actual_C2_counts": [
+            0,
+            0
+          ],
+          "actual_click_probability_per_emission": [
+            "1",
+            "1"
+          ],
+          "click_shares": [
+            "1/2",
+            "1/2"
+          ],
+          "double_clicks": 36,
+          "no_clicks": 0,
+          "transport_norm_preserved": true,
+          "rewind_exact": true,
+          "no_early_click": true
+        }
+      ]
+    },
+    "bell": {
+      "baseline": "7d238e84a2167a4d3fe7bc7942da0cbf97bd29b2",
+      "selected_source_total_variation_between_settings": {
+        "00-01": "1",
+        "00-10": "1",
+        "00-11": "1",
+        "01-10": "1",
+        "01-11": "1",
+        "10-11": "1"
+      },
+      "independent_local_stochastic_models": 6561,
+      "independent_local_stochastic_CHSH_max": "2",
+      "deterministic_response_tables": 16,
+      "deterministic_signed_CHSH_counts": {
+        "2": 8,
+        "-2": 8
+      },
+      "quantum_reference": {
+        "independent_singlet_probabilities_match": true,
+        "exact_CHSH": "14/5",
+        "sample_CHSH": "28037/10000",
+        "all_tickets_replayed": 80000,
+        "sample_CHSH_game_wins": 68037,
+        "sample_win_fraction": "68037/80000",
+        "local_game_expected_win_bound": "3/4",
+        "physical_experiment_significance_claimed": false
+      },
+      "engine_scores": {
+        "literal_unit": {
+          "all_arrival_clicks": "2",
+          "C2_all_emissions": "2",
+          "C2_coincidences_only": "2"
+        },
+        "shared_sign": {
+          "all_arrival_clicks": "2",
+          "C2_all_emissions": "0",
+          "C2_coincidences_only": null
+        },
+        "selection_stress": {
+          "all_arrival_clicks": "1",
+          "C2_all_emissions": "3/2",
+          "C2_coincidences_only": "4"
+        }
+      }
+    },
+    "complexity": {
+      "cases": [
+        {
+          "protocol": "recurrent-bursts-v1",
+          "parameters": {
+            "L": 5,
+            "steps": 600,
+            "family": "baseline",
+            "coefficient": 0,
+            "amplitude": 3,
+            "max_bits": 128
+          },
+          "completed_updates": 600,
+          "stop_reason": "requested_horizon",
+          "tensor_fingerprint": "fc3076f34ff0240e5069ae786b745c3a33c0c528867d0b20ef4ceff46b72f0ce",
+          "dynamics_fingerprint": "f424f8ebd6878db7d0c0ae57306c7a1d83d162302182ee89c30e2808dcaf88dd",
+          "initial_hash": "0d81ff7686221e9d033ceccc23b4a011ee91fd5d792d1611a58ac120bed2728b",
+          "final_hash": "1a79a35719eb8937e480fef8da07863ae5ac44d5ff8c15db4395edfbdc8491f2",
+          "exact_rewind": true,
+          "initial_compact_update": 1,
+          "reference_reassemblies": [],
+          "maximum_counter_bits": 7,
+          "maximum_site_pattern_types": 125,
+          "maximum_edge_pattern_types": 375,
+          "maximum_persistent_pattern_types": 0,
+          "gates": {
+            "recurrent_reference_bursts": false,
+            "growing_structural_proxies": false,
+            "complete_information_recovery": true,
+            "feedback_attribution_demonstrated": null,
+            "stagnation_trigger_demonstrated": null
+          },
+          "user_goal_demonstrated": false,
+          "case": "baseline",
+          "first_maximum_site_patterns": 15,
+          "initial_score": [
+            0,
+            0,
+            0
+          ],
+          "final_score": [
+            125,
+            375,
+            0
+          ],
+          "carrier_refocus_count": 120,
+          "full_state_return_count": 0
+        },
+        {
+          "protocol": "recurrent-bursts-v1",
+          "parameters": {
+            "L": 5,
+            "steps": 80,
+            "family": "baseline",
+            "coefficient": 0,
+            "amplitude": 0,
+            "max_bits": 128
+          },
+          "completed_updates": 80,
+          "stop_reason": "requested_horizon",
+          "tensor_fingerprint": "fc3076f34ff0240e5069ae786b745c3a33c0c528867d0b20ef4ceff46b72f0ce",
+          "dynamics_fingerprint": "f424f8ebd6878db7d0c0ae57306c7a1d83d162302182ee89c30e2808dcaf88dd",
+          "initial_hash": "bd0a5de1ad03dbc749ba26751e74cc38c1ec4d36b7d4d3efeb41344195fa0bca",
+          "final_hash": "bd0a5de1ad03dbc749ba26751e74cc38c1ec4d36b7d4d3efeb41344195fa0bca",
+          "exact_rewind": true,
+          "initial_compact_update": null,
+          "reference_reassemblies": [],
+          "maximum_counter_bits": 0,
+          "maximum_site_pattern_types": 0,
+          "maximum_edge_pattern_types": 0,
+          "maximum_persistent_pattern_types": 0,
+          "gates": {
+            "recurrent_reference_bursts": false,
+            "growing_structural_proxies": false,
+            "complete_information_recovery": true,
+            "feedback_attribution_demonstrated": null,
+            "stagnation_trigger_demonstrated": null
+          },
+          "user_goal_demonstrated": false,
+          "case": "no_messages",
+          "first_maximum_site_patterns": 0,
+          "initial_score": [
+            0,
+            0,
+            0
+          ],
+          "final_score": [
+            0,
+            0,
+            0
+          ],
+          "carrier_refocus_count": 0,
+          "full_state_return_count": 80
+        },
+        {
+          "protocol": "recurrent-bursts-v1",
+          "parameters": {
+            "L": 5,
+            "steps": 80,
+            "family": "disconnected",
+            "coefficient": 0,
+            "amplitude": 3,
+            "max_bits": 128
+          },
+          "completed_updates": 80,
+          "stop_reason": "requested_horizon",
+          "tensor_fingerprint": "0bff11c77bbb9f2dc03df2ec3efd4a43bd93cc4c65b20da2187d913eb7bf5801",
+          "dynamics_fingerprint": "11aaa35fb6f0c26f8053955c0cc9acf918fd3c58aa5c35c6aeb6fa4e40e068d2",
+          "initial_hash": "0d81ff7686221e9d033ceccc23b4a011ee91fd5d792d1611a58ac120bed2728b",
+          "final_hash": "0d81ff7686221e9d033ceccc23b4a011ee91fd5d792d1611a58ac120bed2728b",
+          "exact_rewind": true,
+          "initial_compact_update": null,
+          "reference_reassemblies": [],
+          "maximum_counter_bits": 2,
+          "maximum_site_pattern_types": 0,
+          "maximum_edge_pattern_types": 0,
+          "maximum_persistent_pattern_types": 0,
+          "gates": {
+            "recurrent_reference_bursts": false,
+            "growing_structural_proxies": false,
+            "complete_information_recovery": true,
+            "feedback_attribution_demonstrated": null,
+            "stagnation_trigger_demonstrated": null
+          },
+          "user_goal_demonstrated": false,
+          "case": "disconnected",
+          "first_maximum_site_patterns": 0,
+          "initial_score": [
+            0,
+            0,
+            0
+          ],
+          "final_score": [
+            0,
+            0,
+            0
+          ],
+          "carrier_refocus_count": 16,
+          "full_state_return_count": 16
+        },
+        {
+          "protocol": "recurrent-bursts-v1",
+          "parameters": {
+            "L": 7,
+            "steps": 70,
+            "family": "periodic_control",
+            "coefficient": 0,
+            "amplitude": 3,
+            "max_bits": 128
+          },
+          "completed_updates": 70,
+          "stop_reason": "requested_horizon",
+          "tensor_fingerprint": "f2f07e3a284330652491504d0a3e2c654644698022cc621ed08305830dc9152a",
+          "dynamics_fingerprint": "9cd3d509287101ed9081a2392b3d1e44ef8f7a8d69f3bde776378a1692b18152",
+          "initial_hash": "eeed17e3ed5b2e4e45fad9607cc4842853ca134cb1c86d62b119f41fca6bc3b2",
+          "final_hash": "eeed17e3ed5b2e4e45fad9607cc4842853ca134cb1c86d62b119f41fca6bc3b2",
+          "exact_rewind": true,
+          "initial_compact_update": 0,
+          "reference_reassemblies": [
+            {
+              "reference_mass": "18",
+              "compact_ball_mass": "18",
+              "compact": true,
+              "dispersed": false,
+              "active_sites": 6,
+              "site_pattern_types": 6,
+              "edge_pattern_types": 6,
+              "persistent_pattern_types": 0,
+              "normalized_fingerprint": "67ca7261fa1714f00b50eb364dcaade563fcae9a584811126005ad3f45bc184b",
+              "update": 6,
+              "maximum_counter_bits": 2,
+              "carrier_focused": false
+            },
+            {
+              "reference_mass": "18",
+              "compact_ball_mass": "18",
+              "compact": true,
+              "dispersed": false,
+              "active_sites": 6,
+              "site_pattern_types": 6,
+              "edge_pattern_types": 6,
+              "persistent_pattern_types": 0,
+              "normalized_fingerprint": "67ca7261fa1714f00b50eb364dcaade563fcae9a584811126005ad3f45bc184b",
+              "update": 13,
+              "maximum_counter_bits": 2,
+              "carrier_focused": false
+            },
+            {
+              "reference_mass": "18",
+              "compact_ball_mass": "18",
+              "compact": true,
+              "dispersed": false,
+              "active_sites": 6,
+              "site_pattern_types": 6,
+              "edge_pattern_types": 6,
+              "persistent_pattern_types": 0,
+              "normalized_fingerprint": "67ca7261fa1714f00b50eb364dcaade563fcae9a584811126005ad3f45bc184b",
+              "update": 20,
+              "maximum_counter_bits": 2,
+              "carrier_focused": false
+            },
+            {
+              "reference_mass": "18",
+              "compact_ball_mass": "18",
+              "compact": true,
+              "dispersed": false,
+              "active_sites": 6,
+              "site_pattern_types": 6,
+              "edge_pattern_types": 6,
+              "persistent_pattern_types": 0,
+              "normalized_fingerprint": "67ca7261fa1714f00b50eb364dcaade563fcae9a584811126005ad3f45bc184b",
+              "update": 27,
+              "maximum_counter_bits": 2,
+              "carrier_focused": false
+            },
+            {
+              "reference_mass": "18",
+              "compact_ball_mass": "18",
+              "compact": true,
+              "dispersed": false,
+              "active_sites": 6,
+              "site_pattern_types": 6,
+              "edge_pattern_types": 6,
+              "persistent_pattern_types": 0,
+              "normalized_fingerprint": "67ca7261fa1714f00b50eb364dcaade563fcae9a584811126005ad3f45bc184b",
+              "update": 34,
+              "maximum_counter_bits": 2,
+              "carrier_focused": false
+            },
+            {
+              "reference_mass": "18",
+              "compact_ball_mass": "18",
+              "compact": true,
+              "dispersed": false,
+              "active_sites": 6,
+              "site_pattern_types": 6,
+              "edge_pattern_types": 6,
+              "persistent_pattern_types": 0,
+              "normalized_fingerprint": "67ca7261fa1714f00b50eb364dcaade563fcae9a584811126005ad3f45bc184b",
+              "update": 41,
+              "maximum_counter_bits": 2,
+              "carrier_focused": false
+            },
+            {
+              "reference_mass": "18",
+              "compact_ball_mass": "18",
+              "compact": true,
+              "dispersed": false,
+              "active_sites": 6,
+              "site_pattern_types": 6,
+              "edge_pattern_types": 6,
+              "persistent_pattern_types": 0,
+              "normalized_fingerprint": "67ca7261fa1714f00b50eb364dcaade563fcae9a584811126005ad3f45bc184b",
+              "update": 48,
+              "maximum_counter_bits": 2,
+              "carrier_focused": false
+            },
+            {
+              "reference_mass": "18",
+              "compact_ball_mass": "18",
+              "compact": true,
+              "dispersed": false,
+              "active_sites": 6,
+              "site_pattern_types": 6,
+              "edge_pattern_types": 6,
+              "persistent_pattern_types": 0,
+              "normalized_fingerprint": "67ca7261fa1714f00b50eb364dcaade563fcae9a584811126005ad3f45bc184b",
+              "update": 55,
+              "maximum_counter_bits": 2,
+              "carrier_focused": false
+            },
+            {
+              "reference_mass": "18",
+              "compact_ball_mass": "18",
+              "compact": true,
+              "dispersed": false,
+              "active_sites": 6,
+              "site_pattern_types": 6,
+              "edge_pattern_types": 6,
+              "persistent_pattern_types": 0,
+              "normalized_fingerprint": "67ca7261fa1714f00b50eb364dcaade563fcae9a584811126005ad3f45bc184b",
+              "update": 62,
+              "maximum_counter_bits": 2,
+              "carrier_focused": false
+            },
+            {
+              "reference_mass": "18",
+              "compact_ball_mass": "18",
+              "compact": true,
+              "dispersed": false,
+              "active_sites": 6,
+              "site_pattern_types": 6,
+              "edge_pattern_types": 6,
+              "persistent_pattern_types": 0,
+              "normalized_fingerprint": "67ca7261fa1714f00b50eb364dcaade563fcae9a584811126005ad3f45bc184b",
+              "update": 69,
+              "maximum_counter_bits": 2,
+              "carrier_focused": false
+            }
+          ],
+          "maximum_counter_bits": 2,
+          "maximum_site_pattern_types": 6,
+          "maximum_edge_pattern_types": 9,
+          "maximum_persistent_pattern_types": 0,
+          "gates": {
+            "recurrent_reference_bursts": true,
+            "growing_structural_proxies": false,
+            "complete_information_recovery": true,
+            "feedback_attribution_demonstrated": null,
+            "stagnation_trigger_demonstrated": null
+          },
+          "user_goal_demonstrated": false,
+          "case": "periodic_shell",
+          "first_maximum_site_patterns": 1,
+          "initial_score": [
+            1,
+            1,
+            0
+          ],
+          "final_score": [
+            1,
+            1,
+            0
+          ],
+          "carrier_refocus_count": 0,
+          "full_state_return_count": 10
+        },
+        {
+          "protocol": "recurrent-bursts-v1",
+          "parameters": {
+            "L": 5,
+            "steps": 160,
+            "family": "linear",
+            "coefficient": 1,
+            "amplitude": 3,
+            "max_bits": 128
+          },
+          "completed_updates": 98,
+          "stop_reason": "counter_bit_limit",
+          "tensor_fingerprint": "1932a11967dfac9cbd254a1fdaad356cd81df68be7fc1a3bb4f0b8857072cd6e",
+          "dynamics_fingerprint": "f3e6ac6d272d3c2df567d997e3a3d3cc427d25b20e39e63c0b797772af1e409a",
+          "initial_hash": "0d81ff7686221e9d033ceccc23b4a011ee91fd5d792d1611a58ac120bed2728b",
+          "final_hash": "26719ccdcc0be3c2ad0108d0da74b4d8c514c84295d19a08f54395e218b4cca4",
+          "exact_rewind": true,
+          "initial_compact_update": 1,
+          "reference_reassemblies": [],
+          "maximum_counter_bits": 129,
+          "maximum_site_pattern_types": 123,
+          "maximum_edge_pattern_types": 372,
+          "maximum_persistent_pattern_types": 5,
+          "gates": {
+            "recurrent_reference_bursts": false,
+            "growing_structural_proxies": false,
+            "complete_information_recovery": true,
+            "feedback_attribution_demonstrated": null,
+            "stagnation_trigger_demonstrated": null
+          },
+          "user_goal_demonstrated": false,
+          "case": "linear_plus1",
+          "first_maximum_site_patterns": 10,
+          "initial_score": [
+            0,
+            0,
+            0
+          ],
+          "final_score": [
+            55,
+            255,
+            5
+          ],
+          "carrier_refocus_count": 0,
+          "full_state_return_count": 0
+        },
+        {
+          "protocol": "recurrent-bursts-v1",
+          "parameters": {
+            "L": 5,
+            "steps": 160,
+            "family": "cubic",
+            "coefficient": 1,
+            "amplitude": 3,
+            "max_bits": 128
+          },
+          "completed_updates": 8,
+          "stop_reason": "counter_bit_limit",
+          "tensor_fingerprint": "e1fb4edb2f8b15a283db066ab36abc2cdd9ae5353e92ad1f051f8b261acf9232",
+          "dynamics_fingerprint": "93773ecb10023765e7d9f65b41276c3e0c877cf6e250dcbf9c17061bf3fc2950",
+          "initial_hash": "0d81ff7686221e9d033ceccc23b4a011ee91fd5d792d1611a58ac120bed2728b",
+          "final_hash": "ab0ce9a6260fedc7f064cb8249387bd943ff51f7e5bb00825d7a35d59116c3e9",
+          "exact_rewind": true,
+          "initial_compact_update": 1,
+          "reference_reassemblies": [
+            {
+              "reference_mass": "346350",
+              "compact_ball_mass": "272748",
+              "compact": true,
+              "dispersed": false,
+              "active_sites": 117,
+              "site_pattern_types": 78,
+              "edge_pattern_types": 309,
+              "persistent_pattern_types": 1,
+              "normalized_fingerprint": "eac99e36101d5fb8dc978a2d752054ec81026751456f6b6e1285ece15d7e015b",
+              "update": 6,
+              "maximum_counter_bits": 41,
+              "carrier_focused": false
+            }
+          ],
+          "maximum_counter_bits": 231,
+          "maximum_site_pattern_types": 121,
+          "maximum_edge_pattern_types": 370,
+          "maximum_persistent_pattern_types": 1,
+          "gates": {
+            "recurrent_reference_bursts": false,
+            "growing_structural_proxies": false,
+            "complete_information_recovery": true,
+            "feedback_attribution_demonstrated": null,
+            "stagnation_trigger_demonstrated": null
+          },
+          "user_goal_demonstrated": false,
+          "case": "cubic_plus1",
+          "first_maximum_site_patterns": 8,
+          "initial_score": [
+            0,
+            0,
+            0
+          ],
+          "final_score": [
+            121,
+            366,
+            0
+          ],
+          "carrier_refocus_count": 0,
+          "full_state_return_count": 0
+        },
+        {
+          "protocol": "recurrent-bursts-v1",
+          "parameters": {
+            "L": 5,
+            "steps": 160,
+            "family": "spring",
+            "coefficient": 1,
+            "amplitude": 3,
+            "max_bits": 128
+          },
+          "completed_updates": 87,
+          "stop_reason": "counter_bit_limit",
+          "tensor_fingerprint": "e44360ed54d555a3a7db73d6161b8655b8c1143cc6963761c0fd71d0bdee21fe",
+          "dynamics_fingerprint": "bd75a548cce4f1bd611ce6194ab43c17b3e9eb36fe436539cac816b9708806de",
+          "initial_hash": "0d81ff7686221e9d033ceccc23b4a011ee91fd5d792d1611a58ac120bed2728b",
+          "final_hash": "4d6deb51a3c839ee464664ea015fd95b5b40843a4a1a0f457094de9edca1e37c",
+          "exact_rewind": true,
+          "initial_compact_update": 1,
+          "reference_reassemblies": [],
+          "maximum_counter_bits": 129,
+          "maximum_site_pattern_types": 125,
+          "maximum_edge_pattern_types": 375,
+          "maximum_persistent_pattern_types": 0,
+          "gates": {
+            "recurrent_reference_bursts": false,
+            "growing_structural_proxies": false,
+            "complete_information_recovery": true,
+            "feedback_attribution_demonstrated": null,
+            "stagnation_trigger_demonstrated": null
+          },
+          "user_goal_demonstrated": false,
+          "case": "spring_plus1",
+          "first_maximum_site_patterns": 9,
+          "initial_score": [
+            0,
+            0,
+            0
+          ],
+          "final_score": [
+            125,
+            375,
+            0
+          ],
+          "carrier_refocus_count": 0,
+          "full_state_return_count": 0
+        }
+      ],
+      "flrw_growth_control": {
+        "scope": "Optional prepared homogeneous FLRW only; not communication concentration.",
+        "updates": 32,
+        "exact_rewind": true,
+        "all_samples_spatially_uniform": true,
+        "tensor_fingerprint": "c0ee18a2f72b39285b55fe24e044e80343db0ef3e821f5742b11ead5ef9a6763",
+        "initial_scale_factor": "14",
+        "final_scale_factor": "3502",
+        "initial_bits": 12,
+        "final_bits": 32,
+        "settled_structure_score": [
+          1,
+          1,
+          1
+        ]
+      },
+      "historical_comparison": [
+        {
+          "case": "baseline",
+          "matching_historical_parameters": true,
+          "differences": [],
+          "note": "Exact matched outputs"
+        },
+        {
+          "case": "no_messages",
+          "matching_historical_parameters": false,
+          "differences": null,
+          "note": "Shorter declared control horizon"
+        },
+        {
+          "case": "disconnected",
+          "matching_historical_parameters": false,
+          "differences": null,
+          "note": "Shorter declared control horizon"
+        },
+        {
+          "case": "periodic_shell",
+          "matching_historical_parameters": true,
+          "differences": [],
+          "note": "Exact matched outputs"
+        },
+        {
+          "case": "linear_plus1",
+          "matching_historical_parameters": true,
+          "differences": [],
+          "note": "Exact matched outputs"
+        },
+        {
+          "case": "cubic_plus1",
+          "matching_historical_parameters": true,
+          "differences": [],
+          "note": "Exact matched outputs"
+        },
+        {
+          "case": "spring_plus1",
+          "matching_historical_parameters": true,
+          "differences": [],
+          "note": "Exact matched outputs"
+        }
+      ]
+    },
+    "integration": {
+      "scope": "Component isolation, not shared physical dynamics or empirical validation.",
+      "inventory": {
+        "schema": "Universe24-channels-v1",
+        "total_channels": 4860,
+        "integer_registers_per_node": 14580,
+        "allocation": "disjoint retained intervals; no channel reuse",
+        "cross_component_dynamics": "none; physical coupling is inside the Einstein component",
+        "components": [
+          {
+            "owner": "einstein",
+            "start": 0,
+            "stop": 4771,
+            "channels": 4771,
+            "purpose": "coupled ADM metric, scalar matter and dark dust",
+            "source_fingerprint": "7565da8f3eabfb2cdd7dcf1c4ac19894859c9a32c4f1ae7d7f333ddb29cfbb52"
+          },
+          {
+            "owner": "communication",
+            "start": 4771,
+            "stop": 4825,
+            "channels": 54,
+            "purpose": "six transport lanes and 48 reference receiver channels; no gravitational source",
+            "source_fingerprint": "fc3076f34ff0240e5069ae786b745c3a33c0c528867d0b20ef4ceff46b72f0ce"
+          },
+          {
+            "owner": "probe_experiment",
+            "start": 4825,
+            "stop": 4851,
+            "channels": 26,
+            "purpose": "26-channel independent test chart; general common-metric gate failed",
+            "source_fingerprint": "8560ba937fd3b75f10b4e999a5febe0990cfcd85f443e64f73961f8ac7ed80ac"
+          },
+          {
+            "owner": "causal_wave",
+            "start": 4851,
+            "stop": 4860,
+            "channels": 9,
+            "purpose": "local packet arrival, C2 memory and response; computational cone, no Einstein source",
+            "source_fingerprint": "7eeba10f59889fee0bc02cd131a984adcbb52ac88d73c5ca44b737c4a512658f"
+          }
+        ]
+      },
+      "factor_edges": {
+        "einstein->einstein": 19784,
+        "communication->communication": 306,
+        "probe_experiment->probe_experiment": 60,
+        "causal_wave->causal_wave": 32
+      },
+      "cross_owner_factor_edges": {},
+      "source_and_metric_counterfactuals": [
+        {
+          "microtick": 0,
+          "Einstein_independent_of_wave": true,
+          "wave_independent_of_metric": true
+        },
+        {
+          "microtick": 1,
+          "Einstein_independent_of_wave": true,
+          "wave_independent_of_metric": true
+        },
+        {
+          "microtick": 2,
+          "Einstein_independent_of_wave": true,
+          "wave_independent_of_metric": true
+        },
+        {
+          "microtick": 3,
+          "Einstein_independent_of_wave": true,
+          "wave_independent_of_metric": true
+        },
+        {
+          "microtick": 4,
+          "Einstein_independent_of_wave": true,
+          "wave_independent_of_metric": true
+        },
+        {
+          "microtick": 5,
+          "Einstein_independent_of_wave": true,
+          "wave_independent_of_metric": true
+        },
+        {
+          "microtick": 6,
+          "Einstein_independent_of_wave": true,
+          "wave_independent_of_metric": true
+        }
+      ],
+      "all_full_state_rewinds_exact": true,
+      "prepared_arms_and_metric_different": true,
+      "trace_sha256": "d2e14e1d8848a7c88792220c1cf3cc748e10c1f882919373e7cfd70f78251093"
+    },
+    "frame48": {
+      "channels": 48,
+      "monomials": 762,
+      "input_degree": 2,
+      "gates": {
+        "exact_48_channel_reversible_map": true,
+        "strict_single_edge_support": true,
+        "general_constraint_preservation": false,
+        "nondegeneracy_preservation": false,
+        "arbitrary_integer_precision_refinement": false,
+        "retained_physical_clock": false,
+        "general_einstein_solver_validated": false,
+        "matter_coupled": false
+      },
+      "refinement_rejections": {
+        "1/2": "Increment of K00 has noninteger coefficient 1/2; 48-channel integer refinement is not established",
+        "1/16": "Increment of B00 has noninteger coefficient 1/8; 48-channel integer refinement is not established"
+      },
+      "construction_original_base_commit": "df327c1a4d807df48500b3afeb51a4c4264b8b72",
+      "cases": {
+        "flat": {
+          "steps": 120,
+          "complete_snapshots": 121,
+          "exact_lift_every_step": true,
+          "exact_rewind": true,
+          "remainders_frozen": true,
+          "maximum_integer_bits": 1,
+          "audit_click_classes": {
+            "0": 0,
+            "1": 0,
+            "2": 0
+          },
+          "initial_previous": {
+            "peak_constraints": {
+              "H": "0",
+              "M0": "0",
+              "M1": "0",
+              "M2": "0",
+              "C010": "0",
+              "C011": "0",
+              "C012": "0",
+              "C020": "0",
+              "C021": "0",
+              "C022": "0",
+              "C120": "0",
+              "C121": "0",
+              "C122": "0",
+              "Ricci_antisym01": "0",
+              "Ricci_antisym02": "0",
+              "Ricci_antisym12": "0"
+            },
+            "all_discrete_constraints_zero": true,
+            "singular_nodes": 0,
+            "minimum_abs_det_B": "1"
+          },
+          "trace_sha256": "c1962aa9299b5f103fa4dd7b3185abbbe3b58d427acdc2b129665b9a1e04f92b",
+          "initial_observation": {
+            "peak_constraints": {
+              "H": "0",
+              "M0": "0",
+              "M1": "0",
+              "M2": "0",
+              "C010": "0",
+              "C011": "0",
+              "C012": "0",
+              "C020": "0",
+              "C021": "0",
+              "C022": "0",
+              "C120": "0",
+              "C121": "0",
+              "C122": "0",
+              "Ricci_antisym01": "0",
+              "Ricci_antisym02": "0",
+              "Ricci_antisym12": "0"
+            },
+            "all_discrete_constraints_zero": true,
+            "singular_nodes": 0,
+            "minimum_abs_det_B": "1"
+          },
+          "final_observation": {
+            "peak_constraints": {
+              "H": "0",
+              "M0": "0",
+              "M1": "0",
+              "M2": "0",
+              "C010": "0",
+              "C011": "0",
+              "C012": "0",
+              "C020": "0",
+              "C021": "0",
+              "C022": "0",
+              "C120": "0",
+              "C121": "0",
+              "C122": "0",
+              "Ricci_antisym01": "0",
+              "Ricci_antisym02": "0",
+              "Ricci_antisym12": "0"
+            },
+            "all_discrete_constraints_zero": true,
+            "singular_nodes": 0,
+            "minimum_abs_det_B": "1"
+          }
+        },
+        "nonlinear_anisotropic": {
+          "steps": 6,
+          "complete_snapshots": 7,
+          "exact_lift_every_step": true,
+          "exact_rewind": true,
+          "remainders_frozen": true,
+          "maximum_integer_bits": 172,
+          "audit_click_classes": {
+            "0": 1890,
+            "1": 0,
+            "2": 0
+          },
+          "initial_previous": {
+            "peak_constraints": {
+              "H": "0",
+              "M0": "0",
+              "M1": "0",
+              "M2": "0",
+              "C010": "0",
+              "C011": "0",
+              "C012": "0",
+              "C020": "0",
+              "C021": "0",
+              "C022": "0",
+              "C120": "0",
+              "C121": "0",
+              "C122": "0",
+              "Ricci_antisym01": "0",
+              "Ricci_antisym02": "0",
+              "Ricci_antisym12": "0"
+            },
+            "all_discrete_constraints_zero": true,
+            "singular_nodes": 0,
+            "minimum_abs_det_B": "1"
+          },
+          "trace_sha256": "b93cbd14824e83795000868f543355e6ce928e774ad17db5510cca323ec91661",
+          "initial_observation": {
+            "peak_constraints": {
+              "H": "0",
+              "M0": "0",
+              "M1": "0",
+              "M2": "0",
+              "C010": "0",
+              "C011": "0",
+              "C012": "0",
+              "C020": "0",
+              "C021": "0",
+              "C022": "0",
+              "C120": "0",
+              "C121": "0",
+              "C122": "0",
+              "Ricci_antisym01": "0",
+              "Ricci_antisym02": "0",
+              "Ricci_antisym12": "0"
+            },
+            "all_discrete_constraints_zero": true,
+            "singular_nodes": 0,
+            "minimum_abs_det_B": "1"
+          },
+          "final_observation": {
+            "peak_constraints": {
+              "H": "0",
+              "M0": "0",
+              "M1": "0",
+              "M2": "0",
+              "C010": "0",
+              "C011": "0",
+              "C012": "0",
+              "C020": "0",
+              "C021": "0",
+              "C022": "0",
+              "C120": "0",
+              "C121": "0",
+              "C122": "0",
+              "Ricci_antisym01": "0",
+              "Ricci_antisym02": "0",
+              "Ricci_antisym12": "0"
+            },
+            "all_discrete_constraints_zero": true,
+            "singular_nodes": 0,
+            "minimum_abs_det_B": "20716139110417849973483614885367503996446383081496520273884486261380472580856753683314146195135223251416657710324759001441190479926055304084923414323"
+          }
+        },
+        "off_constraint_spatial": {
+          "steps": 3,
+          "complete_snapshots": 4,
+          "exact_lift_every_step": true,
+          "exact_rewind": true,
+          "remainders_frozen": true,
+          "maximum_integer_bits": 22,
+          "audit_click_classes": {
+            "0": 3523,
+            "1": 0,
+            "2": 0
+          },
+          "initial_previous": {
+            "peak_constraints": {
+              "H": "24",
+              "M0": "7",
+              "M1": "6",
+              "M2": "17/2",
+              "C010": "3",
+              "C011": "5",
+              "C012": "7/2",
+              "C020": "4",
+              "C021": "11/2",
+              "C022": "4",
+              "C120": "7/2",
+              "C121": "7/2",
+              "C122": "7/2",
+              "Ricci_antisym01": "7/2",
+              "Ricci_antisym02": "6",
+              "Ricci_antisym12": "5"
+            },
+            "all_discrete_constraints_zero": false,
+            "singular_nodes": 10,
+            "minimum_abs_det_B": "0"
+          },
+          "trace_sha256": "051b127012b785f60531e334ee4e14c87feae8cc88f28890f2eb006b2b237f6e",
+          "initial_observation": {
+            "peak_constraints": {
+              "H": "20",
+              "M0": "23/2",
+              "M1": "13/2",
+              "M2": "13/2",
+              "C010": "4",
+              "C011": "4",
+              "C012": "7/2",
+              "C020": "6",
+              "C021": "4",
+              "C022": "9/2",
+              "C120": "3",
+              "C121": "3",
+              "C122": "9/2",
+              "Ricci_antisym01": "9/2",
+              "Ricci_antisym02": "9/2",
+              "Ricci_antisym12": "5"
+            },
+            "all_discrete_constraints_zero": false,
+            "singular_nodes": 9,
+            "minimum_abs_det_B": "0"
+          },
+          "final_observation": {
+            "peak_constraints": {
+              "H": "16361888119528",
+              "M0": "5810113078731/2",
+              "M1": "6285792094937/2",
+              "M2": "2884876288161/2",
+              "C010": "183845393853/2",
+              "C011": "139095929089/2",
+              "C012": "47679534398",
+              "C020": "51537001683",
+              "C021": "39243161120",
+              "C022": "31931639317",
+              "C120": "73950316379",
+              "C121": "197160898185/2",
+              "C122": "76902158120",
+              "Ricci_antisym01": "247597367893/2",
+              "Ricci_antisym02": "249684839379/2",
+              "Ricci_antisym12": "282152656127/2"
+            },
+            "all_discrete_constraints_zero": false,
+            "singular_nodes": 0,
+            "minimum_abs_det_B": "177682635"
+          }
+        },
+        "constraint_pair_counterexample": {
+          "steps": 1,
+          "complete_snapshots": 2,
+          "exact_lift_every_step": true,
+          "exact_rewind": true,
+          "remainders_frozen": true,
+          "maximum_integer_bits": 2,
+          "audit_click_classes": {
+            "0": 135,
+            "1": 0,
+            "2": 0
+          },
+          "initial_previous": {
+            "peak_constraints": {
+              "H": "0",
+              "M0": "0",
+              "M1": "0",
+              "M2": "0",
+              "C010": "0",
+              "C011": "0",
+              "C012": "0",
+              "C020": "0",
+              "C021": "0",
+              "C022": "0",
+              "C120": "0",
+              "C121": "0",
+              "C122": "0",
+              "Ricci_antisym01": "0",
+              "Ricci_antisym02": "0",
+              "Ricci_antisym12": "0"
+            },
+            "all_discrete_constraints_zero": true,
+            "singular_nodes": 0,
+            "minimum_abs_det_B": "1"
+          },
+          "trace_sha256": "e055fc6afe475d1d361b4be3e5d3fa24cb4593f6a9d913cc20925b5414a5a9bc",
+          "initial_observation": {
+            "peak_constraints": {
+              "H": "0",
+              "M0": "0",
+              "M1": "0",
+              "M2": "0",
+              "C010": "0",
+              "C011": "0",
+              "C012": "0",
+              "C020": "0",
+              "C021": "0",
+              "C022": "0",
+              "C120": "0",
+              "C121": "0",
+              "C122": "0",
+              "Ricci_antisym01": "0",
+              "Ricci_antisym02": "0",
+              "Ricci_antisym12": "0"
+            },
+            "all_discrete_constraints_zero": true,
+            "singular_nodes": 0,
+            "minimum_abs_det_B": "1"
+          },
+          "final_observation": {
+            "peak_constraints": {
+              "H": "4",
+              "M0": "0",
+              "M1": "0",
+              "M2": "0",
+              "C010": "0",
+              "C011": "0",
+              "C012": "0",
+              "C020": "0",
+              "C021": "0",
+              "C022": "0",
+              "C120": "0",
+              "C121": "0",
+              "C122": "0",
+              "Ricci_antisym01": "0",
+              "Ricci_antisym02": "0",
+              "Ricci_antisym12": "0"
+            },
+            "all_discrete_constraints_zero": false,
+            "singular_nodes": 0,
+            "minimum_abs_det_B": "3"
+          }
+        },
+        "degeneracy_counterexample": {
+          "steps": 1,
+          "complete_snapshots": 2,
+          "exact_lift_every_step": true,
+          "exact_rewind": true,
+          "remainders_frozen": true,
+          "maximum_integer_bits": 2,
+          "audit_click_classes": {
+            "0": 108,
+            "1": 0,
+            "2": 0
+          },
+          "initial_previous": {
+            "peak_constraints": {
+              "H": "0",
+              "M0": "0",
+              "M1": "0",
+              "M2": "0",
+              "C010": "0",
+              "C011": "0",
+              "C012": "0",
+              "C020": "0",
+              "C021": "0",
+              "C022": "0",
+              "C120": "0",
+              "C121": "0",
+              "C122": "0",
+              "Ricci_antisym01": "0",
+              "Ricci_antisym02": "0",
+              "Ricci_antisym12": "0"
+            },
+            "all_discrete_constraints_zero": true,
+            "singular_nodes": 0,
+            "minimum_abs_det_B": "2"
+          },
+          "trace_sha256": "5c82e179c005b4d3ee9086737a85a64ef579ff403682af12b8a096a57f1743af",
+          "initial_observation": {
+            "peak_constraints": {
+              "H": "0",
+              "M0": "0",
+              "M1": "0",
+              "M2": "0",
+              "C010": "0",
+              "C011": "0",
+              "C012": "0",
+              "C020": "0",
+              "C021": "0",
+              "C022": "0",
+              "C120": "0",
+              "C121": "0",
+              "C122": "0",
+              "Ricci_antisym01": "0",
+              "Ricci_antisym02": "0",
+              "Ricci_antisym12": "0"
+            },
+            "all_discrete_constraints_zero": true,
+            "singular_nodes": 0,
+            "minimum_abs_det_B": "1"
+          },
+          "final_observation": {
+            "peak_constraints": {
+              "H": "0",
+              "M0": "0",
+              "M1": "0",
+              "M2": "0",
+              "C010": "0",
+              "C011": "0",
+              "C012": "0",
+              "C020": "0",
+              "C021": "0",
+              "C022": "0",
+              "C120": "0",
+              "C121": "0",
+              "C122": "0",
+              "Ricci_antisym01": "0",
+              "Ricci_antisym02": "0",
+              "Ricci_antisym12": "0"
+            },
+            "all_discrete_constraints_zero": true,
+            "singular_nodes": 27,
+            "minimum_abs_det_B": "0"
+          }
+        }
+      }
+    }
+  },
+  "source_sha256": {
+    "experiments/research/six_lens_clocks.py": "876be23a35ea4bd107b67a3d6b70502c46f9eafff270d49c215bd2783225cda1",
+    "universe24/algebra/integer_circuit.py": "6b1a136079cc4e230bc899aa15f4ed7ae655d33b653595d3185be5d018aaa8e5",
+    "universe24/layers/universe.py": "3aeca3bfbb575efa91b6dd60aa292291a8dddb7f93df6b4b5f749f0c080a0a41",
+    "universe24/layers/causal_wave.py": "7faac3277e101464c688664ae9b671c10df976f4092372ef59c1cf6f243bc14f",
+    "universe24/layers/communication.py": "6b3353d641dd733d4e203637c95aa4584bc075fde4daee03dc3bc613c440d5af",
+    "universe24/prepare/conformal_flrw.py": "152eee37c82ad41c03a5aaacdbf25a0d5e2600c4021f8edbd024ae1a9eebd69a",
+    "universe24/observe/conformal_flrw.py": "ddf977c50d12e78dc21a7249e2ce3633d31663bbd7f66d7c7f03d2384691042f",
+    "universe24/observe/metric_clocks.py": "d65590f41e31f382de83196f54ab7ece27da5d69e5bba9da3562fc839823d190",
+    "experiments/geometry/transported_probe_clock.py": "b64d76cb10bee30ad00d87561af59ebbcbbec91042df9b635117b5c759a8210f",
+    "experiments/research/six_lens_clicks.py": "11a545fbc9cb45f5db13ff4e351ad046dd34136640838fc2f73064b533221982",
+    "universe24/core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+    "universe24/prepare/causal_wave.py": "fa15f504bbf5ebfef844968479f2f518049c2d06d99773acc76dabd4376e69e6",
+    "experiments/research/six_lens_born.py": "a77685e22385bea6a26f548c13957cf98332384c5517aea5ee0b396eca0c2678",
+    "experiments/quantum/born_reference.py": "a972d1b7fcf32ab28226e1e6ae0c672e0b8d1384ffe9cf201ab52c5b3a713346",
+    "universe24/core/tensor.py": "144ce8365ed01583a1950b056b6b94dac6f3f1b4f33085df95be98f30ead22c1",
+    "universe24/layers/choice.py": "c3a58b133f351aceab49c02653877ee62c8e066fcec73cbab77f11e5ef251faf",
+    "universe24/layers/matter.py": "f7dc2a0d4ea9d5bbb3f37883e678920ab341f8bdbcf2c1c7e660ece5746dbbc6",
+    "experiments/research/six_lens_bell.py": "2c2ae4b7de3a3b11eb73f8502fcb1d47ac701bbcabedfc956d5736742a0dd215",
+    "experiments/research/six_lens_complexity.py": "30764e6f26fce955faa9a9661f5562644237c12aca0879f3cdd5b964ab6bc867",
+    "experiments/cosmology/recurrent_bursts.py": "f5ceeccd7e6d19b62a171374242bd9e140791798796abae3dac6f3bcf5f51231",
+    "experiments/cosmology/PROTOCOL.md": "797ae59dd415f76f55154c440e84239a98719cb179b18cad1b0187abb2ce537b",
+    "universe24/prepare/communication.py": "7c3a3063c92554f907fb92d1a73c5ab07cd7a270cc563794280954b41f360eb7",
+    "universe24/layers/conformal_flrw.py": "07215f7517b84e26a5573b2be16c00ab97f2f514478a1dbb1f27b167e68b2807",
+    "universe24/layers/frame48.py": "88c983296bd77df720f5c03bef9407414e846dccf665debbb3f023c0b6ed12e2",
+    "universe24/core/channels.py": "cbff6d1c98bc660d55ab9efd64d9f2cbf6624b265492ca639e21722defc83f5b",
+    "universe24/layers/adm.py": "0ed863b4bbca4eeddc7e158e0a7c3769dd008ddfbe05dd5f689af9e42ba9fc7e",
+    "experiments/research/six_lens_integration.py": "f8dc33d75cc04c4a30df396da546e0dbab61b97ff3c8646eeac6800c093f426d",
+    "experiments/geometry/frame48_audit.py": "382379f337d0becc2a99e45248ea06ad8e9a320041f2f4f0a29239ba9ed4358d",
+    "universe24/algebra/frame_equations.py": "0414e93591cfaf7d1ab3c1c3ac45d958fa120a83c5a3bb337063622106162845",
+    "universe24/prepare/frame48.py": "376a3cc10a225c84b61e34cca124694840af6ab469ad59d5019978dcdd416c1b",
+    "universe24/observe/frame48.py": "3333049e7a096916de2f6bbccb7b4a39ed49865e653f2aa30b7f9e310b7ffbb5",
+    "universe24/core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+    "universe24/runtime.py": "60668f09e5c7d6e9f1abdcc8a92cd3158655dc6802701161592876afc06f2fe5",
+    "universe24/prepare/einstein.py": "08d4d7d26fbae2a42d7938b5174c795354b87e5765ff4e63dfeacec9e1472899",
+    "universe24/observe/event_board.py": "085fda051606f8568677b7a0309f293c5aed17a6eecef10565c9ed221dae90c2",
+    "universe24/layers/reference_model.py": "04aaf2f0dc9adac820f4c723a355647755dee231ab3ff39be86535e829ccb0b7",
+    "universe24/prepare/reference_model.py": "fb0ac396b8ffbae753d126a26fa37b61e59ced9aa80b0d218ab961a98b02f3cb",
+    "universe24/observe/causal_wave.py": "26210fec5277980b0b9106199f8f4070049682dcf9ffb802b9687005b6172ac5"
+  },
+  "raw_report_sha256": {
+    "runs/six-lens/01-clocks/report.json": "7b20890a05222004043dbadcf851010f559809537a14005b4f91cdd046e77fb5",
+    "runs/six-lens/02-clicks/report.json": "6a6e53364fbb22ef65b8990224b525a6d86a145b8d4215456245d1b056b035aa",
+    "runs/six-lens/03-born-algebra/report.json": "dd82f4d8bcdf6427eb25dcd72c2b4fd841ff49ee68679adfa280c2d75eae3cad",
+    "runs/six-lens/04-bell-experiments/independent.json": "55436f604253c2fb40c8c894c0a18655fe826528efefbc04118195ceb33afc6f",
+    "runs/six-lens/05-complexity-cycles/reproduced/summary.json": "80c40f812217fcf836b4a7c74f1dc3f492fc2ca300095e4e737a1be20f18f68b",
+    "runs/six-lens/06-integration/wiring/report.json": "a8935811422b06c9eb3143b0f7d00808cfa949de260921c6a0c53d51a4687840",
+    "runs/six-lens/06-integration/frame48/report.json": "26ac6edf2e32bad225241222a46d8137d9e7ce262588c30d365e7a6229f4b689",
+    "runs/six-lens/root/unified-cli/report.json": "dedbd5485c80ebab18064440fff0297e4527a16d07787dac97768742ea81e186"
+  }
+}

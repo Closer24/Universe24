@@ -34,6 +34,14 @@ jobs:
         run: python -m universe24 --L 3 --steps 1 --causal-wave --out runs/causal-wave --rewind
       - name: Causal Bell controls and explicit squared-amplitude reference
         run: python -m experiments.quantum.bell_cone_audit --out runs/bell-born-cone
+      - name: Six-part clocks, detector, Born, Bell, complexity and integration audit
+        run: |
+          python -m experiments.research.six_lens_clocks
+          python -m experiments.research.six_lens_clicks --out runs/six-lens/02-clicks
+          python -m experiments.research.six_lens_born --out runs/six-lens/03-born-algebra
+          python -m experiments.research.six_lens_bell --input runs/bell-born-cone --out runs/six-lens/04-bell-experiments/independent.json
+          python -m experiments.research.six_lens_complexity --out runs/six-lens/05-complexity-cycles/reproduced
+          python -m experiments.research.six_lens_integration --out runs/six-lens/06-integration/wiring
       - name: Canonical tensor integration inventory
         run: python -m universe24.tools.system_inventory --out runs/system-inventory.json
       - name: Saved tensor, seed and official click decoder
