@@ -1,0 +1,436 @@
+{
+  "scope": "Optional signed-reciprocal local-flux transport candidate; no Einstein or boundedness claim",
+  "source_sha256": "96f302383bf50c99406cc7227f71bbb131fb896a340dc93a1ea44342854233e9",
+  "engine_sha256": "c97037bb0e34c676b775b4c6db24d5ffb889d837db52bcb32c7b412bd0b87d67",
+  "law": {
+    "Q": 1,
+    "D": 6,
+    "gears": 32,
+    "monomials": 158,
+    "rank": 3,
+    "max_input_degree": 2,
+    "fingerprint": "be869a538307e4f1e1c3d7edac6b41468bd5e920f85faeb340a4c529d29c5ca8",
+    "strict_physical_support": true,
+    "support_violations": 0,
+    "reciprocal": true,
+    "one_way_designations": 0,
+    "negative_auxiliary_signs": 24,
+    "sign_exception": "Node flux fields have s=-1. This is signed reciprocity, not an all-positive force potential.",
+    "old_a_reads": 0,
+    "identical_complete_flat_linear_blocks": true,
+    "illegal_direct_cross_gradient_rejected": true
+  },
+  "reciprocal_response": {
+    "matter_flux_seed_at_origin": [
+      3,
+      6,
+      0
+    ],
+    "metric_inputs_at_origin": {
+      "H00": 9,
+      "H01": 36,
+      "H11": 36
+    },
+    "actual_metric_b_after_one_update": {
+      "H00": 3,
+      "H01": 12,
+      "H11": 12
+    },
+    "H01_background_change": 1,
+    "actual_matter_flux_b_changes_at_origin": [
+      -4,
+      -2,
+      0
+    ],
+    "exact_inverse": true,
+    "source_trace_peak": 45,
+    "source_divergence_peak": 36,
+    "source_limit": "The reciprocal H source is neither TT nor a demonstrated conserved Einstein stress source."
+  },
+  "independent_integer_oracle": [
+    {
+      "initial_amplitude": 1,
+      "exact_inputs": true,
+      "exact_scalar_divmod": true,
+      "exact_inverse": true,
+      "engine_stats": {
+        "int64_steps": 1,
+        "pyint_steps": 0,
+        "inverse_int64_steps": 1,
+        "inverse_pyint_steps": 0
+      }
+    },
+    {
+      "initial_amplitude": 1180591620717411303424,
+      "exact_inputs": true,
+      "exact_scalar_divmod": true,
+      "exact_inverse": true,
+      "engine_stats": {
+        "int64_steps": 0,
+        "pyint_steps": 1,
+        "inverse_int64_steps": 0,
+        "inverse_pyint_steps": 1
+      }
+    }
+  ],
+  "response_histories": {
+    "cases": {
+      "axis_flat": {
+        "mode": "axes",
+        "background": {},
+        "steps": 8,
+        "detectors": [
+          [
+            2,
+            0,
+            0
+          ],
+          [
+            0,
+            2,
+            0
+          ]
+        ],
+        "signed_official_scalar_detector_quotients": [
+          [
+            0,
+            1,
+            1,
+            4,
+            -1,
+            74,
+            -8274,
+            104096366
+          ],
+          [
+            0,
+            1,
+            1,
+            4,
+            -1,
+            74,
+            -8274,
+            104096366
+          ]
+        ],
+        "official_records": 4300,
+        "observed_kinds": [
+          0,
+          1,
+          2
+        ],
+        "remainder_changed": true,
+        "peak_counter": 44249504009785645,
+        "peak_metric_by_step": [
+          0,
+          1,
+          4,
+          15,
+          159,
+          18554,
+          212507270,
+          32518498675514790
+        ],
+        "exact_rewind": true,
+        "seed_sha256": "26117fb82e1cc5f35606668abe7d77e3054aefd1f5568c8f7c9620578efb29c2",
+        "final_sha256": "ad7d0b79b6e095bf8683e28cb625de71b8a6d004f687426040753ecda8d039da",
+        "complete_trace_sha256": "961557e48a88045aea5bb5ee9447d3be5d914b884638b46570785d2ef1c2f533"
+      },
+      "axis_plus": {
+        "mode": "axes",
+        "background": {
+          "H00": 1,
+          "H11": -1
+        },
+        "steps": 8,
+        "detectors": [
+          [
+            2,
+            0,
+            0
+          ],
+          [
+            0,
+            2,
+            0
+          ]
+        ],
+        "signed_official_scalar_detector_quotients": [
+          [
+            0,
+            1,
+            1,
+            5,
+            -9,
+            413,
+            -250011,
+            93904403663
+          ],
+          [
+            0,
+            1,
+            1,
+            3,
+            2,
+            11,
+            -86,
+            16263
+          ]
+        ],
+        "official_records": 4200,
+        "observed_kinds": [
+          0,
+          1,
+          2
+        ],
+        "remainder_changed": true,
+        "peak_counter": 35448007273075377055706,
+        "peak_metric_by_step": [
+          1,
+          2,
+          6,
+          37,
+          868,
+          561568,
+          188744175619,
+          26454392819537836293714
+        ],
+        "exact_rewind": true,
+        "seed_sha256": "0c7e37b19332e835cb1b7ffd9f7ae88315f646f1c9aa3bc80faef816ace23d6f",
+        "final_sha256": "77a4b076b78144d1f534796444bc3814e937071de055e1dda07937e98050c32a",
+        "complete_trace_sha256": "027665def9ed814bb777f5da603a231db8d14e09b446eb6db4194ed3e3f1f605"
+      },
+      "angle_flat": {
+        "mode": "angles",
+        "background": {},
+        "steps": 8,
+        "detectors": [
+          [
+            1,
+            1,
+            0
+          ],
+          [
+            1,
+            4,
+            0
+          ]
+        ],
+        "signed_official_scalar_detector_quotients": [
+          [
+            0,
+            1,
+            1,
+            7,
+            -22,
+            980,
+            -1180881,
+            1189933494301
+          ],
+          [
+            0,
+            1,
+            1,
+            7,
+            -22,
+            980,
+            -1180881,
+            1189933494301
+          ]
+        ],
+        "official_records": 8890,
+        "observed_kinds": [
+          0,
+          1,
+          2
+        ],
+        "remainder_changed": true,
+        "peak_counter": 49048232580190397826678307726,
+        "peak_metric_by_step": [
+          0,
+          3,
+          8,
+          55,
+          4054,
+          12926446,
+          212519615919449,
+          35510551828600655184790791795
+        ],
+        "exact_rewind": true,
+        "seed_sha256": "1087f9c864dd63a245070772b703df5ddf667958b4898dd9c0bc01ccfe699f20",
+        "final_sha256": "1cf25cbbe55ea9377ae2e33e85d569033166bbd6282dd93e0764a86d646e3f69",
+        "complete_trace_sha256": "055c4b7d65c8ee33ea636d950286a182d4cb961b7debaefaa7fef95a59803ab8"
+      },
+      "angle_cross": {
+        "mode": "angles",
+        "background": {
+          "H01": 1
+        },
+        "steps": 8,
+        "detectors": [
+          [
+            1,
+            1,
+            0
+          ],
+          [
+            1,
+            4,
+            0
+          ]
+        ],
+        "signed_official_scalar_detector_quotients": [
+          [
+            0,
+            1,
+            0,
+            8,
+            -78,
+            10393,
+            -138039939,
+            23058082677685865
+          ],
+          [
+            0,
+            1,
+            2,
+            5,
+            3,
+            -156,
+            -808769,
+            -81356549574806
+          ]
+        ],
+        "official_records": 9225,
+        "observed_kinds": [
+          0,
+          1,
+          2
+        ],
+        "remainder_changed": true,
+        "peak_counter": 142233634230200438312609755874890112,
+        "peak_metric_by_step": [
+          1,
+          4,
+          13,
+          152,
+          24610,
+          571009188,
+          345840396211411974,
+          112761777866041126035911976519543975
+        ],
+        "exact_rewind": true,
+        "seed_sha256": "0aaf394c5dd50797b1e8b073d61660400cfe967df64f8180e9ab90c33ec40d30",
+        "final_sha256": "75ae3d16c8e19d18e9178a165027623ec53803918281dbfc1442f23f6de0b3b5",
+        "complete_trace_sha256": "ee28e8dadbb5d8ea4dda5eaf0c4307847eafa8c151ecc7270069febbe954372b"
+      }
+    },
+    "same_tensor_comparisons": {
+      "diagonal_metric": [
+        {
+          "species": "matter.A",
+          "first_scalar_field_change": 3,
+          "detector_changed_updates": [
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "species": "matter.B",
+          "first_scalar_field_change": 3,
+          "detector_changed_updates": [
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        }
+      ],
+      "offdiagonal_metric": [
+        {
+          "species": "matter.A",
+          "first_scalar_field_change": 3,
+          "detector_changed_updates": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "species": "matter.B",
+          "first_scalar_field_change": 3,
+          "detector_changed_updates": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        }
+      ]
+    },
+    "interpretation": "Actual dynamic source runs: background fields backreact and are not held fixed. Quotient changes demonstrate response, not calibrated geodesics or packet speeds."
+  },
+  "locality": {
+    "prefix": [
+      {
+        "step": 1,
+        "furthest_changed_face_distance": 1
+      },
+      {
+        "step": 2,
+        "furthest_changed_face_distance": 2
+      },
+      {
+        "step": 3,
+        "furthest_changed_face_distance": 3
+      }
+    ],
+    "exact_rewinds": true
+  },
+  "off_preparation_control": {
+    "steps": 12,
+    "formula": "b_t=(-1)^t*t in uniform H22.j0",
+    "peak": 12,
+    "exact_rewind": true,
+    "proved_unbounded_off_preparation": true,
+    "interpretation": "Unit-modulus formal eigenvalues include a Jordan endpoint; the complete integer theory is not bounded for arbitrary data."
+  },
+  "algebra": {
+    "integer_potential": "Phi0=sum_s [D/2*(f_s^2+sum_i j_si^2)+g*f_s*sum_i delta_i j_si]; Phi_int=kappa*sum_matter [sum_i Hii*ji^2+2*sum_i<j Hij*ji*jj]",
+    "constants": {
+      "Q": 1,
+      "D": 6,
+      "g": 1,
+      "kappa": 1
+    },
+    "fixed_input": "u_f=D*f+g*div(j)+metric_source; u_ji=-D*ji+g*delta_i(f)-2*kappa*sum_j Hij*jj for matter",
+    "update": "ell,r_next=divmod(2*u+r,D); a_next=b; b_next=ell-a",
+    "passive_flat_symbol": "longitudinal lambda^2=D^2-4*g^2*sum_i sin(k_i)^2; cos(omega)=lambda/D; transverse lambda=-D",
+    "passive_flat_low_frequency_speed": "2*g/D=1/3 coarse sites per scalar update, common to every repeated block",
+    "passive_frozen_metric_relation": "cos(omega)-1=-(g^2/D)*v^T*[D*(cos(omega)+1)*I+2*kappa*H]^-1*v, v_i=2*sin(k_i)",
+    "passive_low_frequency_contravariant_spatial_coefficient": "inverse(I+(kappa/D)*H), relative to c0^2=(2*g/D)^2",
+    "passive_low_frequency_covariant_spatial_candidate": "I+(kappa/D)*H, conditional on unit lapse, zero shift and a separate physical time calibration; no measured spacetime metric is established",
+    "passive_frozen_background_instability": "For a spatially uniform matter flux along a positive eigenvalue h of fixed H, lambda=-D-2*kappa*h<-D when kappa*h>0. The carry-suppressed linear recurrence has a root outside the unit circle; at Q=1,kappa=h=1, z+z^-1=-8/3. This is a passive frozen-coefficient instability, not an extra runtime with frozen fields.",
+    "auxiliary_warning": "The j_i are independent node fields. No instantaneous gradient/constitutive graph or its exact preservation is asserted.",
+    "fourier_warning": "These symbols linearize the polynomial input and suppress carries. Real Q=1 Engine runs include remainder changes; equal flat blocks alone do not prove measured universal propagation."
+  },
+  "limitations": [
+    "Flux signs are negative in signed reciprocity; an all-positive-potential realization is not supplied.",
+    "Equality of the complete linear transport blocks holds only at H=0. Hjj modifies matter fluxes only, so geometric components do not share the matter frozen-H characteristics on nonzero metric backgrounds.",
+    "Positive H eigenvalues already destabilize a spatially uniform flux mode in the passive frozen-background linearization; the finite actual Engine runs also exhibit very rapid growth.",
+    "The reciprocal metric source violates TT trace and divergence constraints for the demonstrated seed.",
+    "A conserved Einstein stress tensor, lapse/shift constraints and nonlinear Einstein equations are not established.",
+    "Finite reciprocal-response runs do not establish stability; a uniform auxiliary mode is rigorously unbounded.",
+    "All fields, coefficients and seeds are integers. Fractions occur only in passive symbol/continuum interpretation strings.",
+    "Node fluxes are node vectors, not Yee links. Assigning link metadata would alter physical support and needs a new audit."
+  ]
+}

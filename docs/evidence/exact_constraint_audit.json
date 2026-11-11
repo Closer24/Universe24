@@ -1,0 +1,47 @@
+{
+  "scope": "Exact passive algebra, not Engine or physical Einstein-sector certification",
+  "L": 5,
+  "difference": "delta_mu = shift_plus_mu - shift_minus_mu; common rescalings omitted",
+  "random_symmetric_metric_bianchi_residuals": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "Hamiltonian_identity_G4_00_equals_2_C": true,
+  "spatial_sums_G4_00": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "two_crossing_scalar_waves_Box_residual": 0,
+  "ordinary_pointwise_scalar_stress_divergence_peaks": [
+    40,
+    40,
+    40,
+    0
+  ],
+  "positive_scalar_energy_sums_T2_00": [
+    1800,
+    1800,
+    1800,
+    1800,
+    1800
+  ],
+  "direct_reciprocal_TT_source_divergence_peaks": [
+    1,
+    1,
+    0
+  ],
+  "checkerboard_restricted_source_H_equals_8_psi_squared": true,
+  "checkerboard_restricted_source_transverse_divergence_zero": true,
+  "limitations": [
+    "The Bianchi and torus identities follow algebraically for all periodic h; random h is only an executable control.",
+    "A shifted/staggered stress could repair pointwise stress conservation; none is supplied here.",
+    "The checkerboard source preserves raw planar TT shape, not the metric phase decoder, sourced Einstein equations, or positive metric signature.",
+    "Neither Q nor a coefficient resolution lift changes these compatibility identities."
+  ],
+  "script_sha256": "7136b914f007c309974a1e307b4bac7e5711fb0b5541ade5d22972df11ff0819"
+}

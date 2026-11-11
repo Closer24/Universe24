@@ -40,6 +40,8 @@ The subsequent [local metric readout](PHASE_METRIC_EXPERIMENT.md) uses two ordin
 
 The [metric-source audit](METRIC_SOURCE_AUDIT.md) derives an exact periodic source ledger and a long carry-locked checkerboard drift in the free stencil. The drift is a fast lattice-mode control, not a disproof of every low-frequency limit. It prevents treating the remainder-free spectral band as a general integer-stability certificate.
 
+The [Q=1 reciprocal examples](INTEGER_RECIPROCAL_GEOMETRY.md) use only integer coefficients and initial data. A prepared period-five interaction has an exact all-time orbit bound. Spatial candidates demonstrate actual reciprocal sourcing and an off-diagonal official-record response with strict single-edge support. These examples do not close the gravity target: the generic sources fail the required constraints, and the spatial response tests expose rapid growth. Matching flat transport blocks is not matching curved geometry. The [source-constraint analysis](DYNAMICAL_GEOMETRY_CONSTRAINTS.md) also proves that a periodic flat linearized Einstein target cannot accommodate nonzero nonnegative total matter energy; a consistent background and conserved discrete source are necessary.
+
 ## Optional and rejected constructions
 
 `couple_doublet=True` is a rejected experiment retained to reproduce its exactness and measured runaway. It is off by default. The Einstein and CG2 layers are optional constructions with limited tested regimes; the default does not inherit their proposed conclusions.

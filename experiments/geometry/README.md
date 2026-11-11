@@ -53,6 +53,23 @@ conditional finite-time estimate do not prove all-seed, all-time stability.
 
 ## Independent checks and obstructions
 
+The [integer reciprocal candidates](../../docs/INTEGER_RECIPROCAL_GEOMETRY.md)
+use Q=1 and explicit integer seeds. They demonstrate prepared periodic
+coupling and reciprocal spatial responses, while retaining failures of
+stability and Einstein constraints. They introduce no additional runtime
+rule and do not modify the default. Reproduce them with:
+
+```bash
+python experiments/geometry/reciprocal_metric_candidate.py
+python experiments/geometry/metric_transport_candidate.py
+python experiments/geometry/exact_constraint_audit.py
+```
+
+The last script is passive exact algebra. Its [constraint
+analysis](../../docs/DYNAMICAL_GEOMETRY_CONSTRAINTS.md) separates a
+reciprocal potential from a conserved Einstein source, and identifies the
+mean-source obstruction for a periodic flat linearized target.
+
 The separate [integer curl-wave experiment](../../docs/LINEAR_SPIN2.md) uses
 18 gears and a reciprocal linear tensor. It proves bounded propagation and
 exact constraints for prepared travelling profiles and checks all 24 proper
