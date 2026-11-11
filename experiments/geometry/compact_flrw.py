@@ -24,20 +24,20 @@ def encode(value):
     return value
 
 
-def run(out, *, steps=64, Q=16):
+def run(out, *, steps=64, subdivision=16):
     if type(steps) is not int or steps < 1:
         raise ValueError('steps must be positive')
     out = Path(out)
     out.mkdir(parents=True, exist_ok=True)
-    tensor, seed = prepare(Q=Q, q0=2*Q, dust=(1, 1, 2), radiation=3)
+    tensor, seed = prepare(subdivision=subdivision, q0=2*subdivision, dust=(1, 1, 2), radiation=3)
     engine, state = Engine(tensor), seed
     rows = []
     trace = out/'full_trace.jsonl.gz'
     with gzip.open(trace, 'wt') as stream:
         stream.write(json.dumps({'format': 'Universe24-compact-FLRW-full-state-v1',
-                                'Q': Q, 'tensor': tensor.to_dict()})+'\n')
+                                'subdivision': subdivision, 'tensor': tensor.to_dict()})+'\n')
         for tick in range(steps+1):
-            values = sample(state, Q=Q)
+            values = sample(state, subdivision=subdivision)
             assert values['einstein_residual'] == [0]*4
             assert values['friedmann_residual'] == 0
             rows.append({'tick': tick, **encode(values)})
@@ -60,7 +60,7 @@ def run(out, *, steps=64, Q=16):
     report = {'scope': 'prepared homogeneous flat FLRW dust plus radiation; not general ADM replacement',
               'channels': tensor.G, 'integer_registers_per_node': 3*tensor.G,
               'budget': 48, 'unused_budget': 48-tensor.G, 'padding_channels': 0,
-              'steps': steps, 'Q': Q, 'tensor_fingerprint': tensor.fingerprint,
+              'steps': steps, 'subdivision': subdivision, 'tensor_fingerprint': tensor.fingerprint,
               'rank': tensor.rank, 'monomials': len(tensor),
               'exact_rewind': True, 'complete_trace_replay': True,
               'all_einstein_residuals_zero_in_declared_sector': True,
@@ -82,8 +82,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--out', type=Path, default=ROOT/'runs/compact-flrw')
     parser.add_argument('--steps', type=int, default=64)
-    parser.add_argument('--Q', type=int, default=16)
+    parser.add_argument('--subdivision', type=int, default=16)
     args = parser.parse_args()
-    report = run(args.out, steps=args.steps, Q=args.Q)
+    report = run(args.out, steps=args.steps, subdivision=args.subdivision)
     print(json.dumps({k: report[k] for k in ('scope', 'channels', 'steps', 'exact_rewind',
                      'complete_trace_replay', 'all_einstein_residuals_zero_in_declared_sector')}, indent=2))

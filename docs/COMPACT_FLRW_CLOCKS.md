@@ -65,7 +65,8 @@ The compact integer encoding below is this repository's construction.
 
 ## Eight retained channels
 
-Fix a positive integer resolution `Q` at tensor construction. It specifies
+Fix a positive integer resolution `Q` at tensor construction (`subdivision` in
+the API and `--subdivision` on the CLI). It specifies
 `Δη=1/Q` and passive readout units; it never changes the Engine divisor.
 
 | Channel | Prepared integer value | Physical readout |

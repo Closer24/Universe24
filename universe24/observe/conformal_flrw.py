@@ -4,8 +4,8 @@ import numpy as np
 from universe24.layers.conformal_flrw import NAMES, SOURCES, resolution
 
 
-def sample(state, *, Q=1):
-    Q = resolution(Q)
+def sample(state, *, subdivision=1):
+    subdivision = resolution(subdivision)
     if state.G != len(NAMES):
         raise ValueError('expected the standalone eight-channel state')
     if any(not np.all(v == v[:, :1]) for v in (state.a, state.b)):
@@ -17,12 +17,12 @@ def sample(state, *, Q=1):
     # Check both histories, including the velocities. Off-sector states still
     # evolve reversibly, but must not be silently interpreted as this metric.
     for array, t in ((state.a, q-1), (state.b, q)):
-        expected = [t, A*t*t+B*Q*t, 2*A*t**3+3*B*Q*t*t,
-                    6*A*A*t**5+15*A*B*Q*t**4+10*B*B*Q*Q*t**3,
+        expected = [t, A*t*t+B*subdivision*t, 2*A*t**3+3*B*subdivision*t*t,
+                    6*A*A*t**5+15*A*B*subdivision*t**4+10*B*B*subdivision*subdivision*t**3,
                     *sources, B]
         if list(map(int, array[:, 0])) != expected:
             raise ValueError('prepared FLRW history invariant failed')
-    eta, a = F(q, Q), F(s, Q*Q)
+    eta, a = F(q, subdivision), F(s, subdivision*subdivision)
     ap, app = 2*A*eta+B, F(2*A)
     densities = {name: F(12*value)/a**3 for name, value in zip(SOURCES, sources)}
     densities['radiation'] = F(3*B*B)/a**4
@@ -33,8 +33,8 @@ def sample(state, *, Q=1):
     stress_diag = [rho*a*a] + [pressure*a*a]*3
     # The four-metric is determined by one scale only because of homogeneity
     # and isotropy. These conditions must not be used in the default ADM run.
-    return {'eta': eta, 'scale_factor': a, 'proper_time': F(c, 6*Q**3),
-            'null_affine_parameter': F(ell, 30*Q**5),
+    return {'eta': eta, 'scale_factor': a, 'proper_time': F(c, 6*subdivision**3),
+            'null_affine_parameter': F(ell, 30*subdivision**5),
             'proper_rate_per_conformal_time': a,
             'densities': densities, 'rho': rho, 'pressure': pressure,
             'metric': metric, 'einstein_diagonal': einstein_diag,

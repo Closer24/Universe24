@@ -5,8 +5,8 @@ from universe24.core.lattice import lattice
 from universe24.layers.conformal_flrw import NAMES, resolution, build
 
 
-def prepare(*, L=3, Q=1, q0=2, dust=(1, 1, 1), radiation=1, remainders=None):
-    Q = resolution(Q)
+def prepare(*, L=3, subdivision=1, q0=2, dust=(1, 1, 1), radiation=1, remainders=None):
+    subdivision = resolution(subdivision)
     lattice(L)
     dust = tuple(dust)
     if len(dust) != 3 or any(type(v) is not int or v < 0 for v in dust):
@@ -20,8 +20,8 @@ def prepare(*, L=3, Q=1, q0=2, dust=(1, 1, 1), radiation=1, remainders=None):
         raise ValueError('this big-bang sector requires a nonzero source')
 
     def history(q):
-        return [q, A*q*q+B*Q*q, 2*A*q**3+3*B*Q*q*q,
-                6*A*A*q**5+15*A*B*Q*q**4+10*B*B*Q*Q*q**3,
+        return [q, A*q*q+B*subdivision*q, 2*A*q**3+3*B*subdivision*q*q,
+                6*A*A*q**5+15*A*B*subdivision*q**4+10*B*B*subdivision*subdivision*q**3,
                 *dust, B]
 
     a, b = (np.repeat(np.array(history(q), dtype=object)[:, None], L**3, axis=1)
@@ -30,4 +30,4 @@ def prepare(*, L=3, Q=1, q0=2, dust=(1, 1, 1), radiation=1, remainders=None):
     state = State(L, a, b, r)
     if np.any(state.r < 0) or np.any(state.r >= 6):
         raise ValueError('remainders must lie in [0,6)')
-    return build(Q), state
+    return build(subdivision), state

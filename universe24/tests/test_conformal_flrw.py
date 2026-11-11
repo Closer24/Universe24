@@ -47,14 +47,14 @@ class ConformalFLRWTests(unittest.TestCase):
     def test_sources_clocks_bigints_and_exact_inverse(self):
         for dust, B in (((1, 0, 0), 0), ((0, 1, 0), 0), ((0, 0, 1), 0),
                         ((0, 0, 0), 2), ((1, 2, 3), 4), ((2**80, 3, 4), 2**70)):
-            tensor, seed = prepare(Q=7, dust=dust, radiation=B)
+            tensor, seed = prepare(subdivision=7, dust=dust, radiation=B)
             engine, state, oracle = Engine(tensor), seed, seed
             for _ in range(7):
                 before = state
                 state, oracle = engine.step(state), scalar_step(tensor, oracle)
                 self.assertTrue(state.same_as(oracle))
                 self.assertTrue(engine.inverse_step(state).same_as(before))
-                values = sample(state, Q=7)
+                values = sample(state, subdivision=7)
                 self.assertEqual(values['einstein_residual'], [0]*4)
                 self.assertEqual(values['friedmann_residual'], 0)
                 self.assertTrue(np.array_equal(state.r, seed.r))
@@ -65,11 +65,12 @@ class ConformalFLRWTests(unittest.TestCase):
 
     def test_refinement_matches_at_same_physical_time_without_more_channels(self):
         observations = []
-        for Q in (2, 4, 8):
-            tensor, seed = prepare(Q=Q, q0=2*Q)
-            final = Engine(tensor).run(seed, 4*Q)
-            observations.append(sample(final, Q=Q))
+        for subdivision in (2, 4, 8):
+            tensor, seed = prepare(subdivision=subdivision, q0=2*subdivision)
+            final = Engine(tensor).run(seed, 4*subdivision)
+            observations.append(sample(final, subdivision=subdivision))
             self.assertEqual(tensor.G, 8)
+            self.assertEqual(Engine(tensor).D, 6)
         self.assertEqual(observations[0], observations[1])
         self.assertEqual(observations[1], observations[2])
 
@@ -103,7 +104,7 @@ class ConformalFLRWTests(unittest.TestCase):
             sample(wrong)
 
     def test_invalid_preparation_and_nonuniform_states_rejected(self):
-        for kwargs in ({'Q': 0}, {'Q': True}, {'dust': (-1, 0, 0)}, {'q0': 1},
+        for kwargs in ({'subdivision': 0}, {'subdivision': True}, {'dust': (-1, 0, 0)}, {'q0': 1},
                        {'radiation': 1.2}, {'dust': (0, 0, 0), 'radiation': 0}):
             with self.assertRaises(ValueError):
                 prepare(**kwargs)

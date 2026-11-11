@@ -6,7 +6,7 @@
   "unused_budget": 40,
   "padding_channels": 0,
   "steps": 64,
-  "Q": 16,
+  "subdivision": 16,
   "tensor_fingerprint": "4291baad2653f426198c345b0a560b83a3ac1a052ba2d111b91c1bbc7d46a8f7",
   "rank": 4,
   "monomials": 28,
@@ -208,10 +208,10 @@
     }
   ],
   "source_sha256": {
-    "experiments/geometry/compact_flrw.py": "061c017d7c4dec4d8f5765a144b6056769d6d08f89f2227420b54efa2a5bc99f",
-    "universe24/layers/conformal_flrw.py": "8bf7d7c4d4fd9af14174a834cb79e95ebb37d98c1b7cbfbbb3e7b371e62edd51",
-    "universe24/prepare/conformal_flrw.py": "ce1a6da99817ac5a7ef8b44cc9a7d0d1af185608dc646d5386c5f64ca49df3d8",
-    "universe24/observe/conformal_flrw.py": "089ffefd89b4b79237932533dc50ecc792ac9ba13597f8ac500bdc7b054494a9",
+    "experiments/geometry/compact_flrw.py": "eda41a263c4272fb0d9ddb03e38bdfbd3f6f58907a8ee3f9d53a0e313b7adfcf",
+    "universe24/layers/conformal_flrw.py": "07215f7517b84e26a5573b2be16c00ab97f2f514478a1dbb1f27b167e68b2807",
+    "universe24/prepare/conformal_flrw.py": "152eee37c82ad41c03a5aaacdbf25a0d5e2600c4021f8edbd024ae1a9eebd69a",
+    "universe24/observe/conformal_flrw.py": "ddf977c50d12e78dc21a7249e2ce3633d31663bbd7f66d7c7f03d2384691042f",
     "universe24/core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
     "universe24/core/tensor.py": "144ce8365ed01583a1950b056b6b94dac6f3f1b4f33085df95be98f30ead22c1",
     "universe24/core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e"
@@ -225,5 +225,5 @@
     "Eight fixed channels have unbounded integer bit lengths; geometry decoding alone is not complete state replay."
   ],
   "source_basis": "main cd8cb0347efb4d0678c24ce464c4bcf746c2f14a after merging PRs 33 and 34",
-  "validation": "Independent metric-to-Einstein and geodesic tests; integer scalar oracle, source-disconnection controls, refinement, all-snapshot replay and exact rewind."
+  "validation": "Independent metric-to-Einstein and geodesic tests; integer scalar oracle, source-disconnection controls, refinement at unchanged Engine divisor six, all-snapshot replay and exact rewind."
 }
