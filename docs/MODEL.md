@@ -8,6 +8,12 @@ The default is now `python -m universe24`: nonlinear ADM, complex scalar matter 
 
 The reference baseline and fixed-six research results below remain controls; they no longer describe the CLI default. Retired variable-divisor calibrations stay retired.
 
+The optional [compact null-wave sector](COMPACT_NULL_WAVE.md) stores a prepared
+pp-wave profile in two retained integer channels and decodes its coframe with
+a fixed null covector. Its invariant-sector proof includes both histories and
+frozen remainders. It is a separate model with passive fixed-denominator
+geometry readouts, not a replacement for the default ADM metric.
+
 
 This is the current mathematical contract for the executable model. A node's
 state, a fixed integer coupling tensor, and the complete seed specify a run.
