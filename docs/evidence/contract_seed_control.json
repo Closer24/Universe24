@@ -1,0 +1,16 @@
+{
+  "changed_only_preparation_rng": 17,
+  "steps": 120,
+  "tensor_unchanged": true,
+  "initial_state_hash": "cdab17aa42ec3bc84c3482df70520a0cf42051892554c55cfd3b65157b1148ae",
+  "counts": {
+    "matter": 122856,
+    "cosmic": 29760
+  },
+  "classes": {
+    "1": 76450,
+    "2": 76166
+  },
+  "clock_sequence_matches_rng13": true,
+  "interpretation": "The clock sequence is seed-independent in this control; this does not derive Born statistics."
+}

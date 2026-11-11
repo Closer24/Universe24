@@ -302,7 +302,7 @@ uₓᵢ(a,b) = Σm:target(m)=i cm ∏f∈m z(x+δf,jf,σf).
 
 Here cm is a fixed integer coefficient; σf is either a or b; jf is an input gear; δf is zero or a face-neighbor offset; and z(x,j,a)=aₓⱼ, z(x,j,b)=bₓⱼ. A term has at most three factors. A constant term has an empty product equal to one.
 
-Each term is supported on the output site and at most one face neighbor. Different terms may read different neighbors. Local on-site factors are allowed. This is more general than exactly one linear input per face.
+Each term reads stored registers at the output site and at most one face neighbor. Different terms may read different neighbors. Local on-site factors are allowed. This is more general than exactly one linear input per face. This storage-locality condition is distinct from geometric support: including both endpoints of link gears, 3,300 default monomials span more than one link, with maximum Manhattan diameter two. They remain finite-range local, but the stronger single-physical-link condition does not hold.
 
 A purely matrix notation is possible after lifting the inputs: form Z(v), the vector of the required monomial products, and write u=M Z(v), where M is a fixed integer matrix. This notation does not turn the dynamics into a linear map of a and b. Omitting Z would omit the nonlinear interactions.
 

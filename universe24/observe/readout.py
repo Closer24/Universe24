@@ -44,11 +44,11 @@ def label_mismatches(system, tensor: Tensor) -> list:
 def official_clicks(engine, before, after, step: int = 1):
     """The official click stream (Engine.clicks, stream 'official'): L0 is excluded under the handed class through the
     tensor label; nothing is computed differently."""
-    return engine.clicks(before, after, step, stream="official")
+    return engine.clicks(before, after, step, stream="official").select("official")
 
 
-# ------------------------------------------------------------------ R2: proper-time ticks in the clock's OWN frame
-OWN_FRAME_RULE = ("proper-time tick = one sign cycle of the click sizes in the clock's OWN ROTATING FRAME: the fixed "
+# ------------------------------------------------------------------ R2: candidate clock ticks in the clock's OWN frame
+OWN_FRAME_RULE = ("candidate clock tick = one sign cycle of the click sizes in the clock's OWN ROTATING FRAME: the fixed "
                   "carrier J (identified from the law, never from a species label) is removed by J^-t applied to the "
                   "consecutive click pair (l(t), l(t+1)); the raw sign-cycle reading is kept as contrast (manager R2)")
 
@@ -88,6 +88,8 @@ def carrier_from_law(tensor: Tensor, clock_gears, field: str, D: int) -> dict:
 def own_frame_series(clicks, carrier: float) -> list:
     """s(t) = [J^-t (l(t), l(t+1))]_0 with J = rotation by the carrier angle (0: identity; pi/2: (x, y) -> (y, -x),
     Rule3's zero-input map; pi: -1)."""
+    if carrier not in (0.0, math.pi / 2, math.pi):
+        raise ValueError("carrier must be 0, pi/2 or pi; no silent rounding in the decoder")
     out = []
     for t in range(len(clicks) - 1):
         x, y = clicks[t], clicks[t + 1]

@@ -192,7 +192,8 @@ def centroid(w, axis: int, origin: int):
 
 
 def click_sizes(before: State, after: State, tensor: Tensor, ns: str = "matter"):
-    """ell = b(t+1) + b(t-1) of every matter gear (L, L, L, 16), float (the click sizes, read-only)."""
+    """Raw quotient ell = b(t+1) + b(t-1), shape (L,L,L,16), float.
+    Includes non-click fixed points; this is a state diagnostic, not an official event decoder."""
     _, b1, _ = matter_view(after, tensor, ns, exact=False)
     a0, _, _ = matter_view(before, tensor, ns, exact=False)
     return b1 + a0

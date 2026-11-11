@@ -67,3 +67,14 @@ OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 python -m unittest discover -s universe
 Tests write fresh evidence to ignored `runs/tests/`. Checked-in `universe24/results/` and research notes are historical ONE experiment records, not a declaration that all physical targets passed. Some tests deliberately verify negative findings or failure of a physical hypothesis. A green suite means the stated assertions passed.
 
 See [validation scope](docs/VALIDATION.md), [contribution rules](CONTRIBUTING.md), and [the research proposal](https://docs.google.com/document/d/1NDPfeFj9vldgb0RMSSvx2lBSmOo__E-F3t2cZwfjOjI/edit).
+
+## Tensor and click audit
+
+See [the audit and measured limitations](docs/CLICK_CONTRACT_AUDIT.md). Export a complete tensor, seed and official event stream, then replay the saved inputs:
+
+```bash
+python -m universe24.tools.audit_contract --L 4 --steps 120 --out runs/contract
+python -m universe24.tools.audit_contract --replay runs/contract
+```
+
+All register reads are on-site or at a face neighbor. Including both endpoints of link gears, some terms span two lattice edges; the stricter single-physical-link condition is not satisfied. Official event counts are distinct from signed quotient weights.
