@@ -92,7 +92,7 @@ not yet the physical null cone.
 | A — Mechanical | Exact integers, immutable tensor, ≤48 channels, strict locality, complete forward/inverse replay, scalar oracle and causality controls | Checked for an actual bundle/run only; not a physical theorem. |
 | B — Decoder | Online/offline equality, identity and class/sign checks, missing/duplicate/corrupt-record rejection, observer passivity and no-source controls | Arithmetic click semantics can be validated without assuming a detector model. |
 | C — Einstein geometry | Independent four-metric curvature; vacuum and sourced cases; six evolution equations, four constraints, metric signature and matter conservation | No accepted general ≤48 coupled model. |
-| D — Convergence | Separate and joint space/time/quantization refinement at fixed physical domain and endpoint; stable constraints and valid geometry | The compact general encoding has unresolved integrality, constraint and stability gates. |
+| D — Convergence | Separate and joint space/time/quantization refinement at fixed physical domain and endpoint; stable constraints and valid geometry | Projective integer refinement is now constructive; general spatial convergence, stability and efficient bit growth remain unresolved. |
 | E — Shared clocks and motion | Moving and stationary apparatus, null propagation and free fall using the same geometry; redshift/tidal and held-out controls | No accepted in-budget operational apparatus model. |
 | F — Detector physics | Coupled source/apparatus interaction, complete trials, calibrated response, interference and separately justified Born/Bell statistics | No derived real-world detector law from the present Engine. |
 
@@ -103,6 +103,18 @@ schema/replay checks cannot set C–F to passed. Evidence must identify the seed
 tensor, protocol, source revision, raw results and domain of its claim.
 
 ## Results and limitations of inherited and concurrent proposals
+
+The source-only [projective refinement follow-up](TEAM48_REFINEMENT.md) replaces
+the sign phase with a retained denominator in 41/44 channels. It proves the
+decoded update identity, supports rational physical time/space steps, and
+retains the unchanged fixed-six Engine and bundle interface. The protected
+cubic44 preparation has an exact positive-frame invariant with a vanishing
+physical memory perturbation. Actual sourced homogeneous and plane-symmetric
+tests show decreasing errors in specified refinement series. Several original
+spatial/joint sequences fail their declared comparison test and remain in the
+evidence. Integer bit length grows exponentially; no general physical gate or
+apparatus default is promoted. The historical limitations below refer to their
+original pinned laws, not to this changed projective integrator.
 
 The baseline for this consolidation is commit
 `7d238e84a2167a4d3fe7bc7942da0cbf97bd29b2`. Concurrent proposals #42 and #43

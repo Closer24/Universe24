@@ -8,6 +8,7 @@ Historical results keep their original source revision and limitations.
 
 | Work | Reference | Use in current research | Integration blocker |
 | --- | --- | --- | --- |
+| Projective sourced refinement | [Report](../TEAM48_REFINEMENT.md), `validation/geometry/team48/` | Actual 41/44-channel rational-step integer encoding; positive-frame invariant; sourced temporal and exploratory joint convergence evidence | General Einstein/spatial stability unestablished; several refinement groups fail; exponential integer bit growth; no apparatus. Same supported bundle/runtime only. |
 | Integer ADM | [Derivation](../INTEGER_ADM.md), [baseline](https://github.com/Closer24/Universe24/tree/7d238e84a2167a4d3fe7bc7942da0cbf97bd29b2) | Independent coupled equation and geometric source reference | 4,771 Einstein channels plus historical communication; finite-horizon workspace. |
 | Vacuum frame | [Frame48](../FRAME48_RESEARCH.md), [PR #36](https://github.com/Closer24/Universe24/pull/36) | Polynomial frame evolution and exact reversible lift | 48 channels consumed by vacuum alone; constraints, nondegeneracy and refinement unresolved. |
 | Paired coupled frame | [PR #39](https://github.com/Closer24/Universe24/pull/39), [pinned derivation](https://github.com/Closer24/Universe24/blob/35344a1ba5c12c857404115e893911411ece7d35/docs/FRAME_MATTER.md) | Scalar/dust backreaction, stress signs and independent spacetime checks | 70 channels; constraint drift, refinement and stability; no apparatus. |

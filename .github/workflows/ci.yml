@@ -55,6 +55,8 @@ jobs:
           persist-credentials: false
       - name: One runtime reproduces the complete 44-channel proposal state
         run: python -m validation.team48_contract --source validation-reference --out runs/team48-contract
+      - name: Projective integer refinement and retained physical negative controls
+        run: python -m validation.geometry.team48.refinement_run_audits
       - name: Test evidence
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
