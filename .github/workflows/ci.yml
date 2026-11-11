@@ -42,6 +42,20 @@ jobs:
           python -m experiments.research.six_lens_bell --input runs/bell-born-cone --out runs/six-lens/04-bell-experiments/independent.json
           python -m experiments.research.six_lens_complexity --out runs/six-lens/05-complexity-cycles/reproduced
           python -m experiments.research.six_lens_integration --out runs/six-lens/06-integration/wiring
+      - name: Local complexity mechanisms and independent acceptance
+        run: |
+          python -m experiments.complexity.local_stagnation --out runs/complexity-research/01-stagnation
+          python -m experiments.complexity.structural_memory --out runs/complexity-research/02-memory
+          python -m experiments.complexity.reassembly_feedback --out runs/complexity-research/03-reassembly/verified
+          python -m experiments.complexity.cycle_organization --out runs/complexity-research/04-organization
+          python -m experiments.complexity.complexity_born --out runs/complexity-research/05-born
+          python -m experiments.complexity.sensor_rotor --out runs/complexity-research/07-sensor-rotor
+          python -m experiments.complexity.acceptance_audit --out runs/complexity-research/06-acceptance
+          python -m experiments.complexity.acceptance_audit --stagnation runs/complexity-research/01-stagnation --out runs/complexity-research/06-acceptance/stagnation-independent
+          python -m experiments.complexity.acceptance_audit --born runs/complexity-research/05-born/report.json --out runs/complexity-research/06-acceptance/born-independent
+          python -m experiments.complexity.acceptance_audit --peer-root runs/complexity-research --out runs/complexity-research/06-acceptance/peers-independent
+          python -m experiments.complexity.acceptance_audit --sensor-rotor runs/complexity-research/07-sensor-rotor --out runs/complexity-research/06-acceptance/joint-independent
+          python -m experiments.complexity.summarize --out runs/complexity-research/summary.json
       - name: Canonical tensor integration inventory
         run: python -m universe24.tools.system_inventory --out runs/system-inventory.json
       - name: Saved tensor, seed and official click decoder
