@@ -25,9 +25,9 @@ for i, j, k in ((0, 1, 2), (1, 2, 0), (2, 0, 1)):
     EPS[i, k, j] = -1
 
 
-def build(Q=1, doubled=False):
+def build(doubled=False):
     """A column curl, or the original full-nine symmetric extension C."""
-    D = 6 * Q
+    D = 6
     names = [f"{side}{i}{j}" for side in "EB" for i in range(3) for j in range(3)]
     terms = []
     for side, other in (("E", "B"), ("B", "E")):
@@ -41,7 +41,7 @@ def build(Q=1, doubled=False):
                         offset = tuple(sign if axis == k else 0 for axis in range(3))
                         terms.append((f"{side}{i}{j}", D // 2 * coefficient * sign,
                                       ((f"{other}{row}{col}", offset, "b"),)))
-    return Tensor(names, terms, Q=Q, strict_support=True)
+    return Tensor(names, terms, strict_support=True)
 
 
 def delta(values, axis, lat):
@@ -82,15 +82,15 @@ def dot(a, b):
     return sum(int(x) * int(y) for x, y in zip(a.flat, b.flat))
 
 
-def phase_seed(E, B, Q, L, doubled=False):
+def phase_seed(E, B, L, doubled=False):
     lat = lattice(L)
     a = np.concatenate((E.reshape(9, -1), (-B + curl(E, lat, doubled)).reshape(9, -1)))
     b = np.concatenate((E.reshape(9, -1), B.reshape(9, -1)))
-    r = np.arange(18 * lat.N, dtype=np.int64).astype(object).reshape(18, lat.N) % (6 * Q)
+    r = np.arange(18 * lat.N, dtype=np.int64).astype(object).reshape(18, lat.N) % 6
     return State(L, a, b, r)
 
 
-def travelling_seed(Q, axes=(2,), L=7):
+def travelling_seed(axes=(2,), L=7):
     lat = lattice(L)
     coords = np.array([lat.coords(n) for n in range(lat.N)])
     E = np.zeros((3, 3, lat.N), dtype=object)
@@ -106,12 +106,12 @@ def travelling_seed(Q, axes=(2,), L=7):
         E[i, j] += q; E[j, i] += q
         B[i, i] -= sq; B[j, j] += sq
         B[i, j] += sp; B[j, i] += sp
-    return phase_seed(E, B, Q, L)
+    return phase_seed(E, B, L)
 
 
-def run_travelling(Q, axes):
-    tensor = build(Q);engine = Engine(tensor, Q)
-    seed = travelling_seed(Q, axes);state = seed
+def run_travelling(axes):
+    tensor = build();engine = Engine(tensor)
+    seed = travelling_seed(axes);state = seed
     period = None;records = 0;peak = 0
     lat = seed.lattice
     for tick in range(1, 57):
@@ -135,7 +135,7 @@ def run_travelling(Q, axes):
         if period is None and state.same_as(seed):period = tick
     assert period == 28
     assert engine.rewind(state, 56).same_as(seed)
-    return dict(Q=Q, L=7, axes=list(axes), polarisations=2,
+    return dict(D=6, L=7, axes=list(axes), polarisations=2,
                 zero_mean_profiles=True, steps=56, exact_full_state_period=period,
                 exact_translation_every_two_updates=True, macro_carrier=-1,
                 macro_shift_per_axis=2, peak_counter=peak, official_records=records,
@@ -146,7 +146,7 @@ def run_travelling(Q, axes):
                 tensor_fingerprint=tensor.fingerprint)
 
 
-def oblique_seed(Q, doubled=False):
+def oblique_seed(doubled=False):
     L=5;lat=lattice(L)
     coords=np.array([lat.coords(n) for n in range(lat.N)])
     f=np.array([3,-2,-1,0,0],dtype=object)
@@ -157,12 +157,12 @@ def oblique_seed(Q, doubled=False):
     cross=np.array([[0,0,1],[0,0,-1],[1,-1,0]],dtype=object)
     E=Txy[:,:,None]*f[xy]+Txyz[:,:,None]*f[xyz]
     B=cross[:,:,None]*f[(xy+1)%L]+Txyz[:,:,None]*f[(xyz+2)%L]
-    return phase_seed(E,B,Q,L,doubled)
+    return phase_seed(E,B,L,doubled)
 
 
 def run_instability(doubled=False):
-    Q=7;tensor=build(Q,doubled);engine=Engine(tensor,Q)
-    seed=oblique_seed(Q,doubled);state=seed;lat=seed.lattice
+    tensor=build(doubled);engine=Engine(tensor)
+    seed=oblique_seed(doubled);state=seed;lat=seed.lattice
     E,B=seed.b[:9].reshape(3,3,-1),seed.b[9:].reshape(3,3,-1)
     invariant=dot(E,E)+dot(B,B)-dot(E,curl(B,lat,doubled))
     samples=[]
@@ -180,23 +180,23 @@ def run_instability(doubled=False):
     assert state.max_abs()>10**12
     assert engine.rewind(state,64).same_as(seed)
     return dict(operator="doubled symmetric extension C" if doubled else "single-index curl A",
-                Q=Q,L=5,steps=64,all_TT_residuals_zero=True,
+                D=6,L=5,steps=64,all_TT_residuals_zero=True,
                 remainders_constant=True,exact_rewind=True,
                 conserved_macro_quadratic=invariant,quadratic_positive_definite=False,
                 growth=samples,scope="Oblique 3D high-wave-number instability despite exact constraints.")
 
 
 def algebra_audit():
-    Q=7;lat=lattice(3);rng=np.random.default_rng(41)
+    lat=lattice(3);rng=np.random.default_rng(41)
     X=rng.integers(-3,4,size=(3,3,lat.N)).astype(object)
     Y=rng.integers(-3,4,size=(3,3,lat.N)).astype(object)
     results=[]
     for doubled in (False,True):
-        tensor=build(Q,doubled);engine=Engine(tensor,Q)
+        tensor=build(doubled);engine=Engine(tensor)
         b=np.concatenate((X.reshape(9,-1),Y.reshape(9,-1)))
-        seed=State(3,b.copy(),b.copy(),np.arange(b.size).reshape(b.shape)%(6*Q))
+        seed=State(3,b.copy(),b.copy(),np.arange(b.size).reshape(b.shape)%6)
         actual=engine.inputs(seed)
-        expected=np.concatenate((curl(Y,lat,doubled).reshape(9,-1),curl(X,lat,doubled).reshape(9,-1)))*(3*Q)
+        expected=np.concatenate((curl(Y,lat,doubled).reshape(9,-1),curl(X,lat,doubled).reshape(9,-1)))*3
         assert np.array_equal(actual,expected)
         assert dot(X,curl(Y,lat,doubled))==dot(curl(X,lat,doubled),Y)
         assert check_reciprocity(tensor).ok and not tensor.support_violations()
@@ -206,7 +206,7 @@ def algebra_audit():
     return results
 
 
-def rotate_state(state, permutation, signs, D):
+def rotate_state(state, permutation, signs):
     lat=state.lattice;R=np.zeros((3,3),dtype=np.int64)
     for i,p in enumerate(permutation):R[i,p]=signs[i]
     coords=np.array([lat.coords(n) for n in range(lat.N)],dtype=np.int64).T
@@ -220,27 +220,27 @@ def rotate_state(state, permutation, signs, D):
             a[target]=sign*state.a[source,indices]
             b[target]=sign*state.b[source,indices]
             old_r=state.r[source,indices]
-            r[target]=old_r if sign==1 else D-1-old_r
+            r[target]=old_r if sign==1 else 5-old_r
     return State(state.L,a,b,r)
 
 
 def rotation_and_locality_audit():
-    Q=7;tensor=build(Q);engine=Engine(tensor,Q);L=5
+    tensor=build();engine=Engine(tensor);L=5
     rng=np.random.default_rng(82)
     seed=State(L,rng.integers(-2,3,size=(18,L**3)),
                rng.integers(-2,3,size=(18,L**3)),
-               rng.integers(0,6*Q,size=(18,L**3)))
+               rng.integers(0,6,size=(18,L**3)))
     following=engine.step(seed);rotations=0
     for permutation in itertools.permutations(range(3)):
         parity=(-1)**sum(permutation[i]>permutation[j] for i in range(3) for j in range(i+1,3))
         for signs in itertools.product((-1,1),repeat=3):
             if parity*signs[0]*signs[1]*signs[2]!=1:continue
-            rotated=rotate_state(seed,permutation,signs,engine.D)
-            assert engine.step(rotated).same_as(rotate_state(following,permutation,signs,engine.D))
+            rotated=rotate_state(seed,permutation,signs)
+            assert engine.step(rotated).same_as(rotate_state(following,permutation,signs))
             rotations+=1
     assert rotations==24
     L=7;zero=np.zeros((18,L**3),dtype=np.int64)
-    base=State(L,zero.copy(),zero.copy(),np.full_like(zero,17))
+    base=State(L,zero.copy(),zero.copy(),np.full_like(zero,5))
     perturbed=base.copy();perturbed.b[0,0]=1
     lat=base.lattice
     distances=np.array([sum(min(c,L-c) for c in lat.coords(n)) for n in range(lat.N)])
@@ -254,17 +254,24 @@ def rotation_and_locality_audit():
                 no_influence_outside_face_distance=True)
 
 
-def common_divisor_audit():
-    left=Engine(build(1),1);right=Engine(build(1<<70),1<<70)
-    a,b=travelling_seed(1),travelling_seed(1<<70)
+def integer_precision_audit():
+    """Amplitude scaling exercises Python integers without changing the divisor."""
+    factor = 1 << 70
+    left = Engine(build());right = Engine(build())
+    a = travelling_seed();b = State(a.L, factor*a.a.astype(object),
+                                  factor*a.b.astype(object), a.r.copy())
+    seed_left, seed_right = a.copy(), b.copy()
     for tick in range(1,29):
         n,m=left.step(a),right.step(b)
-        assert np.array_equal(n.a,m.a) and np.array_equal(n.b,m.b)
-        assert left.clicks(a,n,tick).rows()==right.clicks(b,m,tick).rows()
+        assert np.array_equal(factor*n.a.astype(object),m.a)
+        assert np.array_equal(factor*n.b.astype(object),m.b)
+        assert np.array_equal(n.r,m.r)
         a,b=n,m
-    return dict(Q_values=[1,1<<70],steps=28,
-                identical_counter_histories=True,identical_official_quotients=True,
-                differently_prepared_allowed_remainders=True)
+    assert left.rewind(a,28).same_as(seed_left)
+    assert right.rewind(b,28).same_as(seed_right)
+    return dict(amplitude_factor=factor,divisor=6,steps=28,
+                exact_scaled_counter_histories=True,exact_rewind=True,
+                arbitrary_precision_exercised=right.stats["pyint_steps"]>0)
 
 
 def main():
@@ -274,8 +281,8 @@ def main():
     result=dict(scope="Exact prepared linear TT curl sector; no nonlinear Einstein metric, common matter coupling, or calibrated physical detector.",
                 algebra_audit=algebra_audit(),
                 rotation_and_locality=rotation_and_locality_audit(),
-                common_divisor=common_divisor_audit(),
-                travelling=[run_travelling(Q,axes) for Q,axes in ((1,(2,)),(7,(2,)),(7,(0,1,2)))],
+                integer_precision=integer_precision_audit(),
+                travelling=[run_travelling(axes) for axes in ((2,),(0,1,2))],
                 instability_controls=[run_instability(False),run_instability(True)])
     args.out.parent.mkdir(parents=True,exist_ok=True)
     args.out.write_text(json.dumps(result,indent=2)+'\n')

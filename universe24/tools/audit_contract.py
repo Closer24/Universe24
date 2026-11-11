@@ -14,8 +14,8 @@ import numpy as np
 from ..core import Engine, State, Tensor
 from ..core.engine import OBJ
 from ..core.lattice import DIRECTIONS, ZERO, lattice
-from ..demos.one.run_one import build
-from ..observe.one import CosmicLedger, CosmicView, state_hash
+from ..demos.reference_model.run_reference import build
+from ..observe.reference_model import state_hash
 from ..observe.readout import official_clicks
 from ..observe.gravity import click_series, crossing_times, rate_from_crossings
 
@@ -32,7 +32,7 @@ def tensor_report(tensor):
         pts = tensor.physical_support(m)
         max_diameter = max(max_diameter, max(sum(abs(a-b) for a,b in zip(p,q)) for p in pts for q in pts))
     return dict(gears=tensor.G, rank=tensor.rank, max_input_degree=tensor.rank-1,
-                shared_Q=tensor.Q, shared_D=6*tensor.Q,
+                shared_D=6,
                 monomials=len(tensor), census=tensor.census(),
                 storage_local=all(all(f.offset in (ZERO,)+DIRECTIONS for f in m.factors)
                                   and len({f.offset for f in m.factors}-{ZERO})<=1 for m in tensor.monomials),
@@ -45,15 +45,15 @@ def tensor_report(tensor):
                 full_tensor_fingerprint=tensor.fingerprint)
 
 
-def scalar_crosscheck(tensor, Q, L=3):
+def scalar_crosscheck(tensor, L=3):
     """Independent receiver loops: no compiled input evaluator is used by oracle."""
     lat=lattice(L); rng=np.random.default_rng(47); checked=0
-    e=Engine(tensor,Q)
+    e=Engine(tensor)
     samples=(0,1,lat.index(1,1,1))
     for huge in (False,True):
         a=rng.integers(-4,5,size=(tensor.G,lat.N)).astype(OBJ)
         b=rng.integers(-4,5,size=a.shape).astype(OBJ)
-        r=rng.integers(0,6*Q,size=a.shape).astype(OBJ)
+        r=rng.integers(0,6,size=a.shape).astype(OBJ)
         if huge: a[0,:]=2**80; b[0,:]=-(2**81)
         s=State(L,a,b,r); actual=e.inputs(s); nxt=e.step(s)
         for n in samples:
@@ -65,7 +65,7 @@ def scalar_crosscheck(tensor, Q, L=3):
                     v*=int(getattr(s,f.field)[f.gear,lat.index(*nb)])
                 u[m.target]+=v
             for g in range(tensor.G):
-                quotient,remainder=divmod(2*u[g]+int(s.r[g,n]),6*Q)
+                quotient,remainder=divmod(2*u[g]+int(s.r[g,n]),6)
                 expected=(int(s.b[g,n]),quotient-int(s.a[g,n]),remainder)
                 if int(actual[g,n])!=u[g] or nxt.gear(g,n)!=expected:
                     raise AssertionError(('scalar oracle mismatch',huge,g,n))
@@ -77,13 +77,13 @@ def scalar_crosscheck(tensor, Q, L=3):
 def cone_check(single_edge=False, stiffness=None):
     """Difference of two complete runs whose seeds differ at exactly one site."""
     _,T,E,s,_=build(7,'none',13)
-    field='cosmic.M1'
+    field=T.names[0]
     if single_edge:
         from ..layers.strict_edge import single_edge_realization
         from ..prepare.strict_edge import lift_seed
         realization=single_edge_realization(T,stiffness=stiffness)
-        s=lift_seed(s,realization);T=realization.tensor;E=Engine(T,T.Q)
-        field='em.A_x'
+        s=lift_seed(s,realization);T=realization.tensor;E=Engine(T)
+        field=T.names[0]
     altered=s.copy();origin=(3,3,3);n=lattice(7).index(*origin)
     altered.b[T.gear_index(field),n]+=1024
     lat=lattice(7)
@@ -104,7 +104,7 @@ def replay(directory):
     t=Tensor.from_json((p/'tensor.json').read_text(),strict_support=strict)
     with gzip.open(p/'initial_state.json.gz','rt') as f:s=State.from_dict(json.load(f))
     with gzip.open(p/'final_state.json.gz','rt') as f:expected=State.from_dict(json.load(f))
-    e=Engine(t,t.Q)
+    e=Engine(t)
     if (t.fingerprint!=report['tensor']['full_tensor_fingerprint']
             or state_hash(s,np.arange(t.G))!=report['run']['initial_hash']
             or state_hash(expected,np.arange(t.G))!=report['run']['final_hash']):
@@ -114,7 +114,7 @@ def replay(directory):
     return dict(exact=True,steps=report['run']['steps'],tensor=t.dynamics_fingerprint)
 
 
-def decode_saved_clicks(path):
+def decode_saved_clicks(path, *, clock_gear="ref.R00", clock_xyz=(0,0,0)):
     """Decode exported observations without accessing tensor amplitudes or state."""
     counts=Counter();weights=Counter();classes=Counter();clock_t=[];clock_q=[]
     last_step=0;seen=set()
@@ -133,7 +133,7 @@ def decode_saved_clicks(path):
             if key in seen:raise ValueError('duplicate click record in update')
             seen.add(key);last_step=step
             ns=gear.split('.')[0];counts[ns]+=1;weights[ns]+=q;classes[str(kind)]+=1
-            if gear=='cosmic.M1' and xyz==[0,0,0]:clock_t.append(step);clock_q.append(q)
+            if gear==clock_gear and tuple(xyz)==tuple(clock_xyz):clock_t.append(step);clock_q.append(q)
     return dict(records=sum(counts.values()),by_namespace=dict(counts),
                 signed_quotient_sum_by_namespace=dict(weights),by_class=dict(classes),
                 clock_times=clock_t,clock_sizes=clock_q)
@@ -144,13 +144,13 @@ def run(L,steps,rng_seed,out,*,single_edge=False,stiffness=None,max_bits=256):
     if type(max_bits) is not int or max_bits<1:raise ValueError('max_bits must be positive')
     if not single_edge and stiffness is not None:raise ValueError('stiffness requires single_edge')
     out=Path(out);out.mkdir(parents=True,exist_ok=True)
-    S,T,E,seed,prep=build(L,'jpure',rng_seed)
+    S,T,E,seed,prep=build(L,'pulse',rng_seed)
     construction=dict(kind='baseline',source_fingerprint=T.fingerprint)
     if single_edge:
         from ..layers.strict_edge import single_edge_realization
         from ..prepare.strict_edge import lift_seed
         realization=single_edge_realization(T,stiffness=stiffness)
-        seed=lift_seed(seed,realization);T=realization.tensor;E=Engine(T,S.Q)
+        seed=lift_seed(seed,realization);T=realization.tensor;E=Engine(T)
         construction=dict(kind='single-physical-edge experiment',
                           source_fingerprint=realization.source_fingerprint,
                           source_gears=realization.source_gears,stiffness=stiffness,
@@ -161,9 +161,8 @@ def run(L,steps,rng_seed,out,*,single_edge=False,stiffness=None,max_bits=256):
     initial=seed.copy();fp=T.fingerprint
     (out/'tensor.json').write_text(T.to_json())
     save_json(out/'initial_state.json.gz',seed.to_dict())
-    led=CosmicLedger(CosmicView(T),seed,S.info['one']['cosmic_params']['h'],S.info['one']['cosmic_params']['c_pair'])
     counts=Counter();weights=Counter();classes=Counter();audit_rows=0;dropped=0
-    clock_g=T.gear_index('cosmic.M1');times=[];sizes=[]
+    clock_g=T.gear_index(prep['gear']);clock_xyz=prep['origin'];clock_node=lattice(L).index(*clock_xyz);times=[];sizes=[]
     snapshots_hash=state_hash(seed,np.arange(T.G))
     total_records=0;per_update=[];state=seed;peak_bits=0;stopped_for_growth=False
     with gzip.open(out/'official_clicks.jsonl.gz','wt',encoding='utf-8') as f:
@@ -174,7 +173,7 @@ def run(L,steps,rng_seed,out,*,single_edge=False,stiffness=None,max_bits=256):
             raw=E.clicks(state,nxt,step,stream='raw')
             audit_rows+=sum(l=='audit' for l in raw.label)
             dropped+=sum(not c for c,l in zip(raw.changed,raw.label) if l=='official')
-            ts,qs=click_series([log],clock_g,0);times.extend(ts);sizes.extend(qs)
+            ts,qs=click_series([log],clock_g,clock_node);times.extend(ts);sizes.extend(qs)
             # Decoder sees only declared click records, not amplitudes or hidden fields.
             for row in log.rows():
                 _,xyz,g,kind,q,label=row
@@ -182,7 +181,6 @@ def run(L,steps,rng_seed,out,*,single_edge=False,stiffness=None,max_bits=256):
                 counts[ns]+=1;weights[ns]+=q;classes[str(kind)]+=1
                 f.write(json.dumps(dict(step=step,xyz=xyz,gear=name,kind=kind,quotient=q,label=label))+'\n')
             total_records+=len(log);per_update.append(len(log))
-            led.update(state,nxt)
             if state_hash(nxt,np.arange(T.G))!=before:raise AssertionError('observer mutated snapshot')
             if not np.array_equal(nxt.r%2,seed.r%2):raise AssertionError('remainder parity')
             state=nxt
@@ -194,15 +192,15 @@ def run(L,steps,rng_seed,out,*,single_edge=False,stiffness=None,max_bits=256):
     if T.fingerprint!=fp or state_hash(initial,np.arange(T.G))!=snapshots_hash:raise AssertionError('law/seed changed')
     completed=step
     exact=E.rewind(state,completed).same_as(seed)
-    if not exact or any(led.fail.values()):raise AssertionError('rewind/ledger failure')
+    if not exact:raise AssertionError('rewind failure')
     save_json(out/'final_state.json.gz',state.to_dict())
-    decoded=decode_saved_clicks(out/'official_clicks.jsonl.gz')
+    decoded=decode_saved_clicks(out/'official_clicks.jsonl.gz',clock_gear=T.names[clock_g],clock_xyz=clock_xyz)
     if (decoded['records']!=total_records or decoded['by_namespace']!=dict(counts)
             or decoded['signed_quotient_sum_by_namespace']!=dict(weights)
             or decoded['by_class']!=dict(classes) or decoded['clock_times']!=times or decoded['clock_sizes']!=sizes):
         raise AssertionError('saved-event decoder disagrees with online readout')
     crossings=crossing_times(times,sizes);omega=rate_from_crossings(crossings)
-    report=dict(construction=construction,tensor=tensor_report(T),scalar_oracle=scalar_crosscheck(T,S.Q),
+    report=dict(construction=construction,tensor=tensor_report(T),scalar_oracle=scalar_crosscheck(T),
                 forward_cone=cone_check(single_edge,stiffness),
                 run=dict(L=L,steps=completed,requested_steps=steps,rng_seed=rng_seed,seed_report=prep,
                          peak_state_bits=peak_bits,bit_limit=max_bits,stopped_for_growth=stopped_for_growth,
@@ -213,13 +211,10 @@ def run(L,steps,rng_seed,out,*,single_edge=False,stiffness=None,max_bits=256):
                             signed_quotient_sum_by_namespace=dict(weights),records_per_update=per_update,
                             excluded_raw_audit_rows=audit_rows,excluded_official_fixed_point_carries=dropped,
                             decoder_inputs='official click records, tensor names and computational step indices only'),
-                clock=dict(gear='cosmic.M1',node=[0,0,0],events=len(times),sign_crossings=len(crossings),
+                clock=dict(gear=T.names[clock_g],node=clock_xyz,events=len(times),sign_crossings=len(crossings),
                            angular_rate_per_update=omega if np.isfinite(omega) else None,
                            interpretation='diagnostic frequency; no proper-time or physical-unit calibration'),
-                state_only_diagnostics=dict(cosmic_ledger_failures=led.fail,
-                    carry_weight_frequencies=led.born_frequencies(seed,S.info['one']['cosmic_params']['load_sum']),
-                    interpretation='uses hidden state and quotient weights; NOT click-record probabilities'),
-                physics_status='local reversible dynamics and candidate observable patterns; QM/GR not established')
+                physics_status='fixed-six local reversible dynamics; QM/GR and gravitational clock response not established')
     (out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
     report['saved_input_replay']=replay(out)
     (out/'report.json').write_text(json.dumps(report,indent=2)+'\n')

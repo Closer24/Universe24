@@ -60,6 +60,8 @@ def carrier_from_law(tensor: Tensor, clock_gears, field: str, D: int) -> dict:
     (degree-2 monomials with one ``field`` factor and one clock-gear b factor). The carrier is the part the lapse does
     not touch: theta = arccos(c/D), rounded to {0, pi/2, pi}. Returns c, kappa, theta, the rounded carrier and the
     relative fit residual."""
+    if type(D) is not int or D != 6:
+        raise ValueError('this observer requires the fixed divisor six')
     idx = {tensor.gear_index(g): n for n, g in enumerate(clock_gears)}
     fi = tensor.gear_index(field)
     n = len(idx)

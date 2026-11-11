@@ -3,7 +3,7 @@ evolution, never fed back into a run. Exact integers only; no physics: which map
 
 A map is a ``StateMap``: ``X(state) -> State``; ``X @ Y`` is the composition X o Y (Y first).
 
-(a) Per-gear maps (D = 6Q; R'(r) = D-2-r for even r, D-r for odd r; both remainder maps are involutions):
+(a) Per-gear maps (D = 6; R'(r) = D-2-r for even r, D-r for odd r; both remainder maps are involutions):
       "id"  (a, b, r)                        identity
       "M"   (b, a, D-1-r)                    time mirror; flips r mod 2; reversor of every b-only tensor
       "Mp"  (b, a, R'(r))                    M': parity-preserving time mirror; = universe24 time_reverse for D = 6
@@ -11,15 +11,12 @@ A map is a ``StateMap``: ``X(state) -> State``; ``X @ Y`` is the composition X o
       "JR"  J o M' = (-b, -a, r xor 1)       (manager's definition, 09:14)
       "JM"  J o M  = (-b, -a, r)             (the "JR" of CLICK_TAXONOMY)
       "Jp"  (-a, -b, R'(r))                  parity-preserving negation (the J_D of CLICK_TAXONOMY)
-      "rhoL0" (b, a, rho(r)), rho(r) = 4Q + 2 (r mod 2Q) - r: the Q-scaled universe24 time_reverse for the L0
-            (reference) gears (R-M2): an involution of 0..D-1 that fixes the L0 vacuum 2Q. For b-only inputs,
-            K = 2u divisible by 2Q gives the corresponding time-mirror identity. Termwise u-coefficients
-            divisible by Q are a sufficient certificate, not a necessary one: integer-valued polynomial
-            identities may also supply divisibility. The validator compose(..., q_lattice=...) checks that
-            sufficient condition, not a mirror theorem for old-a couplings. R' fixes the new layers' vacuum
-            3Q-1 (odd Q) but sends 2Q to 4Q-2.
-    ``GearwiseMap(tensor, Q, {gear_name: map_name, ...}, default="id")``; ``uniform(tensor, Q, name)``.
-(b) ``GroupLinearMap(tensor, Q, gears, matrix, r_rule=None, neg_r="M")``: at every node, the (a, b) values of the
+      "rhoL0" (b, a, rho(r)), rho(r) = 4 + 2 (r mod 2) - r: the reference mirror.
+            It fixes the reference vacuum remainder two and coincides with "Mp"
+            on the six legal remainders. For b-only integer inputs it is a reversor;
+            old-history inputs require their own theorem.
+    ``GearwiseMap(tensor, {gear_name: map_name, ...}, default="id")``; ``uniform(tensor, name)``.
+(b) ``GroupLinearMap(tensor, gears, matrix, r_rule=None, neg_r="M")``: at every node, the (a, b) values of the
     listed gear types are replaced by matrix @ (a, b) (the same integer matrix on a and on b). Remainders: target i
     takes ``rmap(r[source])`` from ``r_rule[i] = (source_index, rmap_name)`` with rmap_name in {"id", "M", "Mp"}.
     For a signed permutation matrix r_rule may be omitted: a +1 entry copies r, a -1 entry applies ``neg_r``
@@ -58,12 +55,10 @@ GEAR_MAPS = {            # name: (swap a<->b, negate, remainder map applied AFTE
 }
 
 
-def remainder_map(name: str, r: np.ndarray, D: int) -> np.ndarray:
-    """Exact remainder maps on 0..D-1 (D even). "JR" is (D-1) - R'(r) = r xor 1."""
-    # A seed or reloaded state may store small r as int64 even for an arbitrary
-    # precision divisor. Promote before subtracting or taking a large modulus.
-    if D >= LIMIT:
-        r = _cast(r, OBJ)
+def remainder_map(name: str, r: np.ndarray, D: int = 6) -> np.ndarray:
+    """Exact remainder maps on 0..5. "JR" is 5 - R'(r) = r xor 1."""
+    if type(D) is not int or D != 6:
+        raise ValueError("remainder maps use the fixed divisor six")
     if name == "id":
         return r.copy()
     if name == "M":
@@ -73,8 +68,7 @@ def remainder_map(name: str, r: np.ndarray, D: int) -> np.ndarray:
     if name == "JR":
         return (D - 1) - np.where(r % 2 == 0, (D - 2) - r, D - r)
     if name == "rhoL0":
-        Q = D // 6
-        return 4 * Q + 2 * (r % (2 * Q)) - r
+        return 4 + 2 * (r % 2) - r
     raise ValueError(f"unknown remainder map {name!r}; use one of {R_MAPS}")
 
 
@@ -117,8 +111,8 @@ class FunctionMap(StateMap):
 
 # --------------------------------------------------------------------------------------------- (a) per-gear maps
 class GearwiseMap(StateMap):
-    def __init__(self, tensor: Tensor, Q: int, choices: dict | None = None, default: str = "id"):
-        self.D = 6 * Q
+    def __init__(self, tensor: Tensor, choices: dict | None = None, default: str = "id"):
+        self.D = 6
         self.G = tensor.G
         choices = dict(choices or {})
         per = [default] * tensor.G
@@ -135,7 +129,7 @@ class GearwiseMap(StateMap):
             raise ValueError("state does not match the tensor")
         dtype = OBJ if OBJ in (state.a.dtype, state.b.dtype) else I64     # a and b rows may be swapped
         A0, B0 = _cast(state.a, dtype), _cast(state.b, dtype)
-        r_dtype = OBJ if self.D >= LIMIT or state.r.dtype == OBJ else I64
+        r_dtype = OBJ if state.r.dtype == OBJ else I64
         a, b, r = A0.copy(), B0.copy(), _cast(state.r, r_dtype).copy()
         for g, m in enumerate(self.per):
             swap, neg, rm = GEAR_MAPS[m]
@@ -145,18 +139,18 @@ class GearwiseMap(StateMap):
         return State._raw(state.L, a, b, r)
 
 
-def uniform(tensor: Tensor, Q: int, name: str) -> GearwiseMap:
+def uniform(tensor: Tensor, name: str) -> GearwiseMap:
     """The same per-gear map on every gear type."""
-    gm = GearwiseMap(tensor, Q, default=name)
+    gm = GearwiseMap(tensor, default=name)
     gm.name = name
     return gm
 
 
 # --------------------------------------------------------------------------------------- (b) linear group maps
 class GroupLinearMap(StateMap):
-    def __init__(self, tensor: Tensor, Q: int, gears: Sequence[str], matrix: Sequence[Sequence[int]],
+    def __init__(self, tensor: Tensor, gears: Sequence[str], matrix: Sequence[Sequence[int]],
                  r_rule: Sequence[tuple[int, str]] | None = None, neg_r: str = "M", name: str = "linear"):
-        self.D, self.G, self.name = 6 * Q, tensor.G, name
+        self.D, self.G, self.name = 6, tensor.G, name
         self.idx = [tensor.gear_index(g) for g in gears]
         k = len(self.idx)
         if len(set(self.idx)) != k:
@@ -186,7 +180,7 @@ class GroupLinearMap(StateMap):
         big = max(_maxabs_rows(state.a[rows]) + _maxabs_rows(state.b[rows]) + [0])
         dtype = I64 if (state.a.dtype == I64 and state.b.dtype == I64 and self.rowsum * big < LIMIT
                         and self.rowsum < LIMIT) else OBJ
-        r_dtype = OBJ if self.D >= LIMIT or state.r.dtype == OBJ else I64
+        r_dtype = OBJ if state.r.dtype == OBJ else I64
         a, b, r = _cast(state.a, dtype).copy(), _cast(state.b, dtype).copy(), _cast(state.r, r_dtype).copy()
         A0, B0 = _cast(state.a, dtype), _cast(state.b, dtype)
         for i, gi in enumerate(rows):

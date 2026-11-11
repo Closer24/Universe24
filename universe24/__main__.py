@@ -1,5 +1,5 @@
-"""Run the default ONE system. See --help for reproducible run options."""
-from .demos.one.run_one import main
+"""Run the Universe24 Einstein event board. See --help."""
+from .runtime import main
 
 if __name__ == "__main__":
     main()

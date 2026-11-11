@@ -4,7 +4,7 @@
     k0_identity(E, before, after)   the summed Rule3 identity of the lapse, D (B' + A) = 2 Sum u + R - R' (exact, True/False)
     source_split(E, state, kappa)   S = Sum u(h00) - D B and its hand part kappa H (drive mode), exact ints
     hand_only_response(H, kappa, D) G(t) with G(t+1) = 2 G(t) - G(t-1) + 2 kappa H(t)/D, G(0) = G(-1) = 0 (Fractions)
-    input_difference(E1, E0, state) Engine.inputs of two tensors on ONE state: the clock law's exact footprint
+    input_difference(E1, E0, state) Engine.inputs of two tensors on Universe24 state: the clock law's exact footprint
 """
 from __future__ import annotations
 
@@ -44,6 +44,8 @@ def source_split(engine, state, tensor, kappa: int, lapse: str = LAPSE, hand: st
 
 def hand_only_response(H, kappa: int, D: int) -> list:
     """Exact hand-only lapse sum: the double sum of 2 kappa H / D from rest (Fractions)."""
+    if type(D) is not int or D != 6:
+        raise ValueError('this observer requires the fixed divisor six')
     G = [Fraction(0)]
     prev = Fraction(0)
     for t in range(len(H) - 1):

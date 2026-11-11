@@ -20,7 +20,7 @@ $$
 
 Consequently $J^2=I$. No node reads beyond a face neighbor. The axis is a declared circuit orientation, not full cube-rotation symmetry.
 
-For one common positive integer $Q$, set $D=6Q$ and choose the fixed tensor
+With the fixed divisor $D=6$, choose the tensor
 
 $$
 u(b)=\frac D2\bigl(P(b)+J(b)\bigr).
@@ -29,8 +29,8 @@ $$
 Explicitly, its control input is $u_c=Dc$; its data inputs are
 
 $$
-u_x=3Q[x+c(y-x)+y_{n-e}],\qquad
-u_y=3Q[y+c(x-y)+x_{n+e}].
+u_x=3[x+c(y-x)+y_{n-e}],\qquad
+u_y=3[y+c(x-y)+x_{n+e}].
 $$
 
 These are integer polynomials of degree at most two: tensor rank three, within the rank-at-most-four contract. Every product is on-site; each shifted linear term occupies one edge. Construction uses `strict_support=True`. All factors read old `b`, so the old-`a` dependency graph is trivially acyclic.
@@ -109,7 +109,7 @@ The builder optionally permits 45 identity spectators, bringing the total to 48 
 
 ## Exact evidence and reproduction
 
-[The trace JSON](evidence/involution_clock.json) contains the complete tensor and all three explicit seeds, with $L=6,Q=5$, nonuniform remainders and 24 uninterrupted updates per case. Each case has 48 official records, all C0, and rewinds exactly.
+[The trace JSON](evidence/involution_clock.json) contains the complete tensor and all three explicit seeds, with $L=6$, six-state nonuniform remainders and 24 uninterrupted updates per case. Each case has 48 official records, all C0, and rewinds exactly.
 
 | Seed control | First complete-state period | Checked returns |
 |---|---:|---|
@@ -123,11 +123,11 @@ Replay the committed evidence without a separate circuit simulator:
 import json
 from pathlib import Path
 from universe24.core import Engine, State, Tensor
-from universe24.observe.one import state_hash
+from universe24.observe.reference_model import state_hash
 
 data = json.loads(Path("docs/evidence/involution_clock.json").read_text())
 tensor = Tensor.from_dict(data["tensor"])
-engine = Engine(tensor, data["Q"])
+engine = Engine(tensor)
 for case in data["cases"]:
     seed = State.from_dict(case["seed"])
     state = seed

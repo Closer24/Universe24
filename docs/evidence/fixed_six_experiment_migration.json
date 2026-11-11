@@ -1,0 +1,60 @@
+{
+  "scope": "Migration audit of existing optional experiments; not physics acceptance",
+  "preserved": [
+    {
+      "experiment": "ppwave_palatini_local",
+      "same_numeric_results_and_state_event_hashes": true,
+      "changes": "Removed divisor metadata; new tensor schema/source fingerprints; wording updates only."
+    },
+    {
+      "experiment": "ppwave_geodesic_clock",
+      "same_numeric_results_and_state_event_hashes": true,
+      "changes": "Removed divisor metadata; new tensor schema/source fingerprints; wording updates only."
+    },
+    {
+      "experiment": "reciprocal_metric_candidate",
+      "same_numeric_results_and_state_event_hashes": true,
+      "changes": "Removed divisor metadata; new tensor schema/source fingerprints; wording updates only."
+    },
+    {
+      "experiment": "metric_transport_candidate",
+      "same_numeric_results_and_state_event_hashes": true,
+      "changes": "Removed divisor metadata; new tensor schema/source fingerprints; wording updates only."
+    },
+    {
+      "experiment": "exact_constraint_audit",
+      "same_numeric_results_and_state_event_hashes": true,
+      "changes": "Removed divisor metadata; new tensor schema/source fingerprints; wording updates only."
+    },
+    {
+      "experiment": "retimed_tensor_wave",
+      "same_counter_and_official_histories": true,
+      "same_complete_state": false,
+      "changes": "Fresh fixed-six remainder preparation; three axes instead of duplicated divisor cases."
+    },
+    {
+      "experiment": "linear_spin2",
+      "same_recorded_travelling_and_instability_results": true,
+      "changes": "Fixed-six remainder preparation; bigint exercise now scales amplitude rather than divisor."
+    }
+  ],
+  "changed_counterexample": {
+    "experiment": "palatini_constraint_checks",
+    "divisor": 6,
+    "kappa": 1,
+    "new_constraint": -1,
+    "new_remainder": [
+      2,
+      0
+    ]
+  },
+  "retired": [
+    "conformal_metric_probe",
+    "conformal_nonlinear_clock",
+    "phase_metric_probe",
+    "link_metric_check",
+    "carry_locked_metric",
+    "planar_tt_sector",
+    "metric_obstruction_check"
+  ]
+}

@@ -9,15 +9,10 @@ from ..core.lattice import lattice
 from ..core.tensor import Block, Tensor, vacuum_map
 
 
-def vacuum_state(tensor: Tensor, Q: int, L: int, *blocks: Block, default: int | None = None) -> State:
+def vacuum_state(tensor: Tensor, L: int, *blocks: Block, default: int | None = None) -> State:
     """Every gear at (0, 0, r0) with r0 from the blocks' vacuum data (qualified names); ``default`` for the rest."""
-    if tensor.Q is not None and tensor.Q != Q:
-        raise ValueError(f"ONE divisor: the tensor was built with Q = {tensor.Q}, vacuum_state was given Q = {Q}")
-    for blk in blocks:
-        if blk.Q is not None and blk.Q != Q:
-            raise ValueError(f"ONE divisor: block {blk.name!r} was built with Q = {blk.Q}, not {Q}")
     r0 = vacuum_map(*blocks)
-    D = 6 * Q
+    D = 6
     vals = []
     for name in tensor.names:
         v = r0.get(name, default)
@@ -38,5 +33,7 @@ def with_gears(state: State, tensor: Tensor, values: dict) -> State:
     lat = lattice(state.L)
     for (name, xyz), (va, vb, vr) in values.items():
         g, n = tensor.gear_index(name), lat.index(*xyz)
+        if type(vr) is bool or not isinstance(vr, (int,np.integer)) or not 0 <= vr < 6:
+            raise ValueError("remainder must be an integer from zero through five")
         a[g, n], b[g, n], r[g, n] = va, vb, vr
     return State(state.L, a, b, r)

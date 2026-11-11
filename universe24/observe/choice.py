@@ -37,6 +37,8 @@ def quotient(tensor: Tensor, before: State, after: State, gear: str, nodes=None)
 def click_flags(tensor: Tensor, D: int, before: State, after: State) -> np.ndarray:
     """(G, N) arithmetic-click flags, including audit-labelled gears.
     Use observe.readout.official_clicks for the public label-filtered stream."""
+    if type(D) is not int or D != 6:
+        raise ValueError('this observer requires the fixed divisor six')
     log = extract_clicks(tensor, D, before, after, 1, "official")
     flags = np.zeros((before.G, before.N), dtype=bool)
     flags[np.asarray(log.gear, dtype=np.intp), np.asarray(log.node, dtype=np.intp)] = True
@@ -45,6 +47,8 @@ def click_flags(tensor: Tensor, D: int, before: State, after: State) -> np.ndarr
 
 def official(tensor: Tensor, D: int, before: State, after: State, gear: str, nodes=None) -> np.ndarray:
     """Arithmetic-click flags of the requested gear; no metadata-label filtering."""
+    if type(D) is not int or D != 6:
+        raise ValueError('this observer requires the fixed divisor six')
     log = extract_clicks(tensor, D, before, after, 1, "official")
     g = tensor.gear_index(gear)
     flags = np.zeros(before.N, dtype=bool)
@@ -53,6 +57,8 @@ def official(tensor: Tensor, D: int, before: State, after: State, gear: str, nod
 
 
 def kinds(tensor: Tensor, D: int, before: State, after: State, gear: str, nodes=None) -> np.ndarray:
+    if type(D) is not int or D != 6:
+        raise ValueError('this observer requires the fixed divisor six')
     g = tensor.gear_index(gear)
     delta = (np.asarray(after.r[g], dtype=object) - np.asarray(before.r[g], dtype=object)) % D
     k = handedness_kind(delta, D)

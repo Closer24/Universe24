@@ -53,15 +53,14 @@ def random_potential(seed, names, n_terms=25, max_degree=4):
 class T08Reciprocity(unittest.TestCase):
     def test_T08(self):
         out = {}
-        # (a) reference block, Q = 1 and 7
-        for Q in (1, 7):
-            rep = check_reciprocity(build(reference_block(Q)))
-            out[f"a_reference_Q{Q}"] = (rep.ok, rep.checked)
-            self.assertTrue(rep.ok)
-            self.assertEqual(rep.checked, 288)
+        # (a) fixed-divisor reference block
+        rep = check_reciprocity(build(reference_block()))
+        out["a_reference"] = (rep.ok, rep.checked)
+        self.assertTrue(rep.ok)
+        self.assertEqual(rep.checked, 288)
         # (f) all eight body-sign choices
         for signs in [(sx, sy, sz) for sx in (1, -1) for sy in (1, -1) for sz in (1, -1)]:
-            rep = check_reciprocity(build(reference_block(1, signs)))
+            rep = check_reciprocity(build(reference_block(signs)))
             out[f"f_reference_signs_{signs}"] = rep.ok
             self.assertTrue(rep.ok, signs)
         # (b) symmetric random linear part
@@ -84,7 +83,7 @@ class T08Reciprocity(unittest.TestCase):
                                                  any((f.gear, f.offset) != (m.target, ZERO) for f in m.factors)])
             T2 = Tensor(names, [m for m in T.monomials if m is not victim])
             rep2 = check_reciprocity(T2)
-            out[f"d_delete_one_seed{seed}"] = (rep2.ok, len(rep2.violations), len(rep2.missing_partners))
+            out[f"d_delete_reference_seed{seed}"] = (rep2.ok, len(rep2.violations), len(rep2.missing_partners))
             self.assertFalse(rep2.ok)
             self.assertGreaterEqual(len(rep2.missing_partners), 1)
             # the listed violations are exactly the surviving members of the victim's class
@@ -136,13 +135,13 @@ class T09Compose(unittest.TestCase):
             compose(A, Block((GearType("w"),), (("w", 1, (("A.nope", ZERO, "b"),)),), name="D"))
         with self.assertRaises(ValueError):
             compose(A, Block((GearType("w"),), (), name="A"))
-        ref_ns = compose(build_reference(Q=1, name="ref"))
-        ref_plain = build(reference_block(1))
+        ref_ns = compose(build_reference(name="ref"))
+        ref_plain = build(reference_block())
         self.assertTrue(ref_ns.same_dynamics(ref_plain))
         self.assertEqual(ref_ns.dynamics_fingerprint, ref_plain.dynamics_fingerprint)
         self.assertEqual(ref_ns.names[0], "ref.R00")
         s0 = randgen.random_state(9, 48, 4, 6, -30, 30)
-        e1, e2 = Engine(ref_ns, 1), Engine(ref_plain, 1)
+        e1, e2 = Engine(ref_ns), Engine(ref_plain)
         s1, s2 = s0, s0
         bad = 0
         for _ in range(10):
@@ -152,36 +151,36 @@ class T09Compose(unittest.TestCase):
         record("T0.9", {"names": list(T.names), "reference_namespaced_same_dynamics": True, "run_mismatches": bad})
 
 
-def link_stub(Q, kappa, name="links", pairs=((0, 5), (3, 17), (11, 40))):
+def link_stub(kappa, name="links", pairs=((0, 5), (3, 17), (11, 40))):
     """TEST STUB (not the G9-c design): three Yee link gears W0, W1, W2 per node; potential
-    Phi = kappa*Q * sum_k sum_(h,g) b[W_k](x) b[ref.R_h](x) b[ref.R_g](x + e_k): reciprocal rank-3 hopping."""
+    Phi = kappa * sum_k sum_(h,g) b[W_k](x) b[ref.R_h](x) b[ref.R_g](x + e_k): reciprocal rank-3 hopping."""
     gears = tuple(GearType(f"W{k}", "audit", link=k) for k in range(3))
     pot = []
     for k in range(3):
         e = DIRECTIONS[2 * k]
         for h, g in pairs:
-            pot.append((kappa * Q, [(f"{name}.W{k}", ZERO), (f"ref.R{h:02d}", ZERO), (f"ref.R{g:02d}", e)]))
+            pot.append((kappa, [(f"{name}.W{k}", ZERO), (f"ref.R{h:02d}", ZERO), (f"ref.R{g:02d}", e)]))
     terms = [t for t in gradient_terms(pot) if t[1] != 0]
     local = []
     for target, c, facs in terms:
         local.append((target, c, facs))
-    return Block(gears, tuple(local), name=name, vacuum={f"W{k}": 3 * Q for k in range(3)},
-                 params={"Q": Q, "kappa": kappa}, doc="test stub for the links-frozen hook")
+    return Block(gears, tuple(local), name=name, vacuum={f"W{k}": 3 for k in range(3)},
+                 params={"kappa": kappa}, doc="test stub for the links-frozen hook")
 
 
 class T10LinksFrozen(unittest.TestCase):
     def test_T10(self):
-        Q, L, steps = 7, 4, 30
-        ref = build_reference(Q=Q, name="ref")
+        L, steps = 4, 30
+        ref = build_reference(name="ref")
         rs = ref_random_state(1010, L, -20, 20)
         t_ref = compose(ref)
-        base_state = insert_reference(vacuum_state(t_ref, Q, L, ref), t_ref, rs, Q)
+        base_state = insert_reference(vacuum_state(t_ref, L, ref), t_ref, rs)
         out = {}
         for kappa in (0, 1):
-            stub = link_stub(Q, kappa)
+            stub = link_stub(kappa)
             # the kappa = 1 control is a rank-3 coupling without a spring: its values grow doubly exponentially, so it
             # runs only 2 updates (a difference appears at update 1)
-            res = frozen_equivalence((ref,), (stub,), Q, base_state, steps if kappa == 0 else 2)
+            res = frozen_equivalence((ref,), (stub,), base_state, steps if kappa == 0 else 2)
             rep = check_reciprocity(compose(ref, stub))
             out[f"kappa={kappa}"] = {**res, "reciprocal": rep.ok, "link_gear_links": [0, 1, 2]}
             if kappa == 0:

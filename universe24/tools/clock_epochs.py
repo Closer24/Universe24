@@ -5,7 +5,7 @@ the loop after a complete update; neither changes a value, reseeds an epoch,
 or chooses a branch. Crossings of a declared hand, echoes of selected reader
 b values and exact recurrence of the complete seed are separate diagnostics.
 
-Example: python -m universe24.tools.clock_epochs --steps 1000 --matter-divisor 16
+Example: python -m universe24.tools.clock_epochs --steps 1000 --seed-divisor 16
          --out runs/clock-epochs/report.json
 """
 from __future__ import annotations
@@ -22,7 +22,7 @@ import time
 import numpy as np
 
 from ..core import Engine, State, Tensor
-from ..observe.one import state_hash
+from ..observe.reference_model import state_hash
 from ..observe.readout import official_clicks
 
 
@@ -98,7 +98,7 @@ def _sector_maxima(state, sectors):
 
 def run_epochs(tensor: Tensor, seed: State, *, steps: int,
                hand_indices=(), reader_indices=(), sector_indices=None,
-               Q: int | None = None, max_counter_bits: int = 256,
+               max_counter_bits: int = 256,
                max_seconds: float | None = None, sample_every: int = 100,
                echo_threshold=(1, 20), record_symbols: bool = False) -> dict:
     """Run a fixed tensor from an explicit seed and return a compact JSON report.
@@ -137,9 +137,7 @@ def run_epochs(tensor: Tensor, seed: State, *, steps: int,
             or any(type(v) is not int or v < 1 for v in echo_threshold)):
         raise ValueError("echo_threshold must be a positive integer numerator/denominator pair")
     threshold = Fraction(*echo_threshold)
-    source_Q = tensor.Q if Q is None else Q
-    _positive_integer(source_Q, "Q")
-    engine = Engine(tensor, source_Q)
+    engine = Engine(tensor)
     # Validate remainder domain and gear count before making a run snapshot.
     if seed.G != tensor.G or int(seed.r.min()) < 0 or int(seed.r.max()) >= engine.D:
         raise ValueError("seed gear count or remainder domain does not match the tensor/divisor")
@@ -268,7 +266,7 @@ def run_epochs(tensor: Tensor, seed: State, *, steps: int,
     result = dict(
         schema="universe24-clock-epochs-v1", model_status="diagnostic; no derived physics claim",
         law=dict(tensor_fingerprint=tensor.fingerprint,
-                 dynamics_fingerprint=tensor.dynamics_fingerprint, Q=source_Q, D=engine.D,
+                 dynamics_fingerprint=tensor.dynamics_fingerprint, D=6,
                  G=tensor.G, rank=tensor.rank, monomials=len(tensor.monomials)),
         initial_state=dict(L=initial.L, hash=initial_hash, hash_format="universe24-state-values-v2"),
         parameters=dict(steps=steps, max_counter_bits=max_counter_bits, max_seconds=max_seconds,
@@ -311,34 +309,34 @@ def run_epochs(tensor: Tensor, seed: State, *, steps: int,
     return result
 
 
-def prepare_baseline(*, L=3, rng_seed=13, seed_kind="jpure", matter_divisor=1):
+def prepare_baseline(*, L=3, rng_seed=13, seed_kind="pulse", seed_divisor=1):
     """Construct the unchanged default law and an explicitly declared initial seed.
 
-    The optional divisor truncates only initial matter.* a,b towards zero;
-    all remainders, cosmic data and tensor coefficients are left unchanged.
+    The optional divisor truncates only initial reference a,b towards zero;
+    all remainders and tensor coefficients are left unchanged.
     This happens before the first update and is a seed control, not dynamics.
     """
-    _positive_integer(matter_divisor, "matter_divisor")
+    _positive_integer(seed_divisor, "seed_divisor")
     from ..core.tensor import compose
-    from ..layers.one import one_system
-    from ..prepare.one import one_seed
+    from ..layers.reference_model import reference_system
+    from ..prepare.reference_model import reference_seed
 
-    system = one_system()
+    system = reference_system()
     tensor = compose(*system.blocks)
-    seed, preparation = one_seed(system, tensor, L, bang=seed_kind, rng_seed=rng_seed)
+    seed, preparation = reference_seed(system, tensor, L, bang=seed_kind, rng_seed=rng_seed)
     source_hash = state_hash(seed, np.arange(tensor.G))
-    rows = [g for g, name in enumerate(tensor.names) if name.startswith("matter.")]
-    if matter_divisor != 1:
+    rows = list(range(tensor.G))
+    if seed_divisor != 1:
         seed = seed.copy()
         for field in ("a", "b"):
             array = getattr(seed, field)
             for g in rows:
-                array[g] = [int(value) // matter_divisor if value >= 0
-                            else -((-int(value)) // matter_divisor) for value in array[g]]
-    return tensor, seed, dict(builder="one_system() default, no additional coupling", L=L,
+                array[g] = [int(value) // seed_divisor if value >= 0
+                            else -((-int(value)) // seed_divisor) for value in array[g]]
+    return tensor, seed, dict(builder="reference_system() default, no additional coupling", L=L,
                               rng_seed=rng_seed, seed_kind=seed_kind,
-                              matter_divisor=matter_divisor, scaled_gear_indices=rows,
-                              scaling="initial matter.* a,b truncated towards zero; r unchanged",
+                              seed_divisor=seed_divisor, scaled_gear_indices=rows,
+                              scaling="initial reference a,b truncated towards zero; r unchanged",
                               source_seed_hash=source_hash, seed_report=preparation)
 
 
@@ -347,8 +345,8 @@ def main(argv=None):
     parser.add_argument("--L", type=int, default=3)
     parser.add_argument("--steps", type=int, default=1000)
     parser.add_argument("--rng", type=int, default=13)
-    parser.add_argument("--seed-kind", choices=("jpure", "s2star", "none"), default="jpure")
-    parser.add_argument("--matter-divisor", type=int, default=1)
+    parser.add_argument("--seed-kind", choices=("pulse", "standing", "none"), default="pulse")
+    parser.add_argument("--seed-divisor", type=int, default=1)
     parser.add_argument("--max-counter-bits", type=int, default=256)
     parser.add_argument("--max-seconds", type=float)
     parser.add_argument("--sample-every", type=int, default=100)
@@ -357,10 +355,10 @@ def main(argv=None):
     args = parser.parse_args(argv)
     tensor, seed, preparation = prepare_baseline(L=args.L, rng_seed=args.rng,
                                                  seed_kind=args.seed_kind,
-                                                 matter_divisor=args.matter_divisor)
+                                                 seed_divisor=args.seed_divisor)
     result = run_epochs(tensor, seed, steps=args.steps,
-                        hand_indices=[tensor.gear_index("cosmic.Th")],
-                        reader_indices=[tensor.gear_index("cosmic.M1"), tensor.gear_index("cosmic.M2")],
+                        hand_indices=[0],
+                        reader_indices=list(range(tensor.G)),
                         max_counter_bits=args.max_counter_bits, max_seconds=args.max_seconds,
                         sample_every=args.sample_every, record_symbols=args.record_symbols)
     result["preparation"] = json.loads(json.dumps(preparation))

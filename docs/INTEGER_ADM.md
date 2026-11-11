@@ -1,29 +1,31 @@
 # Full nonlinear Einstein evolution compiled into integer Rule3
 
-This optional construction implements the general 3+1 Einstein evolution
-equations, a real Klein–Gordon field, optional cold pressureless dark matter,
+The default Universe24 construction implements the general 3+1 Einstein evolution
+equations, a real or complex Klein–Gordon field, cold pressureless dark matter,
 and all four Einstein constraints. No homogeneity, diagonal-metric or weak-field
 expansion is imposed on the equations. The tests use regular, modest fields.
 Lapse and shift specify the coordinate gauge. Every numerical update runs
-through the unchanged integer Engine: the RHS is not injected by an observer.
+through the current fixed-six integer Engine: the RHS is not injected by an observer.
 
 The correspondence is **equation by equation after discretization**. The
 finite mesh is not exactly the continuous Einstein spacetime. Constraints have
 measured truncation error; they are not projected to zero during a run. This
-is a new, optional tensor, not an emergent-GR claim about default ONE or its
-previous raw-click interpretation. All earlier experiments remain available.
+is the default event-board tensor. Its equation mapping is implemented explicitly,
+not inferred from a previous raw-click interpretation. Historical component
+experiments remain separately reproducible.
 
 ## Run the entire pipeline
 
-Requires Python, NumPy, and the optional validation dependency SymPy:
+Requires Python, NumPy and SymPy (installed by the package):
 
 ```bash
-python -m pip install '.[validation]'
-python experiments/geometry/adm_integer.py --case dark --steps 2 --dt 1/128 --out runs/geometry/adm/dark
+python -m pip install .
+python -m universe24 --steps 1 --out runs/universe24
 python -m unittest universe24.tests.test_adm_integer -v
 ```
 
-`--case dark` automatically prepares inhomogeneous scalar and dark-density
+The default `--case universe` includes opposite scalar charges and dark matter.
+`--case dark` retains the real-scalar benchmark and automatically prepares inhomogeneous scalar and dark-density
 profiles, solves the initial discrete Hamiltonian constraint, quantizes the
 seed, builds one fixed integer tensor, runs the declared horizon and verifies
 complete reversal. It exports physical fields, the metric, stress, lengths,
@@ -47,8 +49,9 @@ Use signature (-,+,+,+), c=kappa=1 and kappa=8*pi*G/c^4. Define
 
 `g00,g01,...,g22` are the six **spatial** metric components; report keys
 `metric.00,...,metric.33` are the four-dimensional spacetime metric. There are
-18 physical/gauge fields: gamma(6), K(6), alpha, phi, Pi, beta(3), or 19 when
-the dark rest density is enabled. Arithmetic workspace is additional.
+18 fields in the real-scalar control: gamma(6), K(6), alpha, phi, Pi, beta(3).
+The default adds chi, Pi_chi and rho_dark, for 21 physical/gauge fields.
+Arithmetic workspace is additional.
 
 | Einstein or matter equation | Code operation |
 | --- | --- |
@@ -93,6 +96,29 @@ from the scalar gradient, metric and dark fluid; T is never defined as G.
 The matter changes K, K changes the metric, and the metric/lapse/curvature feed
 back into matter. Tests isolate both directions of that response.
 
+## Complex matter and antimatter charge
+
+The default replaces the real field by Phi=(phi+i chi)/sqrt(2), with equal
+mass for both real components. Each component obeys the displayed scalar
+equations. Sum their kinetic, gradient and potential terms in rho, j, S and T.
+The K source is the sum of both gradient products plus
+(V_total+rho_d/2) gamma_ij. Charge conjugation flips (chi,Pi_chi), leaves
+T_mu_nu and Einstein evolution invariant, and reverses the Noether current.
+
+    q = phi Pi_chi - chi Pi,
+    J_spatial^i = gamma^ij (chi partial_j phi - phi partial_j chi),
+    J^0 = q/alpha,  J^i = J_spatial^i - beta^i q/alpha.
+
+The continuum balance is
+
+    (partial_t-beta^i partial_i) q = alpha K q
+        - alpha D_i J_spatial^i - J_spatial^i partial_i alpha.
+
+Both sides are computed independently for a spatial product-rule defect;
+volume-weighted total charge is reported as a numerical diagnostic. Charge
+is not a count of quantum particles. No electromagnetic or annihilation
+interaction is claimed. See [UNIVERSE24_EVENTS.md](UNIVERSE24_EVENTS.md).
+
 ## Dark matter gravitates
 
 Within GR, dark matter contributes to the same stress-energy source as other
@@ -128,7 +154,7 @@ Each arithmetic output z starts with a_z=b_z=0. Once its parents are stable,
 its retained clock c takes values +1,-1 on two consecutive updates. Its fixed
 input is
 
-    u_z = D*b_z + (D/2)*c*F(parents),    D=6, Q=1.
+    u_z = D*b_z + (D/2)*c*F(parents),    D=6.
 
 Rule3 gives `z_next=2*z-z_previous+c*F`, with unchanged remainder. The two
 updates take (a,b) from (0,0) to (0,F) to (F,F); z then remains stationary
@@ -172,9 +198,10 @@ drawn surface, imposed time-varying metric or fitted expansion is substituted.
 These finite edge lengths are discretized geometric measurements, not exact
 finite geodesic distances in a smooth curved manifold. Raw arithmetic
 microtick clicks are not asserted to be all continuum spacetime events. The
-explicit numerical event chart is the implemented mapping. Default ONE's
-other event/particle sectors have not been automatically coupled to this
-new tensor or operationally calibrated to it.
+explicit numerical event chart is the implemented mapping. The default event board connects physical snapshots to their retained integer
+registers and exports their actual official clicks. Historical particle/gauge
+research constructions are not added as uncoupled physical sources. See
+[the event and complex-matter convention](UNIVERSE24_EVENTS.md).
 
 ## Discretization, constraints and finite horizon
 
@@ -242,10 +269,10 @@ than hiding it behind exact arithmetic.
 
 One generic scalar Euler step uses 4,171 gears and 9,596 monomials over 98
 Engine ticks. The dark option's geodesic gauge uses 4,061 gears and 9,392
-monomials over 96 ticks. These are arithmetic registers per node, not thousands
-of new physical fields. Arbitrary-precision paths are exercised. The earlier
-50 checks and 16 ADM/compiler/dark-matter checks pass; no core/default change
-is involved.
+monomials over 96 ticks. These benchmark counts precede the complex-matter promotion. They are arithmetic registers per node, not thousands
+of new physical fields. Arbitrary-precision paths are exercised. The earlier real-scalar controls predate the current fixed-six integration.
+Current checks are recorded in docs/evidence/universe24_integration.json.
+The current main Engine is preserved unchanged.
 The completed two-step inhomogeneous dark run uses 9,727 gears, 21,372
 monomials and 164 Engine microticks; full reversal passes. Retained workspace
 integers reach 97,980 bits and the lossless trace is about 157 MB, illustrating
@@ -273,4 +300,4 @@ the current cost of exact unreduced arithmetic and a retained history.
 
 The integer compiler is this repository's construction. No cited source is
 claimed to have supplied this Rule3 encoding or established its unlimited
-stability or physical equivalence to the default event model.
+stability or physical equivalence to a quantum particle model.

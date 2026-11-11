@@ -1,4 +1,4 @@
-"""Core of Universe24 ONE: geometry, the ONE tensor, the generic Rule3 gear engine."""
+"""Core of Universe24: geometry, the fixed tensor and generic Rule3 gear engine."""
 from .lattice import DIRECTIONS, OFFSETS, Lattice, lattice
 from .tensor import (AcyclicityError, Block, Factor, GearType, LocalityError, Monomial, Tensor, TensorBuilder, build,
                      check_locality, compose, inverse_stages, reference_block, reference_names, vacuum_map)

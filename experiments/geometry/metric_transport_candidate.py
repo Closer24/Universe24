@@ -1,6 +1,6 @@
 """Optional integer, reciprocal node-flux transport; not Einstein dynamics.
 
-The ordinary scalar Rule3 executes one fixed tensor at Q=1. Local auxiliary
+The ordinary scalar Rule3 executes one fixed tensor at divisor six. Local auxiliary
 fluxes permit H_xy*j_x*j_y without a three-site gradient product. The same
 flat four-field transport block is repeated for matter and metric components.
 All construction coefficients and initial data are integers. Fourier formulae
@@ -48,10 +48,10 @@ def differentiate_integer_potential(potential, signs):
     return terms
 
 
-def build(Q=1, g=1, coupling=1):
+def build(g=1, coupling=1):
     """u_f=D*f+g*div(j); u_j=-D*j+g*grad(f), plus local Hjj."""
-    assert all(type(v) is int for v in (Q, g, coupling)) and Q > 0
-    D = 6 * Q
+    assert all(type(v) is int for v in (g, coupling))
+    D = 6
     gears, signs, potential = [], {}, []
     for species in SPECIES:
         for slot in SLOTS:
@@ -72,7 +72,7 @@ def build(Q=1, g=1, coupling=1):
                                             (f"{matter}.j{i}", ZERO),
                                             (f"{matter}.j{j}", ZERO))))
     return Tensor(gears, differentiate_integer_potential(potential, signs),
-                  Q=Q, strict_support=True)
+                  strict_support=True)
 
 
 def blank(tensor, L=5, remainder=2):
@@ -122,7 +122,7 @@ def law_audit(tensor):
     rejected = False
     try:
         Tensor(("H", "chi"), [("H", 1, (("chi", AXES[0], "b"),
-                                           ("chi", AXES[1], "b")))], strict_support=True, Q=1)
+                                           ("chi", AXES[1], "b")))], strict_support=True)
     except LocalityError:
         rejected = True
     assert rejected
@@ -139,7 +139,7 @@ def law_audit(tensor):
                 block.append((ids.index(m.target), m.coeff, ids.index(factor.gear), factor.offset))
         blocks.append(sorted(block))
     assert all(block == blocks[0] for block in blocks)
-    return dict(Q=tensor.Q, D=6*tensor.Q, gears=tensor.G, monomials=len(tensor.monomials),
+    return dict(D=6, gears=tensor.G, monomials=len(tensor.monomials),
                 rank=tensor.rank, max_input_degree=tensor.rank-1, fingerprint=tensor.fingerprint,
                 strict_physical_support=True, support_violations=0, reciprocal=True,
                 one_way_designations=0, negative_auxiliary_signs=len(report.negative_sign_gears),
@@ -153,7 +153,7 @@ def exact_input_and_backreaction(tensor):
     xyz = coordinates(L)
     impulse = np.asarray([int(all(v == 0 for v in row)) for row in xyz], dtype=object)
     seed = replace_seed(tensor, {"matter.A.j0": 3*impulse, "matter.A.j1": 6*impulse})
-    engine = Engine(tensor, 1)
+    engine = Engine(tensor)
     base = blank(tensor, L)
     initial_u = engine.inputs(seed)
     gi = tensor.gear_index
@@ -217,7 +217,7 @@ def independent_integer_oracle(tensor):
                 for j in range(3):
                     h = gi(f"H{min(i,j)}{max(i,j)}.f")
                     expected[js[i]] -= 2*state.b[h]*state.b[js[j]]
-        engine = Engine(tensor,1)
+        engine = Engine(tensor)
         assert np.array_equal(engine.inputs(state),expected)
         result = engine.step(state)
         for gear in range(state.G):
@@ -249,7 +249,7 @@ def scenario_seed(tensor, mode, background, L=5, amplitude=6):
 
 def history_case(tensor, mode, background, steps):
     seed = scenario_seed(tensor, mode, background)
-    engine = Engine(tensor, 1)
+    engine = Engine(tensor)
     state = seed
     history = [state]
     gi = tensor.gear_index
@@ -314,7 +314,7 @@ def locality_prefix(tensor, steps=3):
     zero = blank(tensor,L)
     perturbed = zero.copy()
     perturbed.b[tensor.gear_index("matter.A.f"), 0] = 9
-    e = Engine(tensor,1)
+    e = Engine(tensor)
     left, right = zero, perturbed
     distances = [sum(min(v,L-v) for v in left.lattice.coords(n)) for n in range(left.N)]
     records = []
@@ -333,7 +333,7 @@ def jordan_control(tensor, steps=12):
     # Metric auxiliary transverse uniform mode has no matter source and u=-D*j.
     gear = tensor.gear_index("H22.j0")
     seed.a[gear] = 1
-    engine = Engine(tensor,1)
+    engine = Engine(tensor)
     state = seed
     for t in range(1,steps+1):
         state = engine.step(state)
@@ -362,7 +362,7 @@ def main():
                   locality=locality_prefix(tensor),off_preparation_control=jordan_control(tensor),
                   algebra=dict(
                     integer_potential="Phi0=sum_s [D/2*(f_s^2+sum_i j_si^2)+g*f_s*sum_i delta_i j_si]; Phi_int=kappa*sum_matter [sum_i Hii*ji^2+2*sum_i<j Hij*ji*jj]",
-                    constants=dict(Q=1,D=6,g=1,kappa=1),
+                    constants=dict(D=6,g=1,kappa=1),
                     fixed_input="u_f=D*f+g*div(j)+metric_source; u_ji=-D*ji+g*delta_i(f)-2*kappa*sum_j Hij*jj for matter",
                     update="ell,r_next=divmod(2*u+r,D); a_next=b; b_next=ell-a",
                     passive_flat_symbol="longitudinal lambda^2=D^2-4*g^2*sum_i sin(k_i)^2; cos(omega)=lambda/D; transverse lambda=-D",
@@ -370,9 +370,9 @@ def main():
                     passive_frozen_metric_relation="cos(omega)-1=-(g^2/D)*v^T*[D*(cos(omega)+1)*I+2*kappa*H]^-1*v, v_i=2*sin(k_i)",
                     passive_low_frequency_contravariant_spatial_coefficient="inverse(I+(kappa/D)*H), relative to c0^2=(2*g/D)^2",
                     passive_low_frequency_covariant_spatial_candidate="I+(kappa/D)*H, conditional on unit lapse, zero shift and a separate physical time calibration; no measured spacetime metric is established",
-                    passive_frozen_background_instability="For a spatially uniform matter flux along a positive eigenvalue h of fixed H, lambda=-D-2*kappa*h<-D when kappa*h>0. The carry-suppressed linear recurrence has a root outside the unit circle; at Q=1,kappa=h=1, z+z^-1=-8/3. This is a passive frozen-coefficient instability, not an extra runtime with frozen fields.",
+                    passive_frozen_background_instability="For a spatially uniform matter flux along a positive eigenvalue h of fixed H, lambda=-D-2*kappa*h<-D when kappa*h>0. The carry-suppressed linear recurrence has a root outside the unit circle; at divisor six,kappa=h=1, z+z^-1=-8/3. This is a passive frozen-coefficient instability, not an extra runtime with frozen fields.",
                     auxiliary_warning="The j_i are independent node fields. No instantaneous gradient/constitutive graph or its exact preservation is asserted.",
-                    fourier_warning="These symbols linearize the polynomial input and suppress carries. Real Q=1 Engine runs include remainder changes; equal flat blocks alone do not prove measured universal propagation."),
+                    fourier_warning="These symbols linearize the polynomial input and suppress carries. Fixed-six Engine runs include remainder changes; equal flat blocks alone do not prove measured universal propagation."),
                   limitations=[
                     "Flux signs are negative in signed reciprocity; an all-positive-potential realization is not supplied.",
                     "Equality of the complete linear transport blocks holds only at H=0. Hjj modifies matter fluxes only, so geometric components do not share the matter frozen-H characteristics on nonzero metric backgrounds.",

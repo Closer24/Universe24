@@ -11,7 +11,7 @@ import json
 from pathlib import Path
 
 from ..core.tensor import build
-from ..layers.one import one_system
+from ..layers.reference_model import reference_system
 from .physics_gate import reachable_gears
 
 
@@ -67,7 +67,7 @@ def inventory(tensor):
     gear_components = components(range(tensor.G),edges)
     return dict(schema='universe24-system-inventory-v1',
         dynamics_fingerprint=tensor.dynamics_fingerprint,tensor_fingerprint=tensor.fingerprint,
-        Q=tensor.Q,D=None if tensor.Q is None else 6*tensor.Q,
+        D=6,
         gear_types=tensor.G,retained_integer_counters_per_node=2*tensor.G,
         retained_remainders_per_node=tensor.G,rank=tensor.rank,
         monomials=len(tensor.monomials),designations=len(tensor.designations),
@@ -86,14 +86,25 @@ def inventory(tensor):
             namespace_grouping='Reporting convenience only; gear components can be finer than namespace groups.'))
 
 
-def default_inventory():
-    system = one_system()
+def reference_inventory():
+    system = reference_system()
     result = inventory(build(*system.blocks))
     # Raw terms may cancel or merge on composition. Do not sum these to obtain
     # the live monomial census or pretend each survives independently.
     result['builder_blocks'] = [dict(name=b.name,declared_gear_types=len(b.gears),
                                      raw_terms=len(b.terms),description=b.doc)
                                 for b in system.blocks]
+    return result
+
+
+def default_inventory():
+    from ..layers.adm import compile_adm
+    program, parameters = compile_adm(complex_matter=True, dark_matter=True)
+    result = inventory(program.tensor)
+    result['physical_model'] = 'Einstein + complex Klein-Gordon + geodesic dark dust'
+    result['physical_fields'] = parameters['fields']
+    result['physical_steps'] = parameters['steps']
+    result['engine_microticks'] = program.ticks
     return result
 
 

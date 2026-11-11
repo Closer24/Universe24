@@ -1,2 +1,2 @@
-"""Universe24 ONE: one exact Rule3 engine, one fixed polynomial tensor and one complete seed."""
-__version__ = "0.2.0"
+"""Universe24: fixed-six integer Einstein evolution on an event board."""
+__version__ = "0.4.0"

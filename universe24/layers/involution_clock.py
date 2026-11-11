@@ -11,7 +11,7 @@ involution P and nearest-neighbour wire involution J are
 P is an involution for c in {0,1}; J is an involution without a restriction on
 data. Both preserve Boolean arrays and the number of data bits. Set
 
-    u = (D/2)*(P(b)+J(b)), D=6Q, a_0=P(b_0), 0<=r_0<D.
+    u = (D/2)*(P(b)+J(b)), D=6, a_0=P(b_0), 0<=r_0<D.
 
 The ONLY runtime operation remains Rule3. Since 2u is divisible by D, the
 quotient is P(b)+J(b) and the remainder is unchanged. On a=P(b) the next b is
@@ -37,24 +37,13 @@ All remainders remain fixed, hence every official click has class C0. Clicks
 also record the two-time memory change, not just occupation of a moving bit.
 This construction therefore does not require or derive C2 selection/collapse.
 The control-dependent Fredkin terms are nonreciprocal and explicitly designated;
-no Hamiltonian, energy, synchronization, gravity or quantum claim is made.
-"""
+no Hamiltonian, energy, synchronization, gravity or quantum claim is made."""
 from __future__ import annotations
-
 from ..core.lattice import DIRECTIONS, ZERO
 from ..core.tensor import GearType, Tensor
+CONTROL_WHY = 'Optional Boolean Fredkin circuit: a retained control selects a local swap. Its own value is unchanged, so the control-dependent terms are deliberately nonreciprocal, not derivatives of a shared physical potential. The exact involution proof applies to the prepared binary-control sector.'
 
-
-CONTROL_WHY = (
-    "Optional Boolean Fredkin circuit: a retained control selects a local swap. "
-    "Its own value is unchanged, so the control-dependent terms are deliberately "
-    "nonreciprocal, not derivatives of a shared physical potential. "
-    "The exact involution proof applies to the prepared binary-control sector."
-)
-
-
-def build_involution_clock(*, Q: int = 1, axis: int = 0,
-                           namespace: str = "involution", spectators: int = 0) -> Tensor:
+def build_involution_clock(*, axis: int=0, namespace: str='involution', spectators: int=0) -> Tensor:
     """Build fixed polynomial data for the three-channel Fredkin/wire circuit.
 
     The channel order is control,left,right followed by explicit static
@@ -71,37 +60,24 @@ def build_involution_clock(*, Q: int = 1, axis: int = 0,
     exchanged exactly at nodes whose control is one. No seed preparation or
     forward evolution is performed by this layer builder.
     """
-    if type(Q) is not int or Q < 1:
-        raise ValueError("Q must be a positive Python int")
     if type(axis) is not int or not 0 <= axis < 3:
-        raise ValueError("axis must be 0, 1 or 2")
+        raise ValueError('axis must be 0, 1 or 2')
     if type(namespace) is not str or not namespace.isidentifier():
-        raise ValueError("namespace must be a nonempty identifier")
+        raise ValueError('namespace must be a nonempty identifier')
     if type(spectators) is not int or spectators < 0:
-        raise ValueError("spectators must be a non-negative Python int")
-    c, left, right = (f"{namespace}.{name}" for name in ("control", "left", "right"))
-    gears = [GearType(c, label="audit"), GearType(left), GearType(right)]
-    half_D = 3 * Q
+        raise ValueError('spectators must be a non-negative Python int')
+    c, left, right = (f'{namespace}.{name}' for name in ('control', 'left', 'right'))
+    gears = [GearType(c, label='audit'), GearType(left), GearType(right)]
+    half_D = 3
     e = DIRECTIONS[2 * axis]
-    minus_e = tuple(-component for component in e)
-    f = lambda gear, offset=ZERO: (gear, offset, "b")
-    terms = [
-        (c, 2 * half_D, (f(c),)),
-        (left, half_D, (f(left),)),
-        (left, half_D, (f(right, minus_e),)),
-        (right, half_D, (f(right),)),
-        (right, half_D, (f(left, e),)),
-    ]
+    minus_e = tuple((-component for component in e))
+    f = lambda gear, offset=ZERO: (gear, offset, 'b')
+    terms = [(c, 2 * half_D, (f(c),)), (left, half_D, (f(left),)), (left, half_D, (f(right, minus_e),)), (right, half_D, (f(right),)), (right, half_D, (f(left, e),))]
     for target, other in ((left, right), (right, left)):
-        terms.extend([
-            (target, half_D, (f(c), f(other)), {"designated_one_way": CONTROL_WHY}),
-            (target, -half_D, (f(c), f(target)), {"designated_one_way": CONTROL_WHY}),
-        ])
+        terms.extend([(target, half_D, (f(c), f(other)), {'designated_one_way': CONTROL_WHY}), (target, -half_D, (f(c), f(target)), {'designated_one_way': CONTROL_WHY})])
     for j in range(spectators):
-        name = f"{namespace}.spectator{j:03d}"
-        gears.append(GearType(name, label="audit"))
+        name = f'{namespace}.spectator{j:03d}'
+        gears.append(GearType(name, label='audit'))
         terms.append((name, 2 * half_D, (f(name),)))
-    return Tensor(gears, terms, Q=Q, strict_support=True)
-
-
-__all__ = ["build_involution_clock"]
+    return Tensor(gears, terms, strict_support=True)
+__all__ = ['build_involution_clock']

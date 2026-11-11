@@ -38,8 +38,7 @@ def wire_swap(values, L, axis):
 def prepared_seed(tensor, *, L=3, rng_seed=5):
     rng = np.random.default_rng(rng_seed)
     b = rng.integers(0, 2, size=(tensor.G, L ** 3))
-    # The large-Q test includes remainders too big for the int64 path.
-    D = 6 * tensor.Q
+    D = 6
     r = np.array([[int((g + 1) * (node + 3)) % D for node in range(L ** 3)]
                   for g in range(tensor.G)], dtype=object)
     r[0, 0] = D - 1
@@ -54,10 +53,10 @@ class InvolutionClockTests(unittest.TestCase):
         self.assertEqual(sorted(map(tuple, local_swap(values).T)), sorted(map(tuple, values.T)))
 
     def test_many_ticks_match_independent_alternating_oracle(self):
-        for Q, axis, spectators in ((1, 0, 0), (17, 1, 0), (2 ** 80 + 1, 2, 45)):
-            with self.subTest(Q=Q, axis=axis, spectators=spectators):
-                tensor = build_involution_clock(Q=Q, axis=axis, spectators=spectators)
-                engine = Engine(tensor, Q)
+        for axis, spectators in ((0, 0), (1, 0), (2, 45)):
+            with self.subTest(axis=axis, spectators=spectators):
+                tensor = build_involution_clock(axis=axis, spectators=spectators)
+                engine = Engine(tensor)
                 seed = prepared_seed(tensor)
                 state, expected_b = seed, seed.b.copy()
                 data_count = int(seed.b[1:3].sum())
@@ -97,8 +96,8 @@ class InvolutionClockTests(unittest.TestCase):
                 self.assertTrue(engine.rewind(state, 120).same_as(seed))
 
     def test_single_pulse_propagates_and_control_seed_reflects_it(self):
-        tensor = build_involution_clock(Q=5)
-        engine = Engine(tensor, 5)
+        tensor = build_involution_clock()
+        engine = Engine(tensor)
         L, N = 5, 125
         b = np.zeros((3, N), dtype=np.int64)
         b[0] = 1
@@ -130,7 +129,7 @@ class InvolutionClockTests(unittest.TestCase):
         b = np.zeros((3, 27), dtype=np.int64)
         b[2, 0] = 1
         seed = State(3, b.copy(), b, np.zeros_like(b))  # P=identity for c=0
-        engine = Engine(tensor, 1)
+        engine = Engine(tensor)
         state = seed
         for tick in range(1, 5):
             state = engine.step(state)
@@ -149,12 +148,12 @@ class InvolutionClockTests(unittest.TestCase):
         designated = check_reciprocity(tensor)
         self.assertTrue(designated.ok)  # exceptions declared, not a reciprocal full map
         self.assertEqual(len(designated.designated), 4)
-        stripped = Tensor(tensor.gears, tensor.monomials, Q=tensor.Q)
+        stripped = Tensor(tensor.gears, tensor.monomials)
         self.assertFalse(check_reciprocity(stripped).ok)
 
     def test_invalid_initial_phase_or_control_is_outside_the_theorem(self):
         tensor = build_involution_clock()
-        engine = Engine(tensor, 1)
+        engine = Engine(tensor)
         seed = prepared_seed(tensor)
         wrong_phase = seed.copy()
         wrong_phase.a[1, 0] += 7
@@ -169,7 +168,7 @@ class InvolutionClockTests(unittest.TestCase):
         self.assertGreater(engine.step(arbitrary).max_abs(), 1)
 
     def test_builder_parameter_validation(self):
-        for keyword, value in (("Q", 0), ("Q", True), ("Q", 1.5), ("axis", 3),
+        for keyword, value in (("axis", 3),
                                ("axis", True), ("spectators", -1), ("spectators", True),
                                ("namespace", ""), ("namespace", "not.a.namespace")):
             with self.subTest(keyword=keyword, value=value), self.assertRaises(ValueError):

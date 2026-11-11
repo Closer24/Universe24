@@ -20,6 +20,8 @@ update. It checks the algebra below; it does not execute a gravity model.
 The underlying identities are proved here rather than inferred from those
 finite checks. No default law or engine changes are made.
 
+In every Rule3 recurrence below, `D` denotes the fixed constant six.
+
 ## 1. What a discrete Bianchi identity requires
 
 Let `d_mu` be mutually commuting differences, let
@@ -126,7 +128,7 @@ complementary, and equal field pairs do so with equal remainders. Applying
 this to the planar metric pairs and the two transverse checkerboard signs
 extends the invariant-sector proof to the matching carrying preparation.
 The separate [reciprocal candidate runner](../experiments/geometry/reciprocal_metric_candidate.py)
-checks this at Q=1, kappa=1 for five Engine updates, including the independent
+checks this at divisor six, kappa=1 for five Engine updates, including the independent
 polynomial-input oracle, exact divmod ledger, one-step inverse and full
 rewind. Its raw TT residuals stay zero, while the free phase/metric-shift
 identities fail at update one and counters exceed 300 bits by update five.
@@ -223,31 +225,27 @@ density contrast after a background has been specified; it is not a proof
 that total positive matter gravitates. A runtime mean subtraction would
 also violate the stated local fixed-law requirements.
 
-## 5. What Q does and does not solve
+## 5. What the fixed scalar arithmetic permits
 
-For any positive integer Q, D=6Q. If K is an allowed integer polynomial,
-choose `u=3Q K`. Then for every allowed `0<=r<D`,
+For an allowed integer polynomial K, choose `u=3K`. With the fixed divisor
+six, every legal remainder obeys
 
 ```
-divmod(2u+r,D)=(K,r),
+divmod(2u+r,6)=(K,r),
 a'=b, b'=K-a.
 ```
 
-Consequently Q=1 already permits exact, reciprocal polynomial sectors with
-fixed remainders, including the existing curl and retiming constructions.
-Large Q is not a prerequisite for exact reversibility or an invariant
-linear constraint. For a specified rational direct input, Q may be needed
-to make the tensor coefficients integral. For example the ordinary scalar
-stencil with long-wave speed 1/2 requires `w=D/8=3Q/4`, so that particular
-one-register stencil requires Q divisible by four. A different retimed or
-multi-register encoding can change that arithmetic requirement.
+Thus exact polynomial sectors with fixed remainders, including the curl and
+retiming examples, need no adjustable normalization parameter. A desired
+fractional direct coefficient is not automatically an admissible tensor entry.
+For example, the ordinary scalar stencil with long-wave speed one half
+would require `w=6/8=3/4`; that one-register stencil is unavailable with integer
+coefficients. An alternative multi-register encoding needs its own proof.
 
-Scaling every coefficient and D together does not change their ratios,
-the frozen spectral margin, the Bianchi identity, the torus mean-source
-condition, or the need to prove constraint propagation. Integer state does
-not become physical GR by increasing Q. At Q=1 with generic integer inputs,
-carries still exist because `ell=floor((2u+r)/6)`; they cannot be discarded
-unless divisibility or an explicit retained-ledger identity establishes it.
+The fixed divisor does not solve the Bianchi identity, the torus mean-source
+condition, stability or constraint propagation. Generic inputs still produce
+carries through `ell=floor((2u+r)/6)`. They may be omitted from an analysis
+only where divisibility or an exact retained-ledger identity justifies it.
 
 ## 6. Precise next construction required
 

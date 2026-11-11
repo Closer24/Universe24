@@ -8,10 +8,10 @@ import unittest
 import numpy as np
 import sympy as sp
 from universe24.core import Engine
-from experiments.geometry.integer_circuit import Circuit
-from experiments.geometry.adm_equations import compile_adm, FIELDS, ArrayField, system, flat_data
-from experiments.geometry.adm_initial_data import homogeneous_scalar, numeric_fields, inhomogeneous_scalar
-from experiments.geometry.adm_integer import run, replay_trace
+from universe24.algebra.integer_circuit import Circuit
+from universe24.layers.adm import compile_adm, FIELDS, ArrayField, system, flat_data
+from universe24.prepare.einstein import homogeneous_scalar, numeric_fields, inhomogeneous_scalar
+from universe24.runtime import run, replay_trace
 from experiments.geometry.full_gr_audit import einstein_from_jet, symbolic_jet
 
 

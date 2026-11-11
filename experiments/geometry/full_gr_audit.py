@@ -8,7 +8,7 @@ from itertools import product
 import sympy as sp
 from universe24.core import Tensor
 from universe24.core.tensor import LocalityError
-from experiments.geometry.simplex_metric import EDGES, exact_matrix, inertia
+from universe24.observe.simplex_metric import EDGES, exact_matrix, inertia
 
 FOUR = range(4)
 
@@ -80,7 +80,7 @@ def compilation_barriers():
     locality_rejected = False
     try:
         Tensor(['metric', 'matter'], [('metric', 1, (
-            ('matter', (1, 0, 0), 'b'), ('matter', (0, 1, 0), 'b')))], Q=1)
+            ('matter', (1, 0, 0), 'b'), ('matter', (0, 1, 0), 'b')))])
     except LocalityError:
         locality_rejected = True
     fminus, fzero, fplus = 1, 2, 4

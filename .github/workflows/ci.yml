@@ -1,4 +1,4 @@
-name: ONE reliability
+name: Universe24 reliability
 on:
   pull_request:
   push:
@@ -7,7 +7,7 @@ on:
 permissions:
   contents: read
 jobs:
-  one:
+  universe24:
     runs-on: ubuntu-latest
     timeout-minutes: 120
     strategy:
@@ -17,7 +17,6 @@ jobs:
     env:
       OMP_NUM_THREADS: '1'
       OPENBLAS_NUM_THREADS: '1'
-      GAUGE_LONG: '1'
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -25,27 +24,27 @@ jobs:
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
           python-version: ${{ matrix.python }}
-      - name: Install ONE and validation dependencies
+      - name: Install Universe24 and validation dependencies
         run: python -m pip install '.[validation]'
-      - name: Complete ONE test suite
+      - name: Complete Universe24 test suite
         run: python -m unittest discover -s universe24/tests -t . -v
-      - name: Default ONE forward run and exact rewind
-        run: python -m universe24 --L 3 --tmax 20 --budget 120 --out runs/smoke --tag ci --rewind
+      - name: Default Universe24 forward run and exact rewind
+        run: python -m universe24 --L 3 --steps 1 --out runs/smoke --rewind
       - name: Canonical tensor integration inventory
         run: python -m universe24.tools.system_inventory --out runs/system-inventory.json
       - name: Saved tensor, seed and official click decoder
         run: |
           python -m universe24.tools.audit_contract --L 3 --steps 12 --out runs/contract
           python -m universe24.tools.audit_contract --replay runs/contract
-      - name: Experimental single-edge algebra and negative physical controls
+      - name: Fixed-divisor local geometry experiments and independent audit
         run: |
-          python -m universe24.tools.audit_contract --single-edge --stiffness 33554432 --L 3 --steps 12 --out runs/single-edge
-          python -m universe24.tools.audit_contract --replay runs/single-edge
-          python -m universe24.tools.physics_gate --steps 3 --out runs/physics-gate/report.json
+          python experiments/geometry/ppwave_palatini_local.py --out runs/geometry/ppwave.json
+          python experiments/geometry/ppwave_geodesic_clock.py --out runs/geometry/geodesic.json
+          python experiments/geometry/ppwave_geodesic_audit.py
       - name: Test evidence
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
-          name: one-python-${{ matrix.python }}
+          name: universe24-python-${{ matrix.python }}
           path: runs/
           if-no-files-found: warn

@@ -1,4 +1,4 @@
-"""Independent Q=1 L0 arithmetic oracle for ONE regression tests only.
+"""Independent divisor-six L0 arithmetic oracle for Universe24 regression tests only.
 
 This is a deliberately direct receiver-side calculation, not an installable
 second model. Production code imports none of this module.
@@ -69,8 +69,8 @@ def ref_clicks(before,after,step):
         if ell and a!=b:
             yield Click(addr,((b.r-a.r)//2)%3,ell)
 
-def reference_arrays(ref: RefState, Q: int = 1):
-    """(a, b, r) object arrays of shape (48, L^3) for a universe24 state; r scaled by Q."""
+def reference_arrays(ref: RefState):
+    """(a, b, r) object arrays of shape (48, L^3) for a universe24 state; six-valued remainders."""
     L = ref.cube.side
     lat = _lattice(L)
     a = np.empty((48, lat.N), dtype=OBJ)
@@ -79,30 +79,30 @@ def reference_arrays(ref: RefState, Q: int = 1):
     bg = ref.background
     a[:, :] = bg.a
     b[:, :] = bg.b
-    r[:, :] = Q * bg.r
+    r[:, :] = bg.r
     for (x, y, z, g), ch in ref.cells.items():
         n = lat.index(x, y, z)
-        a[g, n], b[g, n], r[g, n] = ch.a, ch.b, Q * ch.r
+        a[g, n], b[g, n], r[g, n] = ch.a, ch.b, ch.r
     return a, b, r
 
 
-def to_reference_state(a, b, r, L: int, Q: int = 1, background: Channel = VACUUM) -> RefState:
-    """universe24 State from (48, L^3) arrays; r must be a multiple of Q."""
+def to_reference_state(a, b, r, L: int, background: Channel = VACUUM) -> RefState:
+    """universe24 State from (48, L^3) arrays; r must lie in 0..5."""
     lat = _lattice(L)
     cells = {}
     for g in range(48):
         for n in range(lat.N):
             rr = int(r[g, n])
-            if rr % Q:
-                raise ValueError("remainder is not a multiple of Q: not a Q-scaled reference channel")
-            ch = Channel(int(a[g, n]), int(b[g, n]), rr // Q)
+            if not 0 <= rr < 6:
+                raise ValueError("remainder must lie in 0..5")
+            ch = Channel(int(a[g, n]), int(b[g, n]), rr)
             if ch != background:
                 cells[(*lat.coords(n), g)] = ch
     return RefState(Cube(L), background, cells)
 
-def insert_reference(state, tensor, ref_state, Q, namespace="ref"):
+def insert_reference(state, tensor, ref_state, namespace="ref"):
     from universe24.core.engine import State
-    ra,rb,rr=reference_arrays(ref_state,Q)
+    ra,rb,rr=reference_arrays(ref_state)
     a,b,r=(v.astype(OBJ) for v in (state.a,state.b,state.r))
     for g in range(48):
         name=f"R{g:02d}" if namespace is None else f"{namespace}.R{g:02d}"

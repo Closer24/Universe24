@@ -1,4 +1,4 @@
-"""Reciprocity checker (design v5 §1b): every FORCE coupling is the gradient of ONE potential.
+"""Reciprocity checker (design v5 §1b): every FORCE coupling is the gradient of Universe24 potential.
 
 Static check of a Tensor (no state, no dynamics). The b-only part of the input (monomials of degree >= 1 whose
 factors are all b) must satisfy

@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "universe24"
-version = "0.2.0"
-description = "Universe24 ONE: exact reversible Rule3 dynamics with a fixed local polynomial tensor"
+version = "0.4.0"
+description = "Universe24: exact reversible divisor-six Rule3 dynamics with a fixed local polynomial tensor"
 requires-python = ">=3.11"
-dependencies = ["numpy>=1.26,<3"]
+dependencies = ["numpy>=1.26,<3", "sympy>=1.12,<2"]
 readme = "README.md"
 
 [project.scripts]

@@ -1,10 +1,9 @@
 {
   "multiplier_counterexample": {
-    "Q": 2,
-    "D": 12,
-    "kappa": 3,
+    "D": 6,
+    "kappa": 1,
     "rank": 3,
-    "tensor_fingerprint": "c78a6e610d7005b90263415fbc707fdeea452cb255203e711c29ba68b368a2c7",
+    "tensor_fingerprint": "44a09f416c44d0020bf065794f8991c27659b239a4eb7df1c5a89cbe3932a7eb",
     "seed_scope": "Every one of the 27 nodes has the stated initial triple.",
     "initial_a": [
       1,
@@ -27,7 +26,7 @@
       1
     ],
     "next_r": [
-      0,
+      2,
       0
     ],
     "initial_constraint": 0,

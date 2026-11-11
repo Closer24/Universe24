@@ -20,9 +20,9 @@ def _q(name, g):
     return f"{name}.{g}" if name else g
 
 
-def gauge_vacuum(tensor: Tensor, Q: int, L: int, *blocks: Block) -> State:
-    """The joint vacuum (reference at (0,0,2Q) if present, every new gear at (0,0,3Q-1))."""
-    return vacuum_state(tensor, Q, L, *blocks)
+def gauge_vacuum(tensor: Tensor, L: int, *blocks: Block) -> State:
+    """The joint vacuum with each block's explicit remainder in zero through five."""
+    return vacuum_state(tensor, L, *blocks)
 
 
 def random_gauge_state(tensor: Tensor, block: Block, base: State, seed: int, amp_matter: int, amp_noise: int,
@@ -34,7 +34,7 @@ def random_gauge_state(tensor: Tensor, block: Block, base: State, seed: int, amp
     rng = random.Random(seed)
     p = block.params
     alg = ALGEBRAS[p["group"]]
-    D = 6 * p["Q"]
+    D = 6
     A = p["A"]
     matter, links, paths = gear_names(p["group"], p["use_P"])
     a, b, r = base.a.astype(OBJ), base.b.astype(OBJ), base.r.astype(OBJ)
@@ -93,7 +93,7 @@ def set_link(state: State, tensor: Tensor, block: Block, xyz, k: int, U_ab, ) ->
 def set_matter(state: State, tensor: Tensor, block: Block, xyz, psi_a, psi_b) -> State:
     p = block.params
     matter, _, _ = gear_names(p["group"], p["use_P"])
-    vals = {(_q(block.name, g), tuple(xyz)): (int(psi_a[c]), int(psi_b[c])) for c, g in enumerate(matter)}
+    vals = {(_q(block.name, g), tuple(xyz)): (psi_a[c], psi_b[c]) for c, g in enumerate(matter)}
     return set_gears(state, tensor, vals)
 
 
