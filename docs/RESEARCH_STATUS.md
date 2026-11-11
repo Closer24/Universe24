@@ -52,6 +52,16 @@ alternative complete histories. A proposed route-selection or complexity
 mechanism requires an explicit reversible construction and a justified
 observation map. No such physical law follows merely from the click label.
 
+## Recurrent-burst target
+
+The [finite recurring-burst audit](RECURRENT_BURSTS.md) observes no reference
+reassembly in 600 updates of each default L=3,5,7 run. Eighteen local feedback
+candidates fail the combined recurrence/growth target within their declared
+resource limits. A separate periodic-shell control reassembles ten times and
+returns to identical full states, demonstrating recurrence without cumulative
+complexity. All completed histories rewind exactly. The local stagnation
+mechanism and feedback-driven recurrent growth remain unresolved.
+
 ## Provenance
 
 [Current validation](VALIDATION.md) covers the migrated source. The

@@ -89,6 +89,12 @@ encodes selected one-axis worldlines and calibrated time readouts. Those
 coordinates stay inside a carrier node; no general packet propagation,
 backreaction or universal operational metric has been established.
 
+The [recurrent-burst audit](docs/RECURRENT_BURSTS.md) separates message
+refocusing, reference-board reassembly and retained structural growth. Its
+25 cases do not demonstrate stagnation-driven bursts with increasing
+complexity. An exact periodic control reassembles ten times but repeats the
+same structure; all tested histories rewind without information loss.
+
 ## Verification
 
 ```bash

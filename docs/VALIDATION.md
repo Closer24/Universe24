@@ -14,8 +14,8 @@ retires the earlier 382-channel assembly and its dependent research presets.
 
 ## Local communication validation
 
-The current complete suite passes **125 tests**, including seven transport
-and reception checks. The size-three, 20-update communication pulse records
+At the communication change, the complete suite passed **125 tests**, including
+seven transport and reception checks. The size-three, 20-update communication pulse records
 **120 edge messages** and **11685 official clicks**, and rewinds the
 complete seed exactly. The independent scalar oracle checks **324** transitions
 without mismatch; strict support has zero violations, and the saved 12-update
@@ -25,6 +25,16 @@ The new tensor fingerprint is
 `fc3076f34ff0240e5069ae786b745c3a33c0c528867d0b20ef4ceff46b72f0ce`.
 The [evidence record](evidence/local_communication.json) includes source hashes,
 commands, complete seed metadata and the explicit prior-reference comparison.
+
+## Recurrent-burst audit validation
+
+The complete suite now passes **134 tests**, including nine
+[burst-audit checks](../universe24/tests/test_recurrent_bursts.py). All 25
+experimental histories rewind exactly; the independent scalar oracle checks
+**5,832 transitions** across 18 feedback tensors with zero mismatches. The
+[report](RECURRENT_BURSTS.md) and [evidence](evidence/recurrent_bursts.json)
+record the failed physical target separately from successful software checks.
+No case demonstrates stagnation-driven recurrent bursts with growing structure.
 
 ## Verified earlier fixed-six migration results
 
