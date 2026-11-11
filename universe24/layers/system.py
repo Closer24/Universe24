@@ -8,8 +8,9 @@ v2 DEFAULT (OWNER decisions 1, 2, 3, 4-as-prediction, 6, 7, 8; manager 11:1x-11:
   Q        2^33 + 1 (D = 6Q); P = 2^20, k = (Q-1)/(2P) = 2^12
   (1)      l0_offset = Q - 1: ONE vacuum (0, 0, 3Q - 1) for every gear; uniform R' is THE mirror (odd Q). The q-lattice
            rule is retired (the validator is kept for literal time_reverse compositions and the legacy offset 0).
-  (2)      body_signs = (1, -1, 1), the HANDED class: L0 = the dark sector (neutral, massive: M0 has no zero mode,
-           Kramers); L0 clicks are AUDIT-ONLY (passive OD1-type readout label; observe/readout.py). Option: (1, 1, 1).
+  (2)      body_signs = (1, -1, 1), the HANDED class: the linear L0 operator has a gap and Kramers structure.
+           Its proposed dark-sector interpretation is not a physical identification. L0 clicks are AUDIT-ONLY
+           by a passive convention (observe/readout.py). Alternative body signs: (1, 1, 1).
   (3)      l0_lapse = "W" = FORM C (layers/gravity_l0c.py): L0 in the port-difference form at the ONE headroom weight
            Q - 1 (+ on-site 6), clock factor (1 - 2U) on M0 = 6 - Sum W_d, link factor (1 - 4U) on the difference
            transport; reciprocal (L0 sources the wave lapse). Options: None, "R" (B1-GRAV rounded), "W_split"
@@ -18,14 +19,16 @@ v2 DEFAULT (OWNER decisions 1, 2, 3, 4-as-prediction, 6, 7, 8; manager 11:1x-11:
            departure from exact action = reaction is a PREDICTION (exact in symmetric preparations, reciprocal in the
            continuum; two verified no-go theorems). Variants "e1" (undressed), "compact".
   (5)      CLOSED (OWNER 13:09, "hands ON"): chiral=True and electroweak=True by DEFAULT (layers/chiral.py, HAND-M1;
-           layers/electroweak.py, EW-BUILDER). EW removes "matter"'s mlapse/mbeta (lapse x |Phi|^2 dresses the doublet).
+           layers/electroweak.py, EW-BUILDER). EW removes "matter"'s mlapse/mbeta. The default FIX-i sets the Higgs
+           and weak-link lapse coefficients to zero, retaining the singlet-half hop; universal rest-clock response
+           is not established. Earlier nonzero coefficients are an optional contrast, not the current default.
            Both can be switched off: chiral=False, electroweak=False (electroweak alone raises).
   (6)      odd-Q one-shot routers (B1-CHOICE): router + gated exit pair; (7) no F7 (taxicab choice: mechanism test).
   (8)      gravity: lapse = "wave" (metric + reciprocal lapse + beta) + the R-a background gear "bgk" + the k = 0
            offset (initial data); OD2 = variant (its one-way lapse read has no exact time mirror: C8).
   GRAV-FIX beta_form = "detuned" (candidate A, manager 12:58; layers/gravity_beta_fix.py, B1-GRAV): w_G = (Q-1)/2 and
            source -(k/2) Lap(F^2) remove the beta-corner 1:1 resonance; "marginal" = contrast.
-  R1       matter lapse = "C" (manager 11:43; layers/matter_lapse_c.py, reciprocal): ONE clock factor on the mass term
+  R1       before EW composition, matter lapse = "C" (layers/matter_lapse_c.py, reciprocal): a clock factor on the mass term
            m W0 only; hops + the Wilson term in the DIFFERENCE form take the link factor; the beta = 1 read in the same
            split. B1-GRAV's site/hop split (rest clock 1 - 0.6875 U: a 31 % EP violation) = contrast "split".
   matter   B1-EM 16-channel Dirac pair WITH Wilson: hop 2^31, wilson 2^30, mass 4915 * 2^22 (the multiple of 2^22

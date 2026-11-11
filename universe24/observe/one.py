@@ -1,13 +1,15 @@
 """ONE read-only observables (Study 22, ONE-A). Nothing here changes a state or feeds back into a run: every function
 reads complete snapshots produced by Engine.step and returns numbers.
 
-Exact cosmic ledgers per update (before -> after), with ell = after.b + before.a (Rule3: a' = b, b' = ell - a):
-  events   ell_dp - ell_dm = I = b_M1^2 + b_M2^2 (before) at every node        (matched pair: K+ - K- = D I)
+Exact cosmic ledgers per update (before -> after), with ell = after.b + before.a (Rule3: a' = b, b' = ell - a).
+The matched-pair identities assume equal initial detector remainders and static loads summing to D/(2c):
+  weight   ell_dp - ell_dm = I = b_M1^2 + b_M2^2 (before) at every node        (matched pair: K+ - K- = D I)
   lock     r_dp = r_dm at every node                                              (shared remainder)
-  Born     N+ = Sum ell_dp = floor((tok + Sum K+)/D), K+ = 2 u_dp = 2c I b_Lp   (sigma-delta ledger, per node)
+  carry    N+ = Sum ell_dp = floor((tok + Sum K+)/D), K+ = 2 u_dp = 2c I b_Lp   (sigma-delta ledger, per node)
   N_J      rho = D (a_M1 b_M2 - a_M2 b_M1):  rho' - rho = Sum_y 2h (Th_x + Th_y)(b1_x b2_y - b2_x b1_y)
                                                + b1 (r2 - r2') - b2 (r1 - r1')    (local continuity, link current)
-plus the hand's board statistics, Delta = b_dp - b_dm, seed distances and click/outcome records.
+plus the hand's board statistics, Delta = b_dp - b_dm, seed distances and click/outcome records. Compatibility names
+'events' and 'born' refer to these carry-weight identities, not counts of official records or a general Born rule.
 """
 from __future__ import annotations
 
@@ -105,6 +107,11 @@ class CosmicLedger:
         return out
 
     def born_frequencies(self, seed: State, load_sum: int, min_events: int = 10 ** 4) -> dict:
+        """Legacy-named carry-weight ratio diagnostic. 'events' keys count quotient weight, not click records.
+
+        The comparison to initial Lp/load_sum assumes the stated static-load preparation. It neither samples
+        repeated independent measurements nor establishes quantum probabilities for the official stream.
+        """
         p = self.v.f(seed, "Lp", "b")
         Q = load_sum
         tot = self.Nplus + self.Nminus

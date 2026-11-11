@@ -2,7 +2,7 @@
 from L0 CLICKS vs the lapse; universality L0 vs a first-order matter clock; second-order atom reported.
 
 Usage: OMP_NUM_THREADS=1 nice -n 10 python universe24/demos/gravity/l0_ep.py
-Writes results/gravity/L0_EP.json.
+Writes runs/demos/gravity/L0_EP.json.
 """
 from __future__ import annotations
 
@@ -26,7 +26,7 @@ from universe24.layers import gravity_l0 as gl0
 from universe24.observe import gravity as og
 from universe24.prepare import vacuum_state
 
-OUT = ROOT / "universe24/results/gravity"
+OUT = Path("runs/demos/gravity")
 READ_WHY = "L0-EP clock TEST read of the static prescribed lapse gear (one-way)"
 
 

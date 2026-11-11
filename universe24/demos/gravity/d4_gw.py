@@ -3,7 +3,7 @@ quadrupole stress (MECHANISM: prescribed oscillator source, the 0mu components o
 Two TT polarizations, front speed vs c_Q (fraction-of-peak arrival; taxicab |x|_1 bound reported), 1/R decay.
 
 Usage (repository root): OMP_NUM_THREADS=1 nice -n 10 python universe24/demos/gravity/d4_gw.py
-Writes results/gravity/D4.json.
+Writes runs/demos/gravity/D4.json.
 """
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ from universe24.core.engine import OBJ, State
 from universe24.layers import gravity as gr
 from universe24.prepare import vacuum_state
 
-OUT = ROOT / "universe24/results/gravity"
+OUT = Path("runs/demos/gravity")
 WHY = "MECHANISM: prescribed oscillating quadrupole stress (GW demo D4)"
 
 

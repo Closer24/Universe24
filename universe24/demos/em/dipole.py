@@ -11,7 +11,10 @@ import time
 
 import numpy as np
 
-from emlib import save, stamp
+if __package__:
+    from .emlib import save, stamp
+else:
+    from emlib import save, stamp
 from universe24.core import Engine, compose
 from universe24.layers.em import A_NAMES, build_current_driver, build_em
 from universe24.observe import em as oem

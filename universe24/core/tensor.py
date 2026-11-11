@@ -305,7 +305,8 @@ class Tensor:
         return hash((self.gears, self.monomials))
 
     def same_dynamics(self, other: "Tensor") -> bool:
-        """Equal number/order of gear types and equal monomials (names, labels, links, signs, designations ignored)."""
+        """Equal indexed coefficient templates. Ignores Q as well as observer metadata;
+        equal complete update laws also require equal engine divisors."""
         return isinstance(other, Tensor) and self.G == other.G and self.monomials == other.monomials
 
     def is_designated(self, m: Monomial) -> str | None:
@@ -325,8 +326,10 @@ class Tensor:
 
     def q_lattice_violations(self, patterns: Iterable[str], Q: int | None = None) -> list[Monomial]:
         """Terms targeting a gear whose name matches one of ``patterns`` (fnmatch, e.g. "ref.*") with a u-coefficient
-        not = 0 mod Q (default: the tensor's Q). Such a gear keeps remainders on the Q-lattice and has an exact
-        rho_L0 mirror iff this list is empty (R-M2)."""
+        not = 0 mod Q (default: the tensor's Q). An empty list is a sufficient termwise condition for
+        preserving r mod Q. It is not necessary: integer-valued combinations may have divisible values
+        without divisible coefficients. A rho_L0 reversor additionally needs b-only inputs or a separate
+        proof for old-a reads; divisibility alone does not establish time-reversal symmetry."""
         from fnmatch import fnmatchcase
         Q = self.Q if Q is None else Q
         if Q is None:
@@ -397,7 +400,9 @@ class Tensor:
 
     @property
     def dynamics_fingerprint(self) -> str:
-        """sha256 of what the engine reads: G and the monomials by gear INDEX (names and metadata excluded)."""
+        """sha256 of G and indexed monomials; Q and metadata are excluded.
+        Identify the complete law by (this hash, Q), or by the full fingerprint
+        for a tensor that records Q. Kept unchanged for regression compatibility."""
         blob = [self.G, [[m.target, m.coeff, [[f.gear, list(f.offset), f.field] for f in m.factors]]
                          for m in self.monomials]]
         return hashlib.sha256(json.dumps(blob, separators=(",", ":")).encode()).hexdigest()

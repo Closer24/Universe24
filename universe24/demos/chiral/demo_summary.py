@@ -5,7 +5,7 @@
     image's record equals the CP-map of the original record (kinds swapped exactly on negated gears), the P image's does
     not.
 Run (repo root, one core): OMP_NUM_THREADS=1 nice -n 19 python -m universe24.demos.chiral.demo_summary
-Writes results/chiral/DEMO_summary.json.
+Writes runs/demos/chiral/DEMO_summary.json.
 """
 from __future__ import annotations
 
@@ -22,7 +22,7 @@ from ...observe.chiral import ChiralView
 from ...prepare import vacuum_state
 from ...prepare.chiral import chiral_system, gear_groups, jpure_seed, standard_maps
 
-OUT = Path(__file__).resolve().parents[2] / "results" / "chiral"
+OUT = Path("runs/demos/chiral")
 
 
 def stamp():

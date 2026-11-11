@@ -3,7 +3,7 @@ pairs feeling their own lapse) with a prescribed static anti-load at the antipod
 closed-board zero mode). Records max U at the centre and the runaway time versus the load strength.
 
 Usage: OMP_NUM_THREADS=1 nice -n 10 python universe24/demos/gravity/f3_collapse.py
-Writes results/gravity/F3.json.
+Writes runs/demos/gravity/F3.json.
 """
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ from universe24.layers import gravity as gr
 from universe24.prepare import gravity as pg
 from universe24.prepare import vacuum_state
 
-OUT = ROOT / "universe24/results/gravity"
+OUT = Path("runs/demos/gravity")
 
 
 def stamp():

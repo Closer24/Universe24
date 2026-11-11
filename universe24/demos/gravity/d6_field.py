@@ -2,7 +2,7 @@
 (no prepared field): 1/r profile inside the no-image window and the Gauss law (flux through boxes vs enclosed source).
 
 Usage (repository root): OMP_NUM_THREADS=1 nice -n 10 python universe24/demos/gravity/d6_field.py
-Writes results/gravity/D6.json.
+Writes runs/demos/gravity/D6.json.
 """
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ from universe24.observe import gravity as og
 from universe24.prepare import gravity as pg
 from universe24.prepare import vacuum_state
 
-OUT = ROOT / "universe24/results/gravity"
+OUT = Path("runs/demos/gravity")
 
 
 def stamp():

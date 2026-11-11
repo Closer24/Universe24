@@ -1,7 +1,7 @@
 """S1: the SPRING DEFAULT selection run (rule pre-registered in NOTES_gauge.md, 09:50:00 UTC). Exact integers.
 Run from the repository root:
     OMP_NUM_THREADS=1 nice -n 10 python -m universe24.demos.gauge.spring_select
-Writes results/gauge/S1_spring_default.json (rows per seed + the per-candidate summary)."""
+Writes runs/demos/gauge/S1_spring_default.json (rows per seed + the per-candidate summary)."""
 from __future__ import annotations
 
 import json
@@ -16,7 +16,7 @@ from ...observe.gauge import GaugeView
 from ...prepare import vacuum_state
 from ...prepare.gauge import random_gauge_state
 
-OUT = Path(__file__).resolve().parent.parent.parent / "results" / "gauge" / "S1_spring_default.json"
+OUT = Path("runs/demos/gauge/S1_spring_default.json")
 REG = {"C": dict(Q=(1 << 19) + 1, A=256, amp=64, dP=1 << 19), "F": dict(Q=(1 << 25) + 1, A=4096, amp=1000, dP=1 << 25)}
 CANDS = {"C": (4, 8, 16), "F": (2, 3, 4)}
 
@@ -67,6 +67,7 @@ def main():
                      and rs[0]["cfl_2lamA2_over_D"] <= 2 / 3 + 1e-12)
                 summary[f"{group}:{regime}:lam={lam}"] = {"worst_over_seeds": w, "qualifies": q,
                                                           "cfl": rs[0]["cfl_2lamA2_over_D"]}
+    OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps({"rows": rows, "summary": summary, "seconds": round(time.time() - t0, 1),
                                "stamp_utc": datetime.now(timezone.utc).strftime("%a %b %d %H:%M:%S UTC %Y")},
                               indent=1))
@@ -113,6 +114,7 @@ def s2():
                                     for r in rows if r["group"] == g)} for g in ("u1", "su2")}
     out = {"Q": Q, "regime": {**reg, "lam": lam}, "rows": rows, "summary": summary, "seconds": round(time.time() - t0, 1),
            "stamp_utc": datetime.now(timezone.utc).strftime("%a %b %d %H:%M:%S UTC %Y")}
+    OUT.parent.mkdir(parents=True, exist_ok=True)
     (OUT.parent / "S2_default_family_Q2p29.json").write_text(json.dumps(out, indent=1))
     print(summary)
 

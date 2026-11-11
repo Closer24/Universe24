@@ -6,7 +6,10 @@ click charge q_click(t) = sum ell(t)^T J' ell(t+1) against the event charge Q'(t
 """
 import numpy as np
 
-from emlib import Q0, em_system, save, stamp
+if __package__:
+    from .emlib import Q0, em_system, save, stamp
+else:
+    from emlib import Q0, em_system, save, stamp
 from universe24.observe import em as oem
 from universe24.prepare import vacuum_state
 from universe24.prepare import em as pem

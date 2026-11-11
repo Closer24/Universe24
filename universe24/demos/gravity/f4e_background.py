@@ -23,7 +23,7 @@ from universe24.observe import gravity as og
 from universe24.prepare import gravity as pg
 from universe24.prepare import vacuum_state
 
-OUT = ROOT / "universe24/results/gravity"
+OUT = Path("runs/demos/gravity")
 RA_WHY = ("R-a: the declared uniform k = 0 background (-kappa E/N per node, Study 6 D(d)) as a prescribed static gear "
           "B feeding -b_B into the lapse field; B holds its value and does not feel F (data, one-way)")
 

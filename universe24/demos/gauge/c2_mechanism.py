@@ -4,7 +4,7 @@ A prescribed static ZQ8 link field is realised by link gears whose input is u = 
 changes) and by c2's terms INTO L0, designated one-way ("prescribed static link, mechanism test only"); the links do
 not feel the reference (no reaction), which is exactly what a prescribed field is. Run from the repository root:
     OMP_NUM_THREADS=1 nice -n 10 python -m universe24.demos.gauge.c2_mechanism
-Writes demos/gauge/M1_mechanism.json.
+Writes runs/demos/gauge/M1_mechanism.json.
 """
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ from ...layers.links import Q8_ORDER, build_c2
 from ...layers.reference import build_reference
 from ...prepare import vacuum_state
 
-HERE = Path(__file__).resolve().parent
+HERE = Path("runs/demos/gauge")
 WHY = "prescribed static link field (MECHANISM test M1 only; not shipped): the link does not react"
 
 
@@ -131,4 +131,5 @@ def main():
 
 
 if __name__ == "__main__":
+    HERE.mkdir(parents=True, exist_ok=True)
     main()

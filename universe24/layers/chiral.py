@@ -1,4 +1,4 @@
-"""CHIRAL weak SU(2) block (Study 7, HAND-M1 = CHIRAL-BUILDER): a DECLARED CANDIDATE for OWNER decision 5, DEFAULT OFF.
+"""CHIRAL weak SU(2) block (Study 7, HAND-M1 = CHIRAL-BUILDER): a research candidate enabled by the current default_system composition.
 
 TENSOR BLOCKS ONLY (layers/ contract). NEW file; no existing package file is modified. Source: s7/AGREE_H.md (twin-signed
 HAND-M1 11:24:18 / HAND-M2 11:25:40 UTC), rows E1-E7 and joint recommendation 1-2; Study-7 prototype
@@ -29,7 +29,7 @@ Gauge symmetry (exact polynomial identity): b(x) -> [rho(g) P_W + (1 - P_W)] b(x
   Pi_W is not diagonal in the package basis, so local Q8 is NOT a bit-exact signed-permutation covariance here (that needs
   the charge-diagonal integral form, AGREE_H E3: owner decision 2).
 
-Declared limitations (NOTES_chiral.md):
+Standalone-block limitations (NOTES_chiral.md; the complete default adds ehop and replaces the bare-mass lapse):
   * no Higgs kinetic term: the W gets no Higgs-mechanism mass in this candidate (short range OPEN);
   * the doublet partner matter2 is EM-neutral; E1 couples only "matter", so composed with E1 the local t1, t2 Gauss laws
     are broken (charged W; hypercharge structure = integrator/owner item); t3 survives E1;
@@ -239,7 +239,7 @@ def build_chiral_coupling(*, Q: int = Q_DEFAULT, matter: Block, partner: Block, 
                   reversor=REVERSOR_CHIRAL, candidate="DECLARED CANDIDATE (OWNER decision 5 CONDITIONAL)",
                   default_on=CHIRAL_DEFAULT_ON)
     return Block(tuple(gears), tuple(terms), name=name, vacuum={h: r0 for h in HIGGS}, params=params,
-                 doc="chiral Gamma5.V weak SU(2) coupling + Higgs (declared candidate, default OFF)", Q=Q)
+                 doc="chiral Gamma5.V weak SU(2) coupling + Higgs (research candidate; enabled in default_system)", Q=Q)
 
 
 def chiral_blocks(Q: int = Q_DEFAULT, *, matter: Block | None = None, include_matter: bool = False,
@@ -262,12 +262,12 @@ def chiral_blocks(Q: int = Q_DEFAULT, *, matter: Block | None = None, include_ma
 def compose_with_default(system, *, on: bool = CHIRAL_DEFAULT_ON, partner_lapse: bool = True, **kw):
     """Return a NEW layers.system.System with the chiral candidate appended (``on=True``), else ``system`` unchanged.
 
-    The ONE-LINE INTEGRATOR CHANGE (not applied; layers/system.py is not edited by this builder) would be, at the end of
-    default_system before ``return``:
-        if chiral: from .chiral import compose_with_default; return compose_with_default(System(Q, tuple(blocks), info), on=True)
-    with a keyword ``chiral: bool = False`` (DEFAULT OFF).
-    partner_lapse: with matter_lapse "C" the partner gets the SAME universal lapse (+ beta read) as "matter"
-    (layers/matter_lapse_c.py builders, read-only), so the equivalence principle holds for both doublet members."""
+    This helper defaults to on=False for explicit standalone composition. The
+    current default_system enables it (or compose_electroweak) explicitly.
+    partner_lapse=True copies the selected matter lapse and beta terms to the
+    partner. Equal couplings alone do not establish the equivalence principle;
+    the composed electroweak default instead replaces these bare-mass terms.
+    """
     if not on:
         return system
     from .system import System

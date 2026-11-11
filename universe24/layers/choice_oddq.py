@@ -22,7 +22,9 @@ def near_matched_kappa(Q: int, A: int = 1) -> int:
 
 
 def predicted_non_detection(Q: int, A: int = 1) -> Fraction:
-    """The board's prediction: P(no click) = (D - S)/D per one-shot readout (>= 2/D for odd Q)."""
+    """Uniform fresh shared-remainder ensemble: P(no click)=(D-S)/D per
+    one-shot readout (>=2/D for odd Q). Not an unconditional probability for a
+    deterministic seed or a continuously exposed detector."""
     D = 6 * Q
     return Fraction(D - 16 * near_matched_kappa(Q, A) * A * A, D)
 

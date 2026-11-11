@@ -26,7 +26,7 @@ from ...layers.reference import build_reference
 from ...layers.system import with_vacuum
 from ...observe.gauge import C2View
 
-OUT = Path(__file__).resolve().parents[2] / "results" / "system"
+OUT = Path("runs/demos/system")
 Q = (1 << 33) + 1
 L = 4
 LAM = 2                      # T2 (C2-TUNE final, manager 13:01); RUN Z itself ran lam = 4

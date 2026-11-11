@@ -2,7 +2,7 @@
 
 Run from the repository root:
     OMP_NUM_THREADS=2 nice -n 10 python -m universe24.demos.gauge.links_stability
-Writes demos/gauge/G9_c2_stability.json and demos/gauge/C1_stability.json.
+Writes runs/demos/gauge/G9_c2_stability.json and demos/gauge/C1_stability.json.
 """
 from __future__ import annotations
 
@@ -20,7 +20,7 @@ from ...layers.links import build_c1_weights, build_c2
 from ...layers.reference import build_reference
 from ...prepare import vacuum_state
 
-HERE = Path(__file__).resolve().parent
+HERE = Path("runs/demos/gauge")
 
 
 def stamp():
@@ -156,6 +156,7 @@ def strong_runs():
 
 
 if __name__ == "__main__":
+    HERE.mkdir(parents=True, exist_ok=True)
     t0 = time.time()
     res = {"c2": c2_stability(), "stamp_utc": stamp()}
     res["seconds"] = round(time.time() - t0, 1)

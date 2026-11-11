@@ -2,7 +2,7 @@
 
 Run from the repository root:
     OMP_NUM_THREADS=2 nice -n 10 python -m universe24.demos.gauge.run_demos
-Writes demos/gauge/D1.json, D2.json, D3.json.
+Writes runs/demos/gauge/D1.json, D2.json, D3.json.
 """
 from __future__ import annotations
 
@@ -23,7 +23,7 @@ from ...observe.gauge import GaugeView
 from ...prepare import vacuum_state
 from ...prepare.gauge import set_link, set_matter
 
-HERE = Path(__file__).resolve().parent
+HERE = Path("runs/demos/gauge")
 QF = (1 << 25) + 1            # fine demo regime: A = 4096, kappa*A = (Q-1)/2
 
 
@@ -223,6 +223,7 @@ def d2_colour():
 
 
 if __name__ == "__main__":
+    HERE.mkdir(parents=True, exist_ok=True)
     which = sys.argv[1:] or ["D3", "D1", "D2"]
     for w in which:
         t0 = time.time()

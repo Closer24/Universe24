@@ -10,7 +10,10 @@ import time
 
 import numpy as np
 
-from emlib import Q0, accel, band_stats, save, stamp
+if __package__:
+    from .emlib import Q0, accel, band_stats, save, stamp
+else:
+    from emlib import Q0, accel, band_stats, save, stamp
 from universe24.core import Engine, compose
 from universe24.layers.em import build_current_driver, build_em
 from universe24.layers.matter import build_matter

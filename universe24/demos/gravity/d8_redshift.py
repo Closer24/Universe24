@@ -3,7 +3,7 @@ headroom light through the reciprocal on-site bilinear Phi_e = -g b_E b_L; the l
 compared with a co-located receiver atom (CLICK space). MECHANISM static load, prepared field >= 0.
 
 Usage: OMP_NUM_THREADS=1 nice -n 10 python universe24/demos/gravity/d8_redshift.py
-Writes results/gravity/D8.json.
+Writes runs/demos/gravity/D8.json.
 """
 from __future__ import annotations
 
@@ -26,7 +26,7 @@ from universe24.observe import gravity as og
 from universe24.prepare import gravity as pg
 from universe24.prepare import vacuum_state
 
-OUT = ROOT / "universe24/results/gravity"
+OUT = Path("runs/demos/gravity")
 
 
 def stamp():

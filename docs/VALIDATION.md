@@ -1,5 +1,43 @@
 # Implementation validation
 
+## Integrated algebra and repository audit
+
+The [system map](SYSTEM_MAP.md) ties current claims to their assumptions and code. The default recurrence, coefficients, seed construction and both tensor fingerprints are unchanged. Corrections cover exact large-divisor readout/mirror arithmetic, invalid rewind horizons, misleading metadata and portable demo output paths.
+
+| Check actually run | Outcome |
+|---|---|
+| Complete pre-correction suite with GAUGE_LONG=1 | 184 tests in 812.300 seconds; 183 passed, one expected failure, none skipped |
+| Complete corrected suite with GAUGE_LONG=1 | 193 tests in 788.486 seconds; 192 passed, 1 expected failure, none skipped |
+| Focused final regressions and complete-state migration fixture | 18 passed in 5.334 seconds |
+| Default L=4, 120 updates | Exact rewind and saved-input replay; 152,616 official records; online and exported-event decoders agree |
+| Optional single-edge L=4, 120 updates | Exact rewind and replay; 152,617 official records; online and exported-event decoders agree |
+| Independent scalar receiver oracle | 2,292 default and 2,832 mediator gear transitions; zero mismatches, including beyond-int64 states |
+| Local perturbation controls | Zero changed sites outside the storage cone over the tested three updates |
+| Default matched-choice control, 12 updates, preparation RNG 13 vs 17 | 275 differing dp quotient site-updates and different official records on all 12 updates; identical full hand/reader and pair-difference histories |
+| Metric/clock negative control, 40 updates | 9,605 paired cosmic records unchanged; no dependency path in either construction |
+| Electromagnetic state diagnostic, 40 updates | Baseline passes; unadapted mediator readout fails from update 2; explicit passive source-coordinate map passes |
+| Default CLI smoke | All 20 requested updates; exact rewind; zero sampled ledger, Lorenz and dressed-continuity residuals |
+| Installed wheel outside checkout | Exact 120-update replay from saved tensor and seed |
+| Genericity control | Metadata/name changes preserve complete forward/inverse histories for the same indexed polynomial and Q |
+| Group/coupling enumeration | 110,592 associativity cases, 24 proper cube rotations and 110,592 equivariance cases across eight sign choices passed |
+| Repository-wide static checks | All 168 previously tracked Python files and all new sources parse; 286 tracked JSON records parse; internal imports and current documentation links resolve |
+| Demo portability checks | EM census module/direct modes, O6 one-step module/direct modes and historical-input post-hoc reader passed |
+| Canonical tensor inventory | 22 builder blocks, 382 types, rank four, 18,592 live monomials; six independent namespace groups and 15 gear components |
+
+The full-suite expected failure is TC.15, the already recorded negative Bell-style router experiment. No assertion thresholds were loosened. The default complete-state migration traces remain identical. The new inventory records absent interactions rather than adding unproved physical couplings; the matched cosmic preparation still cannot select different future hand/reader trajectories by changing detector load/token data.
+
+All production library/tool modules import, but this is not a blanket import of research demos: several execute expensive experiments at import. Two demos use test helpers and require a checkout. The review covers code structure, documented proofs and scoped numerical tests, not an independent proof of every claim in every historical research record. The historical notes are explicitly separated from the current specification; original numerical evidence is retained.
+
+Reproduce the final checks with the commands in the repository README, plus:
+
+```bash
+python -m universe24.tools.audit_contract --L 4 --steps 120 --out runs/contract
+python -m universe24.tools.audit_contract --single-edge --stiffness 33554432 --L 4 --steps 120 --out runs/single-edge
+python -m universe24.tools.physics_gate --steps 40 --out runs/physics-gate/report.json
+```
+
+The compact [integration evidence](evidence/integrated_validation.json) records exact hashes and outcomes. These checks do not derive GR, general quantum statistics, an atom, or a maximum-complexity selection law.
+
 ## Single-edge experiment
 
 The optional construction and its exact equations are in [SINGLE_EDGE_IMPLEMENTATION](SINGLE_EDGE_IMPLEMENTATION.md). It is not the default. Core Rule3 and default tensor coefficients are unchanged.

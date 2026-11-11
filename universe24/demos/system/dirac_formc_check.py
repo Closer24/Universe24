@@ -1,7 +1,7 @@
 """DIRAC-C exploratory check (pre-registered in NOTES_system.md, "PRE-REGISTRATION DIRAC-C"): the C3 universality setup
 of tests/test_l0c.py with the matter lapse in the Wilson difference form (layers/matter_lapse_c.py, PROPOSAL).
 Run: OMP_NUM_THREADS=1 nice -n 10 python -m universe24.demos.system.dirac_formc_check
-Writes results/system/DIRAC_C.json."""
+Writes runs/demos/system/DIRAC_C.json."""
 from __future__ import annotations
 
 import json
@@ -23,7 +23,7 @@ from ...prepare import vacuum_state
 from ...tests.test_l0c import AMP, L, T_RUN, U0_TARGET, bands
 
 Q, P, D = Q_DEFAULT, P_GRAV, 6 * Q_DEFAULT
-OUT = Path(__file__).resolve().parents[2] / "results" / "system"
+OUT = Path("runs/demos/system")
 
 
 def run(bs, mu, v, F0):

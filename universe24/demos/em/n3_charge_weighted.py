@@ -1,15 +1,25 @@
 """EM-D1b POST-HOC (labelled, NOTES_em.md A3/A5): Newton III for the unequal-width (+,-) run read on MOMENTUM:
-(Q2 a2 / <E''>_2) / (Q1 a1 / <E''>_1), Q_i = |sum rho| of packet i alone (its total charge), from the saved run."""
+(Q2 a2 / <E''>_2) / (Q1 a1 / <E''>_1), Q_i = |sum rho| of packet i alone (its total charge), from the saved run.
+An optional first argument selects the input JSON; otherwise read the historical fixture.
+The analysis writes a fresh report under runs/demos/em and never overwrites that fixture.
+"""
 import json
+import sys
+from pathlib import Path
 
 import numpy as np
 
-from emlib import OUT, Q0, em_system, save
+if __package__:
+    from .emlib import Q0, em_system, save
+else:
+    from emlib import Q0, em_system, save
 from universe24.observe import em as oem
 from universe24.prepare import vacuum_state
 from universe24.prepare import em as pem
 
-run = json.load(open(OUT / "EM-D1_coulomb_+-_r8_T150_w2_2.4.json"))
+input_path = (Path(sys.argv[1]) if len(sys.argv) > 1 else
+              Path(__file__).resolve().parent / "results" / "EM-D1_coulomb_+-_r8_T150_w2_2.4.json")
+run = json.loads(input_path.read_text())
 blocks, Tn, eng = em_system()
 m, e = blocks
 L = run["L"]

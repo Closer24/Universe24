@@ -8,7 +8,10 @@ import time
 
 import numpy as np
 
-from emlib import save, stamp
+if __package__:
+    from .emlib import save, stamp
+else:
+    from emlib import save, stamp
 from universe24.core import Engine, compose
 from universe24.layers.em_compact import default_compact
 from universe24.prepare import vacuum_state

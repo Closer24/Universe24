@@ -4,7 +4,10 @@ import sys
 
 import numpy as np
 
-from emlib import save, stamp
+if __package__:
+    from .emlib import save, stamp
+else:
+    from emlib import save, stamp
 from universe24.core import Engine, State, compose
 from universe24.core.engine import OBJ
 from universe24.layers.em_compact import build_u1_links

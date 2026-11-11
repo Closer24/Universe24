@@ -22,7 +22,7 @@ from universe24.observe import em as oem
 from universe24.prepare import vacuum_state
 from universe24.prepare import em as pem
 
-OUT = Path(__file__).resolve().parent / "results"
+OUT = Path("runs/demos/em")
 Q0 = 2 ** 29 + 1
 HOP0 = (Q0 - 1) // 4
 MASS0 = 3 * Q0
@@ -33,7 +33,7 @@ def stamp() -> str:
 
 
 def save(name: str, data: dict) -> None:
-    OUT.mkdir(exist_ok=True)
+    OUT.mkdir(parents=True, exist_ok=True)
     data = dict(data, demo=name, written=stamp())
     (OUT / f"{name}.json").write_text(json.dumps(data, indent=1, default=float))
 

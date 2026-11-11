@@ -5,7 +5,10 @@ import time
 
 import numpy as np
 
-from emlib import accel, em_system, phi_of, save, stamp, gx
+if __package__:
+    from .emlib import accel, em_system, phi_of, save, stamp, gx
+else:
+    from emlib import accel, em_system, phi_of, save, stamp, gx
 from universe24.observe import em as oem
 from universe24.prepare import vacuum_state
 from universe24.prepare import em as pem

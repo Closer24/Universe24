@@ -9,7 +9,7 @@ ONE seed = one package bang + the cosmic data, all R*-fixed about ONE centre c2 
   cosmic matter the CC-A neutral packet, R*-fixed about c2: b(M1, x0) = A_c, a(M1, c2 - x0) = A_c, b(M2, x0 + e_x) = A_c,
                 a(M2, c2 - x0 - e_x) = A_c (x0 = 0), r = 3Q - 1.
   Born loads    b_Lp = a_Lp = p_x, b_Lm = a_Lm = S_L - p_x (static), S_L = 3Q/c_pair (layers.one), p_x in [S_L/8, 7S_L/8)
-                from rng, p(c2 - x) = p(x); the Born probability of a "+" outcome is p_x / S_L.
+                from rng, p(c2 - x) = p(x); p_x / S_L is the target quotient-weight fraction, not a derived probability of official click records.
   tokens        r_dp = r_dm = tok_x (shared remainder), tok_x uniform in [0, D) from rng, tok(c2 - x) = R'(tok_x); on a
                 self-mirror node tok is a fixed point of R' (3Q - 1 or 3Q). a = b = 0 on the pair.
 The rng seed changes ONLY loads and tokens (outcomes), never the hand, the matter or the package data.

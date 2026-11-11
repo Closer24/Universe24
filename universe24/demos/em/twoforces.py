@@ -12,7 +12,10 @@ import time
 
 import numpy as np
 
-from emlib import MASS0, HOP0, Q0, accel, save, stamp
+if __package__:
+    from .emlib import MASS0, HOP0, Q0, accel, save, stamp
+else:
+    from emlib import MASS0, HOP0, Q0, accel, save, stamp
 from universe24.core import Engine, State, compose
 from universe24.layers.em import build_em
 from universe24.layers.matter import build_matter, build_static_lapse_mechanism

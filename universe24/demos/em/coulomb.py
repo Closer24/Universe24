@@ -12,7 +12,10 @@ import time
 
 import numpy as np
 
-from emlib import (MASS0, HOP0, Q0, accel, band_stats, em_system, gx, phi_of, save, spin_projectors, stamp)
+if __package__:
+    from .emlib import (MASS0, HOP0, Q0, accel, band_stats, em_system, gx, phi_of, save, spin_projectors, stamp)
+else:
+    from emlib import (MASS0, HOP0, Q0, accel, band_stats, em_system, gx, phi_of, save, spin_projectors, stamp)
 from universe24.observe import em as oem
 from universe24.prepare import vacuum_state
 from universe24.prepare import em as pem

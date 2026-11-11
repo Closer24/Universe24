@@ -1,7 +1,10 @@
 """EM-C8 (POST-HOC diagnostic): early-window force of the compact-U(1) candidate vs the Gauss-prepared field."""
 import numpy as np
 
-from emlib import accel, band_stats, save, stamp
+if __package__:
+    from .emlib import accel, band_stats, save, stamp
+else:
+    from emlib import accel, band_stats, save, stamp
 from universe24.core import Engine, compose
 from universe24.layers.em_compact import default_compact
 from universe24.observe import em as oem

@@ -4,7 +4,7 @@ implied by the reciprocal matter lapse, form C (Wilson difference) vs B1-GRAV's 
 (ii) the b-only source total Sum_x S(t), S = dPhi_int/dF: not conserved (relative oscillation reported);
 (iii) k = 0 (uniform state): the C source is the mass energy only (no 6 w |psi|^2 term).
 Run: OMP_NUM_THREADS=1 nice -n 10 python -m universe24.demos.system.gravity_source_check
-Writes results/system/gravity_source.json."""
+Writes runs/demos/system/gravity_source.json."""
 from __future__ import annotations
 
 import json
@@ -23,7 +23,7 @@ from ...prepare import vacuum_state
 
 Q, P, D = Q_DEFAULT, P_GRAV, 6 * Q_DEFAULT
 L, T = 4, 200
-OUT = Path(__file__).resolve().parents[2] / "results" / "system"
+OUT = Path("runs/demos/system")
 
 
 def source_total(Tn, s, gF):

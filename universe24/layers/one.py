@@ -20,7 +20,7 @@ The cosmic block (7 gear types per node; s15/AGREE_COSMIC E2, s13/AGREE_INTEGRAT
     u_Lp = D b_Lp,   u_Lm = D b_Lm                                          static Born loads (initial data p, Q - p)
   K+ - K- = 2 (u_dp - u_dm) = 2c I (b_Lp + b_Lm) = D I when b_Lp + b_Lm = S_L = 3Q/c (c | 3Q; CC-A/CC-B: c = 3, S_L = Q).
   Here c = the smallest divisor of 3Q with D S_L < 2^60 (int64 headroom of the static loads u_L = D b_L; Q = 2^33 + 1 =
-  3^2 67 683 20857 gives c = 1809, S_L = 14,245,331). Exactly I unit choices per update and node,
+  3^2 67 683 20857 gives c = 1809, S_L = 14,245,331). Exactly I signed pair quotient-weight difference per update and node (not I official click records),
   r+ - r- invariant (the shared-remainder lock), N+ = floor((r0 + Sum K+)/D) (Born ledger).
   Ranks: the hand and the matter rank 3; the pair rank 4 of the approved NARROW kind (uncharged singlet b_L x the covariant
   composite |psi|^2). B3: every monomial on one node or one face link. b-only (no two-time read). Deviation form: every

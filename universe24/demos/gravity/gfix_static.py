@@ -57,7 +57,8 @@ def main():
                      "reciprocity_ok": rep.ok, "designated": len(rep.designated), "rank": T.rank,
                      "params": {k_: v for k_, v in beta.params.items() if k_ in ("w_G", "k_G", "detune")}}
     out["written_utc"] = subprocess.run(["date", "-u"], capture_output=True, text=True).stdout.strip()
-    (ROOT / "universe24/results/gravity/GFIX_static.json").write_text(json.dumps(out, indent=1) + "\n")
+    Path("runs/demos/gravity").mkdir(parents=True, exist_ok=True)
+    (Path("runs/demos/gravity/GFIX_static.json")).write_text(json.dumps(out, indent=1) + "\n")
     print(json.dumps(out, indent=1))
 
 

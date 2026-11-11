@@ -6,7 +6,8 @@ state that is fed back into a run (AGENTS item 10). Exact integer / Fraction sta
 * source_of_stored / sources_hbar: s_g = u_g - stencil (exact) and the hbar sources Box hbar = 2 s_hbar + ledger.
 * conservation_defect: D_mu s^{mu nu} of the board's metric source (exact integers; THEOREM: not 0, G-NOGO-a).
 * b3_offdiagonal_wall, two_time_cycle_wall: the two walls, demonstrated by the package's own validators.
-* polarisation_count: exact (sympy) count of the gauge-invariant content of constraint-satisfying null data in LATTICE momenta.
+* polarisation_count: exact (sympy) count on an imposed null-momentum and harmonic-constraint ansatz. This is not a
+  proof that the interacting integer dynamics enforces those constraints or propagates only two physical modes.
 """
 from __future__ import annotations
 
@@ -155,11 +156,13 @@ def two_time_cycle_wall() -> dict:
 
 # ------------------------------------------------------------------ polarisations (exact algebra in lattice momenta)
 def polarisation_count(ks=((3, 4, 0), (1, 2, 2), (2, 3, 6))) -> list:
-    """For each spatial lattice momentum K (integers stand for 2 sin(k_d/2), any scale) and K_0 = c |K| with c a positive
-    symbol: the exact board dispersion makes K null (4 sin^2(w/2) = c^2 Sum 4 sin^2(k_d/2) <=> K_0^2 = c^2 |K|^2). Count, over
-    the 10-dim space of hbar: constraint K^mu hbar_{mu nu} = 0 (rank 4), gauge directions K_mu xi_nu + K_nu xi_mu - eta K.xi
-    inside it (rank 4), and the rank of the linearised Riemann map on the constraint surface (= physical polarisations).
-    Time coordinate x^0 = c t (so K^0 = -K_0/c = -|K|)."""
+    """For each nonzero spatial K, impose K_0 = c |K|. The integer tuples represent scaled lattice momenta; they are
+    not required to be allowed modes of a particular finite periodic board. This null ansatz is motivated by the
+    free, remainder-free stencil symbol 4 sin^2(w/2) = c^2 Sum 4 sin^2(k_d/2).
+    On the ten-dimensional space of hbar, count the imposed harmonic constraint K^mu hbar_{mu nu}=0, the gauge
+    directions K_mu xi_nu + K_nu xi_mu - eta K.xi inside it, and the linearised Riemann rank on its nullspace.
+    The legacy result key 'physical_polarisations' names that last algebraic rank. It does not establish dynamical
+    constraint preservation, source conservation or a physical graviton in Rule3. Time is rescaled as x^0=c t."""
     import sympy as sp
     out = []
     for K in ks:

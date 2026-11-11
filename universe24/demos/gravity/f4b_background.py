@@ -5,7 +5,7 @@ Sum_x h00 is exactly frozen. Self-consistent first-order matter (stress -> hij -
 with noise, a clock-pair load; light and load read b(h00) one-way (designated test reads).
 
 Usage: OMP_NUM_THREADS=1 nice -n 10 python universe24/demos/gravity/f4b_background.py
-Writes results/gravity/F4b.json.
+Writes runs/demos/gravity/F4b.json.
 """
 from __future__ import annotations
 
@@ -28,7 +28,7 @@ from universe24.observe import gravity as og
 from universe24.prepare import gravity as pg
 from universe24.prepare import vacuum_state
 
-OUT = ROOT / "universe24/results/gravity"
+OUT = Path("runs/demos/gravity")
 WHY = ("F4b test read of the OD2 accumulator lapse b(h00) (one-way: the accumulator stays rounding-free; the energy "
        "enters through the prepared Hamiltonian-constraint data R-a and the stress chain)")
 

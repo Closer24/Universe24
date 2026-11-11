@@ -126,6 +126,8 @@ For a node x, first evaluate its G inputs uₓ from the fixed tensor and the old
 
 The repository's core/tensor.py constructs and validates the inputs; core/engine.py implements the shared step and inverse; layers/one.py selects the default tensor; prepare/one.py constructs the seed; observe/ computes diagnostics. The run loop repeatedly calls Engine.step. There is no separate update for a spinor, vector, clock or click.
 
+The [system map](SYSTEM_MAP.md) identifies the actual dependency graph and gives the inverse/locality argument with its scope. The default has six independent namespace groups; the common engine does not couple them merely by evaluating them in one array. Field names, observer labels and link metadata do not change the numerical update for a fixed indexed polynomial.
+
 ### A8. The seed, vacuum and what remains free
 
 Choose the fixed tensor and its parameters, L, and every initial a,b,r value before the run. Default ONE's background construction uses r*=3Q−1 where its complete system preparation specifies that vacuum. The standalone L0 builder also supports the Q-scaled r=2Q vacuum for its isolated arithmetic tests. Use the declared preparation for the selected construction.
@@ -141,6 +143,8 @@ For two consecutive snapshots define ℓ=b′+a. An official-stream event requir
 Let δ=(r′−r) mod D. Its arithmetic class is C0 for δ=0 or δ=D/2; C1 for 0<δ<D/2; and C2 for D/2<δ<D. At D=6 this agrees with the original three-class remainder convention. Gear metadata additionally labels observables as official or audit; select the declared observable sector explicitly.
 
 This classification is calculated after a transition. It does not choose the transition, erase alternatives, or impose an entropy gradient. A physical record and its backreaction must come from gears already present in T. A C2 event is not, by definition, collapse of a wavefunction.
+
+For the current matched cosmic preparation, ell_dp−ell_dm=I and Delta_b_next=I−Delta_a, where I=b_M1²+b_M2². Together with the hand's dependence on the recording pair only through Delta, this makes its future reader/hand history independent of the load split and token under the declared conditions. The [explicit proof](SYSTEM_MAP.md#a-precise-obstruction-to-the-current-choice-interpretation) rules out describing these records as selecting different future hand/reader trajectories in this preparation.
 
 ### A10. Exact identities and conditional statistics
 
@@ -171,6 +175,8 @@ The cosmic block contains a hand Θ, two readers M1,M2, two loads Lp,Lm and two 
 ### A13. Validation and source of truth
 
 The executable source of truth is the public repository's default one_system() construction and its tests. The default dynamics fingerprint is 77f6d251a8adfb2e4727bd2bd5ffeaa0e2ae3538aac393fe95c497fce754acf6. This identifies the indexed polynomial dynamics; it is not a physical validation certificate.
+
+The compatibility field name dynamics_fingerprint excludes Q. A complete law identifier is (dynamics_fingerprint, Q), or the full tensor fingerprint when Q is recorded. Rank four, exact arithmetic and a fixed tensor specify an executable construction; they do not establish all of its proposed physical interpretations.
 
 The repository migration preserves the default complete-state traces and keeps the exact cube algebra inside ONE. The old independent runtime is available only through Git history. Its results are not silently reclassified as ONE results. Current validation commands and actual outcomes are recorded in docs/VALIDATION.md.
 
