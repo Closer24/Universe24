@@ -288,6 +288,14 @@ requested growth between bursts. This gate remains open.
 
 ## Sources and reproduction
 
+The follow-up [integration synthesis](research/synthesis/08-interface-synthesis.md)
+connects the projective refinement proposal to held-out geometry, exact bit-growth,
+gauge/readout, reversible comparison, compatible-identity and reciprocal-matter
+controls. These are source-only research programs, not additional installed
+universes or a concatenated physical tensor. Their independently reproduced
+successes and failures are retained; no acceptance gate is promoted by their
+execution. Run `python -m validation.synthesis.run_all --out runs/synthesis`.
+
 The mathematical source ledger and derivations are preserved in
 [Frame48 research](FRAME48_RESEARCH.md), [integer ADM](INTEGER_ADM.md),
 [compact FLRW](COMPACT_FLRW_CLOCKS.md), [compact null wave](COMPACT_NULL_WAVE.md),

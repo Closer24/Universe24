@@ -62,6 +62,11 @@ jobs:
           node validation/check_board_logic.cjs runs/one-system-board.html
       - name: Projective integer refinement and retained physical negative controls
         run: python -m validation.geometry.team48.refinement_run_audits
+      - name: Integration research controls and independent algebra review
+        run: |
+          python -m validation.synthesis.run_all --out runs/synthesis
+          python -m validation.synthesis.independent_review --out runs/synthesis/independent_review.json
+          python -m validation.synthesis.interface_contract --out runs/synthesis/interface_contract.json
       - name: Test evidence
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
