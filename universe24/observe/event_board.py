@@ -15,7 +15,7 @@ def encoded(value):
             'denominator_hex': format(value.denominator, 'x')}
 
 
-def export_event_board(program, state, parameters, out):
+def export_event_board(program, state, parameters, out, *, causal_wave=None):
     out = Path(out)
     fields = parameters['fields']
     dt, dx = Fraction(parameters['dt']), Fraction(parameters['dx'])
@@ -70,6 +70,8 @@ def export_event_board(program, state, parameters, out):
                'charge_diagnostics': charges, 'provenance': provenance,
                'meaning': 'Metric, matter and stress decoded from one retained Engine state; physical snapshots use a declared coordinate chart.',
                'limits': 'Classical complex scalar and single-stream dark dust. No quantum particle count, electromagnetic interaction or annihilation model. Finite compiled horizon and numerical constraint errors.'}
+    if causal_wave is not None:
+        payload['causal_wave'] = causal_wave
     if hasattr(program,'assembly'):
         payload['channel_allocation']=program.assembly.manifest(include_channels=False)
         payload['channel_allocation']['physical_fields_per_event']=len(fields)
@@ -103,6 +105,11 @@ details{margin-top:15px}summary{cursor:pointer;color:#8edbd1}.limit{border-left:
 <label>z slice <select id="slice"></select></label><label>Color <select id="field"><option value="charge">Signed scalar charge</option><option value="rho_dark">Dark density</option><option value="rho">Total energy density</option><option value="g00">Spatial metric γxx</option><option value="H">Hamiltonian residual</option></select></label></div>
 <div class="grid"><section class="card"><div class="stats"><span>COORDINATE TIME<strong id="clock"></strong></span><span>READY MICROTICK<strong id="tick"></strong></span><span>BOARD EVENTS<strong id="events"></strong></span></div><canvas id="board" width="780" height="650" aria-label="Event board slice"></canvas><div class="key"><span id="min"></span><span id="max"></span></div><p class="caption">Click a node to inspect its metric and source. Lines are shared spatial links; their lengths are computed from the metric, not this diagram's pixel spacing.</p></section>
 <section class="card"><h2 id="nodeTitle">Event</h2><table id="values"></table><details open><summary>Spacetime metric gμν</summary><pre id="metric"></pre></details><details><summary>Independent source Tμν</summary><pre id="stress"></pre></details><details><summary>Einstein constraints</summary><pre id="constraints"></pre></details><details><summary>Retained register provenance</summary><pre id="registers"></pre></details></section></div>
+<section class="card" id="wavePanel" hidden><h2>Local wave → C2 memory → response</h2>
+<p>Experimental probe on the same board. The cone is a bound in Engine microticks; it is not the metric light cone of the Einstein solution.</p>
+<div class="controls"><label>Microtick <input id="waveTime" type="range" min="0" value="0"><span id="waveTick"></span></label><label>z slice <select id="waveSlice"></select></label></div>
+<canvas id="waveBoard" width="780" height="650" aria-label="Local wave, retained memory and actual C2 events"></canvas>
+<p class="caption">Cyan: packet. Orange: memory. Purple: response field. White ring: actual C2 in this update. Square: detector. Shading: conservative causal cone from the complete initial wave state. Click a node to inspect its retained values.</p><pre id="waveNode"></pre><p class="caption" id="waveInfo"></p></section>
 <section class="card" style="margin-top:18px"><h2>Channel ownership</h2><p id="channelSummary"></p><table id="channels"></table><p class="caption">Each owner has a disjoint retained range. Communication and experimental probes are computational controls; they do not add a second metric or stress source to this physical board. Full allocation: channels.json.</p></section>
 <p class="limit" id="limit"></p><p class="caption" id="fingerprint"></p>
 <script type="application/json" id="data">__PAYLOAD__</script>
@@ -121,4 +128,23 @@ if(!events.some(e=>e.node===selected))selected=events[0].node;const e=frame.even
 $('values').replaceChildren();for(const [k,v]of Object.entries({...e.energy,charge:e.charge,phi:e.fields.phi,chi:e.fields.chi??0})){const row=$('values').insertRow();row.insertCell().textContent=k;row.insertCell().textContent=number(v)}
 $('metric').textContent=matrix(e.metric);$('stress').textContent=matrix(e.stress);$('constraints').textContent=JSON.stringify(e.constraints,null,2);$('registers').textContent=JSON.stringify(data.provenance[frame.step],null,2)}
 for(const id of ['time','slice','field'])$(id).addEventListener('input',render);$('board').addEventListener('click',ev=>{const r=$('board').getBoundingClientRect(),x=(ev.clientX-r.left)*780/r.width,y=(ev.clientY-r.top)*650/r.height;let p=points.reduce((a,b)=>Math.hypot(a.x-x,a.y-y)<Math.hypot(b.x-x,b.y-y)?a:b);selected=p.e.node;render()});render();
+if(data.causal_wave){
+const wave=data.causal_wave,wctx=$('waveBoard').getContext('2d');let waveSelected=0,wpoints=[];
+$('wavePanel').hidden=false;$('waveTime').max=wave.frames.length-1;
+for(let z=0;z<data.L;z++)$('waveSlice').add(new Option(z,z));$('waveSlice').value=wave.preparation.source[2];
+$('waveInfo').textContent=wave.meaning+' First C2: '+(wave.first_C2_microtick??'none')+'; C2 records: '+wave.C2_records+'.';
+function renderWave(){const f=wave.frames[+$('waveTime').value],z=+$('waveSlice').value;$('waveTick').textContent=' '+f.microtick;
+wctx.clearRect(0,0,780,650);wpoints=f.nodes.map((n,i)=>({n,i,x:85+n.grid[0]*610/(data.L-1),y:560-n.grid[1]*470/(data.L-1)})).filter(p=>p.n.grid[2]===z);
+for(const p of wpoints){const within=wave.preparation.initial_support.some(s=>p.n.grid.reduce((v,a,k)=>v+Math.min(Math.abs(a-s[k]),data.L-Math.abs(a-s[k])),0)<=f.microtick);
+const radius=Math.min(32,160/data.L),packet=p.n.packets_hex.some(v=>v!=='0'),memory=p.n.memory_hex.slice(0,2).some(v=>v!=='0'),response=p.n.response_hex!=='0';
+if(within){wctx.fillStyle='#223746';wctx.fillRect(p.x-radius-8,p.y-radius-8,2*radius+16,2*radius+16)}
+wctx.beginPath();wctx.fillStyle=packet?'#6de5dc':memory?'#efaa57':response?'#b194ef':'#101d28';wctx.arc(p.x,p.y,radius,0,Math.PI*2);wctx.fill();
+wctx.strokeStyle=f.clicks.some(c=>c[1]===p.i&&c[2]===2)?'#ffffff':'#476477';wctx.lineWidth=3;wctx.stroke();
+if(p.n.detector){wctx.strokeStyle='#efaa57';wctx.strokeRect(p.x-radius-4,p.y-radius-4,2*radius+8,2*radius+8)}
+wctx.fillStyle='#dae9f5';wctx.font='13px monospace';wctx.textAlign='center';wctx.fillText(p.n.grid.join(','),p.x,p.y+radius+24)}
+if(!wpoints.some(p=>p.i===waveSelected))waveSelected=wpoints[0].i;
+$('waveNode').textContent=JSON.stringify({microtick:f.microtick,node:waveSelected,...f.nodes[waveSelected],actual_clicks:f.clicks.filter(c=>c[1]===waveSelected)},null,2)}
+for(const id of ['waveTime','waveSlice'])$(id).addEventListener('input',renderWave);
+$('waveBoard').addEventListener('click',ev=>{const r=$('waveBoard').getBoundingClientRect(),x=(ev.clientX-r.left)*780/r.width,y=(ev.clientY-r.top)*650/r.height;waveSelected=wpoints.reduce((a,b)=>Math.hypot(a.x-x,a.y-y)<Math.hypot(b.x-x,b.y-y)?a:b).i;renderWave()});renderWave();
+}
 </script></html>'''

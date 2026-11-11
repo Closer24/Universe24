@@ -26,13 +26,14 @@ class UniverseProgram:
     """
 
     def __init__(self, einstein, parameters, *, communication=True,
-                 probe_experiment=False, max_channels=None):
-        if type(communication) is not bool or type(probe_experiment) is not bool:
+                 probe_experiment=False, causal_wave=False, max_channels=None):
+        if any(type(v) is not bool for v in (communication, probe_experiment, causal_wave)):
             raise TypeError('component selections must be booleans')
         self.einstein = einstein
         self.parameters = dict(parameters)
         self.communication = communication
         self.probe_experiment = probe_experiment
+        self.causal_wave = causal_wave
         parts = [Component('einstein', einstein.tensor,
                            'coupled ADM metric, scalar matter and dark dust')]
         self.message_system = None
@@ -43,8 +44,14 @@ class UniverseProgram:
                                    'six transport lanes and 48 reference receiver channels; no gravitational source', 'audit'))
         if probe_experiment:
             from universe24.layers.transported_probe import build
-            parts.append(Component('probe_experiment', build(),
+            self.probe_tensor = build()
+            parts.append(Component('probe_experiment', self.probe_tensor,
                                    '26-channel independent test chart; general common-metric gate failed', 'audit'))
+        if causal_wave:
+            from universe24.layers.causal_wave import with_causal_wave
+            self.wave_tensor = with_causal_wave()
+            parts.append(Component('causal_wave', self.wave_tensor,
+                                   'local packet arrival, C2 memory and response; computational cone, no Einstein source', 'audit'))
         self.assembly = ChannelAssembly(parts, max_channels=max_channels)
         self._mapped = replace(einstein, tensor=self.assembly.tensor,
                                names={wire: 'einstein.' + name for wire, name in einstein.names.items()})
@@ -59,8 +66,13 @@ class UniverseProgram:
             seeds['communication'], _ = reference_seed(self.message_system, tensor, L)
         if self.probe_experiment:
             from universe24.prepare.transported_probe import prepare
-            tensor = self.assembly.components[-1].tensor
-            seeds['probe_experiment'] = prepare(tensor, L=L)
+            seeds['probe_experiment'] = prepare(self.probe_tensor, L=L)
+        if self.causal_wave:
+            import numpy as np
+            from universe24.core import State
+            from universe24.prepare.causal_wave import default_causal_wave
+            empty = State(L, *[np.zeros((self.wave_tensor.G, L**3), dtype=object) for _ in range(3)])
+            seeds['causal_wave'], _ = default_causal_wave(empty, self.wave_tensor)
         return self.assembly.pack(seeds)
 
     def channel_manifest(self, *, include_channels=True):
@@ -101,7 +113,7 @@ class UniverseProgram:
         if self.probe_experiment:
             from universe24.observe.transported_probe import sample
             rows['probe'] = sample(self.assembly.extract(after, 'probe_experiment'),
-                                   self.assembly.components[-1].tensor, tick)
+                                   self.probe_tensor, tick)
             rows['probe']['independent_test_metric'] = True
             rows['probe']['general_common_metric_validated'] = False
         return rows

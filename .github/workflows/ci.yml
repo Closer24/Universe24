@@ -30,6 +30,8 @@ jobs:
         run: python -m unittest discover -s universe24/tests -t . -v
       - name: Default Universe24 forward run and exact rewind
         run: python -m universe24 --L 3 --steps 1 --out runs/smoke --rewind
+      - name: Local wave, actual C2 response and complete rewind
+        run: python -m universe24 --L 3 --steps 1 --causal-wave --out runs/causal-wave --rewind
       - name: Canonical tensor integration inventory
         run: python -m universe24.tools.system_inventory --out runs/system-inventory.json
       - name: Saved tensor, seed and official click decoder
