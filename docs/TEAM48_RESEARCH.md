@@ -6,6 +6,15 @@ cross-checked the algebra, integer encoding, geometry, sources, constraints,
 numerics and invariant subflows. Their shared discussion is
 [issue #17](https://github.com/Closer24/Universe24/issues/17).
 
+The subsequently published [one-system contract, issue #40](https://github.com/Closer24/Universe24/issues/40),
+governs acceptance and integration. This document compares **research proposals**;
+it does not establish a menu of supported physical universes. None passes all
+of that contract's gates. The existing 4,825-channel ADM implementation is a
+validation reference and fails its total 48-channel cap. No proposal here is
+promoted to the supported runtime. Allocation/construction findings belong in
+#40; the shared-metric apparatus handoff belongs in
+[issue #41](https://github.com/Closer24/Universe24/issues/41).
+
 The useful result is an actual fixed-six **41-channel charged scalar,
 Maxwell and nonnegative normal-dust candidate**, with one geometric frame,
 and a separately tested **44-channel positive-frame variant**.

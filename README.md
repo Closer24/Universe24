@@ -35,6 +35,10 @@ research candidates: constraint errors, metric validity and a general integer
 refinement family remain explicit gates. Run
 `python -m experiments.geometry.team48.candidate` for the actual allocation;
 the default event board and its channel count are unchanged.
+These encodings are proposals under the
+[one-system, total-48-channel acceptance contract](https://github.com/Closer24/Universe24/issues/40),
+not additional supported physical runtimes. The existing oversized default
+also fails that new architecture's budget.
 
 ## Run the event board
 
