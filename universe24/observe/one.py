@@ -59,7 +59,7 @@ class CosmicView:
 
 
 class CosmicLedger:
-    """Running exact ledgers of the cosmic block (initial tokens read from the seed)."""
+    """Exact state-derived carry ledgers. Weights are not counts of official click records."""
 
     def __init__(self, view: CosmicView, seed: State, h: int, c_pair: int):
         self.v, self.h, self.D, self.c = view, h, view.D, c_pair
@@ -144,13 +144,18 @@ def knz(state: State, rows, N: int) -> list:
 
 
 def state_hash(state: State, rows) -> str:
-    h = hashlib.sha256()
+    """Canonical exact-value hash, independent of int64/object storage.
+
+    Format v2 includes geometry and subset shape. Pre-v2 run hashes are not
+    comparable: they encoded int64 bytes on one execution path and text on another.
+    """
+    h = hashlib.sha256(b"universe24-state-values-v2|")
+    h.update(str(state.L).encode())
     for arr in (state.a, state.b, state.r):
         sub = np.asarray(arr[rows])
-        if sub.dtype == OBJ:
-            h.update(",".join(str(int(x)) for x in sub.ravel()).encode())
-        else:
-            h.update(np.ascontiguousarray(sub.astype(np.int64)).tobytes())
+        h.update(str(sub.shape).encode())
+        h.update(b":")
+        h.update(",".join(str(int(x)) for x in sub.ravel()).encode())
         h.update(b"|")
     return h.hexdigest()
 

@@ -303,6 +303,16 @@ def extract_clicks(tensor: Tensor, D: int, before: State, after: State, step: in
 class Engine:
     """Rule3 on every gear, one divisor D = 6Q, one tensor. No physics, no per-type branch."""
 
+    def __setattr__(self, name, value):
+        if name in ("tensor", "Q", "D") and hasattr(self, name):
+            raise AttributeError("Engine law is fixed; construct a new engine before a run")
+        object.__setattr__(self, name, value)
+
+    def __delattr__(self, name):
+        if name in ("tensor", "Q", "D"):
+            raise AttributeError("Engine law is fixed")
+        object.__delattr__(self, name)
+
     def __init__(self, tensor: Tensor, Q: int = 1):
         if not isinstance(tensor, Tensor):
             raise TypeError("expected a validated Tensor")

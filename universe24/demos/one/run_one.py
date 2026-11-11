@@ -79,6 +79,10 @@ def theorem_o_a_structural(T) -> dict:
 
 
 def run(args) -> dict:
+    if args.tmax < 1 or not math.isfinite(args.budget) or args.budget <= 0:
+        raise ValueError("tmax and the finite wall budget must be positive")
+    if args.couple and args.uncoupled:
+        raise ValueError("choose either --couple or --uncoupled")
     t_wall = time.time()
     skw = {}
     if args.couple:
@@ -113,7 +117,14 @@ def run(args) -> dict:
     meta = {"tag": args.tag, "start": utc(), "L": L, "bang": args.bang, "rng": args.rng, "tmax": args.tmax,
             "budget_s": args.budget, "Q": Q, "G": T.G, "monomials": len(T), "rank": T.rank,
             "designations": len(T.designations), "dynamics_fingerprint": T.dynamics_fingerprint,
-            "fingerprint": T.fingerprint, "cosmic_params": {k: cp[k] for k in ("theta0", "h", "k_theta", "g_w", "c_pair", "load_sum")},
+            "fingerprint": T.fingerprint, "state_hash_format": "universe24-state-values-v2",
+            "initial_state_hash": state_hash(s0, np.arange(T.G)),
+            "observation_semantics": {"matter_clicks": "official changed-triple records",
+                "pair_event_nodes": "nodes with official pair records", "pair_records": "official pair records",
+                "pair_events": "legacy name: signed pair quotient weight, NOT number of click records",
+                "born": "state-dependent quotient-weight ledger, NOT click-record probabilities",
+                "outcomes_file": "raw dp quotient weights including non-click fixed points"},
+            "cosmic_params": {k: cp[k] for k in ("theta0", "h", "k_theta", "g_w", "c_pair", "load_sum")},
             "seed": rep, "theorem_o_a_structural": theorem_o_a_structural(T), "system_kw": {k: str(v) for k, v in skw.items()},
             "coupling": S.info["one"].get("coupling")}
     print(json.dumps({k: meta[k] for k in ("tag", "start", "G", "monomials", "dynamics_fingerprint")}), flush=True)
@@ -121,7 +132,7 @@ def run(args) -> dict:
     Dhist = {0: v.delta(s0)}
     win, windows = None, []
     def new_win():
-        return {"t0": None, "matter_clicks": 0, "pair_event_nodes": 0, "pair_events": 0, "pkg_official": 0,
+        return {"t0": None, "matter_clicks": 0, "pair_event_nodes": 0, "pair_events": 0, "pair_records": 0, "pkg_official": 0,
                 "pkg_official_by_ns": {}}
     win = new_win()
     sampled = {"click_ledger_checks": 0, "click_ledger_fail": 0, "lorenz_fail_updates": 0,
@@ -143,11 +154,14 @@ def run(args) -> dict:
         lp = v.quotients(prev, s, "dp")
         lm = v.quotients(prev, s, "dm")
         outc.append(tuple(int(x) for x in lp.ravel()))
-        m1q, m2q = v.quotients(prev, s, "M1"), v.quotients(prev, s, "M2")
-        win["matter_clicks"] += int(np.sum(m1q != 0) + np.sum(m2q != 0))
-        win["pair_event_nodes"] += int(np.sum((lp != 0) | (lm != 0)))
-        win["pair_events"] += int(np.sum(lp - lm))
-        cl = E.clicks(prev, s)
+        cl = E.clicks(prev, s, t).select("official")
+        if win["t0"] is None:
+            win["t0"] = t - 1  # interval is (t0, t_end]
+        win["matter_clicks"] += int(np.sum(np.isin(cl.gear, mrows)))
+        pair = np.isin(cl.gear, [v.rows["dp"], v.rows["dm"]])
+        win["pair_event_nodes"] += len(set(int(n) for n in cl.node[pair]))
+        win["pair_records"] += int(np.sum(pair))
+        win["pair_events"] += int(np.sum(lp - lm))  # legacy signed carry-weight account
         offi = [g for g, lab in zip(cl.gear, cl.label) if lab == "official" and ns_of[g] != COSMIC_NS]
         win["pkg_official"] += len(offi)
         for g in offi:
@@ -187,6 +201,9 @@ def run(args) -> dict:
         prev = s
         if mb > 200 or time.time() - t_wall > args.budget:
             break
+    if win["t0"] is not None:
+        win["t_end"] = t_end
+        windows.append(win)
     s_final = prev
     wall_fwd = time.time() - t_wall
     # ------------------------------------------------------------ zeros of the board-mean hand + THEOREM O defects
@@ -248,7 +265,7 @@ def run(args) -> dict:
         rewind = {"exact": bool(E.rewind(s_final, t_end).same_as(s0)), "updates": t_end, "wall_s": round(time.time() - t1, 1)}
     out = {"meta": meta, "end": utc(), "t_end": t_end, "wall_forward_s": round(wall_fwd, 1), "engine_stats": dict(E.stats),
            "max_pkg_bits": maxbits_seen, "rewind": rewind, "cosmic_ledger_failures": led.fail,
-           "cosmic_ledger_checks": led.checks, "events_total": led.events_total, "born": born,
+           "cosmic_ledger_checks": led.checks, "events_total": led.events_total, "born": born, "carry_weight_frequencies": born,
            "sampled_ledgers": sampled, "zeros": zeros, "echo_minima_cosmic_b": mins_c[:40],
            "echo_minima_cosmic_ab": mins_cab[:40], "echo_minima_pkg_matter": mins_p[:60], "echo_minima_cosmic_knz": mins_k[:40], "bangs_lt_0.05": bangs,
            "bang_times": bt, "pkg_matter_distance_at_bangs": pkg_at_bangs,
@@ -260,6 +277,10 @@ def run(args) -> dict:
 
 def compare(a: dict, b: dict) -> dict:
     """T4: bit-identical history (hand+matter, package, Delta) vs differing outcomes (pairs, loads)."""
+    fmt_a = a.get("meta", {}).get("state_hash_format", "legacy-v1")
+    fmt_b = b.get("meta", {}).get("state_hash_format", "legacy-v1")
+    if fmt_a != fmt_b:
+        raise ValueError("state hash formats differ; rerun both preparations with the same format")
     ha, hb = a["hashes"], b["hashes"]
     n = min(len(ha), len(hb))
     same = {"hand_matter": 0, "package": 0, "delta": 0, "pairs_loads": 0}
@@ -272,7 +293,7 @@ def compare(a: dict, b: dict) -> dict:
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--L", type=int, default=6)
-    ap.add_argument("--bang", default="jpure")
+    ap.add_argument("--bang", choices=("jpure", "s2star", "none"), default="jpure")
     ap.add_argument("--rng", type=int, default=13)
     ap.add_argument("--tmax", type=int, default=1200)
     ap.add_argument("--budget", type=float, default=1500.0)
@@ -308,7 +329,7 @@ def main(argv=None):
                                                "lit_entries": lit, "differing_over_lit": diff / lit if lit else None}
     (od / f"{args.tag}.json").write_text(json.dumps(out, default=str))
     summ = {k: out[k] for k in ("t_end", "wall_forward_s", "max_pkg_bits", "rewind", "cosmic_ledger_failures",
-                                "born", "sampled_ledgers", "bang_times", "zeros")}
+                                "carry_weight_frequencies", "sampled_ledgers", "bang_times", "zeros")}
     summ["echo_minima_cosmic_b"] = out["echo_minima_cosmic_b"][:12]
     summ["pkg_matter_distance_at_bangs"] = out["pkg_matter_distance_at_bangs"]
     summ["echo_minima_pkg_matter"] = out["echo_minima_pkg_matter"][:20]

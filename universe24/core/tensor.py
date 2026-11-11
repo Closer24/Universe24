@@ -21,10 +21,12 @@ The input of the gear of type t at node x is
 read from the SAME complete previous snapshot, and the gear runs Rule3 with K = 2u (coefficients are coefficients of
 u, so K is even by construction).
 
-Locality (theorem B3, enforced at construction)
+Storage locality (theorem B3, enforced at construction)
     The target node (offset 0) and every factor offset must lie in {0, e} for ONE face direction e: a monomial lives
-    on one node or on one face link. Edge offsets (1,1,0), diagonal offsets (1,1,1), longer offsets (2,0,0) and
+    on one or two neighboring storage sites. Edge offsets (1,1,0), diagonal offsets (1,1,1), longer offsets (2,0,0) and
     monomials touching three nodes (e.g. factors at +e_x and -e_x) raise ``LocalityError``.
+    Including both geometric endpoints of link gears is a stronger condition: ``strict_support=True`` checks it.
+    The default construction satisfies storage locality but contains terms spanning two geometric edges.
 
 Two-time reads
     A factor with field "a" is a two-time read. The graph "gear g's a is read by gear t" must be ACYCLIC (a self-read
@@ -42,6 +44,7 @@ import hashlib
 import json
 from dataclasses import dataclass, field
 from typing import Iterable, Sequence
+from types import MappingProxyType
 
 from .lattice import DIRECTIONS, ZERO, offset_tuple
 
@@ -153,6 +156,14 @@ class Tensor:
 
     __slots__ = ("gears", "monomials", "stages", "designations", "Q", "_index")
 
+    def __setattr__(self, name, value):
+        if hasattr(self, name):
+            raise AttributeError("Tensor is immutable; construct a new tensor before a run")
+        object.__setattr__(self, name, value)
+
+    def __delattr__(self, name):
+        raise AttributeError("Tensor is immutable")
+
     def __init__(self, gears: Sequence, monomials: Iterable, designated_one_way: Iterable = (),
                  strict_support: bool = False, Q: int | None = None, q_lattice: Iterable[str] = ()):
         if Q is not None and (type(Q) is not int or Q < 1):
@@ -177,7 +188,7 @@ class Tensor:
                 raise ValueError(f"duplicate gear name {g.name!r}")
             index[g.name] = i
         self.gears = tuple(gear_list)
-        self._index = index
+        self._index = MappingProxyType(index)
         merged: dict[tuple[int, tuple[Factor, ...]], int] = {}
         designations: dict[tuple[int, tuple[Factor, ...]], str] = {}
         for raw in monomials:
@@ -197,7 +208,7 @@ class Tensor:
         mons.sort(key=lambda m: (m.target, m.degree, m.factors))
         self.monomials = tuple(mons)
         live = {(m.target, m.factors) for m in mons}
-        self.designations = {k: v for k, v in sorted(designations.items()) if k in live}
+        self.designations = MappingProxyType({k: v for k, v in sorted(designations.items()) if k in live})
         self.stages = inverse_stages(len(self.gears), self.monomials)
         q_lattice = tuple(q_lattice)
         if q_lattice:

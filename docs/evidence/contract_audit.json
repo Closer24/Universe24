@@ -1,0 +1,332 @@
+{
+  "tensor": {
+    "gears": 382,
+    "rank": 4,
+    "max_input_degree": 3,
+    "shared_Q": 8589934593,
+    "shared_D": 51539607558,
+    "monomials": 18592,
+    "census": {
+      "node": 3456,
+      "link": 15136,
+      "by_degree": [
+        0,
+        2338,
+        14320,
+        1934
+      ]
+    },
+    "storage_local": true,
+    "inverse_stage_sizes": [
+      365,
+      1,
+      16
+    ],
+    "link_gear_types": 90,
+    "strict_one_link_physical_support_violations": 3300,
+    "physical_support_max_manhattan_diameter": 2,
+    "physical_violations_by_output": {
+      "su2": 384,
+      "su3": 2376,
+      "u1": 120,
+      "em": 18,
+      "metric": 18,
+      "wsu2": 384
+    },
+    "dynamics_fingerprint": "77f6d251a8adfb2e4727bd2bd5ffeaa0e2ae3538aac393fe95c497fce754acf6",
+    "full_tensor_fingerprint": "115379ac323c1e423885da605bc22daa12c2c0910bc4f2e7ecd96f048889fc80"
+  },
+  "scalar_oracle": {
+    "gear_transitions": 2292,
+    "ordinary_and_bigint": true,
+    "mismatches": 0
+  },
+  "forward_cone": {
+    "L": 7,
+    "origin": [
+      3,
+      3,
+      3
+    ],
+    "perturbation": "cosmic.M1 b += 1024 in initial state only",
+    "steps": [
+      {
+        "step": 1,
+        "changed_sites": 7,
+        "outside_cone": 0
+      },
+      {
+        "step": 2,
+        "changed_sites": 25,
+        "outside_cone": 0
+      },
+      {
+        "step": 3,
+        "changed_sites": 63,
+        "outside_cone": 0
+      }
+    ]
+  },
+  "run": {
+    "L": 4,
+    "steps": 120,
+    "rng_seed": 13,
+    "seed_report": {
+      "bang": {
+        "kind": "J-pure (prepare.chiral.jpure_seed, rng 31, width 6), norm-matched (emerge_run)",
+        "norm_ratio_at_2^16": 102.09198433998972,
+        "A_J": 8192,
+        "report": {
+          "A": 8192,
+          "L": 4,
+          "float_projection_Rstar_error": 8.881784197001252e-16,
+          "exact_Rstar_fixed_matter": true,
+          "J_minus_fraction": 8.51148242803071e-09,
+          "N_J": -322360881844730459400,
+          "nonzero_integers": 2048
+        }
+      },
+      "cosmic": {
+        "c2": [
+          0,
+          0,
+          0
+        ],
+        "theta0": 16777216,
+        "A_c": 1024,
+        "rng_seed": 13,
+        "x0": [
+          0,
+          0,
+          0
+        ],
+        "packet": {
+          "M1": {
+            "b": [
+              [
+                0,
+                0,
+                0
+              ]
+            ],
+            "a": [
+              [
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          "M2": {
+            "b": [
+              [
+                1,
+                0,
+                0
+              ]
+            ],
+            "a": [
+              [
+                3,
+                0,
+                0
+              ]
+            ]
+          }
+        },
+        "sum_I0": 2097152,
+        "load_sum": 14245331,
+        "loads": "p in [S_L/8, 7 S_L/8), p(c2 - x) = p(x)",
+        "tokens": "tok(c2 - x) = R'(tok(x))"
+      },
+      "c2": [
+        0,
+        0,
+        0
+      ]
+    },
+    "initial_hash": "7468db12dee92fdbf4460940770cd2be67aa7853c01d3132894b3027c03b0f3e",
+    "final_hash": "8eb88c83b7cfd1fb8cef3ff03c2adc1082cfed1c9ed2dc53f7c1993f04f1866e",
+    "hash_format": "universe24-state-values-v2",
+    "exact_rewind": true,
+    "observers_passive": true,
+    "tensor_unchanged": true,
+    "remainder_parity": true
+  },
+  "clicks": {
+    "official_records": 152616,
+    "by_namespace": {
+      "matter": 122856,
+      "cosmic": 29760
+    },
+    "by_class": {
+      "1": 76592,
+      "2": 76024
+    },
+    "signed_quotient_sum_by_namespace": {
+      "matter": 496950,
+      "cosmic": 47454610
+    },
+    "records_per_update": [
+      1040,
+      1092,
+      1172,
+      1242,
+      1273,
+      1278,
+      1280,
+      1280,
+      1280,
+      1280,
+      1280,
+      1280,
+      1280,
+      1280,
+      1279,
+      1280,
+      1280,
+      1276,
+      1277,
+      1277,
+      1280,
+      1280,
+      1278,
+      1280,
+      1280,
+      1277,
+      1280,
+      1280,
+      1280,
+      1280,
+      1280,
+      1280,
+      1280,
+      1260,
+      1280,
+      1260,
+      1280,
+      1280,
+      1280,
+      1280,
+      1280,
+      1280,
+      1280,
+      1280,
+      1280,
+      1268,
+      1279,
+      1279,
+      1280,
+      1280,
+      1279,
+      1258,
+      1216,
+      1213,
+      1262,
+      1280,
+      1280,
+      1280,
+      1280,
+      1278,
+      1280,
+      1279,
+      1280,
+      1279,
+      1280,
+      1280,
+      1280,
+      1280,
+      1280,
+      1280,
+      1280,
+      1279,
+      1280,
+      1280,
+      1279,
+      1280,
+      1280,
+      1280,
+      1280,
+      1279,
+      1280,
+      1280,
+      1273,
+      1273,
+      1279,
+      1267,
+      1275,
+      1273,
+      1269,
+      1280,
+      1280,
+      1280,
+      1280,
+      1278,
+      1280,
+      1280,
+      1280,
+      1280,
+      1279,
+      1280,
+      1279,
+      1279,
+      1279,
+      1277,
+      1274,
+      1256,
+      1252,
+      1275,
+      1272,
+      1279,
+      1279,
+      1280,
+      1276,
+      1278,
+      1280,
+      1278,
+      1280,
+      1269,
+      1280,
+      1280
+    ],
+    "excluded_raw_audit_rows": 170659,
+    "excluded_official_fixed_point_carries": 0,
+    "decoder_inputs": "official click records, tensor names and computational step indices only",
+    "saved_event_decoder_matches": true
+  },
+  "clock": {
+    "gear": "cosmic.M1",
+    "node": [
+      0,
+      0,
+      0
+    ],
+    "events": 115,
+    "sign_crossings": 57,
+    "angular_rate_per_update": 1.501959831562176,
+    "interpretation": "diagnostic frequency; no proper-time or physical-unit calibration"
+  },
+  "state_only_diagnostics": {
+    "cosmic_ledger_failures": {
+      "events": 0,
+      "lock": 0,
+      "born": 0,
+      "N_J": 0
+    },
+    "carry_weight_frequencies": {
+      "nodes_with_min_events": 64,
+      "min_events": 10000,
+      "max_abs_dev": 5.080659549738797e-07,
+      "mean_abs_dev": 1.5276864233837104e-07,
+      "total_events": 260698726,
+      "N_plus_total": 154077186
+    },
+    "interpretation": "uses hidden state and quotient weights; NOT click-record probabilities"
+  },
+  "physics_status": "local reversible dynamics and candidate observable patterns; QM/GR not established",
+  "saved_input_replay": {
+    "exact": true,
+    "steps": 120,
+    "tensor": "77f6d251a8adfb2e4727bd2bd5ffeaa0e2ae3538aac393fe95c497fce754acf6"
+  }
+}

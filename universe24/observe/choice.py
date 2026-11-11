@@ -35,7 +35,8 @@ def quotient(tensor: Tensor, before: State, after: State, gear: str, nodes=None)
 
 
 def click_flags(tensor: Tensor, D: int, before: State, after: State) -> np.ndarray:
-    """(G, N) boolean array of OFFICIAL clicks for one update (one call of core's passive readout)."""
+    """(G, N) arithmetic-click flags, including audit-labelled gears.
+    Use observe.readout.official_clicks for the public label-filtered stream."""
     log = extract_clicks(tensor, D, before, after, 1, "official")
     flags = np.zeros((before.G, before.N), dtype=bool)
     flags[np.asarray(log.gear, dtype=np.intp), np.asarray(log.node, dtype=np.intp)] = True
@@ -43,7 +44,7 @@ def click_flags(tensor: Tensor, D: int, before: State, after: State) -> np.ndarr
 
 
 def official(tensor: Tensor, D: int, before: State, after: State, gear: str, nodes=None) -> np.ndarray:
-    """Boolean official-click flags of ``gear`` at every node (or at ``nodes``), from core's passive readout."""
+    """Arithmetic-click flags of the requested gear; no metadata-label filtering."""
     log = extract_clicks(tensor, D, before, after, 1, "official")
     g = tensor.gear_index(gear)
     flags = np.zeros(before.N, dtype=bool)
@@ -53,7 +54,7 @@ def official(tensor: Tensor, D: int, before: State, after: State, gear: str, nod
 
 def kinds(tensor: Tensor, D: int, before: State, after: State, gear: str, nodes=None) -> np.ndarray:
     g = tensor.gear_index(gear)
-    delta = (np.asarray(after.r[g], dtype=np.int64) - np.asarray(before.r[g], dtype=np.int64)) % D
+    delta = (np.asarray(after.r[g], dtype=object) - np.asarray(before.r[g], dtype=object)) % D
     k = handedness_kind(delta, D)
     return k if nodes is None else k[np.asarray(nodes, dtype=np.intp)]
 

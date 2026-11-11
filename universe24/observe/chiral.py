@@ -137,7 +137,8 @@ class ChiralView:
         return int(self.D * np.sum(a * (J.astype(object) @ b)))
 
     def click_wronskian(self, s0: State, s1: State, s2: State) -> int:
-        """W_J for the two updates s0 -> s1 -> s2: sum_x ell1(x)^T J ell0(x), ell_t = b(t+1) + a(t) (click sizes)."""
+        """W_J for the two updates s0 -> s1 -> s2: sum_x ell1(x)^T J ell0(x), ell_t = b(t+1) + a(t).
+        Raw state-derived quotients include non-click fixed points; not an official-event-only observable."""
         m = self.matter
         ell0 = s1.b[m].astype(object) + s0.a[m].astype(object)
         ell1 = s2.b[m].astype(object) + s1.a[m].astype(object)
