@@ -55,6 +55,11 @@ jobs:
           persist-credentials: false
       - name: One runtime reproduces the complete 44-channel proposal state
         run: python -m validation.team48_contract --source validation-reference --out runs/team48-contract
+      - name: Passive geometry, sources and visible constraint defects
+        run: |
+          python -m validation.team48_observables --audit runs/team48-contract --source validation-reference
+          python -m validation.team48_board --observables runs/team48-contract/observables.json --out runs/one-system-board.html
+          node validation/check_board_logic.cjs runs/one-system-board.html
       - name: Projective integer refinement and retained physical negative controls
         run: python -m validation.geometry.team48.refinement_run_audits
       - name: Test evidence

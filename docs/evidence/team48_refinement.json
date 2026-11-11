@@ -8559,6 +8559,9 @@
     "full_main_suite": "passed",
     "historical_pre_migration_suite": "248/249, identifier-only fixed-divisor guard failure corrected; focused guard passed",
     "full_main_suite_tests": 275,
-    "full_main_suite_seconds": 230.953
-  }
+    "full_main_suite_seconds": 230.953,
+    "post_main_readout_merge_focused_tests": 16,
+    "post_main_readout_merge_status": "passed; core/system runtime files unchanged, preserved both CI blocks"
+  },
+  "integration_main": "4c494c1188f70eb8a677bf59765cc6e8571c6b88"
 }

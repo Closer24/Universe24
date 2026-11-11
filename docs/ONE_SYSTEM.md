@@ -236,6 +236,17 @@ trace, clicks and `integration.json` remain in the run evidence. Reported
 physical failures are attributed to the pinned proposal; the adapter itself
 does not rerun a physical convergence or apparatus study.
 
+The passive `validation.team48_observables` reader now reconstructs the same
+saved states into exact rational metric/link diagnostics, energy, momentum,
+stress, electric charge/current and literal sampled constraint defects. It
+checks the fixed source/phase/tensor identities and never supplies an Engine
+input. An independent pinned oracle agrees on all 108 node snapshots of this
+three-step audit. Charge conjugation preserves stress and reverses current in
+the independent tests. The preparation's constraint defects grow strongly;
+this is exposed in `validation.team48_board` rather than presented as Einstein
+acceptance. The displayed curvature uses the retained frame connection and is
+not yet an independent reconstruction from the metric.
+
 The next physical handoff must supply compatible constrained temporal data,
 controlled refinement and a shared-metric apparatus within the same budget.
 Keep all phase-sector, nonzero-remainder, Wronskian and independent
@@ -252,6 +263,28 @@ including memory and any scheduler. It must compare independently generated
 ticks and actual transported signals with the same metric, without importing
 #43's separate 31-channel dynamics or an independent coframe. No accepted
 apparatus implementation or complete physical solution is supplied here.
+
+## Complexity, bursts and local selection
+
+The owner's growth/selection objective is coordinated in
+[issue #45](https://github.com/Closer24/Universe24/issues/45). A structural
+complexity statistic and burst predicate must be declared before optimizing
+or selecting results. Integer magnitude, elapsed time and an external log are
+not substitutes for demonstrated structural novelty.
+
+A deterministic reversible map on a finite state space has periodic orbits;
+a fixed state function cannot strictly increase at every indefinitely recurring
+burst on such an orbit. This does not rule out growth in Universe24's unbounded
+integer state space. A proposal must specify whether it claims finite-window,
+statistical or unbounded-trajectory growth and test that actual claim.
+
+A global complexity score may be a passive diagnostic. Any complexity-based
+choice that changes evolution must live in retained local state and the fixed
+tensor, with influence propagated through face neighbors. All comparison,
+memory and scheduling state counts toward 48. No runtime argmax, discarded
+losing branch, hidden optimizer or relabeling of a density peak is introduced.
+The #43 history/routing evidence narrows this task but does not establish the
+requested growth between bursts. This gate remains open.
 
 ## Sources and reproduction
 
