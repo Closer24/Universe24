@@ -102,10 +102,12 @@ the physical gate that the counterexample refutes remains failed. Passing
 schema/replay checks cannot set C–F to passed. Evidence must identify the seed,
 tensor, protocol, source revision, raw results and domain of its claim.
 
-## Results and limitations of the inherited constructions
+## Results and limitations of inherited and concurrent proposals
 
 The baseline for this consolidation is commit
-`7d238e84a2167a4d3fe7bc7942da0cbf97bd29b2`.
+`7d238e84a2167a4d3fe7bc7942da0cbf97bd29b2`. Concurrent proposals #42 and #43
+were inspected separately at the source pins below; their audit results are
+not a claim that those branches have been merged into this execution package.
 
 | Construction | Retained channels per node | Established result and limiting failure |
 | --- | ---: | --- |
@@ -114,7 +116,11 @@ The baseline for this consolidation is commit
 | Frame48 | 48 | Exact repeated vacuum frame lift; no room in this allocation for matter/apparatus, and explicit constraint/degeneracy/refinement failures. |
 | Compact null profile | 2 | Restricted prepared geometry; no general sourced dynamics or operational clocks. |
 | Compact sourced FLRW | 8 | Exact prepared homogeneous polynomial sector and proper-time/affine counters; no general spatial dynamics or physical detector apparatus. |
-| Coupled frame proposal #39 | 70 | Scalar/dust/frame backreaction and exact lift; exceeds cap before apparatus and retains constraint, refinement and stability failures. |
+| Coupled frame proposal #39 | 70 | Scalar/dust/frame backreaction and exact lift; exceeds cap in this older representation and retains constraint, refinement and stability failures. |
+| Sign-compressed frame proposal #42 | 36 | Same 35 physical fields and both time slices as #39 through a proved phase encoding; different retained arrays and unchanged integrator limitations. |
+| Triangular charged-frame proposal #42 | 41 | Geometry, charged scalar, Maxwell, squared dust and one computational phase; actual coupling within budget, but constraint/refinement failures and no apparatus. |
+| Positive-frame proposal #42 | 44 | The coupled system with diagonal amplitude pairs and a proved positive-determinant sector; a computational temporal mode and explicit physical failures remain. |
+| Joint history/sensor/rotor proposal #43 | 31 | Local retained history changes routing and message density; no shared-metric apparatus, and all 16 declared growth/persistence cases fail. |
 
 Frame48's two individually constrained time slices can evolve to Hamiltonian
 residual 4. The coupled proposal records residual 34 for its corresponding
@@ -127,35 +133,122 @@ for a general in-budget derivation.
 proposal. Its reported zero cross-owner couplings explain why merely combining
 several components into one Engine does not produce one interacting physical
 system. Its selected-click Bell result also illustrates why complete emission
-trials and nondetection controls are necessary. At inspection on 2026-11-11,
-#38 was open and #39 was an open draft; their results are proposal evidence,
-not current-release integration claims.
+trials and nondetection controls are necessary.
+
+The newer [PR #42](https://github.com/Closer24/Universe24/pull/42), inspected at
+`49b896c795203914a939e465d6d39e5b99343259`, resolves an important allocation
+problem: one computational sign phase replaces the second explicit field bank.
+The quadratic encoding compresses #39 from 70 to 36 channels while preserving
+its physical trajectory; triangular gauge reduction then gives 32 scalar/dust,
+38 independent-Maxwell and 41 charged-scalar/Maxwell channels. A separately
+proved staggered phase assignment permits the cubic positive-frame variant
+within 44 channels. These are substantive algebraic results, not merely a
+new count for the old 48-channel vacuum allocation.
+
+The 44-channel variant uses 23 geometric fields, 10 scalar fields, one signed
+dust amplitude, six Maxwell fields, three spatial potentials and one phase.
+Its massless tensor has 585 monomials; every channel retains `(a,b,r)`. The
+remaining four slots are unallocated capacity, not an implemented detector or
+physical clock. Positivity follows from nonzero discrete pair Wronskians;
+exact continuum auxiliary time pairs have zero Wronskians, so the protecting
+seed introduces a computational temporal mode. That mode can grow in a
+contracting control. A separately constrained fixture has first-step
+Hamiltonian residual 2624, momentum component 144 and torsion defect 4 while
+the determinant stays positive. Raw joint steps 1/2, 1/4 and 1/8 fail integer
+coefficient checks. Neither exact reversal nor determinant positivity resolves
+these constraint, stability and refinement gates.
+
+[PR #43](https://github.com/Closer24/Universe24/pull/43), inspected at
+`3a02ade62f09db68e2c78d7b0eb7db8f88f81304`, demonstrates local-history-dependent
+routing in a 31-channel composition. It reports 16 of 16 original
+growth/persistence cases failing and no independent reference-board burst.
+Its clock-phase intensity identities assume harmonic coupling; the tested
+detector law remains `min(1,q/3)`, not exclusive Born sampling. Appending its
+31 channels to the 44-channel frame would require 75 channels and is rejected
+by the system cap; no such integration is made.
+
+At inspection on 2026-11-11, #38 and #43 were open, and #39 and #42 were open
+drafts. PR #42 reports CI passing at its pinned head. This establishes its
+reported software/audit status, not accepted Einstein or detector physics.
 
 ## Remaining derivation, without adding another runtime
 
 A physical replacement must fit the same bundle/Engine/decoder interfaces and
-pass the same gates. The next mathematical work is an explicit reversible
-encoding of coupled geometry, matter and apparatus that can be repeatedly
-updated in a fixed allocation. Reusing `(a,b)` as two time slices is not by
-itself a compression proof: the recurrence fixes `a_next=b`, and the proposed
-first-order map must be shown to inhabit an invariant encoding under that
-recurrence, including every remainder.
+pass the same gates. The sign/staggered constructions in #42 now supply an
+explicit fixed-allocation reversible encoding for coupled geometry and the
+stated classical matter. The remaining derivation concerns a compatible,
+stable and refinable physical update, constraints, readouts and actual apparatus.
+The phase is synchronized computational state, not proper time. Its initial
+uniformity and per-field phase offsets belong in the preparation certificate.
 
-The frame equations provide a useful polynomial reference, but neither their
-component count nor their low degree proves discrete constraint propagation.
-A proposed splitting or retimed construction must budget its scheduler and
-workspace, preserve invertibility and single-edge support, supply compatible
-initial data and a refinable physical readout, then pass independent sourced
-Einstein and apparatus tests. No such accepted construction is supplied here.
-The consolidation makes these missing pieces explicit and testable; it does
-not resolve them by renaming a control or weakening the 48-channel cap.
+The frame equations remain a polynomial reference, but neither their component
+count nor their low degree proves discrete constraint propagation. A changed
+splitting or retimed construction must preserve the existing inverse and
+single-edge contracts, account for scheduler/workspace, supply compatible
+initial histories and demonstrate decreasing physical error at a fixed final
+time. A purported nonlinear solution must keep the published H/M/torsion and
+computational-mode controls instead of substituting continuum product rules
+into discrete diagnostics.
+
+### Concrete handoff for the 44-channel law
+
+A **source-only research adapter is implemented** in
+`validation/team48_contract.py`. It imports the pinned #42 law and seed into
+this bundle/Engine/decoder pipeline; it adds no installed model selector.
+
+```bash
+# SOURCE is a clean checkout of the exact pinned #42 commit above.
+python -m validation.team48_contract --source "$SOURCE" --out runs/team48-contract
+python -m universe24 verify --run runs/team48-contract/run
+```
+
+The adapter checks the source commit and clean tracked bytes, then invokes an
+isolated Python subprocess. It reproduces the first `(1,1)` phase sector from
+`integer_staggered_audit.check_candidate`, including RNG 4439, diagonal-pair
+initialization and every remainder draw. The preparation is an unconstrained
+mechanical audit seed, not an Einstein continuum solution pair.
+
+The imported law has **44 channels, 132 retained integer entries per node and
+593 monomials** for `mass_squared=1`, `dt=dx=coupling=1` and zero cosmological
+constant. The cited 585-term figure above belongs to the massless variant.
+All 44 channel ownership records and the exact arithmetic decoder protocol
+are sealed in the bundle. Three updates on 27 nodes are compared entry by
+entry, including every remainder, with both the isolated proposal Engine and
+its independent scalar oracle. The saved generic trace replays and rewinds
+exactly. All emitted arithmetic clicks retain their audit labels; no physical
+detection is inferred from their count or from the empty official stream.
+
+CI checks out the explicit proposal commit solely for this compatibility
+audit; its code is not installed with Universe24. Generated input, complete
+trace, clicks and `integration.json` remain in the run evidence. Reported
+physical failures are attributed to the pinned proposal; the adapter itself
+does not rerun a physical convergence or apparatus study.
+
+The next physical handoff must supply compatible constrained temporal data,
+controlled refinement and a shared-metric apparatus within the same budget.
+Keep all phase-sector, nonzero-remainder, Wronskian and independent
+constraint/torsion controls. A future proposal integration must preserve these
+interfaces and cannot overwrite the mechanical report with an overall
+physical success claim.
+
+The shared-metric apparatus handoff belongs in
+[issue #41](https://github.com/Closer24/Universe24/issues/41), subject to #40's
+hard total cap. Issue #41's older suggestion not to promise a bounded channel
+count does not relax that cap. A detector/clock proposal must reuse declared
+coupled matter or prove a complete allocation in the four remaining slots,
+including memory and any scheduler. It must compare independently generated
+ticks and actual transported signals with the same metric, without importing
+#43's separate 31-channel dynamics or an independent coframe. No accepted
+apparatus implementation or complete physical solution is supplied here.
 
 ## Sources and reproduction
 
 The mathematical source ledger and derivations are preserved in
 [Frame48 research](FRAME48_RESEARCH.md), [integer ADM](INTEGER_ADM.md),
-[compact FLRW](COMPACT_FLRW_CLOCKS.md), [compact null wave](COMPACT_NULL_WAVE.md)
-and the [coupled-frame proposal](https://github.com/Closer24/Universe24/blob/35344a1ba5c12c857404115e893911411ece7d35/docs/FRAME_MATTER.md).
+[compact FLRW](COMPACT_FLRW_CLOCKS.md), [compact null wave](COMPACT_NULL_WAVE.md),
+the [coupled-frame proposal](https://github.com/Closer24/Universe24/blob/35344a1ba5c12c857404115e893911411ece7d35/docs/FRAME_MATTER.md),
+the [compact coupled-frame report](https://github.com/Closer24/Universe24/blob/49b896c795203914a939e465d6d39e5b99343259/docs/TEAM48_RESEARCH.md)
+and the [history/complexity proposal](https://github.com/Closer24/Universe24/blob/3a02ade62f09db68e2c78d7b0eb7db8f88f81304/docs/COMPLEXITY_MECHANISMS.md).
 These documents distinguish cited continuum results from repository-specific
 integer constructions. Their historical command lines describe their pinned
 versions, not additional supported runtime modes in this release.

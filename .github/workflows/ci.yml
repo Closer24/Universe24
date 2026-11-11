@@ -47,6 +47,14 @@ jobs:
           python -m validation.geometry.ppwave_geodesic_audit
           python -m validation.geometry.compact_null_wave --out runs/compact-null-wave
           python -m validation.geometry.compact_flrw --out runs/compact-flrw
+      - name: Check out the pinned sourced proposal for compatibility validation
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: 49b896c795203914a939e465d6d39e5b99343259
+          path: validation-reference
+          persist-credentials: false
+      - name: One runtime reproduces the complete 44-channel proposal state
+        run: python -m validation.team48_contract --source validation-reference --out runs/team48-contract
       - name: Test evidence
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9

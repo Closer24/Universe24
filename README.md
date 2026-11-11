@@ -60,6 +60,8 @@ python -m validation.system_smoke --out runs/system-smoke
 python -m universe24 verify --run runs/system-smoke/run
 ```
 
-The smoke input is explicitly a mechanical test fixture, not a supplied Einstein universe. Tests retain independent Einstein equation checks and known counterexamples. A regression test can pass by confirming that a proposed physical construction fails; the corresponding physics gate remains failed.
+The smoke input is explicitly a mechanical test fixture, not a supplied Einstein universe. The source-only `validation.team48_contract` adapter also passes the pinned 44-channel sourced proposal through this same runtime and compares every retained state to its independent scalar oracle. CI supplies the exact external source pin; this compatibility result does not promote the proposal to a physical default.
+
+Tests retain independent Einstein equation checks and known counterexamples. A regression test can pass by confirming that a proposed physical construction fails; the corresponding physics gate remains failed.
 
 [The standard model report](docs/ONE_SYSTEM.md) defines the research question, equations, module boundaries, methods, results and gates A–F. [The proposal index](docs/proposals/INDEX.md) records the inherited ADM, Frame48, null and FLRW work. [Issue #40](https://github.com/Closer24/Universe24/issues/40) coordinates the missing coupled encoding, refinement, shared-metric apparatus and detector physics.
