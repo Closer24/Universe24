@@ -146,3 +146,9 @@ new ADM compiler in PR #27 at `335eb3c1b625075dbcca01f9cd61faffdd614600`.
 A fixed-six compatibility port passes its focused tests, but its copied
 per-node clock bank and finite compiled horizon do not supply the missing
 local stagnation mechanism. The earlier burst results above are unchanged.
+
+The [joint C2 and causal-cone audit](CLICK_CAUSALITY.md) links message reception
+to later C2 records and tests the complete-event propagation bound. In the
+80-update communication run, 94,043 C2 records occur after the structural
+proxy vector plateaus; no reference reassembly follows. C2 is a passive
+class, not an implemented complexity-generating or collapse-selection rule.

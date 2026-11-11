@@ -40,3 +40,10 @@ The previous assembly's numerical inventory and replay records are
 Their pass counts and physical limitations must not be reassigned to the new
 default. Current checks establish implementation properties, not quantum
 collapse, an Einstein spacetime or a maximum-complexity choice law.
+
+## C2 and the event cone
+
+The [joint audit](CLICK_CAUSALITY.md) proves the modular C0/C1/C2 classification,
+checks differences in official C2 records against the complete initial causal
+footprint, and separates message-driven C2 activity from structural growth.
+A repeated C2 label does not itself implement a complexity preference.

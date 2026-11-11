@@ -28,13 +28,22 @@ commands, complete seed metadata and the explicit prior-reference comparison.
 
 ## Recurrent-burst audit validation
 
-The complete suite now passes **134 tests**, including nine
+At that audit stage, the complete suite passed **134 tests**, including nine
 [burst-audit checks](../universe24/tests/test_recurrent_bursts.py). All 25
 experimental histories rewind exactly; the independent scalar oracle checks
 **5,832 transitions** across 18 feedback tensors with zero mismatches. The
 [report](RECURRENT_BURSTS.md) and [evidence](evidence/recurrent_bursts.json)
 record the failed physical target separately from successful software checks.
 No case demonstrates stagnation-driven recurrent bursts with growing structure.
+
+## Joint C2 and causal-cone audit
+
+The current complete suite passes **142 tests**, including five new C2/cone
+checks and the three ADM-readout bound checks. The [joint audit](CLICK_CAUSALITY.md)
+checks the actual main snapshot, seven traces, two paired event cones and
+observer-free replays. All completed states rewind exactly. C2 activity alone
+does not establish a complexity increase; the reviewed ADM compiler has only
+C0 records because every coefficient is divisible by three.
 
 ## Verified earlier fixed-six migration results
 

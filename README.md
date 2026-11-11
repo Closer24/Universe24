@@ -94,6 +94,8 @@ refocusing, reference-board reassembly and retained structural growth. Its
 25 cases do not demonstrate stagnation-driven bursts with increasing
 complexity. An exact periodic control reassembles ten times but repeats the
 same structure; all tested histories rewind without information loss.
+The [joint C2/cone audit](docs/CLICK_CAUSALITY.md) follows local messages into
+later click classes and tests their relation to the measured structural growth.
 
 ## Verification
 
