@@ -73,7 +73,7 @@ def _integrality_hint(p: dict, P: int, form: str) -> str:
     return '; '.join(bad) or 'integral'
 
 def build_gauge_lapse(*, block: Block, P: int, field: str, form: str='site', oneway: bool=False, name: str | None=None, why: str=WHY_TEST) -> Block:
-    """U1 for one compact gauge layer. oneway=False: ONE potential, reciprocal (the gauge matter sources F).
+    """U1 for one compact gauge layer. oneway=False: Universe24 potential, reciprocal (the gauge matter sources F).
     oneway=True: only the gauge gears read F (designated; for a static PRESCRIBED lapse gear in tests)."""
     p = block.params
     pot = gauge_lapse_potential(block, P=P, field=field, form=form)

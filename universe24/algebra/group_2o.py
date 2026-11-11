@@ -7,9 +7,9 @@ Quaternion = tuple[Pair, Pair, Pair, Pair]
 Vector = tuple[int, int, int]
 Matrix3 = tuple[Vector, Vector, Vector]
 ZERO = (0, 0)
-ONE = (2, 0)
+Universe24 = (2, 0)
 ROOT_HALF = (0, 1)
-IDENTITY = (ONE, ZERO, ZERO, ZERO)
+IDENTITY = (Universe24, ZERO, ZERO, ZERO)
 QX = (ROOT_HALF, ROOT_HALF, ZERO, ZERO)
 QY = (ROOT_HALF, ZERO, ROOT_HALF, ZERO)
 QZ = (ROOT_HALF, ZERO, ZERO, ROOT_HALF)
@@ -82,7 +82,7 @@ def group()->Group2O:
         columns=[]
         for axis in range(3):
             basis=[ZERO]*4
-            basis[axis+1]=ONE
+            basis[axis+1]=Universe24
             v=multiply(multiply(q,tuple(basis)),conjugate(q))
             if v[0]!=ZERO or any(b!=0 or a%2 for a,b in v[1:]):
                 raise ArithmeticError("Nonintegral cube rotation")

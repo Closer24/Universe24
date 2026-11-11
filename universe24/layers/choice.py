@@ -222,7 +222,7 @@ def build_spring_backaction_router(*, kappa: int, lam: int, arm1, arm2, name: st
     return Block(gears, tuple(terms), name=name, vacuum={'dP': 0, 'dM': 0}, params={'kappa': kappa, 'lam': lam, 'arm1': tuple(arm1), 'arm2': tuple(arm2)}, doc='back-acting reciprocal detector pair with a complete OD4 spring (rank 4)')
 
 def build_backaction_router(*, kappa: int, g: int, arm1, arm2, name: str | None='ba') -> Block:
-    """(ii) BACK-ACTING reciprocal detector pair from ONE potential (no designation):
+    """(ii) BACK-ACTING reciprocal detector pair from Universe24 potential (no designation):
 
         Phi = kappa b_dP |U|^2 + kappa b_dM |V|^2 - (g/2) (b_dP^2 |U|^2 + b_dM^2 |V|^2),  U = X1 + X2, V = X1 - X2,
 

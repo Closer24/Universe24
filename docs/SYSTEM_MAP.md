@@ -1,5 +1,12 @@
 # Current system map
 
+## Integrated Einstein event board
+
+The default is now `python -m universe24`: nonlinear ADM, complex scalar matter with opposite U(1) charges and geodesic dark dust. All updates use the fixed-six Engine; the metric, stress and event records come from the same retained state. See [equations](INTEGER_ADM.md), [events and matter conventions](UNIVERSE24_EVENTS.md), and [commands](../README.md).
+
+The reference baseline and fixed-six research results below remain controls; they no longer describe the CLI default. Retired variable-divisor calibrations stay retired.
+
+
 The system consists of a fixed storage graph, a local integer coupling tensor,
 a complete seed, and one scalar Rule3 operation. The default construction has
 48 group-labelled channels. Optional experiments can declare different

@@ -1,5 +1,12 @@
 # From local clocks and links to a shared metric
 
+## Integrated Einstein event board
+
+The default is now `python -m universe24`: nonlinear ADM, complex scalar matter with opposite U(1) charges and geodesic dark dust. All updates use the fixed-six Engine; the metric, stress and event records come from the same retained state. See [equations](INTEGER_ADM.md), [events and matter conventions](UNIVERSE24_EVENTS.md), and [commands](../README.md).
+
+The reference baseline and fixed-six research results below remain controls; they no longer describe the CLI default. Retired variable-divisor calibrations stay retired.
+
+
 The scalar rule now has a fixed divisor of six. This arithmetic decision
 removes a construction parameter; it does not by itself produce a physical
 metric. A rank-four polynomial coupling tensor is not the spacetime metric

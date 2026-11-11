@@ -1,10 +1,10 @@
 """Integration helpers for the gravity layer (NEW file; manager/integrator questions C3, C4, E1 current, 10:5x).
 Tensor blocks only; the frozen layers/gravity.py is imported read-only.
 
-C3 - ONE LAPSE RULE. h-bar^{00} has two implementations: the metric block's WAVE gear (metric.h00, sourced reciprocally
+C3 - Universe24 LAPSE RULE. h-bar^{00} has two implementations: the metric block's WAVE gear (metric.h00, sourced reciprocally
 by build_lapse) and OD2's rounding-free ACCUMULATOR (od2.h00, slaved to the harmonic condition; Sum_x h00 exactly
 frozen, so the closed-board k = 0 obstruction F4 is handled by the prepared R-a background + the k = 0 offset). A system
-must use exactly ONE of them as THE lapse, and every matter species reads that one:
+must use exactly Universe24 of them as THE lapse, and every matter species reads that one:
   * lapse="wave": metric (10 gears) + build_lapse(field="metric.h00") [reciprocal: Newton III exact] + beta on it.
     No OD2 block. (Closed board: the uniform mode grows ~ t^2 (F4); use for static/short demos.)
   * lapse="od2": OD2 (hij F-gears + h0i, h00 accumulators) + build_lapse_oneway(field="od2.h00") [designated: the
@@ -26,7 +26,7 @@ ONEWAY_LAPSE_WHY = 'one-way lapse read of the OD2 accumulator h00 (THE lapse whe
 
 def build_lapse_oneway(*, P: int, field: str, matters: Sequence[gr.MatterSpec], gamma: str='GR', name: str='lapse') -> Block:
     """The universal lapse factors (clock on mass entries, link on transport entries; same coefficients as
-    build_lapse) as a ONE-WAY single-time read of ``field`` (designated): no source into the field."""
+    build_lapse) as a Universe24-WAY single-time read of ``field`` (designated): no source into the field."""
     specs = [gr._resolve_carriers(m) for m in matters]
     pot = gr.lapse_potential(field, P, specs, gamma)
     only = [s.q(g) for s in specs for g in s.gears]
@@ -53,7 +53,7 @@ def od2_hop_stress_scaled(ns: str, spec: gr.MatterSpec, kappa: int, divisor: int
     return out
 
 def gravity_blocks(*, P: int, k: int, matters: Sequence[gr.MatterSpec], lapse: str='od2', stress_spec: gr.MatterSpec | None=None, stress_kappa: int=1, stress_divisor: int=1, beta: bool=True) -> list[Block]:
-    """C3 builder flag: the gravity blocks with ONE lapse (see the module docstring)."""
+    """C3 builder flag: the gravity blocks with Universe24 lapse (see the module docstring)."""
     if lapse == 'wave':
         blocks = [gr.build_metric(), gr.build_lapse(P=P, field='metric.h00', matters=matters)]
         field = 'metric.h00'

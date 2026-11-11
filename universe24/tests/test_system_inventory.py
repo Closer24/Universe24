@@ -3,7 +3,7 @@ import unittest
 
 from universe24.core import Tensor
 from universe24.core.lattice import ZERO
-from universe24.tools.system_inventory import inventory,default_inventory
+from universe24.tools.system_inventory import inventory,reference_inventory
 
 
 class SystemInventoryTests(unittest.TestCase):
@@ -22,8 +22,8 @@ class SystemInventoryTests(unittest.TestCase):
         self.assertEqual(report['independent_namespace_groups'],[['isolated'],['left','middle','right']])
         self.assertEqual(report['factor_reads_by_field'],{'a':1,'b':1})
 
-    def test_default_reference_has_explicit_structural_census(self):
-        report=default_inventory()
+    def test_reference_has_explicit_structural_census(self):
+        report=reference_inventory()
         self.assertEqual(report['D'],6)
         self.assertEqual(report['gear_types'],48)
         self.assertEqual(report['rank'],2)

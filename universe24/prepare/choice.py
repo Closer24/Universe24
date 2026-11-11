@@ -38,7 +38,7 @@ def ring_b(A: int, phase: int, t: int = 0):
 
 
 class Prep:
-    """Mutable builder of ONE initial State (Python-int object arrays). ``set(gear, nodes, a, b, r)`` writes
+    """Mutable builder of Universe24 initial State (Python-int object arrays). ``set(gear, nodes, a, b, r)`` writes
     per-node values (scalars or arrays aligned with ``nodes``, flat node indices). ``state()`` returns the State."""
 
     def __init__(self, tensor: Tensor, L: int, *blocks, default_r: int = 0):

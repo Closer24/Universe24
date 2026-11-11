@@ -1,5 +1,12 @@
 # Fixed-six implementation validation
 
+## Integrated Einstein event board
+
+The default is now `python -m universe24`: nonlinear ADM, complex scalar matter with opposite U(1) charges and geodesic dark dust. All updates use the fixed-six Engine; the metric, stress and event records come from the same retained state. See [equations](INTEGER_ADM.md), [events and matter conventions](UNIVERSE24_EVENTS.md), and [commands](../README.md).
+
+The reference baseline and fixed-six research results below remain controls; they no longer describe the CLI default. Retired variable-divisor calibrations stay retired.
+
+
 The common scalar divisor is now six. Validation must identify the current
 tensor and complete initial state; old variable-divisor hashes or physical
 calibrations are not acceptable substitutes. The migration intentionally
@@ -48,7 +55,7 @@ software test of a negative scientific result.
 
 ```bash
 python -m pip install '.[validation]'
-python -m unittest universe24.tests.test_one universe24.tests.test_migration -v
+python -m unittest universe24.tests.test_reference_model universe24.tests.test_migration -v
 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 python -m unittest discover -s universe24/tests -t . -v
 python -m universe24 --L 3 --tmax 20 --budget 120 --out runs/demo --tag demo --rewind
 python -m universe24.tools.audit_contract --L 4 --steps 120 --out runs/contract

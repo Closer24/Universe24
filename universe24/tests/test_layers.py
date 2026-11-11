@@ -83,7 +83,7 @@ class T08Reciprocity(unittest.TestCase):
                                                  any((f.gear, f.offset) != (m.target, ZERO) for f in m.factors)])
             T2 = Tensor(names, [m for m in T.monomials if m is not victim])
             rep2 = check_reciprocity(T2)
-            out[f"d_delete_one_seed{seed}"] = (rep2.ok, len(rep2.violations), len(rep2.missing_partners))
+            out[f"d_delete_reference_seed{seed}"] = (rep2.ok, len(rep2.violations), len(rep2.missing_partners))
             self.assertFalse(rep2.ok)
             self.assertGreaterEqual(len(rep2.missing_partners), 1)
             # the listed violations are exactly the surviving members of the victim's class

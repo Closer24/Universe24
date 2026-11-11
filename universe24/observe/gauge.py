@@ -377,7 +377,7 @@ class C2View:
 
 def layer_census(tensor: Tensor, prefix: str) -> dict:
     """Static census of the monomials TARGETING gears whose name starts with ``prefix`` (ARCH R3/R4/R6 items):
-    degree histogram, constants, monomials with an a-factor (two-time reads), max entries per row from ONE face
+    degree histogram, constants, monomials with an a-factor (two-time reads), max entries per row from Universe24 face
     neighbour (OD3 placement), rank-4 (degree-3) monomial count, physical supports wider than one link."""
     from ..core.lattice import DIRECTIONS
     names = tensor.names

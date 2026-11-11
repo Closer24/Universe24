@@ -1,14 +1,14 @@
-"""Read-only observables / audit maps for the unified-matter U(6) construction (layers/onematter.py). Reuses the frozen
+"""Read-only observables / audit maps for the unified-matter U(6) construction (layers/unified_matter.py). Reuses the frozen
 observe.gauge.GaugeView machinery (Noether pieces, exact charge and remainder term, integer gauge maps) with the
 M6(C) algebra and the 48 matter gears of the colour triplet."""
 from __future__ import annotations
 import random
 import numpy as np
 from ..core.tensor import Tensor
-from ..layers.onematter import N6, algebra_u6, link_names, matter_gears, mn_index
+from ..layers.unified_matter import N6, algebra_u6, link_names, matter_gears, mn_index
 from .gauge import GaugeView
 
-class OneMatterView(GaugeView):
+class UnifiedMatterView(GaugeView):
 
     def __init__(self, tensor: Tensor, A: int, matter_ns=('q0', 'q1', 'q2'), link_ns: str='u6'):
         self.tensor = tensor
@@ -91,4 +91,4 @@ def random_unit(rng: random.Random, kind: str='u6'):
             ph = (phc[a] + phw[s]) % 4
             v[mn_index(2 * a + s, 2 * pc[a] + pw[s], ph % 2)] = 1 if ph < 2 else -1
     return v
-__all__ = ['OneMatterView', 'random_unit']
+__all__ = ['UnifiedMatterView', 'random_unit']

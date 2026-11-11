@@ -10,7 +10,7 @@ from ..core import State
 from . import vacuum_state
 
 
-def one_seed(system, tensor, L: int, *, bang: str = "pulse", rng_seed: int = 13):
+def reference_seed(system, tensor, L: int, *, bang: str = "pulse", rng_seed: int = 13):
     """Complete pulse, standing, or vacuum data; no particle identification."""
     if bang not in ("pulse", "standing", "none"):
         raise ValueError("fixed-divisor preparations are pulse, standing, or none; old physics seeds were retired")
@@ -32,4 +32,4 @@ def one_seed(system, tensor, L: int, *, bang: str = "pulse", rng_seed: int = 13)
         interpretation="generic reference-lattice preparation; no particle or cosmological identification")
 
 
-__all__ = ["one_seed"]
+__all__ = ["reference_seed"]

@@ -13,7 +13,7 @@ import numpy as np
 
 from universe24.core import Engine, State, Tensor
 from universe24.core.tensor import GearType
-from universe24.observe.one import state_hash
+from universe24.observe.reference_model import state_hash
 from universe24.tools.clock_epochs import main, prepare_baseline, run_epochs
 
 ZERO = (0, 0, 0)

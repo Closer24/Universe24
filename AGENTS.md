@@ -1,9 +1,8 @@
 # Universe24 fixed-divisor development contract
 
-The active runtime is the generic scalar Rule3 engine. The default construction
-is selected by `universe24.layers.one.one_system()`.
+The default `python -m universe24` constructs Einstein ADM, complex scalar matter and dark dust through `universe24.layers.adm`. It uses the unchanged fixed-six Rule3 Engine. The 48-channel reference baseline is explicitly selected through `universe24.layers.reference_model.reference_system()`.
 
-1. Preserve exactly `ell,r_next = divmod(2*u+r,6); a_next=b; b_next=ell-a`. The divisor is fixed at six. Do not add a divisor-scale parameter, per-gear numerator/denominator, or hidden normalization knob.
+1. Preserve exactly `ell,r_next = divmod(2*u+r,6); a_next=b; b_next=ell-a`. The divisor is fixed at six. Do not add a divisor-scale parameter, per-gear divisor, or hidden normalization to this recurrence. Physical rational readouts may use two ordinary retained integer registers only through the proved finite-horizon arithmetic construction in docs/INTEGER_ADM.md; this never changes an Engine denominator.
 2. Every forward output reads the same complete old snapshot. Never insert runtime injections, vetoes, branch selectors, detector callbacks, or unrecorded state.
 3. The fixed integer polynomial tensor has input degree at most three. Every monomial is supported on the target node and at most one face neighbor, including the endpoints of physical link gears. Old-`a` dependencies must be acyclic for staged inversion.
 4. `layers/` constructs fixed law data before a run; `prepare/` constructs complete initial data; `observe/` reads snapshots. Keep these responsibilities separate.

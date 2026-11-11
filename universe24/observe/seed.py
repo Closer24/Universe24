@@ -155,7 +155,7 @@ def non_vacuum_count(state: State, vac: State) -> int:
 __all__ = ['r_star', 'non_vacuum_count', 'l0_relabelling']
 
 def r_star_hands_on(system, tensor: Tensor, c2, L: int):
-    """R* of the hands-ON system as ONE composite of core building blocks (the chiral layer's inversion maps about the
+    """R* of the hands-ON system as Universe24 composite of core building blocks (the chiral layer's inversion maps about the
     SAME centre c2 composed with the integrator's maps): Phi (a, b, r) -> (-Phi_next, -b, r) (original state), M' on every
     other gear, A_d negated (net (-b, -a, r)), both pairs Gamma = W0 J' K, Higgs sig, W links / 2-paths sig o conj,
     L0's signed relabelling S, then the inversion x -> c2 - x (links re-based) and the 2-path reversal of the W links.

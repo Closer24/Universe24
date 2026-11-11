@@ -1,5 +1,12 @@
 # Fixed-divisor Rule3 algebra
 
+## Integrated Einstein event board
+
+The default is now `python -m universe24`: nonlinear ADM, complex scalar matter with opposite U(1) charges and geodesic dark dust. All updates use the fixed-six Engine; the metric, stress and event records come from the same retained state. See [equations](INTEGER_ADM.md), [events and matter conventions](UNIVERSE24_EVENTS.md), and [commands](../README.md).
+
+The reference baseline and fixed-six research results below remain controls; they no longer describe the CLI default. Retired variable-divisor calibrations stay retired.
+
+
 This is the current mathematical contract for the executable model. A node's
 state, a fixed integer coupling tensor, and the complete seed specify a run.
 The scalar divisor is the constant six. There is no adjustable divisor scale,

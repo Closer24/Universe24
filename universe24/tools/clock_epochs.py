@@ -22,7 +22,7 @@ import time
 import numpy as np
 
 from ..core import Engine, State, Tensor
-from ..observe.one import state_hash
+from ..observe.reference_model import state_hash
 from ..observe.readout import official_clicks
 
 
@@ -318,12 +318,12 @@ def prepare_baseline(*, L=3, rng_seed=13, seed_kind="pulse", seed_divisor=1):
     """
     _positive_integer(seed_divisor, "seed_divisor")
     from ..core.tensor import compose
-    from ..layers.one import one_system
-    from ..prepare.one import one_seed
+    from ..layers.reference_model import reference_system
+    from ..prepare.reference_model import reference_seed
 
-    system = one_system()
+    system = reference_system()
     tensor = compose(*system.blocks)
-    seed, preparation = one_seed(system, tensor, L, bang=seed_kind, rng_seed=rng_seed)
+    seed, preparation = reference_seed(system, tensor, L, bang=seed_kind, rng_seed=rng_seed)
     source_hash = state_hash(seed, np.arange(tensor.G))
     rows = list(range(tensor.G))
     if seed_divisor != 1:
@@ -333,7 +333,7 @@ def prepare_baseline(*, L=3, rng_seed=13, seed_kind="pulse", seed_divisor=1):
             for g in rows:
                 array[g] = [int(value) // seed_divisor if value >= 0
                             else -((-int(value)) // seed_divisor) for value in array[g]]
-    return tensor, seed, dict(builder="one_system() default, no additional coupling", L=L,
+    return tensor, seed, dict(builder="reference_system() default, no additional coupling", L=L,
                               rng_seed=rng_seed, seed_kind=seed_kind,
                               seed_divisor=seed_divisor, scaled_gear_indices=rows,
                               scaling="initial reference a,b truncated towards zero; r unchanged",

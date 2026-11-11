@@ -6,26 +6,26 @@ suite retains finite algebra and exact integer invariants that remain meaningful
 import unittest
 import numpy as np
 from universe24.core import Engine, State, Tensor, compose
-from universe24.layers.one import one_system
+from universe24.layers.reference_model import reference_system
 from universe24.layers.matter import algebra, build_matter
 from universe24.layers.chiral import chiral_algebra
 from universe24.layers.gauge import ALGEBRAS
 from universe24.layers.electroweak import hypercharge_generators
 from universe24.prepare import vacuum_state, with_gears
-from universe24.prepare.one import one_seed
+from universe24.prepare.reference_model import reference_seed
 from universe24.prepare.system import random_system_state
 
 
 class FixedSixPreparationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.system = one_system()
+        cls.system = reference_system()
         cls.tensor = compose(*cls.system.blocks)
         cls.engine = Engine(cls.tensor)
 
     def test_default_integer_seed_is_complete_and_repeatable(self):
-        seed, info = one_seed(self.system,self.tensor,5)
-        repeat, info2 = one_seed(self.system,self.tensor,5)
+        seed, info = reference_seed(self.system,self.tensor,5)
+        repeat, info2 = reference_seed(self.system,self.tensor,5)
         self.assertTrue(seed.same_as(repeat)); self.assertEqual(info,info2)
         self.assertEqual(seed.G,48); self.assertEqual(info["amplitude"],3)
         self.assertEqual(np.count_nonzero(seed.b),1)
@@ -35,21 +35,21 @@ class FixedSixPreparationTests(unittest.TestCase):
 
     def test_all_preparations_rewind_without_mutating_seed(self):
         for kind in ("pulse","standing","none"):
-            seed,info = one_seed(self.system,self.tensor,3,bang=kind)
+            seed,info = reference_seed(self.system,self.tensor,3,bang=kind)
             initial=seed.copy()
             final=self.engine.run(seed,12)
             self.assertTrue(self.engine.rewind(final,12).same_as(seed),kind)
             self.assertTrue(seed.same_as(initial),kind)
             if kind == "none": self.assertTrue(final.same_as(seed))
         with self.assertRaisesRegex(ValueError,"retired"):
-            one_seed(self.system,self.tensor,3,bang="jpure")
+            reference_seed(self.system,self.tensor,3,bang="jpure")
         with self.assertRaises(TypeError):
-            one_seed(self.system,self.tensor,3,rng_seed=1.5)
+            reference_seed(self.system,self.tensor,3,rng_seed=1.5)
 
     def test_pulse_records_are_nontrivial_and_inside_local_cone(self):
-        seed,_=one_seed(self.system,self.tensor,7)
+        seed,_=reference_seed(self.system,self.tensor,7)
         initial=seed.copy()
-        control,_=one_seed(self.system,self.tensor,7,bang="none")
+        control,_=reference_seed(self.system,self.tensor,7,bang="none")
         origin=seed.lattice.index(3,3,3)
         origin_xyz=seed.lattice.coords(origin)
         total=0
@@ -85,7 +85,7 @@ class FixedSixPreparationTests(unittest.TestCase):
         self.assertEqual(tensor.support_violations(),[])
 
     def test_seed_setters_reject_fractional_data_and_invalid_remainders(self):
-        seed,_=one_seed(self.system,self.tensor,3,bang="none")
+        seed,_=reference_seed(self.system,self.tensor,3,bang="none")
         name=self.tensor.names[0]
         with self.assertRaises(TypeError):
             with_gears(seed,self.tensor,{(name,(0,0,0)):(1.5,2,3)})

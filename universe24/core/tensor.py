@@ -1,4 +1,4 @@
-"""The ONE translation-invariant tensor of rank <= 4 on v = (1, b, a), as a sparse unit-cell template.
+"""The Universe24 translation-invariant tensor of rank <= 4 on v = (1, b, a), as a sparse unit-cell template.
 
 The tensor is pure data: integers and gear names. It carries no physics and no branch; "light", "matter",
 "gravity" are only names a user may give to gear types or blocks.
@@ -22,7 +22,7 @@ read from the SAME complete previous snapshot, and the gear runs Rule3 with K = 
 u, so K is even by construction).
 
 Storage locality (theorem B3, enforced at construction)
-    The target node (offset 0) and every factor offset must lie in {0, e} for ONE face direction e: a monomial lives
+    The target node (offset 0) and every factor offset must lie in {0, e} for one face direction e: a monomial lives
     on one or two neighboring storage sites. Edge offsets (1,1,0), diagonal offsets (1,1,1), longer offsets (2,0,0) and
     monomials touching three nodes (e.g. factors at +e_x and -e_x) raise ``LocalityError``.
     Including both geometric endpoints of link gears is a stronger condition: ``strict_support=True`` checks it.
@@ -499,7 +499,7 @@ def reference_block_receiver_form(body_signs=(1, 1, 1), prefix: str = "R") -> Bl
 
 
 def compose(*blocks: Block, strict_support: bool = False) -> Tensor:
-    """Merge blocks into ONE tensor. Gear order = block order, then the block's gear order. A block with a namespace
+    """Merge blocks into one tensor. Gear order = block order, then the block's gear order. A block with a namespace
     ``name`` gets qualified gear names "<name>.<gear>"; its terms' local references are qualified the same way and
     qualified references ("other.gear") cross layers. Names must be unique; unknown references raise.
     ``strict_support=True`` (opt-in) also rejects entries whose physical support exceeds one link."""

@@ -1,2 +1,2 @@
-"""Universe24: fixed-divisor Rule3, one integer tensor and one complete seed."""
-__version__ = "0.3.0"
+"""Universe24: fixed-six integer Einstein evolution on an event board."""
+__version__ = "0.4.0"

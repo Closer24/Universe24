@@ -128,7 +128,7 @@ def build_static_lapse_mechanism(*, matter: Block, coupling: int=1, name: str='l
     static when prepared with N.a = N.b). The matter reads it on its on-site mass entries:
         u_matter(x) += coupling * N.b(x) * W0 b(x)        (rank 3, on-site; the clock's mass entry m -> m + c N(x))
     so a prepared profile N(x) is a static position-dependent shift of the rest clock (Study 4 PR-21 'lapse on the
-    mass', charge-blind). The read is ONE-WAY (N is not sourced by matter): designated, MECHANISM. The position
+    mass', charge-blind). The read is Universe24-WAY (N is not sourced by matter): designated, MECHANISM. The position
     dependence lives in the initial data of N (the tensor stays translation invariant).
     """
     if type(coupling) is not int:

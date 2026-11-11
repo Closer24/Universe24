@@ -19,7 +19,7 @@ from __future__ import annotations
 import hashlib
 import numpy as np
 from ..core.engine import OBJ, State
-from ..layers.one import COSMIC_GEARS, COSMIC_NS
+from ..layers.reference_model import COSMIC_GEARS, COSMIC_NS
 
 def _obj(row, L: int) -> np.ndarray:
     return np.asarray(row).astype(OBJ).reshape(L, L, L)

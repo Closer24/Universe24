@@ -123,7 +123,7 @@ Replay the committed evidence without a separate circuit simulator:
 import json
 from pathlib import Path
 from universe24.core import Engine, State, Tensor
-from universe24.observe.one import state_hash
+from universe24.observe.reference_model import state_hash
 
 data = json.loads(Path("docs/evidence/involution_clock.json").read_text())
 tensor = Tensor.from_dict(data["tensor"])

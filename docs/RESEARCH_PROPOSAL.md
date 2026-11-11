@@ -169,7 +169,7 @@ Determine why a successful model would have quantum-like observable probabilitie
 ### The default and the model migration
 
 The current default is the 48-channel group-reference tensor selected by
-`one_system()`. All channels use the fixed divisor six. The previous
+`reference_system()`. All channels use the fixed divisor six. The previous
 382-channel variable-divisor assembly is retired, so its physical
 calibrations and state histories are not evidence about this new default.
 The [current algebra](MODEL.md) defines the supported law.

@@ -5,7 +5,7 @@ from pathlib import Path
 import unittest
 
 from universe24.core import Engine, Tensor
-from universe24.layers.one import one_system
+from universe24.layers.reference_model import reference_system
 from universe24.core.tensor import compose
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -30,7 +30,7 @@ class FixedDivisorContractTests(unittest.TestCase):
 
     def test_default_law_has_only_fixed_six_arithmetic(self):
         self.assertEqual(list(inspect.signature(Engine).parameters), ["tensor"])
-        system = one_system()
+        system = reference_system()
         tensor = compose(*system.blocks)
         engine = Engine(tensor)
         self.assertEqual(engine.D, 6)

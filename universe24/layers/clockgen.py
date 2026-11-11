@@ -1,7 +1,7 @@
 """Optional one-way scalar clock modulation stored as fixed integer tensor terms. The former automatic cosmic assembly and stability window were retired. Explicit blocks remain algebraic experiments, not a physical clock derivation."""
 from __future__ import annotations
 from ..core.tensor import Block
-from .one import COSMIC_NS, one_system
+from .reference_model import COSMIC_NS, reference_system
 from .system import System
 ZERO = (0, 0, 0)
 CLOCKGEN_NS = 'clockgen'
@@ -13,7 +13,7 @@ WHY_CLOCK_DRIVE = 'ADDITIVE CONTRAST (Study 34 CG1, CLK-A; default OFF): the cos
 WHY_CLOCK_PARAM = 'Explicit one-way parametric tensor coupling; the clock does not receive the reciprocal response. No stability claim.'
 
 def build_clockgen(*, kappa: int=KAPPA_DEFAULT, mode: str='drive', hand: str=HAND, lapse: str=LAPSE, name: str=CLOCKGEN_NS) -> Block:
-    """The clock-law block: 0 gear types, ONE designated term targeting the lapse (see the module docstring)."""
+    """The clock-law block: 0 gear types, Universe24 designated term targeting the lapse (see the module docstring)."""
     if type(kappa) is not int or kappa == 0:
         raise ValueError('kappa must be a nonzero Python int (integer coefficient)')
     if mode not in MODES:
@@ -32,7 +32,7 @@ def clockgen_system(*, kappa: int=KAPPA_DEFAULT, mode: str='drive', one_kw: dict
 THETA0_LOG2_CLOCK = 21
 CLOCK_LAWS = ('CG2', 'CG1', 'off')
 
-def one_system_clock(*, law: str='CG2', theta0_log2: int=THETA0_LOG2_CLOCK, kappa: int=1, one_kw: dict | None=None) -> System:
+def reference_system_clock(*, law: str='CG2', theta0_log2: int=THETA0_LOG2_CLOCK, kappa: int=1, one_kw: dict | None=None) -> System:
     """Retired normalization-dependent calibration; no fixed-six equivalence is asserted."""
     raise NotImplementedError('this automatic large-divisor calibration was removed; supply an explicit fixed-six tensor instead')
 
@@ -89,4 +89,4 @@ def lapse_source_census(tensor, lapse: str=LAPSE) -> dict:
         key = '+'.join(nss)
         out[key] = out.get(key, 0) + 1
     return out
-__all__ = ['CLOCKGEN_NS', 'HAND', 'LAPSE', 'KAPPA_DEFAULT', 'MODES', 'WHY_CLOCK_DRIVE', 'WHY_CLOCK_PARAM', 'build_clockgen', 'clockgen_system', 'theta_reader_census', 'lapse_reader_census', 'lapse_source_census', 'THETA0_LOG2_CLOCK', 'CLOCK_LAWS', 'one_system_clock', 'clock_window']
+__all__ = ['CLOCKGEN_NS', 'HAND', 'LAPSE', 'KAPPA_DEFAULT', 'MODES', 'WHY_CLOCK_DRIVE', 'WHY_CLOCK_PARAM', 'build_clockgen', 'clockgen_system', 'theta_reader_census', 'lapse_reader_census', 'lapse_source_census', 'THETA0_LOG2_CLOCK', 'CLOCK_LAWS', 'reference_system_clock', 'clock_window']

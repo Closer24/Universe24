@@ -6,7 +6,7 @@ import numpy as np
 from universe24.core import Engine, GearType, State, Tensor
 from universe24.core.lattice import DIRECTIONS, lattice
 from universe24.core.tensor import LocalityError, compose
-from universe24.layers.one import one_system
+from universe24.layers.reference_model import reference_system
 from universe24.layers.strict_edge import single_edge_realization
 from universe24.prepare.strict_edge import lift_seed
 

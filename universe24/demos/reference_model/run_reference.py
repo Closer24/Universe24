@@ -17,9 +17,9 @@ import numpy as np
 
 from ...core import Engine
 from ...core.tensor import compose
-from ...layers.one import one_system
-from ...observe.one import state_hash
-from ...prepare.one import one_seed
+from ...layers.reference_model import reference_system
+from ...observe.reference_model import state_hash
+from ...prepare.reference_model import reference_seed
 
 
 def forward(engine, state, steps):
@@ -29,10 +29,10 @@ def forward(engine, state, steps):
 
 
 def build(L, bang="pulse", rng_seed=13, system_kw=None):
-    system = one_system(**(system_kw or {}))
+    system = reference_system(**(system_kw or {}))
     tensor = compose(*system.blocks)
     engine = Engine(tensor)
-    seed, preparation = one_seed(system, tensor, L, bang=bang, rng_seed=rng_seed)
+    seed, preparation = reference_seed(system, tensor, L, bang=bang, rng_seed=rng_seed)
     return system, tensor, engine, seed, preparation
 
 

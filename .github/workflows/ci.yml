@@ -29,7 +29,7 @@ jobs:
       - name: Complete Universe24 test suite
         run: python -m unittest discover -s universe24/tests -t . -v
       - name: Default Universe24 forward run and exact rewind
-        run: python -m universe24 --L 3 --tmax 20 --budget 120 --out runs/smoke --tag ci --rewind
+        run: python -m universe24 --L 3 --steps 1 --out runs/smoke --rewind
       - name: Canonical tensor integration inventory
         run: python -m universe24.tools.system_inventory --out runs/system-inventory.json
       - name: Saved tensor, seed and official click decoder

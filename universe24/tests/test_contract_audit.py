@@ -6,7 +6,7 @@ from universe24.core import Engine, GearType, State, Tensor
 from universe24.core.engine import OBJ
 from universe24.core.lattice import ZERO
 from universe24.observe.choice import kinds
-from universe24.observe.one import state_hash
+from universe24.observe.reference_model import state_hash
 from universe24.observe.readout import official_clicks, own_frame_series
 
 class ContractRegression(unittest.TestCase):
@@ -107,7 +107,7 @@ class ContractRegression(unittest.TestCase):
 
     def test_run_report_keeps_each_update_and_actual_click_counts(self):
         from argparse import Namespace
-        from universe24.demos.one.run_one import run, build, compare
+        from universe24.demos.reference_model.run_reference import run, build, compare
         args=Namespace(L=3,bang='pulse',rng=13,tmax=3,budget=120,tag='test',
                        max_bits=256,rewind=True)
         report=run(args)

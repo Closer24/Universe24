@@ -175,14 +175,14 @@ def build_u6_coupling(*, matter: tuple, links: Block, kd: int, kw: int, name: st
     return Block((), tuple(terms), name=name, vacuum={}, params={'kd': kd, 'kw': kw, 'A': A, 'matter': tuple((m.name for m in matter)), 'links': links.name, 'reversor': "Mp per gear (b-only); Kramers: K o M' on matter, M' on Re W, JM on Im W"}, doc='Unified-matter U(6) coupling, reciprocal, rank 3')
 
 @dataclass
-class OneMatter:
+class UnifiedMatter:
     blocks: tuple
     alg: Algebra
 
-def build_one_matter(*, lam: int=0, A: int, kd: int, kw: int, mass: int, spring: str='frobenius') -> OneMatter:
+def build_unified_matter(*, lam: int=0, A: int, kd: int, kw: int, mass: int, spring: str='frobenius') -> UnifiedMatter:
     """Fixed-six integer construction. Historical normalization-dependent calibration is not asserted; select integer coefficients explicitly."""
     matter = build_matter_triplet(hop=A * kd, mass=mass, wilson=A * kw)
     links = build_u6_links(A=A, lam=lam, spring=spring)
     coup = build_u6_coupling(matter=matter, links=links, kd=kd, kw=kw)
-    return OneMatter(matter + (links, coup), algebra_u6())
-__all__ = ['algebra_u6', 'matter_gears', 'link_names', 'build_matter_triplet', 'build_u6_links', 'build_u6_coupling', 'build_one_matter', 'OneMatter', 'mn_index']
+    return UnifiedMatter(matter + (links, coup), algebra_u6())
+__all__ = ['algebra_u6', 'matter_gears', 'link_names', 'build_matter_triplet', 'build_u6_links', 'build_u6_coupling', 'build_unified_matter', 'UnifiedMatter', 'mn_index']

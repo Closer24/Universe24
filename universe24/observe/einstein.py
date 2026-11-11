@@ -111,7 +111,7 @@ def conservation_defect(engine, s0: State, s1: State, ns: str='metric') -> dict:
     return res
 
 def b3_offdiagonal_wall() -> dict:
-    """An off-diagonal stress bilinear d_x phi d_y phi as ONE monomial needs the factors at +e_x and +e_y: LocalityError."""
+    """An off-diagonal stress bilinear d_x phi d_y phi as Universe24 monomial needs the factors at +e_x and +e_y: LocalityError."""
     from ..core.tensor import TensorBuilder
     tb = TensorBuilder()
     tb.gear('hxy')

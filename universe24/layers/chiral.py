@@ -20,7 +20,7 @@ Potential of THIS block (the vacuum parts A(...) and v(...) are build_matter's o
       + sum_x (ytot/2) b(x)^T [rho(phi) Pi_W W0 + W0 Pi_W rho(phi)^T] b(x)               Yukawa (on-site incl. Wilson)
       - sum_x sum_d (w/2) b(x+e)^T [rho(phi(x+e)) Pi_W W0 + W0 Pi_W rho(phi(x))^T] b(x)   Wilson-Yukawa (link)
       + sum_x (D/2)|phi|^2 - (lam_H/4) (|v + phi|^2 - v^2)^2                               Higgs inertia + OD4 spring
-  with ytot = y + 3w. Every term is rank <= 3 except the ONE OD4 spring (minus sign; B1-GAUGE convention). b-only,
+  with ytot = y + 3w. Every term is rank <= 3 except the Universe24 OD4 spring (minus sign; B1-GAUGE convention). b-only,
   reciprocal (one potential, field signs +1), B3-local (node or one face link). The weak links (W = U - A, 4 gears per
   link) and their dynamics (link inertia, 2-path plaquette gears, OD4 spring) are B1-GAUGE's su2 block
   (layers/gauge.py, imported read-only) WITHOUT its own quaternion matter (as layers/em_compact.py does for u1).

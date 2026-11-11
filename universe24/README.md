@@ -1,6 +1,6 @@
 # Universe24 Python package
 
-The active package uses the fixed-divisor-six Rule3 engine. See the repository
+The default `python -m universe24` runs the coupled Einstein event board with complex scalar matter and dark dust through the fixed-divisor-six Rule3 engine. See the repository
 [README](../README.md), [algebra](../docs/MODEL.md), and
 [validation](../docs/VALIDATION.md).
 

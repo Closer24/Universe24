@@ -2,7 +2,7 @@
 import unittest
 import numpy as np
 from universe24.core import Tensor,State,Engine
-from universe24.layers.clockgen import build_clockgen,clockgen_system,one_system_clock,clock_window
+from universe24.layers.clockgen import build_clockgen,clockgen_system,reference_system_clock,clock_window
 class ClockModulationTests(unittest.TestCase):
     def test_polynomial_and_inverse(self):
         for mode in ('drive','param'):
@@ -13,5 +13,5 @@ class ClockModulationTests(unittest.TestCase):
             np.testing.assert_array_equal(e.inputs(s)[1],expected)
             self.assertTrue(e.rewind(e.run(s,5),5).same_as(s))
     def test_automatic_calibration_removed(self):
-        for fn in (clockgen_system,one_system_clock,lambda:clock_window(3)):
+        for fn in (clockgen_system,reference_system_clock,lambda:clock_window(3)):
             with self.assertRaises(NotImplementedError):fn()

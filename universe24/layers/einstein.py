@@ -126,8 +126,8 @@ def einstein_system(base=None, *, on: bool=False, l0_beta: bool=True):
     """Fixed-six integer construction. Historical normalization-dependent calibration is not asserted; select integer coefficients explicitly."""
     from .system import System
     if base is None:
-        from .one import one_system
-        base = one_system()
+        from .reference_model import reference_system
+        base = reference_system()
     if not on:
         return base
     info = dict(base.info)

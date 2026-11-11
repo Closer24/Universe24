@@ -14,8 +14,8 @@ import numpy as np
 from ..core import Engine, State, Tensor
 from ..core.engine import OBJ
 from ..core.lattice import DIRECTIONS, ZERO, lattice
-from ..demos.one.run_one import build
-from ..observe.one import state_hash
+from ..demos.reference_model.run_reference import build
+from ..observe.reference_model import state_hash
 from ..observe.readout import official_clicks
 from ..observe.gravity import click_series, crossing_times, rate_from_crossings
 

@@ -1,6 +1,6 @@
 """COMPACT-U(1) EM candidate (builder B1-EM, manager ruling 09:5x): the Dirac pair hops THROUGH integer complex links.
 
-TENSOR BLOCKS ONLY. Reciprocal by construction (ONE potential, field sign +1 everywhere, b-only, rank 3 in the coupling;
+TENSOR BLOCKS ONLY. Reciprocal by construction (Universe24 potential, field sign +1 everywhere, b-only, rank 3 in the coupling;
 the link dynamics, the 2-path plaquette gears and the OD4 spring are B1-GAUGE's u1 block, imported read-only).
 
 Physical potential of the matter-link coupling (U = A*1 + W, the u1 block's deviation variables W stored):

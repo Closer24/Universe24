@@ -11,8 +11,8 @@ import numpy as np
 
 from universe24.core import State
 from universe24.core.lattice import lattice
-from universe24.demos.one.run_one import build
-from universe24.observe.one import state_hash
+from universe24.demos.reference_model.run_reference import build
+from universe24.observe.reference_model import state_hash
 
 
 def scalar_step(tensor, state):

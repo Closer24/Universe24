@@ -72,7 +72,7 @@ def laplacian_form_potential(g: str, w: int) -> list:
     return wave_potential(g, w, 6 - 6 * w)
 
 def lap_potential(coeff, target: str, f_mono: Sequence) -> list:
-    """Phi monomials of coeff * target(x) * Lap f (x), f = prod of (gear, offset) factors at ONE point (offset 0):
+    """Phi monomials of coeff * target(x) * Lap f (x), f = prod of (gear, offset) factors at Universe24 point (offset 0):
     Lap f(x) = Sum_6 f(x+e) - 6 f(x). Every monomial lives on one link (B3)."""
     pot = []
     for e in SIX:
@@ -126,7 +126,7 @@ class MatterSpec:
         return pot
 
     def link_potentials(self, qualify: bool=True) -> list:
-        """[(axis, [(c, mono), ...]) ...]: the transport potential of ONE link (x, x + e_axis), per axis."""
+        """[(axis, [(c, mono), ...]) ...]: the transport potential of Universe24 link (x, x + e_axis), per axis."""
         nm = self.q if qualify else lambda g: g
         out = []
         for ax, e in enumerate(AXES):
