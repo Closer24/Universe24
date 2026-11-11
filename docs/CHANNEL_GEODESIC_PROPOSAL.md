@@ -1,7 +1,10 @@
 # Proposal: node channels, a shared metric, and transported probes
 
-Status: research proposal only. No executable coefficients, new result, or
-change to the default construction is supplied by this document.
+Status: research specification. A first executable, deliberately restricted
+[transported-probe experiment](TRANSPORTED_PROBE_CLOCK.md) now implements
+actual board transport and clock comparisons. Its off-axis acceptance tests
+fail, so the general physical objective below remains open. The default
+construction is unchanged.
 
 ## One law, several channel roles
 
@@ -87,7 +90,9 @@ Einstein dynamics additionally requires a defined matter source, consistent
 backreaction, local balances, constraint preservation and an appropriate
 continuum limit. Geodesic agreement alone does not establish any of these.
 
-The next implementation task is to construct and test explicit channel
-couplings satisfying this specification. Their existence with the desired
-behavior has not been demonstrated here. A new tensor is a model change;
-keep its evidence separate from the default and historical runs.
+The first implementation supplies explicit channel couplings, reproducible
+integer runs and a joint acceptance test. It passes a restricted axial
+family but does not satisfy the held-out off-axis requirements. The next
+task is geometry-responsive transport and a clock coupling that passes those
+checks. A new tensor is a model change; keep its evidence separate from the
+default and historical runs.

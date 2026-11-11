@@ -21,6 +21,7 @@ Run from the repository root:
 | `python experiments/geometry/ppwave_palatini_local.py` | Known vacuum coframe/connection family, interior success and seam failure | [Local pp-wave algebra](../../docs/PPWAVE_PALATINI_LOCAL.md) |
 | `python experiments/geometry/ppwave_geodesic_clock.py` | A chosen one-axis worldline with a calibrated event decoder | [Geodesic proof](../../docs/PPWAVE_OPERATIONAL_ROUTE.md) |
 | `python experiments/geometry/ppwave_geodesic_audit.py` | Independent symbolic metric/geodesic audit; requires SymPy | [Geodesic proof](../../docs/PPWAVE_OPERATIONAL_ROUTE.md) |
+| `python experiments/geometry/transported_probe_clock.py` | Actual node-to-node marker and clock transport; axial agreement and failed off-axis common-metric gate | [Transported probe and clocks](../../docs/TRANSPORTED_PROBE_CLOCK.md) |
 
 The passive `linear_metric_reconstruction.py` checks a declared linearized
 geometry; it does not advance a new runtime law. The optional
@@ -45,6 +46,12 @@ exact continuum geodesic interpretation and a prepared-sector decoder from
 actual official records. Those coordinates remain inside one carrier node.
 There is no transported board packet, universal clock apparatus or matter
 backreaction, and different norm sectors can share the same official records.
+
+The separate 26-channel transported-probe experiment adds actual board packets
+and two carried clock mechanisms under one order-four tensor. Its central-axis
+geodesic and clock comparison passes after fixed flat calibration; off-axis
+motion and clock response fail the shared-metric test. This is a new optional
+model and does not establish universal clocks or Einstein evolution.
 
 ## Retired presets
 

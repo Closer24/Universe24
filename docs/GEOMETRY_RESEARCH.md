@@ -62,9 +62,16 @@ interpretation requires retained initial data that the official event stream
 alone does not identify. It supplies neither moving board packets nor matter
 backreaction.
 
-The next useful test is therefore joint: an actual locally transported probe,
-a clock built independently of that probe, and a geometry that predicts both
-under one decoder and responds to a consistent source.
+The [transported-probe experiment](TRANSPORTED_PROBE_CLOCK.md) now supplies a
+joint test with a packet and two autonomous clock mechanisms moving between
+board nodes. A restricted axial family agrees with the metric after fixed
+flat calibration, but held-out off-axis paths fail both motion and clock
+criteria. Its geometry-dependent clock response is real but physically
+incorrect in those controls; its marker routing remains geometry-blind.
+
+The next target is geometry-responsive transport and independently built
+clocks that pass those held-out checks under one decoder, followed by a
+geometry that responds to a consistent source. That target remains open.
 
 ## Retired experiments
 

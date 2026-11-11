@@ -83,6 +83,11 @@ encodes selected one-axis worldlines and calibrated time readouts. Those
 coordinates stay inside a carrier node; no general packet propagation,
 backreaction or universal operational metric has been established.
 
+The separate [transported-probe experiment](docs/TRANSPORTED_PROBE_CLOCK.md)
+uses 26 channels and one order-four tensor to carry a marker and two clocks
+between board nodes. It passes a restricted axial comparison but explicitly
+fails off-axis geodesic and proper-time tests; its common-metric gate is false.
+
 ## Verification
 
 ```bash
