@@ -36,6 +36,8 @@ jobs:
         run: python -m experiments.quantum.bell_cone_audit --out runs/bell-born-cone
       - name: Canonical tensor integration inventory
         run: python -m universe24.tools.system_inventory --out runs/system-inventory.json
+      - name: Compact sourced Team48 constructions and independent physical gates
+        run: python -m experiments.geometry.team48.run_audits
       - name: Saved tensor, seed and official click decoder
         run: |
           python -m universe24.tools.audit_contract --L 3 --steps 12 --out runs/contract

@@ -9,8 +9,8 @@ The default is now `python -m universe24`: nonlinear ADM, complex scalar matter 
 The reference baseline and fixed-six research results below remain controls; they no longer describe the CLI default. Retired variable-divisor calibrations stay retired.
 
 
-The active engine has one scalar update with divisor six. The default is the
-48-channel group-reference construction. The earlier 382-channel field and
+The active engine has one scalar update with divisor six. The 48-channel
+group-reference construction is an explicitly selected control. The earlier 382-channel field and
 cosmic assembly, its variable-divisor calibrations and associated physical
 presets are retired. This change does not preserve their old trajectories.
 
@@ -64,3 +64,13 @@ observation map. No such physical law follows merely from the click label.
 reports without relabelling them as fixed-six evidence. Existing negative
 results remain negative; old positive results remain conditional on their
 original construction until reproduced or re-proved for the new one.
+
+## Compact sourced investigation
+
+[Team48](TEAM48_RESEARCH.md) reports the exact 70-to-36 physical-trajectory
+compression, triangular 32/38/41-channel sourced candidates, the compiled
+44-channel positive-frame variant, charged-current and squared-dust checks,
+and independent constraint/metric/refinement failures.
+The shared discussion is [issue #17](https://github.com/Closer24/Universe24/issues/17).
+These counts describe isolated candidate tensors, not a change to the default
+4,825-channel system or a completed general 48-channel Einstein solver.

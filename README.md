@@ -25,6 +25,17 @@ PR #34's separate [two-channel null-wave](docs/COMPACT_NULL_WAVE.md) compresses
 another restricted geometry. These experiments do not become extra metrics
 or matter sources in the default board.
 
+A separate [compact sourced investigation](docs/TEAM48_RESEARCH.md) now fits
+charged classical scalar matter, Maxwell fields and nonnegative normal dust
+with one geometric frame into **41 integer channels**. The exact sign encoding
+also compresses PR #39's 70-channel physical trajectory into 36. A separately
+compiled **44-channel variant** preserves a nondegenerate frame on its stated
+prepared domain, with an explicit temporal-mode limitation. These are
+research candidates: constraint errors, metric validity and a general integer
+refinement family remain explicit gates. Run
+`python -m experiments.geometry.team48.candidate` for the actual allocation;
+the default event board and its channel count are unchanged.
+
 ## Run the event board
 
 ```bash

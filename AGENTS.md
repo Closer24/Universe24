@@ -15,6 +15,13 @@ The default `python -m universe24` constructs Einstein ADM, complex scalar matte
 9. Distinguish identities, numerical evidence and physical hypotheses. Reversibility is not boundedness, energy conservation, universal clock behavior, a Born-rule derivation or Einstein dynamics.
 10. Put fresh runs under `runs/`. Do not relabel historical evidence as current. Regenerated evidence needs source provenance and a stated comparison with the previous construction.
 
+The isolated `experiments/geometry/team48` sign encodings preserve their
+declared leapfrog; compression does not certify Einstein constraints or
+convergence. Its prepared projective-Milne control has the separate proof
+`D[n]=2*S+n`, `B00=S/D`, `K00=-S/D` in `docs/TEAM48_RESEARCH.md`. That proof
+authorizes this passive homogeneous-vacuum readout only, not generic ratios,
+runtime metric repair, or promotion to the default physical metric.
+
 Run the quick suite and appropriate affected checks. For common-engine or
 structural migrations, run the full discovery and the CLI forward/rewind smoke
 run documented in README. Review the diff and update the mathematical contract
