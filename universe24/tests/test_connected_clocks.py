@@ -1,6 +1,6 @@
 """The retired resolution-lift experiment must not silently claim fixed-six physics."""
 import unittest
-from universe24.tools.connected_clocks import RETIRED_REASON, build_candidate, paired_control
+from validation.tools.connected_clocks import RETIRED_REASON, build_candidate, paired_control
 
 class ConnectedClocksRetirementTests(unittest.TestCase):
     def test_old_candidate_fails_explicitly(self):

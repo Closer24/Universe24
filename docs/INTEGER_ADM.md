@@ -1,5 +1,8 @@
 # Full nonlinear Einstein evolution compiled into integer Rule3
 
+> Historical research/reference document. The current supported interface and acceptance status are defined in [ONE_SYSTEM.md](ONE_SYSTEM.md). Commands and default-model descriptions below refer to the earlier construction; see [the 0.6 migration](MIGRATION_0_6.md). No general ≤48-channel physical model is accepted.
+
+
 The Einstein component is now allocated inside the unified 0.5.0 runtime with isolated communication/probe components. See [UNIFIED_SYSTEM.md](UNIFIED_SYSTEM.md) for channel ownership and [current validation](evidence/universe24_unification.json). Earlier measurements below describe the 0.4.0 physical component and retain their original scope.
 
 The default Universe24 construction implements the general 3+1 Einstein evolution

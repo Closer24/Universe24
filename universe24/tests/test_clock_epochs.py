@@ -14,7 +14,7 @@ import numpy as np
 from universe24.core import Engine, State, Tensor
 from universe24.core.tensor import GearType
 from universe24.observe.reference_model import state_hash
-from universe24.tools.clock_epochs import main, prepare_baseline, run_epochs
+from validation.tools.clock_epochs import main, prepare_baseline, run_epochs
 
 ZERO = (0, 0, 0)
 
@@ -90,7 +90,7 @@ class ClockEpochTests(unittest.TestCase):
         self.assertTrue(initial_stop["exact_rewind"])
         self.assertEqual(initial_stop["final_state_hash"], initial_stop["initial_state"]["hash"])
         tensor, seed = fixture()
-        with patch("universe24.tools.clock_epochs.time.monotonic", side_effect=[0, 2, 3, 4, 5]):
+        with patch("validation.tools.clock_epochs.time.monotonic", side_effect=[0, 2, 3, 4, 5]):
             wall_stop = run_epochs(tensor, seed, steps=10, max_seconds=1)
         self.assertEqual(wall_stop["stop_reason"], "forward_wall_budget")
         self.assertEqual(wall_stop["completed_steps"], 1)

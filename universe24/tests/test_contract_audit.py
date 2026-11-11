@@ -107,7 +107,7 @@ class ContractRegression(unittest.TestCase):
 
     def test_run_report_keeps_each_update_and_actual_click_counts(self):
         from argparse import Namespace
-        from universe24.demos.reference_model.run_reference import run, build, compare
+        from validation.demos.reference_model.run_reference import run, build, compare
         args=Namespace(L=3,bang='pulse',rng=13,tmax=3,budget=120,tag='test',
                        max_bits=256,rewind=True)
         report=run(args)
@@ -127,7 +127,7 @@ class ContractRegression(unittest.TestCase):
     def test_offline_decoder_rejects_nonofficial_or_duplicate_records(self):
         import gzip,json,tempfile
         from pathlib import Path
-        from universe24.tools.audit_contract import decode_saved_clicks
+        from validation.tools.audit_contract import decode_saved_clicks
         row=dict(step=1,xyz=[0,0,0],gear='cosmic.M1',kind=1,quotient=2,label='official')
         with tempfile.TemporaryDirectory(dir='.') as tmp:
             p=Path(tmp)/'events.jsonl.gz'

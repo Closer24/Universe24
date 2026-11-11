@@ -11,7 +11,7 @@ import numpy as np
 
 from universe24.core import State
 from universe24.core.lattice import lattice
-from universe24.demos.reference_model.run_reference import build
+from validation.demos.reference_model.run_reference import build
 from universe24.observe.reference_model import state_hash
 
 

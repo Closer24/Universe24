@@ -26,33 +26,27 @@ jobs:
           python-version: ${{ matrix.python }}
       - name: Install Universe24 and validation dependencies
         run: python -m pip install '.[validation]'
-      - name: Complete Universe24 test suite
+      - name: Complete suite including independent physical counterexamples
         run: python -m unittest discover -s universe24/tests -t . -v
-      - name: Default Universe24 forward run and exact rewind
-        run: python -m universe24 --L 3 --steps 1 --out runs/smoke --rewind
-      - name: Local wave, actual C2 response and complete rewind
-        run: python -m universe24 --L 3 --steps 1 --causal-wave --out runs/causal-wave --rewind
-      - name: Causal Bell controls and explicit squared-amplitude reference
-        run: python -m experiments.quantum.bell_cone_audit --out runs/bell-born-cone
-      - name: Canonical tensor integration inventory
-        run: python -m universe24.tools.system_inventory --out runs/system-inventory.json
-      - name: Saved tensor, seed and official click decoder
+      - name: One-system bundle, forward run, offline decoder and exact replay
         run: |
-          python -m universe24.tools.audit_contract --L 3 --steps 12 --out runs/contract
-          python -m universe24.tools.audit_contract --replay runs/contract
-      - name: Fixed-divisor local geometry experiments and independent audit
+          python -m validation.system_smoke --out runs/system-smoke
+          python -m universe24 verify --run runs/system-smoke/run
+          python -m universe24 status
+      - name: Physical acceptance cannot be inferred from mechanical success
         run: |
-          python experiments/geometry/ppwave_palatini_local.py --out runs/geometry/ppwave.json
-          python experiments/geometry/ppwave_geodesic_clock.py --out runs/geometry/geodesic.json
-          python experiments/geometry/ppwave_geodesic_audit.py
-          python experiments/geometry/compact_null_wave.py --out runs/compact-null-wave
-          python experiments/geometry/compact_flrw.py --out runs/compact-flrw
-      - name: Consolidated communication and probe evidence
+          if python -m universe24 verify --run runs/system-smoke/run --require-physics; then
+            echo 'Unexpected physical acceptance without independent evidence'
+            exit 1
+          fi
+      - name: Independent historical reference checks
         run: |
-          python -m universe24.demos.communication.run_communication --L 3 --tmax 20 --out runs/communication-smoke --rewind
-          python experiments/geometry/transported_probe_clock.py --replay runs/transported-probe/checked.json
-      - name: Channel allocation budget
-        run: python -m universe24 --plan --max-channels 5000 --out runs/channel-plan
+          python -m validation.quantum.bell_cone_audit --out runs/bell-born-cone
+          python -m validation.geometry.ppwave_palatini_local --out runs/geometry/ppwave.json
+          python -m validation.geometry.ppwave_geodesic_clock --out runs/geometry/geodesic.json
+          python -m validation.geometry.ppwave_geodesic_audit
+          python -m validation.geometry.compact_null_wave --out runs/compact-null-wave
+          python -m validation.geometry.compact_flrw --out runs/compact-flrw
       - name: Test evidence
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9

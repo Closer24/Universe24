@@ -1,11 +1,15 @@
 # Universe24 Python package
 
-The default `python -m universe24` runs the coupled Einstein event board with complex scalar matter and dark dust through the fixed-divisor-six Rule3 engine. See the repository
-[README](../README.md), [algebra](../docs/MODEL.md), and
-[validation](../docs/VALIDATION.md).
+The supported entry point is `python -m universe24`: prepare one complete
+integer bundle, run its fixed local tensor, and verify its passive clicks and
+full-state rewind. All retained state must fit at most 48 channels per node.
 
-Earlier package notes and manifests are in the
-[historical archive](../docs/archive/pre-fixed-six/README.md); they do not
-define current parameters or current physical claims.
+No accepted general Einstein-plus-apparatus model currently meets that budget.
+The default command reports status; it does not select a reference fixture or
+the oversized historical ADM construction as a substitute.
 
-Channel allocation and consolidated research components are documented in [UNIFIED_SYSTEM.md](../docs/UNIFIED_SYSTEM.md). The main runtime uses one assembled tensor and complete retained seed.
+See the repository [README](../README.md), the current
+[system specification](../docs/ONE_SYSTEM.md), and the
+[API migration](../docs/MIGRATION_0_6.md). Historical builders and readouts are
+research dependencies; their claims and limits are catalogued in the
+[proposal index](../docs/proposals/INDEX.md).

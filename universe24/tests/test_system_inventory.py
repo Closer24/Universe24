@@ -3,7 +3,7 @@ import unittest
 
 from universe24.core import Tensor
 from universe24.core.lattice import ZERO
-from universe24.tools.system_inventory import inventory,reference_inventory
+from validation.tools.system_inventory import inventory,reference_inventory
 
 
 class SystemInventoryTests(unittest.TestCase):

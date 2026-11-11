@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[2]
 class FixedDivisorContractTests(unittest.TestCase):
     def test_runtime_sources_have_no_scale_parameter_or_attribute(self):
         failures = []
-        for directory in (ROOT/"universe24", ROOT/"experiments"):
+        for directory in (ROOT/"universe24", ROOT/"validation"):
             for path in directory.rglob("*.py"):
                 if "tests" in path.parts:
                     continue

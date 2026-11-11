@@ -13,7 +13,7 @@ from universe24.core.channels import ChannelAssembly, Component
 from universe24.algebra.integer_circuit import Circuit
 from universe24.layers.adm import compile_adm, flat_data
 from universe24.layers.universe import UniverseProgram
-from universe24.runtime import run, replay_trace
+from validation.adm_reference import run, replay_trace
 
 
 class ChannelTests(unittest.TestCase):

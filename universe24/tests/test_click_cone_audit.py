@@ -2,8 +2,8 @@
 import unittest
 import numpy as np
 from universe24.core import Engine, State, Tensor
-from universe24.demos.communication.run_communication import build
-from experiments.cosmology.click_cone_audit import (
+from validation.demos.communication.run_communication import build
+from validation.cosmology.click_cone_audit import (
     trace, event_cone, communication_case, c2_periodic_case, reception_control,
 )
 

@@ -6,7 +6,7 @@ import unittest
 
 import numpy as np
 
-from experiments.geometry import ppwave_palatini_local as pp
+from validation.geometry import ppwave_palatini_local as pp
 from universe24.core import Engine
 
 ROOT = Path(__file__).resolve().parents[2]

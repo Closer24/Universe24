@@ -11,7 +11,7 @@ import numpy as np
 from universe24.core import Engine
 from universe24.layers.adm import compile_adm, system, flat_data, ArrayField
 from universe24.prepare.einstein import inhomogeneous_scalar, numeric_fields
-from universe24.runtime import run, replay_trace
+from validation.adm_reference import run, replay_trace
 from universe24.tests.test_adm_integer import execute
 
 

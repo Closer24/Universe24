@@ -1,5 +1,8 @@
 # Frame48: research synthesis and a bounded-channel implementation
 
+> Historical research/reference document. The current supported interface and acceptance status are defined in [ONE_SYSTEM.md](ONE_SYSTEM.md). Commands and default-model descriptions below refer to the earlier construction; see [the 0.6 migration](MIGRATION_0_6.md). No general ≤48-channel physical model is accepted.
+
+
 Status, 2026-11-11: **48-channel reversible candidate implemented; general GR
 solver validation fails.** The new result is an exact, horizon-independent
 embedding of a nonlinear frame leapfrog map. Constraint preservation,
