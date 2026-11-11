@@ -1,5 +1,11 @@
 # Tetrad/Palatini gravity: a precise next target, not a completed Rule3 derivation
 
+The [Frame48 research synthesis](FRAME48_RESEARCH.md) now implements an exact
+48-channel lift of a quadratic, gauge-fixed vacuum-frame leapfrog map. It
+includes a primary-source ledger, independent continuum checks, complete
+replay and failed constraint/nondegeneracy/refinement/clock gates. This is a
+concrete bounded-channel candidate, not a completed general Palatini solver.
+
 The isolated checks are reproducible from the repository root:
 
 ```sh
