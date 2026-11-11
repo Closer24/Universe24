@@ -199,6 +199,10 @@ and full-state rewind. The eight scoped tests and 13 existing quick tests passed
 
 ## What this completes and what remains open
 
+The follow-up [Einstein-Maxwell experiment](EINSTEIN_MAXWELL_EXPERIMENT.md)
+adds an independently computed nonzero electromagnetic source and charged
+test particles, with a separate negative test for naive reciprocal completion.
+
 This completes a restricted chain: exact prepared integer transport, a declared
 full nonlinear vacuum metric, symbolic Einstein/Riemann verification, and an
 autonomous tidal detector with measured convergence to its geodesics.
