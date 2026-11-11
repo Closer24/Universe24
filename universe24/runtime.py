@@ -231,6 +231,7 @@ def main(argv=None):
     source_hashes={str(path.relative_to(ROOT)):hashlib.sha256(path.read_bytes()).hexdigest() for path in (
         Path(__file__),ROOT/'universe24/layers/adm.py',ROOT/'universe24/algebra/integer_circuit.py',
         ROOT/'universe24/prepare/einstein.py',ROOT/'universe24/observe/event_board.py',ROOT/'universe24/core/engine.py',
+        ROOT/'universe24/observe/metric_clocks.py',
         ROOT/'universe24/core/channels.py',ROOT/'universe24/layers/universe.py',
         ROOT/'universe24/layers/communication.py',ROOT/'universe24/layers/reference_model.py',
         ROOT/'universe24/prepare/communication.py',ROOT/'universe24/prepare/reference_model.py')}

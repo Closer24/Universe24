@@ -88,6 +88,22 @@ so historical evidence remains replayable.
 | PR #29, `90d8638` | Six message lanes, 48-channel receiver, preparation, passive edge logs and tests | Default companion component; standalone control retained |
 | PR #30, `da66a78` | C2/cone audit, burst controls, exact readout bounds, figures and scheduler review | Passive research tools and negative results retained |
 | PR #31, `37543d9` | 26-channel transported probe and candidate clocks | Explicit experiment; failed general common-metric gate stays false |
+| PR #33, `d8e297b` | Nine-channel local arrival, C2 memory and response | Optional computational probe; no stress-energy or metric-null cone |
+| PR #34, `d01e419` | Two-channel null-profile geometry and inverse certificates | Standalone restricted pp-wave sector; no generic matter or proper clock |
+
+PR #33 and #34 were reviewed together and merged after 23 combined focused
+checks and successful upstream CI. Neither supplies a general 48-channel
+Einstein replacement. The new [eight-channel FLRW clock sector](COMPACT_FLRW_CLOCKS.md)
+demonstrates indefinite-horizon prepared evolution with dust and radiation,
+using eight actual channels and no padding. It is not added to the default
+physical owner and must not overwrite the ADM metric.
+
+The board's new proper-clock rates are passive contractions of the existing
+four-metric. They allocate zero additional channels and add no second clock
+law to the Engine. The normal rate equals the lapse; a fixed-grid clock has
+squared rate `-g_tt` only when its tangent is timelike. Unit normal clock rate
+does not imply flat spacetime. See the clock note for coordinate and observer
+conventions.
 
 The old PR #29 CLI is available as
 `python -m universe24.demos.communication.run_communication`. The default

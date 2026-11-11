@@ -14,6 +14,17 @@ b_next = ell - a
 
 All updates read the same old state. Physical rational fields are retained integer numerator/denominator expressions. No external solver supplies future states during the run.
 
+The compact route now has an **eight-channel sourced FLRW experiment**: a
+homogeneous expanding geometry, three pressureless species and radiation,
+with proper-time and null affine counters in the same fixed tensor. The
+number of channels stays eight for any run length; integers can grow. It is
+an exact prepared symmetry sector, **not a 48-channel replacement for general
+ADM**. Run `python experiments/geometry/compact_flrw.py` and see
+[the recurrence, clock meaning and limits](docs/COMPACT_FLRW_CLOCKS.md).
+PR #34's separate [two-channel null-wave](docs/COMPACT_NULL_WAVE.md) compresses
+another restricted geometry. These experiments do not become extra metrics
+or matter sources in the default board.
+
 ## Run the event board
 
 ```bash
@@ -31,6 +42,14 @@ python -m universe24 --plan --max-channels 5000 --out runs/channel-plan
 The default `--case universe` places both signs of scalar charge and positive dark density on a periodic 3×3×3 board, with a general non-diagonal metric. Initial constraints are solved before integer quantization. The Engine performs every evolution update; complete rewind and all arithmetic registers are verified automatically. Two steps retain much larger intermediate integers and take substantially more time and memory.
 
 The board lets you select time, spatial slice and displayed field, then inspect any node's spacetime metric, stress-energy tensor and constraints. Every physical field links to the retained integer registers and microticks that computed it. The geometric lengths and angles follow from the same evolved metric. The drawing's pixel spacing is a layout, not a claim about curved physical distance.
+
+Each selected event also displays the instantaneous proper-clock rate derived
+from that same metric, for the hypersurface-normal observer and a stationary
+grid observer. A null/spacelike grid tangent is identified explicitly. These
+rates are chart dependent; they are not accumulated clock readings or a
+gravitational-redshift calculation. In the default unit-lapse
+chart, normal clocks tick at one even when curvature and matter are nonzero.
+The default shift is nonzero, so fixed-grid clock rates differ from normal rates.
 
 Other preparations: `--case matter`, `antimatter`, `dark`, `inhomogeneous`, `scalar`, `massless`, or `gauge`. `matter` and `antimatter` are charge-conjugate classical scalar preparations. `--method midpoint` selects the second-order time integrator. `--L` selects an odd periodic side length, at least three for constrained nonuniform data.
 

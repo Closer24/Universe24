@@ -43,6 +43,8 @@ jobs:
           python experiments/geometry/ppwave_palatini_local.py --out runs/geometry/ppwave.json
           python experiments/geometry/ppwave_geodesic_clock.py --out runs/geometry/geodesic.json
           python experiments/geometry/ppwave_geodesic_audit.py
+          python experiments/geometry/compact_null_wave.py --out runs/compact-null-wave
+          python experiments/geometry/compact_flrw.py --out runs/compact-flrw
       - name: Consolidated communication and probe evidence
         run: |
           python -m universe24.demos.communication.run_communication --L 3 --tmax 20 --out runs/communication-smoke --rewind
