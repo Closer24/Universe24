@@ -101,6 +101,8 @@ Euclidean division means 2u+r=Dℓ+r′ with 0≤r′<D, also for negative u. Th
 
 D(b′+a) = 2u+r−r′.
 
+Q is itself a positive integer. All tensor coefficients, seed registers and evolving registers are integers; division returns an integer quotient and an integer remainder, never a fractional register value. For example, with Q=1 and 2u+r=8, divmod(8,6) returns (1,2). Fractions used in a dispersion calculation or physical calibration are analysis of the integer history, not extra state or runtime arithmetic. A larger Q changes the allowed remainder range; it is an optional construction parameter, not a derived physical constant. Only the simultaneous scaling in A11c gives the stated equivalence between different Q values; changing Q alone changes the dynamics.
+
 There is one shared Q and D for the complete construction, not a freely selected num/den for each gear. On the isolated L0 subspace, multiplying its coefficients and remainders by Q reproduces the divisor-six recurrence. This scaling does not make all nonlinear ONE terms equivalent to the earlier 1/1 model. Any claimed effective num/den family needs its own derivation under H7.
 
 ### A6a. Exact inverse and the distinction from a mirror
@@ -282,6 +284,16 @@ A separate [integer tensor-wave construction](LINEAR_SPIN2.md) gives an exact pr
 A subsequent [local metric experiment](PHASE_METRIC_EXPERIMENT.md) adds two internal phase registers, themselves updated by Rule3. A fixed quadratic expression in the registers reconstructs a travelling metric perturbation at every update. Its linearized Ricci tensor and linear energy/momentum constraints vanish exactly for the explicitly declared central-difference operator. A separate one-way, rank-four probe coupling changes actual official detector records. This is still a restricted test-body construction: the phase registers themselves emit no official clicks, the wave and probe speeds differ, and reciprocal backreaction and nonlinear Einstein constraints are absent. In the chosen transverse wave gauge, fixed-coordinate rest clocks have no first-order slowing; the tested response is spatial propagation.
 
 The [Palatini target](PALATINI_TARGET.md) expresses a possible geometric starting point using a local coframe e and metric g=eᵀηe, where η is the Minkowski signature matrix. Its quartic gravitational action makes low polynomial degree plausible, but its first-order constraints, physical link support and matter coupling require a separate reversible construction. The current work does not derive a complete Einstein event spacetime.
+
+### A12b. Integer reciprocal examples and their limits
+
+Separate integer reciprocal examples use Q=1 and D=6, including explicitly integer seeds. A two-gear, order-four spatial potential Phi=sum_x(3e_x^2+7chi_x^2)-sum_edges(1+e_x^2+e_y^2)(chi_y-chi_x)^2 has a prepared complete-state period-five orbit. Its positive integer link coefficients change between one and three, and same-tensor initial-only controls change the opposite field's official records. This is a standing periodic interaction, not an operational metric; the same tensor also has a proved unbounded preparation.
+
+A separate node-flux construction produces diagonal and off-diagonal official detector responses with strict single-edge support. All fields use the same scalar Rule3 and complete flat transport block, but their response on curved backgrounds is not universal. The reciprocal sources fail the required constraints, and finite response runs grow rapidly. Reciprocal coupling, exact reversal and a nonzero detector response do not establish Einstein dynamics.
+
+The source-constraint analysis also proves an independent compatibility condition: every spatially periodic flat linearized Einstein field has zero spatial sum of G00. It therefore cannot have nonzero nonnegative total matter density as its source. A consistent homogeneous dynamical background or boundary contribution and a conserved discrete stress source are needed. These are precise limitations of the stated target, not a no-go theorem for all integer Rule3 constructions.
+
+See [the complete integer constructions and proofs](INTEGER_RECIPROCAL_GEOMETRY.md) and [the source-constraint analysis](DYNAMICAL_GEOMETRY_CONSTRAINTS.md). These are optional experiments; the default tensor is unchanged.
 
 ### A13. Validation and source of truth
 
