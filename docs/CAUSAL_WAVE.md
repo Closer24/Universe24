@@ -118,3 +118,7 @@ integers.
 
 Validation and current source hashes are recorded in
 `docs/evidence/causal_wave.json`. Raw runs belong under `runs/`.
+
+The follow-up [Bell/Born audit](BELL_BORN_CONE.md) tests causal detector clicks,
+setting-dependent C2 selection, stochastic local choices and squared-amplitude
+inputs against a separately labelled quantum reference.
