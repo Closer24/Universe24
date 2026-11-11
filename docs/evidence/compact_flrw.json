@@ -1,0 +1,229 @@
+{
+  "scope": "prepared homogeneous flat FLRW dust plus radiation; not general ADM replacement",
+  "channels": 8,
+  "integer_registers_per_node": 24,
+  "budget": 48,
+  "unused_budget": 40,
+  "padding_channels": 0,
+  "steps": 64,
+  "Q": 16,
+  "tensor_fingerprint": "4291baad2653f426198c345b0a560b83a3ac1a052ba2d111b91c1bbc7d46a8f7",
+  "rank": 4,
+  "monomials": 28,
+  "exact_rewind": true,
+  "complete_trace_replay": true,
+  "all_einstein_residuals_zero_in_declared_sector": true,
+  "maximum_retained_integer_bits": 40,
+  "sources": {
+    "dust": [
+      1,
+      1,
+      2
+    ],
+    "radiation_amplitude": 3
+  },
+  "samples": [
+    {
+      "tick": 0,
+      "eta": "2",
+      "scale_factor": "22",
+      "proper_time": "50/3",
+      "null_affine_parameter": "1112/5",
+      "proper_rate_per_conformal_time": "22",
+      "densities": {
+        "dust.matter": "3/2662",
+        "dust.antimatter": "3/2662",
+        "dust.dark": "3/1331",
+        "radiation": "27/234256"
+      },
+      "rho": "1083/234256",
+      "pressure": "9/234256",
+      "metric": [
+        [
+          "-484",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "484",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "484",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0",
+          "484"
+        ]
+      ],
+      "einstein_diagonal": [
+        "1083/484",
+        "9/484",
+        "9/484",
+        "9/484"
+      ],
+      "stress_diagonal": [
+        "1083/484",
+        "9/484",
+        "9/484",
+        "9/484"
+      ],
+      "einstein_residual": [
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "friedmann_residual": "0"
+    },
+    {
+      "tick": 32,
+      "eta": "4",
+      "scale_factor": "76",
+      "proper_time": "328/3",
+      "null_affine_parameter": "25024/5",
+      "proper_rate_per_conformal_time": "76",
+      "densities": {
+        "dust.matter": "3/109744",
+        "dust.antimatter": "3/109744",
+        "dust.dark": "3/54872",
+        "radiation": "27/33362176"
+      },
+      "rho": "3675/33362176",
+      "pressure": "9/33362176",
+      "metric": [
+        [
+          "-5776",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "5776",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "5776",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0",
+          "5776"
+        ]
+      ],
+      "einstein_diagonal": [
+        "3675/5776",
+        "9/5776",
+        "9/5776",
+        "9/5776"
+      ],
+      "stress_diagonal": [
+        "3675/5776",
+        "9/5776",
+        "9/5776",
+        "9/5776"
+      ],
+      "einstein_residual": [
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "friedmann_residual": "0"
+    },
+    {
+      "tick": 64,
+      "eta": "6",
+      "scale_factor": "162",
+      "proper_time": "342",
+      "null_affine_parameter": "166536/5",
+      "proper_rate_per_conformal_time": "162",
+      "densities": {
+        "dust.matter": "1/354294",
+        "dust.antimatter": "1/354294",
+        "dust.dark": "1/177147",
+        "radiation": "1/25509168"
+      },
+      "rho": "289/25509168",
+      "pressure": "1/76527504",
+      "metric": [
+        [
+          "-26244",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "26244",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "26244",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0",
+          "26244"
+        ]
+      ],
+      "einstein_diagonal": [
+        "289/972",
+        "1/2916",
+        "1/2916",
+        "1/2916"
+      ],
+      "stress_diagonal": [
+        "289/972",
+        "1/2916",
+        "1/2916",
+        "1/2916"
+      ],
+      "einstein_residual": [
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "friedmann_residual": "0"
+    }
+  ],
+  "source_sha256": {
+    "experiments/geometry/compact_flrw.py": "061c017d7c4dec4d8f5765a144b6056769d6d08f89f2227420b54efa2a5bc99f",
+    "universe24/layers/conformal_flrw.py": "8bf7d7c4d4fd9af14174a834cb79e95ebb37d98c1b7cbfbbb3e7b371e62edd51",
+    "universe24/prepare/conformal_flrw.py": "ce1a6da99817ac5a7ef8b44cc9a7d0d1af185608dc646d5386c5f64ca49df3d8",
+    "universe24/observe/conformal_flrw.py": "089ffefd89b4b79237932533dc50ecc792ac9ba13597f8ac500bdc7b054494a9",
+    "universe24/core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+    "universe24/core/tensor.py": "144ce8365ed01583a1950b056b6b94dac6f3f1b4f33085df95be98f30ead22c1",
+    "universe24/core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e"
+  },
+  "limitations": [
+    "Only homogeneous isotropic expanding flat solutions with zero cosmological constant.",
+    "Matter and antimatter are noninteracting pressureless species labels; no scalar charge, quantum fields or annihilation.",
+    "Radiation is an isotropic fluid with p=rho/3; no individual photon dynamics.",
+    "Null affine counter describes an analytic test ray x=eta-eta0; no moving packet or test-ray stress source.",
+    "No spatially varying gravity, black holes, gravitational waves or arbitrary initial data in this sector.",
+    "Eight fixed channels have unbounded integer bit lengths; geometry decoding alone is not complete state replay."
+  ],
+  "source_basis": "main cd8cb0347efb4d0678c24ce464c4bcf746c2f14a after merging PRs 33 and 34",
+  "validation": "Independent metric-to-Einstein and geodesic tests; integer scalar oracle, source-disconnection controls, refinement, all-snapshot replay and exact rewind."
+}

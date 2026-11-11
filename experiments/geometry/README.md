@@ -13,4 +13,9 @@ and channel manifest. See [the algebra, comparison scope and negative controls](
 
 ## Integrated research components
 
+The eight-channel `compact_flrw.py` experiment adds a distinct homogeneous
+dust/radiation sector with sourced geometry, proper time and a null affine
+counter. Its fixed tensor has no construction-time horizon. It does not
+replace the general ADM model. See [the exact recurrence and clock conventions](../../docs/COMPACT_FLRW_CLOCKS.md).
+
 The transported probe and its negative common-metric controls from PR #31 are now included. Run `python experiments/geometry/transported_probe_clock.py`; replay the original evidence with `--replay runs/transported-probe/checked.json`. `python -m universe24 --probe-experiment --L 5` allocates this test chart alongside Einstein in one Engine, with isolated channels. It does not supply the physical board metric. See [UNIFIED_SYSTEM.md](../../docs/UNIFIED_SYSTEM.md).

@@ -8,6 +8,7 @@ from fractions import Fraction
 import json
 import math
 from pathlib import Path
+from universe24.observe.metric_clocks import clock_readout
 
 
 def encoded(value):
@@ -39,6 +40,8 @@ def export_event_board(program, state, parameters, out, *, causal_wave=None):
             values = {name: read(name) for name in fields}
             metric = [[read(f'metric.{min(i,j)}{max(i,j)}') for j in range(4)] for i in range(4)]
             stress = [[read(f'stress.{min(i,j)}{max(i,j)}') for j in range(4)] for i in range(4)]
+            clocks = clock_readout(metric, values['alpha'], [values[f'beta{i}'] for i in range(3)])
+            grid_rate = math.sqrt(float(clocks['grid_rate_squared'])) if clocks['grid_worldline'] == 'timelike' else None
             energy = {name: read(f'source.{name}') for name in ('rho', 'rho_scalar', 'rho_dark')}
             charge = read('matter.charge') if complex_matter else Fraction(0)
             current = [read(f'matter.current{i}') for i in range(4)] if complex_matter else [Fraction(0)] * 4
@@ -52,12 +55,17 @@ def export_event_board(program, state, parameters, out, *, causal_wave=None):
                            'fields': {k: float(v) for k, v in values.items()},
                            'metric': [[float(v) for v in row] for row in metric],
                            'stress': [[float(v) for v in row] for row in stress],
+                           'clocks': {'normal_rate': float(clocks['normal_rate']),
+                                      'normal_coordinate_velocity': list(map(float, clocks['normal_coordinate_velocity'])),
+                                      'grid_rate_squared': float(clocks['grid_rate_squared']),
+                                      'grid_rate': grid_rate, 'grid_worldline': clocks['grid_worldline']},
                            'energy': {k: float(v) for k, v in energy.items()},
                            'charge': float(charge), 'current': list(map(float, current)),
                            'constraints': {k: float(read(f'constraint.{k}')) for k in ('H', 'M0', 'M1', 'M2')}})
             exact.append({'id': event_id, 'metric': [[encoded(v) for v in row] for row in metric],
                           'stress': [[encoded(v) for v in row] for row in stress],
                           'energy': {k: encoded(v) for k, v in energy.items()},
+                          'clocks': {k: encoded(clocks[k]) for k in ('normal_rate', 'normal_rate_squared', 'grid_rate_squared')},
                           'charge': encoded(charge), 'current': list(map(encoded, current))})
         import gzip
         with gzip.open(out / f'event_tensors_{step}.json.gz', 'wt') as file:
@@ -68,6 +76,7 @@ def export_event_board(program, state, parameters, out, *, causal_wave=None):
     payload = {'format': 'Universe24-event-board-v1', 'L': state.L, 'dt': str(dt), 'dx': str(dx),
                'tensor_fingerprint': program.tensor.fingerprint, 'frames': frames,
                'charge_diagnostics': charges, 'provenance': provenance,
+               'clock_meaning': 'Instantaneous proper time per coordinate time, from this same four-metric. Normal observer: velocity=-shift, rate=lapse. Fixed grid observer: rate squared=-g_tt if timelike. These are local rates, not integrated geodesic clocks. Coordinate rates depend on the chosen chart.',
                'meaning': 'Metric, matter and stress decoded from one retained Engine state; physical snapshots use a declared coordinate chart.',
                'limits': 'Classical complex scalar and single-stream dark dust. No quantum particle count, electromagnetic interaction or annihilation model. Finite compiled horizon and numerical constraint errors.'}
     if causal_wave is not None:
@@ -104,7 +113,7 @@ details{margin-top:15px}summary{cursor:pointer;color:#8edbd1}.limit{border-left:
 <div class="controls"><label>Physical step <input id="time" type="range" min="0" value="0"><span id="timeLabel"></span></label>
 <label>z slice <select id="slice"></select></label><label>Color <select id="field"><option value="charge">Signed scalar charge</option><option value="rho_dark">Dark density</option><option value="rho">Total energy density</option><option value="g00">Spatial metric γxx</option><option value="H">Hamiltonian residual</option></select></label></div>
 <div class="grid"><section class="card"><div class="stats"><span>COORDINATE TIME<strong id="clock"></strong></span><span>READY MICROTICK<strong id="tick"></strong></span><span>BOARD EVENTS<strong id="events"></strong></span></div><canvas id="board" width="780" height="650" aria-label="Event board slice"></canvas><div class="key"><span id="min"></span><span id="max"></span></div><p class="caption">Click a node to inspect its metric and source. Lines are shared spatial links; their lengths are computed from the metric, not this diagram's pixel spacing.</p></section>
-<section class="card"><h2 id="nodeTitle">Event</h2><table id="values"></table><details open><summary>Spacetime metric gμν</summary><pre id="metric"></pre></details><details><summary>Independent source Tμν</summary><pre id="stress"></pre></details><details><summary>Einstein constraints</summary><pre id="constraints"></pre></details><details><summary>Retained register provenance</summary><pre id="registers"></pre></details></section></div>
+<section class="card"><h2 id="nodeTitle">Event</h2><table id="values"></table><details open><summary>Clocks from this metric</summary><pre id="properClocks"></pre><p class="caption" id="clockMeaning"></p></details><details open><summary>Spacetime metric gμν</summary><pre id="metric"></pre></details><details><summary>Independent source Tμν</summary><pre id="stress"></pre></details><details><summary>Einstein constraints</summary><pre id="constraints"></pre></details><details><summary>Retained register provenance</summary><pre id="registers"></pre></details></section></div>
 <section class="card" id="wavePanel" hidden><h2>Local wave → C2 memory → response</h2>
 <p>Experimental probe on the same board. The cone is a bound in Engine microticks; it is not the metric light cone of the Einstein solution.</p>
 <div class="controls"><label>Microtick <input id="waveTime" type="range" min="0" value="0"><span id="waveTick"></span></label><label>z slice <select id="waveSlice"></select></label></div>
@@ -126,7 +135,7 @@ for(const p of points)for(const q of points)if(Math.abs(p.e.grid[0]-q.e.grid[0])
 for(const p of points){const v=value(p.e),t=($('field').value==='charge'||$('field').value==='H')?v/span:2*(v-lo)/(hi-lo||1)-1;ctx.beginPath();ctx.fillStyle=t<0?`hsl(205 65% ${25+35*Math.abs(t)}%)`:`hsl(29 80% ${25+35*t}%)`;ctx.arc(p.x,p.y,Math.min(32,160/data.L),0,Math.PI*2);ctx.fill();if(p.e.node===selected){ctx.strokeStyle='#fff';ctx.lineWidth=3;ctx.stroke();ctx.strokeStyle='#344e60'}ctx.fillStyle='#dae9f5';ctx.font='13px monospace';ctx.textAlign='center';ctx.fillText(p.e.id,p.x,p.y+47)}
 if(!events.some(e=>e.node===selected))selected=events[0].node;const e=frame.events.find(e=>e.node===selected);$('nodeTitle').textContent=`Event ${e.id} · (${e.grid.join(', ')})`;
 $('values').replaceChildren();for(const [k,v]of Object.entries({...e.energy,charge:e.charge,phi:e.fields.phi,chi:e.fields.chi??0})){const row=$('values').insertRow();row.insertCell().textContent=k;row.insertCell().textContent=number(v)}
-$('metric').textContent=matrix(e.metric);$('stress').textContent=matrix(e.stress);$('constraints').textContent=JSON.stringify(e.constraints,null,2);$('registers').textContent=JSON.stringify(data.provenance[frame.step],null,2)}
+$('properClocks').textContent='Normal observer dτ/dt: '+number(e.clocks.normal_rate)+'\nNormal coordinate velocity: '+e.clocks.normal_coordinate_velocity.map(number).join(', ')+'\nFixed grid dτ/dt: '+(e.clocks.grid_rate===null?e.clocks.grid_worldline+' — no stationary timelike clock':number(e.clocks.grid_rate));$('clockMeaning').textContent=data.clock_meaning;$('metric').textContent=matrix(e.metric);$('stress').textContent=matrix(e.stress);$('constraints').textContent=JSON.stringify(e.constraints,null,2);$('registers').textContent=JSON.stringify(data.provenance[frame.step],null,2)}
 for(const id of ['time','slice','field'])$(id).addEventListener('input',render);$('board').addEventListener('click',ev=>{const r=$('board').getBoundingClientRect(),x=(ev.clientX-r.left)*780/r.width,y=(ev.clientY-r.top)*650/r.height;let p=points.reduce((a,b)=>Math.hypot(a.x-x,a.y-y)<Math.hypot(b.x-x,b.y-y)?a:b);selected=p.e.node;render()});render();
 if(data.causal_wave){
 const wave=data.causal_wave,wctx=$('waveBoard').getContext('2d');let waveSelected=0,wpoints=[];

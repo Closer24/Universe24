@@ -98,6 +98,14 @@ class UniverseTests(unittest.TestCase):
             event = board['frames'][1]['events'][0]
             self.assertEqual(event['fields']['chi'], float(self.program.read(self.final, '1.chi')))
             self.assertEqual(event['stress'][0][0], float(self.program.read(self.final, '1.stress.00')))
+            self.assertEqual(event['clocks']['normal_rate'], float(self.program.read(self.final, '1.alpha')))
+            self.assertEqual(event['clocks']['grid_rate_squared'], -event['metric'][0][0])
+            self.assertEqual(event['clocks']['grid_worldline'], 'timelike')
+            with gzip.open(out / 'event_tensors_1.json.gz', 'rt') as stream:
+                exact_event = json.load(stream)[0]
+            pair = exact_event['clocks']['grid_rate_squared']
+            self.assertEqual(Fraction(int(pair['numerator_hex'], 16), int(pair['denominator_hex'], 16)),
+                             -self.program.read(self.final, '1.metric.00'))
             self.assertIn('Universe24', (out / 'board.html').read_text())
             with gzip.open(out / 'official_events.jsonl.gz', 'rt') as stream:
                 self.assertEqual(json.loads(next(stream))['format'], 'Universe24-official-events-v1')
