@@ -1,5 +1,11 @@
 # ONE research status
 
+## Implemented discretized Einstein evolution
+
+The optional [integer ADM construction](INTEGER_ADM.md) implements general nonlinear 3+1 Einstein evolution with a real scalar, optional pressureless dark matter, lapse/shift gauge choices and all four constraint readouts. A staged rational-arithmetic circuit is compiled into fixed degree-three integer monomials; every runtime update is the original Rule3. Metric components, stress, shared spatial links and local angles are read from evolved retained state. Inhomogeneous constrained preparations and mutual matter/geometry response are tested.
+
+This is an explicit implementation of chosen discretized equations, not a derivation of general relativity from default ONE. Finite grid/time errors, approximate constraint preservation, a finite compiled horizon, growing workspace and the limited single-stream dust model remain explicit. The pre-existing ONE matter sectors and raw official-event interpretation are not automatically unified with this optional construction. See the new document for commands, equation coverage and measured controls; historical limitations below continue to describe their named constructions.
+
 The active default is ONE v1, the result of `one_system()`. The implementation is a candidate model. A successful software check is evidence for its precise assertion, not for every physical interpretation in a research note.
 
 ## Established construction properties

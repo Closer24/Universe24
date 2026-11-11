@@ -143,7 +143,7 @@ class TestGeneralEinsteinObserver(unittest.TestCase):
         self.assertTrue(result['shifted_radiation_all_16_G_minus_T_zero'])
         self.assertEqual(result['shifted_radiation_G_01'], '1/256')
         # A complete observer must not be mislabeled a complete evolution law.
-        self.assertFalse(result['compilation_barriers']['full_nonlinear_GR_compiled_into_Rule3'])
+        self.assertFalse(result['compilation_barriers']['this_observer_compiles_dynamics'])
 
     def test_nonlinear_equations_from_integer_link_jets(self):
         t, x, y, z = sp.symbols('t x y z')

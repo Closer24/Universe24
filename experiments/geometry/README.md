@@ -1,5 +1,16 @@
 # Geometry experiments and controls
 
+## Full nonlinear ADM in integer Rule3
+
+The [ADM implementation](../../docs/INTEGER_ADM.md) evolves a general spatial metric, extrinsic curvature and a real scalar, with optional pressureless dark matter. It computes all four Einstein constraints and the full spacetime metric/stress. A finite arithmetic circuit is compiled into a fixed rank-four tensor; only the unchanged `Engine.step` advances retained integers. Geometry is reconstructed from the evolving fields, including shared spatial links and local angles.
+
+```bash
+python experiments/geometry/adm_integer.py --case dark --steps 2 --dt 1/128 --out runs/geometry/adm/dark
+python -m unittest universe24.tests.test_adm_integer -v
+```
+
+This implements discretized field equations with measured errors, not exact continuum equality or an identification of every raw arithmetic click with a spacetime event. The compiled horizon is finite, workspace grows with its length, and the default ONE field/event sectors are unchanged. Dark matter is an explicit normal-comoving, pressureless fluid model valid before stream crossing. The older examples and controls below retain their narrower scopes.
+
 These are optional, reproducible experiments. They do not modify the default
 ONE tensor, `Engine.step`, the click definition, or a running state. A declared
 tensor and complete integer seed are fixed before each run; observations are

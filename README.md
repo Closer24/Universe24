@@ -19,6 +19,24 @@ A separate [bounded-circuit example](docs/BOUNDED_CIRCUITS.md) proves exact rout
 
 The [geometry research](docs/GEOMETRY_RESEARCH.md) derives the clock/link reconstruction requirements and the missing Einstein constraints. Isolated [geometry experiments](experiments/geometry/README.md) include a restricted conformal clock construction, an invariant linear tensor-wave sector and exact counterexamples. They are research examples, kept outside the default runtime.
 
+The optional [integer ADM implementation](docs/INTEGER_ADM.md) now computes the **full nonlinear 3+1 Einstein evolution equations**, a real scalar field, optional pressureless dark matter, and all four Einstein constraint readouts. General spatial variation and off-diagonal metric components are supported. The complete numerical trajectory is compiled before the run into a fixed rank-four integer tensor; the unchanged Rule3 Engine performs every update. The evolving metric determines the event-chart geometry, shared spatial links and local angles.
+
+This is a numerical implementation with measured discretization/constraint errors and a finite compiled horizon. It does not assert exact equality to continuous spacetime, replace default ONE, couple all existing particle sectors, or identify every arithmetic click with an Einstein event. Dark matter here is an explicit pressureless, single-stream fluid in geodesic slicing, not an assumed particle discovery or a multistream halo simulation.
+
+```bash
+# Automatically prepare constrained scalar + dark-matter data, compile, run and rewind
+python experiments/geometry/adm_integer.py --case dark --steps 2 --dt 1/128 --out runs/geometry/adm/dark
+
+# General scalar geometry with a harmonic lapse; optional midpoint time integration
+python experiments/geometry/adm_integer.py --case inhomogeneous --steps 1 --out runs/geometry/adm/scalar
+python experiments/geometry/adm_integer.py --case massless --method midpoint --dt 1/16 --out runs/geometry/adm/midpoint
+
+# Exact compilation, independent Einstein solutions, source feedback and constraint tests
+python -m unittest universe24.tests.test_adm_integer -v
+```
+
+The automatic runner saves the tensor, a lossless journal of every retained `(a,b,r)` state, exact physical snapshots, geometry and error reports under `runs/`. This experimental compiler can use thousands of registers and large integers; the selected horizon and source assumptions are part of the configuration.
+
 ## Install and run
 
 Python 3.11 or newer:
@@ -64,6 +82,7 @@ Optional builders are experiments within the same ONE engine. The coupled-double
 | [`prepare/one.py`](universe24/prepare/one.py) | Initial data only |
 | [`observe/`](universe24/observe) | Passive measurements and audit identities |
 | [`demos/one/run_one.py`](universe24/demos/one/run_one.py) | Reproducible run and reporting |
+| [`experiments/geometry/adm_integer.py`](experiments/geometry/adm_integer.py) | Optional complete ADM/scalar/dark-dust circuit, automatic preparation, geometry and full-state audit |
 | [`tests/`](universe24/tests) | Exact arithmetic, locality, reversibility and scoped research tests |
 
 ## Verification

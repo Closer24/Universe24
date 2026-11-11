@@ -1,7 +1,10 @@
 # Einstein-derived dynamics, integer geometry, and the remaining general-GR gap
 
-**Status: the request for unrestricted, self-consistent Einstein dynamics in
-Rule3 is not yet fulfilled.** This experiment derives and implements one
+**Historical sector experiment.** A subsequent [full ADM + scalar implementation](INTEGER_ADM.md)
+compiles nonlinear spatial evolution and all four constraint readouts into
+Rule3 using staged rational arithmetic. It allows discretization error and a
+finite precompiled horizon; it does not make the exact continuum claim.
+This earlier experiment derives and implements one
 closed homogeneous radiation sector, reconstructs general local metrics from
 signed edge data, and adds a general nonlinear Einstein observer. The observer
 is not an evolution law. No default ONE code or common Engine code changes.
@@ -19,8 +22,8 @@ is not an evolution law. No default ONE code or common Engine code changes.
 
 The cubic board remains a computational mesh. General relativity does not
 require dynamically changing its connectivity: physical distances and angles
-can change on a fixed mesh. The unresolved requirement is general local metric
-dynamics with consistent constraints and matter coupling.
+can change on a fixed mesh. The broader implementation is documented separately
+in [INTEGER_ADM.md](INTEGER_ADM.md).
 
 ## Derive before discretizing
 
@@ -191,8 +194,8 @@ A general construction should start from a chosen covariant or constrained
 discrete action, derive its geometry AND matter equations, and show how the
 integer Rule3 state enforces or approximates those equations. It must specify
 gauge, constraints, boundary conditions and the continuum limit. Full local
-metric evolution, gravitational self-interaction, consistent source feedback
-and constraint propagation remain unimplemented here. Regge is a researched
+metric evolution and scalar feedback are now implemented in the staged ADM
+experiment; its constraint errors are measured. Regge is a researched
 route to that goal, not a completed component of this patch.
 
 ## Reproduction and measured results

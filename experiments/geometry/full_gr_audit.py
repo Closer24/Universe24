@@ -98,8 +98,9 @@ def compilation_barriers():
         'inverse_metric_component': str(inverse_component),
         'inverse_component_fourth_derivative': str(fourth_derivative),
         'scope': 'These reject a direct one-step substitution in current fields. Auxiliary fields, different variables, staged computation, and consistent discrete actions are not ruled out.',
-        'full_nonlinear_GR_compiled_into_Rule3': False,
-        'arbitrary_local_geometry_evolution_implemented': False,
+        'this_observer_compiles_dynamics': False,
+        'staged_ADM_compiler_available': True,
+        'staged_implementation': 'experiments/geometry/adm_equations.py',
     }
 
 

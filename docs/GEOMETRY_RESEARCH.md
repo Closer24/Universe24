@@ -1,5 +1,11 @@
 # From local clocks and links to a candidate spacetime metric
 
+## Subsequent implementation: staged ADM evolution
+
+The [integer ADM experiment](INTEGER_ADM.md) now implements the full nonlinear metric/curvature evolution equations, scalar dynamics, optional pressureless dark matter and all four Einstein constraint readouts. Auxiliary arithmetic registers and retained clock pulses overcome the direct one-step inverse-metric and mixed-stencil barriers; the unchanged Engine remains the only updater. General nonuniform and off-diagonal data are exercised. The mapped event chart, evolving metric, link/angle readouts and numerical errors are explicit.
+
+This is a newly chosen tensor computing a finite numerical-relativity trajectory. It does not establish the default model's universal clock calibration, exact finite-lattice Bianchi identities, unlimited stability, or equality of raw arithmetic events with continuum Einstein events. The audit below remains applicable to the older direct clock/link and linearized candidates.
+
 A common metric reconstructed from clock readings and signal travel is a necessary geometric milestone. Einstein constraint equations and their preserved evolution are additional requirements. The current model has a limited slow-wave metric interpretation, explicit finite-frequency and stability limitations, and missing responses that block a general Einstein interpretation. No complete Einstein event spacetime is claimed here.
 
 This document collects exact reconstruction algebra, checks against the actual fixed tensor, and narrowly scoped candidate corrections. The [clock research overview](CLOCK_RESEARCH.md) covers the event definition and rest-clock falsification test; the [conformal metric experiment](CONFORMAL_METRIC_EXPERIMENT.md) is a separate restricted candidate. The [integer curl-wave construction](LINEAR_SPIN2.md) and [local phase-metric experiment](PHASE_METRIC_EXPERIMENT.md) add exact prepared wave and linearized-metric identities, with an explicitly limited one-way probe. All proposed experiments remain outside the default implementation.
