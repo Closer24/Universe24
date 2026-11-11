@@ -62,6 +62,20 @@ python -m universe24 verify --run runs/system-smoke/run
 
 The smoke input is explicitly a mechanical test fixture, not a supplied Einstein universe. The source-only `validation.team48_contract` adapter also passes the pinned 44-channel sourced proposal through this same runtime and compares every retained state to its independent scalar oracle. CI supplies the exact external source pin; this compatibility result does not promote the proposal to a physical default.
 
+The same saved 44-channel run can be inspected without changing its dynamics:
+
+```bash
+python -m validation.team48_observables --audit runs/team48-contract --source validation-reference
+python -m validation.team48_board --observables runs/team48-contract/observables.json --out runs/one-system-board.html
+```
+
+The board shows exact metric/link diagnostics, scalar/dust/Maxwell energy,
+momentum, stress and signed classical charge. It also exposes Hamiltonian,
+momentum and torsion defects. These are retained-state readouts, not physical
+measurements decoded from detector clicks. Opposite U(1) charge is not a claim
+of quantum antiparticle counts or annihilation. Complexity growth/selection
+remains the explicit open task in [issue #45](https://github.com/Closer24/Universe24/issues/45).
+
 Tests retain independent Einstein equation checks and known counterexamples. A regression test can pass by confirming that a proposed physical construction fails; the corresponding physics gate remains failed.
 
 [The standard model report](docs/ONE_SYSTEM.md) defines the research question, equations, module boundaries, methods, results and gates A–F. [The proposal index](docs/proposals/INDEX.md) records the inherited ADM, Frame48, null and FLRW work. [Issue #40](https://github.com/Closer24/Universe24/issues/40) coordinates the missing coupled encoding, refinement, shared-metric apparatus and detector physics.
