@@ -1,0 +1,528 @@
+{
+  "schema": "metric-clock-gate-v3",
+  "config": {
+    "Q": 16777217,
+    "P": 4096,
+    "L": 3,
+    "steps": 32768,
+    "amplitude": 16777216,
+    "mass_multipliers": [
+      1,
+      4,
+      1024,
+      4096
+    ],
+    "fields": [
+      0,
+      32,
+      128,
+      -128
+    ],
+    "tolerance": 1e-05,
+    "counter_limit": 1152921504606846976
+  },
+  "manifest": {
+    "tensor_fingerprint": "e93a0bd29dd687b6285265374a6daee8a3e77f4e3ae3f3fc4cefdb7d9e07ce3a",
+    "dynamics_fingerprint": "89881d4fcde86c2132a1de44328671bb46edfdc58ea933459143dae9cdc8721b",
+    "rank": 3,
+    "gear_count": 5,
+    "support_violations": [],
+    "designation_count": 4,
+    "same_tensor_all_cases": true
+  },
+  "primary": "R_AB=[omega_A(F)/omega_B(F)]/[omega_A(0)/omega_B(0) must be within tolerance of one",
+  "readout": "Official-labelled changed-triple nonzero-quotient records at node0; signed crossing interpolation",
+  "scope": "Isolated prescribed-background scalar test clocks; not one_system, generated gravity or a complete metric",
+  "secondary": "Sine-transformed dispersion diagnostic only; cannot rescue a failed raw-clock gate",
+  "reproduction": "python -m universe24.tools.metric_clock_gate --out runs/metric-clock-gate/report.json",
+  "provenance": {
+    "fresh_public_run": true,
+    "matches_prior_scratch_final_hashes_and_rates": true,
+    "prior_scratch_process_interrupted_after_completed_flat_case": true,
+    "prior_scratch_flat_case_reused_when_resuming": true,
+    "relational_criterion_declared_before_nonzero_field_results": true,
+    "public_tool_uses_no_cache": true,
+    "implementation_sha256": "59363450edf111c0b027e3211854709858319530cda1627b5f41d6683b27e031",
+    "full_report_sha256": "870c4fdfe81d778c9cb0d48ee497479bb56128503294576fb5fe31a3d6cdea67",
+    "trajectory_execution_schema": "metric-clock-gate-v1",
+    "validation_patch_implementation_sha256": "4eed259b179b14eb0a757d6baec6460a824c07af6e1f487d73d76ee16a53629d",
+    "validation_patch": "Guard-at-final-update failure is excluded; explicit inconclusive status added. Trajectory and click-rate computation unchanged.",
+    "guard_status_derived_from_saved_exact_counter_peaks": true,
+    "flat_control_validation_patch": {
+      "method": "Acceptance-only reanalysis of the recorded complete, guarded, rewound flat control and unchanged recorded rates; no trajectory rerun or result replacement.",
+      "pre_patch_evidence_sha256": "f85409747dec5184e5cfe9680b81d22fe1cb00578c31e5f763e593042bab3c56",
+      "implementation_sha256": "15cb667b74b52a05ab8693a8d9310af4422b964814be6eaf89b264b50630be53",
+      "original_execution_and_prior_guard_patch_hashes_retained": true,
+      "all_recorded_flat_rates_positive_and_available": true,
+      "numeric_rates_hashes_and_acceptance_results_unchanged": true
+    },
+    "current_acceptance_implementation_sha256": "15cb667b74b52a05ab8693a8d9310af4422b964814be6eaf89b264b50630be53"
+  },
+  "cases": [
+    {
+      "F": 0,
+      "U": 0.0,
+      "expected_lapse": 1.0,
+      "steps": 32768,
+      "requested_steps": 32768,
+      "seed_sha256": "fc447701bb625bf8a70781656335c9c0339890b6c8f2a8cacb8a8aab26f89945",
+      "final_sha256": "ec5b331272907eb157674ce038c9ed1d9afd92cb500f42163177966f34dfbaf8",
+      "static_field_exact": true,
+      "peak_counter_magnitude": 18378548,
+      "peak_counter_bits": 25,
+      "clocks": {
+        "1": {
+          "official_records": 32768,
+          "crossings": 133,
+          "raw_omega": 0.012757845117187055,
+          "analytic_omega": 0.012757845217452341,
+          "raw_omega_error": -1.0026528565743043e-10,
+          "raw_ratio": 1.0,
+          "raw_ratio_minus_common_lapse": 0.0,
+          "sine_dispersion_ratio": 1.0,
+          "sine_ratio_minus_common_lapse": 0.0
+        },
+        "4": {
+          "official_records": 32768,
+          "crossings": 266,
+          "raw_omega": 0.025516209717311007,
+          "analytic_omega": 0.025516209596935232,
+          "raw_omega_error": 1.2037577531986976e-10,
+          "raw_ratio": 1.0,
+          "raw_ratio_minus_common_lapse": 0.0,
+          "sine_dispersion_ratio": 1.0,
+          "sine_ratio_minus_common_lapse": 0.0
+        },
+        "1024": {
+          "official_records": 32768,
+          "crossings": 4288,
+          "raw_omega": 0.4111378496523102,
+          "analytic_omega": 0.41113784989392077,
+          "raw_omega_error": -2.416105648883615e-10,
+          "raw_ratio": 1.0,
+          "raw_ratio_minus_common_lapse": 0.0,
+          "sine_dispersion_ratio": 1.0,
+          "sine_ratio_minus_common_lapse": 0.0
+        },
+        "4096": {
+          "official_records": 32768,
+          "crossings": 8773,
+          "raw_omega": 0.8410686431350679,
+          "analytic_omega": 0.8410686439119239,
+          "raw_omega_error": -7.768560239540534e-10,
+          "raw_ratio": 1.0,
+          "raw_ratio_minus_common_lapse": 0.0,
+          "sine_dispersion_ratio": 1.0,
+          "sine_ratio_minus_common_lapse": 0.0
+        }
+      },
+      "exact_rewind": true,
+      "relational_clock_pairs": [
+        {
+          "A": 1,
+          "B": 4,
+          "double_ratio": 1.0,
+          "minus_one": 0.0,
+          "pass": true,
+          "within_tolerance": true
+        },
+        {
+          "A": 1,
+          "B": 1024,
+          "double_ratio": 1.0,
+          "minus_one": 0.0,
+          "pass": true,
+          "within_tolerance": true
+        },
+        {
+          "A": 1,
+          "B": 4096,
+          "double_ratio": 1.0,
+          "minus_one": 0.0,
+          "pass": true,
+          "within_tolerance": true
+        },
+        {
+          "A": 4,
+          "B": 1024,
+          "double_ratio": 1.0,
+          "minus_one": 0.0,
+          "pass": true,
+          "within_tolerance": true
+        },
+        {
+          "A": 4,
+          "B": 4096,
+          "double_ratio": 1.0,
+          "minus_one": 0.0,
+          "pass": true,
+          "within_tolerance": true
+        },
+        {
+          "A": 1024,
+          "B": 4096,
+          "double_ratio": 1.0,
+          "minus_one": 0.0,
+          "pass": true,
+          "within_tolerance": true
+        }
+      ],
+      "relational_all_clock_gate": true,
+      "relational_first_pair_gate": true,
+      "sine_dispersion_gate": true,
+      "guard_pass": true,
+      "stop_reason": "completed",
+      "relational_status": "pass",
+      "flat_control_valid": true
+    },
+    {
+      "F": 32,
+      "U": 0.00390625,
+      "expected_lapse": 0.9960860906568267,
+      "steps": 32768,
+      "requested_steps": 32768,
+      "seed_sha256": "05a55753430855c74049f6a950a43c5252a2aaa6bfe05ce949c06a1034ddbc69",
+      "final_sha256": "97ef55722d0f32d8c63cc152f174f21d46c871ff27f8c621e147b03d52b8c8dd",
+      "static_field_exact": true,
+      "peak_counter_magnitude": 18364211,
+      "peak_counter_bits": 25,
+      "clocks": {
+        "1": {
+          "official_records": 32768,
+          "crossings": 133,
+          "raw_omega": 0.012707911531668975,
+          "analytic_omega": 0.012707911494547627,
+          "raw_omega_error": 3.7121347662427695e-11,
+          "raw_ratio": 0.9960860486187584,
+          "raw_ratio_minus_common_lapse": -4.2038068359673275e-08,
+          "sine_dispersion_ratio": 0.9960861013947179,
+          "sine_ratio_minus_common_lapse": 1.073789113181789e-08
+        },
+        "4": {
+          "official_records": 32768,
+          "crossings": 265,
+          "raw_omega": 0.02541633599626841,
+          "analytic_omega": 0.025416336078726922,
+          "raw_omega_error": -8.245851224053524e-11,
+          "raw_ratio": 0.9960858716028329,
+          "raw_ratio_minus_common_lapse": -2.1905399383292945e-07,
+          "sine_dispersion_ratio": 0.9960860827264867,
+          "sine_ratio_minus_common_lapse": -7.93034005130977e-09
+        },
+        "1024": {
+          "official_records": 32768,
+          "crossings": 4271,
+          "raw_omega": 0.4095057755780237,
+          "analytic_omega": 0.40950577559001794,
+          "raw_omega_error": -1.1994238935386647e-11,
+          "raw_ratio": 0.9960303482745101,
+          "raw_ratio_minus_common_lapse": -5.5742382316648076e-05,
+          "sine_dispersion_ratio": 0.996086091205155,
+          "sine_ratio_minus_common_lapse": 5.483282716767235e-10
+        },
+        "4096": {
+          "official_records": 32768,
+          "crossings": 8736,
+          "raw_omega": 0.8375693045018727,
+          "analytic_omega": 0.837569304386413,
+          "raw_omega_error": 1.1545975286963994e-10,
+          "raw_ratio": 0.9958394137485004,
+          "raw_ratio_minus_common_lapse": -0.0002466769083263598,
+          "sine_dispersion_ratio": 0.9960860916511675,
+          "sine_ratio_minus_common_lapse": 9.943407208723443e-10
+        }
+      },
+      "exact_rewind": true,
+      "relational_clock_pairs": [
+        {
+          "A": 1,
+          "B": 4,
+          "double_ratio": 1.000000177711511,
+          "minus_one": 1.7771151106238392e-07,
+          "pass": true,
+          "within_tolerance": true
+        },
+        {
+          "A": 1,
+          "B": 1024,
+          "double_ratio": 1.0000559223364476,
+          "minus_one": 5.592233644757805e-05,
+          "pass": false,
+          "within_tolerance": false
+        },
+        {
+          "A": 1,
+          "B": 4096,
+          "double_ratio": 1.0002476653031132,
+          "minus_one": 0.0002476653031131537,
+          "pass": false,
+          "within_tolerance": false
+        },
+        {
+          "A": 4,
+          "B": 1024,
+          "double_ratio": 1.00005574461503,
+          "minus_one": 5.5744615029995614e-05,
+          "pass": false,
+          "within_tolerance": false
+        },
+        {
+          "A": 4,
+          "B": 4096,
+          "double_ratio": 1.0002474875476206,
+          "minus_one": 0.0002474875476206062,
+          "pass": false,
+          "within_tolerance": false
+        },
+        {
+          "A": 1024,
+          "B": 4096,
+          "double_ratio": 1.0001917322445504,
+          "minus_one": 0.00019173224455037996,
+          "pass": false,
+          "within_tolerance": false
+        }
+      ],
+      "relational_all_clock_gate": false,
+      "relational_first_pair_gate": true,
+      "sine_dispersion_gate": true,
+      "guard_pass": true,
+      "stop_reason": "completed",
+      "relational_status": "measured_disagreement",
+      "flat_control_valid": true
+    },
+    {
+      "F": 128,
+      "U": 0.015625,
+      "expected_lapse": 0.9842509842514764,
+      "steps": 32768,
+      "requested_steps": 32768,
+      "seed_sha256": "c547d39e2750b29d8febd30aabe41f34c5b8ebf7ee821f1e74a133f9d5e82763",
+      "final_sha256": "c3dd477562e218a0df28c138bfb978efe772d753dfc99039c9b91744e82ab96f",
+      "static_field_exact": true,
+      "peak_counter_magnitude": 18321356,
+      "peak_counter_bits": 25,
+      "clocks": {
+        "1": {
+          "official_records": 32768,
+          "crossings": 131,
+          "raw_omega": 0.012556919108073902,
+          "analytic_omega": 0.012556919050969123,
+          "raw_omega_error": 5.7104779238592585e-11,
+          "raw_ratio": 0.9842507878667949,
+          "raw_ratio_minus_common_lapse": -1.9638468151672583e-07,
+          "sine_dispersion_ratio": 0.9842509964627008,
+          "sine_ratio_minus_common_lapse": 1.2211224365010764e-08
+        },
+        "4": {
+          "official_records": 32768,
+          "crossings": 262,
+          "raw_omega": 0.025114333149721897,
+          "analytic_omega": 0.02511433311795703,
+          "raw_omega_error": 3.176486851330651e-11,
+          "raw_ratio": 0.9842501463955101,
+          "raw_ratio_minus_common_lapse": -8.378559662736151e-07,
+          "sine_dispersion_ratio": 0.9842509808532318,
+          "sine_ratio_minus_common_lapse": -3.398244574626119e-09
+        },
+        "1024": {
+          "official_records": 32768,
+          "crossings": 4220,
+          "raw_omega": 0.40457229182658017,
+          "analytic_omega": 0.40457229180649606,
+          "raw_omega_error": 2.0084101048922776e-11,
+          "raw_ratio": 0.9840307628419948,
+          "raw_ratio_minus_common_lapse": -0.0002202214094816357,
+          "sine_dispersion_ratio": 0.9842509848699059,
+          "sine_ratio_minus_common_lapse": 6.184295298083953e-10
+        },
+        "4096": {
+          "official_records": 32768,
+          "crossings": 8626,
+          "raw_omega": 0.8270042961017151,
+          "analytic_omega": 0.8270042958603523,
+          "raw_omega_error": 2.413628186204164e-10,
+          "raw_ratio": 0.983278003349491,
+          "raw_ratio_minus_common_lapse": -0.0009729809019853874,
+          "sine_dispersion_ratio": 0.9842509853770428,
+          "sine_ratio_minus_common_lapse": 1.1255664178477787e-09
+        }
+      },
+      "exact_rewind": true,
+      "relational_clock_pairs": [
+        {
+          "A": 1,
+          "B": 4,
+          "double_ratio": 1.0000006517360318,
+          "minus_one": 6.517360318092358e-07,
+          "pass": true,
+          "within_tolerance": true
+        },
+        {
+          "A": 1,
+          "B": 1024,
+          "double_ratio": 1.0002235956771968,
+          "minus_one": 0.000223595677196764,
+          "pass": false,
+          "within_tolerance": false
+        },
+        {
+          "A": 1,
+          "B": 4096,
+          "double_ratio": 1.0009893280577722,
+          "minus_one": 0.0009893280577721875,
+          "pass": false,
+          "within_tolerance": false
+        },
+        {
+          "A": 4,
+          "B": 1024,
+          "double_ratio": 1.0002229437958645,
+          "minus_one": 0.0002229437958645164,
+          "pass": false,
+          "within_tolerance": false
+        },
+        {
+          "A": 4,
+          "B": 4096,
+          "double_ratio": 1.0009886756773847,
+          "minus_one": 0.0009886756773846983,
+          "pass": false,
+          "within_tolerance": false
+        },
+        {
+          "A": 1024,
+          "B": 4096,
+          "double_ratio": 1.0007655612043995,
+          "minus_one": 0.000765561204399523,
+          "pass": false,
+          "within_tolerance": false
+        }
+      ],
+      "relational_all_clock_gate": false,
+      "relational_first_pair_gate": true,
+      "sine_dispersion_gate": true,
+      "guard_pass": true,
+      "stop_reason": "completed",
+      "relational_status": "measured_disagreement",
+      "flat_control_valid": true
+    },
+    {
+      "F": -128,
+      "U": -0.015625,
+      "expected_lapse": 1.015504800579495,
+      "steps": 32768,
+      "requested_steps": 32768,
+      "seed_sha256": "4a71236f7517a3195e716e7a1db54d9d25da102914f69a8d5ef0c5f7fe296f6a",
+      "final_sha256": "60e3348dd878f4d0061fe3e304f15392485627119dc5c687747c8e908d156bcb",
+      "static_field_exact": true,
+      "peak_counter_magnitude": 18436236,
+      "peak_counter_bits": 25,
+      "clocks": {
+        "1": {
+          "official_records": 32768,
+          "crossings": 135,
+          "raw_omega": 0.012955655835075316,
+          "analytic_omega": 0.01295565580911714,
+          "raw_omega_error": 2.5958176580465064e-11,
+          "raw_ratio": 1.0155050258151963,
+          "raw_ratio_minus_common_lapse": 2.25235701201143e-07,
+          "sine_dispersion_ratio": 1.0155048105950035,
+          "sine_ratio_minus_common_lapse": 1.0015508422611674e-08
+        },
+        "4": {
+          "official_records": 32768,
+          "crossings": 270,
+          "raw_omega": 0.025911855359234032,
+          "analytic_omega": 0.025911855306684706,
+          "raw_omega_error": 5.254932600173845e-11,
+          "raw_ratio": 1.0155056588069429,
+          "raw_ratio_minus_common_lapse": 8.58227447775306e-07,
+          "sine_dispersion_ratio": 1.0155047978483214,
+          "sine_ratio_minus_common_lapse": -2.7311737316182416e-09
+        },
+        "1024": {
+          "official_records": 32768,
+          "crossings": 4356,
+          "raw_omega": 0.4176059905035617,
+          "analytic_omega": 0.41760599067826926,
+          "raw_omega_error": -1.7470758173487866e-10,
+          "raw_ratio": 1.0157322923606313,
+          "raw_ratio_minus_common_lapse": 0.00022749178113623536,
+          "sine_dispersion_ratio": 1.0155048007491903,
+          "sine_ratio_minus_common_lapse": 1.69695146823301e-10
+        },
+        "4096": {
+          "official_records": 32768,
+          "crossings": 8917,
+          "raw_omega": 0.8549582395797638,
+          "analytic_omega": 0.854958239415493,
+          "raw_omega_error": 1.642708191695874e-10,
+          "raw_ratio": 1.0165142245618892,
+          "raw_ratio_minus_common_lapse": 0.0010094239823941198,
+          "sine_dispersion_ratio": 1.0155048016445989,
+          "sine_ratio_minus_common_lapse": 1.0651037829489951e-09
+        }
+      },
+      "exact_rewind": true,
+      "relational_clock_pairs": [
+        {
+          "A": 1,
+          "B": 4,
+          "double_ratio": 0.9999993766733439,
+          "minus_one": -6.233266560684569e-07,
+          "pass": true,
+          "within_tolerance": true
+        },
+        {
+          "A": 1,
+          "B": 1024,
+          "double_ratio": 0.9997762534999189,
+          "minus_one": -0.0002237465000810568,
+          "pass": false,
+          "within_tolerance": false
+        },
+        {
+          "A": 1,
+          "B": 4096,
+          "double_ratio": 0.9990071966310871,
+          "minus_one": -0.0009928033689129423,
+          "pass": false,
+          "within_tolerance": false
+        },
+        {
+          "A": 4,
+          "B": 1024,
+          "double_ratio": 0.9997768766874964,
+          "minus_one": -0.00022312331250362583,
+          "pass": false,
+          "within_tolerance": false
+        },
+        {
+          "A": 4,
+          "B": 4096,
+          "double_ratio": 0.9990078193392906,
+          "minus_one": -0.0009921806607093853,
+          "pass": false,
+          "within_tolerance": false
+        },
+        {
+          "A": 1024,
+          "B": 4096,
+          "double_ratio": 0.9992307710188759,
+          "minus_one": -0.0007692289811240816,
+          "pass": false,
+          "within_tolerance": false
+        }
+      ],
+      "relational_all_clock_gate": false,
+      "relational_first_pair_gate": true,
+      "sine_dispersion_gate": true,
+      "guard_pass": true,
+      "stop_reason": "completed",
+      "relational_status": "measured_disagreement",
+      "flat_control_valid": true
+    }
+  ],
+  "flat_control_valid": true
+}

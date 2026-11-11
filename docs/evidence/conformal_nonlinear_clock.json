@@ -1,0 +1,327 @@
+{
+  "schema": "conformal-nonlinear-clock-v1",
+  "scope": "Two coupled nonlinear scalar clocks under a newly chosen reciprocal rank-four tensor. Finite-time temporal refinement and controlled probe limit; not the default law, general geometry, quantum statistics or Einstein gravity.",
+  "law": "Common conformal tensor plus u_clock1-=3A^2 clock1 clock2^2 and u_clock2-=3A^2 clock2 clock1^2. No Omega factor multiplies this canonical quartic; metric source still evolves reciprocally.",
+  "seed": "Base conformal seed; before evolution set a_clock_s=b_clock_s-A*Omega^3*(m_s^2+1)/(2N^2), exactly integer. All other a,b,r unchanged.",
+  "comparison": "For n=1..5N compare official ell_Omega2(n)/(4A) with ell_Omega1(2n-1)/(2A). Missing rows contribute zero. No fitted shift, rescaling, or runtime correction.",
+  "metric_drift_scope": "Nominal constant-background time matching, not integration and retiming of evolving Omega. Actual proper-time mismatch is bounded by t*drift_2+2t*drift_1; t_max=(5N-1)/N.",
+  "refinements": [
+    8,
+    16,
+    32,
+    64
+  ],
+  "results": [
+    {
+      "N": 8,
+      "parameters": {
+        "N": 8,
+        "A": 262144,
+        "P": 68719476736,
+        "Q": 302231454903657293676544,
+        "D": 1813388729421943762059264,
+        "w": 151115727451828646838272,
+        "masses": [
+          1,
+          2
+        ],
+        "L": 3,
+        "interaction": true
+      },
+      "steps_per_run": 81,
+      "proper_time_matched_max_absolute_trace_errors": [
+        0.05136585235595703,
+        0.1944732666015625
+      ],
+      "exact_error_numerators": [
+        53861,
+        203920
+      ],
+      "exact_error_denominator": 1048576,
+      "nominal_proper_time_mismatch_bound": 9.754330676514655e-08,
+      "exact_mismatch_bound_numerator": 53625,
+      "exact_mismatch_bound_denominator": 549755813888,
+      "exact_rewinds": [
+        true,
+        true
+      ],
+      "clock_observations": [
+        {
+          "Omega": 1,
+          "seed_sha256": "02e90341f37b02d82bc975b6968973ce116aba10435056f446acc14304eb9774",
+          "final_sha256": "8f5efbaa360c12ca6571afaec714ad08ae33df4c44d58817093967ec00052d65",
+          "exact_rewind": true,
+          "max_Omega_counter_drift": 135,
+          "max_Omega_normalized_drift": 1.964508555829525e-09,
+          "min_Omega_counter": 68719476601,
+          "positive_Omega_every_update": true,
+          "official_row_count": 8388,
+          "official_readout_missing_nonzero": 0,
+          "official_trace_sha256": {
+            "1": "e13c9a6514e6f40d3846b742cc8454ea6063b1e4d367183afd991f3aacc12f22",
+            "2": "f997a9e2555091e9938daea7274e6590886c401d26c8f8d37f77f35a0b75d3f2"
+          }
+        },
+        {
+          "Omega": 2,
+          "seed_sha256": "e1c4791916f0a6d6f5589c140413d59ab792e5e50d7c6e127faaef1c2c4bfc77",
+          "final_sha256": "635a97d41143acdfa824cb06f087496ebc09938f7886bebe6065ee9c68791006",
+          "exact_rewind": true,
+          "max_Omega_counter_drift": 1105,
+          "max_Omega_normalized_drift": 1.607986632734537e-08,
+          "min_Omega_counter": 137438952367,
+          "positive_Omega_every_update": true,
+          "official_row_count": 8388,
+          "official_readout_missing_nonzero": 0,
+          "official_trace_sha256": {
+            "1": "341a0d1da08021feb71727bafd4806aa14a89dffcbee29948f7a7aa7ed0a050a",
+            "2": "ee04be0a7c7e566243720536908bae50449d36dc2c4501069b7d2735e301a34e"
+          }
+        }
+      ],
+      "rank": 4,
+      "strict_support": true,
+      "reciprocity": true,
+      "monomials": 34,
+      "tensor_fingerprint": "bd06799dc720b524d36bf14a31b2405363b0313b0b9fc7bb64e655e4a2489c67"
+    },
+    {
+      "N": 16,
+      "parameters": {
+        "N": 16,
+        "A": 16777216,
+        "P": 281474976710656,
+        "Q": 20282409603651670423947251286016,
+        "D": 121694457621910022543683507716096,
+        "w": 10141204801825835211973625643008,
+        "masses": [
+          1,
+          2
+        ],
+        "L": 3,
+        "interaction": true
+      },
+      "steps_per_run": 161,
+      "proper_time_matched_max_absolute_trace_errors": [
+        0.013513907790184021,
+        0.05162237584590912
+      ],
+      "exact_error_numerators": [
+        906903,
+        3464319
+      ],
+      "exact_error_denominator": 67108864,
+      "nominal_proper_time_mismatch_bound": 2.3382851210840272e-11,
+      "exact_mismatch_bound_numerator": 105307,
+      "exact_mismatch_bound_denominator": 4503599627370496,
+      "exact_rewinds": [
+        true,
+        true
+      ],
+      "clock_observations": [
+        {
+          "Omega": 1,
+          "seed_sha256": "589c90239ae187beb46f5829e7421da5277c7bad9158e2018121ffd82ed1f6a7",
+          "final_sha256": "029c87b4d959b0532a31ebae5a3a0e5d2913710d0fc35effeb5535ddb051d776",
+          "exact_rewind": true,
+          "max_Omega_counter_drift": 131,
+          "max_Omega_normalized_drift": 4.654054919228656e-13,
+          "min_Omega_counter": 281474976710525,
+          "positive_Omega_every_update": true,
+          "official_row_count": 16938,
+          "official_readout_missing_nonzero": 0,
+          "official_trace_sha256": {
+            "1": "4faa1f19f952f40608f30ac78e82048570f69c277c0a92606b1349fea5b73b34",
+            "2": "6ede9819205d34424d7db78758f429759652ecacef9044e7ee9b958e15ee3f64"
+          }
+        },
+        {
+          "Omega": 2,
+          "seed_sha256": "a852e473a32630c49372e06d0cc9e236f138bd06ea15d702b385d03a01c65944",
+          "final_sha256": "ae6bbf505c57963df9a7094cf3cf326bd6fb151d9332c3944378f40823e69640",
+          "exact_rewind": true,
+          "max_Omega_counter_drift": 1071,
+          "max_Omega_normalized_drift": 3.8049563499953365e-12,
+          "min_Omega_counter": 562949953420241,
+          "positive_Omega_every_update": true,
+          "official_row_count": 16938,
+          "official_readout_missing_nonzero": 0,
+          "official_trace_sha256": {
+            "1": "68160128f57bc0c76a026c571a35b6fb352146d424d82df7b284e4e90ecedfc1",
+            "2": "7e9563fec446ac95da2474f51b8d1eef6e2e2e7af40281a906ddb37f56dc422c"
+          }
+        }
+      ],
+      "rank": 4,
+      "strict_support": true,
+      "reciprocity": true,
+      "monomials": 34,
+      "tensor_fingerprint": "6c01117f9884fb8ec4868f496c3222ffd783fb67e1ecdaaef8e05f6597093cc8"
+    },
+    {
+      "N": 32,
+      "parameters": {
+        "N": 32,
+        "A": 1073741824,
+        "P": 1152921504606846976,
+        "Q": 1361129467683753853853498429727072845824,
+        "D": 8166776806102523123120990578362437074944,
+        "w": 680564733841876926926749214863536422912,
+        "masses": [
+          1,
+          2
+        ],
+        "L": 3,
+        "interaction": true
+      },
+      "steps_per_run": 321,
+      "proper_time_matched_max_absolute_trace_errors": [
+        0.0034253988415002823,
+        0.013090710155665874
+      ],
+      "exact_error_numerators": [
+        14711976,
+        56224172
+      ],
+      "exact_error_denominator": 4294967296,
+      "nominal_proper_time_mismatch_bound": 5.740525242659e-15,
+      "exact_mismatch_bound_numerator": 211788,
+      "exact_mismatch_bound_denominator": 36893488147419103232,
+      "exact_rewinds": [
+        true,
+        true
+      ],
+      "clock_observations": [
+        {
+          "Omega": 1,
+          "seed_sha256": "154bee535752b6b0162408a8f402caf87b6bd6b343bd8e9f47ebabaafb2fb213",
+          "final_sha256": "04388abbfca628660fcef146d178fb1d21699b8b6a44e0197bcf0531043b8ee9",
+          "exact_rewind": true,
+          "max_Omega_counter_drift": 130,
+          "max_Omega_normalized_drift": 1.1275702593849246e-16,
+          "min_Omega_counter": 1152921504606846846,
+          "positive_Omega_every_update": true,
+          "official_row_count": 34164,
+          "official_readout_missing_nonzero": 0,
+          "official_trace_sha256": {
+            "1": "0ef8ee931f17df61ec36c993f7e2fada59609129807ddb1de500b3340052926c",
+            "2": "e4654a2d12787db2e458f2dd9f2b8d0f4b45c251a53365920e2e270f5d3559a9"
+          }
+        },
+        {
+          "Omega": 2,
+          "seed_sha256": "30f677f79efd6075af739256a6fec6426680e88ae6294ef94d7ae42e31072a62",
+          "final_sha256": "ead61dab1135f098ebcdaa9714eb27266d0f5af97f7ac5d9873bd624e181d303",
+          "exact_rewind": true,
+          "max_Omega_counter_drift": 1072,
+          "max_Omega_normalized_drift": 9.298117831235686e-16,
+          "min_Omega_counter": 2305843009213692880,
+          "positive_Omega_every_update": true,
+          "official_row_count": 34164,
+          "official_readout_missing_nonzero": 0,
+          "official_trace_sha256": {
+            "1": "d6e72d1db4b89ddeeee7f40f8eb28e430aaebc3658a13c2c19fe5366774b19ce",
+            "2": "188c176f45d74cb75babb0ed9006da06e609f412bc80643e8e6f8106f3d99450"
+          }
+        }
+      ],
+      "rank": 4,
+      "strict_support": true,
+      "reciprocity": true,
+      "monomials": 34,
+      "tensor_fingerprint": "915cf6a6457a3b87f9acaa0d78f6de1208ffc3ea8f1e16a43c4724b1b53f738d"
+    },
+    {
+      "N": 64,
+      "parameters": {
+        "N": 64,
+        "A": 68719476736,
+        "P": 4722366482869645213696,
+        "Q": 91343852333181432387730302044767688728495783936,
+        "D": 548063113999088594326381812268606132370974703616,
+        "w": 45671926166590716193865151022383844364247891968,
+        "masses": [
+          1,
+          2
+        ],
+        "L": 3,
+        "interaction": true
+      },
+      "steps_per_run": 641,
+      "proper_time_matched_max_absolute_trace_errors": [
+        0.0008590338329668157,
+        0.0032822393404785544
+      ],
+      "exact_error_numerators": [
+        236129422,
+        902215080
+      ],
+      "exact_error_denominator": 274877906944,
+      "nominal_proper_time_mismatch_bound": 1.1177559268531054e-18,
+      "exact_mismatch_bound_numerator": 337821,
+      "exact_mismatch_bound_denominator": 302231454903657293676544,
+      "exact_rewinds": [
+        true,
+        true
+      ],
+      "clock_observations": [
+        {
+          "Omega": 1,
+          "seed_sha256": "cabd837ea292f7689508c4bb6649088c7a87031e98b02e6844d305943d5a1bed",
+          "final_sha256": "ff2c7f7447e035709720643d77abf48dd31ed6c8556d3e25af5e4ea5e5c7bb89",
+          "exact_rewind": true,
+          "max_Omega_counter_drift": 0,
+          "max_Omega_normalized_drift": 0.0,
+          "min_Omega_counter": 4722366482869645213696,
+          "positive_Omega_every_update": true,
+          "official_row_count": 68778,
+          "official_readout_missing_nonzero": 0,
+          "official_trace_sha256": {
+            "1": "c4002fda80d5aa2654d75d3abce5d4e926fc69f692e2502b0f25993edca9b372",
+            "2": "391790a976077ab6c53ddd925c5aa6056e29c6b545ad26b895ffc28bd06c37d4"
+          }
+        },
+        {
+          "Omega": 2,
+          "seed_sha256": "dd4c1f83cb28b197b2996f17fed2ac833d03ad63b5f5fbfdbd02d20292df40ee",
+          "final_sha256": "de1072d0b1726261ace509ff84a523686c19c835938028e5fa45b8a97f616aab",
+          "exact_rewind": true,
+          "max_Omega_counter_drift": 1059,
+          "max_Omega_normalized_drift": 2.24251972785576e-19,
+          "min_Omega_counter": 9444732965739290426333,
+          "positive_Omega_every_update": true,
+          "official_row_count": 68778,
+          "official_readout_missing_nonzero": 0,
+          "official_trace_sha256": {
+            "1": "6608076c8fbbf6bd534fa5b229e53fa906acca40e7b4d45b48254b22d0896217",
+            "2": "89d1895cd8ad12900b84d9ed7b91dd703bfcf1c7cf4cc959b3f5ee2e25aa1fdc"
+          }
+        }
+      ],
+      "rank": 4,
+      "strict_support": true,
+      "reciprocity": true,
+      "monomials": 34,
+      "tensor_fingerprint": "dbef3597fb3e14c684a302526ecde3993083205033c5ad043e6459cb4fd10f36"
+    }
+  ],
+  "provenance": {
+    "method": "fresh public Engine runs and complete inverse runs",
+    "source_sha256": {
+      "experiments/geometry/conformal_nonlinear_clock.py": "d7ba670c9bca7bec597ee3b8db26ca334b84f5f79fc479441c079480089b6189",
+      "experiments/geometry/conformal_metric_probe.py": "cd3c95ebb8675069dbb298fbaf24c439a58b625da8e368bb4655497bfd4ac049",
+      "universe24/core/engine.py": "c97037bb0e34c676b775b4c6db24d5ffb889d837db52bcb32c7b412bd0b87d67",
+      "universe24/core/tensor.py": "b5f757054709e477748f500d931e84cc29a67a7f57b6012ecb532db51104ce50",
+      "universe24/observe/readout.py": "6f8f0335c876390340d5d89372bd24d129fe0abecab4d6a2d820bc9036ef6e11"
+    },
+    "python_version": "3.12.14",
+    "numpy_version": "2.3.5",
+    "state_hash_format": "universe24-state-values-v2",
+    "prior_result_verification": {
+      "method": "Every prior numeric result, tensor fingerprint, trace hash and rewind flag equals the fresh public result exactly; new audit fields are additional.",
+      "prior_result_sha256": "a416d703560e0f901249babad4658a2b51e1b973a6aa61957c0545e3120e3fa7",
+      "prior_research_script_sha256": "756db41ced1ac13442f33bebd9494cd6bd607d0e108b6f360200fdde31c2d122",
+      "exact_match": true
+    }
+  }
+}

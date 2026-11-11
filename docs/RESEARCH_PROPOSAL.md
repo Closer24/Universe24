@@ -154,6 +154,8 @@ A test must define a complexity or organization measure, candidate routes, acces
 
 “Anti-entropy” is shorthand for formation of local order, not an assumed fundamental force. The opposing effect must be identified through measured spreading, heating or disorder in declared variables. Algebraic amplitude growth is not automatically temperature.
 
+On a finite invariant set, reversible evolution consists of cycles. A scalar organization score cannot increase strictly around a closed cycle. A proposed ordering preference must therefore specify the observed subsystem, preparation ensemble and regime; it cannot be assumed to improve every complete state at every update forever.
+
 ### H17. Quantum structure as a research target
 
 Determine why a successful model would have quantum-like observable probabilities, superposition and correlations. Conditional carry statistics and spinor transformation rules are useful ingredients, but general Born probabilities, interference, Bell correlations, measurement independence and no-signalling must be assessed together. A classically local deterministic model with independently chosen settings cannot claim an ordinary Bell-inequality violation without identifying which assumption changes.
@@ -164,7 +166,7 @@ Determine why a successful model would have quantum-like observable probabilitie
 
 ONE v1 has 382 gear types, 18,592 live input monomials and 736 terms explicitly designated one-way. Its common scale is Q=2³³+1. Every forward step evaluates the fixed polynomial on the same previous snapshot, then applies Rule3 componentwise. The exact construction is selected by one_system(); Section 7 gives its definitions.
 
-The base package contributes 375 gear types. The seven-gear cosmic block brings the total to 382. By default these two parts are block diagonal: the package does not read the cosmic block, and the cosmic block does not read the package. The cosmic block's own M1 and M2 gears do read its hand. Coexistence in one array therefore does not demonstrate cooperation between all gears.
+The fixed coupling graph divides the gear types into fifteen weak dependency components, or six groups when named modules are considered as whole units. A weak component groups gear types connected by input dependencies, ignoring the direction of influence. A module is a named set of related gears. Its seven-gear cosmic block is disconnected from the package. Under its documented preparation with a shared detector remainder, the detector difference has a recurrence independent of the shared detector token; changing that token therefore does not change the future hand or reader trajectory. A common engine does not by itself create communication.
 
 ### What the code and checks establish
 
@@ -172,11 +174,27 @@ The implementation provides exact integer state evolution, validated local polyn
 
 Controlled quotient-and-remainder constructions produce exclusive events and conditional frequency identities for specified loads and remainder ensembles. Clock and field studies demonstrate particular oscillations, responses and failure regimes. Their initialization, parameter choices, observation rules and tested horizons are part of each result.
 
+### Optional clock experiments
+
+A new optional fixed tensor adds seven local clock types and reciprocal detector-sum feedback, for 389 types in total. Controlled initial perturbations produce downstream official-record differences; bridge-off and reverse-direction controls distinguish interaction from coincident oscillations. The same scalar Rule3 advances every register. These are chosen experimental interactions, not gravity or a complexity optimizer. The individual detector ledger changes, so its former probability interpretation cannot be copied unchanged. Detailed preparations and outcomes are in [the clock research record](CLOCK_RESEARCH.md).
+
+A separate three-channel circuit has an exact all-time boundedness proof on its prepared Boolean sector. Two chosen local involutions are compiled into one fixed polynomial input, producing transmission, reflection and periodic clocks through Rule3 alone. All official clicks in this example are C0. It is an explicit building block, not the complete physical model or the binary-octahedral representation. [Equations, proof and actual traces](BOUNDED_CIRCUITS.md).
+
+### Stability evidence
+
+The original default preparation, called jpure in the code, on L=3 exceeds the declared growth limit at update 2192, while the entire computed history remains exactly reversible. Lowering only the initial matter amplitudes by a factor of sixteen gives longer quiet tested windows; slow metric drift remains. Separate even-lattice and sector-level checks are needed because a large background clock can hide growth in another field. Hand crossings are computational clock markers, not established cosmological bangs.
+
+A separate prescribed-background clock test compares dimensionless ratios of raw official-click cycle rates. For a prescribed dimensionless field amplitude U=1/64 controlling the clock factor, a pair including a faster clock differs from common dilation by about 0.000989, exceeding the declared 0.00001 tolerance; the two slow clocks differ by about 0.000000652 and pass that restricted test. This identifies a finite-frequency limitation and a possible low-frequency regime. It does not construct a propagation metric or derive the Einstein equations. [Exact protocol and results](CLOCK_RESEARCH.md#8-gravity-means-a-shared-metric-measured-by-clocks-and-signals).
+
+Further isolated geometric experiments provide limited constructive results. A new four-gear conformal scalar tensor gives converging common clock scaling, including an interacting clock pair, with sixteen exactly reversed histories. The optional Einstein tensor also has a prepared planar wave sector whose linear trace and divergence constraints are preserved exactly; its activity remains in the audit stream rather than official detector records. These are explicit building blocks, not general Einstein dynamics. [Geometric derivations and tests](GEOMETRY_RESEARCH.md).
+
+A separate 18-gear [integer tensor-wave example](LINEAR_SPIN2.md) supplies an exact bounded travelling sector with two polarizations and a moving official arithmetic event pattern. The same scalar Rule3 preserves its prepared symmetry, trace and divergence constraints for all time. General three-dimensional preparations remain unstable, and no matter detector yet reads this field as a common metric.
+
 ### What remains unresolved
 
-The visible matter doublet is not yet coupled to the rest-lapse in the way needed for universal gravitational response. Additional gauge sectors are present without a complete interacting Standard Model. Uniform lapse drift and runaway in rejected parameter choices limit stability claims. A general fresh-remainder mechanism, unrestricted Born statistics, Bell-consistent quantum predictions and autonomous physical time are not established.
+The visible matter doublet is not yet coupled to the rest-lapse in the way needed for universal gravitational response. Additional gauge sectors are present without a complete interacting Standard Model. Uniform and checkerboard metric modes, and runaway in the original default preparation as well as rejected couplings, limit stability claims. A general fresh-remainder mechanism, unrestricted Born statistics, Bell-consistent quantum predictions and autonomous physical time are not established.
 
-The coupled-doublet experiment is rejected and off by default because it exhibited runaway. Optional Einstein and CG2 builders are separate settings within ONE and are off by default; their limited results must not be attributed to the default. Retained research records include failed hypotheses and superseded choices. The current source and default fingerprint govern what is actually implemented.
+The coupled-doublet experiment is rejected and off by default because it exhibited runaway. Additional variants, such as the Einstein extension and the CG2 gauge experiment, are also off by default and have separate configurations and tested limits. The enabled default already contains gravitational candidates and gauge layers; the system map lists them explicitly. Results from additional variants must not be attributed to that default. Retained research records include failed hypotheses and superseded choices. The current source and default fingerprint govern what is actually implemented.
 
 ## 6. Research objectives, method and people
 
@@ -197,6 +215,10 @@ Establish long-time and size-dependent stability of the default; distinguish bou
 ### 6.4 Relativity targets at the click level
 
 Show operational local clocks and causal cones; consistent calibration of a common light speed; observer agreement and an appropriate Lorentz limit; universal free fall and clock redshift; a metric interpretation with local conservation and constrained gravitational degrees of freedom; and quantitative weak-field and radiative predictions. Recovering general relativity requires an appropriate continuum theory and empirical limits, not merely storing ten metric components.
+
+The target is gravitational geometry: infer one operational metric from local clock intervals and signal travel through links, then test its predictions for other species and for free fall without separate fits. A separate attraction between oscillator amplitudes does not establish gravity. The rank-four coupling tensor is not itself the rank-two spacetime metric.
+
+The event-space target includes the Einstein energy and momentum constraints, their preservation by the evolution, and a consistently identified stress source. Six directed axis measurements and a local clock do not determine all ten metric components; the off-diagonal spatial components require independent observations. Section A12a defines the reconstruction and constraint obligations. A continuum interpretation must specify its refinement, physical calibration and error bounds.
 
 The equivalence principle requires different physical clock and matter constructions to respond consistently. Test gravitational redshift, free fall, light bending, propagation delay and gravitational waves with independently defined apparatus and sources. General covariance concerns physical predictions under coordinate descriptions; it is not proved by relabeling lattice indices. State the regime and approximation for each target.
 
@@ -228,7 +250,7 @@ Theoretical physicist: A researcher with expertise in quantum foundations, quant
 
 The public repository is an executable starting example for this research grant. It is intended to make the assumptions and unresolved tasks concrete for a dedicated researcher; it is not a completed physical theory.
 
-## 7. Algebra of the ONE implementation
+## 7. Algebra of a possible implementation
 
 ### A0. Overview: what the algebra does
 
@@ -252,11 +274,13 @@ Signed integers can be encoded by natural numbers without loss: encode(z)=2z for
 
 The root simulation state contains a, b and r arrays of shape (G,L³). There is no separately evolved click log, second board, hidden local time register or external control state in this representation. A diagnostic can keep a history for analysis without feeding it back.
 
+The history of these local transitions is the proposed underlying event network (P3). Clicks are observations of that network (P7), not a second physical spacetime. The intended relativistic geometry must follow from signal and clock dynamics on the board and be confirmed by click measurements. The coordinate pair (n,x) is a computational label; it has not been shown to be an Einstein-spacetime coordinate system with an operational Lorentzian metric.
+
 ### A2. The cube, its rotations and quaternions
 
 The orientation-preserving rotations of the cube are 24 signed 3×3 permutation matrices R with determinant +1. Quaternion units obey i²=j²=k²=ijk=−1. Unit quaternions act on a spatial vector, written as a pure imaginary quaternion, by v↦qvq⁻¹.
 
-The quarter-turn lifts qₓ=(1+i)/√2 and qᵧ=(1+j)/√2 generate the binary octahedral group H=2O of order 48. The map H→O sends q and −q to the same one of the 24 proper cube rotations. The central element −1 acts trivially on vectors but can change the sign of a spinor.
+Define the quarter-turn lifts qₓ=(1+i)/√2, qᵧ=(1+j)/√2 and q𝓏=(1+k)/√2. The first two generate the binary octahedral group H=2O of order 48. The map H→O sends q and −q to the same one of the 24 proper cube rotations. The central element −1 acts trivially on vectors but can change the sign of a spinor.
 
 These 48 elements are not the 24 rotations plus 24 spatial reflections. The full spatial cube group including reflections is a different group. If a model needs reflection symmetry, specify and test the action on every relevant gear and link orientation.
 
@@ -268,15 +292,19 @@ The 48 L0 gear labels correspond to g∈H. Write Rg for its spatial rotation. Fo
 
 h₊ₓ=h₋ₓ=1;    h₊ᵧ=qᵧ;    h₋ᵧ=qᵧ⁻¹;    h₊𝓏=q𝓏³;    h₋𝓏=q𝓏⁻³.
 
-Define πd(g)=g h(Rg⁻¹d). A chosen sign s for each body axis supplies the weight wd(g). The directional matrix is
+Define πd(g)=g h(Rg⁻¹d). Choose body-axis signs s=(sₓ,sᵧ,s𝓏)∈{−1,+1}³ and set wd(g)=s_axis(Rg⁻¹d), with the same sign for both orientations of an axis. The complete default selects (1,−1,1); the standalone reference builder also supports other sign choices. The directional matrix is
 
 [Pd]g,h = wd(g) if h=πd(g), and 0 otherwise.
 
-Each Pd is a signed 48×48 permutation matrix. Opposite directions satisfy P−d=Pdᵀ, so three matrices determine all six. For the isolated L0 block,
+Each Pd is a signed 48×48 permutation matrix. Opposite directions satisfy P−d=Pdᵀ, so three matrices determine all six. The standalone reference builder uses
 
 uₓ = Q Σd Pd bₓ₊d.
 
-This is the matrix form of the fixed L0 coupling actually used by the builder. The complete ONE tensor adds other gears and terms, so this equation alone is not the complete ONE input. Its helper functions retain the name “reference” for this L0 block; that name does not invoke another engine.
+The complete default instead selects the free L0 block built by gravity_l0c.py, with input
+
+uₓ = 6bₓ + (Q−1)Σd Pd bₓ₊d.
+
+Its reduced neighbor weight and on-site term move the lowest possible free-input eigenvalue from −D to −D+12. This small margin does not guarantee stability after adding interactions. The full tensor then adds lapse and source couplings, as well as other gears and interactions; neither free-block equation alone is the complete input. The helper functions retain the name “reference” for L0; that name does not invoke another engine.
 
 Matrix entries are generated from the exact group construction before a run. Cached group products and permutation indices are representations of those fixed matrices, not additional dynamical laws or tunable routing instructions.
 
@@ -288,7 +316,7 @@ An L0 state can be written Bₓ=Σg bₓg[g] in the group ring ℤ[H], where [g]
 
 The angle brackets in the denominator denote a two-sided ideal: the imposed relations and all their algebraic consequences. This identifies equivalent expressions for composed group elements. It does not merge distinct stored states or discard remainders.
 
-Under the regular action, representative projections are s=Σg bg, v=Σg bg Rg e, A=Σg bg Rg A* Rgᵀ, and ψ=Σg bg g. Their transformation laws are scalar, vector, rank-two tensor and quaternionic spinor, respectively. The seed vector e and tensor A* define the projection. These projections may overlap in information and need not have closed independent dynamics.
+The regular action permutes group labels by left multiplication: (ρ(h)b)g=b_h⁻¹g. For a spatial field the combined rotation is (ρ(h)b)ₓ,g=b_Rh⁻¹x,h⁻¹g. Representative projections are s=Σg bg, v=Σg bg Rg e, A=Σg bg Rg A* Rgᵀ, and ψ=Σg bg g. Their transformation laws are scalar, vector, rank-two tensor and quaternionic spinor, respectively. The seed vector e and tensor A* define the projection. These projections may overlap in information and need not have closed independent dynamics.
 
 ONE also explicitly builds field modules, rather than obtaining every field by observing L0. Its matter matrices use left and right multiplication by i,j,k and integer Kronecker products. They encode proposed Dirac-like transport and internal actions; other blocks contain link and metric candidates. These are additional representation and coupling choices within T. An abstract representation does not prove that the interacting full tensor has the desired physical symmetry.
 
@@ -309,6 +337,8 @@ A purely matrix notation is possible after lifting the inputs: form Z(v), the ve
 For example, a fixed term c·bₓ,j·bₓ+d,k has a changing effective coefficient c·bₓ,j for the second factor. It permits modulation through the state while c and the tensor remain fixed. Whether it realizes a useful gate or clutch must be tested.
 
 The implementation validates locality, merges equal monomials and records the order needed for inversion. Its sparse coefficient representation is an implementation of this algebra, not a second changing table. Default ONE has 18,592 live monomials of degree at most three.
+
+The optional [single-edge construction](SINGLE_EDGE_IMPLEMENTATION.md) introduces node mediators while retaining all physical link types. It has 472 gear types and zero strict support violations. Its equations, inverse proof and passive source-coordinate observation map are explicit. The map restores the Lorenz diagnostic, but the new dynamics includes extra forces and is not proved physically equivalent. It is an experiment, not the default algebra or an established physical correction.
 
 ### A6. The scalar update and the common divisor
 
@@ -350,11 +380,15 @@ For a node x, first evaluate its G inputs uₓ from the fixed tensor and the old
 
 The repository's core/tensor.py constructs and validates the inputs; core/engine.py implements the shared step and inverse; layers/one.py selects the default tensor; prepare/one.py constructs the seed; observe/ computes diagnostics. The run loop repeatedly calls Engine.step. There is no separate update for a spinor, vector, clock or click.
 
+The [system map](SYSTEM_MAP.md) identifies the actual dependency graph and gives the inverse/locality argument with its scope. The default has six independent namespace groups; the common engine does not couple them merely by evaluating them in one array. Field names, observer labels and link metadata do not change the numerical update for a fixed indexed polynomial.
+
 ### A8. The seed, vacuum and what remains free
 
 Choose the fixed tensor and its parameters, L, and every initial a,b,r value before the run. Default ONE's background construction uses r*=3Q−1 where its complete system preparation specifies that vacuum. The standalone L0 builder also supports the Q-scaled r=2Q vacuum for its isolated arithmetic tests. Use the declared preparation for the selected construction.
 
 The seed can contain localized packets, static loads and correlated remainders. These are inputs, not derived physical facts. A seed ensemble specifies how different preparations are sampled. The engine performs no new random draw during evolution.
+
+The default jpure preparation uses floating-point projection and norm matching to choose an integer seed. Forward evolution then uses exact arithmetic only. Exporting the complete integer seed gives reproducible input; a random-seed number alone does not guarantee identical preparation across numerical-library versions.
 
 The degrees of freedom to investigate are the tensor construction, its coefficient choices, geometry, initial state and declared observation map. Changing the tensor changes the model; changing only the seed changes the preparation. The current number of gears, masses, gauge content and coupling constants are not uniquely derived from Rule3 or from 24 cube rotations.
 
@@ -365,6 +399,8 @@ For two consecutive snapshots define ℓ=b′+a. An official-stream event requir
 Let δ=(r′−r) mod D. Its arithmetic class is C0 for δ=0 or δ=D/2; C1 for 0<δ<D/2; and C2 for D/2<δ<D. At D=6 this agrees with the original three-class remainder convention. Gear metadata additionally labels observables as official or audit; select the declared observable sector explicitly.
 
 This classification is calculated after a transition. It does not choose the transition, erase alternatives, or impose an entropy gradient. A physical record and its backreaction must come from gears already present in T. A C2 event is not, by definition, collapse of a wavefunction.
+
+For the default matched cosmic preparation, without the optional sum bridge, ell_dp−ell_dm=I and Delta_b_next=I−Delta_a, where I=b_M1²+b_M2². Together with the hand's dependence on the recording pair only through Delta, this makes its future reader/hand history independent of the load split and token under the declared conditions. The [explicit proof](SYSTEM_MAP.md#a-precise-obstruction-to-the-current-choice-interpretation) rules out describing these records as selecting different future hand/reader trajectories in this preparation.
 
 ### A10. Exact identities and conditional statistics
 
@@ -384,17 +420,124 @@ For a linear b-only input u=Bb, ignoring the bounded remainder correction gives 
 
 A mode gap, a recurrence period or a velocity is not a complete effective Rule3 law and is not yet physical mass or light. A traveling packet must be distinguished from a sequence of similar readouts at fixed sites. Demonstrating synchronized or assembled clocks requires reproducible observables and perturbation tests.
 
+### A11a. Optional connected clocks: fixed tensor data
+
+The optional clock network adds one master-clock gear and one clock gear per selected sector **at every node**. A master gear is a local register, not a global variable read by every node. Quadratic springs couple these clocks; optional face-neighbor springs transmit clock disturbances locally. The clock-only input is
+
+u_C = (D/2)C + Σ_j k_j(C_j−C).
+
+Here C and C_j denote the current b values of clock gears, and k_j are fixed nonnegative integer spring coefficients. The spring language describes these polynomial couplings, not a separately applied mechanical force law.
+
+An isolated clock with this coefficient obeys b′=b−a exactly and keeps its remainder unchanged, hence has a period dividing six. Connecting clocks changes their normal modes; it does not prove an attracting synchronized state. All new clocks require explicit initial a,b,r values.
+
+Field ports use complete declared multiplets. For a diagonal integer quadratic form E=Σ_i w_i(b_i+v_i)², define the chosen interaction
+
+Φ_port = −λ C²(E−E₀)/2,
+Δu_C = −λ C(E−E₀),
+Δu_i = −s_i λ C²w_i(b_i+v_i).
+
+Here λ is a fixed integer coupling, E₀ is a fixed reference value, v_i are fixed affine shifts from stored deviations to full fields, and s_i∈{−1,+1} is the field sign. These are integer input polynomials of degree at most three. Subtracting E₀ can cancel the clock's vacuum input; it does not generally cancel the reciprocal force on a shifted field. A physical-link multiplet couples symmetrically to the clocks at its two endpoints. Every added term has single-edge physical support. This does not remove existing wider-support terms in the source tensor.
+
+The quadratic form must be invariant under the representation being claimed. The catalogue uses complete reference, matter, Higgs and gauge-matter multiplets and the spatial metric Frobenius form. It does not use an electromagnetic-potential norm, which is not gauge invariant. Covariance of an added polynomial is not a proof of continuous gauge covariance of the full rounded dynamics or Lorentz invariance. The resulting dependency graph is connected, but a homogeneous zero field can remain unexcited: a graph path alone is not a signal experiment.
+
+### A11b. Record backreaction without a click callback
+
+The default matched pair is read only through its difference, which is blind to the shared initial detector token under the conditions in A9. A new optional scalar bridge reads the sum as well:
+
+Φ_bridge = −κ C(d_p+d_m),
+Δu_C = −κ(d_p+d_m),
+Δu_dp = Δu_dm = −κ C.
+
+The three gears are on-site scalar gears with sign +1. This reciprocal, degree-one addition changes the fixed tensor before the run; it adds no rule after an observed click. A token-dependent record can now affect a future clock state. The matched-pair difference and shared remainder lock survive because the same force enters both detectors. Their individual quotient ledgers change, however:
+
+Write the original positive detector input as c I L_p, where c is its fixed integer coefficient, I=M1²+M2² is the reader intensity and L_p is its stored positive load. The sum below is over the observed updates:
+
+D Σℓ_p = 2c ΣI L_p − 2κ ΣC + r_p,0−r_p,N.
+
+The previous individual probability interpretation cannot be copied without this term. A controlled isolated example changes the shared initial detector remainder while keeping loads fixed; the records change at step one and the clock at step two. Removing the bridge removes that clock response. This proves a route for record backreaction, not an optimizer, wavefunction collapse, quantum entanglement or a preference for complexity.
+
+### A11c. Resolution, stability and the scope of the clock metaphor
+
+For any positive integer M, an exact change of integer resolution is
+
+T_M=MT,  Q_M=MQ,  E_M(a,b,r)=(a,b,Mr),
+W(T_M,Q_M) E_M = E_M W(T,Q).
+
+This follows from divmod(M(2u+r),MD)=(ℓ,Mr′). It preserves baseline a,b histories, quotients and click classes exactly. It embeds them in a subset of the larger remainder space. Adding small integer interactions afterwards defines a new model; the identity applies to its zero-added-coupling control. A newly computed vacuum 3MQ−1 generally differs from the required lifted remainder M(3Q−1). Specialized mirror or seed-symmetry statements require new checks.
+
+Resolution lifting does not cure an unstable source history. The isolated metric row has u=6b+(Q−1)Σ_neighbors b, giving the even-lattice checkerboard eigenvalue β=−D+12. Negative on-site stiffness can push this mode out of the oscillatory band. Odd periodic grids omit the exact checkerboard mode, so even-grid controls are required. A continuous confining quartic potential also does not imply bounded discrete Rule3 motion: a cubic restoring force can overshoot and produce an escaping recurrence at sufficiently large amplitudes.
+
+The retained remainders matter even inside that linear band. On an even cube, a prepared free metric mode has bₓ(n)=(−1)^(x+y+z+n)(B+vn) over an explicitly proved finite interval while its remainders remain within range. For v=0 the complete state has period two; for B=512, v=1 and the default Q, the interval exceeds two billion updates. One million updates and their inverses were checked in the exact two-sublattice reduction, with a separate full-engine prefix check. This is a high-frequency counterexample to an unrestricted stability claim, not a rejection of every smooth continuum limit. The [metric-source audit](METRIC_SOURCE_AUDIT.md) gives the seed, proof and executable checks.
+
+The [clock research record](CLOCK_RESEARCH.md) separates algebraic identities, finite-horizon controls, rejected integrations and physical targets. Hand zero crossings, reader-state echoes and full-state recurrence are separate diagnostics. None is by itself a cosmological bang. A deterministic local clock network with independent measurement settings and all trials counted obeys the Bell–CHSH bound; connecting its clocks does not evade that theorem.
+
+### A11d. An exactly bounded routing and clock example
+
+A separate small experiment gives an all-time invariant-sector proof, rather than extrapolating a finite run. Choose two local polynomial maps 𝒫 and 𝒥 that are involutions on a finite domain: applying either twice returns the input. Compile the fixed input
+
+u=(D/2)[𝒫(b)+𝒥(b)],    a₀=𝒫(b₀).
+
+Ordinary Rule3 gives (a′,b′,r′)=(b,𝒥(b),r). Because 𝒥²=id, the next state lies on a=𝒥(b), and the following step gives b′=𝒫(b). The two prepared phase graphs alternate automatically through the two-time registers. There is no extra gate call or runtime phase switch. If both maps preserve Boolean states, a and b remain Boolean and r remains fixed at every time. On a finite board, reversibility then proves periodicity.
+
+With E(b,r)=(𝒫(b),b,r), this is the exact embedding identity W²E(b,r)=E(𝒫𝒥(b),r). It recovers a complete two-step circuit transition, not just one matching frequency. It does not yet produce an effective Rule3 family with a different num/den ratio.
+
+The concrete example has three node channels: a retained control c and two data channels L,R. The local controlled swap is 𝒫(c,L,R)=(c,L+c(R−L),R+c(L−R)), with c∈{0,1}. The wire map swaps R(x) with L(x+e) for one chosen axis e. Both are involutions on the prepared Boolean sector; the compiled input is quadratic and strictly single-edge local. Four control-dependent terms are explicitly nonreciprocal. Arbitrary mismatched two-time seeds are outside the boundedness proof.
+
+The [bounded-circuit example](BOUNDED_CIRCUITS.md) shows exact transmission, reflection and periodic clocks using the same fixed tensor and different complete seeds. Its controls are retained static data, not a complexity optimizer. Its clicks all have class C0, so routing does not require or establish C2 collapse. This is a selected circuit within the common Rule3 engine, not the default field model, a full cube-symmetric construction, or a derivation of light, mass, gravity or quantum entanglement.
+
 ### A12. Gravity candidates and the cosmic block
 
 ONE includes ten metric-labeled gears, but the default coupling uses a much narrower gravitational mechanism. Lapse denotes a candidate factor relating local clock rates to the computational coordinate; it is not physical proper time until calibrated. The L0 sector participates in a coupled lapse construction. The visible doublet still lacks the universal rest-clock response required by the equivalence principle.
 
 Weak-field response and inverse-distance source studies are evidence within specified constructions. Chosen site and link coefficients can reproduce desired leading-order factors, so those factors must not be presented as uniquely derived from Rule3. Optional Einstein-layer calculations are not a derivation of full general relativity for default ONE.
 
-The cosmic block contains a hand Θ, two readers M1,M2, two loads Lp,Lm and two record gears dp,dm. Its tensor defines their interactions. A hand crossing zero can organize a diagnostic time interval, but it does not reset or reseed the board. Exact forward and inverse histories retain the whole state through the crossing.
+The gravitational target is geometry, not an additional attraction between clocks. Infer a common metric g from local clock intervals and signal travel through links, then require it to predict free fall and the observations of other species without separate fits. In a continuum limit, massive test bodies should follow its timelike geodesics and light its null cones; the metric must itself obey the appropriate source and constraint equations. A causal graph or ten metric-labeled gears alone does not establish this.
+
+The rank-four coupling tensor T is not the spacetime metric. Its indices describe polynomial inputs. A physical spacetime metric g is a rank-two object inferred from clock and signal measurements. Its state-dependent values and curvature would have to emerge under the fixed update law.
+
+Even common rest coefficients need a calibration check. Write F=metric.h00 and U=F/(2P), where P is the fixed integer normalization of this field. The current second-order reference clock coupling has the remainder-free relation sin(ω(U)/2)/sin(ω₀/2)=√(1−2U). In that approximation, its raw frequency ratio is 1−[2tan(ω₀/2)/ω₀]U+O(U²), which depends on the clock's rest frequency. A universal low-frequency limit, all-species transport, metric sources and the Einstein equations remain requirements. The optional clock springs and norm ports above are experimental interactions and are not identified as gravity.
+
+The cosmic block contains a hand Θ_c (the gear cosmic.Th), two readers M1,M2, two loads Lp,Lm and two record gears dp,dm. This hand is distinct from the observation map Θ in A0. Its tensor defines their interactions. A hand crossing zero can organize a diagnostic time interval, but it does not reset or reseed the board. Exact forward and inverse histories retain the whole state through the crossing.
+
+### A12a. Reconstructing geometry and preserving Einstein constraints
+
+A general metric relates locally measured times and spatial separations. In units where the calibrated speed of light is one, write
+
+ds² = −N²dt² + γᵢⱼ(dxⁱ+βⁱdt)(dxʲ+βʲdt).
+
+Here γ is the positive spatial metric, N is the lapse relating coordinate time to clocks moving normally to a spatial slice, and β is the shift between successive spatial coordinate labels. A clock fixed at a board coordinate measures dτ/dt=√(N²−γᵢⱼβⁱβʲ), which equals N only when the shift is zero. The coordinates are descriptive labels, not an assumed universal physical clock.
+
+The local reconstruction can be written explicitly. Let α=dτ_fixed/dt be the calibrated rate of a clock fixed in these coordinates, and t₊,t₋ the forward and reverse signal travel times over coordinate displacements ±ℓn. For constant metric coefficients in the measured patch, the null-interval equation gives
+
+B(n)=g₀ᵢnⁱ=α²(t₊−t₋)/(2ℓ),
+Γ(n)=γᵢⱼnⁱnʲ=α²t₊t₋/ℓ².
+
+Once the full positive matrix γ and the components Bᵢ are determined, β=γ⁻¹B and N²=α²+Bᵀγ⁻¹B. These are reconstruction identities conditional on physical clock and signal measurements; they do not assume that the present gears already provide those measurements.
+
+Clock rates together with independent directional signal travel times can reconstruct these coefficients under a declared synchronization and scale convention. In a locally approximately stationary, constant patch, or an appropriate local refinement limit, the six directed axis measurements determine the time-space components and spatial diagonal, but leave three spatial off-diagonal entries undetermined. Travel times through a varying field instead depend on the whole path. Independent oblique propagation or other calibrated observations are required. The [geometry research](GEOMETRY_RESEARCH.md) derives the inverse formulas and an exact axis-data ambiguity.
+
+The current scalar lapse construction has a restricted slow-wave interpretation. For U=F/(2P), its rest coefficient is N²=1−2U and transport coefficient is C=1−4U. In the uniform weak-field, low-frequency limit they fit a spatial scale A²=N²/C and ds²=−N²c₀²dt²+A²d𝐱², where c₀ is the flat low-frequency propagation speed. This is an inferred kinematic candidate from selected coefficients. Finite-frequency effects, spatial variation, remainders and other species require additional checks. A separate [conformal scalar experiment](CONFORMAL_METRIC_EXPERIMENT.md) gives a controlled common clock limit for another chosen tensor; it does not supply general Einstein geometry.
+
+Einstein dynamics requires more than reconstruction. Let Kᵢⱼ measure the change of the spatial geometry normal to a slice, K=γⁱʲKᵢⱼ its trace, and ³R the curvature scalar of that spatial metric. Let ρ and jⁱ be independently identified physical energy and momentum densities. Initial data must satisfy the energy constraint and three momentum constraints:
+
+³R + K² − KᵢⱼKⁱʲ = 16πG_eff ρ + 2Λ,
+∇ⱼ(Kⁱʲ−γⁱʲK) = 8πG_eff jⁱ.
+
+The derivative ∇ is defined by γ; indices are raised with its inverse. G_eff is the effective gravitational coupling to be inferred and calibrated, and Λ is a possible cosmological term. These are target physical parameters, not additional runtime update functions. The remaining metric evolution equations and local stress conservation must also follow from the same construction. The physical stress tensor is distinct from the fixed polynomial coupling tensor T.
+
+An exact encoded constraint sector requires that both Rule3 and its inverse preserve all its defining constraints, with the retained remainders included. A continuum claim instead needs a specified refinement and bounds showing the physical constraint residuals vanish. A prepared planar tensor-wave sector in the optional Einstein example preserves its linear trace and divergence constraints exactly, but its activity is audit-only and the general nonlinear constraints have not been obtained. Stored off-diagonal fields currently can be invisible to the other sectors, and the implemented source has a conservation defect.
+
+A separate [integer tensor-wave construction](LINEAR_SPIN2.md) gives an exact propagating building block. Two 3×3 arrays E and B use 18 ordinary gears and fixed inputs u_E=(D/2) curl B, u_B=(D/2) curl E, where curl acts on each tensor column through face-neighbor differences. The scalar Rule3 preserves prepared symmetry, zero trace and zero divergence without dropping remainders. A particular preparation makes every two updates translate arbitrary integer profiles two cells with a fixed sign; amplitudes are bounded for all time. Its official arithmetic clicks carry the travelling pattern. General three-dimensional preparations can still grow, and these fields are not yet a metric measured by matter or detectors. This example does not change the default construction or establish nonlinear Einstein dynamics.
+
+A subsequent [local metric experiment](PHASE_METRIC_EXPERIMENT.md) adds two internal phase registers, themselves updated by Rule3. A fixed quadratic expression in the registers reconstructs a travelling metric perturbation at every update. Its linearized Ricci tensor and linear energy/momentum constraints vanish exactly for the explicitly declared central-difference operator. A separate one-way, rank-four probe coupling changes actual official detector records. This is still a restricted test-body construction: the phase registers themselves emit no official clicks, the wave and probe speeds differ, and reciprocal backreaction and nonlinear Einstein constraints are absent. In the chosen transverse wave gauge, fixed-coordinate rest clocks have no first-order slowing; the tested response is spatial propagation.
+
+The [Palatini target](PALATINI_TARGET.md) expresses a possible geometric starting point using a local coframe e and metric g=eᵀηe, where η is the Minkowski signature matrix. Its quartic gravitational action makes low polynomial degree plausible, but its first-order constraints, physical link support and matter coupling require a separate reversible construction. The current work does not derive a complete Einstein event spacetime.
 
 ### A13. Validation and source of truth
 
 The executable source of truth is the public repository's default one_system() construction and its tests. The default dynamics fingerprint is 77f6d251a8adfb2e4727bd2bd5ffeaa0e2ae3538aac393fe95c497fce754acf6. This identifies the indexed polynomial dynamics; it is not a physical validation certificate.
+
+The compatibility field name dynamics_fingerprint excludes Q. A complete law identifier is (dynamics_fingerprint, Q), or the full tensor fingerprint when Q is recorded. Rank four, exact arithmetic and a fixed tensor specify an executable construction; they do not establish all of its proposed physical interpretations.
 
 The repository migration preserves the default complete-state traces and keeps the exact cube algebra inside ONE. The old independent runtime is available only through Git history. Its results are not silently reclassified as ONE results. Current validation commands and actual outcomes are recorded in docs/VALIDATION.md.
 

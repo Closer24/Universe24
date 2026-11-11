@@ -1,5 +1,36 @@
 # Implementation validation
 
+## Connected clocks and geometric requirements
+
+The core Rule3 engine, default tensor and default seed builder are unchanged. Optional builders compile new clock interactions into fixed tensor data; isolated geometric experiments live under `experiments/geometry/`. The [clock research record](CLOCK_RESEARCH.md) and [geometry audit](GEOMETRY_RESEARCH.md) distinguish exact identities, measured finite histories and physical requirements.
+
+| Check actually run | Outcome |
+|---|---|
+| Complete suite with `GAUGE_LONG=1`, before the final metric-gate guard correction | 236 tests in 938.499 seconds; one existing expected failure, no unexpected failures |
+| Complete suite after the guard correction | 237 tests in 881.613 seconds; one existing expected failure, no unexpected failures or skips |
+| Final complete suite after flat-control validation | 238 tests in 870.617 seconds; one existing expected failure, no unexpected failures or skips |
+| Default `L=3` CLI, 20 updates | Exact rewind; unchanged dynamics fingerprint; zero sampled ledger, Lorenz and dressed-continuity residuals |
+| Default `L=4` saved-input audit, 120 updates | Exact rewind and replay; 152,616 official records; independent scalar oracle has zero mismatches |
+| Wheel installed outside checkout | Saved 120-update audit replays exactly; optional connected-clock paired control also runs and rewinds |
+| Resolution lift, clock ports, bridge and bounded routing | Exact algebra, support and inverse regressions pass; no default-law changes |
+| Public connected-clock controls | Forward and reverse official-record influence, zero-bridge negative control, exact rewinds and no violations of the tested storage cone |
+| Held-out clock preparations | Three additional seeds, a phase-decorrelated preparation and a reference packet each complete 5000 updates and exactly rewind; phase alignment is not created spontaneously and metric growth remains |
+| Long baseline preparation control | Retained 46,000 updates on L=4 plus complete exact inverse; 29 peak counter bits, 58,603,903 official records and no full-seed recurrence; requested 100,000 horizon not reached |
+| Raw relational metric-clock gate | Four 32,768-update preparations exactly rewind; slow pair passes tolerance, faster pairs fail; corrected resource-guard and insufficient-data statuses remain distinct from physical acceptance |
+| Strict local clock composition | Rank four and zero physical-support violations; finite runs rewind, but the physical-link Lorenz constraint remains failed in the wave-margin experiment |
+| Isolated conformal geometry experiments | Sixteen exact Engine histories and reversals; restricted clock-rate and nonlinear-history convergence, not a derivation of general Einstein dynamics |
+| Planar vacuum tensor-wave sector | Exact invariant linear trace/divergence sector; 256 actual updates and rewind pass; 32,224 audit records and no official detector records |
+| Separate integer curl waves | Exact all-time travelling-profile proof; 18 gears, two polarizations, 24 proper rotations, fixed remainders and exact rewinds; general oblique instability retained as a negative control |
+| Separate two-bank retiming | Six 56-update Engine histories on three chosen axes and two divisors; exact half-speed translation, period 14 and rewinds; an unprepared linear-growth control prevents an all-seed claim |
+| Local travelling metric and test probes | Exact declared linearized lattice Ricci/constraint identities; two 84-update rank-four probe histories reverse exactly and show different official records; one-way coupling and unequal speeds remain explicit |
+| Metric carry-lock control | Four million-update forward/inverse reduced histories; each has a 32-update actual-Engine prefix check; a proved finite drift interval differs from the remainder-free spectrum |
+
+The expected failure is the previously recorded TC.15 Bell-style experiment. No physical acceptance tolerance was relaxed. The new metric tool originally could accept a run whose growth guard was reached on its final requested update; the corrected tool records the guard explicitly and rejects that acceptance. A second review found that a completed comparison could use a guard-failed flat control: the tool now requires a valid reference trajectory and rates for acceptance, while retaining numerical ratios as diagnostics. Both failures have actual-Engine regression fixtures. Insufficient clock crossings are inconclusive, not a measured agreement or disagreement. The published long clock trajectories had a valid completed flat control and did not reach the guard; their original execution hashes and both validation-only patches are separately recorded.
+
+The [long-run manifest](evidence/clock_long_runs.json) gives actual completed horizons, exact states' hashes, resource stops and inverse results. [Connected-clock evidence](evidence/connected_clocks.json), [raw metric-clock evidence](evidence/metric_clock_gate.json), [the metric-source audit](METRIC_SOURCE_AUDIT.md) and the [geometry experiment index](../experiments/geometry/README.md) provide the individual reproduction commands. A successful command or test suite includes verified negative physical findings; it does not assert gravity, quantum entanglement, cosmological bounces or complexity maximization.
+
+The compact [integration validation record](evidence/clock_integration_validation.json) records the final suite, default-law preservation, installed-wheel replay and source hashes. The wheel's flat-control regression was also executed outside the checkout: an invalid 22-update reference correctly blocks acceptance of its otherwise completed 128-update comparison.
+
 ## Integrated algebra and repository audit
 
 The [system map](SYSTEM_MAP.md) ties current claims to their assumptions and code. The default recurrence, coefficients, seed construction and both tensor fingerprints are unchanged. Corrections cover exact large-divisor readout/mirror arithmetic, invalid rewind horizons, misleading metadata and portable demo output paths.

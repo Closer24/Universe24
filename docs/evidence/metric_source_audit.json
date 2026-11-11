@@ -1,0 +1,3062 @@
+{
+  "schema": "metric-source-audit-v1",
+  "scope": "Exact source/remainder bookkeeping and a proved free-stencil carry-locked sector. No Einstein-metric or full-model boundedness claim.",
+  "source_snapshot_audit": {
+    "schema": "metric-source-ledger-v1",
+    "scope": "Exact passive decomposition of saved snapshots and one next transition; not new long-run stability evidence.",
+    "results": [
+      {
+        "label": "baseline5000",
+        "step": 0,
+        "snapshot": "runs/bang-to-bang/baseline5000/seed.json.gz",
+        "L": 3,
+        "Q": 8589934593,
+        "D": 51539607558,
+        "w": 8589934592,
+        "tensor_fingerprint": "115379ac323c1e423885da605bc22daa12c2c0910bc4f2e7ecd96f048889fc80",
+        "state_hash": "3acd66a1afd326f2ce5120f77d4346edce262c84d3a4c21160bc55e968cb5481",
+        "next_state_hash": "2f4c9b642614d42e8bddf2a15d24ea81b7ec0baad038a80daa972cfc11a54bfb",
+        "exact_step_inverse": true,
+        "exact_node_ledger": true,
+        "exact_zero_mode_ledger": true,
+        "F_mean": {
+          "numerator": 0,
+          "denominator": 1,
+          "decimal": 0.0
+        },
+        "F_min": 0,
+        "F_max": 0,
+        "velocity_mean": {
+          "numerator": 0,
+          "denominator": 1,
+          "decimal": 0.0
+        },
+        "acceleration_mean": {
+          "numerator": 0,
+          "denominator": 1,
+          "decimal": 0.0
+        },
+        "source_sum": 6261174272,
+        "source_implied_acceleration_mean": {
+          "numerator": 6261174272,
+          "denominator": 695784702033,
+          "decimal": 0.008998723676599377
+        },
+        "remainder_acceleration_mean": {
+          "numerator": -6261174272,
+          "denominator": 695784702033,
+          "decimal": -0.008998723676599377
+        },
+        "source_by_namespace": {
+          "bgk": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          },
+          "matter": {
+            "sum": 6261174272,
+            "acceleration_mean": {
+              "numerator": 6261174272,
+              "denominator": 695784702033,
+              "decimal": 0.008998723676599377
+            }
+          },
+          "matter2": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          },
+          "ref": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          }
+        },
+        "bg_initially_or_currently_zero": true,
+        "p": 695784702006,
+        "pnext": 708307050550,
+        "checkerboard_projection": null
+      },
+      {
+        "label": "baseline5000",
+        "step": 1600,
+        "snapshot": "runs/bang-to-bang/baseline5000/checkpoints/state-1600.json.gz",
+        "L": 3,
+        "Q": 8589934593,
+        "D": 51539607558,
+        "w": 8589934592,
+        "tensor_fingerprint": "115379ac323c1e423885da605bc22daa12c2c0910bc4f2e7ecd96f048889fc80",
+        "state_hash": "130c862d27c4dc609a266f7725b59cf8f8c77beba31e63b1c2ea80dd3942602b",
+        "next_state_hash": "2beb5b98d6a72d36fd50018932d4f5966821e74c196f5666b8de2f6515034729",
+        "exact_step_inverse": true,
+        "exact_node_ledger": true,
+        "exact_zero_mode_ledger": true,
+        "F_mean": {
+          "numerator": -5825521,
+          "denominator": 9,
+          "decimal": -647280.1111111111
+        },
+        "F_min": -647525,
+        "F_max": -647024,
+        "velocity_mean": {
+          "numerator": -17213,
+          "denominator": 9,
+          "decimal": -1912.5555555555557
+        },
+        "acceleration_mean": {
+          "numerator": -38,
+          "denominator": 9,
+          "decimal": -4.222222222222222
+        },
+        "source_sum": -2867826988032,
+        "source_implied_acceleration_mean": {
+          "numerator": -955942329344,
+          "denominator": 231928234011,
+          "decimal": -4.121716070578372
+        },
+        "remainder_acceleration_mean": {
+          "numerator": -23310214258,
+          "denominator": 231928234011,
+          "decimal": -0.10050615164385045
+        },
+        "source_by_namespace": {
+          "bgk": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          },
+          "matter": {
+            "sum": -2867826988032,
+            "acceleration_mean": {
+              "numerator": -955942329344,
+              "denominator": 231928234011,
+              "decimal": -4.121716070578372
+            }
+          },
+          "matter2": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          },
+          "ref": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          }
+        },
+        "bg_initially_or_currently_zero": true,
+        "p": -2660905142566858,
+        "pnext": -2666640796542922,
+        "checkerboard_projection": null
+      },
+      {
+        "label": "baseline5000",
+        "step": 1900,
+        "snapshot": "runs/bang-to-bang/baseline5000/checkpoints/state-1900.json.gz",
+        "L": 3,
+        "Q": 8589934593,
+        "D": 51539607558,
+        "w": 8589934592,
+        "tensor_fingerprint": "115379ac323c1e423885da605bc22daa12c2c0910bc4f2e7ecd96f048889fc80",
+        "state_hash": "c532e2ce23b67d2b3cb0ca569cc1420434f200cba14f79cd357a05445dc4fa33",
+        "next_state_hash": "fd416b57b8babf7ad48b759ffe219bfcdfb0885c3eb4e0008fd840e1751998e0",
+        "exact_step_inverse": true,
+        "exact_node_ledger": true,
+        "exact_zero_mode_ledger": true,
+        "F_mean": {
+          "numerator": -39754504,
+          "denominator": 27,
+          "decimal": -1472389.037037037
+        },
+        "F_min": -1472616,
+        "F_max": -1472155,
+        "velocity_mean": {
+          "numerator": -102139,
+          "denominator": 27,
+          "decimal": -3782.925925925926
+        },
+        "acceleration_mean": {
+          "numerator": -245,
+          "denominator": 27,
+          "decimal": -9.074074074074074
+        },
+        "source_sum": -6316096704512,
+        "source_implied_acceleration_mean": {
+          "numerator": -6316096704512,
+          "denominator": 695784702033,
+          "decimal": -9.077659635311207
+        },
+        "remainder_acceleration_mean": {
+          "numerator": 2494778657,
+          "denominator": 695784702033,
+          "decimal": 0.0035855612371334896
+        },
+        "source_by_namespace": {
+          "bgk": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          },
+          "matter": {
+            "sum": -6316096704512,
+            "acceleration_mean": {
+              "numerator": -6316096704512,
+              "denominator": 695784702033,
+              "decimal": -9.077659635311207
+            }
+          },
+          "matter2": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          },
+          "ref": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          }
+        },
+        "bg_initially_or_currently_zero": true,
+        "p": -5263467030687690,
+        "pnext": -5276099224096714,
+        "checkerboard_projection": null
+      },
+      {
+        "label": "baseline5000",
+        "step": 2100,
+        "snapshot": "runs/bang-to-bang/baseline5000/checkpoints/state-2100.json.gz",
+        "L": 3,
+        "Q": 8589934593,
+        "D": 51539607558,
+        "w": 8589934592,
+        "tensor_fingerprint": "115379ac323c1e423885da605bc22daa12c2c0910bc4f2e7ecd96f048889fc80",
+        "state_hash": "8a23814a630f7d11b22725d5d86f31245ecb4f0c39d69e56b3b6f13a85453f64",
+        "next_state_hash": "348e94ac7c1cb65ae8a8d239844ec93fb3a6bcb1d92503e682f2fb836840f744",
+        "exact_step_inverse": true,
+        "exact_node_ledger": true,
+        "exact_zero_mode_ledger": true,
+        "F_mean": {
+          "numerator": -65674414,
+          "denominator": 27,
+          "decimal": -2432385.703703704
+        },
+        "F_min": -2432740,
+        "F_max": -2432065,
+        "velocity_mean": {
+          "numerator": -55199,
+          "denominator": 9,
+          "decimal": -6133.222222222223
+        },
+        "acceleration_mean": {
+          "numerator": -511,
+          "denominator": 27,
+          "decimal": -18.925925925925927
+        },
+        "source_sum": -13142755539968,
+        "source_implied_acceleration_mean": {
+          "numerator": -13142755539968,
+          "denominator": 695784702033,
+          "decimal": -18.88911253950602
+        },
+        "remainder_acceleration_mean": {
+          "numerator": -25614191101,
+          "denominator": 695784702033,
+          "decimal": -0.03681338641990602
+        },
+        "source_by_namespace": {
+          "bgk": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          },
+          "matter": {
+            "sum": -13142755539968,
+            "acceleration_mean": {
+              "numerator": -13142755539968,
+              "denominator": 695784702033,
+              "decimal": -18.88911253950602
+            }
+          },
+          "matter2": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          },
+          "ref": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          }
+        },
+        "bg_initially_or_currently_zero": true,
+        "p": -8534161331888074,
+        "pnext": -8560446842968010,
+        "checkerboard_projection": null
+      },
+      {
+        "label": "baseline5000",
+        "step": 2180,
+        "snapshot": "runs/bang-to-bang/baseline5000/checkpoints/state-2180.json.gz",
+        "L": 3,
+        "Q": 8589934593,
+        "D": 51539607558,
+        "w": 8589934592,
+        "tensor_fingerprint": "115379ac323c1e423885da605bc22daa12c2c0910bc4f2e7ecd96f048889fc80",
+        "state_hash": "ba67beeaf843b5001a942c8008e38b873812961d8da84de38e11b9561d32b701",
+        "next_state_hash": "f468dd7417955c0e287eacf98eefebade7fe35f53a9ba94c83923ed1ea1abad2",
+        "exact_step_inverse": true,
+        "exact_node_ledger": true,
+        "exact_zero_mode_ledger": true,
+        "F_mean": {
+          "numerator": -80858426,
+          "denominator": 27,
+          "decimal": -2994756.5185185187
+        },
+        "F_min": -2995158,
+        "F_max": -2994413,
+        "velocity_mean": {
+          "numerator": -74738,
+          "denominator": 9,
+          "decimal": -8304.222222222223
+        },
+        "acceleration_mean": {
+          "numerator": -808,
+          "denominator": 9,
+          "decimal": -89.77777777777777
+        },
+        "source_sum": -62523192680448,
+        "source_implied_acceleration_mean": {
+          "numerator": -20841064226816,
+          "denominator": 231928234011,
+          "decimal": -89.85997032956125
+        },
+        "remainder_acceleration_mean": {
+          "numerator": 19062773384,
+          "denominator": 231928234011,
+          "decimal": 0.0821925517834792
+        },
+        "source_by_namespace": {
+          "bgk": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          },
+          "matter": {
+            "sum": -62523192680448,
+            "acceleration_mean": {
+              "numerator": -20841064226816,
+              "denominator": 231928234011,
+              "decimal": -89.85997032956125
+            }
+          },
+          "matter2": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          },
+          "ref": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          }
+        },
+        "bg_initially_or_currently_zero": true,
+        "p": -11555124984115146,
+        "pnext": -11680171369476042,
+        "checkerboard_projection": null
+      },
+      {
+        "label": "low16-L4-10000",
+        "step": 0,
+        "snapshot": "runs/bang-to-bang/low16-L4-10000/seed.json.gz",
+        "L": 4,
+        "Q": 8589934593,
+        "D": 51539607558,
+        "w": 8589934592,
+        "tensor_fingerprint": "115379ac323c1e423885da605bc22daa12c2c0910bc4f2e7ecd96f048889fc80",
+        "state_hash": "8a1f4e1dc5d14017489ae69be2a26c7b4cca55f4943a8fe746c6b73649207597",
+        "next_state_hash": "5d6743d7e256b82a683ae2650f176fbaa9bd60f019c1ac04b525eb8345207266",
+        "exact_step_inverse": true,
+        "exact_node_ledger": true,
+        "exact_zero_mode_ledger": true,
+        "F_mean": {
+          "numerator": 0,
+          "denominator": 1,
+          "decimal": 0.0
+        },
+        "F_min": 0,
+        "F_max": 0,
+        "velocity_mean": {
+          "numerator": 0,
+          "denominator": 1,
+          "decimal": 0.0
+        },
+        "acceleration_mean": {
+          "numerator": 0,
+          "denominator": 1,
+          "decimal": 0.0
+        },
+        "source_sum": 296268800,
+        "source_implied_acceleration_mean": {
+          "numerator": 4629200,
+          "denominator": 25769803779,
+          "decimal": 0.00017963660257950309
+        },
+        "remainder_acceleration_mean": {
+          "numerator": -4629200,
+          "denominator": 25769803779,
+          "decimal": -0.00017963660257950309
+        },
+        "source_by_namespace": {
+          "bgk": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          },
+          "matter": {
+            "sum": 296268800,
+            "acceleration_mean": {
+              "numerator": 4629200,
+              "denominator": 25769803779,
+              "decimal": 0.00017963660257950309
+            }
+          },
+          "matter2": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          },
+          "ref": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          }
+        },
+        "bg_initially_or_currently_zero": true,
+        "p": 1649267441792,
+        "pnext": 1649859979392,
+        "checkerboard_projection": {
+          "beta": -51539607546,
+          "beta_over_D": {
+            "numerator": -8589934591,
+            "denominator": 8589934593,
+            "decimal": -0.9999999997671694
+          },
+          "lower_band_margin": 12,
+          "mean": {
+            "numerator": 0,
+            "denominator": 1,
+            "decimal": 0.0
+          },
+          "velocity": {
+            "numerator": 0,
+            "denominator": 1,
+            "decimal": 0.0
+          },
+          "residual_after_uniform_and_corner_max": {
+            "numerator": 0,
+            "denominator": 1,
+            "decimal": 0.0
+          },
+          "source_projection": 0,
+          "source_by_namespace": {
+            "bgk": 0,
+            "matter": 0,
+            "matter2": 0,
+            "ref": 0
+          },
+          "exact_projected_ledger": true
+        }
+      },
+      {
+        "label": "low16-L4-10000",
+        "step": 10000,
+        "snapshot": "runs/bang-to-bang/low16-L4-10000/final.json.gz",
+        "L": 4,
+        "Q": 8589934593,
+        "D": 51539607558,
+        "w": 8589934592,
+        "tensor_fingerprint": "115379ac323c1e423885da605bc22daa12c2c0910bc4f2e7ecd96f048889fc80",
+        "state_hash": "72aa3c20606eb895d63403476553afb648d8e343d49f171e550e3c4629f2d131",
+        "next_state_hash": "8489c580ba46f85b175963e893247ee82b8e90623f1b622c58ca158d6392b0aa",
+        "exact_step_inverse": true,
+        "exact_node_ledger": true,
+        "exact_zero_mode_ledger": true,
+        "F_mean": {
+          "numerator": 562035,
+          "denominator": 64,
+          "decimal": 8781.796875
+        },
+        "F_min": -9623,
+        "F_max": 27206,
+        "velocity_mean": {
+          "numerator": 121,
+          "denominator": 64,
+          "decimal": 1.890625
+        },
+        "acceleration_mean": {
+          "numerator": 1,
+          "denominator": 64,
+          "decimal": 0.015625
+        },
+        "source_sum": 298138624,
+        "source_implied_acceleration_mean": {
+          "numerator": 4658416,
+          "denominator": 25769803779,
+          "decimal": 0.00018077033259353636
+        },
+        "remainder_acceleration_mean": {
+          "numerator": 25471665155,
+          "denominator": 1649267441856,
+          "decimal": 0.015444229667406464
+        },
+        "source_by_namespace": {
+          "bgk": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          },
+          "matter": {
+            "sum": 298138624,
+            "acceleration_mean": {
+              "numerator": 4658416,
+              "denominator": 25769803779,
+              "decimal": 0.00018077033259353636
+            }
+          },
+          "matter2": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          },
+          "ref": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          }
+        },
+        "bg_initially_or_currently_zero": true,
+        "p": 7909321468032,
+        "pnext": 7909917745280,
+        "checkerboard_projection": {
+          "beta": -51539607546,
+          "beta_over_D": {
+            "numerator": -8589934591,
+            "denominator": 8589934593,
+            "decimal": -0.9999999997671694
+          },
+          "lower_band_margin": 12,
+          "mean": {
+            "numerator": 1174107,
+            "denominator": 64,
+            "decimal": 18345.421875
+          },
+          "velocity": {
+            "numerator": 2348037,
+            "denominator": 64,
+            "decimal": 36688.078125
+          },
+          "residual_after_uniform_and_corner_max": {
+            "numerator": 2521,
+            "denominator": 32,
+            "decimal": 78.78125
+          },
+          "source_projection": 0,
+          "source_by_namespace": {
+            "bgk": 0,
+            "matter": 0,
+            "matter2": 0,
+            "ref": 0
+          },
+          "exact_projected_ledger": true
+        }
+      },
+      {
+        "label": "norm-L3-M268435456-B256-S64-T5000",
+        "step": 0,
+        "snapshot": "runs/bang-to-bang/norm-L3-M268435456-B256-S64-T5000/seed.json.gz",
+        "L": 3,
+        "Q": 2305843009482129408,
+        "D": 13835058056892776448,
+        "w": 2305843009213693952,
+        "tensor_fingerprint": "83a6377a92280372d57dd851b8a5aac7a32a01f56d5ec0d32ce989649b137bd8",
+        "state_hash": "54b530d0cd32b4798242bed77b22c5201fc1fbb86b2be61f32f95e985938ac9f",
+        "next_state_hash": "5cedecb148344f36da646732415c2fbb50b6ab21373052367b935304c027750a",
+        "exact_step_inverse": true,
+        "exact_node_ledger": true,
+        "exact_zero_mode_ledger": true,
+        "F_mean": {
+          "numerator": 0,
+          "denominator": 1,
+          "decimal": 0.0
+        },
+        "F_min": 0,
+        "F_max": 0,
+        "velocity_mean": {
+          "numerator": 0,
+          "denominator": 1,
+          "decimal": 0.0
+        },
+        "acceleration_mean": {
+          "numerator": 0,
+          "denominator": 1,
+          "decimal": 0.0
+        },
+        "source_sum": 6265567010881536,
+        "source_implied_acceleration_mean": {
+          "numerator": 7780352,
+          "denominator": 231928234011,
+          "decimal": 3.354637710745898e-05
+        },
+        "remainder_acceleration_mean": {
+          "numerator": -7780352,
+          "denominator": 231928234011,
+          "decimal": -3.354637710745898e-05
+        },
+        "source_by_namespace": {
+          "bgk": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          },
+          "clocknet,metric": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          },
+          "matter": {
+            "sum": 6265567010881536,
+            "acceleration_mean": {
+              "numerator": 7780352,
+              "denominator": 231928234011,
+              "decimal": 3.354637710745898e-05
+            }
+          },
+          "matter2": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          },
+          "ref": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          }
+        },
+        "bg_initially_or_currently_zero": true,
+        "p": 186773283760804724736,
+        "pnext": 186785814894826487808,
+        "checkerboard_projection": null
+      },
+      {
+        "label": "norm-L3-M268435456-B256-S64-T5000",
+        "step": 5000,
+        "snapshot": "runs/bang-to-bang/norm-L3-M268435456-B256-S64-T5000/final.json.gz",
+        "L": 3,
+        "Q": 2305843009482129408,
+        "D": 13835058056892776448,
+        "w": 2305843009213693952,
+        "tensor_fingerprint": "83a6377a92280372d57dd851b8a5aac7a32a01f56d5ec0d32ce989649b137bd8",
+        "state_hash": "81648053aced763910093a287f1bf296495fba360ffd7274ce5ebd1b877d0c0d",
+        "next_state_hash": "3d748267ffce841ef9fd4a5ce65eb6f91ff585bf46f32b51b20fbecd426767e3",
+        "exact_step_inverse": true,
+        "exact_node_ledger": true,
+        "exact_zero_mode_ledger": true,
+        "F_mean": {
+          "numerator": 16105,
+          "denominator": 27,
+          "decimal": 596.4814814814815
+        },
+        "F_min": 570,
+        "F_max": 631,
+        "velocity_mean": {
+          "numerator": 4,
+          "denominator": 9,
+          "decimal": 0.4444444444444444
+        },
+        "acceleration_mean": {
+          "numerator": -1,
+          "denominator": 27,
+          "decimal": -0.037037037037037035
+        },
+        "source_sum": 31386104866724727,
+        "source_implied_acceleration_mean": {
+          "numerator": 10462034955574909,
+          "denominator": 62257761256017494016,
+          "decimal": 0.00016804386705382386
+        },
+        "remainder_acceleration_mean": {
+          "numerator": -2316305044437704317,
+          "denominator": 62257761256017494016,
+          "decimal": -0.03720508090409086
+        },
+        "source_by_namespace": {
+          "bgk": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          },
+          "clocknet,metric": {
+            "sum": -4303955081,
+            "acceleration_mean": {
+              "numerator": -4303955081,
+              "denominator": 186773283768052482048,
+              "decimal": -2.3043740486701184e-11
+            }
+          },
+          "matter": {
+            "sum": 31386109170679808,
+            "acceleration_mean": {
+              "numerator": 116922368,
+              "denominator": 695784702033,
+              "decimal": 0.00016804389009756433
+            }
+          },
+          "matter2": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          },
+          "ref": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          }
+        },
+        "bg_initially_or_currently_zero": true,
+        "p": 342728906164325317570,
+        "pnext": 342791678374058767024,
+        "checkerboard_projection": null
+      },
+      {
+        "label": "norm-L4-M268435456-B256-S64-T5000",
+        "step": 0,
+        "snapshot": "runs/bang-to-bang/norm-L4-M268435456-B256-S64-T5000/seed.json.gz",
+        "L": 4,
+        "Q": 2305843009482129408,
+        "D": 13835058056892776448,
+        "w": 2305843009213693952,
+        "tensor_fingerprint": "83a6377a92280372d57dd851b8a5aac7a32a01f56d5ec0d32ce989649b137bd8",
+        "state_hash": "96eec4681648148aceff388a68aa4ec3fac2c739024c811185bb4145ec5dc2e2",
+        "next_state_hash": "95794016f8e11eadd0a366f21b2cf6ba10887cec8c3bb9f273808bbb96f545fa",
+        "exact_step_inverse": true,
+        "exact_node_ledger": true,
+        "exact_zero_mode_ledger": true,
+        "F_mean": {
+          "numerator": 0,
+          "denominator": 1,
+          "decimal": 0.0
+        },
+        "F_min": 0,
+        "F_max": 0,
+        "velocity_mean": {
+          "numerator": 0,
+          "denominator": 1,
+          "decimal": 0.0
+        },
+        "acceleration_mean": {
+          "numerator": 0,
+          "denominator": 1,
+          "decimal": 0.0
+        },
+        "source_sum": 79529050426572800,
+        "source_implied_acceleration_mean": {
+          "numerator": 4629200,
+          "denominator": 25769803779,
+          "decimal": 0.00017963660257950309
+        },
+        "remainder_acceleration_mean": {
+          "numerator": -4629200,
+          "denominator": 25769803779,
+          "decimal": -0.00017963660257950309
+        },
+        "source_by_namespace": {
+          "bgk": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          },
+          "clocknet,metric": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          },
+          "matter": {
+            "sum": 79529050426572800,
+            "acceleration_mean": {
+              "numerator": 4629200,
+              "denominator": 25769803779,
+              "decimal": 0.00017963660257950309
+            }
+          },
+          "matter2": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          },
+          "ref": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          }
+        },
+        "bg_initially_or_currently_zero": true,
+        "p": 442721857803388977152,
+        "pnext": 442880915904242122752,
+        "checkerboard_projection": {
+          "beta": -13835058053671550976,
+          "beta_over_D": {
+            "numerator": -8589934591,
+            "denominator": 8589934593,
+            "decimal": -0.9999999997671694
+          },
+          "lower_band_margin": 3221225472,
+          "mean": {
+            "numerator": 0,
+            "denominator": 1,
+            "decimal": 0.0
+          },
+          "velocity": {
+            "numerator": 0,
+            "denominator": 1,
+            "decimal": 0.0
+          },
+          "residual_after_uniform_and_corner_max": {
+            "numerator": 0,
+            "denominator": 1,
+            "decimal": 0.0
+          },
+          "source_projection": 0,
+          "source_by_namespace": {
+            "bgk": 0,
+            "clocknet,metric": 0,
+            "matter": 0,
+            "matter2": 0,
+            "ref": 0
+          },
+          "exact_projected_ledger": true
+        }
+      },
+      {
+        "label": "norm-L4-M268435456-B256-S64-T5000",
+        "step": 5000,
+        "snapshot": "runs/bang-to-bang/norm-L4-M268435456-B256-S64-T5000/final.json.gz",
+        "L": 4,
+        "Q": 2305843009482129408,
+        "D": 13835058056892776448,
+        "w": 2305843009213693952,
+        "tensor_fingerprint": "83a6377a92280372d57dd851b8a5aac7a32a01f56d5ec0d32ce989649b137bd8",
+        "state_hash": "4fb273498736d9e9ce0016058fa163839a1487a3fce6a245c9dfe137b7a8a370",
+        "next_state_hash": "86c8a3635ff14f5ef9f3141aebb968cd148ece02a6ed10eff351bc401a6d2f85",
+        "exact_step_inverse": true,
+        "exact_node_ledger": true,
+        "exact_zero_mode_ledger": true,
+        "F_mean": {
+          "numerator": 129495,
+          "denominator": 64,
+          "decimal": 2023.359375
+        },
+        "F_min": -10280,
+        "F_max": 14338,
+        "velocity_mean": {
+          "numerator": 7,
+          "denominator": 8,
+          "decimal": 0.875
+        },
+        "acceleration_mean": {
+          "numerator": -3,
+          "denominator": 64,
+          "decimal": -0.046875
+        },
+        "source_sum": 94698427215792937,
+        "source_implied_acceleration_mean": {
+          "numerator": 94698427215792937,
+          "denominator": 442721857820568846336,
+          "decimal": 0.00021390050105493853
+        },
+        "remainder_acceleration_mean": {
+          "numerator": -20847285512554957609,
+          "denominator": 442721857820568846336,
+          "decimal": -0.04708890050105494
+        },
+        "source_by_namespace": {
+          "bgk": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          },
+          "clocknet,metric": {
+            "sum": -35383391447,
+            "acceleration_mean": {
+              "numerator": -35383391447,
+              "denominator": 442721857820568846336,
+              "decimal": -7.99223955672425e-11
+            }
+          },
+          "matter": {
+            "sum": 94698462599184384,
+            "acceleration_mean": {
+              "numerator": 612464,
+              "denominator": 2863311531,
+              "decimal": 0.0002139005809773341
+            }
+          },
+          "matter2": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          },
+          "ref": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          }
+        },
+        "bg_initially_or_currently_zero": true,
+        "p": 1191988110964142240808,
+        "pnext": 1192177507818573826682,
+        "checkerboard_projection": {
+          "beta": -13835058053671550976,
+          "beta_over_D": {
+            "numerator": -8589934591,
+            "denominator": 8589934593,
+            "decimal": -0.9999999997671694
+          },
+          "lower_band_margin": 3221225472,
+          "mean": {
+            "numerator": 785691,
+            "denominator": 64,
+            "decimal": 12276.421875
+          },
+          "velocity": {
+            "numerator": 196397,
+            "denominator": 8,
+            "decimal": 24549.625
+          },
+          "residual_after_uniform_and_corner_max": {
+            "numerator": 1223,
+            "denominator": 32,
+            "decimal": 38.21875
+          },
+          "source_projection": -204155766293,
+          "source_by_namespace": {
+            "bgk": 0,
+            "clocknet,metric": -204155766293,
+            "matter": 0,
+            "matter2": 0,
+            "ref": 0
+          },
+          "exact_projected_ledger": true
+        }
+      },
+      {
+        "label": "low16-L4-100000-checkpointed",
+        "step": 33000,
+        "snapshot": "runs/bang-to-bang/low16-L4-100000-checkpointed/forward-checkpoint.json.gz",
+        "L": 4,
+        "Q": 8589934593,
+        "D": 51539607558,
+        "w": 8589934592,
+        "tensor_fingerprint": "115379ac323c1e423885da605bc22daa12c2c0910bc4f2e7ecd96f048889fc80",
+        "state_hash": "94c24249407cac2367092a73bd109ebb17ba5e50b65bf586d1eed01631c653d4",
+        "next_state_hash": "142c5f3c1c49d7aad37a81642aad4a5c19e7a44f7a66617c8af3ab3e71a57ed4",
+        "exact_step_inverse": true,
+        "exact_node_ledger": true,
+        "exact_zero_mode_ledger": true,
+        "F_mean": {
+          "numerator": 6699647,
+          "denominator": 64,
+          "decimal": 104681.984375
+        },
+        "F_min": -206202,
+        "F_max": 415578,
+        "velocity_mean": {
+          "numerator": 23,
+          "denominator": 8,
+          "decimal": 2.875
+        },
+        "acceleration_mean": {
+          "numerator": 1,
+          "denominator": 64,
+          "decimal": 0.015625
+        },
+        "source_sum": -1843197952,
+        "source_implied_acceleration_mean": {
+          "numerator": -28799968,
+          "denominator": 25769803779,
+          "decimal": -0.0011175858476450372
+        },
+        "remainder_acceleration_mean": {
+          "numerator": 27613001731,
+          "denominator": 1649267441856,
+          "decimal": 0.01674258584764504
+        },
+        "source_by_namespace": {
+          "bgk": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          },
+          "matter": {
+            "sum": -1843197952,
+            "acceleration_mean": {
+              "numerator": -28799968,
+              "denominator": 25769803779,
+              "decimal": -0.0011175858476450372
+            }
+          },
+          "matter2": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          },
+          "ref": {
+            "sum": 0,
+            "acceleration_mean": {
+              "numerator": 0,
+              "denominator": 1,
+              "decimal": 0.0
+            }
+          }
+        },
+        "bg_initially_or_currently_zero": true,
+        "p": 11077975339136,
+        "pnext": 11074288943232,
+        "checkerboard_projection": {
+          "beta": -51539607546,
+          "beta_over_D": {
+            "numerator": -8589934591,
+            "denominator": 8589934593,
+            "decimal": -0.9999999997671694
+          },
+          "lower_band_margin": 12,
+          "mean": {
+            "numerator": 19888823,
+            "denominator": 64,
+            "decimal": 310762.859375
+          },
+          "velocity": {
+            "numerator": 19888197,
+            "denominator": 32,
+            "decimal": 621506.15625
+          },
+          "residual_after_uniform_and_corner_max": {
+            "numerator": 1159,
+            "denominator": 8,
+            "decimal": 144.875
+          },
+          "source_projection": 0,
+          "source_by_namespace": {
+            "bgk": 0,
+            "matter": 0,
+            "matter2": 0,
+            "ref": 0
+          },
+          "exact_projected_ledger": true
+        }
+      }
+    ],
+    "cumulative_source_ledger": [
+      {
+        "label": "baseline5000",
+        "steps": 1600,
+        "exact_total_source_from_endpoint_ledger": -1330800463634432,
+        "mean_source_acceleration": {
+          "numerator": -20793757244288,
+          "denominator": 17394617550825,
+          "decimal": -1.195413304347228
+        },
+        "basis": "Telescoping exact identity on the archived history, not reevaluation of every intermediate state."
+      },
+      {
+        "label": "baseline5000",
+        "steps": 1900,
+        "exact_total_source_from_endpoint_ledger": -2632081407694848,
+        "mean_source_acceleration": {
+          "numerator": -3848072233472,
+          "denominator": 1932735283425,
+          "decimal": -1.990998077425705
+        },
+        "basis": "Telescoping exact identity on the archived history, not reevaluation of every intermediate state."
+      },
+      {
+        "label": "baseline5000",
+        "steps": 2100,
+        "exact_total_source_from_endpoint_ledger": -4267428558295040,
+        "mean_source_acceleration": {
+          "numerator": -213371427914752,
+          "denominator": 73057393713465,
+          "decimal": -2.9206000524957973
+        },
+        "basis": "Telescoping exact identity on the archived history, not reevaluation of every intermediate state."
+      },
+      {
+        "label": "baseline5000",
+        "steps": 2180,
+        "exact_total_source_from_endpoint_ledger": -5777910384408576,
+        "mean_source_acceleration": {
+          "numerator": -160497510678016,
+          "denominator": 42133629178665,
+          "decimal": -3.809249613828337
+        },
+        "basis": "Telescoping exact identity on the archived history, not reevaluation of every intermediate state."
+      },
+      {
+        "label": "low16-L4-10000",
+        "steps": 10000,
+        "exact_total_source_from_endpoint_ledger": 3130027013120,
+        "mean_source_acceleration": {
+          "numerator": 611333401,
+          "denominator": 3221225472375,
+          "decimal": 0.00018978286563382527
+        },
+        "basis": "Telescoping exact identity on the archived history, not reevaluation of every intermediate state."
+      },
+      {
+        "label": "norm-L3-M268435456-B256-S64-T5000",
+        "steps": 5000,
+        "exact_total_source_from_endpoint_ledger": 77977811201760296417,
+        "mean_source_acceleration": {
+          "numerator": 77977811201760296417,
+          "denominator": 933866418840262410240000,
+          "decimal": 8.349996276619341e-05
+        },
+        "basis": "Telescoping exact identity on the archived history, not reevaluation of every intermediate state."
+      },
+      {
+        "label": "norm-L4-M268435456-B256-S64-T5000",
+        "steps": 5000,
+        "exact_total_source_from_endpoint_ledger": 374633126580376631828,
+        "mean_source_acceleration": {
+          "numerator": 93658281645094157957,
+          "denominator": 553402322275711057920000,
+          "decimal": 0.00016924085403174831
+        },
+        "basis": "Telescoping exact identity on the archived history, not reevaluation of every intermediate state."
+      },
+      {
+        "label": "low16-L4-100000-checkpointed",
+        "steps": 33000,
+        "exact_total_source_from_endpoint_ledger": 4714353948672,
+        "mean_source_acceleration": {
+          "numerator": 1023080284,
+          "denominator": 11811160065375,
+          "decimal": 8.661979672929931e-05
+        },
+        "basis": "Telescoping exact identity on the archived history, not reevaluation of every intermediate state."
+      }
+    ]
+  },
+  "free_corner_control": {
+    "schema": "free-corner-control-v1",
+    "Q": 8589934593,
+    "D": 51539607558,
+    "w": 8589934592,
+    "beta": -51539607546,
+    "even_cube": true,
+    "scope": "Exact parity-uniform restriction of free scalar metric stencil, no sources or portals. Finite horizon, not all-time boundedness proof.",
+    "cases": [
+      {
+        "amplitude": 512,
+        "initial_velocity_parameter": 0,
+        "seed": [
+          [
+            -512,
+            512
+          ],
+          [
+            512,
+            -512
+          ],
+          [
+            25769803778,
+            25769803778
+          ]
+        ],
+        "final": [
+          [
+            -512,
+            512
+          ],
+          [
+            512,
+            -512
+          ],
+          [
+            25769803778,
+            25769803778
+          ]
+        ],
+        "steps": 1000000,
+        "exact_rewind": true,
+        "seed_sha256": "6d56400f741fccf19dd97e3fad911238c420f5c64c2ae344a0a196eb1cfc0fe2",
+        "final_sha256": "6d56400f741fccf19dd97e3fad911238c420f5c64c2ae344a0a196eb1cfc0fe2",
+        "formula_verified_steps": 1000000,
+        "proved_linear_formula_through": null,
+        "min_abs_corner": 512,
+        "peak_abs_corner": 512,
+        "engine_prefix_steps": 32,
+        "engine_prefix_exact": true,
+        "engine_prefix_inverse_exact": true,
+        "samples": [
+          {
+            "step": 10000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 20000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 30000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 40000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 50000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 60000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 70000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 80000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 90000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 100000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 110000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 120000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 130000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 140000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 150000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 160000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 170000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 180000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 190000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 200000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 210000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 220000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 230000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 240000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 250000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 260000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 270000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 280000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 290000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 300000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 310000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 320000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 330000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 340000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 350000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 360000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 370000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 380000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 390000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 400000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 410000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 420000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 430000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 440000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 450000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 460000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 470000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 480000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 490000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 500000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 510000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 520000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 530000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 540000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 550000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 560000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 570000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 580000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 590000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 600000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 610000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 620000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 630000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 640000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 650000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 660000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 670000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 680000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 690000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 700000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 710000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 720000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 730000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 740000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 750000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 760000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 770000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 780000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 790000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 800000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 810000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 820000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 830000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 840000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 850000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 860000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 870000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 880000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 890000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 900000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 910000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 920000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 930000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 940000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 950000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 960000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 970000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 980000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 990000,
+            "demodulated_corner": 512
+          },
+          {
+            "step": 1000000,
+            "demodulated_corner": 512
+          }
+        ]
+      },
+      {
+        "amplitude": 18345,
+        "initial_velocity_parameter": 0,
+        "seed": [
+          [
+            -18345,
+            18345
+          ],
+          [
+            18345,
+            -18345
+          ],
+          [
+            25769803778,
+            25769803778
+          ]
+        ],
+        "final": [
+          [
+            -18345,
+            18345
+          ],
+          [
+            18345,
+            -18345
+          ],
+          [
+            25769803778,
+            25769803778
+          ]
+        ],
+        "steps": 1000000,
+        "exact_rewind": true,
+        "seed_sha256": "525679ff5b399b59a5ed34603993eb56004c6dd2cbaf19351adc45707e93f2a2",
+        "final_sha256": "525679ff5b399b59a5ed34603993eb56004c6dd2cbaf19351adc45707e93f2a2",
+        "formula_verified_steps": 1000000,
+        "proved_linear_formula_through": null,
+        "min_abs_corner": 18345,
+        "peak_abs_corner": 18345,
+        "engine_prefix_steps": 32,
+        "engine_prefix_exact": true,
+        "engine_prefix_inverse_exact": true,
+        "samples": [
+          {
+            "step": 10000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 20000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 30000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 40000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 50000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 60000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 70000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 80000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 90000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 100000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 110000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 120000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 130000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 140000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 150000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 160000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 170000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 180000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 190000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 200000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 210000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 220000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 230000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 240000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 250000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 260000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 270000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 280000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 290000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 300000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 310000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 320000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 330000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 340000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 350000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 360000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 370000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 380000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 390000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 400000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 410000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 420000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 430000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 440000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 450000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 460000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 470000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 480000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 490000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 500000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 510000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 520000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 530000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 540000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 550000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 560000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 570000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 580000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 590000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 600000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 610000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 620000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 630000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 640000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 650000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 660000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 670000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 680000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 690000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 700000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 710000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 720000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 730000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 740000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 750000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 760000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 770000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 780000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 790000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 800000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 810000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 820000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 830000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 840000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 850000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 860000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 870000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 880000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 890000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 900000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 910000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 920000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 930000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 940000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 950000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 960000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 970000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 980000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 990000,
+            "demodulated_corner": 18345
+          },
+          {
+            "step": 1000000,
+            "demodulated_corner": 18345
+          }
+        ]
+      },
+      {
+        "amplitude": 289784,
+        "initial_velocity_parameter": 0,
+        "seed": [
+          [
+            -289784,
+            289784
+          ],
+          [
+            289784,
+            -289784
+          ],
+          [
+            25769803778,
+            25769803778
+          ]
+        ],
+        "final": [
+          [
+            -289784,
+            289784
+          ],
+          [
+            289784,
+            -289784
+          ],
+          [
+            25769803778,
+            25769803778
+          ]
+        ],
+        "steps": 1000000,
+        "exact_rewind": true,
+        "seed_sha256": "d9a10bfb06ed35572ac732f79217391ecb488150c751ea94f9ec8eca86fbdf73",
+        "final_sha256": "d9a10bfb06ed35572ac732f79217391ecb488150c751ea94f9ec8eca86fbdf73",
+        "formula_verified_steps": 1000000,
+        "proved_linear_formula_through": null,
+        "min_abs_corner": 289784,
+        "peak_abs_corner": 289784,
+        "engine_prefix_steps": 32,
+        "engine_prefix_exact": true,
+        "engine_prefix_inverse_exact": true,
+        "samples": [
+          {
+            "step": 10000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 20000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 30000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 40000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 50000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 60000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 70000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 80000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 90000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 100000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 110000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 120000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 130000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 140000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 150000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 160000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 170000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 180000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 190000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 200000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 210000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 220000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 230000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 240000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 250000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 260000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 270000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 280000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 290000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 300000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 310000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 320000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 330000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 340000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 350000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 360000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 370000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 380000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 390000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 400000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 410000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 420000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 430000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 440000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 450000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 460000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 470000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 480000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 490000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 500000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 510000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 520000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 530000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 540000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 550000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 560000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 570000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 580000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 590000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 600000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 610000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 620000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 630000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 640000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 650000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 660000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 670000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 680000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 690000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 700000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 710000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 720000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 730000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 740000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 750000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 760000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 770000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 780000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 790000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 800000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 810000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 820000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 830000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 840000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 850000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 860000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 870000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 880000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 890000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 900000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 910000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 920000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 930000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 940000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 950000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 960000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 970000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 980000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 990000,
+            "demodulated_corner": 289784
+          },
+          {
+            "step": 1000000,
+            "demodulated_corner": 289784
+          }
+        ]
+      },
+      {
+        "amplitude": 512,
+        "initial_velocity_parameter": 1,
+        "seed": [
+          [
+            -511,
+            511
+          ],
+          [
+            512,
+            -512
+          ],
+          [
+            25769803778,
+            25769803778
+          ]
+        ],
+        "final": [
+          [
+            -1000511,
+            1000511
+          ],
+          [
+            1000512,
+            -1000512
+          ],
+          [
+            25757803778,
+            25781803778
+          ]
+        ],
+        "steps": 1000000,
+        "exact_rewind": true,
+        "seed_sha256": "207a9c216139087eb9b813ab66ad0898c450f2e6ec69ef74f56957a30ee54831",
+        "final_sha256": "845f63fe884ea398cdbed976850f58fdf08399f668335f98335851d2cd43acb3",
+        "formula_verified_steps": 1000000,
+        "proved_linear_formula_through": 2147482625,
+        "min_abs_corner": 512,
+        "peak_abs_corner": 1000512,
+        "engine_prefix_steps": 32,
+        "engine_prefix_exact": true,
+        "engine_prefix_inverse_exact": true,
+        "samples": [
+          {
+            "step": 10000,
+            "demodulated_corner": 10512
+          },
+          {
+            "step": 20000,
+            "demodulated_corner": 20512
+          },
+          {
+            "step": 30000,
+            "demodulated_corner": 30512
+          },
+          {
+            "step": 40000,
+            "demodulated_corner": 40512
+          },
+          {
+            "step": 50000,
+            "demodulated_corner": 50512
+          },
+          {
+            "step": 60000,
+            "demodulated_corner": 60512
+          },
+          {
+            "step": 70000,
+            "demodulated_corner": 70512
+          },
+          {
+            "step": 80000,
+            "demodulated_corner": 80512
+          },
+          {
+            "step": 90000,
+            "demodulated_corner": 90512
+          },
+          {
+            "step": 100000,
+            "demodulated_corner": 100512
+          },
+          {
+            "step": 110000,
+            "demodulated_corner": 110512
+          },
+          {
+            "step": 120000,
+            "demodulated_corner": 120512
+          },
+          {
+            "step": 130000,
+            "demodulated_corner": 130512
+          },
+          {
+            "step": 140000,
+            "demodulated_corner": 140512
+          },
+          {
+            "step": 150000,
+            "demodulated_corner": 150512
+          },
+          {
+            "step": 160000,
+            "demodulated_corner": 160512
+          },
+          {
+            "step": 170000,
+            "demodulated_corner": 170512
+          },
+          {
+            "step": 180000,
+            "demodulated_corner": 180512
+          },
+          {
+            "step": 190000,
+            "demodulated_corner": 190512
+          },
+          {
+            "step": 200000,
+            "demodulated_corner": 200512
+          },
+          {
+            "step": 210000,
+            "demodulated_corner": 210512
+          },
+          {
+            "step": 220000,
+            "demodulated_corner": 220512
+          },
+          {
+            "step": 230000,
+            "demodulated_corner": 230512
+          },
+          {
+            "step": 240000,
+            "demodulated_corner": 240512
+          },
+          {
+            "step": 250000,
+            "demodulated_corner": 250512
+          },
+          {
+            "step": 260000,
+            "demodulated_corner": 260512
+          },
+          {
+            "step": 270000,
+            "demodulated_corner": 270512
+          },
+          {
+            "step": 280000,
+            "demodulated_corner": 280512
+          },
+          {
+            "step": 290000,
+            "demodulated_corner": 290512
+          },
+          {
+            "step": 300000,
+            "demodulated_corner": 300512
+          },
+          {
+            "step": 310000,
+            "demodulated_corner": 310512
+          },
+          {
+            "step": 320000,
+            "demodulated_corner": 320512
+          },
+          {
+            "step": 330000,
+            "demodulated_corner": 330512
+          },
+          {
+            "step": 340000,
+            "demodulated_corner": 340512
+          },
+          {
+            "step": 350000,
+            "demodulated_corner": 350512
+          },
+          {
+            "step": 360000,
+            "demodulated_corner": 360512
+          },
+          {
+            "step": 370000,
+            "demodulated_corner": 370512
+          },
+          {
+            "step": 380000,
+            "demodulated_corner": 380512
+          },
+          {
+            "step": 390000,
+            "demodulated_corner": 390512
+          },
+          {
+            "step": 400000,
+            "demodulated_corner": 400512
+          },
+          {
+            "step": 410000,
+            "demodulated_corner": 410512
+          },
+          {
+            "step": 420000,
+            "demodulated_corner": 420512
+          },
+          {
+            "step": 430000,
+            "demodulated_corner": 430512
+          },
+          {
+            "step": 440000,
+            "demodulated_corner": 440512
+          },
+          {
+            "step": 450000,
+            "demodulated_corner": 450512
+          },
+          {
+            "step": 460000,
+            "demodulated_corner": 460512
+          },
+          {
+            "step": 470000,
+            "demodulated_corner": 470512
+          },
+          {
+            "step": 480000,
+            "demodulated_corner": 480512
+          },
+          {
+            "step": 490000,
+            "demodulated_corner": 490512
+          },
+          {
+            "step": 500000,
+            "demodulated_corner": 500512
+          },
+          {
+            "step": 510000,
+            "demodulated_corner": 510512
+          },
+          {
+            "step": 520000,
+            "demodulated_corner": 520512
+          },
+          {
+            "step": 530000,
+            "demodulated_corner": 530512
+          },
+          {
+            "step": 540000,
+            "demodulated_corner": 540512
+          },
+          {
+            "step": 550000,
+            "demodulated_corner": 550512
+          },
+          {
+            "step": 560000,
+            "demodulated_corner": 560512
+          },
+          {
+            "step": 570000,
+            "demodulated_corner": 570512
+          },
+          {
+            "step": 580000,
+            "demodulated_corner": 580512
+          },
+          {
+            "step": 590000,
+            "demodulated_corner": 590512
+          },
+          {
+            "step": 600000,
+            "demodulated_corner": 600512
+          },
+          {
+            "step": 610000,
+            "demodulated_corner": 610512
+          },
+          {
+            "step": 620000,
+            "demodulated_corner": 620512
+          },
+          {
+            "step": 630000,
+            "demodulated_corner": 630512
+          },
+          {
+            "step": 640000,
+            "demodulated_corner": 640512
+          },
+          {
+            "step": 650000,
+            "demodulated_corner": 650512
+          },
+          {
+            "step": 660000,
+            "demodulated_corner": 660512
+          },
+          {
+            "step": 670000,
+            "demodulated_corner": 670512
+          },
+          {
+            "step": 680000,
+            "demodulated_corner": 680512
+          },
+          {
+            "step": 690000,
+            "demodulated_corner": 690512
+          },
+          {
+            "step": 700000,
+            "demodulated_corner": 700512
+          },
+          {
+            "step": 710000,
+            "demodulated_corner": 710512
+          },
+          {
+            "step": 720000,
+            "demodulated_corner": 720512
+          },
+          {
+            "step": 730000,
+            "demodulated_corner": 730512
+          },
+          {
+            "step": 740000,
+            "demodulated_corner": 740512
+          },
+          {
+            "step": 750000,
+            "demodulated_corner": 750512
+          },
+          {
+            "step": 760000,
+            "demodulated_corner": 760512
+          },
+          {
+            "step": 770000,
+            "demodulated_corner": 770512
+          },
+          {
+            "step": 780000,
+            "demodulated_corner": 780512
+          },
+          {
+            "step": 790000,
+            "demodulated_corner": 790512
+          },
+          {
+            "step": 800000,
+            "demodulated_corner": 800512
+          },
+          {
+            "step": 810000,
+            "demodulated_corner": 810512
+          },
+          {
+            "step": 820000,
+            "demodulated_corner": 820512
+          },
+          {
+            "step": 830000,
+            "demodulated_corner": 830512
+          },
+          {
+            "step": 840000,
+            "demodulated_corner": 840512
+          },
+          {
+            "step": 850000,
+            "demodulated_corner": 850512
+          },
+          {
+            "step": 860000,
+            "demodulated_corner": 860512
+          },
+          {
+            "step": 870000,
+            "demodulated_corner": 870512
+          },
+          {
+            "step": 880000,
+            "demodulated_corner": 880512
+          },
+          {
+            "step": 890000,
+            "demodulated_corner": 890512
+          },
+          {
+            "step": 900000,
+            "demodulated_corner": 900512
+          },
+          {
+            "step": 910000,
+            "demodulated_corner": 910512
+          },
+          {
+            "step": 920000,
+            "demodulated_corner": 920512
+          },
+          {
+            "step": 930000,
+            "demodulated_corner": 930512
+          },
+          {
+            "step": 940000,
+            "demodulated_corner": 940512
+          },
+          {
+            "step": 950000,
+            "demodulated_corner": 950512
+          },
+          {
+            "step": 960000,
+            "demodulated_corner": 960512
+          },
+          {
+            "step": 970000,
+            "demodulated_corner": 970512
+          },
+          {
+            "step": 980000,
+            "demodulated_corner": 980512
+          },
+          {
+            "step": 990000,
+            "demodulated_corner": 990512
+          },
+          {
+            "step": 1000000,
+            "demodulated_corner": 1000512
+          }
+        ]
+      }
+    ],
+    "tensor_fingerprint": "2588f4f6c0f8d99f162fe15e8ef92370244422e72e8cd5692a5e1545c76c93fc",
+    "implementation_sha256": "21e88a2dbe593d2aad081395224cc14835f005cbb7c7e16b450e9851d45482b9",
+    "reproduction": "python experiments/geometry/carry_locked_metric.py --steps 1000000"
+  },
+  "limitations": [
+    "Archived source snapshots were evaluated passively for one forward/inverse step; this is not a new full-horizon replay.",
+    "The million-step histories use the exact two-sublattice restriction of one free scalar metric gear, not the whole default field tensor.",
+    "The first32fullEngineL4updates andinverse are independentlychecked percase.",
+    "The finite linear-growth formula ends when its remainder inequalities cease; indefinite growth is not asserted.",
+    "No metric inferred from clock/signal observations, Einstein source law, cosmological scale factor or bounce follows from these register histories."
+  ]
+}

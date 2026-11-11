@@ -1,0 +1,690 @@
+{
+  "schema": "universe24-strict-clock-composition-evidence-v1",
+  "description": "Optional lifted candidate with seven reciprocal clocks, scalar record bridge, and 90 physical-link mediators. No default tensor changed.",
+  "preparation": [
+    "demos.one.run_one.build(L, jpure, rng_seed=13).",
+    "Divide initial matter a,b by16 truncating toward zero; no other preexisting field scaled.",
+    "Set su2.psi_1, su3.psi_0r, u1.psi_re b at origin to512.",
+    "Set h0x,h0y,h0z,hxx,hyy,hzz,hxy,hxz,hyz b to32*(-1)^(x+y+z), a=-b.",
+    "Multiply all source coefficients and Q by M=2^28; multiply source remainders byM.",
+    "Add clock network with all seven a=b=512, r=3Qnew-1, spring=Dnew/64; catalogue norm couplings M except metric couplings1.",
+    "Add scalar bridge -Dnew/256*Ccosmic*(dp+dm).",
+    "Apply single_edge_realization with declared stiffness; initialize each new H by copying original U a,b,r once.",
+    "For second history only, add Dnew/3 modulo Dnew to both dp and dm remainders at origin before running.",
+    "Run the unchanged scalar Engine; no state edits after either seed. Rewind every retained register for300 steps."
+  ],
+  "seed_map": "Each source physical link U gets edgehub.<U name> H with copied initial a,b,r; original U remains independently dynamic. Other source and clock registers unchanged.",
+  "field_port_scope": "Complete multiplet quadratic forms; positive metric form has cube-only added-force covariance on original geometry, not Lorentz covariance. Full localized tensor covariance is not established.",
+  "evidence": [
+    {
+      "L": 3,
+      "steps": 300,
+      "requested_steps": 300,
+      "scale": 268435456,
+      "amplitude": 512,
+      "bridge_div": 256,
+      "spring_div": 64,
+      "stiffness": 268435456,
+      "stiffness_mode": "weak",
+      "Q": 2305843009482129408,
+      "D": 13835058056892776448,
+      "source_fingerprint": "83a6377a92280372d57dd851b8a5aac7a32a01f56d5ec0d32ce989649b137bd8",
+      "tensor_fingerprint": "e89f7c93612886936a77bf82d079bc12e2cadaf875d4dae5f55ee3883b458207",
+      "source_gears": 389,
+      "gears": 479,
+      "mediator_pairs": 90,
+      "rank": 4,
+      "monomials": 19311,
+      "strict_support_violations": 0,
+      "old_a_factor_occurrences_before": 118,
+      "old_a_factor_occurrences_after": 118,
+      "inverse_stage_sizes": [
+        462,
+        1,
+        16
+      ],
+      "weak_gear_components": 1,
+      "exact_rewinds": true,
+      "pair_lock": true,
+      "maxbits": 25,
+      "first_b": {
+        "cosmic": 1,
+        "clocknet": 10,
+        "chiral": 142,
+        "matter": 155,
+        "edgehub": 156,
+        "em": 157,
+        "wsu2": 187
+      },
+      "first_r": {
+        "cosmic": 1,
+        "clocknet": 2,
+        "su2": 123,
+        "su3": 123,
+        "u1": 123,
+        "chiral": 130,
+        "edgehub": 130,
+        "matter": 130,
+        "metric": 130,
+        "em": 157,
+        "wsu2": 173
+      },
+      "first_official_click": {
+        "cosmic": 1,
+        "clocknet": 9,
+        "matter": 150
+      },
+      "first_clock_b": {
+        "clocknet.cosmic": 10,
+        "clocknet.master": 95,
+        "clocknet.su2": 122,
+        "clocknet.su3": 122,
+        "clocknet.u1": 122,
+        "clocknet.choice": 122,
+        "clocknet.core": 129
+      },
+      "first_physical_link_b": {},
+      "first_source_projection_state_difference": 1,
+      "first_source_projection_official_click_difference": 258,
+      "initial_sha256": "1b6fbee76de358fb4239a3a94c6dd0b628f9d378cc651b1c4f90dfe2860671b9",
+      "perturbed_initial_sha256": "e1ce028787ce259c8c9bdbed0ba580d76aa7b8fb9ff5803552f9bcf6a2f1e173",
+      "final_sha256": "4e3fb53bc27e3a2f93350783c15a10ef58df67edfaadb83e9f98a6652326e5b1",
+      "series": [
+        {
+          "step": 20,
+          "bits": 25,
+          "clock_max": 9658,
+          "physical_link_max": 1312,
+          "mediator_max": 15160,
+          "metric_node_max": 1312
+        },
+        {
+          "step": 40,
+          "bits": 25,
+          "clock_max": 1917,
+          "physical_link_max": 2592,
+          "mediator_max": 26420,
+          "metric_node_max": 2592
+        },
+        {
+          "step": 60,
+          "bits": 25,
+          "clock_max": 1789,
+          "physical_link_max": 3872,
+          "mediator_max": 41808,
+          "metric_node_max": 3872
+        },
+        {
+          "step": 80,
+          "bits": 25,
+          "clock_max": 7420,
+          "physical_link_max": 5152,
+          "mediator_max": 54418,
+          "metric_node_max": 5152
+        },
+        {
+          "step": 100,
+          "bits": 25,
+          "clock_max": 1077,
+          "physical_link_max": 6432,
+          "mediator_max": 68252,
+          "metric_node_max": 6432
+        },
+        {
+          "step": 120,
+          "bits": 25,
+          "clock_max": 6921,
+          "physical_link_max": 7712,
+          "mediator_max": 81904,
+          "metric_node_max": 7712
+        },
+        {
+          "step": 140,
+          "bits": 25,
+          "clock_max": 4578,
+          "physical_link_max": 8992,
+          "mediator_max": 93596,
+          "metric_node_max": 8992
+        },
+        {
+          "step": 160,
+          "bits": 25,
+          "clock_max": 1734,
+          "physical_link_max": 10272,
+          "mediator_max": 107738,
+          "metric_node_max": 10272
+        },
+        {
+          "step": 180,
+          "bits": 25,
+          "clock_max": 7799,
+          "physical_link_max": 11552,
+          "mediator_max": 122407,
+          "metric_node_max": 11552
+        },
+        {
+          "step": 200,
+          "bits": 25,
+          "clock_max": 2453,
+          "physical_link_max": 12832,
+          "mediator_max": 133967,
+          "metric_node_max": 12832
+        },
+        {
+          "step": 220,
+          "bits": 25,
+          "clock_max": 6462,
+          "physical_link_max": 14112,
+          "mediator_max": 148604,
+          "metric_node_max": 14112
+        },
+        {
+          "step": 240,
+          "bits": 25,
+          "clock_max": 2450,
+          "physical_link_max": 15392,
+          "mediator_max": 160891,
+          "metric_node_max": 15392
+        },
+        {
+          "step": 260,
+          "bits": 25,
+          "clock_max": 2071,
+          "physical_link_max": 16672,
+          "mediator_max": 174242,
+          "metric_node_max": 16672
+        },
+        {
+          "step": 280,
+          "bits": 25,
+          "clock_max": 10452,
+          "physical_link_max": 17952,
+          "mediator_max": 189502,
+          "metric_node_max": 17952
+        },
+        {
+          "step": 300,
+          "bits": 25,
+          "clock_max": 3243,
+          "physical_link_max": 19232,
+          "mediator_max": 200383,
+          "metric_node_max": 19232
+        }
+      ],
+      "classification": "finite strict-local feasibility test"
+    },
+    {
+      "L": 4,
+      "steps": 300,
+      "requested_steps": 300,
+      "scale": 268435456,
+      "amplitude": 512,
+      "bridge_div": 256,
+      "spring_div": 64,
+      "stiffness": 268435456,
+      "stiffness_mode": "weak",
+      "Q": 2305843009482129408,
+      "D": 13835058056892776448,
+      "source_fingerprint": "83a6377a92280372d57dd851b8a5aac7a32a01f56d5ec0d32ce989649b137bd8",
+      "tensor_fingerprint": "e89f7c93612886936a77bf82d079bc12e2cadaf875d4dae5f55ee3883b458207",
+      "source_gears": 389,
+      "gears": 479,
+      "mediator_pairs": 90,
+      "rank": 4,
+      "monomials": 19311,
+      "strict_support_violations": 0,
+      "old_a_factor_occurrences_before": 118,
+      "old_a_factor_occurrences_after": 118,
+      "inverse_stage_sizes": [
+        462,
+        1,
+        16
+      ],
+      "weak_gear_components": 1,
+      "exact_rewinds": true,
+      "pair_lock": true,
+      "maxbits": 25,
+      "first_b": {
+        "cosmic": 1,
+        "clocknet": 52,
+        "chiral": 155,
+        "matter": 166,
+        "edgehub": 168,
+        "em": 169,
+        "wsu2": 224,
+        "su2": 244,
+        "su3": 244,
+        "u1": 244
+      },
+      "first_r": {
+        "cosmic": 1,
+        "clocknet": 2,
+        "su2": 135,
+        "su3": 135,
+        "u1": 135,
+        "chiral": 140,
+        "edgehub": 140,
+        "matter": 140,
+        "metric": 140,
+        "em": 169,
+        "wsu2": 175
+      },
+      "first_official_click": {
+        "cosmic": 1,
+        "clocknet": 52,
+        "matter": 166,
+        "su2": 244,
+        "su3": 244,
+        "u1": 244
+      },
+      "first_clock_b": {
+        "clocknet.cosmic": 52,
+        "clocknet.master": 97,
+        "clocknet.su2": 134,
+        "clocknet.su3": 134,
+        "clocknet.u1": 134,
+        "clocknet.choice": 134,
+        "clocknet.core": 139
+      },
+      "first_physical_link_b": {},
+      "first_source_projection_state_difference": 1,
+      "first_source_projection_official_click_difference": null,
+      "initial_sha256": "751162756d272bde7e57f05cfc0186c1cac30d5576e4401796d8620735b822a7",
+      "perturbed_initial_sha256": "6b34eab32f2695b9272e1c54170f503cf424c44f2fde2fa742400a021fbfe15b",
+      "final_sha256": "6bdf9363ce1cbece8f6710589a0409aa4a6ee7fbc4bef8b2d79c8952b9b4089e",
+      "series": [
+        {
+          "step": 20,
+          "bits": 25,
+          "clock_max": 9281,
+          "physical_link_max": 1312,
+          "mediator_max": 10073,
+          "metric_node_max": 1312
+        },
+        {
+          "step": 40,
+          "bits": 25,
+          "clock_max": 1144,
+          "physical_link_max": 2592,
+          "mediator_max": 24317,
+          "metric_node_max": 2592
+        },
+        {
+          "step": 60,
+          "bits": 25,
+          "clock_max": 2985,
+          "physical_link_max": 3872,
+          "mediator_max": 24707,
+          "metric_node_max": 3872
+        },
+        {
+          "step": 80,
+          "bits": 25,
+          "clock_max": 7201,
+          "physical_link_max": 5152,
+          "mediator_max": 44464,
+          "metric_node_max": 5152
+        },
+        {
+          "step": 100,
+          "bits": 25,
+          "clock_max": 1644,
+          "physical_link_max": 6432,
+          "mediator_max": 36894,
+          "metric_node_max": 6432
+        },
+        {
+          "step": 120,
+          "bits": 25,
+          "clock_max": 6575,
+          "physical_link_max": 7712,
+          "mediator_max": 56292,
+          "metric_node_max": 7712
+        },
+        {
+          "step": 140,
+          "bits": 25,
+          "clock_max": 2048,
+          "physical_link_max": 8992,
+          "mediator_max": 52765,
+          "metric_node_max": 8992
+        },
+        {
+          "step": 160,
+          "bits": 25,
+          "clock_max": 2483,
+          "physical_link_max": 10272,
+          "mediator_max": 60906,
+          "metric_node_max": 10272
+        },
+        {
+          "step": 180,
+          "bits": 25,
+          "clock_max": 6202,
+          "physical_link_max": 11552,
+          "mediator_max": 66723,
+          "metric_node_max": 11552
+        },
+        {
+          "step": 200,
+          "bits": 25,
+          "clock_max": 2484,
+          "physical_link_max": 12832,
+          "mediator_max": 78954,
+          "metric_node_max": 12832
+        },
+        {
+          "step": 220,
+          "bits": 25,
+          "clock_max": 6831,
+          "physical_link_max": 14112,
+          "mediator_max": 86553,
+          "metric_node_max": 14112
+        },
+        {
+          "step": 240,
+          "bits": 25,
+          "clock_max": 1423,
+          "physical_link_max": 15392,
+          "mediator_max": 98784,
+          "metric_node_max": 15392
+        },
+        {
+          "step": 260,
+          "bits": 25,
+          "clock_max": 2814,
+          "physical_link_max": 16672,
+          "mediator_max": 105344,
+          "metric_node_max": 16672
+        },
+        {
+          "step": 280,
+          "bits": 25,
+          "clock_max": 8245,
+          "physical_link_max": 17952,
+          "mediator_max": 112207,
+          "metric_node_max": 17952
+        },
+        {
+          "step": 300,
+          "bits": 25,
+          "clock_max": 3612,
+          "physical_link_max": 19232,
+          "mediator_max": 118998,
+          "metric_node_max": 19232
+        }
+      ],
+      "classification": "finite strict-local feasibility test"
+    },
+    {
+      "L": 4,
+      "steps": 300,
+      "requested_steps": 300,
+      "scale": 268435456,
+      "amplitude": 512,
+      "bridge_div": 256,
+      "spring_div": 64,
+      "stiffness": 9007199255789568,
+      "stiffness_mode": "standard",
+      "Q": 2305843009482129408,
+      "D": 13835058056892776448,
+      "source_fingerprint": "83a6377a92280372d57dd851b8a5aac7a32a01f56d5ec0d32ce989649b137bd8",
+      "tensor_fingerprint": "c440118e0dfcf6d106b40ef92e060ecc41621bf07af6f30a85445e466e91568b",
+      "source_gears": 389,
+      "gears": 479,
+      "mediator_pairs": 90,
+      "rank": 4,
+      "monomials": 19311,
+      "strict_support_violations": 0,
+      "old_a_factor_occurrences_before": 118,
+      "old_a_factor_occurrences_after": 118,
+      "inverse_stage_sizes": [
+        462,
+        1,
+        16
+      ],
+      "weak_gear_components": 1,
+      "exact_rewinds": true,
+      "pair_lock": true,
+      "maxbits": 25,
+      "first_b": {
+        "cosmic": 1,
+        "clocknet": 52,
+        "chiral": 136,
+        "matter": 141,
+        "edgehub": 143,
+        "em": 144,
+        "wsu2": 238
+      },
+      "first_r": {
+        "cosmic": 1,
+        "clocknet": 2,
+        "chiral": 108,
+        "edgehub": 108,
+        "matter": 108,
+        "metric": 108,
+        "su2": 135,
+        "su3": 135,
+        "u1": 135,
+        "em": 144,
+        "wsu2": 155
+      },
+      "first_official_click": {
+        "cosmic": 1,
+        "clocknet": 52,
+        "matter": 137,
+        "su2": 239,
+        "su3": 239,
+        "u1": 239
+      },
+      "first_clock_b": {
+        "clocknet.cosmic": 52,
+        "clocknet.master": 97,
+        "clocknet.core": 107,
+        "clocknet.su2": 134,
+        "clocknet.su3": 134,
+        "clocknet.u1": 134,
+        "clocknet.choice": 134
+      },
+      "first_physical_link_b": {
+        "em.A_x": 154,
+        "em.A_y": 155,
+        "em.A_z": 159,
+        "wsu2.Uz_k": 238,
+        "wsu2.Ux_k": 254,
+        "wsu2.Uy_k": 257
+      },
+      "first_source_projection_state_difference": 1,
+      "first_source_projection_official_click_difference": 12,
+      "initial_sha256": "751162756d272bde7e57f05cfc0186c1cac30d5576e4401796d8620735b822a7",
+      "perturbed_initial_sha256": "6b34eab32f2695b9272e1c54170f503cf424c44f2fde2fa742400a021fbfe15b",
+      "final_sha256": "8ff884f5d6f60a19cb83ffaacbe58b22b47ce5935fb41c26b2c595e27765854f",
+      "series": [
+        {
+          "step": 20,
+          "bits": 25,
+          "clock_max": 9281,
+          "physical_link_max": 1240,
+          "mediator_max": 8972,
+          "metric_node_max": 1084
+        },
+        {
+          "step": 40,
+          "bits": 25,
+          "clock_max": 1144,
+          "physical_link_max": 6834,
+          "mediator_max": 17434,
+          "metric_node_max": 1103
+        },
+        {
+          "step": 60,
+          "bits": 25,
+          "clock_max": 2985,
+          "physical_link_max": 13413,
+          "mediator_max": 12141,
+          "metric_node_max": 70
+        },
+        {
+          "step": 80,
+          "bits": 25,
+          "clock_max": 7201,
+          "physical_link_max": 15791,
+          "mediator_max": 29211,
+          "metric_node_max": 1032
+        },
+        {
+          "step": 100,
+          "bits": 25,
+          "clock_max": 1644,
+          "physical_link_max": 16157,
+          "mediator_max": 21306,
+          "metric_node_max": 1148
+        },
+        {
+          "step": 120,
+          "bits": 25,
+          "clock_max": 6575,
+          "physical_link_max": 20178,
+          "mediator_max": 38789,
+          "metric_node_max": 169
+        },
+        {
+          "step": 140,
+          "bits": 25,
+          "clock_max": 2048,
+          "physical_link_max": 27146,
+          "mediator_max": 27993,
+          "metric_node_max": 973
+        },
+        {
+          "step": 160,
+          "bits": 25,
+          "clock_max": 2483,
+          "physical_link_max": 31154,
+          "mediator_max": 41263,
+          "metric_node_max": 1185
+        },
+        {
+          "step": 180,
+          "bits": 25,
+          "clock_max": 6203,
+          "physical_link_max": 31473,
+          "mediator_max": 66435,
+          "metric_node_max": 266
+        },
+        {
+          "step": 200,
+          "bits": 25,
+          "clock_max": 2484,
+          "physical_link_max": 33765,
+          "mediator_max": 143753,
+          "metric_node_max": 908
+        },
+        {
+          "step": 220,
+          "bits": 25,
+          "clock_max": 6830,
+          "physical_link_max": 40221,
+          "mediator_max": 354430,
+          "metric_node_max": 1214
+        },
+        {
+          "step": 240,
+          "bits": 25,
+          "clock_max": 1426,
+          "physical_link_max": 45728,
+          "mediator_max": 962836,
+          "metric_node_max": 360
+        },
+        {
+          "step": 260,
+          "bits": 25,
+          "clock_max": 2814,
+          "physical_link_max": 46833,
+          "mediator_max": 2642458,
+          "metric_node_max": 838
+        },
+        {
+          "step": 280,
+          "bits": 25,
+          "clock_max": 8245,
+          "physical_link_max": 47654,
+          "mediator_max": 7304994,
+          "metric_node_max": 1234
+        },
+        {
+          "step": 300,
+          "bits": 25,
+          "clock_max": 3612,
+          "physical_link_max": 52868,
+          "mediator_max": 20230808,
+          "metric_node_max": 455
+        }
+      ],
+      "classification": "rejected as stability evidence: excited linearly unstable metric mode"
+    }
+  ],
+  "corner_audit": {
+    "schema": "universe24-strict-metric-corner-v1",
+    "scale": 268435456,
+    "Q_base": 8589934593,
+    "Q": 2305843009482129408,
+    "D": 13835058056892776448,
+    "assumptions": [
+      "Isolated lifted metric h0i wave with all clock ports removed.",
+      "Even periodic lattice admits k=(pi,pi,pi).",
+      "Physical U to H Fourier cross coefficient k*(1+exp(i*pi))=0.",
+      "This is a linear wave audit, not a theorem for the complete nonlinear candidate."
+    ],
+    "derivation": "u_H(pi)=(-D+12M-2k) H(pi); b_next+b_prev=2u_H/D plus bounded remainder correction.",
+    "port_note": "A spatially uniform clock c and weight-two endpoint norm further shift beta_pi by -4*c*c. A spatially varying clock couples Fourier modes.",
+    "rows": [
+      {
+        "name": "weak",
+        "stiffness": 268435456,
+        "beta_pi": -13835058054208421888,
+        "D": 13835058056892776448,
+        "margin_beta_plus_D": 2684354560,
+        "scalar_mode_inside_linear_band": true,
+        "spectral_radius": 1,
+        "predicted_large_root_growth_over_20_steps": 1
+      },
+      {
+        "name": "standard",
+        "stiffness": 9007199255789568,
+        "beta_pi": -13853072452183130112,
+        "D": 13835058056892776448,
+        "margin_beta_plus_D": -18014395290353664,
+        "scalar_mode_inside_linear_band": false,
+        "spectral_radius": 1.0523497238041213,
+        "predicted_large_root_growth_over_20_steps": 2.7746092401821474
+      }
+    ]
+  },
+  "limitations": [
+    "Strict transformation changes dynamics; source-coordinate view omits independent physical links and is not invertible.",
+    "Exact rewind, graph connectivity and finite small counters do not establish stability, particle physics, gravity or quantum entanglement.",
+    "Weak stiffness has no detected token-induced physical U b difference through300. An independent public L4 rerun detects physical U state/remainder differences at169; the L3 physical remainder timing was not separately measured.",
+    "Copied metric a=-b causes an initial inertial velocity64 on independent physical U when stiffness is weak; the reported drift is preparation, not attraction.",
+    "Weak histories already differ in source-coordinate state at step1; L3 projected official clicks differ by258, while the tested L4 projected official clicks match through300.",
+    "Strong stiffness retains exact reversibility but has an isolated metric corner eigenvalue outside the stable linear band; observed mediator growth agrees.",
+    "Old-a factor count remains118; all added reads are b-only and the inverse stage sizes are462,1,16.",
+    "New mediator geometry may require a different cube/gauge representation; source covariance does not transfer automatically."
+  ],
+  "public_weak_strict_cross_check": {
+    "tensor_fingerprint": "e89f7c93612886936a77bf82d079bc12e2cadaf875d4dae5f55ee3883b458207",
+    "L": 4,
+    "completed_steps": 300,
+    "exact_rewinds": [
+      true,
+      true
+    ],
+    "first_physical_link_difference": {
+      "state": 169,
+      "b": null,
+      "r": 169
+    },
+    "outside_storage_cone": 0,
+    "matched_quotient_difference_equals_reader_intensity": true
+  }
+}

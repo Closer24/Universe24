@@ -1,0 +1,53 @@
+{
+  "scope": "Named optional Einstein tensor, not all possible encodings or prepared sectors",
+  "Q": 8589934593,
+  "P": 1048576,
+  "tensor_fingerprint": "6bb274b7ba434e22bee67afb3292a589cfce025a06b4307a74d8872fe53863ec",
+  "dynamics_fingerprint": "c6996dce4d2a01e942eff3aa7edbe8c8cd69f275fb1b08fe1fa88d997f11e0d0",
+  "blind_components": {
+    "h0x": {
+      "external_reading_monomials": 0,
+      "own_target_monomials": 7
+    },
+    "h0y": {
+      "external_reading_monomials": 0,
+      "own_target_monomials": 7
+    },
+    "h0z": {
+      "external_reading_monomials": 0,
+      "own_target_monomials": 7
+    },
+    "hxy": {
+      "external_reading_monomials": 0,
+      "own_target_monomials": 7
+    },
+    "hxz": {
+      "external_reading_monomials": 0,
+      "own_target_monomials": 7
+    },
+    "hyz": {
+      "external_reading_monomials": 0,
+      "own_target_monomials": 7
+    }
+  },
+  "official_counterfactual": {
+    "changed_initial_field": "metric.hxy alternating along z",
+    "amplitude": 262144,
+    "steps": 20,
+    "official_records_each": 25006,
+    "official_streams_identical": true,
+    "all_other_state_registers_identical": true,
+    "both_exact_rewind": true
+  },
+  "source_counterexample": {
+    "preparation": "uniform ref.R00 b=32; a=0; all other counters0; r=3Q-1",
+    "declared_source_divergence": {
+      "0": 18382848,
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "max_abs_source": 33554432
+    },
+    "limitation": "This is the implemented source diagnostic, not an independently derived physical stress tensor."
+  }
+}

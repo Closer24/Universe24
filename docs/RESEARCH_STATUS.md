@@ -20,6 +20,26 @@ The active default is ONE v1, the result of `one_system()`. The implementation i
 - Physical time and observer calibration independent of a global computational schedule.
 - An autonomous, measured preference for greater persistent organization. C2 readout does not implement a complexity optimizer.
 
+## Connected-clock research
+
+The optional [clock network and record bridge](CLOCK_RESEARCH.md) connect the default's independent sectors using a newly chosen fixed tensor. Complete declared quadratic forms, local clocks and reciprocal record-sum feedback replace the earlier single-component wiring experiment. Initial-only counterfactual controls change downstream official records and rewind exactly. This is an interaction demonstration, not an emergent metric, a synchronization theorem or a route optimizer. The public `connected_clocks` runner keeps the candidate and preparation explicit; the default law is unchanged.
+
+An independent [bounded circuit](BOUNDED_CIRCUITS.md) has a stronger but narrower result: a prepared Boolean sector is invariant for all time. Ordinary Rule3 alternates two local involutions through its retained registers. It gives exact propagation, reflection and periodic clocks, with no callback. It is a three-channel chosen circuit, not the 48-element cube representation or the full field model; all its official events are C0.
+
+Longer runs expose failure in the original default `jpure` preparation at update 2192 on L=3. Dividing only the initial matter amplitudes by 16 provides longer quiet finite windows, but does not remove slow metric drift or prove unlimited stability. Large background counters can mask growth in smaller fields, so the epoch runner reports separate sector bounds. Hand crossings, reader echoes and complete-state recurrence are measured separately; none is by itself a physical cosmological bounce.
+
+Gravity is required to be a common geometry inferred from clocks and signal propagation. The coupling tensor's order is unrelated to the rank of a physical spacetime metric. Current lapse readers, finite-frequency clock comparisons, incomplete stress coupling and the default-off Einstein extension do not yet establish one metric shared by all species. New clock springs and norm ports are not identified as gravity. The geometry audit in [CLOCK_RESEARCH](CLOCK_RESEARCH.md#8-gravity-means-a-shared-metric-measured-by-clocks-and-signals) gives the explicit tests and obstacles.
+
+The [detailed geometry audit](GEOMETRY_RESEARCH.md) now gives algebraic reconstruction formulas and the additional Einstein constraint/evolution requirements. Axis-only signal data leave spatial off-diagonal components undetermined. In the optional Einstein construction, a stored off-diagonal wave can leave all official records unchanged; the implemented source also has a conservation defect. A prepared planar vacuum tensor-wave sector does preserve its linear trace/divergence conditions exactly, including carries, but its observed records are audit-only.
+
+A separate [conformal scalar construction](CONFORMAL_METRIC_EXPERIMENT.md) gives a limited positive result: two independent or interacting scalar clocks approach one common proper-time scaling while a massless canonical signal keeps the conformal null cone. Sixteen full histories reverse exactly. This is a new four-gear tensor in a declared temporal/probe limit, not general Einstein dynamics or a spatial continuum proof. The [Palatini target](PALATINI_TARGET.md) explains why quartic geometric coefficients alone do not impose the needed first-order constraints.
+
+An independent [integer curl-wave construction](LINEAR_SPIN2.md) supplies an exact bounded travelling sector with two tensor polarizations. Eighteen ordinary Rule3 gears, fixed reciprocal coefficients and a prepared seed preserve symmetry, trace and divergence for all time. All 24 proper cube rotations and exact reversals pass; the official arithmetic records carry a moving pattern. General oblique three-dimensional preparations remain unstable. The result is a linear geometric building block, not a measured Einstein metric or a gravitational detector.
+
+The subsequent [local metric readout](PHASE_METRIC_EXPERIMENT.md) uses two ordinary phase registers to reconstruct that travelling perturbation at every update. Its declared linearized lattice Einstein operator and constraints vanish exactly. A fixed rank-four, one-way test-body coupling changes official scalar-probe records in two exactly reversed 84-update histories. The phase registers are silent in the official stream, the wave and probe speeds differ, and nonlinear Einstein backreaction remains absent.
+
+The [metric-source audit](METRIC_SOURCE_AUDIT.md) derives an exact periodic source ledger and a long carry-locked checkerboard drift in the free stencil. The drift is a fast lattice-mode control, not a disproof of every low-frequency limit. It prevents treating the remainder-free spectral band as a general integer-stability certificate.
+
 ## Optional and rejected constructions
 
 `couple_doublet=True` is a rejected experiment retained to reproduce its exactness and measured runaway. It is off by default. The Einstein and CG2 layers are optional constructions with limited tested regimes; the default does not inherit their proposed conclusions.

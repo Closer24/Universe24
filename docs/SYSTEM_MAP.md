@@ -68,6 +68,8 @@ No live monomial crosses between these groups in either direction, so their full
 
 The checked-in [inventory](evidence/system_inventory.json) identifies the exact tensor by its fingerprints. Its 22 builder blocks have 382 declared types in total. Blocks such as ehop, gwb and lapseL0 add coefficients to existing gears without adding new gear types; the empty lapse block adds neither. Raw builder term counts must not be confused with 18,592 live monomials after cancellation and merging.
 
+The optional [connected-clock preset](CLOCK_RESEARCH.md) changes that construction before evolution. Seven additional local clocks, complete-multiplet ports and a recording-sum bridge join the 389 gear types into one weak dependency component. Paired controls demonstrate transfer in both directions; a zero-bridge control removes it. The original 382-type default and this inventory remain unchanged. Connectivity is not a stability or shared-metric theorem: zero unforced multiplets can remain dormant, randomized clock phases do not spontaneously align in the tested preparation, and metric growth remains visible.
+
 ## A precise obstruction to the current choice interpretation
 
 For the cosmic preparation let c be its fixed pair coefficient and I=b_M1²+b_M2². In each preparation require a_L=b_L for both loads (so they remain static), Lp+Lm=D/(2c), and r_dp=r_dm. Between the two compared preparations require equal complete hand/reader states (a,b,r) and equal Delta_a,Delta_b; the load split and shared token may differ. The pair inputs are u_dp=c I Lp and u_dm=−c I Lm. Equal initial pair remainders remain equal because their inputs differ by a multiple of D. Exact Euclidean division then gives
@@ -117,10 +119,14 @@ A passive state diagnostic is not an official-event-only observable. Tests using
 | `layers/gravity.py`, `gravity_select.py`, `gravity_l0.py`, `gravity_l0c.py`, `gravity_beta_fix.py`, `matter_lapse_c.py` | Metric/lapse candidates and composition helpers; actual enabled coefficients govern the claims |
 | `layers/choice.py`, `choice_oddq.py`, `choice_round.py` | Prepared choice/router variants; using the same recurrence does not prove quantum measurement |
 | `layers/strict_edge.py` | Optional locality experiment, not default physical equivalence |
+| `layers/clock_network.py`, `clock_bridge.py` | Optional complete-multiplet clock ports and record-sum feedback, compiled into a fixed tensor |
+| `layers/resolution.py`, `prepare/resolution.py` | Exact coefficient/divisor/seed embedding; preserves source trajectories rather than stabilizing them |
+| `layers/involution_clock.py` | Bounded Boolean routing sector compiled from two local involutions; distinct from the default field tensor |
 | `layers/einstein.py`, `gravity_hybrid.py`, `clockgen.py`, `onematter.py`, `em_compact.py`, `electroweak_b.py`, `universality.py`, `c2_zq8.py` | Optional or comparison constructions; their conclusions apply only to their stated tensor and preparation |
 | `prepare/` | Complete initial states, selected backgrounds, packets and ensembles; no mutation during forward evolution |
 | `observe/` | Passive state/event diagnostics for the named construction; no feedback into the forward rule |
 | `tools/audit_contract.py`, `physics_gate.py`, `system_inventory.py` | Reproducible audit, physical negative controls and structural census |
+| `tools/connected_clocks.py`, `clock_epochs.py`, `metric_clock_gate.py` | Declared candidate and paired controls, passive epoch diagnostics, and raw-clock universality gate |
 | `demos/one/run_one.py`, package `__main__.py` | Default executable run and reports |
 | Other `demos/` | Scoped research experiments, sometimes expensive; new output goes under `runs/` |
 | `tests/` | Exact checks and declared numerical regressions, including known negative physical findings |
