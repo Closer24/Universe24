@@ -1,4 +1,4 @@
-"""ONE read-only observables (Study 22, ONE-A). Nothing here changes a state or feeds back into a run: every function
+"""Universe24 read-only observables. Nothing here changes a state or feeds back into a run: every function
 reads complete snapshots produced by Engine.step and returns numbers.
 
 The cosmic-specific helpers require explicitly supplied gears and matching

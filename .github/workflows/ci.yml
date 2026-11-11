@@ -1,4 +1,4 @@
-name: Fixed-divisor reliability
+name: Universe24 reliability
 on:
   pull_request:
   push:
@@ -7,7 +7,7 @@ on:
 permissions:
   contents: read
 jobs:
-  one:
+  universe24:
     runs-on: ubuntu-latest
     timeout-minutes: 120
     strategy:
@@ -24,11 +24,11 @@ jobs:
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
           python-version: ${{ matrix.python }}
-      - name: Install ONE and validation dependencies
+      - name: Install Universe24 and validation dependencies
         run: python -m pip install '.[validation]'
-      - name: Complete ONE test suite
+      - name: Complete Universe24 test suite
         run: python -m unittest discover -s universe24/tests -t . -v
-      - name: Default ONE forward run and exact rewind
+      - name: Default Universe24 forward run and exact rewind
         run: python -m universe24 --L 3 --tmax 20 --budget 120 --out runs/smoke --tag ci --rewind
       - name: Canonical tensor integration inventory
         run: python -m universe24.tools.system_inventory --out runs/system-inventory.json
@@ -45,6 +45,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
-          name: one-python-${{ matrix.python }}
+          name: universe24-python-${{ matrix.python }}
           path: runs/
           if-no-files-found: warn

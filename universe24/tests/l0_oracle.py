@@ -1,4 +1,4 @@
-"""Independent divisor-six L0 arithmetic oracle for ONE regression tests only.
+"""Independent divisor-six L0 arithmetic oracle for Universe24 regression tests only.
 
 This is a deliberately direct receiver-side calculation, not an installable
 second model. Production code imports none of this module.

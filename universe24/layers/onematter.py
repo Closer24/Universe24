@@ -1,4 +1,4 @@
-"""ONE MATTER CONTENT, option (A) (manager ruling 10:5x; INTEGRATOR): ONE multiplet, ONE unified link algebra.
+"""Unified matter content: one multiplet and one unified link algebra.
 
 TENSOR BLOCKS ONLY. Matter = colour triplet (x) B1-EM Dirac pair: three copies q0, q1, q2 of layers.matter.build_matter
 (imported read-only; 16 channels each, 48 per node). The complex structure is the Dirac carrier J8 on the 8-block; the
@@ -172,7 +172,7 @@ def build_u6_coupling(*, matter: tuple, links: Block, kd: int, kw: int, name: st
                                 key = tuple(sorted((w, (mg[8 * k + i], (0, 0, 0)), (mg[8 * l + j], e))))
                                 t[key] = t.get(key, 0) + Fraction(c)
     terms = deviation_terms(phi, 6, {})
-    return Block((), tuple(terms), name=name, vacuum={}, params={'kd': kd, 'kw': kw, 'A': A, 'matter': tuple((m.name for m in matter)), 'links': links.name, 'reversor': "Mp per gear (b-only); Kramers: K o M' on matter, M' on Re W, JM on Im W"}, doc='ONE-matter U(6) coupling (option A), reciprocal, rank 3')
+    return Block((), tuple(terms), name=name, vacuum={}, params={'kd': kd, 'kw': kw, 'A': A, 'matter': tuple((m.name for m in matter)), 'links': links.name, 'reversor': "Mp per gear (b-only); Kramers: K o M' on matter, M' on Re W, JM on Im W"}, doc='Unified-matter U(6) coupling, reciprocal, rank 3')
 
 @dataclass
 class OneMatter:

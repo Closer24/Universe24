@@ -1,4 +1,4 @@
-"""Read-only observables / audit maps for the ONE-matter U(6) system (layers/onematter.py). Reuses the frozen
+"""Read-only observables / audit maps for the unified-matter U(6) construction (layers/onematter.py). Reuses the frozen
 observe.gauge.GaugeView machinery (Noether pieces, exact charge and remainder term, integer gauge maps) with the
 M6(C) algebra and the 48 matter gears of the colour triplet."""
 from __future__ import annotations

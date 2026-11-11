@@ -1,4 +1,4 @@
-"""Run the fixed-divisor-six model with a complete seed and passive records.
+"""Run Universe24, the fixed-divisor-six model with a complete seed and passive records.
 
 Every forward update is Engine.step. A resource gate may stop the run after a
 complete step; it never modifies state. Previous field/cosmic presets are not
@@ -75,7 +75,7 @@ def run(args):
         rewind = dict(exact=engine.rewind(state,completed).same_as(seed), updates=completed)
         if not rewind["exact"]:
             raise AssertionError("complete seed was not recovered")
-    return dict(meta=dict(tag=args.tag,model="fixed-divisor-six reference construction",D=6,
+    return dict(meta=dict(project="Universe24",tag=args.tag,model="fixed-divisor-six reference construction",D=6,
                     L=args.L,G=tensor.G,rank=tensor.rank,monomials=len(tensor.monomials),
                     designations=len(tensor.designations),fingerprint=tensor.fingerprint,
                     dynamics_fingerprint=tensor.dynamics_fingerprint,
@@ -98,7 +98,7 @@ def compare(left,right):
 
 
 def main(argv=None):
-    parser=argparse.ArgumentParser(description=__doc__)
+    parser=argparse.ArgumentParser(prog="universe24", description=__doc__)
     parser.add_argument("--L",type=int,default=3)
     parser.add_argument("--bang",choices=("pulse","standing","none"),default="pulse",
                         help="initial preparation; this name does not assert a cosmological bang")

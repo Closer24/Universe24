@@ -1,6 +1,6 @@
 """Experimental single-physical-edge realization, using the existing Rule3 engine.
 
-This is a NEW tensor, not an exact retiming or gauge-equivalent rewrite of ONE.
+This is a NEW tensor, not an exact retiming or gauge-equivalent rewrite of the retired variable-divisor construction.
 For each link-valued source gear U, introduce a node gear H carrying its old
 polynomial. Replace all old U references by H, then couple the retained physical
 link U to H at both endpoints with reciprocal linear springs. All original
