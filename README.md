@@ -34,6 +34,14 @@ The board lets you select time, spatial slice and displayed field, then inspect 
 
 Other preparations: `--case matter`, `antimatter`, `dark`, `inhomogeneous`, `scalar`, `massless`, or `gauge`. `matter` and `antimatter` are charge-conjugate classical scalar preparations. `--method midpoint` selects the second-order time integrator. `--L` selects an odd periodic side length, at least three for constrained nonuniform data.
 
+Add `--causal-wave` to see a local packet reach a detector, create an actual
+C2 memory transition and drive a response field. The board includes a separate
+microtick slider, causal-cone shading and retained triples on node selection.
+This is an optional probe on the same Engine board, with no coupling to
+Einstein stress-energy. Its computational cone is not the metric light cone;
+the Einstein compiler's existing clocks remain. See [law, exact replay and
+scope](docs/CAUSAL_WAVE.md).
+
 ## What is coupled
 
 | Field | Dynamics and gravitational source |

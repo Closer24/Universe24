@@ -34,6 +34,15 @@ def run(program, integer_data, parameters, out=None, verify_arithmetic=True):
     if parameters.get('dark_matter') and np.any(integer_data['rho_dark']<0):
         raise ValueError('dark rest density must be nonnegative')
     seed=program.prepare(L,integer_data)
+    wave=None
+    if getattr(program,'causal_wave',False):
+        from universe24.prepare.causal_wave import default_wave_info
+        from universe24.observe.causal_wave import wave_frame
+        wave={'preparation':default_wave_info(L),
+              'frames':[wave_frame(seed,program.tensor,0,namespace='causal_wave.wave')],
+              'first_C2_microtick':None,'C2_records':0,
+              'meaning':'Optional causal component on the same Engine board; audit clicks, no coupling to Einstein stress-energy.',
+              'cone':'Periodic face-edge computational bound from complete initial a,b support, not a metric-null geodesic.'}
     engine=Engine(program.tensor)
     state=seed
     started=time.monotonic()
@@ -66,6 +75,13 @@ def run(program, integer_data, parameters, out=None, verify_arithmetic=True):
             lo,hi=program.assembly.spans['einstein'] if hasattr(program,'assembly') else (0,program.tensor.G)
             assert np.array_equal(after.r[lo:hi],seed.r[lo:hi])
             all_clicks=engine.clicks(state,after,tick) if click_stream or hasattr(program,'assembly') else None
+            if wave is not None:
+                memory=program.assembly.channel('causal_wave','wave.memory')
+                c2=int(np.count_nonzero((all_clicks.gear==memory)&(all_clicks.kind==2)))
+                wave['C2_records']+=c2
+                if c2 and wave['first_C2_microtick'] is None:
+                    wave['first_C2_microtick']=tick
+                wave['frames'].append(wave_frame(after,program.tensor,tick,all_clicks,namespace='causal_wave.wave'))
             if click_stream:
                 clicks=all_clicks.select('official')
                 official_count+=len(clicks)
@@ -180,12 +196,14 @@ def run(program, integer_data, parameters, out=None, verify_arithmetic=True):
                       'prototype ADM integrator; long-time stability and strong-field production use not validated',
                       'matter/antimatter is a classical complex scalar with opposite U(1) charge, not a quantum Standard Model or annihilation simulator',
                       'dark matter is irrotational single-stream dust before caustics; no particle identity or multistream halo model']}
+    if wave is not None:
+        result['causal_wave']={k:v for k,v in wave.items() if k!='frames'}
     if out:
         if hasattr(program,'assembly'):
             result['channel_allocation']=program.channel_manifest(include_channels=False)
             result['component_observations']=component_summary
             (out/'channels.json').write_text(json.dumps(program.channel_manifest(),indent=2)+'\n')
-        result['event_board']=export_event_board(program,state,parameters,out)
+        result['event_board']=export_event_board(program,state,parameters,out,causal_wave=wave)
         (out/'report.json').write_text(json.dumps(result,indent=2)+'\n')
         (out/'tensor.json').write_text(json.dumps(program.tensor.to_dict(),separators=(',',':'))+'\n')
     return result
@@ -226,6 +244,7 @@ def main(argv=None):
     parser.add_argument('--rewind',action='store_true',help='Exact rewind is always verified; retained for explicit run scripts.')
     parser.add_argument('--no-communication',action='store_true',help='Run only the Einstein physical component.')
     parser.add_argument('--probe-experiment',action='store_true',help='Add the independent 26-channel test chart (L>=5); not a validated physical clock.')
+    parser.add_argument('--causal-wave',action='store_true',help='Add a local wave, C2 memory and response field with a computational cone display.')
     parser.add_argument('--max-channels',type=int,help='Reject construction above this per-node channel budget; never truncate fields.')
     parser.add_argument('--plan',action='store_true',help='Export channel allocation before running any Engine updates.')
     args=parser.parse_args(argv)
@@ -248,13 +267,17 @@ def main(argv=None):
                                    mass_squared=mass,method=args.method,dark_matter=dark_matter,complex_matter=complex_matter)
     from universe24.layers.universe import UniverseProgram
     program=UniverseProgram(program,parameters,communication=not args.no_communication,
-                            probe_experiment=args.probe_experiment,max_channels=args.max_channels)
+                            probe_experiment=args.probe_experiment,causal_wave=args.causal_wave,max_channels=args.max_channels)
     if args.plan:
         args.out.mkdir(parents=True,exist_ok=True)
         (args.out/'channels.json').write_text(json.dumps(program.channel_manifest(),indent=2)+'\n')
         print(json.dumps(program.assembly.manifest(include_channels=False),indent=2))
         return
     print(json.dumps({'phase':'compiled','gears':program.tensor.G,'ticks':program.ticks}),flush=True)
+    if args.causal_wave:
+        for name in ('layers','prepare','observe'):
+            path=ROOT/'universe24'/name/'causal_wave.py'
+            source_hashes[str(path.relative_to(ROOT))]=hashlib.sha256(path.read_bytes()).hexdigest()
     report=run(program,data,parameters,args.out)
     report['initial_data']=info
     report['source_sha256_at_start']=source_hashes
