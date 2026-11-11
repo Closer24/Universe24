@@ -26,44 +26,37 @@ L1  Hypercharge (analysis + algebra; see NOTES_electroweak.md): exact symmetries
     the Higgs (right multiplication) and, through Q, on nothing else: NOT built here (spec in NOTES_electroweak.md).
 """
 from __future__ import annotations
-
 from fractions import Fraction
-
 import numpy as np
-
 from ..core.tensor import Block, GearType
 from .chiral import HIGGS, chiral_algebra
 from .gauge import ALGEBRAS, Poly, deviation_terms, vec_dot
 from .matter import matter_names
-
 EW_DEFAULT_ON = False
-AXES = ("x", "y", "z")
+AXES = ('x', 'y', 'z')
 ZERO = (0, 0, 0)
 UNIT = ((1, 0, 0), (0, 1, 0), (0, 0, 1))
-KH_DEFAULT = 1 << 10
-ONEWAY_WHY = ("MECHANISM: prescribed static lapse F read one-way by the graviweak (b) couplings (EP test only; the "
-              "reciprocal block is the physical candidate)")
-
+KH_DEFAULT = 1024
+ONEWAY_WHY = 'MECHANISM: prescribed static lapse F read one-way by the graviweak (b) couplings (EP test only; the reciprocal block is the physical candidate)'
 
 def _names(coupling: Block, links: Block):
     hq = [coupling.qualify(h) for h in HIGGS]
-    lq = {k: [links.qualify(f"U{AXES[k]}_{c}") for c in ("1", "i", "j", "k")] for k in range(3)}
-    return hq, lq
+    lq = {k: [links.qualify(f'U{AXES[k]}_{c}') for c in ('1', 'i', 'j', 'k')] for k in range(3)}
+    return (hq, lq)
 
-
-def build_higgs_hop(*, coupling: Block, links: Block, kH: int = KH_DEFAULT, name: str = "ehop") -> Block:
+def build_higgs_hop(*, coupling: Block, links: Block, kH: int=KH_DEFAULT, name: str='ehop') -> Block:
     """L3: the covariant Higgs hop through the weak links, with the exact vacuum balance (see module docstring)."""
-    cp, lp = coupling.params, links.params
-    Q, v, A = cp["Q"], cp["v"], lp["A"]
-    D = 6 * Q
+    cp, lp = (coupling.params, links.params)
+    v, A = (cp['v'], lp['A'])
+    D = 6
     if type(kH) is not int or kH < 0:
-        raise ValueError("kH must be a non-negative int")
-    if (kH * v * v) % A:
-        raise ValueError("cW = kH v^2 / A must be an integer")
-    cPhi, cW = 6 * kH * A, kH * v * v // A
+        raise ValueError('kH must be a non-negative int')
+    if kH * v * v % A:
+        raise ValueError('cW = kH v^2 / A must be an integer')
+    cPhi, cW = (6 * kH * A, kH * v * v // A)
     if cPhi + 12 * kH * A > 2 * D:
-        raise ValueError("Higgs hop too strong for the Rule3 stability bound")
-    H = ALGEBRAS["su2"]
+        raise ValueError('Higgs hop too strong for the Rule3 stability bound')
+    H = ALGEBRAS['su2']
     hq, lq = _names(coupling, links)
     Phi = lambda off: [Poly.var(h, off, v if c == 0 else 0) for c, h in enumerate(hq)]
     U = lambda k, off: [Poly.var(g, off, A if c == 0 else 0) for c, g in enumerate(lq[k])]
@@ -75,24 +68,18 @@ def build_higgs_hop(*, coupling: Block, links: Block, kH: int = KH_DEFAULT, name
         pot = pot - vec_dot(Uk, Uk) * Fraction(cW, 2)
     pot = pot - vec_dot(P0, P0) * Fraction(cPhi, 2)
     terms = deviation_terms(pot, D, {})
-    return Block((), tuple(terms), name=name, Q=Q,
-                 params={"Q": Q, "kH": kH, "v": v, "A": A, "cPhi": cPhi, "cW": cW, "coupling": coupling.name,
-                         "links": links.name, "predicted_dcos_w_W": str(Fraction(-cW, D)),
-                         "candidate": "research candidate; needs the chiral block; enabled in default_system"},
-                 doc="L3 covariant Higgs hop <Phi, U Phi'> + exact vacuum balance (W mass term -(cW/2)|U|^2)")
+    return Block((), tuple(terms), name=name, params={'kH': kH, 'v': v, 'A': A, 'cPhi': cPhi, 'cW': cW, 'coupling': coupling.name, 'links': links.name, 'predicted_dcos_w_W': str(Fraction(-cW, D)), 'candidate': 'research candidate; needs the chiral block; enabled in default_system'}, doc="L3 covariant Higgs hop <Phi, U Phi'> + exact vacuum balance (W mass term -(cW/2)|U|^2)")
 
-
-def build_graviweak_b(*, coupling: Block, links: Block, matter_blocks, field: str, P: int, lam_H: int | None = None,
-                      lam_L: int = 4, oneway: bool = False, name: str = "gwb") -> Block:
+def build_graviweak_b(*, coupling: Block, links: Block, matter_blocks, field: str, P: int, lam_H: int | None=None, lam_L: int=4, oneway: bool=False, name: str='gwb') -> Block:
     """L2 option (b): SU(2)-invariant rank-3 lapse couplings (see module docstring). ``field``: qualified name of the
     lapse field gear F (U = F/(2P)); ``matter_blocks``: the doublet members (both pairs)."""
-    cp, lp = coupling.params, links.params
-    Q, v, A, hop = cp["Q"], cp["v"], lp["A"], cp["hop"]
-    lam_H = cp["lam_H"] if lam_H is None else lam_H
-    D = 6 * Q
-    if (lam_H * v * v) % P or (lam_L * A * A) % P:
-        raise ValueError("cF = -lam_H v^2/P and cL = -lam_L A^2/P must be integers")
-    cF, cL = -(lam_H * v * v) // P, -(lam_L * A * A) // P
+    cp, lp = (coupling.params, links.params)
+    v, A, hop = (cp['v'], lp['A'], cp['hop'])
+    lam_H = cp['lam_H'] if lam_H is None else lam_H
+    D = 6
+    if lam_H * v * v % P or lam_L * A * A % P:
+        raise ValueError('cF = -lam_H v^2/P and cL = -lam_L A^2/P must be integers')
+    cF, cL = (-(lam_H * v * v) // P, -(lam_L * A * A) // P)
     hq, lq = _names(coupling, links)
     F = lambda off: Poly.var(field, off)
     pot = Poly()
@@ -101,13 +88,12 @@ def build_graviweak_b(*, coupling: Block, links: Block, matter_blocks, field: st
     for k in range(3):
         Uk = [Poly.var(g, ZERO, A if c == 0 else 0) for c, g in enumerate(lq[k])]
         pot = pot + (F(ZERO) + F(UNIT[k])) * (vec_dot(Uk, Uk) - A * A) * Fraction(cL, 2)
-    # singlet-half transport, direct link factor -(F_x + F_y)/(2P) on (hop/2) b(x+e)^T P_d Pi_S b(x), per pair
     alg = chiral_algebra()
-    PiS16 = np.eye(16, dtype=np.int64) + alg["G5_16"] @ (alg["V"][:16, :16])
+    PiS16 = np.eye(16, dtype=np.int64) + alg['G5_16'] @ alg['V'][:16, :16]
     from .matter import algebra as pair_alg
-    Pd = pair_alg("pair")["P"]
+    Pd = pair_alg('pair')['P']
     for mb in matter_blocks:
-        mn = [mb.qualify(g) for g in matter_names("pair")]
+        mn = [mb.qualify(g) for g in matter_names('pair')]
         for k in range(3):
             M = Pd[k] @ PiS16
             rows, cols = np.nonzero(M)
@@ -121,42 +107,31 @@ def build_graviweak_b(*, coupling: Block, links: Block, matter_blocks, field: st
         for t in terms:
             if t[0] == field:
                 continue
-            if any(f[0] == field for f in t[2]):
-                kept.append(t + ({"designated_one_way": ONEWAY_WHY},))
+            if any((f[0] == field for f in t[2])):
+                kept.append(t + ({'designated_one_way': ONEWAY_WHY},))
             else:
                 kept.append(t)
         terms = kept
-    return Block((), tuple(terms), name=name, Q=Q,
-                 params={"Q": Q, "P": P, "field": field, "cF": cF, "cL": cL, "lam_H": lam_H, "lam_L": lam_L,
-                         "oneway": oneway, "option": "(b): lapse x |Phi|^2, link factor x |U|^2, singlet-half hop",
-                         "candidate": "research candidate; needs the chiral block; enabled in default_system"},
-                 doc="L2(b) graviweak: SU(2)-invariant rank-3 lapse couplings (Higgs sets the clocks)")
+    return Block((), tuple(terms), name=name, params={'P': P, 'field': field, 'cF': cF, 'cL': cL, 'lam_H': lam_H, 'lam_L': lam_L, 'oneway': oneway, 'option': '(b): lapse x |Phi|^2, link factor x |U|^2, singlet-half hop', 'candidate': 'research candidate; needs the chiral block; enabled in default_system'}, doc='L2(b) graviweak: SU(2)-invariant rank-3 lapse couplings (Higgs sets the clocks)')
 
-
-def build_test_lapse_field(*, Q: int, name: str = "lapsef") -> Block:
+def build_test_lapse_field(*, name: str='lapsef') -> Block:
     """A minimal lapse field for stand-alone tests: one node gear F, inertia (D/2) F^2 (marginal), vacuum 0."""
-    D = 6 * Q
-    return Block((GearType("F", "audit"),), (("F", D, (("F", ZERO, "b"),)),), name=name, vacuum={"F": 3 * Q - 1},
-                 params={"Q": Q, "role": "test lapse field (marginal node gear)"}, doc="test lapse field", Q=Q)
+    D = 6
+    return Block((GearType('F', 'audit'),), (('F', D, (('F', ZERO, 'b'),)),), name=name, vacuum={'F': 2}, params={'role': 'test lapse field (marginal node gear)'}, doc='test lapse field')
 
-
-# ======================================================================== L1 generators (algebra only)
 def hypercharge_generators() -> dict:
     """Antisymmetric generator matrices (integer) on (matter 32 channels) and on the Higgs quaternion (4):
     L3 = t3 P_W (x2: t3 PiW), R3 = t3 P_S (x2: t3 PiS) with Higgs -R_k (x2), BL = J' (x2) with Higgs 0,
     Q = L3 + R3 + BL (x2) with Higgs L_k - R_k (x2): the photon (annihilates the vev v.1)."""
     alg = chiral_algebra()
-    t3, PiW, PiS, Jp = alg["t"][2], alg["PiW"], alg["PiS"], alg["Jp"]
-    H = ALGEBRAS["su2"]
+    t3, PiW, PiS, Jp = (alg['t'][2], alg['PiW'], alg['PiS'], alg['Jp'])
+    H = ALGEBRAS['su2']
     Lk = np.array(H.left_matrix((0, 0, 0, 1)), dtype=np.int64)
     Rk = np.array(H.right_matrix((0, 0, 0, 1)), dtype=np.int64)
     Z4 = np.zeros((4, 4), np.int64)
-    return {"L3": (t3 @ PiW, 2 * Lk), "R3": (t3 @ PiS, -2 * Rk), "BL": (2 * Jp, Z4),
-            "Q": (t3 @ PiW + t3 @ PiS + 2 * Jp, 2 * Lk - 2 * Rk)}
+    return {'L3': (t3 @ PiW, 2 * Lk), 'R3': (t3 @ PiS, -2 * Rk), 'BL': (2 * Jp, Z4)}
 
-
-def compose_electroweak(system, *, on: bool = EW_DEFAULT_ON, higgs_hop: bool = True, graviweak: bool = True,
-                        kH: int = KH_DEFAULT, gwb_lam_H: int | None = 0, gwb_lam_L: int = 0):
+def compose_electroweak(system, *, on: bool=EW_DEFAULT_ON, higgs_hop: bool=True, graviweak: bool=True, kH: int=KH_DEFAULT, gwb_lam_H: int | None=0, gwb_lam_L: int=0):
     """FIX-i (owner decision v8-1, 14:37 UTC; s18/AGREE_STAB.md): gwb is built with lam_H = lam_L = 0 (singlet-half hop
     kept); gwb_lam_H=None, gwb_lam_L=4 rebuild the earlier L2(b) default (contrast only).
     Return a NEW System: the chiral candidate (layers/chiral.compose_with_default, partner_lapse=False) + L3 Higgs hop
@@ -168,28 +143,16 @@ def compose_electroweak(system, *, on: bool = EW_DEFAULT_ON, higgs_hop: bool = T
     from .chiral import compose_with_default
     from .system import System
     sysc = compose_with_default(system, on=True, partner_lapse=False)
-    blocks = [b for b in sysc.blocks if b.name not in ("mlapse", "mbeta")]
-    coup, links = sysc.by_name("chiral"), sysc.by_name("wsu2")
+    blocks = [b for b in sysc.blocks if b.name not in ('mlapse', 'mbeta')]
+    coup, links = (sysc.by_name('chiral'), sysc.by_name('wsu2'))
     if higgs_hop:
         blocks.append(build_higgs_hop(coupling=coup, links=links, kH=kH))
     info = dict(sysc.info)
-    if graviweak and system.info.get("gravity"):
-        blocks.append(build_graviweak_b(coupling=coup, links=links,
-                                        matter_blocks=[sysc.by_name("matter"), sysc.by_name("matter2")],
-                                        field=system.info["lapse_field"], P=system.info["P"],
-                                        lam_H=gwb_lam_H, lam_L=gwb_lam_L,
-                                        oneway=(system.info.get("lapse") == "od2")))
-        info["electroweak_fix_i"] = {"gwb_lam_H": gwb_lam_H, "gwb_lam_L": gwb_lam_L,
-                                     "record": "owner decision v8-1, 14:37 UTC, FIX-i per s18/AGREE_STAB.md"}
+    if graviweak and system.info.get('gravity'):
+        blocks.append(build_graviweak_b(coupling=coup, links=links, matter_blocks=[sysc.by_name('matter'), sysc.by_name('matter2')], field=system.info['lapse_field'], P=system.info['P'], lam_H=gwb_lam_H, lam_L=gwb_lam_L, oneway=system.info.get('lapse') == 'od2'))
+        info['electroweak_fix_i'] = {'gwb_lam_H': gwb_lam_H, 'gwb_lam_L': gwb_lam_L, 'record': 'owner decision v8-1, 14:37 UTC, FIX-i per s18/AGREE_STAB.md'}
         actual = blocks[-1].params
-        info["electroweak_lapse"] = (
-            f"L2(b): lam_H={actual['lam_H']}, lam_L={actual['lam_L']} "
-            "(zero disables the corresponding Higgs/link-norm dressing); singlet-half hop retained; "
-            "default mlapse/mbeta of 'matter' removed; beta read of the doublet OPEN")
-    info["electroweak"] = {"status": "research candidate enabled in this composition", "higgs_hop": higgs_hop, "kH": kH,
-                           "graviweak": graviweak, "hypercharge": "analysis only (E1 cannot gauge Y: NOTES)"}
-    return System(system.Q, tuple(blocks), info)
-
-
-__all__ = ["EW_DEFAULT_ON", "KH_DEFAULT", "build_higgs_hop", "build_graviweak_b", "build_test_lapse_field",
-           "hypercharge_generators", "compose_electroweak"]
+        info['electroweak_lapse'] = f"L2(b): lam_H={actual['lam_H']}, lam_L={actual['lam_L']} (zero disables the corresponding Higgs/link-norm dressing); singlet-half hop retained; default mlapse/mbeta of 'matter' removed; beta read of the doublet OPEN"
+    info['electroweak'] = {'status': 'research candidate enabled in this composition', 'higgs_hop': higgs_hop, 'kH': kH, 'graviweak': graviweak, 'hypercharge': 'analysis only (E1 cannot gauge Y: NOTES)'}
+    return System(tuple(blocks), info)
+__all__ = ['EW_DEFAULT_ON', 'KH_DEFAULT', 'build_higgs_hop', 'build_graviweak_b', 'build_test_lapse_field', 'hypercharge_generators', 'compose_electroweak']

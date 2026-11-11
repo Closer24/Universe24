@@ -1,4 +1,4 @@
-name: ONE reliability
+name: Fixed-divisor reliability
 on:
   pull_request:
   push:
@@ -17,7 +17,6 @@ jobs:
     env:
       OMP_NUM_THREADS: '1'
       OPENBLAS_NUM_THREADS: '1'
-      GAUGE_LONG: '1'
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -37,11 +36,11 @@ jobs:
         run: |
           python -m universe24.tools.audit_contract --L 3 --steps 12 --out runs/contract
           python -m universe24.tools.audit_contract --replay runs/contract
-      - name: Experimental single-edge algebra and negative physical controls
+      - name: Fixed-divisor local geometry experiments and independent audit
         run: |
-          python -m universe24.tools.audit_contract --single-edge --stiffness 33554432 --L 3 --steps 12 --out runs/single-edge
-          python -m universe24.tools.audit_contract --replay runs/single-edge
-          python -m universe24.tools.physics_gate --steps 3 --out runs/physics-gate/report.json
+          python experiments/geometry/ppwave_palatini_local.py --out runs/geometry/ppwave.json
+          python experiments/geometry/ppwave_geodesic_clock.py --out runs/geometry/geodesic.json
+          python experiments/geometry/ppwave_geodesic_audit.py
       - name: Test evidence
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9

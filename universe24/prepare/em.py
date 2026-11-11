@@ -1,18 +1,4 @@
-"""prepare/em.py: INITIAL DATA ONLY for the matter and EM layers (AGENTS item 9). Nothing here runs the engine.
-
-* ``dirac_packet``: a positive-energy packet of the complex Dirac pair (physical sector J = +i, charge sector
-  J' = i*sigp), from the package's own Bloch matrix (layers.matter.bloch_matrix), rounded to integers. Floats are used
-  ONLY to build initial data (Study 4 s4/P_em_core.packet, ported to D = 6Q).
-* ``c_image``: antimatter = the C-image (Y -> -Y) of matter data.
-* ``set_matter`` / ``set_field``: write (a, b[, r]) arrays into a copy of a state.
-* ``torus_poisson``: rint of the torus solution of -Lap f = s (k = 0 removed), for prepared static fields.
-* ``static_phi_for``: the prepared static Phi of a charge density with the E1 normalisation (static dressed Gauss:
-  -2 g (Q-1) Lap Phi = sigma rho).
-AUDIT MAPS (they create the initial data of a separate audit run; never applied to a running state):
-* ``c_map``: the full charge conjugation C (Y -> -Y on matter with the parity-preserving remainder map R', and
-  A, Phi -> -A, -Phi with R'); F C = C F exactly (tests/test_em.py).
-* ``x_reversor``: the exact STAGGERED time reversor X = (K o M on matter, M on A_d, Phi -> (-Phi_next, -Phi.b, r)).
-"""
+"""Integer initial-data setters and read-only audit maps. The former rounded packet and static-field presets are retired; floating Fourier helpers are diagnostics only. No function is applied during evolution."""
 from __future__ import annotations
 
 import numpy as np
@@ -30,7 +16,9 @@ def _idx(tensor: Tensor, ns: str, names) -> list[int]:
 
 def r_parity_negation(r, D: int):
     """R'(r) = D - 2 - r (even r), D - r (odd r): the parity-preserving negation remainder map (exact for even K);
-    it fixes 3Q - 1 for odd Q."""
+    it fixes 2 for divisor six."""
+    if type(D) is not int or D != 6:
+        raise ValueError("remainder maps use the fixed divisor six")
     return np.where(r % 2 == 0, (D - 2) - r, D - r)
 
 
@@ -85,37 +73,8 @@ def _sector_basis(sig: int, sigp: int) -> np.ndarray:
 
 def dirac_packet(params: dict, L: int, sigp: int, width: float, amp: int, kc=(0.0, 0.0, 0.0), spin: int = 0,
                  center=(0, 0, 0)):
-    """Positive-energy packet of the pair (J = +i, J' = i*sigp), Gaussian of k-width 1/width around kc, centred at
-    ``center``. Returns integer arrays (a, b) of shape (L, L, L, 16) with b = b(0), a = b(-1) (exact Bloch phases,
-    rounded; peak |b| = amp) and the Bloch angles w (L, L, L). Initial data only."""
-    D = 6 * params["Q"]
-    K = kgrid(L)
-    B = np.zeros((L, L, L, 16, 16), complex)
-    alg = algebra("pair")
-    for d in range(3):
-        ph = np.exp(-1j * K[..., d])[..., None, None]
-        B += params["hop"] * (ph * alg["P"][d] + np.conj(ph) * alg["P"][d].T)
-        if params["wilson"]:
-            B += params["wilson"] * (2 - 2 * np.cos(K[..., d]))[..., None, None] * alg["W0"]
-    B += params["mass"] * alg["W0"]
-    Bs = _sector_basis(+1, sigp)
-    Bk = np.einsum("ia,...ij,jb->...ab", Bs.conj(), B, Bs)
-    lam, Vv = np.linalg.eigh(Bk)                        # ascending: [0, 1] are beta < 0 (the positive-energy pair)
-    u0 = Vv[0, 0, 0][:, spin]
-    Pk = np.einsum("...ia,...ja->...ij", Vv[..., :2], Vv[..., :2].conj())
-    vk = np.einsum("...ij,j->...i", Pk, u0)
-    vk16 = np.einsum("ia,...a->...i", Bs, vk)
-    beta = lam[..., 0]
-    w = np.arccos(np.clip(beta / D, -1, 1))
-    kc = np.asarray(kc, float)
-    kk = ((K - kc + np.pi) % (2 * np.pi)) - np.pi
-    Z = np.exp(-0.5 * width ** 2 * (kk ** 2).sum(-1))
-    zb = np.fft.ifftn(Z[..., None] * vk16, axes=(0, 1, 2))
-    za = np.fft.ifftn((Z * np.exp(1j * w))[..., None] * vk16, axes=(0, 1, 2))
-    sc = amp / np.abs(zb.real).max()
-    b = np.rint(zb.real * sc).astype(np.int64)
-    a = np.rint(za.real * sc).astype(np.int64)
-    return shift(a, center), shift(b, center), w
+    """Retired rounded or scale-dependent preset; use explicit integer initial data."""
+    raise NotImplementedError("This initial-data preset is retired; supply explicit integer initial data")
 
 
 def c_image(arr):
@@ -136,15 +95,8 @@ def spin_spinors(params: dict, sigp: int = +1):
 
 # ------------------------------------------------------------------------------------------------- fields
 def torus_poisson(src, scale: float = 1.0):
-    """rint of the torus solution f of -Lap f = src / scale (k = 0 mode removed). Initial data only."""
-    src = np.asarray(src, float)
-    L = src.shape[0]
-    K = kgrid(L)
-    lam = (2 - 2 * np.cos(K)).sum(-1)
-    lam[0, 0, 0] = 1.0
-    F = np.fft.fftn(src) / (scale * lam)
-    F[0, 0, 0] = 0
-    return np.rint(np.fft.ifftn(F).real).astype(np.int64)
+    """Retired rounded or scale-dependent preset; use explicit integer initial data."""
+    raise NotImplementedError("This initial-data preset is retired; supply explicit integer initial data")
 
 
 def torus_poisson_float(src, scale: float = 1.0):
@@ -159,16 +111,16 @@ def torus_poisson_float(src, scale: float = 1.0):
 
 
 def static_phi_for(rho, em_params: dict):
-    """Prepared static Phi of a charge density rho (rho = D a^T J' b, as observe.em.charge_density) in the E1
-    normalisation: the static dressed Gauss law -2 g (Q - 1) Lap Phi = sigma rho (torus, k = 0 removed)."""
-    Q, g, sigma = em_params["Q"], em_params["g"], em_params["sigma"]
-    return torus_poisson(np.asarray(rho, float) * sigma, 2.0 * g * (Q - 1))
+    """Retired initial-data formula; no fixed-divisor replacement is established."""
+    raise NotImplementedError("This preparation depended on the removed divisor scale; supply explicit integer initial data instead")
 
 
 # ------------------------------------------------------------------------------------------------- audit maps
 def c_map(state: State, tensor: Tensor, D: int, matter_ns: str = "matter", em_ns: str | None = "em") -> State:
     """AUDIT MAP. Charge conjugation C: Y -> -Y on the matter pair, A_d -> -A_d and Phi -> -Phi; every negated gear
-    takes the parity-preserving remainder map R' (exact for even K; fixes the vacuum 3Q - 1 for odd Q)."""
+    takes the parity-preserving remainder map R' (exact for even K; fixes the vacuum 2 for divisor six)."""
+    if type(D) is not int or D != 6:
+        raise ValueError("audit maps use the fixed divisor six")
     A, B, R = state.a.astype(OBJ), state.b.astype(OBJ), state.r.astype(OBJ)
     neg = _idx(tensor, matter_ns, matter_names("pair")[8:])
     if em_ns is not None:
@@ -202,8 +154,10 @@ def x_reversor(state: State, tensor: Tensor, D: int, matter_ns: str = "matter", 
             channel taking the negation map R' again, i.e. r unchanged overall);
     A_d   : M';
     Phi   : (a, b, r) -> (-Phi_next, -Phi.b, r)  (Phi never rounds, so its remainder is inert).
-    mirror = "Mp" (default; fixes the joint vacuum 3Q - 1 for ODD Q) or "M" (S4-P's convention D-1-r; exact too, but it
-    maps the vacuum 3Q - 1 to 3Q). Even Q has no mirror-fixed vacuum remainder."""
+    mirror = "Mp" (default; fixes the joint vacuum 2 for divisor six) or "M" (S4-P's convention D-1-r; exact too, but it
+    maps the vacuum 2 to 3). """
+    if type(D) is not int or D != 6:
+        raise ValueError("audit maps use the fixed divisor six")
     if mirror not in ("Mp", "M"):
         raise ValueError("mirror must be 'Mp' or 'M'")
     rmap = (lambda r: r_parity_negation(r, D)) if mirror == "Mp" else (lambda r: (D - 1) - r)
@@ -235,6 +189,8 @@ def matter_negation(state: State, tensor: Tensor, D: int, matter_ns: str = "matt
                     species: str = "pair") -> State:
     """AUDIT MAP. Global matter sign N: (a, b, r) -> (-a, -b, R'(r)) (mirror "Mp") or (-a, -b, D-1-r) ("M") on every
     matter gear: the central element X^2 (K^2 = -1, the Kramers sign)."""
+    if type(D) is not int or D != 6:
+        raise ValueError("audit maps use the fixed divisor six")
     A, B, R = state.a.astype(OBJ), state.b.astype(OBJ), state.r.astype(OBJ)
     mi = _idx(tensor, matter_ns, matter_names(species))
     A[mi], B[mi] = -A[mi], -B[mi]
@@ -242,7 +198,7 @@ def matter_negation(state: State, tensor: Tensor, D: int, matter_ns: str = "matt
     return State(state.L, A, B, R)
 
 
-def x_reversor_core(tensor: Tensor, Q: int, matter_ns: str = "matter", em_ns: str | None = "em",
+def x_reversor_core(tensor: Tensor, matter_ns: str = "matter", em_ns: str | None = "em",
                     mirror: str = "Mp"):
     """The same staggered reversor X, BUILT FROM core/reversors.py (stage 0.2 building blocks, manager 09:28):
     X = GroupLinearMap(K on the 16 matter gears, neg_r = mirror) o GearwiseMap(mirror on matter and A_d) o PhiMap,
@@ -252,10 +208,10 @@ def x_reversor_core(tensor: Tensor, Q: int, matter_ns: str = "matter", em_ns: st
     from ..core.reversors import FunctionMap, GearwiseMap, GroupLinearMap
     mnames = [f"{matter_ns}.{n}" for n in matter_names("pair")]
     Kmat = [[int(v) for v in row] for row in algebra("pair")["K"]]
-    Kmap = GroupLinearMap(tensor, Q, mnames, Kmat, neg_r=mirror, name="K")
-    Mm = GearwiseMap(tensor, Q, {g: mirror for g in mnames})
+    Kmap = GroupLinearMap(tensor, mnames, Kmat, neg_r=mirror, name="K")
+    Mm = GearwiseMap(tensor, {g: mirror for g in mnames})
     KM = Kmap @ Mm
-    N = GearwiseMap(tensor, Q, {g: ("Jp" if mirror == "Mp" else "J") for g in mnames})
+    N = GearwiseMap(tensor, {g: ("Jp" if mirror == "Mp" else "J") for g in mnames})
     if em_ns is None:
         return KM, KM, N
     anames = [f"{em_ns}.{n}" for n in A_NAMES]
@@ -267,7 +223,7 @@ def x_reversor_core(tensor: Tensor, Q: int, matter_ns: str = "matter", em_ns: st
         a[p], b[p] = -nxt, -b[p]
         return State(state.L, a, b, r)
     PhiMap = FunctionMap(phi_fn, "Phi->(-Phi_next,-b,r)")
-    Mall = GearwiseMap(tensor, Q, {g: mirror for g in mnames + anames})
+    Mall = GearwiseMap(tensor, {g: mirror for g in mnames + anames})
     X = Kmap @ Mall @ PhiMap
     X.name = f"X_EM = (K o {mirror} on matter, {mirror} on A, Phi -> (-Phi_next, -b, r))"
     return X, KM, N

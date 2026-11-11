@@ -28,7 +28,7 @@ def factor(name):
 
 def multiplier_counterexample():
     """A regular dynamical multiplier does not impose its algebraic constraint."""
-    Q, D, kappa = 2, 12, 3
+    D, kappa = 6, 1
     # Phi = D/2*(q^2 + lambda^2) - kappa*lambda*(q^2 - 1).
     tensor = Tensor(
         ["q", "lambda"],
@@ -39,10 +39,9 @@ def multiplier_counterexample():
             ("lambda", -kappa, (factor("q"), factor("q"))),
             ("lambda", kappa, ()),
         ],
-        Q=Q,
         strict_support=True,
     )
-    engine = Engine(tensor, Q)
+    engine = Engine(tensor)
     b = np.ones((2, 27), dtype=np.int64)
     seed = State(3, b.copy(), b.copy(), np.zeros_like(b))
     following = engine.step(seed)
@@ -53,7 +52,6 @@ def multiplier_counterexample():
     assert initial_constraint == 0 and next_constraint == -1
     assert rewind and reciprocal and not tensor.support_violations()
     return {
-        "Q": Q,
         "D": D,
         "kappa": kappa,
         "rank": tensor.rank,
@@ -86,9 +84,9 @@ def physical_link_counterexample():
         GearType("omega_y", link=1),
     ]
     term = ("e", 1, (factor("e"), factor("omega_x"), factor("omega_y")))
-    tensor = Tensor(gears, [term], Q=1)
+    tensor = Tensor(gears, [term])
     try:
-        Tensor(gears, [term], Q=1, strict_support=True)
+        Tensor(gears, [term], strict_support=True)
     except LocalityError as exc:
         rejection = str(exc)
     else:

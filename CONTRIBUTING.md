@@ -1,6 +1,8 @@
-# Contributing to ONE
+# Contributing to Universe24
 
 Read [AGENTS.md](AGENTS.md) and [the model](docs/MODEL.md). Submit a focused change on a branch, with the exact tensor configuration, seed, observation definition and validation commands needed to reproduce the result.
+
+Every active scalar update uses `divmod(2*u+r,6)`. Do not add a divisor parameter, hide one in tensor metadata, or introduce a per-channel numerator/denominator. Effective coefficient families need a declared encoding and proof.
 
 Preserve complete integer state traces for refactors. For mathematical changes, explain which assumptions changed and include an inverse proof or a precise limitation. A new tensor is a change to the model even if the scalar Rule3 function is unchanged.
 

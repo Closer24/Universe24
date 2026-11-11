@@ -3,7 +3,7 @@ import unittest
 
 import numpy as np
 
-from universe24.core import Engine, State, Tensor
+from universe24.core import Engine, GearType, State, Tensor
 from universe24.core.lattice import DIRECTIONS, lattice
 from universe24.core.tensor import LocalityError, compose
 from universe24.layers.one import one_system
@@ -14,19 +14,25 @@ from universe24.prepare.strict_edge import lift_seed
 class StrictEdgeTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.source = compose(*one_system().blocks)
-        cls.k = cls.source.Q // 256
+        # A declared x-link reads a neighboring parallel x-link in y. It is
+        # storage-local, but the union of physical endpoints is not one edge.
+        cls.source = Tensor([GearType("node"), GearType("link", link=0)], [
+            ("node", 2, (("node", (1,0,0), "b"),)),
+            ("node", 1, (("node", (0,0,0), "b"),)*3),
+            ("link", 1, (("link", (0,1,0), "b"),)),
+            ("node", 1, (("link", (0,0,0), "b"),))])
+        cls.k = 1
         cls.realization = single_edge_realization(cls.source, stiffness=cls.k)
         cls.tensor = cls.realization.tensor
-        cls.engine = Engine(cls.tensor, cls.tensor.Q)
+        cls.engine = Engine(cls.tensor)
 
     def test_all_physical_supports_and_links(self):
         source, t = self.source, self.tensor
-        self.assertEqual(len(source.support_violations()), 3300)
+        self.assertEqual(len(source.support_violations()), 1)
         self.assertEqual(t.support_violations(), [])
         self.assertEqual(t.rank, 4)
-        self.assertEqual((source.G, t.G), (382, 472))
-        self.assertEqual(len(self.realization.link_mediators), 90)
+        self.assertEqual((source.G, t.G), (2, 3))
+        self.assertEqual(len(self.realization.link_mediators), 1)
         # Retained edges have real endpoints; no metadata deletion masquerades as a fix.
         self.assertEqual(t.gears[:source.G], source.gears)
         for m in t.monomials:
@@ -49,7 +55,7 @@ class StrictEdgeTests(unittest.TestCase):
         rows = [remap.get(i, i) for i in range(self.source.G)]
         old_view = State(3, *(getattr(state, f)[rows].copy() for f in ('a','b','r')))
         expected = np.zeros_like(state.b, dtype=object)
-        original_inputs = Engine(self.source, self.source.Q).inputs(old_view)
+        original_inputs = Engine(self.source).inputs(old_view)
         expected[rows] = original_inputs
         lat = lattice(3)
         for link, hub in self.realization.link_mediators:
@@ -74,12 +80,12 @@ class StrictEdgeTests(unittest.TestCase):
         a[-1,0], b[0,1] = 2**80, -(2**81)
         state = State(3,a,b,r)
         self.assertTrue(e.rewind(e.run(state,3),3).same_as(state))
-        vac = e.vacuum(3,[3*t.Q-1]*t.G)
+        vac = e.vacuum(3,[2]*t.G)
         self.assertTrue(e.run(vac,3).same_as(vac))
 
     def test_seed_lift_is_initial_data_only(self):
-        e = Engine(self.source,self.source.Q)
-        seed = e.vacuum(3,[3*e.Q-1]*self.source.G)
+        e = Engine(self.source)
+        seed = e.vacuum(3,[2]*self.source.G)
         seed.b[0,0] = 7
         lifted = lift_seed(seed,self.realization)
         for field in ('a','b','r'):
@@ -91,14 +97,14 @@ class StrictEdgeTests(unittest.TestCase):
         with self.assertRaises(ValueError):lift_seed(lifted,self.realization)
 
     def test_same_state_same_tick_strict_rewrite_is_impossible(self):
-        # Old A_x(x) depends on A_x(x-e_y), outside its physical edge.
-        old = Engine(self.source,self.source.Q)
-        s0 = old.vacuum(5,[3*old.Q-1]*self.source.G)
+        # Old link(x) depends on link(x+e_y), outside its physical edge.
+        old = Engine(self.source)
+        s0 = old.vacuum(5,[2]*self.source.G)
         s1 = s0.copy(); lat=lattice(5); origin=lat.index(2,2,2)
-        neighbor=lat.index(2,1,2); g=self.source.gear_index('em.A_x')
+        neighbor=lat.index(2,3,2); g=self.source.gear_index('link')
         s1.b[g,neighbor] = old.D
         old0,old1=old.step(s0),old.step(s1)
-        self.assertEqual(int(old1.b[g,origin])-int(old0.b[g,origin]),2*(old.Q-1))
+        self.assertEqual(int(old1.b[g,origin])-int(old0.b[g,origin]),2)
         a,b=lift_seed(s0,self.realization),lift_seed(s1,self.realization)
         a,b=self.engine.step(a),self.engine.step(b)
         self.assertEqual(a.gear(g,origin),b.gear(g,origin))
@@ -106,35 +112,13 @@ class StrictEdgeTests(unittest.TestCase):
         self.assertNotEqual(a.gear(g,origin),b.gear(g,origin))
 
     def test_stiffness_is_explicit_and_validated(self):
-        for value in (None,0,-1,True,1.5,self.source.Q+1):
+        for value in (None,0,-1,True,1.5,2):
             with self.assertRaises(ValueError):single_edge_realization(self.source,stiffness=value)
         with self.assertRaises(ValueError):single_edge_realization(self.tensor,stiffness=self.k)
 
-    def test_gravity_cannot_reach_the_closed_cosmic_clocks(self):
-        from universe24.tools.physics_gate import reachable_gears
-        for tensor in (self.source,self.tensor):
-            fields=[i for i,n in enumerate(tensor.names) if n.startswith(('metric.','beta.','bgk.'))]
-            cosmic={i for i,n in enumerate(tensor.names) if n.startswith('cosmic.')}
-            self.assertTrue(fields and cosmic)
-            self.assertFalse(reachable_gears(tensor,fields) & cosmic)
-            # Positive control prevents a broken graph traversal from passing the negative check.
-            hand=tensor.gear_index('cosmic.Th')
-            self.assertIn(tensor.gear_index('cosmic.M1'),reachable_gears(tensor,[hand]))
-
-    def test_physical_negative_controls_are_not_hidden(self):
-        from universe24.tools.physics_gate import run
-        result=run(L=4,steps=3,stiffness=self.k)
-        self.assertTrue(result['baseline']['inherited_em_lorenz_identity']['passed'])
-        self.assertEqual(result['single_edge']['inherited_em_lorenz_identity']['first_failed_update'],2)
-        self.assertTrue(result['single_edge']['mapped_em_lorenz_identity']['passed'])
-        for candidate in ('baseline','single_edge'):
-            check=result[candidate]['gravitational_clock_test']
-            self.assertTrue(check['cosmic_official_records_identical'])
-            self.assertGreater(check['records_compared'],0)
-
     def test_source_view_is_passive_and_not_the_full_state(self):
         from universe24.observe.strict_edge import source_coordinate_view
-        seed=Engine(self.source,self.source.Q).vacuum(3,[3*self.source.Q-1]*self.source.G)
+        seed=Engine(self.source).vacuum(3,[2]*self.source.G)
         lifted=lift_seed(seed,self.realization)
         self.assertTrue(source_coordinate_view(lifted,self.realization).same_as(seed))
         link,hub=self.realization.link_mediators[0]

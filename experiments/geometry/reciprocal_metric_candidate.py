@@ -3,7 +3,7 @@
 The existing Engine is used without modifications.  The edge candidate completes
 all derivatives of a phase-decoded metric-shaped interaction.  Its general seed
 loses the old TT constraints.  A checkerboard preparation preserves only the
-algebraic TT sector.  A separate Q=1 reciprocal oscillator has an exact bounded
+algebraic TT sector.  A separate divisor-six reciprocal oscillator has an exact bounded
 period-five orbit; its positive gamma is a chosen readout, not a derived metric.
 The final candidate extends that bounded construction to positive spatial link
 stiffnesses; its invariant standing pattern is still not Einstein geometry.
@@ -45,16 +45,16 @@ def derivative_terms(coefficient, variables):
     return terms
 
 
-def build_edge_candidate(Q=1, kappa=1):
+def build_edge_candidate(kappa=1):
     """Phi_int=kappa sum_xy_edges sigma (F_x+F_y)(chi_y-chi_x)^2.
 
     F=c(E00-E11)+s(B01+B10).  All four metric derivatives and both
-    phase derivatives are included.  The free matter input is Q sum_neighbors
-    chi_y, equivalently D chi + Q Laplacian chi with D=6Q.
+    phase derivatives are included. The free matter input is sum_neighbors
+    chi_y, equivalently 6 chi + Laplacian chi.
     """
-    if type(Q) is not int or Q < 1 or type(kappa) is not int:
-        raise ValueError("Q must be a positive integer and kappa an integer")
-    base = curl_tensor(Q)
+    if type(kappa) is not int:
+        raise ValueError("kappa must be an integer")
+    base = curl_tensor()
     names = ["metric."+n for n in base.names]
     gears = [GearType(n, "audit") for n in names]
     gears += [GearType("phase.c", "audit"), GearType("phase.s", "audit"),
@@ -65,7 +65,7 @@ def build_edge_candidate(Q=1, kappa=1):
     for axis in range(3):
         for sign in (-1, 1):
             offset = tuple(sign if i == axis else 0 for i in range(3))
-            terms.append(("matter", Q, (("matter", offset, "b"),)))
+            terms.append(("matter", 1, (("matter", offset, "b"),)))
     for axis, sigma in ((0, 1), (1, -1)):
         edge = tuple(1 if i == axis else 0 for i in range(3))
         for endpoint in (ZERO, edge):
@@ -78,7 +78,7 @@ def build_edge_candidate(Q=1, kappa=1):
                     variables = ((phase, endpoint), (metric, endpoint),
                                  ("matter", left), ("matter", right))
                     terms.extend(derivative_terms(kappa*sigma*polarity*weight, variables))
-    return Tensor(gears, terms, Q=Q, strict_support=True)
+    return Tensor(gears, terms, strict_support=True)
 
 
 def phase_readout(state):
@@ -86,13 +86,13 @@ def phase_readout(state):
     return b[18]*(b[0]-b[4])+b[19]*(b[10]+b[12])
 
 
-def edge_input_oracle(state, Q=1, kappa=1):
+def edge_input_oracle(state, kappa=1):
     """Independent direct equations, including the reciprocal sources."""
     b = state.b.astype(object)
     lat = state.lattice
     u = np.zeros_like(b, dtype=object)
-    u[:9] = (3*Q)*curl(b[9:18].reshape(3, 3, -1), lat).reshape(9, -1)
-    u[9:18] = (3*Q)*curl(b[:9].reshape(3, 3, -1), lat).reshape(9, -1)
+    u[:9] = 3*curl(b[9:18].reshape(3, 3, -1), lat).reshape(9, -1)
+    u[9:18] = 3*curl(b[:9].reshape(3, 3, -1), lat).reshape(9, -1)
     F = phase_readout(state)
     H = np.zeros(lat.N, dtype=object)
     for axis in range(3):
@@ -100,7 +100,7 @@ def edge_input_oracle(state, Q=1, kappa=1):
             offset = tuple(sign if i == axis else 0 for i in range(3))
             neighbor = lat.shift_index(offset)
             change = b[20, neighbor]-b[20]
-            u[20] += Q*b[20, neighbor]
+            u[20] += b[20, neighbor]
             sigma = (1, -1, 0)[axis]
             H += sigma*change**2
             u[20] -= 2*kappa*sigma*(F+F[neighbor])*change
@@ -114,8 +114,8 @@ def edge_input_oracle(state, Q=1, kappa=1):
 
 
 def prepare_edge(tensor, metric=True, matter="pulse", L=4):
-    engine = Engine(tensor, tensor.Q)
-    D = 6*tensor.Q
+    engine = Engine(tensor)
+    D = 6
     lat = lattice(L)
     coordinates = np.array([lat.coords(i) for i in range(lat.N)], dtype=int)
     z = coordinates[:, 2]
@@ -129,7 +129,7 @@ def prepare_edge(tensor, metric=True, matter="pulse", L=4):
         E[1, 1] = -profile[z]
         B[0, 1] = profile[(z+1) % L]
         B[1, 0] = B[0, 1]
-    core = phase_seed(E, B, tensor.Q, L)
+    core = phase_seed(E, B, L)
     state = engine.vacuum(L, [D//2-1]*tensor.G)
     state.a[:18] = core.a
     state.b[:18] = core.b
@@ -182,7 +182,7 @@ def audit_tensor(tensor):
     assert not reciprocal.designated
     assert not tensor.support_violations()
     assert all(f.field == "b" for m in tensor.monomials for f in m.factors)
-    return {"fingerprint": tensor.fingerprint, "Q": tensor.Q, "D": 6*tensor.Q,
+    return {"fingerprint": tensor.fingerprint, "D": 6,
             "gears": tensor.G, "monomials": len(tensor.monomials), "rank": tensor.rank,
             "strict_single_physical_edge_support": True, "reciprocity": True,
             "designated_one_way_terms": 0, "old_a_reads": 0,
@@ -201,7 +201,7 @@ def checked_step(engine, before):
 
 
 def run_edge_case(tensor, metric, matter, steps, kappa=1):
-    engine = Engine(tensor, tensor.Q)
+    engine = Engine(tensor)
     seed = prepare_edge(tensor, metric, matter)
     state = seed
     history = [state]
@@ -212,7 +212,7 @@ def run_edge_case(tensor, metric, matter, steps, kappa=1):
     first_readout_shift_failure = None
     initial_F = phase_readout(seed)
     for tick in range(1, steps+1):
-        assert np.array_equal(engine.inputs(state), edge_input_oracle(state, tensor.Q, kappa))
+        assert np.array_equal(engine.inputs(state), edge_input_oracle(state, kappa))
         state, ell = checked_step(engine, state)
         history.append(state)
         residual = {key: 0 for key in ("symmetry", "trace", "divergence")}
@@ -256,14 +256,14 @@ def first_history_difference(left, right, selected):
 
 
 def off_sector_audit(tensor, kappa=1):
-    engine = Engine(tensor, tensor.Q)
+    engine = Engine(tensor)
     checks = []
     for scale in (1, 1 << 80):
         a = np.array([((i*7) % 13)-6 for i in range(tensor.G*27)], dtype=object).reshape(tensor.G, 27)*scale
         b = np.array([((i*11) % 17)-8 for i in range(tensor.G*27)], dtype=object).reshape(tensor.G, 27)*scale
-        r = np.array([i % (6*tensor.Q) for i in range(tensor.G*27)], dtype=object).reshape(tensor.G, 27)
+        r = np.array([i % (6) for i in range(tensor.G*27)], dtype=object).reshape(tensor.G, 27)
         seed = State(3, a, b, r)
-        assert np.array_equal(engine.inputs(seed), edge_input_oracle(seed, tensor.Q, kappa))
+        assert np.array_equal(engine.inputs(seed), edge_input_oracle(seed, kappa))
         after, _ = checked_step(engine, seed)
         checks.append({"initial_scale": scale, "direct_input_oracle": True,
                        "exact_divmod_ledger_and_inverse": True,
@@ -273,7 +273,7 @@ def off_sector_audit(tensor, kappa=1):
 
 
 def edge_controls(steps=5):
-    tensor = build_edge_candidate(Q=1)
+    tensor = build_edge_candidate()
     joint, joint_history = run_edge_case(tensor, True, "pulse", steps)
     no_metric, no_metric_history = run_edge_case(tensor, False, "pulse", steps)
     no_matter, no_matter_history = run_edge_case(tensor, True, "none", steps)
@@ -313,12 +313,12 @@ def build_oscillator():
     terms = []
     for coefficient, variables in potential:
         terms.extend(derivative_terms(coefficient, variables))
-    return Tensor(["e", "chi"], terms, Q=1, strict_support=True)
+    return Tensor(["e", "chi"], terms, strict_support=True)
 
 
 def oscillator_controls():
     tensor = build_oscillator()
-    engine = Engine(tensor, 1)
+    engine = Engine(tensor)
     def prepare(e, chi):
         return State(3, [[e]*27, [chi]*27], [[e]*27, [chi]*27], [[0]*27, [0]*27])
     def run(seed, steps):
@@ -359,7 +359,7 @@ def oscillator_controls():
     assert matter_changes_geometry is not None and geometry_changes_matter is not None
     return {"tensor": audit_tensor(tensor), "potential": "2(e^2+chi^2)-e^2 chi^2",
             "inputs": ["u_e=4e-2e chi^2", "u_chi=4chi-2e^2 chi"],
-            "fundamental_state_and_coefficients": "Integers only; Q=1; D=6; no external clock or intervention.",
+            "fundamental_state_and_coefficients": "Integers only; D=6; no external clock or intervention.",
             "prepared_joint_state": {"a": [-1, -1], "b": [-1, -1], "r": [0, 0]},
             "joint": joint, "matter_absent_initially": no_matter,
             "geometry_absent_initially": no_geometry,
@@ -387,7 +387,7 @@ def build_positive_stiffness_candidate():
             for endpoint in (ZERO, edge):
                 variables = (("e", endpoint), ("e", endpoint))+difference
                 terms.extend(derivative_terms(-coefficient, variables))
-    return Tensor(["e", "chi"], terms, Q=1, strict_support=True)
+    return Tensor(["e", "chi"], terms, strict_support=True)
 
 
 def positive_stiffness_input_oracle(state):
@@ -405,7 +405,7 @@ def positive_stiffness_input_oracle(state):
 
 def positive_stiffness_controls():
     tensor = build_positive_stiffness_candidate()
-    engine = Engine(tensor, 1)
+    engine = Engine(tensor)
     lat = lattice(4)
     x = np.array([lat.coords(i)[0] for i in range(lat.N)], dtype=int)
     profile = np.array([1, 0, -1, 0], dtype=object)[x]
@@ -536,9 +536,9 @@ def run(steps=5):
         raise ValueError("Use 2..6 fixed steps for this rapidly growing edge candidate")
     return {"scope": "Exact reciprocal constructions and explicit unclosed gravitational requirements",
             "default_engine_tensor_seed_changed": False,
-            "one_common_Q_per_run": True, "all_fundamental_values_integer": True,
-            "edge_candidate": edge_controls(steps), "bounded_Q1_oscillator": oscillator_controls(),
-            "bounded_Q1_positive_stiffness_links": positive_stiffness_controls()}
+            "fixed_divisor_six": True, "all_fundamental_values_integer": True,
+            "edge_candidate": edge_controls(steps), "bounded_integer_oscillator": oscillator_controls(),
+            "bounded_integer_positive_stiffness_links": positive_stiffness_controls()}
 
 
 if __name__ == "__main__":
@@ -555,5 +555,5 @@ if __name__ == "__main__":
                       "edge_tensor": result["edge_candidate"]["tensor"],
                       "edge_TT_first_failure": result["edge_candidate"]["joint"]["first_raw_TT_failure"],
                       "checkerboard_TT_first_failure": result["edge_candidate"]["planar_checkerboard"]["first_raw_TT_failure"],
-                      "oscillator_period": result["bounded_Q1_oscillator"]["joint"]["first_complete_state_return"],
-                      "positive_stiffness_link_period": result["bounded_Q1_positive_stiffness_links"]["joint"]["first_complete_state_return"]}, indent=2))
+                      "oscillator_period": result["bounded_integer_oscillator"]["joint"]["first_complete_state_return"],
+                      "positive_stiffness_link_period": result["bounded_integer_positive_stiffness_links"]["joint"]["first_complete_state_return"]}, indent=2))

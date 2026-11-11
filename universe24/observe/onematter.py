@@ -2,26 +2,22 @@
 observe.gauge.GaugeView machinery (Noether pieces, exact charge and remainder term, integer gauge maps) with the
 M6(C) algebra and the 48 matter gears of the colour triplet."""
 from __future__ import annotations
-
 import random
-
 import numpy as np
-
 from ..core.tensor import Tensor
 from ..layers.onematter import N6, algebra_u6, link_names, matter_gears, mn_index
 from .gauge import GaugeView
 
-
 class OneMatterView(GaugeView):
-    def __init__(self, tensor: Tensor, Q: int, A: int, matter_ns=("q0", "q1", "q2"), link_ns: str = "u6"):
+
+    def __init__(self, tensor: Tensor, A: int, matter_ns=('q0', 'q1', 'q2'), link_ns: str='u6'):
         self.tensor = tensor
         self.alg = algebra_u6()
-        self.group = "u6"
-        self.Q = Q
-        self.D = 6 * Q
+        self.group = 'u6'
+        self.D = 6
         self.A = A
         self.name = link_ns
-        self.p = {"group": "u6", "Q": Q, "A": A}
+        self.p = {'group': 'u6', 'A': A}
         self.matter = [tensor.gear_index(g) for g in matter_gears(matter_ns)]
         self.links = {k: [tensor.gear_index(g) for g in v] for k, v in link_names(link_ns).items()}
         self.paths = {}
@@ -38,10 +34,10 @@ class OneMatterView(GaugeView):
         from ..core.lattice import lattice
         from ..layers.gauge import UNIT
         from .gauge import rprime
-        alg, D = self.alg, self.D
+        alg, D = (self.alg, self.D)
         lat = lattice(state.L)
-        a, b, r = state.a.astype(OBJ), state.b.astype(OBJ), state.r.astype(OBJ)
-        na, nb, nr = a.copy(), b.copy(), r.copy()
+        a, b, r = (state.a.astype(OBJ), state.b.astype(OBJ), state.r.astype(OBJ))
+        na, nb, nr = (a.copy(), b.copy(), r.copy())
         cache = {}
 
         def two_sided(g, h):
@@ -64,7 +60,6 @@ class OneMatterView(GaugeView):
                 na[gi, n] = s * src_a[j] - x0vec[i]
                 nb[gi, n] = s * src_b[j] - x0vec[i]
                 nr[gi, n] = r[rows[j], n] if s == 1 else int(rprime(np.array(r[rows[j], n]), D))
-
         for n in range(lat.N):
             x = lat.coords(n)
             g = list(gfield[n])
@@ -74,12 +69,11 @@ class OneMatterView(GaugeView):
                 apply(self.links[k], n, two_sided(g, h), [self.x0[i] for i in self.links[k]])
         return State(state.L, na, nb, nr)
 
-
-def random_unit(rng: random.Random, kind: str = "u6"):
+def random_unit(rng: random.Random, kind: str='u6'):
     """A random integer unit of M6(C): a monomial matrix with entries +-1, +-i ('u6'), or a product
     (colour monomial 3x3 with entries +-1/+-i) (x) (pair monomial 2x2 with entries +-1/+-i) ('product')."""
     v = [0] * (2 * N6 * N6)
-    if kind == "u6":
+    if kind == 'u6':
         perm = list(range(N6))
         rng.shuffle(perm)
         for k in range(N6):
@@ -94,9 +88,7 @@ def random_unit(rng: random.Random, kind: str = "u6"):
     phw = [rng.randrange(4) for _ in range(2)]
     for a in range(3):
         for s in range(2):
-            ph = (phc[a] + phw[s]) % 4               # i^ph
+            ph = (phc[a] + phw[s]) % 4
             v[mn_index(2 * a + s, 2 * pc[a] + pw[s], ph % 2)] = 1 if ph < 2 else -1
     return v
-
-
-__all__ = ["OneMatterView", "random_unit"]
+__all__ = ['OneMatterView', 'random_unit']

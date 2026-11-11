@@ -1,0 +1,2191 @@
+{
+  "schema": "universe24-involution-circuit-evidence-v1",
+  "scope": "Chosen optional Boolean circuit tensor; no change to the default model or quantum/physical identification.",
+  "engine": "universe24.core.Engine.step; no runtime gate callback or phase schedule",
+  "seed_convention": "a=P(b): P swaps left/right where the retained control is 1; remainder[g,n]=(g*N+n) mod D",
+  "geometry": {
+    "L": 6,
+    "N": 216,
+    "axis": 0,
+    "periodic": true
+  },
+  "Q": 5,
+  "D": 30,
+  "updates": 24,
+  "tensor": {
+    "format": "metric_variant_v1/tensor/1",
+    "Q": 5,
+    "gears": [
+      {
+        "name": "involution.control",
+        "label": "audit",
+        "link": null,
+        "sign": 1,
+        "sign_why": ""
+      },
+      {
+        "name": "involution.left",
+        "label": "official",
+        "link": null,
+        "sign": 1,
+        "sign_why": ""
+      },
+      {
+        "name": "involution.right",
+        "label": "official",
+        "link": null,
+        "sign": 1,
+        "sign_why": ""
+      }
+    ],
+    "monomials": [
+      [
+        "involution.control",
+        30,
+        [
+          [
+            "involution.control",
+            [0, 0, 0],
+            "b"
+          ]
+        ]
+      ],
+      [
+        "involution.left",
+        15,
+        [
+          [
+            "involution.left",
+            [0, 0, 0],
+            "b"
+          ]
+        ]
+      ],
+      [
+        "involution.left",
+        15,
+        [
+          [
+            "involution.right",
+            [-1, 0, 0],
+            "b"
+          ]
+        ]
+      ],
+      [
+        "involution.left",
+        -15,
+        [
+          [
+            "involution.control",
+            [0, 0, 0],
+            "b"
+          ],
+          [
+            "involution.left",
+            [0, 0, 0],
+            "b"
+          ]
+        ]
+      ],
+      [
+        "involution.left",
+        15,
+        [
+          [
+            "involution.control",
+            [0, 0, 0],
+            "b"
+          ],
+          [
+            "involution.right",
+            [0, 0, 0],
+            "b"
+          ]
+        ]
+      ],
+      [
+        "involution.right",
+        15,
+        [
+          [
+            "involution.left",
+            [1, 0, 0],
+            "b"
+          ]
+        ]
+      ],
+      [
+        "involution.right",
+        15,
+        [
+          [
+            "involution.right",
+            [0, 0, 0],
+            "b"
+          ]
+        ]
+      ],
+      [
+        "involution.right",
+        15,
+        [
+          [
+            "involution.control",
+            [0, 0, 0],
+            "b"
+          ],
+          [
+            "involution.left",
+            [0, 0, 0],
+            "b"
+          ]
+        ]
+      ],
+      [
+        "involution.right",
+        -15,
+        [
+          [
+            "involution.control",
+            [0, 0, 0],
+            "b"
+          ],
+          [
+            "involution.right",
+            [0, 0, 0],
+            "b"
+          ]
+        ]
+      ]
+    ],
+    "designated_one_way": [
+      [
+        "involution.left",
+        [
+          [
+            "involution.control",
+            [0, 0, 0],
+            "b"
+          ],
+          [
+            "involution.left",
+            [0, 0, 0],
+            "b"
+          ]
+        ],
+        "Optional Boolean Fredkin circuit: a retained control selects a local swap. Its own value is unchanged, so the control-dependent terms are deliberately nonreciprocal, not derivatives of a shared physical potential. The exact involution proof applies to the prepared binary-control sector."
+      ],
+      [
+        "involution.left",
+        [
+          [
+            "involution.control",
+            [0, 0, 0],
+            "b"
+          ],
+          [
+            "involution.right",
+            [0, 0, 0],
+            "b"
+          ]
+        ],
+        "Optional Boolean Fredkin circuit: a retained control selects a local swap. Its own value is unchanged, so the control-dependent terms are deliberately nonreciprocal, not derivatives of a shared physical potential. The exact involution proof applies to the prepared binary-control sector."
+      ],
+      [
+        "involution.right",
+        [
+          [
+            "involution.control",
+            [0, 0, 0],
+            "b"
+          ],
+          [
+            "involution.left",
+            [0, 0, 0],
+            "b"
+          ]
+        ],
+        "Optional Boolean Fredkin circuit: a retained control selects a local swap. Its own value is unchanged, so the control-dependent terms are deliberately nonreciprocal, not derivatives of a shared physical potential. The exact involution proof applies to the prepared binary-control sector."
+      ],
+      [
+        "involution.right",
+        [
+          [
+            "involution.control",
+            [0, 0, 0],
+            "b"
+          ],
+          [
+            "involution.right",
+            [0, 0, 0],
+            "b"
+          ]
+        ],
+        "Optional Boolean Fredkin circuit: a retained control selects a local swap. Its own value is unchanged, so the control-dependent terms are deliberately nonreciprocal, not derivatives of a shared physical potential. The exact involution proof applies to the prepared binary-control sector."
+      ]
+    ]
+  },
+  "tensor_fingerprint": "98d5a2970d1c397648007312f8d9f2738e3ab8f9e18a7b1f1936f80c2a33c854",
+  "dynamics_fingerprint": "dc486e1162e258bece8adcd98fbebee824dc59598bab40c607868650c8c38753",
+  "hash_format": "universe24-state-values-v2",
+  "cases": [
+    {
+      "name": "transmit",
+      "seed": {
+        "L": 6,
+        "a": [
+          [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+          [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ],
+        "b": [
+          [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ],
+        "r": [
+          [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5],
+          [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+          [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+        ]
+      },
+      "seed_hash": "827bf8023d28dcb5b6df7767f26486589d6968081e18f109a299910ec121521b",
+      "trace": [
+        {
+          "step": 0,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [0, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "827bf8023d28dcb5b6df7767f26486589d6968081e18f109a299910ec121521b",
+          "official_clicks": []
+        },
+        {
+          "step": 1,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [1, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "8dd284433496a08f6a1c704e876a64ab2f65d96d4d6f1499cda9d2513968f395",
+          "official_clicks": [
+            {
+              "gear": "involution.left",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 2,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [1, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "d8e5273df8152c4bda11ff2c3feb10205f25771f917929f715a5ba310d51e6d6",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.right",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 3,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [2, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "54d8a21e522bac0b246e1ed8fb977b0a178f62c54ac77f722e093d178a32b75f",
+          "official_clicks": [
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [2, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 4,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [2, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "40a9473bed6ba57599bc683299d2e4bef9c7b690175ef67cd08df22f7d301a87",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.right",
+              "position": [2, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 5,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [3, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "022be82d0b12005f1802f7dc6e68c3f945201a342922de414e0674b644faa32f",
+          "official_clicks": [
+            {
+              "gear": "involution.left",
+              "position": [2, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [3, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 6,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [3, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "7b59868c285d6203c5aea887b68f07c2d9e62aff1bd08144bb518d425c587fea",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [2, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.right",
+              "position": [3, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 7,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [4, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "7b789f20e540c22fc64170a0a79f3b791e1175e8108ad2982bc31d28e29da5b9",
+          "official_clicks": [
+            {
+              "gear": "involution.left",
+              "position": [3, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [4, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 8,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [4, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "9f5a47aeb8e6038bba2696497fc41d7c670a42040b16b22022577d6c6e3d465b",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [3, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.right",
+              "position": [4, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 9,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [5, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "bab0dc4d391643a8b54c5bd28753be56effa777a806739b2012b5b85afe1103c",
+          "official_clicks": [
+            {
+              "gear": "involution.left",
+              "position": [4, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [5, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 10,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [5, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "82442046c7e41b6e955685075ce32f7676a7343982e822c29073275775a9cd9f",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [4, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.right",
+              "position": [5, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 11,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [0, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "5640086128ecd9749252b7024714076aed76505f8fcf29456a99a2e2ec29f302",
+          "official_clicks": [
+            {
+              "gear": "involution.left",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [5, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 12,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [0, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "827bf8023d28dcb5b6df7767f26486589d6968081e18f109a299910ec121521b",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.right",
+              "position": [5, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 13,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [1, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "8dd284433496a08f6a1c704e876a64ab2f65d96d4d6f1499cda9d2513968f395",
+          "official_clicks": [
+            {
+              "gear": "involution.left",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 14,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [1, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "d8e5273df8152c4bda11ff2c3feb10205f25771f917929f715a5ba310d51e6d6",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.right",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 15,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [2, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "54d8a21e522bac0b246e1ed8fb977b0a178f62c54ac77f722e093d178a32b75f",
+          "official_clicks": [
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [2, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 16,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [2, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "40a9473bed6ba57599bc683299d2e4bef9c7b690175ef67cd08df22f7d301a87",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.right",
+              "position": [2, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 17,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [3, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "022be82d0b12005f1802f7dc6e68c3f945201a342922de414e0674b644faa32f",
+          "official_clicks": [
+            {
+              "gear": "involution.left",
+              "position": [2, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [3, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 18,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [3, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "7b59868c285d6203c5aea887b68f07c2d9e62aff1bd08144bb518d425c587fea",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [2, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.right",
+              "position": [3, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 19,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [4, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "7b789f20e540c22fc64170a0a79f3b791e1175e8108ad2982bc31d28e29da5b9",
+          "official_clicks": [
+            {
+              "gear": "involution.left",
+              "position": [3, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [4, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 20,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [4, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "9f5a47aeb8e6038bba2696497fc41d7c670a42040b16b22022577d6c6e3d465b",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [3, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.right",
+              "position": [4, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 21,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [5, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "bab0dc4d391643a8b54c5bd28753be56effa777a806739b2012b5b85afe1103c",
+          "official_clicks": [
+            {
+              "gear": "involution.left",
+              "position": [4, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [5, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 22,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [5, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "82442046c7e41b6e955685075ce32f7676a7343982e822c29073275775a9cd9f",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [4, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.right",
+              "position": [5, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 23,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [0, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "5640086128ecd9749252b7024714076aed76505f8fcf29456a99a2e2ec29f302",
+          "official_clicks": [
+            {
+              "gear": "involution.left",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [5, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 24,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [0, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "827bf8023d28dcb5b6df7767f26486589d6968081e18f109a299910ec121521b",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.right",
+              "position": [5, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        }
+      ],
+      "exact_seed_recurrence_steps": [12, 24],
+      "first_positive_complete_period": 12,
+      "summary": {
+        "updates": 24,
+        "exact_rewind": true,
+        "boolean_a_b_every_update": true,
+        "remainders_unchanged_every_update": true,
+        "control_unchanged_every_update": true,
+        "data_bit_count_every_update": 1,
+        "official_click_records": 48,
+        "observed_official_classes": [
+          "C0"
+        ]
+      }
+    },
+    {
+      "name": "single_reflector",
+      "seed": {
+        "L": 6,
+        "a": [
+          [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+          [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ],
+        "b": [
+          [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ],
+        "r": [
+          [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5],
+          [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+          [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+        ]
+      },
+      "seed_hash": "82cbba597a49b2911c6076e592c1694154b43e1107b63f806a64b55baaa9ee13",
+      "trace": [
+        {
+          "step": 0,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [0, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "82cbba597a49b2911c6076e592c1694154b43e1107b63f806a64b55baaa9ee13",
+          "official_clicks": []
+        },
+        {
+          "step": 1,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [1, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "15ebb8904359f8e243d7e13b3acb222ceb91d07a225ef7597f25daa0249fb18b",
+          "official_clicks": [
+            {
+              "gear": "involution.left",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 2,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [1, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "ff40e2c9bec7f1dbda4dbe21dc60535ad5402aac1ff63da307932a6b9eb87327",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.right",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 3,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [2, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "f69937325c23fb5a05c8a281494e56da325d44433e2e5b767944ab594a716d3f",
+          "official_clicks": [
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [2, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 4,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [2, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "ba728caf50fdfb70f6f54618282151d3dc278acaefe7cb98f98c955ef32f1448",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [2, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 5,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [1, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "373df69de87e4c79635595aa477a70970c3ecc701977d58d51c3fd8e8f3c540d",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [2, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 6,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [1, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "d20ac62ef4ac0e2f913e27fc28ae707b03ebaccea515413087fcd65e9ef99a7c",
+          "official_clicks": [
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [2, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 7,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [0, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "5a2a07784122cba2c470859d89f84af12dadd0ef3e8626ae1ea2ba0601cb16c6",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.right",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 8,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [0, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "1ffe4c33b62b154ffe682326d72f7cfd3add6893a1c8b8871386422151bd8eee",
+          "official_clicks": [
+            {
+              "gear": "involution.left",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 9,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [5, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "d81294509695478f140011d6767b6a4d1737e3758499ca2fb3e308c5d3cbebd0",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.right",
+              "position": [5, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 10,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [5, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "109e615e3a39bd68b8fbb9cafaf99766b8603c46ac26f019dad9ef86b531f827",
+          "official_clicks": [
+            {
+              "gear": "involution.left",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [5, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 11,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [4, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "f276d0013b8e1eca31a14bdd4227aa3c73edab147140f7256fec0cdb7d84005e",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [4, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.right",
+              "position": [5, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 12,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [4, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "6ea53548e2b8367b4a2821bf7d48cac66940c60a2f894c8d00e5490594587a02",
+          "official_clicks": [
+            {
+              "gear": "involution.left",
+              "position": [4, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [5, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 13,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [3, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "c3f68826cef2a47d13708378ebc4550926ec8dda4c0a50292951b5cb79b7ba31",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [3, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.right",
+              "position": [4, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 14,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [3, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "b0a0e57ca6b3343f6e5311343ab5cbae1590d6c3254cb81c5fd7d4e7ebe46511",
+          "official_clicks": [
+            {
+              "gear": "involution.left",
+              "position": [3, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [4, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 15,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [2, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "8d3655147182cbfa2a6beb7e5f36d680e6a9682611109f788be60fa7a65609ae",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [2, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.right",
+              "position": [3, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 16,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [2, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "94fc4bc580713e37eb0f0b45cdc8f0435d5b65b304c85fd4dc3093f3767816de",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [2, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [3, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 17,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [3, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "5e1e4aa3483fd47a6b857f7b0ee3524d67a8a7469941820efa984eedd3210ad1",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [2, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [3, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 18,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [3, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "0ff97f2b9da9fb22cc0f804f8dd4fef393d60a69c4c1d566cb5c6b640f5a44a3",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [2, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.right",
+              "position": [3, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 19,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [4, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "fcd4237737ac45455da9c4cd07b589c2a02cf56adab3c9694ec42be546b9f23d",
+          "official_clicks": [
+            {
+              "gear": "involution.left",
+              "position": [3, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [4, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 20,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [4, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "6f34879f4e9ff603c25a27c757492184ac5983282088b987afbe2f3bbd5ae363",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [3, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.right",
+              "position": [4, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 21,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [5, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "9a61048fb854e5767f1dc8e7c2d0a20db4c1260ca85bb5d5d461c57f325836d7",
+          "official_clicks": [
+            {
+              "gear": "involution.left",
+              "position": [4, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [5, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 22,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [5, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "f1228539c81dda4b6b1baf44fe2b4caab2f8d340af8a8415e88b73a7881f94f0",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [4, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.right",
+              "position": [5, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 23,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [0, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "76e7e79db625a25d40b6ec89ade81d3c6c27ab8cff05ea84753bc0379f1fc9ee",
+          "official_clicks": [
+            {
+              "gear": "involution.left",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [5, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 24,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [0, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "82cbba597a49b2911c6076e592c1694154b43e1107b63f806a64b55baaa9ee13",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.right",
+              "position": [5, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        }
+      ],
+      "exact_seed_recurrence_steps": [24],
+      "first_positive_complete_period": 24,
+      "summary": {
+        "updates": 24,
+        "exact_rewind": true,
+        "boolean_a_b_every_update": true,
+        "remainders_unchanged_every_update": true,
+        "control_unchanged_every_update": true,
+        "data_bit_count_every_update": 1,
+        "official_click_records": 48,
+        "observed_official_classes": [
+          "C0"
+        ]
+      }
+    },
+    {
+      "name": "closed_edge",
+      "seed": {
+        "L": 6,
+        "a": [
+          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ],
+        "b": [
+          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ],
+        "r": [
+          [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5],
+          [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+          [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+        ]
+      },
+      "seed_hash": "e71dd240ef70c50e58265d44921ef9c742e61af8e94ecb4b984ba52d1dec9d8c",
+      "trace": [
+        {
+          "step": 0,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [0, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "e71dd240ef70c50e58265d44921ef9c742e61af8e94ecb4b984ba52d1dec9d8c",
+          "official_clicks": []
+        },
+        {
+          "step": 1,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [1, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "da7a195d9591aff26dbb10e62f7e65c30883a210ffbdb32b4ddea56019d58f2b",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 2,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [1, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "5bb73e8271be0f3eea290ca48218fe1ea479cd5982f87dc5fa9d657e1951d4cd",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 3,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [0, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "7814c71d11b65da68b794bc2a5133ff095ad97fe7412fa0f852bc86b907295e5",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 4,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [0, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "e71dd240ef70c50e58265d44921ef9c742e61af8e94ecb4b984ba52d1dec9d8c",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 5,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [1, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "da7a195d9591aff26dbb10e62f7e65c30883a210ffbdb32b4ddea56019d58f2b",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 6,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [1, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "5bb73e8271be0f3eea290ca48218fe1ea479cd5982f87dc5fa9d657e1951d4cd",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 7,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [0, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "7814c71d11b65da68b794bc2a5133ff095ad97fe7412fa0f852bc86b907295e5",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 8,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [0, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "e71dd240ef70c50e58265d44921ef9c742e61af8e94ecb4b984ba52d1dec9d8c",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 9,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [1, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "da7a195d9591aff26dbb10e62f7e65c30883a210ffbdb32b4ddea56019d58f2b",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 10,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [1, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "5bb73e8271be0f3eea290ca48218fe1ea479cd5982f87dc5fa9d657e1951d4cd",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 11,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [0, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "7814c71d11b65da68b794bc2a5133ff095ad97fe7412fa0f852bc86b907295e5",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 12,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [0, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "e71dd240ef70c50e58265d44921ef9c742e61af8e94ecb4b984ba52d1dec9d8c",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 13,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [1, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "da7a195d9591aff26dbb10e62f7e65c30883a210ffbdb32b4ddea56019d58f2b",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 14,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [1, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "5bb73e8271be0f3eea290ca48218fe1ea479cd5982f87dc5fa9d657e1951d4cd",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 15,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [0, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "7814c71d11b65da68b794bc2a5133ff095ad97fe7412fa0f852bc86b907295e5",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 16,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [0, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "e71dd240ef70c50e58265d44921ef9c742e61af8e94ecb4b984ba52d1dec9d8c",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 17,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [1, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "da7a195d9591aff26dbb10e62f7e65c30883a210ffbdb32b4ddea56019d58f2b",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 18,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [1, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "5bb73e8271be0f3eea290ca48218fe1ea479cd5982f87dc5fa9d657e1951d4cd",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 19,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [0, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "7814c71d11b65da68b794bc2a5133ff095ad97fe7412fa0f852bc86b907295e5",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 20,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [0, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "e71dd240ef70c50e58265d44921ef9c742e61af8e94ecb4b984ba52d1dec9d8c",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 21,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [1, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "da7a195d9591aff26dbb10e62f7e65c30883a210ffbdb32b4ddea56019d58f2b",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 22,
+          "occupied_data": [
+            {
+              "channel": "involution.left",
+              "position": [1, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "5bb73e8271be0f3eea290ca48218fe1ea479cd5982f87dc5fa9d657e1951d4cd",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 23,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [0, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "7814c71d11b65da68b794bc2a5133ff095ad97fe7412fa0f852bc86b907295e5",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        },
+        {
+          "step": 24,
+          "occupied_data": [
+            {
+              "channel": "involution.right",
+              "position": [0, 0, 0],
+              "value": 1
+            }
+          ],
+          "full_state_hash": "e71dd240ef70c50e58265d44921ef9c742e61af8e94ecb4b984ba52d1dec9d8c",
+          "official_clicks": [
+            {
+              "gear": "involution.right",
+              "position": [0, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            },
+            {
+              "gear": "involution.left",
+              "position": [1, 0, 0],
+              "kind": "C0",
+              "quotient": 1
+            }
+          ]
+        }
+      ],
+      "exact_seed_recurrence_steps": [4, 8, 12, 16, 20, 24],
+      "first_positive_complete_period": 4,
+      "summary": {
+        "updates": 24,
+        "exact_rewind": true,
+        "boolean_a_b_every_update": true,
+        "remainders_unchanged_every_update": true,
+        "control_unchanged_every_update": true,
+        "data_bit_count_every_update": 1,
+        "official_click_records": 48,
+        "observed_official_classes": [
+          "C0"
+        ]
+      }
+    }
+  ],
+  "interpretation": {
+    "periods": "Exact equality of full a,b,r to initial state, checked every update.",
+    "clicks": "Actual official labelled changed-triple records; all C0 because remainders are constant.",
+    "padding": "No spectators used: 3 active channels, not the 48-dimensional 2O representation.",
+    "proof": "docs/BOUNDED_CIRCUITS.md",
+    "tests": "python -m unittest universe24.tests.test_involution_clock -v"
+  }
+}

@@ -44,8 +44,8 @@ def _u(tensor, L, A, B, g, n):
     return u
 
 
-def oracle_step(tensor, Q, L, A, B, R):
-    D, G, N = 6 * Q, len(A), len(A[0])
+def oracle_step(tensor, L, A, B, R):
+    D, G, N = 6, len(A), len(A[0])
     nA, nB, nR = [[0] * N for _ in range(G)], [[0] * N for _ in range(G)], [[0] * N for _ in range(G)]
     for g in range(G):
         for n in range(N):
@@ -54,9 +54,9 @@ def oracle_step(tensor, Q, L, A, B, R):
     return nA, nB, nR
 
 
-def oracle_inverse(tensor, Q, L, A, B, R):
+def oracle_inverse(tensor, L, A, B, R):
     """b-only tensors: K from the old b = new a."""
-    D, G, N = 6 * Q, len(A), len(A[0])
+    D, G, N = 6, len(A), len(A[0])
     oA, oB, oR = [[0] * N for _ in range(G)], [[0] * N for _ in range(G)], [[0] * N for _ in range(G)]
     for g in range(G):
         for n in range(N):
@@ -86,7 +86,7 @@ def as_lists(s: State):
 
 class T11Int64Extremes(unittest.TestCase):
     def test_T11(self):
-        L, Q = 3, 1
+        L = 3
         N = lattice(L).N
         tensors = {
             "linear": Tensor(["g"], [("g", 1, (("g", EX, "b"),))]),
@@ -108,11 +108,11 @@ class T11Int64Extremes(unittest.TestCase):
         }
         out, checked = {}, 0
         for tname, tensor in tensors.items():
-            eng = Engine(tensor, Q)
+            eng = Engine(tensor)
             for cname, (A, B, R) in cases.items():
-                exp_f = oracle_step(tensor, Q, L, A, B, R)
-                exp_i = oracle_inverse(tensor, Q, L, A, B, R)
-                exp_c = oracle_clicks(6 * Q, (A, B, R), exp_f)
+                exp_f = oracle_step(tensor, L, A, B, R)
+                exp_i = oracle_inverse(tensor, L, A, B, R)
+                exp_c = oracle_clicks(6, (A, B, R), exp_f)
                 for fname, conv in forms.items():
                     arrs = [conv(x) for x in (A, B, R)]
                     if any(x is None for x in arrs):
@@ -151,11 +151,11 @@ class T12StrictSupport(unittest.TestCase):
         self.assertEqual(T.support_violations(), [])
         out["hop_through_link"] = f"ACCEPTED in strict mode ({len(T)} monomials)"
         # node-gear tensors are unaffected
-        build(reference_block(1), strict_support=True)
-        compose(build_reference(Q=7, name="ref"), strict_support=True)
+        build(reference_block(), strict_support=True)
+        compose(build_reference(name="ref"), strict_support=True)
         for seed in range(10, 16):
             for a_reads in (False, True):
-                build(randgen.random_tensor_block(seed, G=6, Q=10 ** 6, a_reads=a_reads), strict_support=True)
+                build(randgen.random_tensor_block(seed, G=6, a_reads=a_reads), strict_support=True)
         out["reference_and_T03_tensors_strict"] = "ACCEPTED"
         blk = Block(tuple(gears), (probe,), name="lk")
         self.assertEqual(len(compose(blk).support_violations()), 1)

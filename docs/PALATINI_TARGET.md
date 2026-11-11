@@ -11,6 +11,16 @@ The default output is under ignored `runs/geometry/`. The checked result is
 The runner is [palatini_constraint_checks.py](../experiments/geometry/palatini_constraint_checks.py).
 No default tensor or core update is changed by this experiment.
 
+A separate [local pp-wave construction](PPWAVE_PALATINI_LOCAL.md) now provides
+an exact prepared-sector embedding of a known nonflat vacuum family through
+integer Rule3 steps. Its centered interior residuals vanish, but transverse
+periodic seams and operational clock response fail. It addresses a restricted
+example of the embedding criterion below; it does not resolve the general
+Palatini evolution, gauge, or matter-coupling problem.
+
+In every Rule3 recurrence below, `D` denotes the fixed constant six.
+It is not an adjustable coefficient.
+
 ## What the polynomial action actually gives
 
 Let e^a be a nondegenerate coframe and omega^ab an antisymmetric Lorentz connection. The metric is defined algebraically by
@@ -45,7 +55,7 @@ The exact control in the experiment makes the issue explicit. The reciprocal loc
 
     Phi=D/2(q^2+lambda^2)-kappa lambda(q^2-1)
 
-has degree three. With D=12,kappa=3,a=b=(1,1),r=0, the constraint q^2=1 is initially true but the next q is0. The complete state still rewinds exactly. If q were one diagonal coframe component, a nondegenerate metric would have become degenerate. Giving the multiplier ordinary Rule3 inertia converts its role into another force equation, not algebraic constraint enforcement.
+has degree three. With D=6,kappa=1,a=b=(1,1),r=0, the constraint q^2=1 is initially true but the next q is 0. The complete state still rewinds exactly. If q were one diagonal coframe component, a nondegenerate metric would have become degenerate. Giving the multiplier ordinary Rule3 inertia converts its role into another force equation, not algebraic constraint enforcement.
 
 ## Geometric locality is a separate condition
 
@@ -78,4 +88,4 @@ For Palatini gravity, the prerequisite F is precisely what is missing. Its const
 
 Bahr and Dittrich, *Breaking and restoring of diffeomorphism symmetry in discrete gravity*, https://arxiv.org/pdf/0909.5688, show why ordinary discretization can remove continuum gauge degeneracies and discuss symmetry-preserving alternatives. This is not a no-go theorem for every discrete action. It establishes that action resemblance and polynomial degree do not suffice: the discrete equations and their constraint propagation need an independent derivation.
 
-The next defensible milestone is therefore a small explicitly specified constrained geometric map, a valid seed, a proof of its inverse and constraint preservation, and an operational clock/link decoder consistent with g=eta e e. The currently implemented conformal toy is a useful narrower example; it has no generic Weyl curvature or full Einstein constraint system.
+The next defensible milestone is therefore a small explicitly specified constrained geometric map, a valid seed, a proof of its inverse and constraint preservation, and an operational clock/link decoder consistent with g=eta e e. The previous variable-divisor conformal toy is retired. The active local pp-wave example is a narrower exact construction; it does not establish generic matter coupling or preservation of the full Einstein constraint system.

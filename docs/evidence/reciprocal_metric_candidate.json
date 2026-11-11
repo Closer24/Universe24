@@ -1,12 +1,11 @@
 {
   "scope": "Exact reciprocal constructions and explicit unclosed gravitational requirements",
   "default_engine_tensor_seed_changed": false,
-  "one_common_Q_per_run": true,
+  "fixed_divisor_six": true,
   "all_fundamental_values_integer": true,
   "edge_candidate": {
     "tensor": {
-      "fingerprint": "fd800f647fcb6288a9ecf46a3d42615a3123e638e5e5e24b60024eaa7986200a",
-      "Q": 1,
+      "fingerprint": "1d85234035f53beb6dcca8d8b30b81aee7b05d3a3c8a33551c431bf231abcc15",
       "D": 6,
       "gears": 21,
       "monomials": 190,
@@ -1690,10 +1689,9 @@
       "No common characteristic metric, nonlinear Einstein equation, or universal matter coupling is established."
     ]
   },
-  "bounded_Q1_oscillator": {
+  "bounded_integer_oscillator": {
     "tensor": {
-      "fingerprint": "c5445da7a4af30b26888353ad36bf758104828c4f3f7def7cd263bce05fd204e",
-      "Q": 1,
+      "fingerprint": "fa1918c92dacf5d6d5b2b4dd479510f8c20b321df1e3f044f53bc4680836bcf4",
       "D": 6,
       "gears": 2,
       "monomials": 4,
@@ -1709,7 +1707,7 @@
       "u_e=4e-2e chi^2",
       "u_chi=4chi-2e^2 chi"
     ],
-    "fundamental_state_and_coefficients": "Integers only; Q=1; D=6; no external clock or intervention.",
+    "fundamental_state_and_coefficients": "Integers only; D=6; no external clock or intervention.",
     "prepared_joint_state": {
       "a": [
         -1,
@@ -2396,10 +2394,9 @@
       "No spatial propagation, Einstein constraints, geodesics, or common characteristic cone are present."
     ]
   },
-  "bounded_Q1_positive_stiffness_links": {
+  "bounded_integer_positive_stiffness_links": {
     "tensor": {
-      "fingerprint": "5cc05bda80a1a566bfce93e22cda4eac73975faa885ed4626563159f9f50e742",
-      "Q": 1,
+      "fingerprint": "2435348fdcc53f32bf56ee5be6868b5e80c336f473094bb25fa97448c3b0d0e2",
       "D": 6,
       "gears": 2,
       "monomials": 40,
@@ -6413,5 +6410,5 @@
       "No Einstein Hamiltonian or momentum constraint, source conservation identity, common characteristic metric, or universal matter coupling has been proved."
     ]
   },
-  "implementation_sha256": "3f6e2e3aeacaf504f52a3536d5e2cbba6ea698e43d9f122a0bc0b1aa50354763"
+  "implementation_sha256": "fe3741f33fcab3739c25c25d1df38a913aeaa82e08fdde15917cfe709212f75a"
 }

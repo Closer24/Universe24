@@ -44,6 +44,8 @@ def source_split(engine, state, tensor, kappa: int, lapse: str = LAPSE, hand: st
 
 def hand_only_response(H, kappa: int, D: int) -> list:
     """Exact hand-only lapse sum: the double sum of 2 kappa H / D from rest (Fractions)."""
+    if type(D) is not int or D != 6:
+        raise ValueError('this observer requires the fixed divisor six')
     G = [Fraction(0)]
     prev = Fraction(0)
     for t in range(len(H) - 1):

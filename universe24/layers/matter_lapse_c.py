@@ -15,48 +15,38 @@ term, +(9/16)(G_x + G_y)/P on hops + Wilson difference, so every clock factor si
 Integer coefficients need m in 4P Z, w in 2P Z, hop in 2P Z (default: m/(4P) = 4915, w/(4P) = 256, hop/(2P) = 1024).
 """
 from __future__ import annotations
-
 from fractions import Fraction
-
 from ..core.tensor import Block
 from . import gravity as gr
 from .matter import _face, algebra, matter_names
-
 ZERO = (0, 0, 0)
-WHY_C = ("Dirac matter clock TEST read (one-way) of a static prescribed lapse gear; Wilson in difference form "
-         "(proposal); the reciprocal block (oneway=False) is checked separately")
-G_READ_C_WHY = ("beta=1 auxiliary G read by first-order (Dirac) matter, Wilson in difference form (clock factor +G/(4P) on "
-                "the mass term, link factor +(9/16)(G_x+G_y)/P on hops + Wilson difference): a reciprocal partner would "
-                "source G with the matter energy, giving G = F^2/(2P) - F at FIRST order and destroying the lapse; the "
-                "reciprocal equivalent is the OD4 quartic (B1-GRAV build_beta_rank4)")
-
+WHY_C = 'Dirac matter clock TEST read (one-way) of a static prescribed lapse gear; Wilson in difference form (proposal); the reciprocal block (oneway=False) is checked separately'
+G_READ_C_WHY = 'beta=1 auxiliary G read by first-order (Dirac) matter, Wilson in difference form (clock factor +G/(4P) on the mass term, link factor +(9/16)(G_x+G_y)/P on hops + Wilson difference): a reciprocal partner would source G with the matter energy, giving G = F^2/(2P) - F at FIRST order and destroying the lapse; the reciprocal equivalent is the OD4 quartic (B1-GRAV build_beta_rank4)'
 
 def matter_split_c(matter: Block):
     """(site potential, [(axis, link potential)]) of the matter in the difference form (qualified gear names)."""
     mp = matter.params
-    m, w, hop = mp["mass"], mp["wilson"], mp["hop"]
-    alg = algebra(mp.get("species", "pair"))
-    W0, Pd = alg["W0"], alg["P"]
-    names = [matter.qualify(x) for x in matter_names(mp.get("species", "pair"))]
+    m, w, hop = (mp['mass'], mp['wilson'], mp['hop'])
+    alg = algebra(mp.get('species', 'pair'))
+    W0, Pd = (alg['W0'], alg['P'])
+    names = [matter.qualify(x) for x in matter_names(mp.get('species', 'pair'))]
     n = len(names)
-    site = [(Fraction(m, 2) * int(W0[i, j]), [(names[i], ZERO), (names[j], ZERO)])
-            for i in range(n) for j in range(n) if W0[i, j]]
+    site = [(Fraction(m, 2) * int(W0[i, j]), [(names[i], ZERO), (names[j], ZERO)]) for i in range(n) for j in range(n) if W0[i, j]]
     links = []
     for d in range(3):
         e = _face(d, +1)
         lp = []
         for i in range(n):
             for j in range(n):
-                if W0[i, j] and w:                       # (w/2)[bx W0 bx + by W0 by - 2 bx W0 by]
+                if W0[i, j] and w:
                     c = Fraction(w, 2) * int(W0[i, j])
                     lp.append((c, [(names[i], ZERO), (names[j], ZERO)]))
                     lp.append((c, [(names[i], e), (names[j], e)]))
                     lp.append((-2 * c, [(names[i], ZERO), (names[j], e)]))
-                if Pd[d][i, j] and hop:                  # hop b(x+e)_i P_d[i,j] b(x)_j
+                if Pd[d][i, j] and hop:
                     lp.append((Fraction(hop * int(Pd[d][i, j])), [(names[i], e), (names[j], ZERO)]))
         links.append((d, e, lp))
-    return site, links, names
-
+    return (site, links, names)
 
 def matter_lapse_c_potential(*, matter: Block, P: int, field: str) -> list:
     """-(1/2)(F/P) Phi_site - (1/2)((F_x + F_y)/P) Phi_link (first-order matter, gamma = 1)."""
@@ -68,21 +58,16 @@ def matter_lapse_c_potential(*, matter: Block, P: int, field: str) -> list:
             pot += [(-uF * c, [(field, fo)] + mono) for c, mono in lp]
     return pot
 
-
-def build_matter_lapse_c(*, Q: int, P: int, field: str, matter: Block, oneway: bool = True,
-                         name: str = "mlapseC", why: str = WHY_C) -> Block:
+def build_matter_lapse_c(*, P: int, field: str, matter: Block, oneway: bool=True, name: str='mlapseC', why: str=WHY_C) -> Block:
     pot = matter_lapse_c_potential(matter=matter, P=P, field=field)
     if oneway:
-        only = [matter.qualify(x) for x in matter_names(matter.params.get("species", "pair"))]
-        terms = gr.gradient_terms(pot, only=only, designation=why, what="matter lapse C")
+        only = [matter.qualify(x) for x in matter_names(matter.params.get('species', 'pair'))]
+        terms = gr.gradient_terms(pot, only=only, designation=why, what='matter lapse C')
     else:
-        terms = gr.gradient_terms(pot, what="matter lapse C")
-    return Block((), tuple(terms), name=name, Q=Q,
-                 params={"Q": Q, "P": P, "field": field, "oneway": oneway, "form": "C (Wilson difference)"},
-                 doc="Dirac matter lapse with the Wilson term in difference form (clock factor on the mass term only)")
+        terms = gr.gradient_terms(pot, what='matter lapse C')
+    return Block((), tuple(terms), name=name, params={'P': P, 'field': field, 'oneway': oneway, 'form': 'C (Wilson difference)'}, doc='Dirac matter lapse with the Wilson term in difference form (clock factor on the mass term only)')
 
-
-def build_matter_beta_read_c(*, Q: int, P: int, G: str, matter: Block, name: str = "mbetaC") -> Block:
+def build_matter_beta_read_c(*, P: int, G: str, matter: Block, name: str='mbetaC') -> Block:
     """The beta = 1 read of the matter in the SAME split (B1-GRAV beta_matter_factors(1) = (1/4, 9/16)); one-way,
     designated with G_READ_C_WHY (the first-order factors actually used; its reciprocal form is the OD4 quartic)."""
     c_site, c_link = gr.beta_matter_factors(1)
@@ -91,10 +76,6 @@ def build_matter_beta_read_c(*, Q: int, P: int, G: str, matter: Block, name: str
     for _d, e, lp in links:
         for go in (ZERO, e):
             read += [(c_link * c / P, [(G, go)] + mono) for c, mono in lp]
-    terms = gr.gradient_terms(read, only=names, designation=G_READ_C_WHY, what="matter beta read C")
-    return Block((), tuple(terms), name=name, Q=Q, params={"Q": Q, "P": P, "G": G, "form": "C (Wilson difference)"},
-                 doc="beta = 1 read of the matter, Wilson in difference form (one-way, designated)")
-
-
-__all__ = ["build_matter_lapse_c", "build_matter_beta_read_c", "matter_lapse_c_potential", "matter_split_c",
-           "WHY_C", "G_READ_C_WHY"]
+    terms = gr.gradient_terms(read, only=names, designation=G_READ_C_WHY, what='matter beta read C')
+    return Block((), tuple(terms), name=name, params={'P': P, 'G': G, 'form': 'C (Wilson difference)'}, doc='beta = 1 read of the matter, Wilson in difference form (one-way, designated)')
+__all__ = ['build_matter_lapse_c', 'build_matter_beta_read_c', 'matter_lapse_c_potential', 'matter_split_c', 'WHY_C', 'G_READ_C_WHY']

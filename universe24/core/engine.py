@@ -1,4 +1,4 @@
-"""Generic exact Rule3 gear engine for ONE divisor D = 6Q and ONE tensor (core/tensor.py).
+"""Generic exact Rule3 gear engine with the fixed divisor six and one tensor.
 
 The only state-changing primitive, applied to every gear of every node from the SAME previous complete snapshot:
 
@@ -243,7 +243,7 @@ class ClickLog:
     Columns (one row per gear instance): ``gear`` (type index), ``node`` (flat index), ``kind`` (0 = C0, 1 = C1,
     2 = C2), ``quotient`` (= after.b + before.a = ell), ``changed`` (triple changed), ``label`` (the gear type's
     readout label, "official" or "audit"). ``stream`` is "official" (click iff quotient != 0 AND the triple changed:
-    the Q=1 arithmetic convention) or "raw" (every ell != 0, NON-OFFICIAL).
+    the divisor-six arithmetic convention) or "raw" (every ell != 0, NON-OFFICIAL).
     Rows are sorted by (x, y, z, gear), lexicographic event order.
     """
     step: int
@@ -271,8 +271,9 @@ class ClickLog:
 
 
 def handedness_kind(delta_mod_D: np.ndarray, D: int) -> np.ndarray:
-    """kind of a turn delta = (r' - r) mod D taken in (-D/2, D/2]: C0 if delta in {0, D/2}, C1 if 0 < delta < D/2,
-    C2 if -D/2 < delta < 0 (CLICK_TAXONOMY section 1; for D = 6 equal to ((r' - r)//2) mod 3)."""
+    """Classify a turn on the six-position remainder wheel; D must be six."""
+    if type(D) is not int or D != 6:
+        raise ValueError("click readout uses the fixed divisor six")
     half = D // 2
     d = delta_mod_D
     return np.where((d == 0) | (d == half), 0, np.where(d < half, 1, 2)).astype(np.int64)
@@ -280,6 +281,8 @@ def handedness_kind(delta_mod_D: np.ndarray, D: int) -> np.ndarray:
 
 def extract_clicks(tensor: Tensor, D: int, before: State, after: State, step: int = 1,
                    stream: str = "official") -> ClickLog:
+    if type(D) is not int or D != 6:
+        raise ValueError("click readout uses the fixed divisor six")
     if stream not in ("official", "raw"):
         raise ValueError("stream must be 'official' or 'raw' (raw = every ell != 0, non-official)")
     if before.a.shape != after.a.shape or before.L != after.L:
@@ -292,11 +295,9 @@ def extract_clicks(tensor: Tensor, D: int, before: State, after: State, step: in
         hit &= np.asarray(changed, dtype=bool)
     # order rows by (node, gear) == (x, y, z, gear)
     node_idx, gear_idx = np.nonzero(hit.T)
-    # Reloading small remainders compacts them to int64 even when D is much
-    # larger. Cast before subtracting/modulo so readout is storage-independent.
-    r_dtype = OBJ if D >= LIMIT else I64
-    delta = (_cast(after.r[gear_idx, node_idx], r_dtype)
-             - _cast(before.r[gear_idx, node_idx], r_dtype)) % D
+    # Legal remainders are in 0..5, independent of counter storage width.
+    delta = (_cast(after.r[gear_idx, node_idx], I64)
+             - _cast(before.r[gear_idx, node_idx], I64)) % D
     kind = handedness_kind(delta, D)
     labels = tensor.labels
     return ClickLog(step, before.L, stream, gear_idx, node_idx, kind, quot[gear_idx, node_idx],
@@ -305,28 +306,25 @@ def extract_clicks(tensor: Tensor, D: int, before: State, after: State, step: in
 
 # ======================================================================== engine
 class Engine:
-    """Rule3 on every gear, one divisor D = 6Q, one tensor. No physics, no per-type branch."""
+    """Rule3 on every gear, fixed divisor six, one tensor. No per-type branch."""
+
+    __slots__ = ("tensor", "D", "_compiled", "stats")
 
     def __setattr__(self, name, value):
-        if name in ("tensor", "Q", "D") and hasattr(self, name):
+        if name in ("tensor", "D") and hasattr(self, name):
             raise AttributeError("Engine law is fixed; construct a new engine before a run")
         object.__setattr__(self, name, value)
 
     def __delattr__(self, name):
-        if name in ("tensor", "Q", "D"):
+        if name in ("tensor", "D"):
             raise AttributeError("Engine law is fixed")
         object.__delattr__(self, name)
 
-    def __init__(self, tensor: Tensor, Q: int = 1):
+    def __init__(self, tensor: Tensor):
         if not isinstance(tensor, Tensor):
             raise TypeError("expected a validated Tensor")
-        if type(Q) is not int or Q < 1:
-            raise ValueError("Q must be a positive int (D = 6Q)")
-        if tensor.Q is not None and tensor.Q != Q:
-            raise ValueError(f"ONE divisor: the tensor was built with Q = {tensor.Q}, the engine was given Q = {Q}")
         self.tensor = tensor
-        self.Q = Q
-        self.D = 6 * Q
+        self.D = 6
         self._compiled: dict[int, _Compiled] = {}
         self.stats = {"int64_steps": 0, "pyint_steps": 0, "inverse_int64_steps": 0, "inverse_pyint_steps": 0}
 
@@ -353,7 +351,7 @@ class Engine:
         return plan.evaluate(_cast(state.a, dtype), _cast(state.b, dtype), dtype)
 
     def _dtype(self, plan: _Plan, a, b, extra) -> np.dtype:
-        if not plan.coeffs_fit or self.D >= LIMIT // 8:
+        if not plan.coeffs_fit:
             return OBJ
         ma, mb = _maxabs_rows(a), _maxabs_rows(b)
         if max(ma + mb, default=0) >= LIMIT or not all(_fits(x) for x in extra):
@@ -387,7 +385,7 @@ class Engine:
         self._check(state)
         comp = self._comp(state.L)
         D = self.D
-        dtype = I64 if (all(_fits(x) for x in (state.a, state.b)) and D < LIMIT // 8
+        dtype = I64 if (all(_fits(x) for x in (state.a, state.b))
                         and all(p.coeffs_fit for p, _ in comp.stages)) else OBJ
         b_old = _cast(state.a, dtype).copy()
         a_old = np.zeros_like(b_old)
@@ -420,7 +418,7 @@ class Engine:
     def mirror(self, state: State) -> State:
         """M(a,b,r)=(b,a,D-1-r); a reversor for b-only inputs, not general old-a tensors."""
         self._check(state)
-        r = _cast(state.r, OBJ if self.D >= LIMIT else I64)
+        r = _cast(state.r, I64)
         return State._raw(state.L, state.b.copy(), state.a.copy(), (self.D - 1) - r)
 
     # ------------------------------------------------------------------ preparation helpers (initial data only)

@@ -10,14 +10,10 @@ identity under its stated conditions, but modifies each individual quotient
 ledger. It does not derive collapse, a Born rule, complexity selection or GR.
 """
 from __future__ import annotations
-
 from ..core.tensor import Block
-
 ZERO = (0, 0, 0)
 
-
-def build_clock_record_bridge(*, Q: int, clock: str, positive: str, negative: str,
-                              kappa: int, include_free_clock: bool = False) -> Block:
+def build_clock_record_bridge(*, clock: str, positive: str, negative: str, kappa: int, include_free_clock: bool=False) -> Block:
     """Return an additive block; gears must already be declared by the caller.
 
     Names are global (normally qualified, e.g. ``clock.local``, ``cosmic.dp``).
@@ -31,32 +27,20 @@ def build_clock_record_bridge(*, Q: int, clock: str, positive: str, negative: st
     0 <= kappa < D/2. This linear band condition is not a bound for an arbitrary
     composed nonlinear system or a proof of bounded integer trajectories.
     """
-    if type(Q) is not int or Q <= 0:
-        raise ValueError('Q must be a positive integer')
     if type(kappa) is not int or kappa < 0:
         raise ValueError('kappa must be a non-negative integer')
     if type(include_free_clock) is not bool:
         raise TypeError('include_free_clock must be a bool')
     names = (clock, positive, negative)
-    if any(type(name) is not str or not name.strip() for name in names):
+    if any((type(name) is not str or not name.strip() for name in names)):
         raise ValueError('clock and record names must be non-empty strings')
     if len(set(names)) != 3:
         raise ValueError('clock and record gears must be distinct')
     f = lambda gear: (gear, ZERO, 'b')
     terms = []
     if kappa:
-        terms.extend([
-            (clock, -kappa, (f(positive),)),
-            (clock, -kappa, (f(negative),)),
-            (positive, -kappa, (f(clock),)),
-            (negative, -kappa, (f(clock),)),
-        ])
-    D = 6 * Q
+        terms.extend([(clock, -kappa, (f(positive),)), (clock, -kappa, (f(negative),)), (positive, -kappa, (f(clock),)), (negative, -kappa, (f(clock),))])
+    D = 6
     if include_free_clock:
         terms.append((clock, D // 2, (f(clock),)))
-    return Block((), tuple(terms), name=None, Q=Q,
-        params=dict(clock=clock,positive=positive,negative=negative,kappa=kappa,
-                    include_free_clock=include_free_clock,
-                    isolated_remainder_free_band=2*kappa < D,
-                    required_field_signs=[1,1,1],required_link_axes=[None,None,None]),
-        doc='optional reciprocal scalar clock / recording-sum bridge; no new forward primitive')
+    return Block((), tuple(terms), name=None, params=dict(clock=clock, positive=positive, negative=negative, kappa=kappa, include_free_clock=include_free_clock, isolated_remainder_free_band=2 * kappa < D, required_field_signs=[1, 1, 1], required_link_axes=[None, None, None]), doc='optional reciprocal scalar clock / recording-sum bridge; no new forward primitive')

@@ -25,19 +25,17 @@
     "local_prefix_steps": 3,
     "no_influence_outside_face_distance": true
   },
-  "common_divisor": {
-    "Q_values": [
-      1,
-      1180591620717411303424
-    ],
+  "integer_precision": {
+    "amplitude_factor": 1180591620717411303424,
+    "divisor": 6,
     "steps": 28,
-    "identical_counter_histories": true,
-    "identical_official_quotients": true,
-    "differently_prepared_allowed_remainders": true
+    "exact_scaled_counter_histories": true,
+    "exact_rewind": true,
+    "arbitrary_precision_exercised": true
   },
   "travelling": [
     {
-      "Q": 1,
+      "D": 6,
       "L": 7,
       "axes": [
         2
@@ -58,34 +56,10 @@
       "rank": 2,
       "strict_support": true,
       "reciprocity": true,
-      "tensor_fingerprint": "8078dc1b722160bdcc74248c9cb0a3887b364cba4e67479188a95f8e475169c2"
+      "tensor_fingerprint": "dbab99a50240268d05d2703ac66623d076de946ed86a34c037fe7347410bf866"
     },
     {
-      "Q": 7,
-      "L": 7,
-      "axes": [
-        2
-      ],
-      "polarisations": 2,
-      "zero_mean_profiles": true,
-      "steps": 56,
-      "exact_full_state_period": 28,
-      "exact_translation_every_two_updates": true,
-      "macro_carrier": -1,
-      "macro_shift_per_axis": 2,
-      "peak_counter": 3,
-      "official_records": 120736,
-      "all_official_kinds_C0": true,
-      "all_TT_residuals_zero": true,
-      "remainders_constant": true,
-      "exact_rewind": true,
-      "rank": 2,
-      "strict_support": true,
-      "reciprocity": true,
-      "tensor_fingerprint": "68baefe622b328471ac6dacc9f1855e467a2377455a70756b16dec863c4dd2c0"
-    },
-    {
-      "Q": 7,
+      "D": 6,
       "L": 7,
       "axes": [
         0,
@@ -108,13 +82,13 @@
       "rank": 2,
       "strict_support": true,
       "reciprocity": true,
-      "tensor_fingerprint": "68baefe622b328471ac6dacc9f1855e467a2377455a70756b16dec863c4dd2c0"
+      "tensor_fingerprint": "dbab99a50240268d05d2703ac66623d076de946ed86a34c037fe7347410bf866"
     }
   ],
   "instability_controls": [
     {
       "operator": "single-index curl A",
-      "Q": 7,
+      "D": 6,
       "L": 5,
       "steps": 64,
       "all_TT_residuals_zero": true,
@@ -163,7 +137,7 @@
     },
     {
       "operator": "doubled symmetric extension C",
-      "Q": 7,
+      "D": 6,
       "L": 5,
       "steps": 64,
       "all_TT_residuals_zero": true,
