@@ -140,3 +140,9 @@ radiation example is a separate construction and still uses the retired `Q`
 interface. It is not imported into this audit or evidence for a repeated
 bounce. Integration requires a compatibility review against the fixed-six
 engine and a fresh run of its own checks.
+
+A [follow-up review on 11 November 2026](EINSTEIN_UPDATE_REVIEW.md) checks the
+new ADM compiler in PR #27 at `335eb3c1b625075dbcca01f9cd61faffdd614600`.
+A fixed-six compatibility port passes its focused tests, but its copied
+per-node clock bank and finite compiled horizon do not supply the missing
+local stagnation mechanism. The earlier burst results above are unchanged.

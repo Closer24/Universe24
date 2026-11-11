@@ -1,0 +1,23 @@
+--- a/experiments/geometry/integer_circuit.py
++++ b/experiments/geometry/integer_circuit.py
+@@ -122 +122 @@
+-    def compile(self, outputs, Q=1):
++    def compile(self, outputs):
+@@ -140 +140 @@
+-        D = 6*Q
++        D = 6
+@@ -166,2 +166,2 @@
+-        tensor = Tensor(clocks+[names[w] for w in ordered], terms, Q=Q, strict_support=True)
+-        return Compiled(self, tensor, outputs, names, ready, ticks, period, Q)
++        tensor = Tensor(clocks+[names[w] for w in ordered], terms, strict_support=True)
++        return Compiled(self, tensor, outputs, names, ready, ticks, period)
+@@ -252 +251,0 @@
+-    Q: int
+@@ -266 +265 @@
+-        r = (17*np.arange(b.size).reshape(b.shape)+5) % (6*self.Q)
++        r = (17*np.arange(b.size).reshape(b.shape)+5) % 6
+--- a/experiments/geometry/adm_integer.py
++++ b/experiments/geometry/adm_integer.py
+@@ -36 +36 @@
+-    engine=Engine(program.tensor,program.Q)
++    engine=Engine(program.tensor)
