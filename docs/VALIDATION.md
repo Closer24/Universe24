@@ -1,5 +1,8 @@
 # Fixed-six implementation validation
 
+> Historical research/reference document. The current supported interface and acceptance status are defined in [ONE_SYSTEM.md](ONE_SYSTEM.md). Commands and default-model descriptions below refer to the earlier construction; see [the 0.6 migration](MIGRATION_0_6.md). No general ≤48-channel physical model is accepted.
+
+
 The 0.5.0 consolidation adds disjoint channel ownership, local communication and explicit probe experiments; see [UNIFIED_SYSTEM.md](UNIFIED_SYSTEM.md) and [fresh validation](evidence/universe24_unification.json). The physical Einstein metric remains the sole metric of the main event board.
 
 ## Integrated Einstein event board

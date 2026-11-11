@@ -7,7 +7,8 @@ import unittest
 import numpy as np
 import sympy as sp
 
-from experiments.geometry.compact_null_wave import run
+from validation.geometry.compact_null_wave import run
+from validation.provenance import migrated_source_hashes
 from universe24.algebra.null_covector import ETA, NullCoframe
 from universe24.core import Engine, State, Tensor
 from universe24.layers.null_wave import build
@@ -138,7 +139,10 @@ class NullCovectorTests(unittest.TestCase):
             self.assertEqual(report['complete_state']['audit_click_classes'],
                              {'0': 2080, '1': 0, '2': 0})
             expected_path = Path(__file__).resolve().parents[2]/'docs/evidence/compact_null_wave.json'
-            self.assertEqual(report, json.loads(expected_path.read_text()))
+            expected = json.loads(expected_path.read_text())
+            self.assertEqual(report.pop('source_sha256'), migrated_source_hashes(
+                expected.pop('source_sha256'), Path(__file__).resolve().parents[2]))
+            self.assertEqual(report, expected)
 
 
 if __name__ == '__main__':

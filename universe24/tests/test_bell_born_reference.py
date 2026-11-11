@@ -4,8 +4,8 @@ from fractions import Fraction
 from itertools import product
 import unittest
 
-from experiments.quantum.bell_cone_audit import audit, trial
-from experiments.quantum.born_reference import (interference, probabilities, measure,
+from validation.quantum.bell_cone_audit import audit, trial
+from validation.quantum.born_reference import (interference, probabilities, measure,
     singlet_amplitudes, quantum_reference, stochastic_local_bound, router_calibration)
 from universe24.core import Engine
 from universe24.layers.causal_wave import with_causal_wave

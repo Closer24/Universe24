@@ -8,7 +8,7 @@ import unittest
 import numpy as np
 import sympy as sp
 
-from experiments.geometry.full_gr_audit import einstein_from_jet, symbolic_jet
+from validation.geometry.full_gr_audit import einstein_from_jet, symbolic_jet
 from universe24.algebra.frame_equations import FIELDS, ANTISYMMETRIC, SYMMETRIC, equations
 from universe24.core import Engine, State, Tensor
 from universe24.core.lattice import lattice
@@ -160,7 +160,8 @@ class Frame48Tests(unittest.TestCase):
             inverse_metric_at(values)
 
     def test_full_trace_replay_evidence_and_failed_gates(self):
-        from experiments.geometry.frame48_audit import audit
+        from validation.geometry.frame48_audit import audit
+        from validation.provenance import migrated_source_hashes
         with tempfile.TemporaryDirectory() as directory:
             report = audit(directory)
             records = [json.loads(line) for line in
@@ -173,7 +174,9 @@ class Frame48Tests(unittest.TestCase):
                 self.assertTrue(state.same_as(State.from_dict(record['state'])))
             fixture = Path(__file__).resolve().parents[2]/'docs/evidence/frame48_research.json'
             expected = json.loads(fixture.read_text())
-            for key in ('source_sha256', 'gates', 'tensor_fingerprint', 'cases', 'manifest'):
+            self.assertEqual(report['source_sha256'], migrated_source_hashes(
+                expected['source_sha256'], Path(__file__).resolve().parents[2]))
+            for key in ('gates', 'tensor_fingerprint', 'cases', 'manifest'):
                 self.assertEqual(report[key], expected[key])
             self.assertFalse(report['gates']['general_einstein_solver_validated'])
             self.assertFalse(report['gates']['retained_physical_clock'])

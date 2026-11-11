@@ -1,5 +1,8 @@
 # Compact null-covector geometry
 
+> Historical research/reference document. The current supported interface and acceptance status are defined in [ONE_SYSTEM.md](ONE_SYSTEM.md). Commands and default-model descriptions below refer to the earlier construction; see [the 0.6 migration](MIGRATION_0_6.md). No general ≤48-channel physical model is accepted.
+
+
 The optional compact experiment retains one integer profile in two transport
 banks and reconstructs the prepared pp-wave coframe exactly. It replaces the
 **32 coframe channels** of the older construction with **2 profile channels**

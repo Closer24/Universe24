@@ -9,7 +9,7 @@ from universe24.core import Engine
 from universe24.layers.transported_probe import build, CLOCKS
 from universe24.prepare.transported_probe import prepare
 from universe24.observe.transported_probe import sample, assess
-from experiments.geometry.transported_probe_clock import execute, run, replay, seam_control
+from validation.geometry.transported_probe_clock import execute, run, replay, seam_control
 
 
 class TransportedProbeTests(unittest.TestCase):

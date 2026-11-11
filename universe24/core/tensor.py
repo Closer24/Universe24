@@ -42,7 +42,7 @@ Canonical form
 from __future__ import annotations
 
 import hashlib
-import json
+from . import exact_json as json
 from dataclasses import dataclass, field
 from typing import Iterable, Sequence
 from types import MappingProxyType

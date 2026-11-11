@@ -1,8 +1,8 @@
 """Retired physical presets cannot silently claim success for the new law."""
 import unittest
-from universe24.tools.metric_clock_gate import run_gate, main
-from universe24.tools.connected_clocks import build_candidate
-from universe24.tools.physics_gate import run
+from validation.tools.metric_clock_gate import run_gate, main
+from validation.tools.connected_clocks import build_candidate
+from validation.tools.physics_gate import run
 
 
 class MetricClockGateTests(unittest.TestCase):

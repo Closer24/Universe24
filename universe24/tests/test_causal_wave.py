@@ -155,7 +155,7 @@ class CausalWaveTests(unittest.TestCase):
     def test_einstein_integration_replay_includes_changed_remainders(self):
         from universe24.layers.adm import compile_adm, flat_data
         from universe24.layers.universe import UniverseProgram
-        from universe24.runtime import run, replay_trace
+        from validation.adm_reference import run, replay_trace
         einstein, parameters = compile_adm(complex_matter=True, dark_matter=True)
         program = UniverseProgram(einstein, parameters, causal_wave=True)
         data = flat_data(3)

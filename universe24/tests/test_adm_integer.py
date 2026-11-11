@@ -11,8 +11,8 @@ from universe24.core import Engine
 from universe24.algebra.integer_circuit import Circuit
 from universe24.layers.adm import compile_adm, FIELDS, ArrayField, system, flat_data
 from universe24.prepare.einstein import homogeneous_scalar, numeric_fields, inhomogeneous_scalar
-from universe24.runtime import run, replay_trace
-from experiments.geometry.full_gr_audit import einstein_from_jet, symbolic_jet
+from validation.adm_reference import run, replay_trace
+from validation.geometry.full_gr_audit import einstein_from_jet, symbolic_jet
 
 
 def execute(program, data):

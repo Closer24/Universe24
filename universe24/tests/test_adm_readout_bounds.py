@@ -4,7 +4,7 @@ from fractions import Fraction
 from math import nextafter
 import unittest
 
-from experiments.cosmology.audit_adm_readouts import audit
+from validation.cosmology.audit_adm_readouts import audit
 
 
 def report(ranges):

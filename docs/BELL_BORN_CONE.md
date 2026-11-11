@@ -1,5 +1,8 @@
 # From amplitudes to clicks: what is implemented and what is assumed
 
+> Historical research/reference document. The current supported interface and acceptance status are defined in [ONE_SYSTEM.md](ONE_SYSTEM.md). Commands and default-model descriptions below refer to the earlier construction; see [the 0.6 migration](MIGRATION_0_6.md). No general ≤48-channel physical model is accepted.
+
+
 The local wave really delays the detector until arrival. That fact does not
 yet supply a Born probability law or a Bell violation. This audit separates
 the actual Engine events from an explicit quantum reference.

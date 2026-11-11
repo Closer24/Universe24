@@ -1,5 +1,8 @@
 # One Universe24 system with explicit channel ownership
 
+> Historical research/reference document. The current supported interface and acceptance status are defined in [ONE_SYSTEM.md](ONE_SYSTEM.md). Commands and default-model descriptions below refer to the earlier construction; see [the 0.6 migration](MIGRATION_0_6.md). No general ≤48-channel physical model is accepted.
+
+
 The default run constructs **one fixed tensor, one complete seed and one
 Rule3 Engine**. It includes the Einstein physical component and the local
 communication control. The transported-probe experiment can be included in the

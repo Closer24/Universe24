@@ -6,6 +6,8 @@ import sys
 import tempfile
 import unittest
 
+from validation.provenance import migrated_source_hashes
+
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -18,7 +20,7 @@ class IntegerGeometryEvidence(unittest.TestCase):
         for name in retired:
             with self.subTest(experiment=name):
                 result = subprocess.run(
-                    [sys.executable, str(ROOT/"experiments"/"geometry"/(name+".py"))],
+                    [sys.executable, str(ROOT/"validation"/"geometry"/(name+".py"))],
                     cwd=ROOT, capture_output=True, text=True, timeout=10)
                 self.assertNotEqual(result.returncode, 0)
                 self.assertIn("Retired experiment:", result.stderr)
@@ -34,11 +36,19 @@ class IntegerGeometryEvidence(unittest.TestCase):
                 with self.subTest(experiment=name):
                     output = Path(directory) / (name + ".json")
                     subprocess.run(
-                        [sys.executable, str(ROOT / "experiments" / "geometry" / (name + ".py")),
+                        [sys.executable, str(ROOT / "validation" / "geometry" / (name + ".py")),
                          "--out", str(output)], cwd=ROOT, check=True,
                         capture_output=True, text=True, timeout=60)
                     actual = json.loads(output.read_text())
                     expected = json.loads((ROOT / "docs" / "evidence" / (name + ".json")).read_text())
+                    # Import relocation changes source bytes, not the preserved result.
+                    # Keep the historical evidence and verify new provenance separately.
+                    if 'implementation_sha256' in actual:
+                        old_source = 'experiments/geometry/' + name + '.py'
+                        current_source = 'validation/geometry/' + name + '.py'
+                        fresh = migrated_source_hashes(
+                            {old_source: expected.pop('implementation_sha256')}, ROOT)
+                        self.assertEqual(actual.pop('implementation_sha256'), fresh[current_source])
                     self.assertEqual(actual, expected)
 
 

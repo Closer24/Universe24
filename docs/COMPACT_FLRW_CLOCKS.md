@@ -1,5 +1,8 @@
 # A repeating sourced geometric step within the 48-channel budget
 
+> Historical research/reference document. The current supported interface and acceptance status are defined in [ONE_SYSTEM.md](ONE_SYSTEM.md). Commands and default-model descriptions below refer to the earlier construction; see [the 0.6 migration](MIGRATION_0_6.md). No general ≤48-channel physical model is accepted.
+
+
 This optional construction uses **eight actual channels**, with no empty
 padding, clock bank, unrolled future or external evolution callback. It runs
 the unchanged fixed-six Engine. It covers the expanding, homogeneous,

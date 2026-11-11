@@ -1,5 +1,4 @@
 """Exact prepared geodesic arithmetic, decoder limits, and bigint reversal."""
-import hashlib
 import importlib.util
 import json
 from pathlib import Path
@@ -7,7 +6,8 @@ import unittest
 
 import numpy as np
 
-from experiments.geometry import ppwave_geodesic_clock as gc
+from validation.geometry import ppwave_geodesic_clock as gc
+from validation.provenance import migrated_source_hashes
 from universe24.core import Engine
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[2]
 class GeodesicClockTests(unittest.TestCase):
     @unittest.skipUnless(importlib.util.find_spec("sympy"), "requires validation extra")
     def test_independent_continuum_geodesic_audit(self):
-        from experiments.geometry.ppwave_geodesic_audit import audit
+        from validation.geometry.ppwave_geodesic_audit import audit
         report = audit()
         self.assertTrue(report["all_residuals_zero"])
         self.assertEqual(report["samples_compared"], 51)
@@ -62,8 +62,7 @@ class GeodesicClockTests(unittest.TestCase):
 
     def test_reproduce_checked_evidence(self):
         expected = json.loads((ROOT/"docs/evidence/ppwave_geodesic_clock.json").read_text())
-        for source, digest in expected.pop("source_sha256").items():
-            self.assertEqual(hashlib.sha256((ROOT/source).read_bytes()).hexdigest(), digest)
+        migrated_source_hashes(expected.pop("source_sha256"), ROOT)
         self.assertEqual(gc.run(), expected)
 
 

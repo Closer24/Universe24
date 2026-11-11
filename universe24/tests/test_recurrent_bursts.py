@@ -7,8 +7,8 @@ import unittest
 import numpy as np
 
 from universe24.core import State, Engine, Tensor
-from universe24.demos.communication.run_communication import build
-from experiments.cosmology.recurrent_bursts import (
+from validation.demos.communication.run_communication import build
+from validation.cosmology.recurrent_bursts import (
     ReassemblyTracker, structural_snapshot, progressive_reassemblies,
     candidate_tensor, run_case, FAMILIES,
 )
