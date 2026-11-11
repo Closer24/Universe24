@@ -14,6 +14,11 @@ a fixed null covector. Its invariant-sector proof includes both histories and
 frozen remainders. It is a separate model with passive fixed-denominator
 geometry readouts, not a replacement for the default ADM metric.
 
+The [Frame48 candidate](FRAME48_RESEARCH.md) adds a horizon-independent,
+48-channel exact lift of a nonlinear vacuum-frame time stencil. Its general
+constraint, nondegeneracy, refinement and physical-clock gates remain false.
+It is an explicitly separate research model with a published source ledger.
+
 
 This is the current mathematical contract for the executable model. A node's
 state, a fixed integer coupling tensor, and the complete seed specify a run.

@@ -4,6 +4,14 @@ Default Einstein evolution is installed in `universe24.layers.adm` and runs with
 
 See [the main README](../../README.md), [equations](../../docs/INTEGER_ADM.md), and [event board](../../docs/UNIVERSE24_EVENTS.md).
 
+## Frame48 research candidate
+
+`python experiments/geometry/frame48_audit.py` runs the new horizon-independent
+48-channel nonlinear frame-map experiment. Its exact inverse passes; general
+Einstein validation, resolution, nondegeneracy and physical-clock gates remain
+false. [Research, equations, literature and handoff](../../docs/FRAME48_RESEARCH.md)
+include both successful and negative controls. It does not replace the ADM CLI.
+
 ## Compact null-covector experiment
 
 `python experiments/geometry/compact_null_wave.py` runs a separate two-channel
