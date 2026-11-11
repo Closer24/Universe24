@@ -7,6 +7,11 @@ nondegeneracy, fine integer resolution and an operational clock remain open.
 The default ADM system is not changed. Passing tests of the negative controls
 do not turn these failed physical gates into successes.
 
+The [coupled matter continuation](FRAME_MATTER.md) adds the default model's
+complex scalar and normal dust in one experimental 70-channel tensor,
+including a nonnegative square-density encoding and explicit conservation
+failures. Frame48 remains the unchanged vacuum restriction.
+
 ## Research map and source ledger
 
 These are primary sources consulted for this investigation. Links identify

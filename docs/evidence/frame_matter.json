@@ -1,0 +1,1266 @@
+{
+  "schema": "Universe24-matter-frame-v1",
+  "base_commit": "7d238e84a2167a4d3fe7bc7942da0cbf97bd29b2",
+  "channels": 70,
+  "monomials": 1056,
+  "input_degree": 2,
+  "tensor_fingerprint": "2697f927e6f914868fca5a0e76e389959eed32ca1b78d5580f688d382f2a2d38",
+  "manifest": {
+    "schema": "Universe24-channels-v1",
+    "total_channels": 70,
+    "integer_registers_per_node": 210,
+    "allocation": "disjoint retained intervals; no channel reuse",
+    "cross_component_dynamics": "none; physical coupling is inside the Einstein component",
+    "components": [
+      {
+        "owner": "coupled_frame_matter",
+        "start": 0,
+        "stop": 70,
+        "channels": 70,
+        "purpose": "one frame with mutually coupled complex scalar and normal dust; experimental",
+        "source_fingerprint": "6c94865163aa9cee17cda3dc6b6b9e3744b576447d6a08abb221dfe8b48de363"
+      }
+    ],
+    "channels": [
+      {
+        "index": 0,
+        "name": "coupled_frame_matter.X.B00",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 1,
+        "name": "coupled_frame_matter.X.B01",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 2,
+        "name": "coupled_frame_matter.X.B02",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 3,
+        "name": "coupled_frame_matter.X.B10",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 4,
+        "name": "coupled_frame_matter.X.B11",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 5,
+        "name": "coupled_frame_matter.X.B12",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 6,
+        "name": "coupled_frame_matter.X.B20",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 7,
+        "name": "coupled_frame_matter.X.B21",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 8,
+        "name": "coupled_frame_matter.X.B22",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 9,
+        "name": "coupled_frame_matter.X.K00",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 10,
+        "name": "coupled_frame_matter.X.K01",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 11,
+        "name": "coupled_frame_matter.X.K02",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 12,
+        "name": "coupled_frame_matter.X.K11",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 13,
+        "name": "coupled_frame_matter.X.K12",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 14,
+        "name": "coupled_frame_matter.X.K22",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 15,
+        "name": "coupled_frame_matter.X.G010",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 16,
+        "name": "coupled_frame_matter.X.G011",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 17,
+        "name": "coupled_frame_matter.X.G012",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 18,
+        "name": "coupled_frame_matter.X.G020",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 19,
+        "name": "coupled_frame_matter.X.G021",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 20,
+        "name": "coupled_frame_matter.X.G022",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 21,
+        "name": "coupled_frame_matter.X.G120",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 22,
+        "name": "coupled_frame_matter.X.G121",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 23,
+        "name": "coupled_frame_matter.X.G122",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 24,
+        "name": "coupled_frame_matter.X.phi",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 25,
+        "name": "coupled_frame_matter.X.Pi",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 26,
+        "name": "coupled_frame_matter.X.Q0",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 27,
+        "name": "coupled_frame_matter.X.Q1",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 28,
+        "name": "coupled_frame_matter.X.Q2",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 29,
+        "name": "coupled_frame_matter.X.chi",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 30,
+        "name": "coupled_frame_matter.X.Pi_chi",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 31,
+        "name": "coupled_frame_matter.X.W0",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 32,
+        "name": "coupled_frame_matter.X.W1",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 33,
+        "name": "coupled_frame_matter.X.W2",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 34,
+        "name": "coupled_frame_matter.X.dust_amplitude",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 35,
+        "name": "coupled_frame_matter.Y.B00",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 36,
+        "name": "coupled_frame_matter.Y.B01",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 37,
+        "name": "coupled_frame_matter.Y.B02",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 38,
+        "name": "coupled_frame_matter.Y.B10",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 39,
+        "name": "coupled_frame_matter.Y.B11",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 40,
+        "name": "coupled_frame_matter.Y.B12",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 41,
+        "name": "coupled_frame_matter.Y.B20",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 42,
+        "name": "coupled_frame_matter.Y.B21",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 43,
+        "name": "coupled_frame_matter.Y.B22",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 44,
+        "name": "coupled_frame_matter.Y.K00",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 45,
+        "name": "coupled_frame_matter.Y.K01",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 46,
+        "name": "coupled_frame_matter.Y.K02",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 47,
+        "name": "coupled_frame_matter.Y.K11",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 48,
+        "name": "coupled_frame_matter.Y.K12",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 49,
+        "name": "coupled_frame_matter.Y.K22",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 50,
+        "name": "coupled_frame_matter.Y.G010",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 51,
+        "name": "coupled_frame_matter.Y.G011",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 52,
+        "name": "coupled_frame_matter.Y.G012",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 53,
+        "name": "coupled_frame_matter.Y.G020",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 54,
+        "name": "coupled_frame_matter.Y.G021",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 55,
+        "name": "coupled_frame_matter.Y.G022",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 56,
+        "name": "coupled_frame_matter.Y.G120",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 57,
+        "name": "coupled_frame_matter.Y.G121",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 58,
+        "name": "coupled_frame_matter.Y.G122",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 59,
+        "name": "coupled_frame_matter.Y.phi",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 60,
+        "name": "coupled_frame_matter.Y.Pi",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 61,
+        "name": "coupled_frame_matter.Y.Q0",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 62,
+        "name": "coupled_frame_matter.Y.Q1",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 63,
+        "name": "coupled_frame_matter.Y.Q2",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 64,
+        "name": "coupled_frame_matter.Y.chi",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 65,
+        "name": "coupled_frame_matter.Y.Pi_chi",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 66,
+        "name": "coupled_frame_matter.Y.W0",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 67,
+        "name": "coupled_frame_matter.Y.W1",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 68,
+        "name": "coupled_frame_matter.Y.W2",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      },
+      {
+        "index": 69,
+        "name": "coupled_frame_matter.Y.dust_amplitude",
+        "owner": "coupled_frame_matter",
+        "label": "audit",
+        "link": null
+      }
+    ],
+    "metric_authorities": [
+      "coupled_frame_matter.B"
+    ],
+    "bank_semantics": {
+      "X": "previous 35-field slice",
+      "Y": "current 35-field slice"
+    },
+    "retained_components_per_slice": {
+      "inverse_triad": 9,
+      "extrinsic_curvature": 6,
+      "spatial_connection": 9,
+      "complex_scalar_and_frame_gradients": 10,
+      "signed_dust_amplitude": 1
+    },
+    "dust_density": "dust_amplitude squared; sign retained, no clipping",
+    "clock_apparatus_channels": 0
+  },
+  "cases": {
+    "flat": {
+      "steps": 24,
+      "complete_snapshots": 25,
+      "exact_pair_map": true,
+      "exact_rewind": true,
+      "remainders_frozen": true,
+      "maximum_integer_bits": 1,
+      "audit_click_classes": {
+        "0": 0,
+        "1": 0,
+        "2": 0
+      },
+      "observations": [
+        {
+          "peak_constraints": {
+            "H": "0",
+            "M0": "0",
+            "M1": "0",
+            "M2": "0",
+            "C010": "0",
+            "C011": "0",
+            "C012": "0",
+            "C020": "0",
+            "C021": "0",
+            "C022": "0",
+            "C120": "0",
+            "C121": "0",
+            "C122": "0",
+            "Ricci_antisym01": "0",
+            "Ricci_antisym02": "0",
+            "Ricci_antisym12": "0",
+            "Q_gradient0": "0",
+            "Q_gradient1": "0",
+            "Q_gradient2": "0",
+            "W_gradient0": "0",
+            "W_gradient1": "0",
+            "W_gradient2": "0"
+          },
+          "all_discrete_constraints_zero": true,
+          "singular_nodes": 0,
+          "minimum_abs_det_B": "1",
+          "minimum_rho": "0",
+          "maximum_rho": "0",
+          "negative_dust_nodes": 0,
+          "peak_energy_balance_defect": "0",
+          "peak_charge_balance_defect": "0"
+        },
+        {
+          "peak_constraints": {
+            "H": "0",
+            "M0": "0",
+            "M1": "0",
+            "M2": "0",
+            "C010": "0",
+            "C011": "0",
+            "C012": "0",
+            "C020": "0",
+            "C021": "0",
+            "C022": "0",
+            "C120": "0",
+            "C121": "0",
+            "C122": "0",
+            "Ricci_antisym01": "0",
+            "Ricci_antisym02": "0",
+            "Ricci_antisym12": "0",
+            "Q_gradient0": "0",
+            "Q_gradient1": "0",
+            "Q_gradient2": "0",
+            "W_gradient0": "0",
+            "W_gradient1": "0",
+            "W_gradient2": "0"
+          },
+          "all_discrete_constraints_zero": true,
+          "singular_nodes": 0,
+          "minimum_abs_det_B": "1",
+          "minimum_rho": "0",
+          "maximum_rho": "0",
+          "negative_dust_nodes": 0,
+          "peak_energy_balance_defect": "0",
+          "peak_charge_balance_defect": "0"
+        }
+      ],
+      "trace_sha256": "112c0f7c9ac379359d830fb1d0a1f81b1378e498a991d29d6a5de20efb1de13b"
+    },
+    "complex_scalar_and_dust": {
+      "steps": 4,
+      "complete_snapshots": 5,
+      "exact_pair_map": true,
+      "exact_rewind": true,
+      "remainders_frozen": true,
+      "maximum_integer_bits": 38,
+      "audit_click_classes": {
+        "0": 1971,
+        "1": 0,
+        "2": 0
+      },
+      "observations": [
+        {
+          "peak_constraints": {
+            "H": "15",
+            "M0": "0",
+            "M1": "0",
+            "M2": "0",
+            "C010": "0",
+            "C011": "0",
+            "C012": "0",
+            "C020": "0",
+            "C021": "0",
+            "C022": "0",
+            "C120": "0",
+            "C121": "0",
+            "C122": "0",
+            "Ricci_antisym01": "0",
+            "Ricci_antisym02": "0",
+            "Ricci_antisym12": "0",
+            "Q_gradient0": "0",
+            "Q_gradient1": "0",
+            "Q_gradient2": "0",
+            "W_gradient0": "0",
+            "W_gradient1": "0",
+            "W_gradient2": "0"
+          },
+          "all_discrete_constraints_zero": false,
+          "singular_nodes": 0,
+          "minimum_abs_det_B": "1",
+          "minimum_rho": "15/2",
+          "maximum_rho": "15/2",
+          "negative_dust_nodes": 0,
+          "peak_energy_balance_defect": "0",
+          "peak_charge_balance_defect": "0"
+        },
+        {
+          "peak_constraints": {
+            "H": "173",
+            "M0": "0",
+            "M1": "0",
+            "M2": "0",
+            "C010": "0",
+            "C011": "0",
+            "C012": "0",
+            "C020": "0",
+            "C021": "0",
+            "C022": "0",
+            "C120": "0",
+            "C121": "0",
+            "C122": "0",
+            "Ricci_antisym01": "0",
+            "Ricci_antisym02": "0",
+            "Ricci_antisym12": "0",
+            "Q_gradient0": "0",
+            "Q_gradient1": "0",
+            "Q_gradient2": "0",
+            "W_gradient0": "0",
+            "W_gradient1": "0",
+            "W_gradient2": "0"
+          },
+          "all_discrete_constraints_zero": false,
+          "singular_nodes": 0,
+          "minimum_abs_det_B": "1",
+          "minimum_rho": "43/2",
+          "maximum_rho": "43/2",
+          "negative_dust_nodes": 0,
+          "peak_energy_balance_defect": "0",
+          "peak_charge_balance_defect": "0"
+        },
+        {
+          "peak_constraints": {
+            "H": "193293",
+            "M0": "0",
+            "M1": "0",
+            "M2": "0",
+            "C010": "0",
+            "C011": "0",
+            "C012": "0",
+            "C020": "0",
+            "C021": "0",
+            "C022": "0",
+            "C120": "0",
+            "C121": "0",
+            "C122": "0",
+            "Ricci_antisym01": "0",
+            "Ricci_antisym02": "0",
+            "Ricci_antisym12": "0",
+            "Q_gradient0": "0",
+            "Q_gradient1": "0",
+            "Q_gradient2": "0",
+            "W_gradient0": "0",
+            "W_gradient1": "0",
+            "W_gradient2": "0"
+          },
+          "all_discrete_constraints_zero": false,
+          "singular_nodes": 0,
+          "minimum_abs_det_B": "1331",
+          "minimum_rho": "14283/2",
+          "maximum_rho": "14283/2",
+          "negative_dust_nodes": 0,
+          "peak_energy_balance_defect": "0",
+          "peak_charge_balance_defect": "0"
+        },
+        {
+          "peak_constraints": {
+            "H": "239977559553",
+            "M0": "0",
+            "M1": "0",
+            "M2": "0",
+            "C010": "0",
+            "C011": "0",
+            "C012": "0",
+            "C020": "0",
+            "C021": "0",
+            "C022": "0",
+            "C120": "0",
+            "C121": "0",
+            "C122": "0",
+            "Ricci_antisym01": "0",
+            "Ricci_antisym02": "0",
+            "Ricci_antisym12": "0",
+            "Q_gradient0": "0",
+            "Q_gradient1": "0",
+            "Q_gradient2": "0",
+            "W_gradient0": "0",
+            "W_gradient1": "0",
+            "W_gradient2": "0"
+          },
+          "all_discrete_constraints_zero": false,
+          "singular_nodes": 0,
+          "minimum_abs_det_B": "68468125571",
+          "minimum_rho": "15598479711/2",
+          "maximum_rho": "15598479711/2",
+          "negative_dust_nodes": 0,
+          "peak_energy_balance_defect": "0",
+          "peak_charge_balance_defect": "0"
+        },
+        {
+          "peak_constraints": {
+            "H": "367719875101085229413633",
+            "M0": "0",
+            "M1": "0",
+            "M2": "0",
+            "C010": "0",
+            "C011": "0",
+            "C012": "0",
+            "C020": "0",
+            "C021": "0",
+            "C022": "0",
+            "C120": "0",
+            "C121": "0",
+            "C122": "0",
+            "Ricci_antisym01": "0",
+            "Ricci_antisym02": "0",
+            "Ricci_antisym12": "0",
+            "Q_gradient0": "0",
+            "Q_gradient1": "0",
+            "Q_gradient2": "0",
+            "W_gradient0": "0",
+            "W_gradient1": "0",
+            "W_gradient2": "0"
+          },
+          "all_discrete_constraints_zero": false,
+          "singular_nodes": 0,
+          "minimum_abs_det_B": "4815393271623152711810233883",
+          "minimum_rho": "23091767075851551759967/2",
+          "maximum_rho": "23091767075851551759967/2",
+          "negative_dust_nodes": 0,
+          "peak_energy_balance_defect": "0",
+          "peak_charge_balance_defect": "0"
+        }
+      ],
+      "trace_sha256": "66130ad055743d2375caf07dac21c6542f4f616fa78c8c75f6441b6bdcdca8e3"
+    },
+    "spatial_matter": {
+      "steps": 3,
+      "complete_snapshots": 4,
+      "exact_pair_map": true,
+      "exact_rewind": true,
+      "remainders_frozen": true,
+      "maximum_integer_bits": 24,
+      "audit_click_classes": {
+        "0": 5125,
+        "1": 0,
+        "2": 0
+      },
+      "observations": [
+        {
+          "peak_constraints": {
+            "H": "30",
+            "M0": "6",
+            "M1": "7",
+            "M2": "7",
+            "C010": "3",
+            "C011": "3",
+            "C012": "3",
+            "C020": "5",
+            "C021": "7/2",
+            "C022": "7/2",
+            "C120": "3",
+            "C121": "7/2",
+            "C122": "4",
+            "Ricci_antisym01": "9/2",
+            "Ricci_antisym02": "9/2",
+            "Ricci_antisym12": "8",
+            "Q_gradient0": "5/2",
+            "Q_gradient1": "3",
+            "Q_gradient2": "4",
+            "W_gradient0": "5/2",
+            "W_gradient1": "5/2",
+            "W_gradient2": "7/2"
+          },
+          "all_discrete_constraints_zero": false,
+          "singular_nodes": 10,
+          "minimum_abs_det_B": "0",
+          "minimum_rho": "2",
+          "maximum_rho": "11/2",
+          "negative_dust_nodes": 0,
+          "peak_energy_balance_defect": "11/2",
+          "peak_charge_balance_defect": "7/2"
+        },
+        {
+          "peak_constraints": {
+            "H": "890",
+            "M0": "217",
+            "M1": "156",
+            "M2": "162",
+            "C010": "43",
+            "C011": "43",
+            "C012": "48",
+            "C020": "51",
+            "C021": "95/2",
+            "C022": "77",
+            "C120": "91/2",
+            "C121": "63/2",
+            "C122": "66",
+            "Ricci_antisym01": "147/2",
+            "Ricci_antisym02": "189/2",
+            "Ricci_antisym12": "201/2",
+            "Q_gradient0": "35/2",
+            "Q_gradient1": "23/2",
+            "Q_gradient2": "29/2",
+            "W_gradient0": "25",
+            "W_gradient1": "37/2",
+            "W_gradient2": "39/2"
+          },
+          "all_discrete_constraints_zero": false,
+          "singular_nodes": 3,
+          "minimum_abs_det_B": "0",
+          "minimum_rho": "25/2",
+          "maximum_rho": "281/2",
+          "negative_dust_nodes": 0,
+          "peak_energy_balance_defect": "472",
+          "peak_charge_balance_defect": "243/2"
+        },
+        {
+          "peak_constraints": {
+            "H": "7342171",
+            "M0": "584565/2",
+            "M1": "606067/2",
+            "M2": "233247",
+            "C010": "30966",
+            "C011": "54023",
+            "C012": "90727/2",
+            "C020": "81287/2",
+            "C021": "91295/2",
+            "C022": "125639/2",
+            "C120": "77855/2",
+            "C121": "20675",
+            "C122": "79789/2",
+            "Ricci_antisym01": "64967",
+            "Ricci_antisym02": "156841/2",
+            "Ricci_antisym12": "75915/2",
+            "Q_gradient0": "3019",
+            "Q_gradient1": "1650",
+            "Q_gradient2": "3991/2",
+            "W_gradient0": "1205",
+            "W_gradient1": "1716",
+            "W_gradient2": "4297/2"
+          },
+          "all_discrete_constraints_zero": false,
+          "singular_nodes": 0,
+          "minimum_abs_det_B": "94",
+          "minimum_rho": "18795/2",
+          "maximum_rho": "490520",
+          "negative_dust_nodes": 0,
+          "peak_energy_balance_defect": "73773061/2",
+          "peak_charge_balance_defect": "550139/2"
+        },
+        {
+          "peak_constraints": {
+            "H": "401737610070530",
+            "M0": "9924725724645/2",
+            "M1": "7433403368417/2",
+            "M2": "4088038493844",
+            "C010": "318692328313/2",
+            "C011": "131153491814",
+            "C012": "632149423757/2",
+            "C020": "202601255461/2",
+            "C021": "214534275411",
+            "C022": "573642505867",
+            "C120": "127899343025/2",
+            "C121": "283304005761/2",
+            "C122": "766503274591/2",
+            "Ricci_antisym01": "415270995794",
+            "Ricci_antisym02": "607213284608",
+            "Ricci_antisym12": "569954898469/2",
+            "Q_gradient0": "346490835",
+            "Q_gradient1": "571771463/2",
+            "Q_gradient2": "295326735",
+            "W_gradient0": "222522467",
+            "W_gradient1": "206631365",
+            "W_gradient2": "225392074"
+          },
+          "all_discrete_constraints_zero": false,
+          "singular_nodes": 0,
+          "minimum_abs_det_B": "2818921032",
+          "minimum_rho": "832441191",
+          "maximum_rho": "37642023095993/2",
+          "negative_dust_nodes": 0,
+          "peak_energy_balance_defect": "1060053707552655864",
+          "peak_charge_balance_defect": "358659169109993/2"
+        }
+      ],
+      "trace_sha256": "b2dc09171dfe3639463bf37b519db469a5d630350e0364d3c1a72a1369a56b5a"
+    },
+    "constrained_slice_pair": {
+      "steps": 1,
+      "complete_snapshots": 2,
+      "exact_pair_map": true,
+      "exact_rewind": true,
+      "remainders_frozen": true,
+      "maximum_integer_bits": 3,
+      "audit_click_classes": {
+        "0": 297,
+        "1": 0,
+        "2": 0
+      },
+      "observations": [
+        {
+          "peak_constraints": {
+            "H": "0",
+            "M0": "0",
+            "M1": "0",
+            "M2": "0",
+            "C010": "0",
+            "C011": "0",
+            "C012": "0",
+            "C020": "0",
+            "C021": "0",
+            "C022": "0",
+            "C120": "0",
+            "C121": "0",
+            "C122": "0",
+            "Ricci_antisym01": "0",
+            "Ricci_antisym02": "0",
+            "Ricci_antisym12": "0",
+            "Q_gradient0": "0",
+            "Q_gradient1": "0",
+            "Q_gradient2": "0",
+            "W_gradient0": "0",
+            "W_gradient1": "0",
+            "W_gradient2": "0"
+          },
+          "all_discrete_constraints_zero": true,
+          "singular_nodes": 0,
+          "minimum_abs_det_B": "1",
+          "minimum_rho": "1",
+          "maximum_rho": "1",
+          "negative_dust_nodes": 0,
+          "peak_energy_balance_defect": "0",
+          "peak_charge_balance_defect": "0"
+        },
+        {
+          "peak_constraints": {
+            "H": "34",
+            "M0": "0",
+            "M1": "0",
+            "M2": "0",
+            "C010": "0",
+            "C011": "0",
+            "C012": "0",
+            "C020": "0",
+            "C021": "0",
+            "C022": "0",
+            "C120": "0",
+            "C121": "0",
+            "C122": "0",
+            "Ricci_antisym01": "0",
+            "Ricci_antisym02": "0",
+            "Ricci_antisym12": "0",
+            "Q_gradient0": "0",
+            "Q_gradient1": "0",
+            "Q_gradient2": "0",
+            "W_gradient0": "0",
+            "W_gradient1": "0",
+            "W_gradient2": "0"
+          },
+          "all_discrete_constraints_zero": false,
+          "singular_nodes": 0,
+          "minimum_abs_det_B": "1",
+          "minimum_rho": "17",
+          "maximum_rho": "17",
+          "negative_dust_nodes": 0,
+          "peak_energy_balance_defect": "0",
+          "peak_charge_balance_defect": "0"
+        }
+      ],
+      "trace_sha256": "a061f24a184aae84b763cf7c0a48bc5f3366d7ce28f23a752e76d74c3aa4e0e9"
+    },
+    "signed_dust_nonnegative_density": {
+      "steps": 1,
+      "complete_snapshots": 2,
+      "exact_pair_map": true,
+      "exact_rewind": true,
+      "remainders_frozen": true,
+      "maximum_integer_bits": 4,
+      "audit_click_classes": {
+        "0": 243,
+        "1": 0,
+        "2": 0
+      },
+      "observations": [
+        {
+          "peak_constraints": {
+            "H": "2",
+            "M0": "0",
+            "M1": "0",
+            "M2": "0",
+            "C010": "0",
+            "C011": "0",
+            "C012": "0",
+            "C020": "0",
+            "C021": "0",
+            "C022": "0",
+            "C120": "0",
+            "C121": "0",
+            "C122": "0",
+            "Ricci_antisym01": "0",
+            "Ricci_antisym02": "0",
+            "Ricci_antisym12": "0",
+            "Q_gradient0": "0",
+            "Q_gradient1": "0",
+            "Q_gradient2": "0",
+            "W_gradient0": "0",
+            "W_gradient1": "0",
+            "W_gradient2": "0"
+          },
+          "all_discrete_constraints_zero": false,
+          "singular_nodes": 0,
+          "minimum_abs_det_B": "1",
+          "minimum_rho": "1",
+          "maximum_rho": "1",
+          "negative_dust_nodes": 0,
+          "peak_energy_balance_defect": "0",
+          "peak_charge_balance_defect": "0"
+        },
+        {
+          "peak_constraints": {
+            "H": "20",
+            "M0": "0",
+            "M1": "0",
+            "M2": "0",
+            "C010": "0",
+            "C011": "0",
+            "C012": "0",
+            "C020": "0",
+            "C021": "0",
+            "C022": "0",
+            "C120": "0",
+            "C121": "0",
+            "C122": "0",
+            "Ricci_antisym01": "0",
+            "Ricci_antisym02": "0",
+            "Ricci_antisym12": "0",
+            "Q_gradient0": "0",
+            "Q_gradient1": "0",
+            "Q_gradient2": "0",
+            "W_gradient0": "0",
+            "W_gradient1": "0",
+            "W_gradient2": "0"
+          },
+          "all_discrete_constraints_zero": false,
+          "singular_nodes": 0,
+          "minimum_abs_det_B": "3",
+          "minimum_rho": "1",
+          "maximum_rho": "1",
+          "negative_dust_nodes": 0,
+          "peak_energy_balance_defect": "0",
+          "peak_charge_balance_defect": "0"
+        }
+      ],
+      "trace_sha256": "8534aba84fd9b7cb3d86b832964b117e437df1fd1727db5bbef135a594bfb54c"
+    },
+    "scalar_gradient_failure": {
+      "steps": 1,
+      "complete_snapshots": 2,
+      "exact_pair_map": true,
+      "exact_rewind": true,
+      "remainders_frozen": true,
+      "maximum_integer_bits": 4,
+      "audit_click_classes": {
+        "0": 244,
+        "1": 0,
+        "2": 0
+      },
+      "observations": [
+        {
+          "peak_constraints": {
+            "H": "16",
+            "M0": "0",
+            "M1": "0",
+            "M2": "0",
+            "C010": "0",
+            "C011": "0",
+            "C012": "0",
+            "C020": "0",
+            "C021": "0",
+            "C022": "0",
+            "C120": "0",
+            "C121": "0",
+            "C122": "0",
+            "Ricci_antisym01": "0",
+            "Ricci_antisym02": "0",
+            "Ricci_antisym12": "0",
+            "Q_gradient0": "0",
+            "Q_gradient1": "0",
+            "Q_gradient2": "0",
+            "W_gradient0": "0",
+            "W_gradient1": "0",
+            "W_gradient2": "0"
+          },
+          "all_discrete_constraints_zero": false,
+          "singular_nodes": 0,
+          "minimum_abs_det_B": "1",
+          "minimum_rho": "0",
+          "maximum_rho": "8",
+          "negative_dust_nodes": 0,
+          "peak_energy_balance_defect": "0",
+          "peak_charge_balance_defect": "0"
+        },
+        {
+          "peak_constraints": {
+            "H": "284",
+            "M0": "72",
+            "M1": "72",
+            "M2": "72",
+            "C010": "0",
+            "C011": "0",
+            "C012": "0",
+            "C020": "0",
+            "C021": "0",
+            "C022": "0",
+            "C120": "0",
+            "C121": "0",
+            "C122": "0",
+            "Ricci_antisym01": "0",
+            "Ricci_antisym02": "0",
+            "Ricci_antisym12": "0",
+            "Q_gradient0": "16",
+            "Q_gradient1": "0",
+            "Q_gradient2": "0",
+            "W_gradient0": "0",
+            "W_gradient1": "0",
+            "W_gradient2": "0"
+          },
+          "all_discrete_constraints_zero": false,
+          "singular_nodes": 0,
+          "minimum_abs_det_B": "3",
+          "minimum_rho": "0",
+          "maximum_rho": "142",
+          "negative_dust_nodes": 0,
+          "peak_energy_balance_defect": "516",
+          "peak_charge_balance_defect": "0"
+        }
+      ],
+      "trace_sha256": "a5aada145822fbffe3ef58294ff54d21db98511e90666633b8197c6e1bbd74d2"
+    }
+  },
+  "refinement_rejections": {
+    "dt=1/2,dx=1/2": "Increment of K00 has noninteger coefficient -1/2; 70-channel integer refinement is not established",
+    "dt=1/16,dx=1": "Increment of B00 has noninteger coefficient 1/8; 70-channel integer refinement is not established"
+  },
+  "continuum_reference": {
+    "role": "floating homogeneous consistency only, not spatial/general/Rule3 convergence",
+    "mass_squared": 0,
+    "runs": [
+      {
+        "steps": 16,
+        "dt": "1/16",
+        "maximum_error_at_t2": 0.00027102025697706145
+      },
+      {
+        "steps": 32,
+        "dt": "1/32",
+        "maximum_error_at_t2": 3.9521304714240646e-05
+      },
+      {
+        "steps": 64,
+        "dt": "1/64",
+        "maximum_error_at_t2": 1.5342833127207633e-05
+      }
+    ],
+    "errors_decrease": true
+  },
+  "gates": {
+    "exact_reversible_integer_pair_map": true,
+    "strict_single_edge_support": true,
+    "bidirectional_scalar_dust_coupling": true,
+    "single_frame_geometry_in_candidate": true,
+    "general_constraint_preservation": false,
+    "scalar_gradient_constraint_preservation": false,
+    "dust_density_nonnegative_by_square_encoding": true,
+    "nonnegative_total_energy_density": true,
+    "nondegeneracy_preservation": false,
+    "local_discrete_energy_and_charge_balance": false,
+    "arbitrary_integer_spacetime_refinement": false,
+    "operational_metric_clock": false,
+    "general_einstein_solver_validated": false
+  },
+  "source_sha256": {
+    "experiments/geometry/frame_matter_audit.py": "dd50b8827f3db16a624fb13ff8971426ac294d6c5226f23badab3a18d70b2bd0",
+    "universe24/algebra/frame_equations.py": "0414e93591cfaf7d1ab3c1c3ac45d958fa120a83c5a3bb337063622106162845",
+    "universe24/algebra/frame_matter.py": "8a6668d3aaf64d176b50372660f55d0b8f40531304e5223450e851a06aaddfcf",
+    "universe24/algebra/null_covector.py": "59ceb651bd4b547be94ff93163026d7ce9a800b78b722acdf82cfa48fb90716a",
+    "universe24/layers/frame_matter.py": "193ce6378c4a93f0731bd30db75e1b969066df5a5568bb2217a23137e8ad86bf",
+    "universe24/prepare/frame48.py": "376a3cc10a225c84b61e34cca124694840af6ab469ad59d5019978dcdd416c1b",
+    "universe24/prepare/frame_matter.py": "99105b8798031ba61b450aa0bdc5220dbd85581ec1f95fe053b9d59392cba110",
+    "universe24/observe/frame48.py": "3333049e7a096916de2f6bbccb7b4a39ed49865e653f2aa30b7f9e310b7ffbb5",
+    "universe24/observe/frame_matter.py": "da6e5456718276244b48ff3910cefebd7152112b18e5d9d91d7fe9b705d3523d",
+    "universe24/core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+    "universe24/core/tensor.py": "144ce8365ed01583a1950b056b6b94dac6f3f1b4f33085df95be98f30ead22c1",
+    "universe24/core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+    "universe24/core/channels.py": "cbff6d1c98bc660d55ab9efd64d9f2cbf6624b265492ca639e21722defc83f5b",
+    "universe24/tests/test_frame_matter.py": "4300bf1b5c2ebb473917aaa85648890bd2996bfcd44d69f82aaedc6c1e4abc51"
+  }
+}

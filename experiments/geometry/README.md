@@ -27,3 +27,11 @@ counter. Its fixed tensor has no construction-time horizon. It does not
 replace the general ADM model. See [the exact recurrence and clock conventions](../../docs/COMPACT_FLRW_CLOCKS.md).
 
 The transported probe and its negative common-metric controls from PR #31 are now included. Run `python experiments/geometry/transported_probe_clock.py`; replay the original evidence with `--replay runs/transported-probe/checked.json`. `python -m universe24 --probe-experiment --L 5` allocates this test chart alongside Einstein in one Engine, with isolated channels. It does not supply the physical board metric. See [UNIFIED_SYSTEM.md](../../docs/UNIFIED_SYSTEM.md).
+## Coupled frame, complex scalar and dust
+
+`python experiments/geometry/frame_matter_audit.py --out runs/frame-matter`
+exports the experimental 70-channel coupled tensor, complete replay traces
+and source-hashed evidence. See [the algebra and physical gates](../../docs/FRAME_MATTER.md).
+It proves exact reversible execution and nonnegative encoded dust density;
+general Einstein constraint propagation, refinement and operational clocks
+remain unvalidated. The default ADM event-board geometry is unchanged.
