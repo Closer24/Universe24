@@ -78,3 +78,5 @@ python -m universe24.tools.audit_contract --replay runs/contract
 ```
 
 All register reads are on-site or at a face neighbor. Including both endpoints of link gears, some terms span two lattice edges; the stricter single-physical-link condition is not satisfied. Official event counts are distinct from signed quotient weights.
+
+An explicit [single-edge experiment](docs/SINGLE_EDGE_IMPLEMENTATION.md) adds 90 node mediators and meets the stronger condition with the same engine. It changes dynamics and requires a declared observation map; physical equivalence is unproved, so it is not the default. Run `python -m universe24.tools.physics_gate` to reproduce the electromagnetic readout comparison and the gravity-independent cosmic-clock control. Neither construction establishes Einstein spacetime; the board is the proposed substrate and clicks are its observable records.

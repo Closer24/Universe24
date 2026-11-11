@@ -24,6 +24,8 @@ Signed integers can be encoded by natural numbers without loss: encode(z)=2z for
 
 The root simulation state contains a, b and r arrays of shape (G,L³). There is no separately evolved click log, second board, hidden local time register or external control state in this representation. A diagnostic can keep a history for analysis without feeding it back.
 
+The history of these local transitions is the proposed underlying event network (P3). Clicks are observations of that network (P7), not a second physical spacetime. The intended relativistic geometry must follow from signal and clock dynamics on the board and be confirmed by click measurements. The coordinate pair (n,x) is a computational label; it has not been shown to be an Einstein-spacetime coordinate system with an operational Lorentzian metric.
+
 ### A2. The cube, its rotations and quaternions
 
 The orientation-preserving rotations of the cube are 24 signed 3×3 permutation matrices R with determinant +1. Quaternion units obey i²=j²=k²=ijk=−1. Unit quaternions act on a spatial vector, written as a pure imaginary quaternion, by v↦qvq⁻¹.
@@ -81,6 +83,8 @@ A purely matrix notation is possible after lifting the inputs: form Z(v), the ve
 For example, a fixed term c·bₓ,j·bₓ+d,k has a changing effective coefficient c·bₓ,j for the second factor. It permits modulation through the state while c and the tensor remain fixed. Whether it realizes a useful gate or clutch must be tested.
 
 The implementation validates locality, merges equal monomials and records the order needed for inversion. Its sparse coefficient representation is an implementation of this algebra, not a second changing table. Default ONE has 18,592 live monomials of degree at most three.
+
+The optional [single-edge construction](SINGLE_EDGE_IMPLEMENTATION.md) introduces node mediators while retaining all physical link types. It has 472 gear types and zero strict support violations. Its equations, inverse proof and passive source-coordinate observation map are explicit. The map restores the Lorenz diagnostic, but the new dynamics includes extra forces and is not proved physically equivalent. It is an experiment, not the default algebra or an established physical correction.
 
 ### A6. The scalar update and the common divisor
 

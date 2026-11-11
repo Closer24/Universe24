@@ -74,11 +74,18 @@ def scalar_crosscheck(tensor, Q, L=3):
     return dict(gear_transitions=checked,ordinary_and_bigint=True,mismatches=0)
 
 
-def cone_check():
+def cone_check(single_edge=False, stiffness=None):
     """Difference of two complete runs whose seeds differ at exactly one site."""
     _,T,E,s,_=build(7,'none',13)
+    field='cosmic.M1'
+    if single_edge:
+        from ..layers.strict_edge import single_edge_realization
+        from ..prepare.strict_edge import lift_seed
+        realization=single_edge_realization(T,stiffness=stiffness)
+        s=lift_seed(s,realization);T=realization.tensor;E=Engine(T,T.Q)
+        field='em.A_x'
     altered=s.copy();origin=(3,3,3);n=lattice(7).index(*origin)
-    altered.b[T.gear_index('cosmic.M1'),n]+=1024
+    altered.b[T.gear_index(field),n]+=1024
     lat=lattice(7)
     dist=np.array([sum(min(abs(a-b),7-abs(a-b)) for a,b in zip(lat.coords(i),origin)) for i in range(lat.N)])
     rows=[]
@@ -88,14 +95,16 @@ def cone_check():
         outside=int(np.sum(changed & (dist>step)))
         if outside:raise AssertionError('forward cone exceeded')
         rows.append(dict(step=step,changed_sites=int(changed.sum()),outside_cone=outside))
-    return dict(L=7,origin=origin,perturbation='cosmic.M1 b += 1024 in initial state only',steps=rows)
+    return dict(L=7,origin=origin,perturbation=field+' b += 1024 in initial state only',steps=rows)
 
 
 def replay(directory):
-    p=Path(directory);t=Tensor.from_json((p/'tensor.json').read_text())
+    p=Path(directory);report=json.loads((p/'report.json').read_text())
+    strict=report.get('construction',{}).get('kind')=='single-physical-edge experiment'
+    t=Tensor.from_json((p/'tensor.json').read_text(),strict_support=strict)
     with gzip.open(p/'initial_state.json.gz','rt') as f:s=State.from_dict(json.load(f))
     with gzip.open(p/'final_state.json.gz','rt') as f:expected=State.from_dict(json.load(f))
-    report=json.loads((p/'report.json').read_text());e=Engine(t,t.Q)
+    e=Engine(t,t.Q)
     if (t.fingerprint!=report['tensor']['full_tensor_fingerprint']
             or state_hash(s,np.arange(t.G))!=report['run']['initial_hash']
             or state_hash(expected,np.arange(t.G))!=report['run']['final_hash']):
@@ -130,10 +139,25 @@ def decode_saved_clicks(path):
                 clock_times=clock_t,clock_sizes=clock_q)
 
 
-def run(L,steps,rng_seed,out):
+def run(L,steps,rng_seed,out,*,single_edge=False,stiffness=None,max_bits=256):
     if type(steps) is not int or steps<1:raise ValueError('steps must be positive')
+    if type(max_bits) is not int or max_bits<1:raise ValueError('max_bits must be positive')
+    if not single_edge and stiffness is not None:raise ValueError('stiffness requires single_edge')
     out=Path(out);out.mkdir(parents=True,exist_ok=True)
     S,T,E,seed,prep=build(L,'jpure',rng_seed)
+    construction=dict(kind='baseline',source_fingerprint=T.fingerprint)
+    if single_edge:
+        from ..layers.strict_edge import single_edge_realization
+        from ..prepare.strict_edge import lift_seed
+        realization=single_edge_realization(T,stiffness=stiffness)
+        seed=lift_seed(seed,realization);T=realization.tensor;E=Engine(T,S.Q)
+        construction=dict(kind='single-physical-edge experiment',
+                          source_fingerprint=realization.source_fingerprint,
+                          source_gears=realization.source_gears,stiffness=stiffness,
+                          link_mediators=[[T.names[g],T.names[h]] for g,h in realization.link_mediators],
+                          seed_lift='H.a,b,r copied once from U.a,b,r; independent thereafter',
+                          equivalent_to_source_dynamics=False,
+                          physical_acceptance='not accepted as a physics-preserving replacement; see physics_gate')
     initial=seed.copy();fp=T.fingerprint
     (out/'tensor.json').write_text(T.to_json())
     save_json(out/'initial_state.json.gz',seed.to_dict())
@@ -141,7 +165,7 @@ def run(L,steps,rng_seed,out):
     counts=Counter();weights=Counter();classes=Counter();audit_rows=0;dropped=0
     clock_g=T.gear_index('cosmic.M1');times=[];sizes=[]
     snapshots_hash=state_hash(seed,np.arange(T.G))
-    total_records=0;per_update=[];state=seed
+    total_records=0;per_update=[];state=seed;peak_bits=0;stopped_for_growth=False
     with gzip.open(out/'official_clicks.jsonl.gz','wt',encoding='utf-8') as f:
         for step in range(1,steps+1):
             nxt=E.step(state)
@@ -162,8 +186,14 @@ def run(L,steps,rng_seed,out):
             if state_hash(nxt,np.arange(T.G))!=before:raise AssertionError('observer mutated snapshot')
             if not np.array_equal(nxt.r%2,seed.r%2):raise AssertionError('remainder parity')
             state=nxt
+            bits=max(abs(int(v)).bit_length() for arr in (state.a,state.b,state.r) for v in arr.flat)
+            peak_bits=max(bits,peak_bits)
+            if bits>max_bits:
+                stopped_for_growth=True
+                break
     if T.fingerprint!=fp or state_hash(initial,np.arange(T.G))!=snapshots_hash:raise AssertionError('law/seed changed')
-    exact=E.rewind(state,steps).same_as(seed)
+    completed=step
+    exact=E.rewind(state,completed).same_as(seed)
     if not exact or any(led.fail.values()):raise AssertionError('rewind/ledger failure')
     save_json(out/'final_state.json.gz',state.to_dict())
     decoded=decode_saved_clicks(out/'official_clicks.jsonl.gz')
@@ -172,8 +202,10 @@ def run(L,steps,rng_seed,out):
             or decoded['by_class']!=dict(classes) or decoded['clock_times']!=times or decoded['clock_sizes']!=sizes):
         raise AssertionError('saved-event decoder disagrees with online readout')
     crossings=crossing_times(times,sizes);omega=rate_from_crossings(crossings)
-    report=dict(tensor=tensor_report(T),scalar_oracle=scalar_crosscheck(T,S.Q),forward_cone=cone_check(),
-                run=dict(L=L,steps=steps,rng_seed=rng_seed,seed_report=prep,
+    report=dict(construction=construction,tensor=tensor_report(T),scalar_oracle=scalar_crosscheck(T,S.Q),
+                forward_cone=cone_check(single_edge,stiffness),
+                run=dict(L=L,steps=completed,requested_steps=steps,rng_seed=rng_seed,seed_report=prep,
+                         peak_state_bits=peak_bits,bit_limit=max_bits,stopped_for_growth=stopped_for_growth,
                          initial_hash=snapshots_hash,final_hash=state_hash(state,np.arange(T.G)),
                          hash_format='universe24-state-values-v2',exact_rewind=exact,observers_passive=True,
                          tensor_unchanged=True,remainder_parity=True),
@@ -199,7 +231,14 @@ def main():
     p.add_argument('--L',type=int,default=4);p.add_argument('--steps',type=int,default=120)
     p.add_argument('--rng',type=int,default=13);p.add_argument('--out',default='runs/contract')
     p.add_argument('--replay',metavar='DIRECTORY')
+    p.add_argument('--single-edge',action='store_true',help='experimental node/link mediator tensor; changes dynamics')
+    p.add_argument('--stiffness',type=int,help='explicit fixed mediator coefficient, required with --single-edge')
+    p.add_argument('--max-bits',type=int,default=256,help='stop and record growth above this bit length')
     args=p.parse_args()
-    r=replay(args.replay) if args.replay else run(args.L,args.steps,args.rng,args.out)
+    if not args.replay and args.single_edge and args.stiffness is None:
+        p.error('--single-edge requires an explicit --stiffness')
+    r=replay(args.replay) if args.replay else run(args.L,args.steps,args.rng,args.out,
+        single_edge=args.single_edge,stiffness=args.stiffness,max_bits=args.max_bits)
     print(json.dumps(r,indent=2))
+    if r.get('run',{}).get('stopped_for_growth'):raise SystemExit(2)
 if __name__=='__main__':main()
