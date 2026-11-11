@@ -60,6 +60,8 @@ jobs:
           python -m validation.team48_observables --audit runs/team48-contract --source validation-reference
           python -m validation.team48_board --observables runs/team48-contract/observables.json --out runs/one-system-board.html
           node validation/check_board_logic.cjs runs/one-system-board.html
+      - name: Local clock links, retained observer and independent failure controls
+        run: python -m validation.clock_links.run_audits --base-bundle runs/team48-contract/run/bundle --out runs/clock-links
       - name: Test evidence
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9

@@ -276,6 +276,25 @@ requested growth between bursts. This gate remains open.
 
 ## Sources and reproduction
 
+### Clock-link observer follow-up
+
+[The staged clock/observer plan](CLOCK_LINK_OBSERVER_PLAN.md) implements a
+source-only construction on the pinned 44-channel bundle: four retained
+local/face coherent-intensity responses bring its total to 48. It uses the
+same Engine, complete trace, ownership ledger and canonical decoder. The
+added polynomial inputs are `u=3F`, with `F=|z|²` or a coherent face sum,
+so `ell=F` and each remainder is retained. The complete source44 projection
+is unchanged; this is one-way test apparatus, without supplied stress or
+backreaction, proper-time calibration or local gauge-covariant transport.
+
+The construction is a model change for the additional retained responses,
+not a default physical model. History-sensitive event suppression and exact
+interference records pass. Binary Born frequencies fail; there is no
+apparatus-to-carrier selection or recurrent structural-growth evidence.
+The combined audit preserves these failures and rejects mixed run/source
+identities. See the plan for the next reciprocal-interaction, pointer,
+probability-measure and shared-metric acceptance sequence.
+
 The mathematical source ledger and derivations are preserved in
 [Frame48 research](FRAME48_RESEARCH.md), [integer ADM](INTEGER_ADM.md),
 [compact FLRW](COMPACT_FLRW_CLOCKS.md), [compact null wave](COMPACT_NULL_WAVE.md),
