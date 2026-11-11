@@ -1,5 +1,7 @@
 # Full nonlinear Einstein evolution compiled into integer Rule3
 
+The Einstein component is now allocated inside the unified 0.5.0 runtime with isolated communication/probe components. See [UNIFIED_SYSTEM.md](UNIFIED_SYSTEM.md) for channel ownership and [current validation](evidence/universe24_unification.json). Earlier measurements below describe the 0.4.0 physical component and retain their original scope.
+
 The default Universe24 construction implements the general 3+1 Einstein evolution
 equations, a real or complex Klein–Gordon field, cold pressureless dark matter,
 and all four Einstein constraints. No homogeneity, diagonal-metric or weak-field

@@ -310,7 +310,7 @@ def run_epochs(tensor: Tensor, seed: State, *, steps: int,
 
 
 def prepare_baseline(*, L=3, rng_seed=13, seed_kind="pulse", seed_divisor=1):
-    """Construct the unchanged default law and an explicitly declared initial seed.
+    """Construct the explicit 48-channel reference law and an explicitly declared initial seed.
 
     The optional divisor truncates only initial reference a,b towards zero;
     all remainders and tensor coefficients are left unchanged.
@@ -321,7 +321,7 @@ def prepare_baseline(*, L=3, rng_seed=13, seed_kind="pulse", seed_divisor=1):
     from ..layers.reference_model import reference_system
     from ..prepare.reference_model import reference_seed
 
-    system = reference_system()
+    system = reference_system(communication=False)
     tensor = compose(*system.blocks)
     seed, preparation = reference_seed(system, tensor, L, bang=seed_kind, rng_seed=rng_seed)
     source_hash = state_hash(seed, np.arange(tensor.G))
@@ -333,7 +333,7 @@ def prepare_baseline(*, L=3, rng_seed=13, seed_kind="pulse", seed_divisor=1):
             for g in rows:
                 array[g] = [int(value) // seed_divisor if value >= 0
                             else -((-int(value)) // seed_divisor) for value in array[g]]
-    return tensor, seed, dict(builder="reference_system() default, no additional coupling", L=L,
+    return tensor, seed, dict(builder="reference_system(communication=False), explicit reference law", L=L,
                               rng_seed=rng_seed, seed_kind=seed_kind,
                               seed_divisor=seed_divisor, scaled_gear_indices=rows,
                               scaling="initial reference a,b truncated towards zero; r unchanged",

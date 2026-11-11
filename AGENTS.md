@@ -2,6 +2,8 @@
 
 The default `python -m universe24` constructs Einstein ADM, complex scalar matter and dark dust through `universe24.layers.adm`. It uses the unchanged fixed-six Rule3 Engine. The 48-channel reference baseline is explicitly selected through `universe24.layers.reference_model.reference_system()`.
 
+`layers/universe.py` assembles this physical component and the 54-channel communication control under disjoint ownership in `core/channels.py`. Preserve the single authority of the ADM metric. The optional transported probe has an independent test chart and a failed general common-metric gate; never silently promote it to physical matter or proper-time dynamics. Extend the channel manifest and complete-state trace when adding retained data. Never reuse channels across owners or omit remainder changes from replay.
+
 1. Preserve exactly `ell,r_next = divmod(2*u+r,6); a_next=b; b_next=ell-a`. The divisor is fixed at six. Do not add a divisor-scale parameter, per-gear divisor, or hidden normalization to this recurrence. Physical rational readouts may use two ordinary retained integer registers only through the proved finite-horizon arithmetic construction in docs/INTEGER_ADM.md; this never changes an Engine denominator.
 2. Every forward output reads the same complete old snapshot. Never insert runtime injections, vetoes, branch selectors, detector callbacks, or unrecorded state.
 3. The fixed integer polynomial tensor has input degree at most three. Every monomial is supported on the target node and at most one face neighbor, including the endpoints of physical link gears. Old-`a` dependencies must be acyclic for staged inversion.

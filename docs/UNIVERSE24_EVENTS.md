@@ -1,5 +1,7 @@
 # Universe24: one Einstein event board
 
+The Einstein component is now allocated inside the unified 0.5.0 runtime with isolated communication/probe components. See [UNIFIED_SYSTEM.md](UNIFIED_SYSTEM.md) for channel ownership and [current validation](evidence/universe24_unification.json). Earlier measurements below describe the 0.4.0 physical component and retain their original scope.
+
 The default entry point is `python -m universe24`. Einstein evolution is in the
 installed package, not an optional observer added to a separate default model.
 The fixed tensor evolves a spatial metric, extrinsic curvature, complex scalar

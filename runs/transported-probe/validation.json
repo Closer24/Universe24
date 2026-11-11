@@ -1,0 +1,696 @@
+{
+  "date": "2026-11-11",
+  "baseline_commit": "b556ba0ff9019e36ffa596f4655668b202be111e",
+  "report": "runs/transported-probe/checked.json",
+  "report_sha256": "892ea69a2b36293a0bcc96cb09616796f787cfbf11f360fc2cf267db982ba270",
+  "source_sha256": {
+    "experiments/geometry/transported_probe_clock.py": "b64d76cb10bee30ad00d87561af59ebbcbbec91042df9b635117b5c759a8210f",
+    "universe24/layers/transported_probe.py": "870e3f5ac2de2ae001a6ae2a13131fff333956a022d3e0982c1730fbdf86908e",
+    "universe24/prepare/transported_probe.py": "1efc9eba4eb7a340225f864ee39bf906b9b791f43ea1e0e29744a485834d239a",
+    "universe24/observe/transported_probe.py": "ca3cd2629cdf8861858ed914d308f9c92ad7d9a5f6a01291f073c8aea220229d",
+    "universe24/core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+    "universe24/core/tensor.py": "e8af57caaf5a920b0efdf9e5399609fbd3ae49bfd1e37f7d465e545b37780c7d",
+    "universe24/core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e"
+  },
+  "tensor_fingerprint": "8560ba937fd3b75f10b4e999a5febe0990cfcd85f443e64f73961f8ac7ed80ac",
+  "channels": 26,
+  "rank": 4,
+  "tests": {
+    "quick_and_existing_ppwave": 14,
+    "new_tests": 5,
+    "full_discovery": 123,
+    "all_pass": true
+  },
+  "default_cli_smoke": {
+    "updates": 20,
+    "exact_rewind": true
+  },
+  "replayed_cases": 5,
+  "common_metric_validated": false,
+  "cases": [
+    {
+      "curvature": 0,
+      "x": 0,
+      "y": 0,
+      "steps": 48,
+      "exact_rewind": true,
+      "chart": {
+        "interior_nonzero_laplacians": 0,
+        "seam_nonzero_laplacians": 0
+      },
+      "assessment": {
+        "actual_board_transport": true,
+        "timelike": true,
+        "metric_norm_per_macrostep": -3,
+        "predicted_proper_rate_squared": {
+          "numerator": 3,
+          "denominator": 4
+        },
+        "transverse_geodesic_residual": [
+          {
+            "numerator": 0,
+            "denominator": 1
+          },
+          {
+            "numerator": 0,
+            "denominator": 1
+          },
+          {
+            "numerator": 0,
+            "denominator": 1
+          },
+          {
+            "numerator": 0,
+            "denominator": 1
+          }
+        ],
+        "geodesic_matches": true,
+        "interior_chart": true,
+        "transverse_profile_hessian_diagonal": [
+          0,
+          0
+        ],
+        "nonflat_at_probe": false,
+        "coframe_inverse_certificate": true,
+        "clocks": {
+          "control": {
+            "tick_steps": [
+              0,
+              8,
+              16,
+              24,
+              32,
+              40,
+              48
+            ],
+            "intervals": [
+              8,
+              8,
+              8,
+              8,
+              8,
+              8
+            ],
+            "calibration": "4*sqrt(3) proper-time units per full cycle",
+            "measured_rate_squared": [
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              }
+            ],
+            "matches_metric": true,
+            "insufficient_ticks": false
+          },
+          "candidate": {
+            "tick_steps": [
+              0,
+              12,
+              24,
+              36,
+              48
+            ],
+            "intervals": [
+              12,
+              12,
+              12,
+              12
+            ],
+            "calibration": "6*sqrt(3) proper-time units per full cycle",
+            "measured_rate_squared": [
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              }
+            ],
+            "matches_metric": true,
+            "insufficient_ticks": false
+          }
+        },
+        "common_metric_passes": true
+      }
+    },
+    {
+      "curvature": 0,
+      "x": 1,
+      "y": 0,
+      "steps": 48,
+      "exact_rewind": true,
+      "chart": {
+        "interior_nonzero_laplacians": 0,
+        "seam_nonzero_laplacians": 0
+      },
+      "assessment": {
+        "actual_board_transport": true,
+        "timelike": true,
+        "metric_norm_per_macrostep": -3,
+        "predicted_proper_rate_squared": {
+          "numerator": 3,
+          "denominator": 4
+        },
+        "transverse_geodesic_residual": [
+          {
+            "numerator": 0,
+            "denominator": 1
+          },
+          {
+            "numerator": 0,
+            "denominator": 1
+          },
+          {
+            "numerator": 0,
+            "denominator": 1
+          },
+          {
+            "numerator": 0,
+            "denominator": 1
+          }
+        ],
+        "geodesic_matches": true,
+        "interior_chart": true,
+        "transverse_profile_hessian_diagonal": [
+          0,
+          0
+        ],
+        "nonflat_at_probe": false,
+        "coframe_inverse_certificate": true,
+        "clocks": {
+          "control": {
+            "tick_steps": [
+              0,
+              8,
+              16,
+              24,
+              32,
+              40,
+              48
+            ],
+            "intervals": [
+              8,
+              8,
+              8,
+              8,
+              8,
+              8
+            ],
+            "calibration": "4*sqrt(3) proper-time units per full cycle",
+            "measured_rate_squared": [
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              }
+            ],
+            "matches_metric": true,
+            "insufficient_ticks": false
+          },
+          "candidate": {
+            "tick_steps": [
+              0,
+              12,
+              24,
+              36,
+              48
+            ],
+            "intervals": [
+              12,
+              12,
+              12,
+              12
+            ],
+            "calibration": "6*sqrt(3) proper-time units per full cycle",
+            "measured_rate_squared": [
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              }
+            ],
+            "matches_metric": true,
+            "insufficient_ticks": false
+          }
+        },
+        "common_metric_passes": true
+      }
+    },
+    {
+      "curvature": 1,
+      "x": 0,
+      "y": 0,
+      "steps": 48,
+      "exact_rewind": true,
+      "chart": {
+        "interior_nonzero_laplacians": 0,
+        "seam_nonzero_laplacians": 60
+      },
+      "assessment": {
+        "actual_board_transport": true,
+        "timelike": true,
+        "metric_norm_per_macrostep": -3,
+        "predicted_proper_rate_squared": {
+          "numerator": 3,
+          "denominator": 4
+        },
+        "transverse_geodesic_residual": [
+          {
+            "numerator": 0,
+            "denominator": 1
+          },
+          {
+            "numerator": 0,
+            "denominator": 1
+          },
+          {
+            "numerator": 0,
+            "denominator": 1
+          },
+          {
+            "numerator": 0,
+            "denominator": 1
+          }
+        ],
+        "geodesic_matches": true,
+        "interior_chart": true,
+        "transverse_profile_hessian_diagonal": [
+          2,
+          -2
+        ],
+        "nonflat_at_probe": true,
+        "coframe_inverse_certificate": true,
+        "clocks": {
+          "control": {
+            "tick_steps": [
+              0,
+              8,
+              16,
+              24,
+              32,
+              40,
+              48
+            ],
+            "intervals": [
+              8,
+              8,
+              8,
+              8,
+              8,
+              8
+            ],
+            "calibration": "4*sqrt(3) proper-time units per full cycle",
+            "measured_rate_squared": [
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              }
+            ],
+            "matches_metric": true,
+            "insufficient_ticks": false
+          },
+          "candidate": {
+            "tick_steps": [
+              0,
+              12,
+              24,
+              36,
+              48
+            ],
+            "intervals": [
+              12,
+              12,
+              12,
+              12
+            ],
+            "calibration": "6*sqrt(3) proper-time units per full cycle",
+            "measured_rate_squared": [
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              }
+            ],
+            "matches_metric": true,
+            "insufficient_ticks": false
+          }
+        },
+        "common_metric_passes": true
+      }
+    },
+    {
+      "curvature": 1,
+      "x": 1,
+      "y": 0,
+      "steps": 48,
+      "exact_rewind": true,
+      "chart": {
+        "interior_nonzero_laplacians": 0,
+        "seam_nonzero_laplacians": 60
+      },
+      "assessment": {
+        "actual_board_transport": true,
+        "timelike": true,
+        "metric_norm_per_macrostep": -1,
+        "predicted_proper_rate_squared": {
+          "numerator": 1,
+          "denominator": 4
+        },
+        "transverse_geodesic_residual": [
+          {
+            "numerator": 0,
+            "denominator": 1
+          },
+          {
+            "numerator": -2,
+            "denominator": 1
+          },
+          {
+            "numerator": 0,
+            "denominator": 1
+          },
+          {
+            "numerator": 0,
+            "denominator": 1
+          }
+        ],
+        "geodesic_matches": false,
+        "interior_chart": true,
+        "transverse_profile_hessian_diagonal": [
+          2,
+          -2
+        ],
+        "nonflat_at_probe": true,
+        "coframe_inverse_certificate": true,
+        "clocks": {
+          "control": {
+            "tick_steps": [
+              0,
+              8,
+              16,
+              24,
+              32,
+              40,
+              48
+            ],
+            "intervals": [
+              8,
+              8,
+              8,
+              8,
+              8,
+              8
+            ],
+            "calibration": "4*sqrt(3) proper-time units per full cycle",
+            "measured_rate_squared": [
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              }
+            ],
+            "matches_metric": false,
+            "insufficient_ticks": false
+          },
+          "candidate": {
+            "tick_steps": [
+              0,
+              6,
+              12,
+              18,
+              24,
+              30,
+              36,
+              42,
+              48
+            ],
+            "intervals": [
+              6,
+              6,
+              6,
+              6,
+              6,
+              6,
+              6,
+              6
+            ],
+            "calibration": "6*sqrt(3) proper-time units per full cycle",
+            "measured_rate_squared": [
+              {
+                "numerator": 3,
+                "denominator": 1
+              },
+              {
+                "numerator": 3,
+                "denominator": 1
+              },
+              {
+                "numerator": 3,
+                "denominator": 1
+              },
+              {
+                "numerator": 3,
+                "denominator": 1
+              },
+              {
+                "numerator": 3,
+                "denominator": 1
+              },
+              {
+                "numerator": 3,
+                "denominator": 1
+              },
+              {
+                "numerator": 3,
+                "denominator": 1
+              },
+              {
+                "numerator": 3,
+                "denominator": 1
+              }
+            ],
+            "matches_metric": false,
+            "insufficient_ticks": false
+          }
+        },
+        "common_metric_passes": false
+      }
+    },
+    {
+      "curvature": 1,
+      "x": 0,
+      "y": 1,
+      "steps": 48,
+      "exact_rewind": true,
+      "chart": {
+        "interior_nonzero_laplacians": 0,
+        "seam_nonzero_laplacians": 60
+      },
+      "assessment": {
+        "actual_board_transport": true,
+        "timelike": true,
+        "metric_norm_per_macrostep": -5,
+        "predicted_proper_rate_squared": {
+          "numerator": 5,
+          "denominator": 4
+        },
+        "transverse_geodesic_residual": [
+          {
+            "numerator": 0,
+            "denominator": 1
+          },
+          {
+            "numerator": 0,
+            "denominator": 1
+          },
+          {
+            "numerator": 2,
+            "denominator": 1
+          },
+          {
+            "numerator": 0,
+            "denominator": 1
+          }
+        ],
+        "geodesic_matches": false,
+        "interior_chart": true,
+        "transverse_profile_hessian_diagonal": [
+          2,
+          -2
+        ],
+        "nonflat_at_probe": true,
+        "coframe_inverse_certificate": true,
+        "clocks": {
+          "control": {
+            "tick_steps": [
+              0,
+              8,
+              16,
+              24,
+              32,
+              40,
+              48
+            ],
+            "intervals": [
+              8,
+              8,
+              8,
+              8,
+              8,
+              8
+            ],
+            "calibration": "4*sqrt(3) proper-time units per full cycle",
+            "measured_rate_squared": [
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              },
+              {
+                "numerator": 3,
+                "denominator": 4
+              }
+            ],
+            "matches_metric": false,
+            "insufficient_ticks": false
+          },
+          "candidate": {
+            "tick_steps": [
+              0
+            ],
+            "intervals": [],
+            "calibration": "6*sqrt(3) proper-time units per full cycle",
+            "measured_rate_squared": [],
+            "matches_metric": false,
+            "insufficient_ticks": true
+          }
+        },
+        "common_metric_passes": false
+      }
+    }
+  ],
+  "comparison": "New optional 26-channel tensor, not equivalent to either the default or prior 48-channel pp-wave examples."
+}

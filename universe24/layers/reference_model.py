@@ -136,8 +136,24 @@ def theta_reading_census(tensor, theta0: int=1, exclude=(COSMIC_NS,)) -> dict:
         (readers if rec['verdict'] == 'CAN read Theta' else non_readers).append(ns)
     return {'theta0': theta0, 'D': D, 'per_namespace': per, 'readers': readers, 'non_readers': non_readers, 'first_order_gear_types': len(first), 'cross_reads': cross, 'block_diagonal': cross['cosmic_reads_package'] == 0 and cross['package_reads_cosmic'] == 0}
 
-def reference_system(*, body_signs=(1, -1, 1), label='official', extra_blocks=(), **retired_options) -> System:
-    """Return the fixed-six reference baseline; optional blocks are explicit."""
-    system = default_system(body_signs=body_signs, label=label, extra_blocks=tuple(extra_blocks), **retired_options)
-    system.info['reference_model'] = {'version': 'fixed-six', 'default': '48-channel reference', 'cosmic': False, 'coupled_doublet': False, 'law': 'fixed tensor and initial state; scalar divisor six'}
+def reference_system(*, body_signs=(1, -1, 1), label='official', extra_blocks=(),
+               communication: bool = False, **retired_options) -> System:
+    """Reference dynamics with local message reception; no global clock.
+
+    communication=False selects the previous 48-channel reference law and
+    its original preparation explicitly, for historical regression checks.
+    """
+    if type(communication) is not bool:
+        raise TypeError('communication must be a bool')
+    from .communication import build_communication
+    extra = tuple(extra_blocks)
+    if communication:
+        extra = (build_communication(label=label),) + extra
+    system = default_system(body_signs=body_signs, label=label, extra_blocks=extra, **retired_options)
+    model = 'local-communication' if communication else 'reference'
+    system.info.update(implementation='fixed-six-' + model, communication=communication,
+                       default_gear_count=54 if communication else 48)
+    system.info['one'] = {'version': 'fixed-six-communication' if communication else 'fixed-six',
+                         'default': model, 'cosmic': False, 'coupled_doublet': False,
+                         'law': 'fixed tensor and initial state; scalar divisor six'}
     return system
