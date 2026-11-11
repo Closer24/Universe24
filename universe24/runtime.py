@@ -39,6 +39,8 @@ def run(program, integer_data, parameters, out=None, verify_arithmetic=True):
     started=time.monotonic()
     stream=None
     click_stream=None
+    component_stream=None
+    component_summary={}
     official_count=0
     if out is not None:
         out=Path(out);out.mkdir(parents=True,exist_ok=True)
@@ -48,26 +50,47 @@ def run(program, integer_data, parameters, out=None, verify_arithmetic=True):
             'definition':'Engine official changed-triple clicks of retained physical numerator/denominator registers',
             'columns':['microtick','gear','node','quotient_hex','kind'],
             'tensor_fingerprint':program.tensor.fingerprint})+'\n')
-        stream.write(json.dumps({'format':'Rule3-full-triples-delta-v1','seed':seed.to_dict(),
+        if hasattr(program,'assembly'):
+            component_stream=gzip.open(out/'component_events.jsonl.gz','wt')
+            component_stream.write(json.dumps({'format':'Universe24-component-events-v1',
+                'meaning':'Passive computational messages and audit clicks; not an additional gravitational source',
+                'tensor_fingerprint':program.tensor.fingerprint})+'\n')
+        stream.write(json.dumps({'format':'Rule3-full-triples-delta-v2','seed':seed.to_dict(),
                                  'tensor_fingerprint':program.tensor.fingerprint,
-                                 'rule':'after.a=before.b; after.r=before.r; b deltas below, hex integers'})+'\n')
+                                 'rule':'after.a=before.b; explicit b and r deltas below, hex integers'})+'\n')
     try:
         for tick in range(1,program.ticks+1):
             after=engine.step(state)
-            assert np.array_equal(after.r,seed.r)
+            # Arithmetic gates preserve remainders; independent message receivers
+            # may emit C1/C2. Never impose the arithmetic identity on all owners.
+            lo,hi=program.assembly.spans['einstein'] if hasattr(program,'assembly') else (0,program.tensor.G)
+            assert np.array_equal(after.r[lo:hi],seed.r[lo:hi])
+            all_clicks=engine.clicks(state,after,tick) if click_stream or hasattr(program,'assembly') else None
             if click_stream:
-                clicks=engine.clicks(state,after,tick).select('official')
+                clicks=all_clicks.select('official')
                 official_count+=len(clicks)
                 for gear,node,quotient,kind in zip(clicks.gear,clicks.node,clicks.quotient,clicks.kind):
                     click_stream.write(json.dumps([tick,int(gear),int(node),format(int(quotient),'x'),int(kind)],separators=(',',':'))+'\n')
             if stream:
                 gears,nodes=np.nonzero(after.b!=state.b)
                 changes=[[int(g),int(n),format(int(after.b[g,n]),'x')] for g,n in zip(gears,nodes)]
-                stream.write(json.dumps({'tick':tick,'b':changes},separators=(',',':'))+'\n')
+                rg,rn=np.nonzero(after.r!=state.r)
+                remainders=[[int(g),int(n),format(int(after.r[g,n]),'x')] for g,n in zip(rg,rn)]
+                stream.write(json.dumps({'tick':tick,'b':changes,'r':remainders},separators=(',',':'))+'\n')
+            if hasattr(program,'assembly'):
+                observed=program.observe_components(state,after,tick,all_clicks)
+                for name,row in observed['components'].items():
+                    counts=component_summary.setdefault(name,{'changed_triple_clicks':0,'C0':0,'C1':0,'C2':0})
+                    counts['changed_triple_clicks']+=row['changed_triple_clicks']
+                    for k,v in row['classes'].items():counts['C'+k]+=v
+                if 'messages' in observed:
+                    component_summary['communication']['message_records']=component_summary['communication'].get('message_records',0)+len(observed['messages'])
+                if component_stream:component_stream.write(json.dumps(observed,separators=(',',':'))+'\n')
             state=after
     finally:
         if stream:stream.close()
         if click_stream:click_stream.close()
+        if component_stream:component_stream.close()
     if verify_arithmetic:
         expected=program.evaluate_integer_dag(seed)
         for wire,value in expected.items():
@@ -158,6 +181,10 @@ def run(program, integer_data, parameters, out=None, verify_arithmetic=True):
                       'matter/antimatter is a classical complex scalar with opposite U(1) charge, not a quantum Standard Model or annihilation simulator',
                       'dark matter is irrotational single-stream dust before caustics; no particle identity or multistream halo model']}
     if out:
+        if hasattr(program,'assembly'):
+            result['channel_allocation']=program.channel_manifest(include_channels=False)
+            result['component_observations']=component_summary
+            (out/'channels.json').write_text(json.dumps(program.channel_manifest(),indent=2)+'\n')
         result['event_board']=export_event_board(program,state,parameters,out)
         (out/'report.json').write_text(json.dumps(result,indent=2)+'\n')
         (out/'tensor.json').write_text(json.dumps(program.tensor.to_dict(),separators=(',',':'))+'\n')
@@ -168,20 +195,27 @@ def replay_trace(path):
     """Recover every complete (a,b,r) snapshot from a lossless delta journal."""
     with gzip.open(path,'rt') as stream:
         header=json.loads(next(stream));state=State.from_dict(header['seed'])
+        if header['format'] not in ('Rule3-full-triples-delta-v1','Rule3-full-triples-delta-v2'):
+            raise ValueError('unknown trace format')
         yield state
         for expected_tick,line in enumerate(stream,1):
             record=json.loads(line)
             if record['tick']!=expected_tick:raise ValueError('missing/reordered tick')
             b=state.b.astype(object).copy()
             for gear,node,value in record['b']:b[gear,node]=int(value,16)
-            state=State(state.L,state.b,b,state.r)
+            r=state.r.copy()
+            for gear,node,value in record.get('r',[]):r[gear,node]=int(value,16)
+            state=State(state.L,state.b,b,r)
             yield state
 
 
 def main(argv=None):
     source_hashes={str(path.relative_to(ROOT)):hashlib.sha256(path.read_bytes()).hexdigest() for path in (
         Path(__file__),ROOT/'universe24/layers/adm.py',ROOT/'universe24/algebra/integer_circuit.py',
-        ROOT/'universe24/prepare/einstein.py',ROOT/'universe24/observe/event_board.py',ROOT/'universe24/core/engine.py')}
+        ROOT/'universe24/prepare/einstein.py',ROOT/'universe24/observe/event_board.py',ROOT/'universe24/core/engine.py',
+        ROOT/'universe24/core/channels.py',ROOT/'universe24/layers/universe.py',
+        ROOT/'universe24/layers/communication.py',ROOT/'universe24/layers/reference_model.py',
+        ROOT/'universe24/prepare/communication.py',ROOT/'universe24/prepare/reference_model.py')}
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--case',choices=('universe','matter','antimatter','scalar','massless','gauge','inhomogeneous','dark'),default='universe')
     parser.add_argument('--steps',type=int,default=1)
@@ -190,7 +224,13 @@ def main(argv=None):
     parser.add_argument('--method',choices=('euler','midpoint'),default='euler')
     parser.add_argument('--out',type=Path,default=Path('runs/universe24'))
     parser.add_argument('--rewind',action='store_true',help='Exact rewind is always verified; retained for explicit run scripts.')
+    parser.add_argument('--no-communication',action='store_true',help='Run only the Einstein physical component.')
+    parser.add_argument('--probe-experiment',action='store_true',help='Add the independent 26-channel test chart (L>=5); not a validated physical clock.')
+    parser.add_argument('--max-channels',type=int,help='Reject construction above this per-node channel budget; never truncate fields.')
+    parser.add_argument('--plan',action='store_true',help='Export channel allocation before running any Engine updates.')
     args=parser.parse_args(argv)
+    if args.probe_experiment and (args.L<5 or args.L%2!=1):
+        parser.error('--probe-experiment requires odd --L >= 5')
     info={}
     complex_matter=args.case in ('universe','matter','antimatter')
     dark_matter=args.case in ('universe','dark')
@@ -206,6 +246,14 @@ def main(argv=None):
         data=homogeneous_scalar(args.L,scale,mass)
     program,parameters=compile_adm(steps=args.steps,dt=Fraction(args.dt),dx=Fraction(1,args.L),scale=scale,
                                    mass_squared=mass,method=args.method,dark_matter=dark_matter,complex_matter=complex_matter)
+    from universe24.layers.universe import UniverseProgram
+    program=UniverseProgram(program,parameters,communication=not args.no_communication,
+                            probe_experiment=args.probe_experiment,max_channels=args.max_channels)
+    if args.plan:
+        args.out.mkdir(parents=True,exist_ok=True)
+        (args.out/'channels.json').write_text(json.dumps(program.channel_manifest(),indent=2)+'\n')
+        print(json.dumps(program.assembly.manifest(include_channels=False),indent=2))
+        return
     print(json.dumps({'phase':'compiled','gears':program.tensor.G,'ticks':program.ticks}),flush=True)
     report=run(program,data,parameters,args.out)
     report['initial_data']=info

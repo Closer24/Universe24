@@ -1,0 +1,1094 @@
+{
+  "reviewed_at_utc": "2026-11-11T13:47:04.425184+00:00",
+  "remote_refs": {
+    "main": "8d3f15074d3f9a9344ec587dbab0222243505187",
+    "einstein_previous": "ba8b6c12066b0dbdf3f2001c9fa75571d7cff49b",
+    "einstein_reviewed": "335eb3c1b625075dbcca01f9cd61faffdd614600",
+    "communication": "90d8638c1ebf86021dde3371766acb42e0a42ee6",
+    "burst_research_base": "dd39096922fa766278b6166092fbebd26b6eb831"
+  },
+  "upstream_source_sha256": {
+    "experiments/geometry/integer_circuit.py": "717b3536449308aec751bfe7596d373a6d7a5ea70ef3d39ef4a262206e9308ae",
+    "experiments/geometry/adm_integer.py": "0fe8370d49a9fc1ac9b0ac37d0e6666dbc480473bf0c020885c65bad8c03aae3",
+    "experiments/geometry/adm_equations.py": "64ef32ead778c62af950998cd58691cdfa8e5b8e673b1a5b1065514f91990197",
+    "experiments/geometry/adm_initial_data.py": "5c7f9cde964907217464153931d5fa9d701984af701ec4b1f476db389ce8f898",
+    "experiments/geometry/full_gr_audit.py": "c0223c0ba4d73087c823660616941d4c875ac6d119769c2d467c8e53e46b7ea2",
+    "experiments/geometry/simplex_metric.py": "f82701ca4be7cbe7f8cac1baac974b788d2dcdb8460ef9de0708104e383471aa",
+    "docs/INTEGER_ADM.md": "25c69d8392dbd7c56676b1a32f19feabbfe5782efb9b0aa3cf1907bc25535a19",
+    "universe24/tests/test_adm_integer.py": "1f7a6022edca2fc0c6cbe587f350f3c775816650b9c439fe5fcbf050690cb2b4"
+  },
+  "unmodified_test_result": {
+    "tests_run": 7,
+    "reported_errors_including_setup": 5,
+    "failure": "TypeError: Tensor.__init__() got an unexpected keyword argument 'Q'"
+  },
+  "adaptation": "Review-only removal of the Q parameter; D=6, remainder range six, Engine(tensor). Core unchanged. On-node copied clocks intentionally left unchanged to audit their limitation.",
+  "adapted_source_sha256": {
+    "experiments/geometry/integer_circuit.py": "2bdf76e72f982e0ba2f68061c4812bbeffea14cddc265c5b2d560b1869279f76",
+    "experiments/geometry/adm_integer.py": "ce1e831091ec84934584cc81f4816d3b9689f466e44d3ce9352d59e3a95f1e14",
+    "universe24/core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+    "universe24/core/tensor.py": "e8af57caaf5a920b0efdf9e5399609fbd3ae49bfd1e37f7d465e545b37780c7d"
+  },
+  "validation": {
+    "upstream_focused_tests_after_port": 16,
+    "upstream_focused_passed": true,
+    "new_readout_bounds_tests": 3,
+    "new_readout_bounds_passed": true,
+    "small_scalar_oracle": {
+      "gear_transitions": 78,
+      "ordinary_and_bigint": true,
+      "mismatches": 0
+    }
+  },
+  "scheduler_control": {
+    "declared_ticks": 6,
+    "clock_period": 9,
+    "clock_gears_per_node": 9,
+    "clock_a_and_b_identical_at_all_nodes": true,
+    "clock_target_has_spatial_neighbor_read": false,
+    "clock_target_reads_arithmetic": false,
+    "arithmetic_input_intervention_changes_clocks": false,
+    "nominal_output": "49",
+    "clock_removed_at_one_node_output": "0",
+    "clock_removed_other_node_output": "49",
+    "cut_exact_rewind": true,
+    "beyond_horizon_first_changed_output": {
+      "tick": 14,
+      "output_node0": "373",
+      "max_bits": 9
+    },
+    "beyond_horizon_exact_rewind": true,
+    "trace": [
+      {
+        "tick": 0,
+        "output_node0": "0",
+        "max_bits": 2
+      },
+      {
+        "tick": 1,
+        "output_node0": "0",
+        "max_bits": 3
+      },
+      {
+        "tick": 2,
+        "output_node0": "0",
+        "max_bits": 3
+      },
+      {
+        "tick": 3,
+        "output_node0": "0",
+        "max_bits": 3
+      },
+      {
+        "tick": 4,
+        "output_node0": "0",
+        "max_bits": 3
+      },
+      {
+        "tick": 5,
+        "output_node0": "49",
+        "max_bits": 6
+      },
+      {
+        "tick": 6,
+        "output_node0": "49",
+        "max_bits": 6
+      },
+      {
+        "tick": 7,
+        "output_node0": "49",
+        "max_bits": 6
+      },
+      {
+        "tick": 8,
+        "output_node0": "49",
+        "max_bits": 6
+      },
+      {
+        "tick": 9,
+        "output_node0": "49",
+        "max_bits": 6
+      },
+      {
+        "tick": 10,
+        "output_node0": "49",
+        "max_bits": 6
+      },
+      {
+        "tick": 11,
+        "output_node0": "49",
+        "max_bits": 6
+      },
+      {
+        "tick": 12,
+        "output_node0": "49",
+        "max_bits": 6
+      },
+      {
+        "tick": 13,
+        "output_node0": "49",
+        "max_bits": 6
+      },
+      {
+        "tick": 14,
+        "output_node0": "373",
+        "max_bits": 9
+      },
+      {
+        "tick": 15,
+        "output_node0": "373",
+        "max_bits": 9
+      },
+      {
+        "tick": 16,
+        "output_node0": "373",
+        "max_bits": 9
+      },
+      {
+        "tick": 17,
+        "output_node0": "373",
+        "max_bits": 9
+      },
+      {
+        "tick": 18,
+        "output_node0": "373",
+        "max_bits": 9
+      },
+      {
+        "tick": 19,
+        "output_node0": "373",
+        "max_bits": 9
+      },
+      {
+        "tick": 20,
+        "output_node0": "373",
+        "max_bits": 9
+      },
+      {
+        "tick": 21,
+        "output_node0": "373",
+        "max_bits": 9
+      },
+      {
+        "tick": 22,
+        "output_node0": "373",
+        "max_bits": 9
+      },
+      {
+        "tick": 23,
+        "output_node0": "1462",
+        "max_bits": 11
+      },
+      {
+        "tick": 24,
+        "output_node0": "1462",
+        "max_bits": 11
+      },
+      {
+        "tick": 25,
+        "output_node0": "1462",
+        "max_bits": 11
+      },
+      {
+        "tick": 26,
+        "output_node0": "1462",
+        "max_bits": 11
+      },
+      {
+        "tick": 27,
+        "output_node0": "1462",
+        "max_bits": 11
+      }
+    ],
+    "small_circuit_scalar_oracle": {
+      "gear_transitions": 78,
+      "ordinary_and_bigint": true,
+      "mismatches": 0
+    },
+    "scope": "Prepared arithmetic control. Past-horizon outputs are not additional physical snapshots; this is not a burst-model run."
+  },
+  "physical_run": {
+    "parameters": {
+      "steps": 2,
+      "dt": "1/128",
+      "dx": "1/3",
+      "scale": 281474976710656,
+      "mass_squared": "1",
+      "cosmological": "0",
+      "method": "euler",
+      "dark_matter": true,
+      "lapse": "geodesic",
+      "fields": [
+        "g00",
+        "g01",
+        "g02",
+        "g11",
+        "g12",
+        "g22",
+        "K00",
+        "K01",
+        "K02",
+        "K11",
+        "K12",
+        "K22",
+        "alpha",
+        "phi",
+        "Pi",
+        "beta0",
+        "beta1",
+        "beta2",
+        "rho_dark"
+      ],
+      "L": 3
+    },
+    "physical_model": "nonlinear Einstein + real Klein-Gordon + normal-comoving pressureless dark matter; prescribed static shift",
+    "runtime": "unchanged Rule3 Engine only; compiled finite-horizon rational arithmetic",
+    "gears": 9727,
+    "monomials": 21372,
+    "rank": 4,
+    "engine_ticks": 164,
+    "clock_period": 167,
+    "physical_snapshot_ready_ticks": {
+      "0": 0,
+      "1": 52,
+      "2": 98
+    },
+    "all_arithmetic_registers_verified": true,
+    "complete_rewind_exact": true,
+    "no_support_violations": true,
+    "arbitrary_precision_used": true,
+    "tensor_fingerprint": "fb885d389454a13e332a304268e3ffa2e46bc83705a3cca88cb7459892e1f1fe",
+    "engine_stats": {
+      "int64_steps": 0,
+      "pyint_steps": 164,
+      "inverse_int64_steps": 0,
+      "inverse_pyint_steps": 164
+    },
+    "event_chart": {
+      "label": "(physical step, cube node)",
+      "coordinates": "(step*dt, ix*dx, iy*dx, iz*dx)",
+      "tangent_basis_diagonal": [
+        "1/128",
+        "1/3",
+        "1/3",
+        "1/3"
+      ],
+      "meaning": "physical mesh events have an explicit metric readout; raw arithmetic microtick clicks are not identified with all continuum events"
+    },
+    "maximum_integer_bits": 97980,
+    "seconds": 259.26568313199823,
+    "samples": [
+      {
+        "step": 0,
+        "time": "0",
+        "field_node0": {
+          "g00": 1.0002316236495972,
+          "g01": 0.12502896785736084,
+          "g02": 0.06251448392868042,
+          "g11": 1.0002316236495972,
+          "g12": 0.06251448392868042,
+          "g22": 1.0002316236495972,
+          "K00": -0.05732975791986661,
+          "K01": -0.007166220594065464,
+          "K02": -0.003583110297032732,
+          "K11": -0.05732975791986661,
+          "K12": -0.003583110297032732,
+          "K22": -0.05732975791986661,
+          "alpha": 1.0,
+          "phi": 0.13671875,
+          "Pi": 0.0,
+          "beta0": 0.03125,
+          "beta1": 0.015625,
+          "beta2": 0.0,
+          "rho_dark": 0.00244140625
+        },
+        "field_ranges": {
+          "g00": [
+            0.9998957514762878,
+            1.0002316236495972
+          ],
+          "g01": [
+            0.12498694658279419,
+            0.12502896785736084
+          ],
+          "g02": [
+            0.06249350309371948,
+            0.06251448392868042
+          ],
+          "g11": [
+            0.9998957514762878,
+            1.0002316236495972
+          ],
+          "g12": [
+            0.06249350309371948,
+            0.06251448392868042
+          ],
+          "g22": [
+            0.9998957514762878,
+            1.0002316236495972
+          ],
+          "K00": [
+            -0.05732975791986661,
+            -0.057310506908468284
+          ],
+          "K01": [
+            -0.007166220594065464,
+            -0.007163812082435328
+          ],
+          "K02": [
+            -0.003583110297032732,
+            -0.0035819077493819407
+          ],
+          "K11": [
+            -0.05732975791986661,
+            -0.057310506908468284
+          ],
+          "K12": [
+            -0.003583110297032732,
+            -0.0035819077493819407
+          ],
+          "K22": [
+            -0.05732975791986661,
+            -0.057310506908468284
+          ],
+          "alpha": [
+            1.0,
+            1.0
+          ],
+          "phi": [
+            0.119140625,
+            0.13671875
+          ],
+          "Pi": [
+            0.0,
+            0.0
+          ],
+          "beta0": [
+            0.03125,
+            0.03125
+          ],
+          "beta1": [
+            0.015625,
+            0.015625
+          ],
+          "beta2": [
+            0.0,
+            0.0
+          ],
+          "rho_dark": [
+            0.001708984375,
+            0.00244140625
+          ]
+        },
+        "constraint_max": {
+          "H": 7.365568893263433e-07,
+          "M0": 0.0,
+          "M1": 0.0,
+          "M2": 0.0
+        },
+        "constraint_node0_exact": {
+          "H": {
+            "numerator_hex": "bd4661029a7d25dce67963619874ae3590aa80c73c84b4096687e313b",
+            "denominator_hex": "3f0f486f6207ca3a07e8966473f74bec0e619d93817ef5a10f8800000000000"
+          },
+          "M0": {
+            "numerator_hex": "0",
+            "denominator_hex": "1"
+          },
+          "M1": {
+            "numerator_hex": "0",
+            "denominator_hex": "1"
+          },
+          "M2": {
+            "numerator_hex": "0",
+            "denominator_hex": "1"
+          }
+        },
+        "discrete_evolution_max_residual": "0",
+        "geometry_node0_exact": {
+          "metric": [
+            [
+              {
+                "numerator_hex": "-7fd3fd641",
+                "denominator_hex": "800000000"
+              },
+              {
+                "numerator_hex": "1101021",
+                "denominator_hex": "20000000"
+              },
+              {
+                "numerator_hex": "a0097d",
+                "denominator_hex": "20000000"
+              },
+              {
+                "numerator_hex": "3002d9",
+                "denominator_hex": "40000000"
+              }
+            ],
+            [
+              {
+                "numerator_hex": "1101021",
+                "denominator_hex": "20000000"
+              },
+              {
+                "numerator_hex": "800797",
+                "denominator_hex": "800000"
+              },
+              {
+                "numerator_hex": "1000f3",
+                "denominator_hex": "800000"
+              },
+              {
+                "numerator_hex": "1000f3",
+                "denominator_hex": "1000000"
+              }
+            ],
+            [
+              {
+                "numerator_hex": "a0097d",
+                "denominator_hex": "20000000"
+              },
+              {
+                "numerator_hex": "1000f3",
+                "denominator_hex": "800000"
+              },
+              {
+                "numerator_hex": "800797",
+                "denominator_hex": "800000"
+              },
+              {
+                "numerator_hex": "1000f3",
+                "denominator_hex": "1000000"
+              }
+            ],
+            [
+              {
+                "numerator_hex": "3002d9",
+                "denominator_hex": "40000000"
+              },
+              {
+                "numerator_hex": "1000f3",
+                "denominator_hex": "1000000"
+              },
+              {
+                "numerator_hex": "1000f3",
+                "denominator_hex": "1000000"
+              },
+              {
+                "numerator_hex": "800797",
+                "denominator_hex": "800000"
+              }
+            ]
+          ],
+          "signed_squared_tangent_links": {
+            "0-1": {
+              "numerator_hex": "-7fd3fd641",
+              "denominator_hex": "2000000000000"
+            },
+            "0-2": {
+              "numerator_hex": "800797",
+              "denominator_hex": "4800000"
+            },
+            "0-3": {
+              "numerator_hex": "800797",
+              "denominator_hex": "4800000"
+            },
+            "0-4": {
+              "numerator_hex": "800797",
+              "denominator_hex": "4800000"
+            },
+            "1-2": {
+              "numerator_hex": "1ff0a68a8b7b7",
+              "denominator_hex": "12000000000000"
+            },
+            "1-3": {
+              "numerator_hex": "1ff5e6da3b7b7",
+              "denominator_hex": "12000000000000"
+            },
+            "1-4": {
+              "numerator_hex": "1ffc473b017b7",
+              "denominator_hex": "12000000000000"
+            },
+            "2-3": {
+              "numerator_hex": "31ca1",
+              "denominator_hex": "100000"
+            },
+            "2-4": {
+              "numerator_hex": "f00e3b",
+              "denominator_hex": "4800000"
+            },
+            "3-4": {
+              "numerator_hex": "f00e3b",
+              "denominator_hex": "4800000"
+            }
+          }
+        }
+      },
+      {
+        "step": 1,
+        "time": "1/128",
+        "field_node0": {
+          "g00": 1.001127401117095,
+          "g01": 0.1251409400541431,
+          "g02": 0.06257047002707156,
+          "g11": 1.001127401117095,
+          "g12": 0.06257047002707156,
+          "g22": 1.001127401117095,
+          "K00": -0.057376627826243094,
+          "K01": -0.007172306686317887,
+          "K02": -0.0035861553986238164,
+          "K11": -0.057376627826243094,
+          "K12": -0.0035861553986238164,
+          "K22": -0.057376606950105415,
+          "alpha": 1.0,
+          "phi": 0.13671875,
+          "Pi": -0.0016952113971893282,
+          "beta0": 0.03125,
+          "beta1": 0.015625,
+          "beta2": 0.0,
+          "rho_dark": 0.0024381265745887504
+        },
+        "field_ranges": {
+          "g00": [
+            1.0007911678035781,
+            1.001127401117095
+          ],
+          "g01": [
+            0.1250988736159661,
+            0.1251409400541431
+          ],
+          "g02": [
+            0.06254946663699551,
+            0.06257047002707156
+          ],
+          "g11": [
+            1.0007911678035781,
+            1.001127401117095
+          ],
+          "g12": [
+            0.06254946663699551,
+            0.06257047002707156
+          ],
+          "g22": [
+            1.0007911678035781,
+            1.001127401117095
+          ],
+          "K00": [
+            -0.057376627826243094,
+            -0.05735212031164384
+          ],
+          "K01": [
+            -0.007172306686317887,
+            -0.007168430940658916
+          ],
+          "K02": [
+            -0.0035861553986238164,
+            -0.0035838797320986086
+          ],
+          "K11": [
+            -0.057376627826243094,
+            -0.05735212023657803
+          ],
+          "K12": [
+            -0.0035861553986238164,
+            -0.0035838797883979683
+          ],
+          "K22": [
+            -0.057376606950105415,
+            -0.057352153359615354
+          ],
+          "alpha": [
+            1.0,
+            1.0
+          ],
+          "phi": [
+            0.11913740634918213,
+            0.13671875
+          ],
+          "Pi": [
+            -0.0016952113971893282,
+            -0.0006171141467603141
+          ],
+          "beta0": [
+            0.03125,
+            0.03125
+          ],
+          "beta1": [
+            0.015625,
+            0.015625
+          ],
+          "beta2": [
+            0.0,
+            0.0
+          ],
+          "rho_dark": [
+            0.001706420381310636,
+            0.0024381265745887504
+          ]
+        },
+        "constraint_max": {
+          "H": 2.6893744771216586e-06,
+          "M0": 1.585413600090532e-06,
+          "M1": 1.584421332817499e-06,
+          "M2": 1.5635101659903485e-06
+        },
+        "constraint_node0_exact": {
+          "H": {
+            "numerator_hex": "-666970f7e851960752e0a4dac2187b601acac6608d890d5efed708fa1e29a217396eebf0d3d765447634f1a8c43859e88a5b28dcf9a8cebf9e251d68fe9577f187e3cb5040f353b439a0e7609c808e115990a21dca4926096825e84ef35f7c9fc87e1745d116a6d9db83f659bd1658e1c36ecbd3c69ae86d98cf5670f2b504818f9023a32871e957f0a6f80c30d68ac24eb6939e156614c20a145d1ac1ac9aa97eacddac4a702b905d8f87488f38d3869da1d20b",
+            "denominator_hex": "2450eb9e349acd43961a28a5da6cec37420c62004bb5b0b0b5c01c713be3d14b53bed963979ea8d5d1eac29eaf719b8b892fd0aed7666d65aa99e026f4d69f3eb53b54a17752853d4377f84ab72c2522921847d7478872d322acecb95389060a2e80447005c13c2183b4615e0a3a2826ab285e602de66f049a62d9afd376ef35cfe312aba88ec14602e01c06ab82a31e30a20f547f136ba2693877f460c7e4f0e49fff2567cc518e881e4fa931e961d3e000000000000"
+          },
+          "M0": {
+            "numerator_hex": "2142abb88a87275e58e00a3953aa0e7861a0ba6fc72ea8ea3552ed82aab28c011ab3eae9b5ebd24f727a7e03b619e214154d627b86c2e7e0871f2c6d231f3339d0bb0b42c5935b4c24471fa0d7a723ab83a19bd4b58f33a8df9f566feb9cf00b0c6885b63d1910b92b409bafe0e3b7b93b640ae02b9afbd75b3f1687b2e3b62f78b2a43cc47c5d44d5bfdfdd4d1e8a49fc590ce73eef354671920df552dc60d82a7ab8c1b0d9ed6567c8164b64484abad3dc4335bfe4f9e56af1115989a6b505",
+            "denominator_hex": "b5b4304dac7758c4f517b1bd0c96f4ec78525d53624e6d2e8eb0f18760f152803afffe6277651fcf9d6c776869f814f6d3a594fdcef5496e1581a38ec7cd45c14ffd83188ceaa20d61955d0d2bb7a612b47f8acf8248bbdc276fd51fb89f014e800ce245f840c68b18428899f11fc910a150b5cd6c1bd6db701e8ed285efd92061795c78ca12215a27a3eab9530b0b78255f9fca94d2ca1bf4992ff03649fb24c6b1febe90e2ce901062e05dd4e8623d575c032b0f45bb38edb1856287f2a000000000"
+          },
+          "M1": {
+            "numerator_hex": "103d865c2f38b5327300cbf8f0a286b0bde6547cfe09c5d4b4a9447c5c2933a7140b4d95de8bea8a7f66b13b4d444e0e301859ff651ca6878a9cabfcfb4da84b39011ce953efe9073ac5510afc94d09a9b133c9729c559654f287ca103ce0f797af23ea5cc59566f53745a286f894131b082172a12677850d278cdfd9ef40e04faf077780cd559de62d4892e8cb0d38b8518497efd8c89304067f54c78404312ce55d83593318b0efc16f276568f7ef64dea97a8282fc4b01e3b8b99ec96666371",
+            "denominator_hex": "b171f72bda6c8cb0575923929e4b6b2eed806f236e00969f7758cbde34abaa91399dfe6c2898c110bfbbec9bf77c44790aafb37fdc1b89b5810099b96f1e761ec81d9205f99d2241114bdcdedcb1582e44448d8ea53b0774fe833620fa4b4746a90c94f8546f41e3d5b0f96655790a5a3d88d18a9b932fd24b7dd77996cc3a099f30844df555b4920ab61338fb18c933547f620bd555d95f4cdd98d095043f41ea09d2c6197d7db8b0008f1ba1eaefefe74fdb180cea18d5981f5c4238c2f04000000000"
+          },
+          "M2": {
+            "numerator_hex": "-5b52295c8924db13b4aa79f513cb2eae4131c59d5cbf9c0c65898aa9a7adf5b6b3dd0be3e9b29f666b6465e06d9d6457e5053e794b1f8981ac9d02afe8890b5598738ad107400689719b43d857217e238692b5d4190a997188e3b56bce494d0a77e88c77ce2159664754bca974ceec04de16ba42d658b897bd13cf9315e7ea90a4597813281e00d78803978b66334bd1f6866ba0e946e0fadb50f77b63b8d1ffce638c3ab1f67dae46fb811457cb991e2767560a596e17087e7a03217f53405785385d0a1029548f3",
+            "denominator_hex": "8b37cbc9676da18fe9c3e43388859ec132a7d758043018294cdfafd04dfe15f8f0533fada2a29685f9d4375c2e433a326afb29997fccff9f9f718cc3b862cdd8aca738001408ec4a14017c6f74cadca3c65429ef200ac24c4bd2b2532ca7bd6e9c2aa1e12e8cf7fee24d3ab6e6053a9086e24778ae9933ce49e6be69d611814e491709a6c6fd023cbfceea9d1c6a0df9db4d005eb522a838aead515c735798cf16bccca9df95aa0cfc3887f5aa9596c73e540526f17640b0de04391a7ede1dd27e19bd566135c793d3427692ef00"
+          }
+        },
+        "discrete_evolution_max_residual": "0",
+        "geometry_node0_exact": {
+          "metric": [
+            [
+              {
+                "numerator_hex": "-1ff4fcd340d35710b",
+                "denominator_hex": "20000000000000000"
+              },
+              {
+                "numerator_hex": "4413a03c58e5ab",
+                "denominator_hex": "800000000000000"
+              },
+              {
+                "numerator_hex": "280b8b7a18c39f",
+                "denominator_hex": "800000000000000"
+              },
+              {
+                "numerator_hex": "c0376b7d8a193",
+                "denominator_hex": "1000000000000000"
+              }
+            ],
+            [
+              {
+                "numerator_hex": "4413a03c58e5ab",
+                "denominator_hex": "800000000000000"
+              },
+              {
+                "numerator_hex": "20093c54ddad3d",
+                "denominator_hex": "20000000000000"
+              },
+              {
+                "numerator_hex": "40127929d8b31",
+                "denominator_hex": "20000000000000"
+              },
+              {
+                "numerator_hex": "40127929d8b31",
+                "denominator_hex": "40000000000000"
+              }
+            ],
+            [
+              {
+                "numerator_hex": "280b8b7a18c39f",
+                "denominator_hex": "800000000000000"
+              },
+              {
+                "numerator_hex": "40127929d8b31",
+                "denominator_hex": "20000000000000"
+              },
+              {
+                "numerator_hex": "20093c54ddad3d",
+                "denominator_hex": "20000000000000"
+              },
+              {
+                "numerator_hex": "40127929d8b31",
+                "denominator_hex": "40000000000000"
+              }
+            ],
+            [
+              {
+                "numerator_hex": "c0376b7d8a193",
+                "denominator_hex": "1000000000000000"
+              },
+              {
+                "numerator_hex": "40127929d8b31",
+                "denominator_hex": "40000000000000"
+              },
+              {
+                "numerator_hex": "40127929d8b31",
+                "denominator_hex": "40000000000000"
+              },
+              {
+                "numerator_hex": "20093c54ddad3d",
+                "denominator_hex": "20000000000000"
+              }
+            ]
+          ],
+          "signed_squared_tangent_links": {
+            "0-1": {
+              "numerator_hex": "-1ff4fcd340d35710b",
+              "denominator_hex": "80000000000000000000"
+            },
+            "0-2": {
+              "numerator_hex": "20093c54ddad3d",
+              "denominator_hex": "120000000000000"
+            },
+            "0-3": {
+              "numerator_hex": "20093c54ddad3d",
+              "denominator_hex": "120000000000000"
+            },
+            "0-4": {
+              "numerator_hex": "20093c54ddad3d",
+              "denominator_hex": "120000000000000"
+            },
+            "1-2": {
+              "numerator_hex": "7fdfe8cd129dd0dec69d",
+              "denominator_hex": "480000000000000000000"
+            },
+            "1-3": {
+              "numerator_hex": "7ff4eedca44dea67c69d",
+              "denominator_hex": "480000000000000000000"
+            },
+            "1-4": {
+              "numerator_hex": "800e7638baef4087e69d",
+              "denominator_hex": "480000000000000000000"
+            },
+            "2-3": {
+              "numerator_hex": "c755e8f38f2b",
+              "denominator_hex": "4000000000000"
+            },
+            "2-4": {
+              "numerator_hex": "3c1151171dcf49",
+              "denominator_hex": "120000000000000"
+            },
+            "3-4": {
+              "numerator_hex": "3c1151171dcf49",
+              "denominator_hex": "120000000000000"
+            }
+          }
+        }
+      },
+      {
+        "step": 2,
+        "time": "1/64",
+        "field_node0": {
+          "g00": 1.002023910878291,
+          "g01": 0.1252530073400417,
+          "g02": 0.06262650370213749,
+          "g11": 1.002023910878291,
+          "g12": 0.06262650370213749,
+          "g22": 1.0020239105521014,
+          "K00": -0.057423539914425184,
+          "K01": -0.007178398153215473,
+          "K02": -0.0035892031883771863,
+          "K11": -0.05742353991418238,
+          "K12": -0.003589203188377187,
+          "K22": -0.05742349815247817,
+          "alpha": 1.0,
+          "phi": 0.1367055041964509,
+          "Pi": -0.003387584596445522,
+          "beta0": 0.03125,
+          "beta1": 0.015625,
+          "beta2": 0.0,
+          "rho_dark": 0.002434851316657003
+        },
+        "field_ranges": {
+          "g00": [
+            1.001687235104238,
+            1.002023910878291
+          ],
+          "g01": [
+            0.1252108853810967,
+            0.1252530073400417
+          ],
+          "g02": [
+            0.06260546340830855,
+            0.06262650370213749
+          ],
+          "g11": [
+            1.001687235104238,
+            1.002023910878291
+          ],
+          "g12": [
+            0.06260546340830855,
+            0.06262650370213749
+          ],
+          "g22": [
+            1.0016872348181678,
+            1.0020239105521014
+          ],
+          "K00": [
+            -0.057423539914425184,
+            -0.057393756162176256
+          ],
+          "K01": [
+            -0.007178398153215473,
+            -0.007173050106625712
+          ],
+          "K02": [
+            -0.0035898623102155127,
+            -0.003585460328333486
+          ],
+          "K11": [
+            -0.05742353991418238,
+            -0.05739375346510397
+          ],
+          "K12": [
+            -0.003589861736841356,
+            -0.0035854605310572055
+          ],
+          "K22": [
+            -0.05742349815247817,
+            -0.05739382887845076
+          ],
+          "alpha": [
+            1.0,
+            1.0
+          ],
+          "phi": [
+            0.11912936744248574,
+            0.1367055041964509
+          ],
+          "Pi": [
+            -0.003387584596445522,
+            -0.001233287196148208
+          ],
+          "beta0": [
+            0.03125,
+            0.03125
+          ],
+          "beta1": [
+            0.015625,
+            0.015625
+          ],
+          "beta2": [
+            0.0,
+            0.0
+          ],
+          "rho_dark": [
+            0.0017038605386171858,
+            0.002434851316657003
+          ]
+        },
+        "constraint_max": {
+          "H": 5.770580433670827e-06,
+          "M0": 3.1739735962107638e-06,
+          "M1": 3.1713391948870804e-06,
+          "M2": 3.1288692356712136e-06
+        },
+        "constraint_node0_exact": {
+          "H": {
+            "numerator_hex": "-194ac39851add762f9a1a02783546fa1fc4b98093a0b8c6a4d70d1994ad4a8211ad418611b668361f0241b6e3c758d4f9abebf0881122efddfcd13ef37f1736e4bad8561117a37b1006868384a0c630fae476957ef690ccffc8ec0a18c5409650d878df7f28ea0d37aeae561abcbc97c4b60f54cb2beea61e52651eed497576da001447acdb92cb23958008fdf44dd42e6df3e0c161ce3d0a1710208ad08a4e21f9416d4df06f1f4c4a1915f74aeb687ed221e416124a36d29eb5657739daeca65de0b479c4f48cf620ad25918b4af62a31e7f8299b9c6c4f365444ac96f4aa61fe9451013ec3d7a46dfb68aa5d0316bdb8f3b0ae92db84fca5c8bc974b0fd523db69637205f0473d04e0ad790bcc9d5f4b54b3c4abe0afe713e0e2c24c189803d838c4bcbecc5c00e285f2475fc740df9cf7f9f0d2808e711216c396c874a4c19e5f901709380a56699702ab446cbcd6941e20aafbb67a7d0265b50e842aabc0fb1819b38bd40de3ede62841aacf2151e4b33ea5e88c1ffbb0257a189f9b0c3179dfc53f95f6df8bd8c1dafad5f80f2d5c437bd38fa3d7882de46c8d9a0c4aec2852bdc6a52ec995d28e6d500f71e3809c99648f436b30a304b53292d86f6f85f5a4cce9c701920bb826b8a064d97eda500d5ab4a622372063ef4d24b44d4ceb837d362ffd01714f5567d6668f3f2341ddf6d97f0d41162a594d97dc91b68277081050f7f90c34313520423481dd4683a3709dac222b0d304cf996cb0d6a0675ab0defb171b517587eb9c597ce2c49f11b8f43157465ac25968837e133d7ce28ce807175c5e14c293a4f188d53b2e6d34efea56e5888da2145fe9aa6b6cf47358293ff46b17f7c38ec66359442c14972f5424568c18fc115c8395770c25ab8e2d68cb720b14ea31a17eb010f27c6d12f7fca90c5b71878e82a71f9af74936309c0f19bb19890406a13ad2e3c2c94c9ac4c3ec464180addc05af0d95f232de739b12a4a9c5f9a7d9f00f43de43183b142e86ba3b0913a97b7468e5d117b579ae3fdc8282f71e906ea428f5171ccc9e3c5c9f9a929cc2607f53038670bf3b2b0d21312faaa077382499ecd116c37e19c7ee8262a781f3803088a56072a330f3a8f785640d504ac99b012841b57fa4315ffabb9427a03763946208e51a8e38d5e3c26a0bc7696570dd08c982f2ea190f332d842afcebe588067a32be958814142f18e3a1cc335aa57c1f06a77e7a044778bcd85be4da615612f57fcb124fee7728be1af01408cbbdb533785e6a7427bd7c2f2f4fba7f043c2a7fb489085500500bf25bfb96b0e7d82ca1a7f34db0acb949e4e11c950eb8bdc4c1e4dbcefb4aa4e56a5e03bd9ca49a8bbc24c616ca75b036619e7814d832fff1a820fcc47dbc5f116f1d4617f3a1f8eb35d4efe2eb48515d23f151aab7e1db09577586d01d0eb11a7af52b139cb3cc732b7d86e6c5bc15bb750f7fdace75a37d1f344989522d94bc2a11f98a6293cf67f3d6bd5a3526eb5a650f666094e9f5fcc6dc35d51a19773d6777c73944612785d5a6a4a12b5d70c905be63b854fe4fdea641f90baa24bcb4838f121400a8506a2f8a2e871bbc45474340448725040de3608cca2a5116563c5bf33aafd06a9524dcbb541e943f692e83852103bfde9e7a31fc5bc8f286e4a81155ab69937285572e2a7f5899a8a92df88fb6eaf31eaf034f659bdf0eb22fdeb50308da45921c927bb14a50a0f841b85958bceba821cc08e0649ff64b7b17655c24e0e12dad52dd139c729e995fb5b901d213125dee7b06077d1e833e69a930064c1323bb92c8c2b5b2ad1e9f2f3e68cab4f2c2d293823c557f750944c81844a5466447e9fe5293e66cdea5e1c4351cd5ddfe3364bf47bf9f09c605440c7a79b7a8982c4260cd67341d290582fb23161093abeaa586a75660aeccd30898d23202f75302ac21ecb380f11a2c1",
+            "denominator_hex": "42e0d1785dd653596e324314e27568e832f3cce2ae65505802e56d90a41857e88ed46c6a8e851d9161e83dc79dc2a3fcbf8050ec78bbff8f91abdd93156672cc16b2a762eda76cb27162338541f69835d98ba34c15736f694caeb1ac4270a8b39d8d3b482eb84fc5d1644b2aaa4ed312d316e5cbd4224deb025582551d7d127fe0dcad1ec7a74a2ce94eba3af45a53a09d7153ed6d6f321929e4053aeeda9889e6376e11598195d1410a3686af99096272afff317bb5c7e69355344baefa52ec65c99d0b84e596a2ce3bfcf9df5ad10fd662bf7129e3927dda1523bc2efa9935c74df7f832a956f888ec4a13e96dc2da471eb495360d12e12be8db1e3ccd4bad6056a0dfa5fc59f203c619445437560469c5c24d748f10f1586fd3b6654f399c514a4ddcf731e02c053937416accfd2e77ea3b5339634a63392e6293bce04ab7f19b3bcac07aeadd8089b3588f0a47c5eb72aad5e02c77cad144627c025bcad50f522666081be397be8644ec84c76416ecd3e384231f54569235c59cf768f447be09c231ac56eae5d2384de7890ca870886d01b6356be4e27399977ac15b97fb085b380ba8d49d85c25d57119e10edb90590ba67f04863a95f48c680dc274fe1ca40771b228b48d169644879d215436aa84d39d312ab580de305f8a42e9f1fd393ad2f76bccb0e428ae1abcbe71ecc6795077ede4cb47026f8d57aa1228fe0ddcb7649361ce356452f036100b7bb7eea4b1ae2dab21b77c5012f286a74766d2736cf1e8f47bf1dc1754be181c53636504e660e33af854b0f7f9b3cbe83b30691d455bfc06e4c6261b04c65ddb93a64b8af19b9e1f4dae6ef24f14406a3cfc75e62720eff035d46fbd279663bae56b65769fdfd16831486b5aeb33ec2a9a188288b2b0acd7f57d9c5a3c02ecbfad2f13854fd1726f374c7d558673bb2358009ed783c17cfbfde1f031f0c25c8f37b66ea23971a8916c029ba3183893f63487acb9583bf005695923d45ff206103c9f3841c465eeaf995d55960c23f40906bf61b1e945ff20c53a97b7920ac411d78dce3ee3368ac7dd9ad17cc5e379eb4562cf2b0d5c63cd0e08a5fc17478f686ca38d372ca57dc3ee65b6a737db7f74d0a5a5da3d643643ccfc3d78950b992ac001beb76d32384ad6f0958c79206337c2b8deef412c84206f69ecce8a5cb975135792e8cd474e4b15842fe244b2c638e45942981c3443a8f03f39c2b2a3adb6abfdd4f869ebf2e2e27be652bd8a696a682a6b3f41d4242f915587e0898b1eba97388fe35e80d54d17f78b5aa2ad44e7ddb2c68ff93c998c42f8d8b65dd5567836516a9c8aeeebdafbfc6c18de034e7c4a1b10725b98a057e057d7a357fb947a1d23573ca342efcaa79148eb425f0cf79631d6a01fb69fdb9e2405aec2a3ad356a23490f7df8a3ff12e9e41d500d08c9fe35444c45820e9af40428c7434a3fe3913282d74516a84eea91f4c17ae494224abee332988d17bf2579c0254012bbb06f25b9ef4ee8816d90841334cef827c139d35696ea1c747f551946f23b0373e3aed948fdbecd4888ca7169954443a6fb8a297b804c6e859a02012f22042677164fda2f31d06a1e24ec1a18879016f26594f7977b52bf3231587dacdec9381651275f985d33f160a846922ea6ceaa9b66f3cbe915cf5c2af2f36e0be3826a3e8ff734035e3affdbddcaff6bb617f1f87930ce9fc665340b7601cd5a064f5ef7a1ac217f6a25a384942ad6368419a66c24b9e5438045589c063f3ec8d9e9c1b3da0330e9e87a326acb704a113657da2aadb438ddd0e7e951dea29882577b4f6f3efb17b8052962d38a427f455524a185871f50842a843e27f0fed26f6f6b6f94dbbba952d3597b6e5a0a8f55b292583a9d7446d5788bbd0931f58cc37cafafe198264d5531e9fea36aeb892c0619f7401f2ae5ae9ed09e400000000000000000000000"
+          },
+          "M0": {
+            "numerator_hex": "c39bc298880a40983bdb0024c5404ccca1b9de86de7f05c935c01c91de5f5cb4d9c97ce7f3f209574a544f74a7f497dd63dea061f3509c463d684d32e8cd1dfb68c76e2d0eb34ad6c6ec154abaec0837f26b7081a658eb7a27e318a1285888f8cba202a8949de1f76281f251655a9e413b9ff63d9da8801b8cbc840bd60b6a42340fa868dec9b5cb943d4bb5148861c987ceea27eb80df5f365d88361c72f6909f00d05d1f15538c456363ace488a110c0d8b57ff00edb89a6a63eeb3fc1d1191ed593cf32672b05448e315fc8f25de9f6f6ca23151b79a149ab761bf5374d40a1e1faaeb80ebb997333d9058737443fd406914dce6b38bd4648a339f7b9263b49a7dc2f4a103b92eb5dcab9e9f5087248e177b66e9d6f29137a04efccb377d364371b55dc6cdd7c0cdd0a70fec46f2701488beb3a352ed15e0bbe32948d6e2994579ecf4ff40a042f9fba7c76f59db178a3fd26813c8978a1dbed80ce43ce0d5029846d66d630f3be2b8b40b7537be6932d8b16609d0d849c06ba559bb79069640e08c164a16aeb228b7c122df3f4131282452e067db9d9e0a19b02aceb06874a12066f2fff6e1b33e802c268d2a420bda65951aadf8a8863b5854e06c85d90bb4833babaaefcaee99539c6fd91f43b93144d122964b3fe3048bf3eec0250f07f66e603a7cc3d5a6c1dcb44c8aec54c5ea435de463f967a4c2deee984c78853466f3e6ba22afad2f882e684e69f086d182510ff24b6715136652a61bb52e21d79328735efe07770c3cc90aa1338aca93aeaf702271be340bd1737efcc88666184699e118d3660e7b5e5937bdce55d559ab269df84b82b31270677f5d756bb546d3331b5f53c77ee6d2177a8a84756882020d5f9ab8b15ee373870a3184eccf74fe94f1a8659f8dbe66554cc7462c19172332020588fa8728d30a7e2884d8e43907811ea820994b900436d07d96a59f64025d9b5801cc70843509613c7b5333b12dc5174b4c508ca370db57d40df497ef6580d289848700d449b08ca9406ccbfe9955ebe1723a7bf38dace507c717a29111245cb5fcaec4bee7119d8438c41fe4046119d94f71cc102db7ff6f7cec961b87b872528ef5e4a29b3cfec265248aec47861475505bedda48b02e26742aec4741bfe07552176362aa9b7b60f54c45352e084cf87a4e724a8fb479677a92d1e6f062168e7491161be3ee644a978273af26c873351208906742ea46edd9cd5ff6be2b72382f85bec562dc900d2d45a4af5460f9d8605e5a8e906e2ebfe5d2157725205a36b3acdefc0f5e4e091e6878fdab371212c938ad1b900966bdf2fe6f0b1575e3425cadfc3e725bd73f055f318561daf878e69d4a231dcdb7d40c30e91b84d435a9d4e8f4beb48ae1feed4df31ad38bb557832e86d0226021e32d28e088ee16c205dfdd9a4e230c882cc7342fda69a6f7384dfb531166d71096e9ba11bcd355b61fa4630fb53fe5bba74f186b226d50b708c9ea91e6cf892e8aaa7a71c155e54161f9a444eb8ac56ade603c779c19be01dad286aa87f25be6d007fdc77b22a0b488f0ecf417e7cdc6d8b435f7d40a18ff03a4038dcd0b1fd746dfe03ac6350370bdb9a4997ab0b378247867227a20afc8caf90c6158f9630ad2e4684e1be16b2890afa099f2c02ac6b805796c2389b425a3d1a6c5821189cf6abd50333a6543734d3df8883309d7216e9cfcae17eda017e315051e8c80eec7186efdba7ec165913b48e5a953615fe88cc2a12bf761e52a97e209a46ef957e9b781b33bcc812fb6d1b12cc3cef42e96a8e25b71e0fad11968219c3e762098f864477bc2a3871a546c83d69f03c95444f7ff9cbc562616eb0b7bd276fc29f7bfea9687b9abe0ef68f7c0914c9e4d6087d47ab8b80c2af7cf38bb3ab9522c69ae9c2680e1cced08c727c519988d9e69c58cca70c4907f316b7563bcaf76db3b6db858eaa54fc0a13afb5266051146d6141fdd8cd931fc4c251a2a8aa0a01b7b6b30fd65186f7baf898db80f38227e14a29bb82398abd3bf44122c88d108c3ffab3ae7c64ea4f026d8e05b45fedbb62da32a6bb2eaecb1647970a21bad4b305ec506aaa7740fd94d26bfc3f6f8650e10932c239498f45341d8a899fd1e3bc242edf98770ce769d8e401",
+            "denominator_hex": "1ddc8e81f50b348daf493bb5668e9408697727cde7c2dfeb48fba5525eadef79dadf090f0904e23afa69c9104ba4e7d1b0456f0e9987517c17882bfb16c17b33553d5632d18f23d8ee632323ae7b70f1f079ce9b676c1b1e44e45aa29cea73bb2b14a5b942d1694d77f9a6b7a183391f41ad644f55e130f6b70f0057ece3829be0ce03ca72d2c3f165eb798c88876195acc8e9182011adbb5386b5c09dd68a25b761c78d35d6d6cbfa676ca1bb20822aebd27c05d4aee7f0c9677f6f4bd56ba3b9969a7fdde4500c657089a205c0c0e4035cfbd6a2597db2c1835d01e77f440039fb1241bccbcd8479474d122926910e23557b07a41462ff20eb5612628ccff4ed1778b5bee324309a647d6961c751a7f771f6878e68b8d060a8ff4b7ba16d9e161d6fc0c5c9f72e260b2506aeec9e200b78329c11b764cfbf5f4b0cf7e8cb2932524470ce7cc910f295c15b452c7f16bb578e3e960e84ffca6478faf80bfac53a65f388042ccae1a393ebf372c44372151c34ff4edf8639be42c81aff7103081f2518319a1c52e9eba2f7b75070b1da991381e37d4c5297c7a5df66c025be1e97530136b2c33299e56f8ca633d9da4aa1588191094868fb1281f6c13f108c6bd708b0fbbb56bef0ac0be1f9526dcc9c809fc9bf3ebb3c884d659433c87e2aa0189bc719c50fbe79b4e811d7d9793eedd65c88dddb2aef9c924602b0dc3b2f3cc122acc5b2a5ded20191b9868c0958c8d4dbd472e724ad117c966d8165c9785d95c6990e51f4bf91e30eec3783d070de503ed0157caf139b6d6faeb762f7d45bf9cdbfe0b50a97beb18e27584b34e48ccf3ce08794530caced7ddeaff79ee7173149466a872883d786bfd7ee8b1fe3a69667991ed94fa58f93cf8545df068c8812add1843e7e1e4cd8ed5d6a87008676f969a8579b1e791d23eccf7ba8d0a2f058069ee29949067d7383c50e2f76911d71ff516aa80ebb4931d6c6dfbb8812ec1b1c6fd360d411e8333addba20064b8857db87a145596805fa0e59edd42c3151b801f798b0b7586398c008bb72d85f64376abee636e4fcfd705110aff93866525347df911339a5243becb0167deae37db5964eb06cf21aa18d2a88fbf88affe773c9c0e68ecabbb8cca5ae03e72d9a5d797b8651809999223427f3b269871043c0a28f46256b6a3c98a2d32c8720fdea39ab0c375d0ec20448f283d483793805037407ab92c86b49c281306c55056ba3d9dff8d95a1af6c93ac7d01d12a3a139d7a996b3164ba11e7041f3a1d0bb8761ed34b75c2739a76ea25519d3e5f1a7790834f2894ea7dbdfc3b5670bbb294d850a32a7b10ebf14320c8103b0cd4cde4b1a3d7c88ae3eb718d39ad319b0ff868e1a36652c95ea3e11a82716697eaf16d8add3c5bda12e6f069e2b1c20ac2a746a58e960ecdefff258f63bf009591b947044bb9c8b0aab1870d4f7e1679082cfcb36c5636a72aae7c73aebb5f701c564c5cec92240c2f8e9a9d568d5a6863546834691c700f0879f7862de7aacad082b869e09557dcbcb2badfcc4ae822140ea893431f19d1ded02f78242d3d934663b589952e7874826824dba48646a411ebd3ba4ae3dda574ff99d1bcfa1d88e883a9b9f726df63ea3aa756798874b2c7f40caaa4c40223fad34d4f9eff1f91abdfa52521f6a7722933438017aec0601c164de6524b123fabbf78e12baab56736224311d1773ab6c6fbdab6943a6d0221aafff65f13cae2a8a9b98c91c451ea78b575bc112b1b62a74b62bcd77380e425556109ae40d760fe8a5c9641e6b10e363556124adf5d8f7775dc5e83397da9f43ed50c0989acf0bc8726301285c5e8b4e91da0717b1ce0c21ceac45b15f3f903d5980f84626c0a5b4caf63e980e97fd1c074639896354b03c385e483ce7497d0888d1468d76f0a7f92da395ffd2dbc5d70d9dca676839b509e1c2ad0a5400a62ad127ce0d1a2f5605d4454d6f5f901a9934a56259df179553386ecd9405a2db01f848fb37caafc04e9d5e74837e56fdcd99da0066221f5c15ffeec8a51a0a80fdf77401efe68455871cff99eab35d3e184714f1d6b3bb0484ddde3800fac9745a8d598fe4d1cfce8702177d4187d5d885cc72b424538db66e72c2178cf5a1b2a27100000000000000000"
+          },
+          "M1": {
+            "numerator_hex": "c397f25a4de3b94e2f0cc0186db8c6a84053c429b873e1e8504159bfb7dfd5948c9bb737deea92ca4847f69f6917a3cf147480bcc14a7d22b1ba34b8dbb9a6b5c755440a5420c82667a6d1220502a09610c268d2969c6cc269f6d6c4711e0d55ae2b11b6285aad66599d7cfc0354d0b6c59111f3386ef130c79782e59f6b86e8440064c60d6e4483359d28f081141ba18b45dbe05102408f7195e882ef98a775848d1e34400a750c426c335ec33ddb46c53284fbd6c73638803fe68816c3aad333c135998bacb7eb88ff6b693368213948f954a041a665532a956b9fd5672d0c0556441cb99e36ba54e5d98a0be09241fb9cc880d76280c8528835637f9492c656ea9165527631da92aa854cf121013446f726690a06c0c0a4ce22187191fc7fddda410755346f5fa5a4ef84707be4790babfcc83e29b3ed081a52583b1c57ceaab5daaeea6b1bb9f908ffb0281817f2dffb9abf53a8640a59a97a530fbb8f1a2696747e9c5fd7373fd1854987868b3e780bcfdf4da56fca088b64ef95456bc28d652c64c97ecff1bcf000586a3e077cfe3ebd5a98bc73321086b54015dc6e2f5d97414f40324c749da6b54640247488eebd4bb002fad7eca952e0207eb447b2e45884d95ea242fed8f0249f552997188cd7f4d1e4d43f072a319c43e7ce4fcf686d870f7143a83c07cd8ff7ed2a266fed0647fb3b866d614582796f8d57eca3bc95616f6c2e37459bd96e0d90bcf21a6b31a2d984a64615d60af19d24cd578f4bfeb3f3ef68e30459a0e9b6b69a225878c13ae313d725cffce9da28d8e8d69a59387aeac32db8b4ecb1b653f0be34c758416560693570e35da875549cadb3ac7ea86c18923ad5397be29c6e2d3cd69b01e6fe598dd10f0c6f76289f8a95d64afc13c805af33ca582617b0fbf2b2102d1efc0b9114956aae72c324ab327a647d25ca8680b5ae25bd7ca2ad4ffe35ea8771e57c9f06d03aa27671b8182f48e9d3c98953a88a493d08adea55aa0412bd0a9d0827709bc5c0ce416876dc25225fb2d919d5f887883857c9ec98cfd9caf558692e1a9277264bea310b893408af7ef5d8aa7ad6917f814eb472f08a56a733d2d94d5cf2d4e39c9927292f216388eaa9bfcb413facd50e5272aaf1c56520ea1821d6998ad31e5d6db966ec5fe8374d618ce09496770ebd70c69da21c9c286b8827f95aa160ed377f892e0642c07b02c21632675c361dbc394d1df3e645bd93a824f2b348c31a286527569eb6ff64897e584f3506e42e2eaef6667f03c2003fa68b3f43daa0d4a8e85109473d78952cf48657d7709c63a9d7318b8c5c415803a6aba1e0b4fe29077ecb2a3746b90db72a47c8025fb3bb5de7287f9b878b874f1f287b7790daf07efaf94c6dd3e6a731bb7b5f873f77db7ac33f6f81f0c0041210188d21349f0b5b528cdcfe3ebce81fcb8fd96f7e4f5423fee65b813a6c0c52d762df3a90c77fdb8ba2fa73eac74a5403c2673b9605b369078e5524a4ffd80e597ee1aee720b918ee3c988c9408dcb2b4fd320878a3fecad6284ed694dce8becea9865f1c140e8e72092bc6b6e48588df74c28795b21338e5eac5474acfae992a3b09dfe7012066ea549029c14d99c5696eccc4e6a944f2c9712d3c7a5054f3c7d561b4763de502b013519e8e0a3c61c4c89c3a99b8a0e802295d79e38e8ae76248df7ac450e05ba9f97f5dfde351acf3fcc2903205a6116faaa1894344b02681aec92b0501f053e745341c542dd0dea0e9be928b6ebf36288671abacbe11d23db60da45570fadd8cc140ff991194565ca1bce63eae4242e48648ba6c53aacbc9117bd8a2cf09b2adf443444ffe75594b298680475e53a22392a448982e38b30293097467a4c4e8df098c35a7918839678ca49434f3db6302c4f8628262be7004c2ed71eb81467e2e963ad6e81232121fe46d821d55d1ac8b563b5a4a2127ea3077e40bbf6539adfaaf5f50d113c062049f8777e4746b7771cd1f289f735b68f5b9e44a1c24845096cb1b51060e104ed04a79a4f7926233e7a88b7137a83fdd23c08deb8bb0a82d5e81938d9a80559da8848d4ecf81e3e52aaa54d7d54adbbed1c69522f5fb91c3fb837a7cc3dbc6d1efaa5e9dc31bb9ea528a277e7068770ce769d8e401",
+            "denominator_hex": "3bb91d03ea16691b5e92776acd1d2810d2ee4f9bcf85bfd691f74aa4bd5bdef3b5be121e1209c475f4d392209749cfa3608ade1d330ea2f82f1057f62d82f666aa7aac65a31e47b1dcc646475cf6e1e3e0f39d36ced8363c89c8b54539d4e77656294b7285a2d29aeff34d6f4306723e835ac89eabc261ed6e1e00afd9c70537c19c0794e5a587e2cbd6f319110ec32b5991d23040235b76a70d6b813bad144b6ec38f1a6badad97f4ced94376410455d7a4f80ba95dcfe192cefede97aad747732d34ffbbc8a018cae113440b8181c806b9f7ad44b2fb658306ba03cefe880073f6248379979b08f28e9a24524d221c46aaf60f4828c5fe41d6ac24c5199fe9da2ef16b7dc6486134c8fad2c38ea34feee3ed0f1cd171a0c151fe96f742db3c2c3adf818b93ee5c4c164a0d5dd93c4016f06538236ec99f7ebe9619efd1965264a488e19cf99221e52b82b68a58fe2d76af1c7d2c1d09ff94c8f1f5f017f58a74cbe710085995c34727d7e6e58886e42a3869fe9dbf0c737c859035fee206103e4a30633438a5d3d745ef6ea0e163b5322703c6fa98a52f8f4bbecd804b7c3d2ea6026d65866533cadf194c67b3b49542b103221290d1f62503ed827e2118d7ae1161f776ad7de15817c3f2a4db9939013f937e7d7679109acb286790fc554031378e338a1f7cf369d023afb2f27ddbacb911bbb655df39248c0561b8765e798245598b654bbda40323730d1812b191a9b7a8e5ce495a22f92cdb02cb92f0bb2b8d321ca3e97f23c61dd86f07a0e1bca07da02af95e2736dadf5d6ec5efa8b7f39b7fc16a152f7d631c4eb09669c9199e79c10f28a61959dafbbd5fef3dce2e62928cd50e5107af0d7fafdd163fc74d2ccf323db29f4b1f279f0a8bbe0d1910255ba3087cfc3c99b1dabad50e010cedf2d350af363cf23a47d99ef751a145e0b00d3dc532920cfae7078a1c5eed223ae3fea2d5501d769263ad8dbf771025d83638dfa6c1a823d06675bb74400c9710afb70f428ab2d00bf41cb3dba85862a37003ef31616eb0c731801176e5b0bec86ed57dcc6dc9f9fae0a2215ff270cca4a68fbf2226734a4877d9602cfbd5c6fb6b2c9d60d9e435431a5511f7f115ffcee79381cd1d957771994b5c07ce5b34baf2f70ca301333244684fe764d30e208781451e8c4ad6d4793145a6590e41fbd47356186eba1d840891e507a906f2700a06e80f572590d693850260d8aa0ad747b3bff1b2b435ed92758fa03a25474273af532d662c97423ce083e743a1770ec3da696eb84e734edd44aa33a7cbe34ef21069e5129d4fb7bf876ace1776529b0a14654f621d7e2864190207619a99bc96347af9115c7d6e31a735a63361ff0d1c346cca592bd47c23504e2cd2fd5e2db15ba78b7b425cde0d3c5638415854e8d4b1d2c1d9bdffe4b1ec77e012b23728e089773916155630e1a9efc2cf21059f966d8ac6d4e555cf8e75d76bee038ac98b9d92448185f1d353aad1ab4d0c6a8d068d238e01e10f3ef0c5bcf5595a10570d3c12aafb9796575bf9895d044281d5126863e33a3bda05ef0485a7b268cc76b132a5cf0e904d049b7490c8d4823d7a77495c7bb4ae9ff33a379f43b11d1075373ee4dbec7d4754eacf310e9658fe8195549880447f5a69a9f3dfe3f2357bf4a4a43ed4ee4526687002f5d80c0382c9bcca496247f577ef1c257556ace6c448623a2ee756d8df7b56d2874da044355ffecbe2795c5515373192388a3d4f16aeb78225636c54e96c579aee701c84aaac2135c81aec1fd14b92c83cd621c6c6aac2495bebb1eeeebb8bd0672fb53e87daa18131359e1790e4c60250b8bd169d23b40e2f639c18439d588b62be7f207ab301f08c4d814b6995ec7d301d2ffa380e8c7312c6a9607870bc9079ce92fa1111a28d1aede14ff25b472bffa5b78bae1b3b94ced0736a13c3855a14a8014c55a24f9c1a345eac0ba88a9adebf203532694ac4b3be2f2aa670dd9b280b45b603f091f66f955f809d3abce906fcadfb9b33b400cc443eb82bffdd914a341501fbeee803dfcd08ab0e39ff33d566ba7c308e29e3ad67760909bbbc7001f592e8b51ab31fc9a39f9d0e042efa830fabb10b98e56848a71b6cdce5842f19eb436544e200000000000000000"
+          },
+          "M2": {
+            "numerator_hex": "-332551c94d38174d39ae7014eb07d3070b392bbf42007280f5b50e3babb1fa8b1e1daa3f2e8766e0a7e2c1aa916cd02d978c2e75bd7407c7db5fe04d85aa3990d496060f117bb7d4a0c0f223e07f01343309c3b8f7af45f0a8cc89e9b2cd13c8e0937884684e73782387df4ff17d7967b05ab65ca2655273af8c4bf6b47c6ee04b672acd924cc1c279125f1dab7197c639553240b3b7babfb413d03d2ec8fbb65fe00ff0f8addac897f2487c5c6917f009f7eef1286a7dd76151474c82471759c5f917af7a9d19fde21be0787736f19d5c70da13794f199faa122a7e3530e9410edd811522d7655f307c04505664547b85d3e8dbcc03a4d1641c2df824177dbc617e6e513e71679f50ed33d7a88de5d4bc750ba8380601803bd8063b2549236c13cc12247ac33e380dbcf05471efa607ae88192b620c064fc5b42063f386ad647b8f9ef5eb0c917477b1a473fc4665e37aadfea931592c004e2d57955a77b59768128886c5d67c11e7d1e95da5c2f68d38ef01dd64790d2298e883ae9907abaf38e52461b5490b595b5bb2b7643ba937a3d5d334c26d5912b941734ab20a8058c805301ad814a0bb571268117840bc0748f98df94714bb11773904de8d35b8f3a6658361991a3f7304bc6b60b5998aec46f97bb38b37296c7104cccc2926e3de420aa0207c6acbad2dee987f60647fb55813f099109ff7e66e07c04a78025e24e88e7a55572764094221905a8ba8003e829042041abf48be707d73a692d93aa0f95e364a3ad2803e937027fa268a1c5cf50e748f669277fcb3120acf2c2aa59616c89e411f8992c362571801a8caf56d759697ac61f07a09d155c667eead97bc4f97b951a1b35332f6afb454bbf006ec4329943bc65a6f9243e8cf022d8cdbe39fd6529277f889e3a3400b08c2d83555c8e58a06182caf3c7f3d43511772fbe4364dd386901983c9934d067718b23b25e37e3437a7433d2fca6ee9994c0665146b91c54db05cc3da522e953d57e09be8490e9645a4e3f56e2a028054a0cfe2842156ce1e534011a803217ef87b1af3064848ae4d4bbe9f37a3bef6c94df43817fe358cbae35c8bbcf2b34a4691a74343705f3233353e62a1331734ffc6203b2b70bc2552f908a367a061ea07aadae5318ee910044b22bff290c65ae1f2471d127ed5aa4025fa4d0ea8a558cbbfacb21b5098d073ce69ae3398b26e8658f4f6c98b2a1f693cb881532fad7a308603dd05ae5a1993a51c697453f3956c09f0ed8305fb8ec6d0bf49ba81a1574a257903ec3a69fb79997fb3d1d50bb624d88aca6c3f00c3c01a6039ac35b97f6264589668d5e7ded9d644d2c2465a13940b67a19994f1ab15fb6ef81576cc2636c5f0e1b697c64920510d19f9912f763b0e51ff42ad1e0037d82c670f23c3cecf161f1afefac02ebcc90beeb1d988147361b8fee8c106c8b91e9ac5fec5095ec67f23fa7b8031b816741bb77e7748f293ceb217f7e9b525d323f7a11ed6f2176dd16196172b51b5d9b02734ea0815187d2da2cb370dee5225cdd80c460679da97870bb606dc838a2935ef19d092d4c577612ed2751910e689dd9cde24396d23365966d92ed9e2f2dae577a7045fa79ccb0f889d96ebb7ca2181f3ec912280c200d80c6e057ccc34c068dd7b1e7a5a1c94ca26bded72139260640bb82a56276a82c3f847b5ec9703b88aa604f4a3e0499d10ca047cc2b896b131a46d1f40cfc717f7963e8e8303d20b60ba6665acfa37c33cd6b446e0d8eda59235c3d051c9c06e7714221ded4c01bd2218b579c7aeed69b6f5e31d8f4f760c0c8a8961d3376e4fd5afcab4e250a4fb50f47daaa98f5944ec56bc34fc85d0eb1ca645803c7e160f441eeaeaa510de119f8c718b8a7a1b270e93427e2d9db2fd67449d00b826dad80e979a4715234efcc6d02df80262514a6d288d302276eab97705537dbf6d004989fa77e4c0d953563d3b9a8ab05bd95b938f9330f4a907ef0f4b552591224b856ba87187d42d3b7e1a6238f5a819e0cc1ffe0005eb4c87d26a86bceb34a3ced438b1944ce85d882832c969bac7913cad83a803991e0e325460e94452054f1fec0f9492cc6e68f8623dcdfac2f22b1ff227bbfe9faf6403dfc3877a365b04231a1d5404d43a6f4cb0cea398af72f911277f6ad165629ed3ed7dfc7d5994d18a8d14a39223b8e8deeae3d7ae4c836fff806a4241bab0a9d686ef5ee68fa1b7e6116287157",
+            "denominator_hex": "3653de3b2f080af1114512e00b432ada9f80880f9b363277cfa8a686551d8e0a5500c68ff4dc38eb5dab33b5172d916cb1b29b392faa01916025b856bd54342f0003b7abc9702630f3559f719fe0a22c4d0f6cbf79e0b8204fda5de8ec2e7a834d666b3004e41608cc86df76eb10a02f3f92bbea6dd16a1c655ebad275bdd65d72394fd7c36d80cc15682a72e7771dfe56e1df47ed132592e0eb438c4c9afdce5ba1af8c8840f26dd396cc7d04b1eae85b3bb1b5d7f86f8e8e5b837a51c913470d430d4923a2f301b8d118b9b4ffd9028e01013fcec98cbeece4f7e5694224d255a5cb1012b79a5ed710f72b91fddbb12b38a7de9b92a0f4ccb34f5ea87aa84ea52c480dd6f83fac897e3ec344e171365d4010c21e65facd3f92d3f1d47053f59792b2579569b9bec9e0cb128e24667edecc8341470d0db3242b3312b7c96a0816e01cd01b42161383aefffd699402bef8358a50cceb42dd82bf61a5202f269454cb0adc909eabe3611664218d117df636c8a5d819c65c13355e30031af2740c00185bfc859794258bf5469603a721a6257797cd085f7f886de3e74dec23539bd4d1ecbcab603aab8d50c74b567a1c2d46f2e3dffc61d8f5212b79406b662a4fe41aa0ad4fa47ec034a233e13f782a9496d3e91bab9dc54560799410bce51c1fd7c0fa0ae456f12d1662ab869fda1c301180a5a623e9ee43f049b0929a49bb98ad7e88d1750e13653ef3677c944bc1bc5712fb8849ae3ceb9d7aa746d7f489dd6febd5b8105d9ee72aaa205173a4531da52960cd664d91f56167f1bedb8aa8384d06ac5bf34c144ed22760e19088998b2b5fcff6e1296a358103933e7e0d7f16ceed700c0d76ec6cb4e259dd3b76c758bfec421b15773f793d0593780dc8c86a642428d204748ada02a9910280ee5c6a00d220033734f8c0d7c96087798c80e38f38c386ea46fb302f06117846b9db8dc34ee2549b7c2a80e1be1117fbb63c378e0ac54f6c16adc9e60d72f8edeb33448cf5a8cb772adaafbb0bafe6b3f55e2fc31c021b44f64e44e0bde594dfbfcfa17f48f6b9c30a27ceb6ca46ae71895e2233e68fe281c9beb17a6bdf2e9d8d253a6b91611ff6067076d3d21dd5c8d539babd91be8a93b511273f993ef0c6a73b25201e86ac9f0f958b60e86f4c1a04374a1a81fb781baa74ef8db6ef12cc44d1688853a221cc3de18b8c3e5e8c4ceae7c29778267a52243abc0b6cd0af830cf76d012b974387aa1f5560491d91b01ff29e1acdf4fc3e4156b4393be5b6bc2a9222af8d7ee0a768af384ec9cf99c5193ea98840d907a5cd88d6642b1833f6c43cc0c13c4769eda210a3060780745f9e8d586f435a21b6082b20c2c3c96d8a19eb8b2eab7e510f2cbc34218d7718f36883ce9c940f08090ede86dc1c364cfcc3be392d3684ee3309bf0485b7dfae0466dc4fc9ed3f29ec29b2ea567b8c643d42c5cd606d81adda0a4e82e114dfdd2df3850efa0c058d5af0c3ca0e1cfc007869d28a7e13b6976a94757e3bc72f655d02f96c7cbeb213a76b13518b1d99605e503a79484dafe48a4c5b4cae729ecfa8341cde2c5da205a9efbcde2e6c999e078d6dd44ac109e2126288135b075fd1691ae32843339db6a5ef7603c5dbcc37103eb7792cb65f8b0c54cbb8e36e39a5c836617e57b13b47f140bb33639f3abeedc32f738fe5cf6f94b2274ed2be70090692dbc71e9d275092aa9794c2acdc4f1f9e1270d38622fe46bff783d0fa9fe83f65316916f1e15eb9622489254b81957e2d3ebdb330b0f8a0bb223a117172808b8579600d3c194b5488953091562866d7470eb23c52433c390ceee518ea631935d517499ee63f1563a37a2450552da1b02877d49013160badf7f640ec21a3a1bf04a27afaef320eec91fe41f66430239efea79c30ae810c7f069efe1140fbb11f0aa886346c167dcc27c3ab5921d1cd3bd552ed3438cfa6ca1437c26f624137daef76fe0e07b518d165bcba0f0e9e5fea1afb7015cdaee2fca692febae2c1d5c6f0ebca19872e9cd0ccc8293c617cd33fc2f6cf5a9c8f7437a12b73f2ff0dfc69e5fae3a66b638bc75c058171aabe3e0254125fea49a94ff379c82277675570463d5483a36cb47df767b0d81808ee6ad88f5ad15115878ad070163a4e612d035c2e5f451449d1b5b8bb8e4294b62d09d9333587387e789858d675afaf6acb08e928be907f8cb031c0bbcce7ca7507a269a1fe60248bfa00"
+          }
+        },
+        "discrete_evolution_max_residual": null,
+        "geometry_node0_exact": {
+          "metric": [
+            [
+              {
+                "numerator_hex": "-bd2c4359e54787c8bafd3bb4305bdd167fb0f3ac74266edfc6e5",
+                "denominator_hex": "bd6d82bbc9da6120db42801e85f3000000000000000000000000"
+              },
+              {
+                "numerator_hex": "1935945c20e5e747e238b12c9003db4e8507597b9c3b9d3445",
+                "denominator_hex": "2f5b60aef276984836d0a007a17cc0000000000000000000000"
+              },
+              {
+                "numerator_hex": "ed4392c510d899080d307fc771b32e344fda094a119e5d091",
+                "denominator_hex": "2f5b60aef276984836d0a007a17cc0000000000000000000000"
+              },
+              {
+                "numerator_hex": "1b402f248b1bfbb5314ae12d1e9d966b7febc82304affef881dc7e55",
+                "denominator_hex": "2442ca3a473ebacef51651256eb9b47e1fd80000000000000000000000"
+              }
+            ],
+            [
+              {
+                "numerator_hex": "1935945c20e5e747e238b12c9003db4e8507597b9c3b9d3445",
+                "denominator_hex": "2f5b60aef276984836d0a007a17cc0000000000000000000000"
+              },
+              {
+                "numerator_hex": "bdcfa83faea16ffc134c8c98da42be89705b0cb87c9c6dd53",
+                "denominator_hex": "bd6d82bbc9da6120db42801e85f3000000000000000000000"
+              },
+              {
+                "numerator_hex": "17b9f542b11b9485fcf1f9974bb837d56fbf7e48ca80f799f",
+                "denominator_hex": "bd6d82bbc9da6120db42801e85f3000000000000000000000"
+              },
+              {
+                "numerator_hex": "915650c2e5ea93c65c3a0645f89dcce7ff942b656e554fd809ed4c7",
+                "denominator_hex": "910b28e91cfaeb3bd4594495bae6d1f87f6000000000000000000000"
+              }
+            ],
+            [
+              {
+                "numerator_hex": "ed4392c510d899080d307fc771b32e344fda094a119e5d091",
+                "denominator_hex": "2f5b60aef276984836d0a007a17cc0000000000000000000000"
+              },
+              {
+                "numerator_hex": "17b9f542b11b9485fcf1f9974bb837d56fbf7e48ca80f799f",
+                "denominator_hex": "bd6d82bbc9da6120db42801e85f3000000000000000000000"
+              },
+              {
+                "numerator_hex": "bdcfa83faea16ffc134c8c98da42be89705b0cb87c9c6dd53",
+                "denominator_hex": "bd6d82bbc9da6120db42801e85f3000000000000000000000"
+              },
+              {
+                "numerator_hex": "915650c2e5ea93c65c3a0645f89dcce7ff942b656e554fd809ed4c7",
+                "denominator_hex": "910b28e91cfaeb3bd4594495bae6d1f87f6000000000000000000000"
+              }
+            ],
+            [
+              {
+                "numerator_hex": "1b402f248b1bfbb5314ae12d1e9d966b7febc82304affef881dc7e55",
+                "denominator_hex": "2442ca3a473ebacef51651256eb9b47e1fd80000000000000000000000"
+              },
+              {
+                "numerator_hex": "915650c2e5ea93c65c3a0645f89dcce7ff942b656e554fd809ed4c7",
+                "denominator_hex": "910b28e91cfaeb3bd4594495bae6d1f87f6000000000000000000000"
+              },
+              {
+                "numerator_hex": "915650c2e5ea93c65c3a0645f89dcce7ff942b656e554fd809ed4c7",
+                "denominator_hex": "910b28e91cfaeb3bd4594495bae6d1f87f6000000000000000000000"
+              },
+              {
+                "numerator_hex": "48ab27ac8ba5160f0b9e4dbb33281ed1cf75a6899e63f8bbd633f45b",
+                "denominator_hex": "488594748e7d759dea2ca24add7368fc3fb000000000000000000000"
+              }
+            ]
+          ],
+          "signed_squared_tangent_links": {
+            "0-1": {
+              "numerator_hex": "-bd2c4359e54787c8bafd3bb4305bdd167fb0f3ac74266edfc6e5",
+              "denominator_hex": "2f5b60aef276984836d0a007a17cc000000000000000000000000000"
+            },
+            "0-2": {
+              "numerator_hex": "3f4538153a35cffeb1198432f36b94d87ac9043d7edecf471",
+              "denominator_hex": "2384888335d8f236291c7805b91d9000000000000000000000"
+            },
+            "0-3": {
+              "numerator_hex": "3f4538153a35cffeb1198432f36b94d87ac9043d7edecf471",
+              "denominator_hex": "2384888335d8f236291c7805b91d9000000000000000000000"
+            },
+            "0-4": {
+              "numerator_hex": "8130468814b3b57014a7a6a2220e6fade2984482e0b1ba317cce243",
+              "denominator_hex": "488594748e7d759dea2ca24add7368fc3fb000000000000000000000"
+            },
+            "1-2": {
+              "numerator_hex": "fc8c91b6d778aaf42f3a1e8be9a532bb3cd802625cb48772a4f6b51",
+              "denominator_hex": "8e12220cd763c8d8a471e016e4764000000000000000000000000000"
+            },
+            "1-3": {
+              "numerator_hex": "fcb6172396b80c6b0cbfb530aa08d55ce9d82945f8a10e5033c6b51",
+              "denominator_hex": "8e12220cd763c8d8a471e016e4764000000000000000000000000000"
+            },
+            "1-4": {
+              "numerator_hex": "2046682bc9b8cacf31ce855ab728313edb1f2b610572fb5548b31662e638e3",
+              "denominator_hex": "1221651d239f5d677a8b2892b75cda3f0fec000000000000000000000000000"
+            },
+            "2-3": {
+              "numerator_hex": "2f72d0e819b4f8b2c9a46f73747a77e27c3fdd334a3",
+              "denominator_hex": "f38729f8b773ebcca86ecca00000000000000000000"
+            },
+            "2-4": {
+              "numerator_hex": "2d6af8c46f81cd20e7e6bab782f9ac7cb22c0429a1f63428b94306a5",
+              "denominator_hex": "d990bd5dab7860d9be85e6e0985a3af4bf1000000000000000000000"
+            },
+            "3-4": {
+              "numerator_hex": "2d6af8c46f81cd20e7e6bab782f9ac7cb22c0429a1f63428b94306a5",
+              "denominator_hex": "d990bd5dab7860d9be85e6e0985a3af4bf1000000000000000000000"
+            }
+          }
+        }
+      }
+    ],
+    "limits": [
+      "finite compiled horizon; retained workspace grows with requested steps",
+      "constraints propagate with discretization error; no claim of exact continuum GR",
+      "prototype ADM integrator; long-time stability and strong-field production use not validated",
+      "matter is a real scalar plus optional irrotational single-stream dark dust; no dark particle identity or multistream halo model",
+      "pre-existing ONE matter/event sectors are not automatically coupled to this new tensor"
+    ],
+    "initial_data": {
+      "newton_iterations": 3,
+      "unquantized_H_max": 4.218847493575595e-15,
+      "constant_expansion": "961611/16777216",
+      "scope": "constrained inhomogeneous real scalar and pressureless dark dust; fixed periodic topology"
+    },
+    "upstream_commit": "335eb3c1b625075dbcca01f9cd61faffdd614600",
+    "adaptation": "fixed divisor six only; copied per-node clock bank unchanged in isolated review",
+    "source_sha256": {
+      "experiments/geometry/integer_circuit.py": "2bdf76e72f982e0ba2f68061c4812bbeffea14cddc265c5b2d560b1869279f76",
+      "experiments/geometry/adm_integer.py": "ce1e831091ec84934584cc81f4816d3b9689f466e44d3ce9352d59e3a95f1e14",
+      "experiments/geometry/adm_equations.py": "64ef32ead778c62af950998cd58691cdfa8e5b8e673b1a5b1065514f91990197",
+      "universe24/core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0"
+    }
+  },
+  "physical_readout_audit": {
+    "scope": "Post-hoc bounds on sampled physical dust and field signs; separate from the ref.* burst protocol.",
+    "physical_snapshots": 3,
+    "samples": [
+      {
+        "physical_step": 0,
+        "dust_ball_fraction_upper_bound": "26270997826327898/70931694131085303",
+        "dust_ball_fraction_upper_bound_float": 0.37037037037037046,
+        "every_dust_ball_below_dispersed_threshold": true,
+        "uniform_joint_field_sign_pattern": true,
+        "site_sign_pattern_types": 1,
+        "edge_sign_pattern_types": 1,
+        "persistent_sign_pattern_types_across_three_snapshots": 0
+      },
+      {
+        "physical_step": 1,
+        "dust_ball_fraction_upper_bound": "26235706548770138/70825275126448119",
+        "dust_ball_fraction_upper_bound_float": 0.3704285864323173,
+        "every_dust_ball_below_dispersed_threshold": true,
+        "uniform_joint_field_sign_pattern": true,
+        "site_sign_pattern_types": 1,
+        "edge_sign_pattern_types": 1,
+        "persistent_sign_pattern_types_across_three_snapshots": 0
+      },
+      {
+        "physical_step": 2,
+        "dust_ball_fraction_upper_bound": "78601388417836340/212157085228857891",
+        "dust_ball_fraction_upper_bound_float": 0.37048674727524433,
+        "every_dust_ball_below_dispersed_threshold": true,
+        "uniform_joint_field_sign_pattern": true,
+        "site_sign_pattern_types": 1,
+        "edge_sign_pattern_types": 1,
+        "persistent_sign_pattern_types_across_three_snapshots": 0
+      }
+    ],
+    "four_reassemblies_established": false,
+    "complete_information_recovery": true,
+    "between_snapshot_reassemblies": "not resolved by these snapshots",
+    "limitations": [
+      "3 sampled physical states; events between them remain unresolved.",
+      "Field sign patterns are only the declared structural proxy; they do not capture all geometric variation.",
+      "Microticks compute a finite DAG; they are not additional completed physical time steps."
+    ]
+  },
+  "user_goal_demonstrated": false,
+  "integration_decision": "Do not integrate the copied clock bank or treat the finite compiler as a perpetual local-message burst mechanism. Publish the verified compatibility patch and review only.",
+  "review_source_sha256": {
+    "experiments/cosmology/review_adm_scheduler.py": "acbd0eea327073d0201af74c91e6078bf61bb408f046b4dfcd04207b2d41e5e0",
+    "experiments/cosmology/audit_adm_readouts.py": "191b42301a583564f4e485fd6c67812d5319f8135995f5ce74f58900bb212d41",
+    "experiments/cosmology/adm_fixed_six_review.patch": "4d32178935e68b8da2370d0ea3dae0d0fd11852bcda6a01c40714a447e850f62",
+    "universe24/tests/test_adm_readout_bounds.py": "aa0d736fa68536cb1ef618f8a17245d8fbdd877117fc58e14280f254ca2a8f68"
+  }
+}

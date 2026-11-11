@@ -98,13 +98,20 @@ def reference_inventory():
 
 
 def default_inventory():
+    from fractions import Fraction
     from ..layers.adm import compile_adm
-    program, parameters = compile_adm(complex_matter=True, dark_matter=True)
+    from ..layers.universe import UniverseProgram
+    from ..prepare.einstein import inhomogeneous_scalar
+    _, scale, _ = inhomogeneous_scalar(3, complex_matter=True, dark_matter=True)
+    program, parameters = compile_adm(complex_matter=True, dark_matter=True,
+                                      scale=scale, dx=Fraction(1, 3))
+    program = UniverseProgram(program, parameters)
     result = inventory(program.tensor)
     result['physical_model'] = 'Einstein + complex Klein-Gordon + geodesic dark dust'
     result['physical_fields'] = parameters['fields']
     result['physical_steps'] = parameters['steps']
     result['engine_microticks'] = program.ticks
+    result['channel_allocation'] = program.assembly.manifest(include_channels=False)
     return result
 
 

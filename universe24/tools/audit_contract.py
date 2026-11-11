@@ -162,7 +162,7 @@ def run(L,steps,rng_seed,out,*,single_edge=False,stiffness=None,max_bits=256):
     (out/'tensor.json').write_text(T.to_json())
     save_json(out/'initial_state.json.gz',seed.to_dict())
     counts=Counter();weights=Counter();classes=Counter();audit_rows=0;dropped=0
-    clock_g=T.gear_index(prep['gear']);clock_xyz=prep['origin'];clock_node=lattice(L).index(*clock_xyz);times=[];sizes=[]
+    clock_g=T.gear_index(prep.get('gear', 'ref.R00'));clock_xyz=prep['origin'];clock_node=lattice(L).index(*clock_xyz);times=[];sizes=[]
     snapshots_hash=state_hash(seed,np.arange(T.G))
     total_records=0;per_update=[];state=seed;peak_bits=0;stopped_for_growth=False
     with gzip.open(out/'official_clicks.jsonl.gz','wt',encoding='utf-8') as f:

@@ -2,6 +2,8 @@
 
 Universe24 runs discretized Einstein gravity, complex scalar matter with opposite U(1) charges, and cold pressureless dark matter on one event board. The default command prepares constraint-compatible data, compiles one fixed local integer tensor, evolves it through Rule3, and exports the evolving geometry and matter together.
 
+The same tensor now also contains local message transport and its reference receiver. Components have disjoint named channel ranges, so their state cannot overlap. The default one-step model has 21 physical fields and 4,825 integer channels per node: 4,771 for Einstein arithmetic and 54 for communication. An explicitly selected 26-channel probe experiment has its own test chart and retains its failed general common-metric result. It never replaces the physical ADM metric or adds a gravitational source. See [system integration and channel ownership](docs/UNIFIED_SYSTEM.md).
+
 The fundamental update remains exact and reversible:
 
 ```text
@@ -21,6 +23,9 @@ python -m universe24 --steps 1 --out runs/universe24
 
 # Two physical steps at the same final time as the default one-step run:
 python -m universe24 --steps 2 --dt 1/128 --out runs/universe24-fine
+
+# Inspect allocation, or enforce a construction-time channel budget:
+python -m universe24 --plan --max-channels 5000 --out runs/channel-plan
 ```
 
 The default `--case universe` places both signs of scalar charge and positive dark density on a periodic 3×3×3 board, with a general non-diagonal metric. Initial constraints are solved before integer quantization. The Engine performs every evolution update; complete rewind and all arithmetic registers are verified automatically. Two steps retain much larger intermediate integers and take substantially more time and memory.
@@ -53,6 +58,8 @@ The current circuit has a finite horizon fixed at construction. It retains its w
 - `physical_N.json.gz`, `event_tensors_N.json.gz`: exact integer-pair fields, metric, independently computed stress and current at each physical snapshot.
 - `geometry_N.json.gz`: shared spatial squared lengths and local angle data.
 - `tensor.json`, `full_trace.jsonl.gz`, `report.json`: fixed law, lossless complete-state trace, errors and source hashes.
+- `channels.json`: every channel's owner and each physical field's retained-register address.
+- `component_events.jsonl.gz`: passive local message records and computational C0/C1/C2 counts, separate from physical readouts.
 
 A physical mesh event and an individual integer arithmetic click are explicitly different levels of the same retained computation. A click is not a particle count. [Event mapping and matter conventions](docs/UNIVERSE24_EVENTS.md) and [all Einstein equations](docs/INTEGER_ADM.md) define the correspondence.
 
@@ -61,6 +68,8 @@ A physical mesh event and an individual integer arithmetic click are explicitly 
 | Path | Responsibility |
 | --- | --- |
 | `universe24/core/` | Unchanged Rule3 Engine, retained state and fixed local tensor |
+| `universe24/core/channels.py` | Disjoint component allocation, complete seed assembly and read-only ports |
+| `universe24/layers/universe.py` | Construct the single combined tensor and its explicit research components |
 | `universe24/algebra/integer_circuit.py` | Compile rational arithmetic into clocked degree-three integer gates |
 | `universe24/layers/adm.py` | Einstein, scalar, dust and gauge equations; fixed tensor construction |
 | `universe24/prepare/einstein.py` | Initial data and constraint solve, before evolution |
@@ -78,7 +87,9 @@ python -m universe24 --L 3 --steps 1 --out runs/smoke --rewind
 python -m universe24.tools.system_inventory --out runs/system-inventory.json
 ```
 
-See [recorded integration checks](docs/evidence/universe24_integration.json) for the current fixed-six base and complete validation.
+See [recorded integration checks](docs/evidence/universe24_integration.json) for the 0.4.0 fixed-six physical baseline.
+
+The 0.5.0 consolidation of PRs #29–#31 is documented in [UNIFIED_SYSTEM.md](docs/UNIFIED_SYSTEM.md), with [fresh evidence](docs/evidence/universe24_unification.json). The earlier 0.4.0 record remains historical evidence for its pinned source. `--no-communication` selects the Einstein-only control; `--probe-experiment --L 5` includes the independent probe test in the same Engine.
 
 The fixed-six 48-channel reference control remains independently reproducible:
 

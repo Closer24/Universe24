@@ -1,5 +1,7 @@
 # Fixed-divisor Rule3 algebra
 
+The 0.5.0 consolidation adds disjoint channel ownership, local communication and explicit probe experiments; see [UNIFIED_SYSTEM.md](UNIFIED_SYSTEM.md) and [fresh validation](evidence/universe24_unification.json). The physical Einstein metric remains the sole metric of the main event board.
+
 ## Integrated Einstein event board
 
 The default is now `python -m universe24`: nonlinear ADM, complex scalar matter with opposite U(1) charges and geodesic dark dust. All updates use the fixed-six Engine; the metric, stress and event records come from the same retained state. See [equations](INTEGER_ADM.md), [events and matter conventions](UNIVERSE24_EVENTS.md), and [commands](../README.md).

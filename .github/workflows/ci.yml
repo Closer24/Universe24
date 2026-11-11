@@ -41,6 +41,12 @@ jobs:
           python experiments/geometry/ppwave_palatini_local.py --out runs/geometry/ppwave.json
           python experiments/geometry/ppwave_geodesic_clock.py --out runs/geometry/geodesic.json
           python experiments/geometry/ppwave_geodesic_audit.py
+      - name: Consolidated communication and probe evidence
+        run: |
+          python -m universe24.demos.communication.run_communication --L 3 --tmax 20 --out runs/communication-smoke --rewind
+          python experiments/geometry/transported_probe_clock.py --replay runs/transported-probe/checked.json
+      - name: Channel allocation budget
+        run: python -m universe24 --plan --max-channels 5000 --out runs/channel-plan
       - name: Test evidence
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9

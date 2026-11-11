@@ -13,7 +13,7 @@ import numpy as np
 
 from universe24.core import Engine, State, Tensor
 from universe24.core.lattice import DIRECTIONS, ZERO
-from universe24.demos.reference_model.run_reference import build
+from universe24.demos.communication.run_communication import build
 from universe24.observe.reference_model import state_hash
 
 
@@ -39,7 +39,7 @@ def fixture(name, tensor, initial, steps):
 def main(out_dir):
     out_dir=Path(out_dir)
     out_dir.mkdir(parents=True,exist_ok=True)
-    _,reference,_,seed,_=build(3,'pulse',13)
+    _,reference,_,seed,_=build(3,'pulse',13,model='reference')
     wave=Tensor(['wave'],[('wave',1,(('wave',d,'b'),)) for d in DIRECTIONS])
     rng=np.random.default_rng(47)
     a=rng.integers(-4,5,size=(1,27));b=rng.integers(-4,5,size=(1,27))
@@ -47,7 +47,9 @@ def main(out_dir):
     bigint=Tensor(['counter'],[('counter',3,(('counter',ZERO,'b'),))])
     amplitude=1<<80
     huge=State(3,[[0]*27],[[amplitude]*27],[[0]*27])
-    jobs=[('reference_pulse',reference,seed,20),
+    _,communication,_,message_seed,_=build(3,'pulse',13)
+    jobs=[('local_communication_pulse',communication,message_seed,20),
+          ('reference_pulse',reference,seed,20),
           ('scalar_wave_random',wave,State(3,a,b,r),12),
           ('bigint_periodic_clock',bigint,huge,12)]
     index=[]

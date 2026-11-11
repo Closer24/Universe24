@@ -70,6 +70,10 @@ def export_event_board(program, state, parameters, out):
                'charge_diagnostics': charges, 'provenance': provenance,
                'meaning': 'Metric, matter and stress decoded from one retained Engine state; physical snapshots use a declared coordinate chart.',
                'limits': 'Classical complex scalar and single-stream dark dust. No quantum particle count, electromagnetic interaction or annihilation model. Finite compiled horizon and numerical constraint errors.'}
+    if hasattr(program,'assembly'):
+        payload['channel_allocation']=program.assembly.manifest(include_channels=False)
+        payload['channel_allocation']['physical_fields_per_event']=len(fields)
+        payload['channel_allocation']['property_groups']=program.channel_manifest(include_channels=False)['property_groups']
     (out / 'event_board.json').write_text(json.dumps(payload, indent=2) + '\n')
     (out / 'board.html').write_text(HTML.replace('__PAYLOAD__', json.dumps(payload, separators=(',', ':')).replace('<', '\\u003c')))
     return {'file': 'board.html', 'data': 'event_board.json', 'physical_events': sum(len(f['events']) for f in frames),
@@ -99,12 +103,14 @@ details{margin-top:15px}summary{cursor:pointer;color:#8edbd1}.limit{border-left:
 <label>z slice <select id="slice"></select></label><label>Color <select id="field"><option value="charge">Signed scalar charge</option><option value="rho_dark">Dark density</option><option value="rho">Total energy density</option><option value="g00">Spatial metric γxx</option><option value="H">Hamiltonian residual</option></select></label></div>
 <div class="grid"><section class="card"><div class="stats"><span>COORDINATE TIME<strong id="clock"></strong></span><span>READY MICROTICK<strong id="tick"></strong></span><span>BOARD EVENTS<strong id="events"></strong></span></div><canvas id="board" width="780" height="650" aria-label="Event board slice"></canvas><div class="key"><span id="min"></span><span id="max"></span></div><p class="caption">Click a node to inspect its metric and source. Lines are shared spatial links; their lengths are computed from the metric, not this diagram's pixel spacing.</p></section>
 <section class="card"><h2 id="nodeTitle">Event</h2><table id="values"></table><details open><summary>Spacetime metric gμν</summary><pre id="metric"></pre></details><details><summary>Independent source Tμν</summary><pre id="stress"></pre></details><details><summary>Einstein constraints</summary><pre id="constraints"></pre></details><details><summary>Retained register provenance</summary><pre id="registers"></pre></details></section></div>
+<section class="card" style="margin-top:18px"><h2>Channel ownership</h2><p id="channelSummary"></p><table id="channels"></table><p class="caption">Each owner has a disjoint retained range. Communication and experimental probes are computational controls; they do not add a second metric or stress source to this physical board. Full allocation: channels.json.</p></section>
 <p class="limit" id="limit"></p><p class="caption" id="fingerprint"></p>
 <script type="application/json" id="data">__PAYLOAD__</script>
 <script>
 const data=JSON.parse(document.getElementById('data').textContent),$=id=>document.getElementById(id),ctx=$('board').getContext('2d');let selected=0,points=[];
 $('time').max=data.frames.length-1;for(let z=0;z<data.L;z++)$('slice').add(new Option(z,z));$('limit').textContent=data.limits;
 $('fingerprint').textContent='Fixed tensor '+data.tensor_fingerprint+' · Exact arrays: physical_N.json.gz / event_tensors_N.json.gz';
+if(data.channel_allocation){const a=data.channel_allocation;$('channelSummary').textContent=`${a.physical_fields_per_event} physical fields · ${a.total_channels} channels per node · ${a.integer_registers_per_node} retained integers (a, b, r)`;for(const c of a.components){const row=$('channels').insertRow();for(const v of [c.owner,`${c.start}–${c.stop-1}`,c.channels,c.purpose])row.insertCell().textContent=v}}else{$('channelSummary').textContent='Standalone Einstein component; register provenance is shown per physical field.'}
 const number=x=>Number(x).toPrecision(6),matrix=a=>a.map(row=>row.map(x=>number(x).padStart(13)).join(' ')).join('\n');
 function value(e){let key=$('field').value;return key==='charge'?e.charge:key==='H'?e.constraints.H:key==='g00'?e.fields.g00:e.energy[key]}
 function render(){const frame=data.frames[+$('time').value],z=+$('slice').value,events=frame.events.filter(e=>e.grid[2]===z),vals=events.map(value),lo=Math.min(...vals),hi=Math.max(...vals),span=Math.max(Math.abs(lo),Math.abs(hi),1e-30);$('clock').textContent=frame.time;$('tick').textContent=frame.ready_microtick;$('events').textContent=data.L**3;$('timeLabel').textContent=' '+frame.step;$('min').textContent=number(lo);$('max').textContent=number(hi);
