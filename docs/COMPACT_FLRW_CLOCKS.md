@@ -142,8 +142,9 @@ observer. These exact contractions are passive and allocate no channels.
 Only the displayed square root uses floating point. Rates are instantaneous,
 not accumulated worldline integrals, geodesic solutions or redshift estimates.
 
-In the default geodesic chart `α=1, β=0`, all normal clocks have unit rate
-despite varying matter and curvature. Gravity also changes spatial distances,
+In the default geodesic chart `α=1`, all normal clocks have unit rate
+despite varying matter and curvature. The default prescribed shift is nonzero,
+so stationary grid clocks have different rates; their tangent is not the normal. Gravity also changes spatial distances,
 relative motion and the comparison of clocks along different worldlines.
 Reading `g_tt` alone does not determine the full Einstein geometry.
 

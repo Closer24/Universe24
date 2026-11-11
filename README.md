@@ -47,8 +47,9 @@ Each selected event also displays the instantaneous proper-clock rate derived
 from that same metric, for the hypersurface-normal observer and a stationary
 grid observer. A null/spacelike grid tangent is identified explicitly. These
 rates are chart dependent; they are not accumulated clock readings or a
-gravitational-redshift calculation. In the default unit-lapse, zero-shift
+gravitational-redshift calculation. In the default unit-lapse
 chart, normal clocks tick at one even when curvature and matter are nonzero.
+The default shift is nonzero, so fixed-grid clock rates differ from normal rates.
 
 Other preparations: `--case matter`, `antimatter`, `dark`, `inhomogeneous`, `scalar`, `massless`, or `gauge`. `matter` and `antimatter` are charge-conjugate classical scalar preparations. `--method midpoint` selects the second-order time integrator. `--L` selects an odd periodic side length, at least three for constrained nonuniform data.
 
