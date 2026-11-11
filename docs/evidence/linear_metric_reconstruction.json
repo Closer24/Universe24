@@ -1,0 +1,39 @@
+{
+  "scope": "Passive exact linearized Einstein operator on the reconstructed axis TT metric, using stated central differences; not nonlinear GR or the probe-inferred metric",
+  "L": 7,
+  "metric_denominator": 28672,
+  "integer_hplus": [
+    120,
+    -96,
+    24,
+    -24,
+    -16,
+    48,
+    -56
+  ],
+  "integer_hcross": [
+    80,
+    -32,
+    24,
+    -32,
+    -32,
+    24,
+    -32
+  ],
+  "microtime_profile": "h(t,z)=H[(t+z) mod7]/(M P)",
+  "derivative_convention": "D_mu=(shift_plus_mu-shift_minus_mu)/2 in unit lattice spacing; curvature uses D_mu D_nu, a two-cell second-derivative stencil",
+  "all_16_linearized_Ricci_components_zero": true,
+  "linear_Hamiltonian_constraint_zero": true,
+  "all_linear_momentum_constraints_zero": true,
+  "electric_Riemann_matches_original_curvature_profiles": true,
+  "trace_and_transversality_exact": true,
+  "maximum_squared_integer_polarisation_amplitude": 20800,
+  "spatial_signature_positive": true,
+  "limitations": [
+    "Geometry is reconstructed from a prepared profile and internal phase registers, not inferred from official events alone.",
+    "The exact statements refer to the declared linearized difference operator; the nonlinear Einstein residual is not zero.",
+    "Nearest-neighbor and central-derivative-squared curvature stencils are different at finite lattice spacing.",
+    "The separately tested scalar probe has a different flat characteristic speed, so this does not produce one universal metric."
+  ],
+  "implementation_sha256": "7983e870bef580eb3d34d2f655265c4dee918cd075b9ac2a3dca98aa22c986f0"
+}

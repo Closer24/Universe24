@@ -1,0 +1,214 @@
+{
+  "scope": "Exact prepared linear TT curl sector; no nonlinear Einstein metric, common matter coupling, or calibrated physical detector.",
+  "algebra_audit": [
+    {
+      "doubled": false,
+      "independent_input_oracle": true,
+      "full_nine_component_self_adjointness": true,
+      "reciprocity": true,
+      "strict_support": true,
+      "monomials": 72
+    },
+    {
+      "doubled": true,
+      "independent_input_oracle": true,
+      "full_nine_component_self_adjointness": true,
+      "reciprocity": true,
+      "strict_support": true,
+      "monomials": 144
+    }
+  ],
+  "rotation_and_locality": {
+    "proper_cube_rotations": 24,
+    "full_state_equivariance": true,
+    "generic_off_sector_state": true,
+    "local_prefix_steps": 3,
+    "no_influence_outside_face_distance": true
+  },
+  "common_divisor": {
+    "Q_values": [
+      1,
+      1180591620717411303424
+    ],
+    "steps": 28,
+    "identical_counter_histories": true,
+    "identical_official_quotients": true,
+    "differently_prepared_allowed_remainders": true
+  },
+  "travelling": [
+    {
+      "Q": 1,
+      "L": 7,
+      "axes": [
+        2
+      ],
+      "polarisations": 2,
+      "zero_mean_profiles": true,
+      "steps": 56,
+      "exact_full_state_period": 28,
+      "exact_translation_every_two_updates": true,
+      "macro_carrier": -1,
+      "macro_shift_per_axis": 2,
+      "peak_counter": 3,
+      "official_records": 120736,
+      "all_official_kinds_C0": true,
+      "all_TT_residuals_zero": true,
+      "remainders_constant": true,
+      "exact_rewind": true,
+      "rank": 2,
+      "strict_support": true,
+      "reciprocity": true,
+      "tensor_fingerprint": "8078dc1b722160bdcc74248c9cb0a3887b364cba4e67479188a95f8e475169c2"
+    },
+    {
+      "Q": 7,
+      "L": 7,
+      "axes": [
+        2
+      ],
+      "polarisations": 2,
+      "zero_mean_profiles": true,
+      "steps": 56,
+      "exact_full_state_period": 28,
+      "exact_translation_every_two_updates": true,
+      "macro_carrier": -1,
+      "macro_shift_per_axis": 2,
+      "peak_counter": 3,
+      "official_records": 120736,
+      "all_official_kinds_C0": true,
+      "all_TT_residuals_zero": true,
+      "remainders_constant": true,
+      "exact_rewind": true,
+      "rank": 2,
+      "strict_support": true,
+      "reciprocity": true,
+      "tensor_fingerprint": "68baefe622b328471ac6dacc9f1855e467a2377455a70756b16dec863c4dd2c0"
+    },
+    {
+      "Q": 7,
+      "L": 7,
+      "axes": [
+        0,
+        1,
+        2
+      ],
+      "polarisations": 2,
+      "zero_mean_profiles": true,
+      "steps": 56,
+      "exact_full_state_period": 28,
+      "exact_translation_every_two_updates": true,
+      "macro_carrier": -1,
+      "macro_shift_per_axis": 2,
+      "peak_counter": 5,
+      "official_records": 258720,
+      "all_official_kinds_C0": true,
+      "all_TT_residuals_zero": true,
+      "remainders_constant": true,
+      "exact_rewind": true,
+      "rank": 2,
+      "strict_support": true,
+      "reciprocity": true,
+      "tensor_fingerprint": "68baefe622b328471ac6dacc9f1855e467a2377455a70756b16dec863c4dd2c0"
+    }
+  ],
+  "instability_controls": [
+    {
+      "operator": "single-index curl A",
+      "Q": 7,
+      "L": 5,
+      "steps": 64,
+      "all_TT_residuals_zero": true,
+      "remainders_constant": true,
+      "exact_rewind": true,
+      "conserved_macro_quadratic": 51200,
+      "quadratic_positive_definite": false,
+      "growth": [
+        {
+          "tick": 1,
+          "peak_counter": 27,
+          "bits": 5
+        },
+        {
+          "tick": 2,
+          "peak_counter": 72,
+          "bits": 7
+        },
+        {
+          "tick": 4,
+          "peak_counter": 544,
+          "bits": 10
+        },
+        {
+          "tick": 8,
+          "peak_counter": 42604,
+          "bits": 16
+        },
+        {
+          "tick": 16,
+          "peak_counter": 248762344,
+          "bits": 28
+        },
+        {
+          "tick": 32,
+          "peak_counter": 8467392663446344,
+          "bits": 53
+        },
+        {
+          "tick": 64,
+          "peak_counter": 9810231378914580246885146256544,
+          "bits": 103
+        }
+      ],
+      "scope": "Oblique 3D high-wave-number instability despite exact constraints."
+    },
+    {
+      "operator": "doubled symmetric extension C",
+      "Q": 7,
+      "L": 5,
+      "steps": 64,
+      "all_TT_residuals_zero": true,
+      "remainders_constant": true,
+      "exact_rewind": true,
+      "conserved_macro_quadratic": 47800,
+      "quadratic_positive_definite": false,
+      "growth": [
+        {
+          "tick": 1,
+          "peak_counter": 54,
+          "bits": 6
+        },
+        {
+          "tick": 2,
+          "peak_counter": 324,
+          "bits": 9
+        },
+        {
+          "tick": 4,
+          "peak_counter": 10804,
+          "bits": 14
+        },
+        {
+          "tick": 8,
+          "peak_counter": 19351204,
+          "bits": 25
+        },
+        {
+          "tick": 16,
+          "peak_counter": 57145369181764,
+          "bits": 46
+        },
+        {
+          "tick": 32,
+          "peak_counter": 492462258934873729290821764,
+          "bits": 89
+        },
+        {
+          "tick": 64,
+          "peak_counter": 36565987231783810212756676673128643371648225007980804,
+          "bits": 175
+        }
+      ],
+      "scope": "Oblique 3D high-wave-number instability despite exact constraints."
+    }
+  ]
+}

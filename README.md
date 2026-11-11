@@ -13,6 +13,12 @@ This is an executable mathematical model, **not a demonstrated derivation of qua
 
 The [system map and claim audit](docs/SYSTEM_MAP.md) explain the generic node, prove the inverse under its assumptions, list every module's role and show what actually communicates. The default tensor has six independent namespace groups; its present cosmic detector choices do not select different future clock trajectories under the declared preparation.
 
+The optional [connected-clock research](docs/CLOCK_RESEARCH.md) adds reciprocal clock and record couplings as fixed tensor entries, with exact resolution lifting and unchanged Rule3. These are experimental builders, not the default law or established gravity/entanglement. Long runs also expose instability in the original default preparation; bounded shorter runs must not be extrapolated to arbitrary times or seeds.
+
+A separate [bounded-circuit example](docs/BOUNDED_CIRCUITS.md) proves exact routing and periodic clocks for all time on a prepared Boolean invariant sector. It uses the same engine, but a different fixed tensor; its proof is not a stability theorem for the default field model.
+
+The [geometry research](docs/GEOMETRY_RESEARCH.md) derives the clock/link reconstruction requirements and the missing Einstein constraints. Isolated [geometry experiments](experiments/geometry/README.md) include a restricted conformal clock construction, an invariant linear tensor-wave sector and exact counterexamples. They are research examples, kept outside the default runtime.
+
 ## Install and run
 
 Python 3.11 or newer:
@@ -53,6 +59,8 @@ Optional builders are experiments within the same ONE engine. The coupled-double
 | [`core/tensor.py`](universe24/core/tensor.py) | Polynomial input, locality and inverse-dependency validation |
 | [`algebra/`](universe24/algebra) | Cube rotations, binary-octahedral group and fixed L0 matrices |
 | [`layers/one.py`](universe24/layers/one.py) | Default complete ONE construction |
+| [`layers/clock_network.py`](universe24/layers/clock_network.py), [`clock_bridge.py`](universe24/layers/clock_bridge.py) | Optional fixed reciprocal interactions and record feedback |
+| [`layers/involution_clock.py`](universe24/layers/involution_clock.py) | Exact prepared-sector routing experiment |
 | [`prepare/one.py`](universe24/prepare/one.py) | Initial data only |
 | [`observe/`](universe24/observe) | Passive measurements and audit identities |
 | [`demos/one/run_one.py`](universe24/demos/one/run_one.py) | Reproducible run and reporting |
@@ -74,6 +82,29 @@ python -m universe24.tools.system_inventory --out runs/system-inventory.json
 Tests write fresh evidence to ignored `runs/tests/`. Checked-in `universe24/results/` and research notes are historical ONE experiment records, not a declaration that all physical targets passed. Some tests deliberately verify negative findings or failure of a physical hypothesis. A green suite means the stated assertions passed.
 
 See [validation scope](docs/VALIDATION.md), [contribution rules](CONTRIBUTING.md), and [the research proposal](https://docs.google.com/document/d/1NDPfeFj9vldgb0RMSSvx2lBSmOo__E-F3t2cZwfjOjI/edit).
+
+## Reproduce the optional clock research
+
+```bash
+# Autonomous candidate, explicit initial state, exact rewind
+python -m universe24.tools.connected_clocks --L 3 --steps 1000 --out runs/connected/report.json
+
+# Paired controls change only a declared initial source; the tensor stays fixed
+python -m universe24.tools.connected_clocks --control forward --L 4 --steps 300 --out runs/connected/forward.json
+python -m universe24.tools.connected_clocks --control reverse --L 3 --steps 1200 --out runs/connected/reverse.json
+python -m universe24.tools.connected_clocks --control off --L 3 --steps 300 --out runs/connected/off.json
+
+# Distinguish hand crossings, reader echoes and complete-state recurrence
+python -m universe24.tools.clock_epochs --L 3 --steps 1000 --matter-divisor 16 --out runs/epochs/report.json
+
+# Raw official-click clock ratios in prescribed backgrounds; includes failed physical criteria
+python -m universe24.tools.metric_clock_gate --out runs/metric-clock-gate/report.json
+
+# Exact finite-sector proof fixtures and replay of committed evidence
+python -m unittest universe24.tests.test_involution_clock -v
+```
+
+Inspect the actual completed horizon, per-sector bounds, inverse result and physical acceptance fields. A successful command means the experiment ran; it does not turn a failed physical criterion into a pass. The metric-clock gate's faster clocks fail its declared universal-dilation tolerance even though all histories rewind exactly. The reference packet and long field runs also expose growing metric amplitudes.
 
 ## Tensor and click audit
 
