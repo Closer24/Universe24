@@ -83,7 +83,9 @@ jobs:
       - name: Eight-lane retained selection and reciprocal apparatus audit
         run: python -m validation.selection.run_audits --reference validation-reference-50 --out runs/retained-selection
       - name: Cross-team massive45 identity and preserved constraint failures
-        run: python -m validation.integration_contract.massive45 > runs/cross-team-integration.json
+        run: |
+          python -m validation.integration_contract.massive45 > runs/cross-team-integration.json
+          python -m validation.integration_contract.sector_handoff > runs/sector-handoff.json
       - name: Generic coupling identities and exact homogeneous sector reconstruction
         run: |
           python -m validation.generic_couplings --out runs/generic-couplings

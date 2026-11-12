@@ -1,0 +1,230 @@
+{
+  "schema": "universe24/native-packet-clock/1",
+  "baseline_pin": "8c53e69f4b466dcbd2da7dab7e3c365bd9731766",
+  "common45_tensor_sha256": "6ea453fa77a5a9d74af5bd4fc626cfcdc8f92942b10c301d2d00814bf4d05ba0",
+  "scope": "Source-only fixed-flat one-direction massive linear field primitive; no GR, stress source, detector or proper-clock acceptance.",
+  "derivation": {
+    "exact_symbolic_symmetrizer": true,
+    "spectral_theorem_scope": "Ideal recurrence without carry forcing; actual Engine is compared against it with a deterministic error bound.",
+    "decoded_recurrence": "Y[n+1]=Y[n-1]+(sigma3*Delta_axis+mu*J)*Y[n]/3+eta[n]",
+    "J": [
+      [
+        0,
+        1
+      ],
+      [
+        -1,
+        0
+      ]
+    ],
+    "exact_carry": "eta=s_b*(r-r_next)/(6*S), |eta|<=2/(3*S)",
+    "dispersion": "sin(omega)^2=(4*sin(k)^2+mu^2)/36",
+    "group_velocity_nodes_per_tick": "sin(k)*cos(k)/(9*sin(omega)*cos(omega))",
+    "phase_rate_along_packet_center": "omega-k*v_group",
+    "rest_angular_frequency": "asin(abs(mu)/6)",
+    "stability_domain": "sqrt(4+mu^2)<6",
+    "mu1_uniform_pair_power_bound": 1.4792414766118986,
+    "principal_continuum_limit": "Y_t=sigma3*Y_x+m*J*Y; each component solves Y_tt=Y_xx-m^2*Y",
+    "units": "dx=1, dt=1/3 gives continuum c=1 and m=mu/2; frequencies above use Engine ticks",
+    "refinement_obstruction": "At dt=dx/3, fixed physical m requires mu=2*m*dx. Nonzero integer mu cannot tend to zero with dx. No fixed-mass refinement claim."
+  },
+  "mechanics": {
+    "channels": 3,
+    "retained_integers_per_node": 9,
+    "additional_clock_fields": 0,
+    "degree": 3,
+    "all_six_initial_remainders": true,
+    "cases": [
+      {
+        "axis": 0,
+        "changed_remainder_entries": 892,
+        "tensor_sha256": "ea5259f846d2ea42b5d3de6de31312c5f2133125e470105b4f115288ad6328fe",
+        "trace_sha256": "fc4738256dd656b8e3fcc82ee97b9f55970979c33aed4cb4a978fc2116735e5a",
+        "scalar_register_comparisons": 5832,
+        "full_rewind": true
+      },
+      {
+        "axis": 1,
+        "changed_remainder_entries": 861,
+        "tensor_sha256": "64f8527bcca2cebd4139014b7af1a83ee2bc4e9dac0b2e690356eb572d6e6c04",
+        "trace_sha256": "d9dab9e336d9bd867a83a84afafab5cd7512250c3b4a1742d63fbecfcb57b1a8",
+        "scalar_register_comparisons": 5832,
+        "full_rewind": true
+      },
+      {
+        "axis": 2,
+        "changed_remainder_entries": 880,
+        "tensor_sha256": "ee2dd8c4f97cb3a4a07ba0bcc85e6830b623cddd02f3ef98f6d6043d41fe2ef4",
+        "trace_sha256": "d55ee875f4e6faa14ebb8f890ceb4b1b4873ca2af91b6b0c5f25223183c67433",
+        "scalar_register_comparisons": 5832,
+        "full_rewind": true
+      }
+    ]
+  },
+  "spectral_controls": {
+    "spectral_cases": [
+      {
+        "L": 16,
+        "mode": 0,
+        "axis": 0,
+        "omega_predicted": 0.16744807921968932,
+        "omega_measured": 0.16744807771419346,
+        "group_velocity_predicted": 0.0,
+        "ray_phase_rate_over_rest": 1.0,
+        "continuum_SR_rate_at_group_speed": 1.0,
+        "full_rewind": true,
+        "rest_upward_crossings": [
+          10,
+          47
+        ],
+        "tensor_sha256": "ea5259f846d2ea42b5d3de6de31312c5f2133125e470105b4f115288ad6328fe"
+      },
+      {
+        "L": 32,
+        "mode": 1,
+        "axis": 0,
+        "omega_predicted": 0.1798725120081965,
+        "omega_measured": 0.17987250982306024,
+        "group_velocity_predicted": 0.12078432552747405,
+        "ray_phase_rate_over_rest": 0.9325670731893083,
+        "continuum_SR_rate_at_group_speed": 0.9320409435007985,
+        "full_rewind": true,
+        "rest_upward_crossings": [],
+        "tensor_sha256": "ea5259f846d2ea42b5d3de6de31312c5f2133125e470105b4f115288ad6328fe"
+      },
+      {
+        "L": 16,
+        "mode": 2,
+        "axis": 1,
+        "omega_predicted": 0.2928427717285754,
+        "omega_measured": 0.2928427636810823,
+        "group_velocity_predicted": 0.2010075630518425,
+        "ray_phase_rate_over_rest": 0.8060516519964412,
+        "continuum_SR_rate_at_group_speed": 0.7977240352174654,
+        "full_rewind": true,
+        "rest_upward_crossings": [],
+        "tensor_sha256": "64f8527bcca2cebd4139014b7af1a83ee2bc4e9dac0b2e690356eb572d6e6c04"
+      },
+      {
+        "L": 16,
+        "mode": -3,
+        "axis": 2,
+        "omega_predicted": 0.3577495616798307,
+        "omega_measured": 0.3577495562744576,
+        "group_velocity_predicted": -0.11976846407083552,
+        "ray_phase_rate_over_rest": 1.2938378577895604,
+        "continuum_SR_rate_at_group_speed": 0.9332200357509567,
+        "full_rewind": true,
+        "rest_upward_crossings": [],
+        "tensor_sha256": "ee2dd8c4f97cb3a4a07ba0bcc85e6830b623cddd02f3ef98f6d6043d41fe2ef4"
+      },
+      {
+        "L": 16,
+        "mode": 4,
+        "axis": 0,
+        "omega_predicted": 0.3818932481989158,
+        "omega_measured": 0.3818932484931177,
+        "group_velocity_predicted": 1.9673199603074606e-17,
+        "ray_phase_rate_over_rest": 2.2806666399432247,
+        "continuum_SR_rate_at_group_speed": 1.0,
+        "full_rewind": true,
+        "rest_upward_crossings": [],
+        "tensor_sha256": "ea5259f846d2ea42b5d3de6de31312c5f2133125e470105b4f115288ad6328fe"
+      },
+      {
+        "L": 16,
+        "mode": 8,
+        "axis": 2,
+        "omega_predicted": 0.16744807921968932,
+        "omega_measured": 0.16744807060797604,
+        "group_velocity_predicted": -8.280123622712357e-17,
+        "ray_phase_rate_over_rest": 1.0000000000000016,
+        "continuum_SR_rate_at_group_speed": 1.0,
+        "full_rewind": true,
+        "rest_upward_crossings": [],
+        "tensor_sha256": "ee2dd8c4f97cb3a4a07ba0bcc85e6830b623cddd02f3ef98f6d6043d41fe2ef4"
+      }
+    ],
+    "massless_uniform_no_clock": true,
+    "zero_group_speed_high_k_is_not_rest_clock": true,
+    "Nyquist_rest_gap_doubling_observed": true,
+    "unstable_mu7_still_rewinds": true,
+    "unstable_mu7_amplification_24_ticks": 1272706.1658971244,
+    "Nyquist_zero_derivative_warning": "k=pi and k=0 share the same gap; central differences have doubling.",
+    "continuum_clock_identity_exact_at_finite_lattice_spacing": false
+  },
+  "packets": [
+    {
+      "L": 32,
+      "axis": 0,
+      "carrier_mode": 4,
+      "steps": 64,
+      "amplitude_scale": 16777216,
+      "tensor_sha256": "ea5259f846d2ea42b5d3de6de31312c5f2133125e470105b4f115288ad6328fe",
+      "complete_seed_sha256": "3c53e24a4f5f7e1523b076f6f056d9752758e0a88a889e7066c8abbeeb1546eb",
+      "complete_final_sha256": "43bbabd49e5f998b7cbb4e338982e5a721288bc1472bceb3fe7eae89cb9c69c5",
+      "full_rewind": true,
+      "changed_remainder_entries": 2752544,
+      "max_retained_bits": 25,
+      "packet_is_localized_along_one_axis_only": true,
+      "envelope_circular_concentration_minimum": 0.5737916087877037,
+      "measured_displacement_nodes": 12.613478186682158,
+      "measured_group_velocity": 0.19708308525313398,
+      "ideal_finite_band_centroid_velocity": 0.19708308119022383,
+      "spectrum_weighted_group_prediction": 0.1987628123828185,
+      "central_mode_omega_prediction": 0.2928427717285754,
+      "central_mode_omega_measured": 0.2928427714452674,
+      "final_field_rms_error": 7.88248730780672e-08,
+      "deterministic_error_bound": 3.82425097711279e-06,
+      "central_ray_phase_rate": 0.13497180087866154,
+      "central_ray_phase_over_rest_rate": 0.8060516519964412,
+      "continuum_SR_rate_at_same_group_speed": 0.7977240352174654,
+      "proper_clock_from_packet": "not_established: FFT phase is a passive field diagnostic, not an independently ticking retained apparatus",
+      "same_law_as_common45": false
+    },
+    {
+      "L": 32,
+      "axis": 1,
+      "carrier_mode": -4,
+      "steps": 64,
+      "amplitude_scale": 16777216,
+      "tensor_sha256": "64f8527bcca2cebd4139014b7af1a83ee2bc4e9dac0b2e690356eb572d6e6c04",
+      "complete_seed_sha256": "b7edf3d406aac4757d7adbe845c769d2b6af37d51b11c0c453e939a84cf3d31d",
+      "complete_final_sha256": "c92dd6ace3a4a3eea845edcd9825ccf732d0ac493f25bc7c7a69f858b063e24a",
+      "full_rewind": true,
+      "changed_remainder_entries": 2772324,
+      "max_retained_bits": 25,
+      "packet_is_localized_along_one_axis_only": true,
+      "envelope_circular_concentration_minimum": 0.5737915962476572,
+      "measured_displacement_nodes": -12.613477804423994,
+      "measured_group_velocity": -0.19708308363129895,
+      "ideal_finite_band_centroid_velocity": -0.19708308119022386,
+      "spectrum_weighted_group_prediction": -0.1987628123828185,
+      "central_mode_omega_prediction": 0.2928427717285754,
+      "central_mode_omega_measured": 0.2928427720065204,
+      "final_field_rms_error": 8.710679678273845e-08,
+      "deterministic_error_bound": 3.82425097711279e-06,
+      "central_ray_phase_rate": 0.13497180087866154,
+      "central_ray_phase_over_rest_rate": 0.8060516519964412,
+      "continuum_SR_rate_at_same_group_speed": 0.7977240352174654,
+      "proper_clock_from_packet": "not_established: FFT phase is a passive field diagnostic, not an independently ticking retained apparatus",
+      "same_law_as_common45": false
+    }
+  ],
+  "gates": {
+    "flat_localized_wave_packet": "passed",
+    "same_field_spectral_gap_and_phase": "passed",
+    "exact_carry_mechanics_and_replay": "passed",
+    "continuum_SR_clock_exact_at_fixed_spacing": "failed",
+    "fixed_physical_mass_refinement": "blocked",
+    "common45_curved_packet": "not_tested",
+    "operational_clock_apparatus": "not_tested",
+    "Einstein_source_and_backreaction": "not_tested"
+  },
+  "source_sha256": {
+    "validation/generic_structure/packet_clock.py": "2d4ac867d2b5377741de10c5b600d96d60c73deb2fb23bd0c9cab42bbb13a1af",
+    "validation/completion/time_stability.py": "f12574916c00fb220b968bdd2d9c1b1a2b62f92d4e13c7e6b12f81aaa31e8f5d",
+    "universe24/core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+    "universe24/core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3"
+  }
+}

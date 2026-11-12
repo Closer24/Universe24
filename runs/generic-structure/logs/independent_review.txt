@@ -1,0 +1,5 @@
+{
+  "status": "passed_with_explicit_counterexamples",
+  "evidence": "runs/generic-structure/independent_review.json",
+  "physical_acceptance": "not_established"
+}

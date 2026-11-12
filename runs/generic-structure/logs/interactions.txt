@@ -1,0 +1,75 @@
+{
+  "status": "passed_with_preserved_negative_controls",
+  "channels": 5,
+  "response_monomials": 36,
+  "actual_engine": {
+    "status": "passed",
+    "nodes": 27,
+    "steps": 3,
+    "independent_quartic_derivative_and_complete_triple_checks": 405,
+    "all_six_remainders": true,
+    "complete_rewind": true,
+    "rows": [
+      {
+        "step": 1,
+        "potential": "4418",
+        "max_retained_bits": 3,
+        "official_clicks": 83
+      },
+      {
+        "step": 2,
+        "potential": "1043961948",
+        "max_retained_bits": 8,
+        "official_clicks": 118
+      },
+      {
+        "step": 3,
+        "potential": "30333923705387570457799213",
+        "max_retained_bits": 21,
+        "official_clicks": 124
+      }
+    ]
+  },
+  "negative_controls": {
+    "degree_five": {
+      "status": "rejected",
+      "reason": "potential degree exceeds four"
+    },
+    "fractional_response": {
+      "status": "rejected",
+      "reason": "noninteger response coefficient for p: 1/2"
+    },
+    "three_storage_nodes": {
+      "status": "rejected",
+      "reason": "potential physical support must be one node or one face, including link endpoints"
+    },
+    "non_face_neighbor": {
+      "status": "rejected",
+      "reason": "potential physical support must be one node or one face, including link endpoints"
+    },
+    "crossed_link_endpoints": {
+      "status": "rejected",
+      "reason": "potential physical support must be one node or one face, including link endpoints"
+    },
+    "49_retained_channels": {
+      "status": "rejected",
+      "reason": "complete channel budget exceeded: 49 > 48"
+    },
+    "missing_owner": {
+      "status": "rejected",
+      "reason": "one explicit nonempty owner required for every supplied channel"
+    },
+    "floating_coefficient": {
+      "status": "rejected",
+      "reason": "potential coefficients must be exact int or Fraction"
+    },
+    "undeclared_variable": {
+      "status": "rejected",
+      "reason": "every potential variable must name a declared channel"
+    },
+    "removed_partner_response": {
+      "status": "failed_reciprocity_as_expected",
+      "missing_partners": 1
+    }
+  }
+}

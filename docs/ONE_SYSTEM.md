@@ -25,6 +25,13 @@ selected law. It adds exact clock-geometry and host-workload countercontrols,
 independently reproduces the published scalar/Maxwell common kinetic metric,
 and specifies a still-untested transported-field/phase experiment. No runtime
 model or physical acceptance gate is changed by that investigation.
+The source-only [generic interaction and proof structure](research/generic_structure/README.md)
+adds a reusable reciprocal-interaction compiler, counted native schedule,
+complete-history constraint examples, an exact homogeneous-sector extractor
+and a restricted massive packet/phase control. The packet uses a distinct
+three-channel linear law, not the common45 Einstein candidate. These are
+scoped constructions and falsifiers; no production law, physical gate or
+operational-clock interpretation is promoted by their mechanical success.
 
 ## Assumptions and exact law
 
