@@ -1,0 +1,1 @@
+{"designated_one_way":[],"format":"universe24/divisor-six/tensor/2","gears":[{"label":"official","link":null,"name":"source","sign":1,"sign_why":""},{"label":"official","link":null,"name":"neighbor","sign":1,"sign_why":""}],"monomials":[["source",3,[["source",[0,0,0],"b"]]],["neighbor",3,[["source",[1,0,0],"a"]]]]}

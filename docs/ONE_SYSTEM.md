@@ -13,6 +13,13 @@ bundle can be executed and checked without declaring its fields to be physical
 geometry. Mechanical success and physical validation are separate results.
 The coordination and acceptance contract is [issue #40](https://github.com/Closer24/Universe24/issues/40).
 
+The source-only [node, clock and Einstein audit](research/einstein_node/README.md)
+separates identities of every valid Rule3 tensor from physical properties of a
+selected law. It adds exact clock-geometry and host-workload countercontrols,
+independently reproduces the published scalar/Maxwell common kinetic metric,
+and specifies a still-untested transported-field/phase experiment. No runtime
+model or physical acceptance gate is changed by that investigation.
+
 ## Assumptions and exact law
 
 A node retains at most 48 channels. Each channel contains its complete integer
