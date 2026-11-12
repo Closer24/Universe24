@@ -62,6 +62,14 @@ jobs:
           node validation/check_board_logic.cjs runs/one-system-board.html
       - name: Local clock links, retained observer and independent failure controls
         run: python -m validation.clock_links.run_audits --base-bundle runs/team48-contract/run/bundle --out runs/clock-links
+      - name: Check out the pinned corrected full-frame source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: 62202fdccdd9a40d5dbbec104de6f97d9587a999
+          path: validation-reference-50
+          persist-credentials: false
+      - name: Eight-lane retained selection and reciprocal apparatus audit
+        run: python -m validation.selection.run_audits --reference validation-reference-50 --out runs/retained-selection
       - name: Test evidence
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9

@@ -295,6 +295,41 @@ The combined audit preserves these failures and rejects mixed run/source
 identities. See the plan for the next reciprocal-interaction, pointer,
 probability-measure and shared-metric acceptance sequence.
 
+### Retained preference and reciprocal apparatus follow-up
+
+[The eight-lane construction](RETAINED_SELECTION_PLAN.md) supplies a prepared
+three-channel reversible Boolean carrier with local preferred-port routing
+and retained origin memory. If `F` is the local collision plus one streamed
+lane, `u=3(F(b)+F^-1(b))` and complete preparation `a=F^-1(b)` make unchanged
+Rule3 follow `F` exactly, including every remainder. This is a native research
+control. It is not a physical encoding of the earlier 44-channel carrier.
+
+A separate corrected full-frame45 source, pinned to PR50
+`62202fdccdd9a40d5dbbec104de6f97d9587a999`, gains neutral `q,p` for 47 channels.
+The declared massive carrier uses `W=omega²*q²/2+g*q*(phi²+chi²)`, reciprocal
+forces, `rho_app=p²/2+W`, isotropic pressure `p²/2-W`, diagonal K source `-W`
+and Hamiltonian source `-2*rho_app`. Its homogeneous energy exchange cancels
+exactly at the continuum equation level. This cubic construction leaves one
+record slot. It has globally unbounded interaction energy, finite-step
+constraint drift and no general spatial apparatus momentum completion.
+
+Actual48 raw-record feedback changes later carrier positions and, on the
+declared textured fixture, normalized fixed-gauge phase links. Matched
+homogeneous controls preserve their phase despite amplitude response.
+The raw record has no supplied stress or continuum calibration; that48 result
+cannot inherit the47 homogeneous conservation identity. The native sorter,
+native pulse pointer, sourced47 and raw-feedback48 have separate model/seed
+identities through the same runtime, not interchangeable physical claims.
+
+All 36 declared native growth cases fail or lack enough episodes. Conditional
+exclusive routing is proved for single occupancy, but the unrestricted pointer
+retains double outcomes. Distinct stationary one-particle ensembles give
+different output measures. Born probabilities, physical Bell outcomes,
+shared-metric clocks and growing complexity between physical bursts remain
+unestablished. The joint runner checks shared truth tables, exact47-to48 bundle
+lineage, report/source hashes and independent replay of all19 saved runs;
+complete measure-control trials retain another4,080 transitions.
+
 The mathematical source ledger and derivations are preserved in
 [Frame48 research](FRAME48_RESEARCH.md), [integer ADM](INTEGER_ADM.md),
 [compact FLRW](COMPACT_FLRW_CLOCKS.md), [compact null wave](COMPACT_NULL_WAVE.md),
