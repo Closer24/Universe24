@@ -78,6 +78,22 @@ remains the explicit open task in [issue #45](https://github.com/Closer24/Univer
 
 Tests retain independent Einstein equation checks and known counterexamples. A regression test can pass by confirming that a proposed physical construction fails; the corresponding physics gate remains failed.
 
+The [generic coupling audit](docs/GENERIC_COUPLINGS.md) makes the exact carry,
+clock/covector and reciprocal-port controls executable. It also proves and
+checks a full45 to six-channel restriction on homogeneous isotropic neutral
+scalar/dust states, through the same saved-bundle runtime and canonical decoder:
+
+```bash
+python -m validation.generic_couplings --out runs/generic-couplings
+python -m universe24 verify --run runs/generic-couplings/runtime/full
+python -m universe24 verify --run runs/generic-couplings/runtime/reduced
+```
+
+The six-channel domain excludes spatial packets, anisotropy and charged/Maxwell
+modes. Complete histories/carries are reconstructed; source constraint failures
+and integer growth remain visible. These are source-only validation controls,
+not a new default model or physical acceptance.
+
 ## Same-run geodesic board
 
 From this repository checkout, generate a complete saved run and an interactive,

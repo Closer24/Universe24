@@ -74,6 +74,11 @@ jobs:
           python -m validation.geodesic_board --out runs/geodesic-board
           python -m universe24 verify --run runs/geodesic-board/runtime
           node validation/geodesic_board/check_board.cjs runs/geodesic-board/board.html
+      - name: Generic coupling identities and exact homogeneous sector reconstruction
+        run: |
+          python -m validation.generic_couplings --out runs/generic-couplings
+          python -m universe24 verify --run runs/generic-couplings/runtime/full
+          python -m universe24 verify --run runs/generic-couplings/runtime/reduced
       - name: Test evidence
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
