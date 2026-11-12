@@ -18,7 +18,7 @@ class IndependentAcceptanceTests(unittest.TestCase):
     def setUpClass(cls):
         cls.temporary = tempfile.TemporaryDirectory()
         cls.root = Path(cls.temporary.name)
-        cls.run = cls.root/"actual-twelve"
+        cls.run_dir = cls.root/"actual-twelve"
         cls.tensor, cls.seed, cls.protocol = geometry.prepare_fixture(L=11, steps=2)
         channels = [
             {"index": index, "name": cls.tensor.names[index],
@@ -30,7 +30,7 @@ class IndependentAcceptanceTests(unittest.TestCase):
                                protocol=default_protocol(),
                                model={"id": "independent-acceptance-test", "version": "1",
                                       "domain": "finite causal chart"})
-        cls.runtime_report = run_bundle(bundle, cls.run, 2)
+        cls.runtime_report = run_bundle(bundle, cls.run_dir, 2)
         cls.bundle_id = bundle.bundle_id
 
     @classmethod
@@ -39,7 +39,7 @@ class IndependentAcceptanceTests(unittest.TestCase):
 
     def _copy(self, name):
         destination = self.root/name
-        shutil.copytree(self.run, destination)
+        shutil.copytree(self.run_dir, destination)
         return destination
 
     def _replace_records(self, run, filename, records):
@@ -53,7 +53,7 @@ class IndependentAcceptanceTests(unittest.TestCase):
 
     def test_full_twelve_state_oracle_inverse_clicks_and_same_source(self):
         out = self.root/"independent-report.json"
-        result = acceptance.audit_saved_run(self.run, protocol=self.protocol, out=out)
+        result = acceptance.audit_saved_run(self.run_dir, protocol=self.protocol, out=out)
         self.assertEqual(result["tensor_hash"], self.tensor.fingerprint)
         self.assertEqual(result["bundle_id"], self.bundle_id)
         self.assertEqual(result["run_id"], self.runtime_report["run_id"])
@@ -106,7 +106,7 @@ class IndependentAcceptanceTests(unittest.TestCase):
 
     def test_geometry_protocol_must_match_actual_history(self):
         states = [self.seed.to_dict()]
-        states.extend(record["after"] for record in acceptance._records(self.run/"full_trace.jsonl.gz"))
+        states.extend(record["after"] for record in acceptance._records(self.run_dir/"full_trace.jsonl.gz"))
         for change in ({"microsteps": 4}, {"interior_coordinate": 0},
                        {"receiver_coordinate": 6}, {"ticks_per_macro": 2.0}):
             with self.subTest(change=change):
