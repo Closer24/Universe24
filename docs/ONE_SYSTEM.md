@@ -319,6 +319,40 @@ audits. Fresh logs, source hashes and expected physical failures remain in
 `runs/research_eight/`. The complete proposal and its precise domains are
 coordinated in #40, with apparatus-specific results in #41.
 
+The [November eight-researcher continuation](completion/README.md) supplies a
+shared **massive full45** builder, complete seed and ordinary system-bundle
+handoff for clock/stress and signal/metric observations. Its exact tensor and
+seed identity closes the earlier massless-full45 versus massive-triangular44
+handoff gap. The continuum principal certificate now covers arbitrary
+invertible frames and matter backgrounds; continuous linear constraint
+propagation is proved along a homogeneous massive scalar/dust family.
+
+Three distinct constructions must remain separate. The original projective
+time map has a proved wave-CFL instability and a constrained metric-singularity
+counterexample. A cubic full45 modification preserves full-frame
+nondegeneracy for every finite tick on its prepared memory domain, but adds a
+verified finite-h torsion defect and retains exponential bit growth. A separate
+three-channel native linear-wave tensor uses the unchanged fixed-six carries,
+has a uniform Fourier bound, and converges at fixed physical time with
+logarithmic per-integer bit cost. It has not been compiled into the nonlinear
+coupled full45 system. Native nonlinear arithmetic and a reduced sourced
+constraint target provide further building blocks, with their retained-history
+and workspace limitations explicitly tested.
+
+The massive clock audit now includes an actual sampled oscillation on a
+separately fingerprinted coarse-step tensor. Its Hamiltonian defect remains
+nonzero, and its fourteen-step cost reaches 174,385 bits. The exact phase
+formula includes an expansion correction; phase divided by mass is not a
+universal proper-time reading. Same-metric characteristic cones and conditional
+geodesic oracles do not establish moving material packets or an operational
+detector. No general physical gate is promoted by these results.
+
+Run `python -m validation.completion.run_all` for the shared runtime handoff,
+eight research audits and independent cross-law review. Fresh evidence belongs
+under `runs/completion/`; the published integration evidence is
+`docs/evidence/completion_nov12.json`. The unchanged Engine, one supported
+runtime and unresolved general physical acceptance remain part of this contract.
+
 The mathematical source ledger and derivations are preserved in
 [Frame48 research](FRAME48_RESEARCH.md), [integer ADM](INTEGER_ADM.md),
 [compact FLRW](COMPACT_FLRW_CLOCKS.md), [compact null wave](COMPACT_NULL_WAVE.md),
