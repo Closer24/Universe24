@@ -459,6 +459,27 @@ unestablished. The joint runner checks shared truth tables, exact47-to48 bundle
 lineage, report/source hashes and independent replay of all19 saved runs;
 complete measure-control trials retain another4,080 transitions.
 
+The [seven-researcher unified-law continuation](research/unified_law/README.md)
+adds a single shared **six-channel homogeneous spinor/log-frame candidate**.
+Its quadratic physical decoder satisfies the sourced Hamiltonian constraint
+identically. An independently checked cubic proper-time vector field pushes
+forward to the existing full44 homogeneous Einstein–massive-scalar–dust source,
+and beta_dot=k supplies the same nondegenerate metric B=exp(beta). The actual
+retained-history map, ordinary runtime, source/stress and clock observations
+are joined by exact tensor/seed identities. Three fixed-proper-time resolutions
+pass physical-field, phase and dust-mass convergence; a finite-time first-order
+convergence/domain theorem covers the declared prepared family.
+
+This is a restricted new physical coordinate interpretation, not arbitrary-state
+compression of full45 or a solution of the general spatial problem. The old
+Euler and cross-history failures remain controls. Exact decoded constraint does
+not make finite-step source conservation exact: dust-mass drift is still
+nonzero and decreases with refinement. Exponential projective bit growth,
+spatial modes and operational clock/detector construction remain open. A
+separate native arithmetic bridge is not attributed to this tensor. No accepted
+default model or runtime mode is introduced. Reproduce the joint evidence with
+`python -m validation.unified_law.run_all`.
+
 The mathematical source ledger and derivations are preserved in
 [Frame48 research](FRAME48_RESEARCH.md), [integer ADM](INTEGER_ADM.md),
 [compact FLRW](COMPACT_FLRW_CLOCKS.md), [compact null wave](COMPACT_NULL_WAVE.md),

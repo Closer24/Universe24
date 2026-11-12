@@ -1,0 +1,1588 @@
+{
+  "baseline_commit": "4c2abdda08c4212d08896bd2bd933a7c8dd42c1c",
+  "researchers": 7,
+  "audits": [
+    {
+      "module": "common",
+      "returncode": 0,
+      "seconds": 0.749,
+      "evidence": "runs/unified_law/00_common.json",
+      "evidence_sha256": "38d09355290752ec32200c0be6b2026b71bd26fd49b0015a6f28c8ee043338e9"
+    },
+    {
+      "module": "constrained_coordinates",
+      "returncode": 0,
+      "seconds": 0.909,
+      "evidence": "runs/unified_law/01_coordinates.json",
+      "evidence_sha256": "793428c8ed4c7bb6ad06dcb0ed89cb948c7e3a66b9e2a75c4ecdf4acf8e1f51c"
+    },
+    {
+      "module": "hamiltonian",
+      "returncode": 0,
+      "seconds": 0.578,
+      "evidence": "runs/unified_law/02_hamiltonian.json",
+      "evidence_sha256": "9f1ef923ceee3021f66566e7707787952971804ae9699c25b2860f7679f033fb"
+    },
+    {
+      "module": "native_scheduler",
+      "returncode": 0,
+      "seconds": 0.718,
+      "evidence": "runs/unified_law/03_native_scheduler.json",
+      "evidence_sha256": "a1ababcc6fc1889817bce9368837b8e3bbabba9ced90776406a6b4560fa222c5"
+    },
+    {
+      "module": "invariant_map",
+      "returncode": 0,
+      "seconds": 1.372,
+      "evidence": "runs/unified_law/04_invariant_map.json",
+      "evidence_sha256": "5a94fc7b70717dc56b89caa66a51f2c1a0003476ba2d3eded686cd21c6a540b1"
+    },
+    {
+      "module": "spatial_metric",
+      "returncode": 0,
+      "seconds": 1.286,
+      "evidence": "runs/unified_law/05_spatial_metric.json",
+      "evidence_sha256": "af846bd81e08fb5b13a60f183c1280ac3c9e4ceef3d8c4c7d28e2c4858d039e1"
+    },
+    {
+      "module": "clock_acceptance",
+      "returncode": 0,
+      "seconds": 0.824,
+      "evidence": "runs/unified_law/06_clock_acceptance.json",
+      "evidence_sha256": "07a0f9b85deb36b35a1a09e4314268ef8b33520c260fcb3cab3aac515edf8f8b"
+    },
+    {
+      "module": "independent_review",
+      "returncode": 0,
+      "seconds": 0.757,
+      "evidence": "runs/unified_law/07_review.json",
+      "evidence_sha256": "5fc8c0156b663b031476b73d2251f5931581a94860c3c5315556851b39cf7d82",
+      "final_review_rerun": true
+    }
+  ],
+  "evidence": {
+    "common": {
+      "baseline": "4c2abdda08c4212d08896bd2bd933a7c8dd42c1c",
+      "tensor_sha256": "8d5f0fad5d094908afd4e78d05e60710b96c95943bb7aa791e5b753ff33e9df9",
+      "seed_sha256": "61b79e0831d775508ab04086aa4f4009d89bb6df95e2357e4ee7e5ff2777097f",
+      "dt": "1/24",
+      "denominator": 4,
+      "channels": 6,
+      "retained_integers_per_node": 18,
+      "degree": 3,
+      "monomials": 58,
+      "multiplier": 3456,
+      "nodes": 27,
+      "steps": 3,
+      "strict_face_support": true,
+      "all_six_carries_and_independent_oracle": true,
+      "complete_rewind": true,
+      "existing_runtime_complete_states_match_scalar_oracle": true,
+      "constraint_zero_every_step": true,
+      "beta_nonincreasing_every_step": true,
+      "bits": [
+        3,
+        18,
+        66,
+        207
+      ],
+      "physical_samples": [
+        {
+          "k": "-1/2",
+          "p": "0",
+          "phi": "1",
+          "dust": "1/2",
+          "beta": "0"
+        },
+        {
+          "k": "-36499/73728",
+          "p": "-1/24",
+          "phi": "36845/36864",
+          "dust": "35731/73728",
+          "beta": "-1/48"
+        },
+        {
+          "k": "-85721665435973130984705266675519324161/174815415743320440722393171034057474050",
+          "p": "-7055986807499552367995732942143881216/87407707871660220361196585517028737025",
+          "phi": "87170907115717933894510467588795924481/87407707871660220361196585517028737025",
+          "dust": "82143190715611170358715816621717323777/174815415743320440722393171034057474050",
+          "beta": "-387621853146906624/9349208943630483455"
+        },
+        {
+          "k": "-5980126558111262764292609894064945106702599859402152088267398783917413043573068091953040493614924895151255893241269907/12308968402758451359151534663215310917483349624547918150407427443137669020245742828888224786912659297498229678962450432",
+          "p": "-470054744288185547753512054996085969738537742007594571137854080377223971316236427296419108903611565512901251825665/4006825651939600051807140189848734022618277872574192106252417787479709967527911077112052339489797948404371640287256",
+          "phi": "6114613169984929296952248728037426018535997227254419609586620850405471045178592930633735221579011883787756918377844717/6154484201379225679575767331607655458741674812273959075203713721568834510122871414444112393456329648749114839481225216",
+          "dust": "5609471696339388619666062939413505271684240334740255417528024128731066007820153493394124046315423156193476822990621587/12308968402758451359151534663215310917483349624547918150407427443137669020245742828888224786912659297498229678962450432",
+          "beta": "-1213862185487323450818351920736019070537148125835483414527/19612630180223192210659316155590190035674506896691402112976"
+        }
+      ],
+      "bundle_id": "f690886863908b5074c14e4a254186104e59d284033193dab8572c4fa1130498",
+      "runtime_report": {
+        "schema": "universe24/system/run/1",
+        "run_id": "0fc44a977e7c0c70a8fc7908c41783506f6a051f8bd74f66e3247a805c07caf2",
+        "bundle_id": "f690886863908b5074c14e4a254186104e59d284033193dab8572c4fa1130498",
+        "tensor_hash": "8d5f0fad5d094908afd4e78d05e60710b96c95943bb7aa791e5b753ff33e9df9",
+        "steps": 3,
+        "channels_per_node": 6,
+        "retained_integers_per_node": 18,
+        "nodes": 27,
+        "final_state_hash": "26992743507f77caa95890870a04fe83741f6b7f668e4130ed0f477eb88ee9e9",
+        "click_count": 486,
+        "maximum_integer_bits_by_step": [
+          3,
+          18,
+          66,
+          207
+        ],
+        "trace_role": "external complete audit record; never fed into evolution",
+        "source_hashes": {
+          "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+          "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+          "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+          "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+          "system/bundle.py": "6a91f95f67b5730c8c426dc4669dfd9d8a535fd1d7eaaf20cc5ac2d0974969e6",
+          "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+          "system/runtime.py": "7bafea81e5912e26e49312c157a68fca3d50b75d893aa9198592696ea8f2cee4"
+        },
+        "files": {
+          "full_trace.jsonl.gz": "aa1ddc1cdcb87422cf3d19d4c2a227073d08102b66e234cd86c8d16192af1e74",
+          "clicks.jsonl.gz": "7feace4a95fc9ee6e62dc18dcd7471e684f65b77efddf19935555750cfafd309"
+        },
+        "checks": {
+          "bundle_contract": "passed",
+          "complete_state_forward_replay": "passed",
+          "complete_state_step_inverse": "passed",
+          "complete_state_rewind_to_seed": "passed",
+          "canonical_click_parity": "passed"
+        },
+        "acceptance_gates": {
+          "A": {
+            "status": "partial",
+            "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests."
+          },
+          "B": {
+            "status": "partial",
+            "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established."
+          },
+          "C": {
+            "status": "not_tested",
+            "reason": "No independently validated Einstein geometry supplied by the generic executor."
+          },
+          "D": {
+            "status": "not_tested",
+            "reason": "One execution is not a space/time/quantization convergence study."
+          },
+          "E": {
+            "status": "not_tested",
+            "reason": "No shared-metric physical clock or motion evidence established."
+          },
+          "F": {
+            "status": "not_tested",
+            "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result."
+          }
+        }
+      },
+      "source_sha256": {
+        "validation/unified_law/common.py": "4eb2fb97d47273eb97e6c3dab68751b6d9f832f0ee2e7c968e22b31a7f841f75",
+        "validation/unified_law/constrained_coordinates.py": "b85c84775e1b2ec8986110985f3f55705b6b88a5f7a7698ef4db282cb57912ac"
+      },
+      "scope": "One homogeneous sourced candidate; no spatial wave, general GR or operational detector claim"
+    },
+    "constrained_coordinates": {
+      "candidate": "spinor_beta_mass1",
+      "fields": [
+        "sa",
+        "sb",
+        "sc",
+        "se",
+        "beta"
+      ],
+      "symbolic": {
+        "constraint_identity": true,
+        "all_five_pushforward_equations": true,
+        "mass_squared": 1,
+        "lapse": 1,
+        "proper_time_rescaling": false,
+        "degrees": {
+          "sa": 3,
+          "sb": 3,
+          "sc": 3,
+          "se": 3,
+          "beta": 2
+        },
+        "monomial_counts": {
+          "sa": 12,
+          "sb": 12,
+          "sc": 12,
+          "se": 12,
+          "beta": 4
+        },
+        "continuum_energy_exchange_identity": true,
+        "dust_volume_identity": "d(dust^2)/dt=3*k*dust^2; Bdot=k*B",
+        "monotone_curvature_identity": "kdot=(p^2+dust^2)/2>=0; k<=0",
+        "global_future_continuum_bound": "k0<=k(t)<=0; weighted spinor norm -k is nonincreasing",
+        "finite_time_metric_bound": "exp(beta0+k0*T)<=B(t)<=exp(beta0) for 0<=t<=T",
+        "common_phase_equivariance": true,
+        "continuous_phase_generator_annihilates_decoder_and_commutes_with_drift": true,
+        "wrong_spinor_dynamics_rejected_despite_zero_constraint": true,
+        "wrong_dynamics_scalar_residual": "-(3*sb + sc)*(36*sa**2*sb + 66*sa**2*sc + 144*sa*sb*se + 12*sa*sc*se + 48*sa + 108*sb**3 + 54*sb**2*sc - 18*sb*sc**2 - 18*sb*se**2 + sc**3 + 3*sc*se**2 + 24*se)/144",
+        "scope": "Homogeneous isotropic neutral radial massive scalar and comoving dust; expanding branch k<=0."
+      },
+      "existing_source": {
+        "actual_full44_source_matches": true,
+        "all_33_constraints_zero": true,
+        "omitted_field_velocities_zero": true,
+        "same_metric_equation_Bdot_kB": true
+      },
+      "rational_samples": {
+        "signed_rational_cases": 625,
+        "constraint_and_expanding_branch": true,
+        "exact_representable_seed": {
+          "sa": "1",
+          "sb": "0",
+          "sc": "0",
+          "se": "0",
+          "beta": "0"
+        },
+        "seed_physical": {
+          "k": "-1/2",
+          "p": "0",
+          "phi": "1",
+          "dust": "1/2",
+          "beta": "0"
+        },
+        "seed_drift": {
+          "sa": "-1/8",
+          "sb": "-1/6",
+          "sc": "-1",
+          "se": "1/4",
+          "beta": "-1/2"
+        },
+        "seed_global_continuum_phase_rate_lower_bound": "1/4 for the nonzero radial scalar pair",
+        "arbitrary_rational_physical_seed_exact_lift": false
+      },
+      "source_sha256": "b85c84775e1b2ec8986110985f3f55705b6b88a5f7a7698ef4db282cb57912ac",
+      "status": "exact constrained cubic continuum candidate; Engine realization is a separate shared audit",
+      "limitations": [
+        "Five continuum coordinates are not five complete compiled retained channels.",
+        "Physical decoder is many-to-one; complete retained spinors/carries/history must not be discarded.",
+        "No spatial modes, anisotropy, charged phase, Maxwell field or detector is encoded.",
+        "Constraint identity alone does not establish the correct dynamics or convergence."
+      ]
+    },
+    "hamiltonian": {
+      "canonical": {
+        "candidate": "spinor_beta_mass1",
+        "canonical_coordinates": [
+          "v=exp(-3 beta)",
+          "p_v=2k",
+          "phi",
+          "Pi=v*p"
+        ],
+        "Hamiltonian": "-3*v*p_v^2/4 + Pi^2/(2*v) + v*phi^2/2",
+        "dust_energy": "E=v*dust^2",
+        "all_four_canonical_equations_exact": true,
+        "Hamiltonian_plus_dust_identically_zero": true,
+        "comoving_dust_energy_continuously_constant": true,
+        "Hamiltonian_continuously_constant": true,
+        "Friedmann_and_continuity_exact": true,
+        "Raychaudhuri": "kdot=(p^2+dust^2)/2 >= 0",
+        "metric_domain": "v=exp(-3 beta)>0 for every finite real beta",
+        "physical_time": "synchronous dust proper time; lapse=1",
+        "scope": "Continuum pushforward of the shared candidate, not exact finite-tick energy conservation."
+      },
+      "negative_control": {
+        "constraint_still_zero": true,
+        "dust_energy_multiplier": 16,
+        "wrong_dynamics_rejected_by_dust_mass": true,
+        "claim": "Algebraic Friedmann closure must be accompanied by dynamical/source convergence."
+      },
+      "future_harmonic_interface": {
+        "selected_for_current_Engine": false,
+        "variables": [
+          "v",
+          "P=2*v*k",
+          "Pi=v*p",
+          "r=v*phi"
+        ],
+        "fixed_parameter": "E=v*dust^2",
+        "RHS": [
+          "-3*P*v/2",
+          "-E*v - r**2",
+          "-r*v",
+          "-3*P*r/2 + Pi*v"
+        ],
+        "maximum_polynomial_degree": 2,
+        "constraint": "E*v - 3*P**2/4 + Pi**2/2 + r**2/2",
+        "constraint_continuously_conserved": true,
+        "proper_clock": "dT/dlambda=v>0",
+        "no_extra_phi_register": "phi=r/v; its equation follows identically",
+        "Einstein_pushforward_on_constraint": true,
+        "domain": "v>0, E>=0 and C_H=0",
+        "native_complete_map": "not_implemented; do not transfer selected spinor evidence"
+      },
+      "source_sha256": {
+        "validation/unified_law/hamiltonian.py": "f69b404cfdfaccc73f111c73f16423292b0dc3cc28b6d78bf98e8d968dddd277",
+        "validation/unified_law/constrained_coordinates.py": "b85c84775e1b2ec8986110985f3f55705b6b88a5f7a7698ef4db282cb57912ac"
+      },
+      "remaining_gates": [
+        "Measure finite-tick comoving dust mass drift on the actual shared tensor.",
+        "Establish fixed-proper-time convergence of all decoded sources and metric.",
+        "A dust-time gauge is not a counted autonomous detector or retained clock record."
+      ]
+    },
+    "native_scheduler": {
+      "status": "passed_native_first_order_depth_one_two",
+      "rows": [
+        {
+          "depth": 1,
+          "copy_divide": false,
+          "work_remainder": 0,
+          "channels": 9,
+          "degree": 3,
+          "macro_oracle": true,
+          "complete_workspace_and_pulses_restored": true,
+          "full_rewind": true,
+          "peak_bits": 4,
+          "dt": "1/2",
+          "tensor_sha256": "26efb8b7fce8b06667af28f741e43b42e18a24e3baf2f0526e97d19cdcb1abeb"
+        },
+        {
+          "depth": 1,
+          "copy_divide": false,
+          "work_remainder": 1,
+          "channels": 9,
+          "degree": 3,
+          "macro_oracle": true,
+          "complete_workspace_and_pulses_restored": true,
+          "full_rewind": true,
+          "peak_bits": 4,
+          "dt": "1/2",
+          "tensor_sha256": "26efb8b7fce8b06667af28f741e43b42e18a24e3baf2f0526e97d19cdcb1abeb"
+        },
+        {
+          "depth": 1,
+          "copy_divide": false,
+          "work_remainder": 2,
+          "channels": 9,
+          "degree": 3,
+          "macro_oracle": true,
+          "complete_workspace_and_pulses_restored": true,
+          "full_rewind": true,
+          "peak_bits": 5,
+          "dt": "1/2",
+          "tensor_sha256": "26efb8b7fce8b06667af28f741e43b42e18a24e3baf2f0526e97d19cdcb1abeb"
+        },
+        {
+          "depth": 1,
+          "copy_divide": false,
+          "work_remainder": 3,
+          "channels": 9,
+          "degree": 3,
+          "macro_oracle": true,
+          "complete_workspace_and_pulses_restored": true,
+          "full_rewind": true,
+          "peak_bits": 5,
+          "dt": "1/2",
+          "tensor_sha256": "26efb8b7fce8b06667af28f741e43b42e18a24e3baf2f0526e97d19cdcb1abeb"
+        },
+        {
+          "depth": 1,
+          "copy_divide": false,
+          "work_remainder": 4,
+          "channels": 9,
+          "degree": 3,
+          "macro_oracle": true,
+          "complete_workspace_and_pulses_restored": true,
+          "full_rewind": true,
+          "peak_bits": 5,
+          "dt": "1/2",
+          "tensor_sha256": "26efb8b7fce8b06667af28f741e43b42e18a24e3baf2f0526e97d19cdcb1abeb"
+        },
+        {
+          "depth": 1,
+          "copy_divide": false,
+          "work_remainder": 5,
+          "channels": 9,
+          "degree": 3,
+          "macro_oracle": true,
+          "complete_workspace_and_pulses_restored": true,
+          "full_rewind": true,
+          "peak_bits": 5,
+          "dt": "1/2",
+          "tensor_sha256": "26efb8b7fce8b06667af28f741e43b42e18a24e3baf2f0526e97d19cdcb1abeb"
+        },
+        {
+          "depth": 1,
+          "copy_divide": true,
+          "work_remainder": 0,
+          "channels": 9,
+          "degree": 3,
+          "macro_oracle": true,
+          "complete_workspace_and_pulses_restored": true,
+          "full_rewind": true,
+          "peak_bits": 4,
+          "dt": "1/6",
+          "tensor_sha256": "5e7347f0977dc81206a2c6d902da68a2ce16ea93dd254f021a8466f11d7493af"
+        },
+        {
+          "depth": 1,
+          "copy_divide": true,
+          "work_remainder": 1,
+          "channels": 9,
+          "degree": 3,
+          "macro_oracle": true,
+          "complete_workspace_and_pulses_restored": true,
+          "full_rewind": true,
+          "peak_bits": 4,
+          "dt": "1/6",
+          "tensor_sha256": "5e7347f0977dc81206a2c6d902da68a2ce16ea93dd254f021a8466f11d7493af"
+        },
+        {
+          "depth": 1,
+          "copy_divide": true,
+          "work_remainder": 2,
+          "channels": 9,
+          "degree": 3,
+          "macro_oracle": true,
+          "complete_workspace_and_pulses_restored": true,
+          "full_rewind": true,
+          "peak_bits": 4,
+          "dt": "1/6",
+          "tensor_sha256": "5e7347f0977dc81206a2c6d902da68a2ce16ea93dd254f021a8466f11d7493af"
+        },
+        {
+          "depth": 1,
+          "copy_divide": true,
+          "work_remainder": 3,
+          "channels": 9,
+          "degree": 3,
+          "macro_oracle": true,
+          "complete_workspace_and_pulses_restored": true,
+          "full_rewind": true,
+          "peak_bits": 4,
+          "dt": "1/6",
+          "tensor_sha256": "5e7347f0977dc81206a2c6d902da68a2ce16ea93dd254f021a8466f11d7493af"
+        },
+        {
+          "depth": 1,
+          "copy_divide": true,
+          "work_remainder": 4,
+          "channels": 9,
+          "degree": 3,
+          "macro_oracle": true,
+          "complete_workspace_and_pulses_restored": true,
+          "full_rewind": true,
+          "peak_bits": 4,
+          "dt": "1/6",
+          "tensor_sha256": "5e7347f0977dc81206a2c6d902da68a2ce16ea93dd254f021a8466f11d7493af"
+        },
+        {
+          "depth": 1,
+          "copy_divide": true,
+          "work_remainder": 5,
+          "channels": 9,
+          "degree": 3,
+          "macro_oracle": true,
+          "complete_workspace_and_pulses_restored": true,
+          "full_rewind": true,
+          "peak_bits": 4,
+          "dt": "1/6",
+          "tensor_sha256": "5e7347f0977dc81206a2c6d902da68a2ce16ea93dd254f021a8466f11d7493af"
+        },
+        {
+          "depth": 2,
+          "copy_divide": false,
+          "work_remainder": 0,
+          "channels": 12,
+          "degree": 3,
+          "macro_oracle": true,
+          "complete_workspace_and_pulses_restored": true,
+          "full_rewind": true,
+          "peak_bits": 4,
+          "dt": "1/6",
+          "tensor_sha256": "f74648c1bf2021a857a3c8f98d6548e5bf427deb982dde61450b2a8425a7137c"
+        },
+        {
+          "depth": 2,
+          "copy_divide": false,
+          "work_remainder": 1,
+          "channels": 12,
+          "degree": 3,
+          "macro_oracle": true,
+          "complete_workspace_and_pulses_restored": true,
+          "full_rewind": true,
+          "peak_bits": 4,
+          "dt": "1/6",
+          "tensor_sha256": "f74648c1bf2021a857a3c8f98d6548e5bf427deb982dde61450b2a8425a7137c"
+        },
+        {
+          "depth": 2,
+          "copy_divide": false,
+          "work_remainder": 2,
+          "channels": 12,
+          "degree": 3,
+          "macro_oracle": true,
+          "complete_workspace_and_pulses_restored": true,
+          "full_rewind": true,
+          "peak_bits": 4,
+          "dt": "1/6",
+          "tensor_sha256": "f74648c1bf2021a857a3c8f98d6548e5bf427deb982dde61450b2a8425a7137c"
+        },
+        {
+          "depth": 2,
+          "copy_divide": false,
+          "work_remainder": 3,
+          "channels": 12,
+          "degree": 3,
+          "macro_oracle": true,
+          "complete_workspace_and_pulses_restored": true,
+          "full_rewind": true,
+          "peak_bits": 4,
+          "dt": "1/6",
+          "tensor_sha256": "f74648c1bf2021a857a3c8f98d6548e5bf427deb982dde61450b2a8425a7137c"
+        },
+        {
+          "depth": 2,
+          "copy_divide": false,
+          "work_remainder": 4,
+          "channels": 12,
+          "degree": 3,
+          "macro_oracle": true,
+          "complete_workspace_and_pulses_restored": true,
+          "full_rewind": true,
+          "peak_bits": 4,
+          "dt": "1/6",
+          "tensor_sha256": "f74648c1bf2021a857a3c8f98d6548e5bf427deb982dde61450b2a8425a7137c"
+        },
+        {
+          "depth": 2,
+          "copy_divide": false,
+          "work_remainder": 5,
+          "channels": 12,
+          "degree": 3,
+          "macro_oracle": true,
+          "complete_workspace_and_pulses_restored": true,
+          "full_rewind": true,
+          "peak_bits": 4,
+          "dt": "1/6",
+          "tensor_sha256": "f74648c1bf2021a857a3c8f98d6548e5bf427deb982dde61450b2a8425a7137c"
+        },
+        {
+          "depth": 2,
+          "copy_divide": true,
+          "work_remainder": 0,
+          "channels": 12,
+          "degree": 3,
+          "macro_oracle": true,
+          "complete_workspace_and_pulses_restored": true,
+          "full_rewind": true,
+          "peak_bits": 4,
+          "dt": "1/18",
+          "tensor_sha256": "b10b4de6a1c988615548c749a6e01d073822d2cc13e4589238b3876bed21788d"
+        },
+        {
+          "depth": 2,
+          "copy_divide": true,
+          "work_remainder": 1,
+          "channels": 12,
+          "degree": 3,
+          "macro_oracle": true,
+          "complete_workspace_and_pulses_restored": true,
+          "full_rewind": true,
+          "peak_bits": 4,
+          "dt": "1/18",
+          "tensor_sha256": "b10b4de6a1c988615548c749a6e01d073822d2cc13e4589238b3876bed21788d"
+        },
+        {
+          "depth": 2,
+          "copy_divide": true,
+          "work_remainder": 2,
+          "channels": 12,
+          "degree": 3,
+          "macro_oracle": true,
+          "complete_workspace_and_pulses_restored": true,
+          "full_rewind": true,
+          "peak_bits": 4,
+          "dt": "1/18",
+          "tensor_sha256": "b10b4de6a1c988615548c749a6e01d073822d2cc13e4589238b3876bed21788d"
+        },
+        {
+          "depth": 2,
+          "copy_divide": true,
+          "work_remainder": 3,
+          "channels": 12,
+          "degree": 3,
+          "macro_oracle": true,
+          "complete_workspace_and_pulses_restored": true,
+          "full_rewind": true,
+          "peak_bits": 4,
+          "dt": "1/18",
+          "tensor_sha256": "b10b4de6a1c988615548c749a6e01d073822d2cc13e4589238b3876bed21788d"
+        },
+        {
+          "depth": 2,
+          "copy_divide": true,
+          "work_remainder": 4,
+          "channels": 12,
+          "degree": 3,
+          "macro_oracle": true,
+          "complete_workspace_and_pulses_restored": true,
+          "full_rewind": true,
+          "peak_bits": 4,
+          "dt": "1/18",
+          "tensor_sha256": "b10b4de6a1c988615548c749a6e01d073822d2cc13e4589238b3876bed21788d"
+        },
+        {
+          "depth": 2,
+          "copy_divide": true,
+          "work_remainder": 5,
+          "channels": 12,
+          "degree": 3,
+          "macro_oracle": true,
+          "complete_workspace_and_pulses_restored": true,
+          "full_rewind": true,
+          "peak_bits": 4,
+          "dt": "1/18",
+          "tensor_sha256": "b10b4de6a1c988615548c749a6e01d073822d2cc13e4589238b3876bed21788d"
+        }
+      ],
+      "actual_sourced_first_order_system": {
+        "status": "passed_mechanics_failed_exact_constraint",
+        "channels": 21,
+        "degree": 3,
+        "dt": "1/9",
+        "amplitude": 3,
+        "dust_energy": "1",
+        "tensor_sha256": "5ce5caabbef4d2a4e208624946781de36e76db549d5bfd0ccbcf05e0c03e15c1",
+        "nodes": 27,
+        "macros": 6,
+        "microticks": 54,
+        "macro_oracle_and_full_rewind": true,
+        "complete_workspace_restored": true,
+        "rows": [
+          {
+            "macro": 1,
+            "lambda": "1/9",
+            "fields": {
+              "v": "4/3",
+              "P": "-8/3",
+              "Pi": "0",
+              "r": "8/3",
+              "T": "1/3"
+            },
+            "constraint": "-4/9",
+            "positive_volume": true,
+            "max_bits": 4
+          },
+          {
+            "macro": 2,
+            "lambda": "2/9",
+            "fields": {
+              "v": "7/3",
+              "P": "-4",
+              "Pi": "-2/3",
+              "r": "13/3",
+              "T": "1/3"
+            },
+            "constraint": "-1/18",
+            "positive_volume": true,
+            "max_bits": 4
+          },
+          {
+            "macro": 3,
+            "lambda": "1/3",
+            "fields": {
+              "v": "13/3",
+              "P": "-22/3",
+              "Pi": "-7/3",
+              "r": "8",
+              "T": "1"
+            },
+            "constraint": "-23/18",
+            "positive_volume": true,
+            "max_bits": 5
+          },
+          {
+            "macro": 4,
+            "lambda": "4/9",
+            "fields": {
+              "v": "38/3",
+              "P": "-58/3",
+              "Pi": "-25/3",
+              "r": "65/3",
+              "T": "4/3"
+            },
+            "constraint": "16/9",
+            "positive_volume": true,
+            "max_bits": 7
+          },
+          {
+            "macro": 5,
+            "lambda": "5/9",
+            "fields": {
+              "v": "86",
+              "P": "-343/3",
+              "Pi": "-190/3",
+              "r": "124",
+              "T": "4"
+            },
+            "constraint": "-883/36",
+            "positive_volume": true,
+            "max_bits": 9
+          },
+          {
+            "macro": 6,
+            "lambda": "2/3",
+            "fields": {
+              "v": "3290",
+              "P": "-10366/3",
+              "Pi": "-2378",
+              "r": "3537",
+              "T": "62/3"
+            },
+            "constraint": "788521/6",
+            "positive_volume": true,
+            "max_bits": 14
+          }
+        ],
+        "exact_constraint_preservation": "failed",
+        "fixed_time_refinement": "not_tested"
+      },
+      "sourced_quadratic_allocation": {
+        "channels": 21,
+        "degree": 3,
+        "tensor_sha256": "5ce5caabbef4d2a4e208624946781de36e76db549d5bfd0ccbcf05e0c03e15c1",
+        "dt": "1/9"
+      },
+      "not_established": [
+        "fixed-time sourced refinement",
+        "constraint preservation",
+        "depth3_and_higher_scheduler",
+        "cubic_spinor_force_compilation"
+      ],
+      "source_sha256": "79015a6fcec2fbb949f7fe8999aebfdfb61a12b04bf73a6a69d25e8bfd5a9cde"
+    },
+    "invariant_map": {
+      "candidate": "one_spinor6_homogeneous_massive_Einstein",
+      "algebra": {
+        "quadratic_constraint_identity": true,
+        "all_five_physical_pushforward_equations": true,
+        "weighted_norm": "N=a^2+3b^2+c^2/6+e^2/2=-2k",
+        "exact_continuum_dissipation": "Ndot=-(p^2+dust^2)<=0",
+        "linear_weighted_skew_and_square": "L*W+W*L=0; L^2=-I/4",
+        "cubic_weighted_self_adjoint": true,
+        "force_bound": "||F(z)||_W <= (1/2+3N/2)*sqrt(N)",
+        "box_lipschitz_bound": "4745/64",
+        "box_acceleration_bound": "5085391/8192",
+        "box_force_bound": "15625/384",
+        "proper_time": "The candidate uses lapse one; no time reparametrization."
+      },
+      "actual_common_engine": {
+        "tensor_sha256": "8d5f0fad5d094908afd4e78d05e60710b96c95943bb7aa791e5b753ff33e9df9",
+        "seed_sha256": "61b79e0831d775508ab04086aa4f4009d89bb6df95e2357e4ee7e5ff2777097f",
+        "dt": "1/24",
+        "denominator": 4,
+        "channels": 6,
+        "retained_integers_per_node": 18,
+        "steps": 3,
+        "nodes": 27,
+        "actual_complete_history_identity": true,
+        "full_rewind": true,
+        "same_common_law_and_seed": true,
+        "rows": [
+          {
+            "tick": 0,
+            "constraint": "0",
+            "weighted_norm2": "1",
+            "beta": "0",
+            "max_retained_bits": 3
+          },
+          {
+            "tick": 1,
+            "constraint": "0",
+            "weighted_norm2": "36499/36864",
+            "beta": "-1/48",
+            "max_retained_bits": 18
+          },
+          {
+            "tick": 2,
+            "constraint": "0",
+            "weighted_norm2": "85721665435973130984705266675519324161/87407707871660220361196585517028737025",
+            "beta": "-387621853146906624/9349208943630483455",
+            "max_retained_bits": 66
+          },
+          {
+            "tick": 3,
+            "constraint": "0",
+            "weighted_norm2": "5980126558111262764292609894064945106702599859402152088267398783917413043573068091953040493614924895151255893241269907/6154484201379225679575767331607655458741674812273959075203713721568834510122871414444112393456329648749114839481225216",
+            "beta": "-1213862185487323450818351920736019070537148125835483414527/19612630180223192210659316155590190035674506896691402112976",
+            "max_retained_bits": 207
+          }
+        ],
+        "constraint_preservation_scope": "Every legal decoded spinor is constrained, including intermediate ticks; dynamics is separately checked."
+      },
+      "domain_and_convergence": {
+        "domain_theorem": "For sa=1 seed, D0>=2, h=1/m<=1/16 and nh<=1/8: N_n<=2, -1/4<=beta_n<=0.",
+        "metric_bound": "exp(-1/4)<=B_n<=1",
+        "history_bound": "epsilon_n<=h^3/63 for n>=1; epsilon_0=0",
+        "convergence_bound": "e_N <= (exp(L*T)-1)/L * (A*h/2 + 10*h^2/63), L=4745/64, A=5085391/8192",
+        "convergence_order": 1,
+        "scope": "Finite proper-time homogeneous family; constants are rigorous but deliberately conservative.",
+        "rows": [
+          {
+            "steps": 3,
+            "h": "1/24",
+            "T": "1/8",
+            "multiplier": 3456,
+            "tensor_sha256": "8d5f0fad5d094908afd4e78d05e60710b96c95943bb7aa791e5b753ff33e9df9",
+            "proved_uniform_N_bound": "2",
+            "observed_max_N": 1.0,
+            "epsilon_upper_bound": "1/870912",
+            "max_retained_bits": 207
+          },
+          {
+            "steps": 4,
+            "h": "1/32",
+            "T": "1/8",
+            "multiplier": 4608,
+            "tensor_sha256": "9339668562afff52e012a7fedcc5241ad0d2545a0424d9f5bf2bdd2244310f40",
+            "proved_uniform_N_bound": "2",
+            "observed_max_N": 1.0,
+            "epsilon_upper_bound": "1/2064384",
+            "max_retained_bits": 649
+          },
+          {
+            "steps": 6,
+            "h": "1/48",
+            "T": "1/8",
+            "multiplier": 6912,
+            "tensor_sha256": "895742d13f7974012fa23fd05c99e814cb8cb319f1da3e84b3f4076583f04aa9",
+            "proved_uniform_N_bound": "2",
+            "observed_max_N": 1.0,
+            "epsilon_upper_bound": "1/6967296",
+            "max_retained_bits": 6101
+          }
+        ]
+      },
+      "physical_refinement": {
+        "same_physical_initial_data": true,
+        "T": "1/8",
+        "reference": "Independent physical Einstein ODE, 60-digit RK4, 1024/2048 step cross-check",
+        "reference_max_change": 2.4600852042871587e-18,
+        "rows": [
+          {
+            "steps": 3,
+            "h": "1/24",
+            "tensor_sha256": "8d5f0fad5d094908afd4e78d05e60710b96c95943bb7aa791e5b753ff33e9df9",
+            "physical_max_error": 0.003424288038394702,
+            "physical_errors": {
+              "k": 0.000378478994458887,
+              "p": 0.003424288038394702,
+              "phi": 0.0008650913795009104,
+              "dust": 0.00016687485150476239,
+              "beta": 0.00031966012204982363
+            },
+            "max_retained_bits": 207
+          },
+          {
+            "steps": 4,
+            "h": "1/32",
+            "tensor_sha256": "9339668562afff52e012a7fedcc5241ad0d2545a0424d9f5bf2bdd2244310f40",
+            "physical_max_error": 0.0025445298932897514,
+            "physical_errors": {
+              "k": 0.0002810101899976373,
+              "p": 0.0025445298932897514,
+              "phi": 0.0006457630805060715,
+              "dust": 0.00012670973861730073,
+              "beta": 0.00024066013026564483
+            },
+            "max_retained_bits": 649,
+            "observed_order": 1.0322077437700519
+          },
+          {
+            "steps": 6,
+            "h": "1/48",
+            "tensor_sha256": "895742d13f7974012fa23fd05c99e814cb8cb319f1da3e84b3f4076583f04aa9",
+            "physical_max_error": 0.0016808919563542362,
+            "physical_errors": {
+              "k": 0.00018548647486232706,
+              "p": 0.0016808919563542362,
+              "phi": 0.0004285181170172751,
+              "dust": 8.548323127634609e-05,
+              "beta": 0.00016104242674065675
+            },
+            "max_retained_bits": 6101,
+            "observed_order": 1.0225820371704268
+          }
+        ],
+        "not_claimed": "A long-time, spatial or efficient-bit convergence theorem."
+      },
+      "source_sha256": {
+        "validation/unified_law/invariant_map.py": "8d7ab2535a7712a1da8a46d60ea71d4c90549534f9e6e379033dfdd40ed66264",
+        "validation/unified_law/constrained_coordinates.py": "b85c84775e1b2ec8986110985f3f55705b6b88a5f7a7698ef4db282cb57912ac",
+        "validation/unified_law/common.py": "4eb2fb97d47273eb97e6c3dab68751b6d9f832f0ee2e7c968e22b31a7f841f75"
+      },
+      "status": "Exact homogeneous constraint/domain and finite-time first-order consistency proved; actual Engine/refinement verified.",
+      "limitations": [
+        "Retained cubic projective denominator still has exponential bit-length growth.",
+        "Only the homogeneous isotropic expanding neutral scalar/dust sector is represented.",
+        "Proper coordinate time is not an implemented material detector or tick record.",
+        "Generic full45, spatial/geodesic packets and quantum gates are not established."
+      ]
+    },
+    "spatial_metric": {
+      "candidate": "spinor_beta_mass1",
+      "continuum_geometry": {
+        "independent_full4D_Einstein_tensor": true,
+        "G00_orthonormal": "3*k^2",
+        "Gii_orthonormal": "2*dk/dtau-3*k^2",
+        "actual_spinor_source_equals_Einstein_tensor": true,
+        "same_beta_velocity_equals_k": true,
+        "total_energy_continuity": true,
+        "dust_comoving_amount": "dust^2*exp(-3*beta) is constant in the exact continuum ODE",
+        "comoving_dust_geodesic": true,
+        "comoving_proper_time": "dtau=N*dt; chosen candidate N=1",
+        "frozen_geometry_rejected_despite_zero_algebraic_constraint": true,
+        "continuum_future_bound": "k0<=k(t)<=0; beta0+k0*t<=beta(t)<=beta0 for t>=0",
+        "global_future_ODE_domain": "The positive definite weighted spinor norm -k is nonincreasing; no finite future blowup.",
+        "scope": "Exact homogeneous isotropic continuum pushforward; not finite-step Einstein evolution."
+      },
+      "geodesic_reference": {
+        "same_metric_mass_shell": true,
+        "spatial_covector_constants": "p_i constant for a homogeneous metric",
+        "coordinate_velocity": "dx^i/dt=N*exp(2beta)*p_i/sqrt(m^2+exp(2beta)|p|^2)",
+        "proper_time_rate": "dtaumoving/dt=N*m/sqrt(m^2+exp(2beta)|p|^2)",
+        "null_coordinate_speed": "N*exp(beta)",
+        "wrong_coordinate_tick_control": "flat m=4, |p|=3 gives 4/5, not 1",
+        "actual_retained_moving_probe": "not_tested",
+        "actual_spatial_matter_or_signal_propagation": "not_tested"
+      },
+      "actual_shared_metric": [
+        {
+          "tensor_sha256": "8d5f0fad5d094908afd4e78d05e60710b96c95943bb7aa791e5b753ff33e9df9",
+          "channels": 6,
+          "steps": 3,
+          "nodes": 27,
+          "metric_decoder": "B=exp(beta), gamma_inverse=exp(2beta)*I",
+          "every_snapshot_constraint_zero": true,
+          "beta_monotone_nonincreasing": true,
+          "actual_complete_history_recurrence": true,
+          "metric_positive_at_every_finite_snapshot": true,
+          "epsilon_bound": "0<=epsilon<=1/7",
+          "beta_initial": "0",
+          "beta_final": "-1213862185487323450818351920736019070537148125835483414527/19612630180223192210659316155590190035674506896691402112976",
+          "beta_lower_bound": "-1/12",
+          "maximum_abs_k_on_interval": "1/2",
+          "fixed_time_lower_metric_bound": "lambda_min(gamma_inverse)>=exp(2beta0-8*T*Kmax/3)",
+          "positive_metric_is_not_uniform_infinite_time_bound": true,
+          "finite_step_Einstein_evolution": "not_asserted",
+          "additional_retained_metric_or_probe_channels": 0,
+          "seed_sha256": "61b79e0831d775508ab04086aa4f4009d89bb6df95e2357e4ee7e5ff2777097f",
+          "dt": "1/24",
+          "denominator": 4,
+          "retained_integers_per_node": 18,
+          "complete_bits": [
+            3,
+            18,
+            66,
+            207
+          ],
+          "physical_time": "1/8"
+        },
+        {
+          "tensor_sha256": "9339668562afff52e012a7fedcc5241ad0d2545a0424d9f5bf2bdd2244310f40",
+          "channels": 6,
+          "steps": 4,
+          "nodes": 27,
+          "metric_decoder": "B=exp(beta), gamma_inverse=exp(2beta)*I",
+          "every_snapshot_constraint_zero": true,
+          "beta_monotone_nonincreasing": true,
+          "actual_complete_history_recurrence": true,
+          "metric_positive_at_every_finite_snapshot": true,
+          "epsilon_bound": "0<=epsilon<=1/7",
+          "beta_initial": "0",
+          "beta_final": {
+            "approximation": -0.06181286123911523,
+            "numerator_bits": 643,
+            "denominator_bits": 647,
+            "binary_ratio_sha256": "a7949058290ee8bf0fc1232d372710175f52f494a0286ed50c61686d5fdd24a7"
+          },
+          "beta_lower_bound": "-1/12",
+          "maximum_abs_k_on_interval": "1/2",
+          "fixed_time_lower_metric_bound": "lambda_min(gamma_inverse)>=exp(2beta0-8*T*Kmax/3)",
+          "positive_metric_is_not_uniform_infinite_time_bound": true,
+          "finite_step_Einstein_evolution": "not_asserted",
+          "additional_retained_metric_or_probe_channels": 0,
+          "seed_sha256": "61b79e0831d775508ab04086aa4f4009d89bb6df95e2357e4ee7e5ff2777097f",
+          "dt": "1/32",
+          "denominator": 4,
+          "retained_integers_per_node": 18,
+          "complete_bits": [
+            3,
+            19,
+            67,
+            213,
+            649
+          ],
+          "physical_time": "1/8"
+        },
+        {
+          "tensor_sha256": "895742d13f7974012fa23fd05c99e814cb8cb319f1da3e84b3f4076583f04aa9",
+          "channels": 6,
+          "steps": 6,
+          "nodes": 27,
+          "metric_decoder": "B=exp(beta), gamma_inverse=exp(2beta)*I",
+          "every_snapshot_constraint_zero": true,
+          "beta_monotone_nonincreasing": true,
+          "actual_complete_history_recurrence": true,
+          "metric_positive_at_every_finite_snapshot": true,
+          "epsilon_bound": "0<=epsilon<=1/7",
+          "beta_initial": "0",
+          "beta_final": {
+            "approximation": -0.06173324353559024,
+            "numerator_bits": 6095,
+            "denominator_bits": 6099,
+            "binary_ratio_sha256": "becef8f942726e22768813c0b4d207b25670c524012caea0fa2eb783a7a54005"
+          },
+          "beta_lower_bound": "-1/12",
+          "maximum_abs_k_on_interval": "1/2",
+          "fixed_time_lower_metric_bound": "lambda_min(gamma_inverse)>=exp(2beta0-8*T*Kmax/3)",
+          "positive_metric_is_not_uniform_infinite_time_bound": true,
+          "finite_step_Einstein_evolution": "not_asserted",
+          "additional_retained_metric_or_probe_channels": 0,
+          "seed_sha256": "61b79e0831d775508ab04086aa4f4009d89bb6df95e2357e4ee7e5ff2777097f",
+          "dt": "1/48",
+          "denominator": 4,
+          "retained_integers_per_node": 18,
+          "complete_bits": [
+            3,
+            19,
+            70,
+            220,
+            673,
+            2030,
+            6101
+          ],
+          "physical_time": "1/8"
+        }
+      ],
+      "wrong_beta_state_rejected_despite_zero_constraint": true,
+      "source_sha256": {
+        "validation/unified_law/spatial_metric.py": "dbcb5afa7b2ac59de864c21237b6b2dc33fff2727252b2f556071fbfcb01def8",
+        "validation/unified_law/constrained_coordinates.py": "b85c84775e1b2ec8986110985f3f55705b6b88a5f7a7698ef4db282cb57912ac",
+        "validation/unified_law/common.py": "4eb2fb97d47273eb97e6c3dab68751b6d9f832f0ee2e7c968e22b31a7f841f75"
+      },
+      "limitations": [
+        "Homogeneity removes spatial momentum/curvature modes.",
+        "Passive trajectories and mass shell do not allocate a material probe.",
+        "Algebraic positivity and exact constraint do not establish finite-step source dynamics.",
+        "The common projective integer cost remains a separate issue."
+      ]
+    },
+    "clock_acceptance": {
+      "candidate": "spinor_beta_mass1",
+      "continuum": {
+        "energy_continuity": "rho_dot=3*k*(rho+pressure)",
+        "comoving_dust_mass": "D=dust^2*exp(-3*beta); D_dot=0",
+        "phase": "theta=atan2(-p,mass*phi) on the nonzero neutral radial sector",
+        "phase_proper_rate": "mass-3*k*mass*phi*p/(mass^2*phi^2+p^2)",
+        "monotonic_sufficient_condition": "|3*k|<2*mass, mass>0, scalar energy>0",
+        "metric": "ds^2=-dt^2+exp(-2*beta)*(dx^2+dy^2+dz^2)",
+        "proper_time_gauge": "lapse1; comoving normal proper time equals continuum t",
+        "selected_continuum_clock_domain": "C=0 and k0=-1/2 give k_dot=(p^2+dust^2)/2>=0; decoder k<=0, so |3k|<=3/2 and theta_dot>=1/4 globally forward",
+        "scope": "Continuum identities; no retained detector, winding counter or correction-integral register."
+      },
+      "actual_shared_candidate": {
+        "equations": "shared spinor_beta_mass1",
+        "duration": "1/8",
+        "predeclared_steps": [
+          3,
+          4,
+          6
+        ],
+        "predeclared_finest_phase_error_bound": 0.005,
+        "predeclared_finest_relative_dust_mass_error_bound": 0.05,
+        "shared_default_tensor_sha256": "8d5f0fad5d094908afd4e78d05e60710b96c95943bb7aa791e5b753ff33e9df9",
+        "shared_default_seed_sha256": "61b79e0831d775508ab04086aa4f4009d89bb6df95e2357e4ee7e5ff2777097f",
+        "reference": {
+          "method": "independent proper-time physical-coordinate RK4; passive only",
+          "steps": 4096,
+          "half_resolution_agreement": 1.1102230246251565e-15,
+          "initial": {
+            "beta": "0",
+            "k": "-1/2",
+            "phi": "1",
+            "p": "0",
+            "dust": "1/2"
+          },
+          "final": {
+            "beta": -0.06157220110884933,
+            "k": -0.48545643116511994,
+            "phi": 0.9926565377140691,
+            "p": -0.11388921275259753,
+            "dust": 0.4558891996470008
+          },
+          "observables": {
+            "frame_B": 0.9402850536650076,
+            "spatial_metric_diagonal": 1.1310477349570038,
+            "scalar_rho": 0.4991688773239448,
+            "scalar_pressure": -0.48619812454253836,
+            "dust_density": 0.20783496235478296,
+            "comoving_dust_mass": 0.2499999999999995,
+            "phase": 0.11423226109711956,
+            "phase_proper_rate": 0.8350791302907943,
+            "phase_monotonic_margin": 0.5436307065046402
+          }
+        },
+        "rows": [
+          {
+            "tensor_sha256": "8d5f0fad5d094908afd4e78d05e60710b96c95943bb7aa791e5b753ff33e9df9",
+            "seed_sha256": "61b79e0831d775508ab04086aa4f4009d89bb6df95e2357e4ee7e5ff2777097f",
+            "dt": "1/24",
+            "denominator": 4,
+            "channels": 6,
+            "retained_integers_per_node": 18,
+            "steps": 3,
+            "target_proper_time": "1/8",
+            "nodes": 27,
+            "monomials": 58,
+            "same_initial_physical_fields": true,
+            "exact_constraint_zero_every_macro_sample": true,
+            "independent_scalar_oracle_each_tick": true,
+            "full_state_rewind": true,
+            "all_six_initial_remainders": true,
+            "max_retained_bits": [
+              3,
+              18,
+              66,
+              207
+            ],
+            "metric_positive_all_samples": true,
+            "phase_strictly_increases_all_samples": true,
+            "minimum_sampled_clock_monotonic_margin": 0.5,
+            "final_physical_fields": {
+              "beta": -0.06189186123089941,
+              "k": -0.48583491015958014,
+              "phi": 0.9935216290935703,
+              "p": -0.11731350079099256,
+              "dust": 0.45572232479549635
+            },
+            "final_observables": {
+              "frame_B": 0.9399845300652554,
+              "spatial_metric_diagonal": 1.1317710678670545,
+              "scalar_rho": 0.5004238424722901,
+              "scalar_pressure": -0.4866613850044519,
+              "dust_density": 0.20768283731701187,
+              "comoving_dust_mass": 0.25005669673267567,
+              "phase": 0.1175342318556461,
+              "phase_proper_rate": 0.8302666022290947,
+              "phase_monotonic_margin": 0.5424952695212597
+            },
+            "field_absolute_errors": {
+              "beta": 0.00031966012205007777,
+              "k": 0.0003784789944601963,
+              "phi": 0.0008650913795011927,
+              "p": 0.0034242880383950347,
+              "dust": 0.00016687485150446157
+            },
+            "max_field_error": 0.0034242880383950347,
+            "phase_error": 0.0033019707585265345,
+            "dust_mass_error": 5.669673267566511e-05,
+            "dust_mass_drift_positive_exact_rational_certificate": true,
+            "dust_mass_drift_certified_interval": [
+              5.669673267566446e-05,
+              5.669673267566446e-05
+            ],
+            "dust_mass_interval_width": 1.726999866102479e-24,
+            "maximum_sampled_dust_mass_error": 5.669673267566511e-05,
+            "universal_phase_equals_proper_time": false,
+            "phase_less_than_proper_time_exact_rational_witness": true,
+            "phase_minus_proper_time": -0.0074657681443539015
+          },
+          {
+            "tensor_sha256": "9339668562afff52e012a7fedcc5241ad0d2545a0424d9f5bf2bdd2244310f40",
+            "seed_sha256": "61b79e0831d775508ab04086aa4f4009d89bb6df95e2357e4ee7e5ff2777097f",
+            "dt": "1/32",
+            "denominator": 4,
+            "channels": 6,
+            "retained_integers_per_node": 18,
+            "steps": 4,
+            "target_proper_time": "1/8",
+            "nodes": 27,
+            "monomials": 58,
+            "same_initial_physical_fields": true,
+            "exact_constraint_zero_every_macro_sample": true,
+            "independent_scalar_oracle_each_tick": true,
+            "full_state_rewind": true,
+            "all_six_initial_remainders": true,
+            "max_retained_bits": [
+              3,
+              19,
+              67,
+              213,
+              649
+            ],
+            "metric_positive_all_samples": true,
+            "phase_strictly_increases_all_samples": true,
+            "minimum_sampled_clock_monotonic_margin": 0.5,
+            "final_physical_fields": {
+              "beta": -0.06181286123911523,
+              "k": -0.48573744135511887,
+              "phi": 0.9933023007945755,
+              "p": -0.11643374264588761,
+              "dust": 0.4557624899083838
+            },
+            "final_observables": {
+              "frame_B": 0.9400587917687062,
+              "spatial_metric_diagonal": 1.1315922621829477,
+              "scalar_rho": 0.5001031385951631,
+              "scalar_pressure": -0.48654632216863425,
+              "dust_density": 0.20771944720748964,
+              "comoving_dust_mass": 0.25004150934290464,
+              "phase": 0.11668634995317653,
+              "phase_proper_rate": 0.8315024622928524,
+              "phase_monotonic_margin": 0.5427876759346435
+            },
+            "field_absolute_errors": {
+              "beta": 0.00024066013026589894,
+              "k": 0.00028101018999893146,
+              "phi": 0.0006457630805063452,
+              "p": 0.0025445298932900845,
+              "dust": 0.00012670973861700352
+            },
+            "max_field_error": 0.0025445298932900845,
+            "phase_error": 0.0024540888560569685,
+            "dust_mass_error": 4.150934290464425e-05,
+            "dust_mass_drift_positive_exact_rational_certificate": true,
+            "dust_mass_drift_certified_interval": [
+              4.150934290463373e-05,
+              4.150934290463373e-05
+            ],
+            "dust_mass_interval_width": 1.6945012880715808e-24,
+            "maximum_sampled_dust_mass_error": 4.150934290464425e-05,
+            "universal_phase_equals_proper_time": false,
+            "phase_less_than_proper_time_exact_rational_witness": true,
+            "phase_minus_proper_time": -0.008313650046823468
+          },
+          {
+            "tensor_sha256": "895742d13f7974012fa23fd05c99e814cb8cb319f1da3e84b3f4076583f04aa9",
+            "seed_sha256": "61b79e0831d775508ab04086aa4f4009d89bb6df95e2357e4ee7e5ff2777097f",
+            "dt": "1/48",
+            "denominator": 4,
+            "channels": 6,
+            "retained_integers_per_node": 18,
+            "steps": 6,
+            "target_proper_time": "1/8",
+            "nodes": 27,
+            "monomials": 58,
+            "same_initial_physical_fields": true,
+            "exact_constraint_zero_every_macro_sample": true,
+            "independent_scalar_oracle_each_tick": true,
+            "full_state_rewind": true,
+            "all_six_initial_remainders": true,
+            "max_retained_bits": [
+              3,
+              19,
+              70,
+              220,
+              673,
+              2030,
+              6101
+            ],
+            "metric_positive_all_samples": true,
+            "phase_strictly_increases_all_samples": true,
+            "minimum_sampled_clock_monotonic_margin": 0.5,
+            "final_physical_fields": {
+              "beta": -0.06173324353559024,
+              "k": -0.48564191763998354,
+              "phi": 0.9930850558310866,
+              "p": -0.1155701047089521,
+              "dust": 0.45580371641572476
+            },
+            "final_observables": {
+              "frame_B": 0.9401336400704707,
+              "spatial_metric_diagonal": 1.1314120869739817,
+              "scalar_rho": 0.49978718860873533,
+              "scalar_pressure": -0.48643073950629717,
+              "dust_density": 0.20775702789838643,
+              "comoving_dust_mass": 0.25002702009514893,
+              "phase": 0.11585369959067447,
+              "phase_proper_rate": 0.8327160563060829,
+              "phase_monotonic_margin": 0.5430742470800494
+            },
+            "field_absolute_errors": {
+              "beta": 0.00016104242674090663,
+              "k": 0.00018548647486360537,
+              "phi": 0.00042851811701749565,
+              "p": 0.0016808919563545688,
+              "dust": 8.548323127605117e-05
+            },
+            "max_field_error": 0.0016808919563545688,
+            "phase_error": 0.001621438493554908,
+            "dust_mass_error": 2.7020095148933e-05,
+            "dust_mass_drift_positive_exact_rational_certificate": true,
+            "dust_mass_drift_certified_interval": [
+              2.702009514893081e-05,
+              2.702009514893081e-05
+            ],
+            "dust_mass_interval_width": 1.662331533045666e-24,
+            "maximum_sampled_dust_mass_error": 2.7020095148933e-05,
+            "universal_phase_equals_proper_time": false,
+            "phase_less_than_proper_time_exact_rational_witness": true,
+            "phase_minus_proper_time": -0.009146300409325528
+          }
+        ],
+        "observed_orders": [
+          {
+            "max_field_error": 1.0322077437699348,
+            "phase_error": 1.0315690962203055,
+            "dust_mass_error": 1.083828580339324
+          },
+          {
+            "max_field_error": 1.0225820371702616,
+            "phase_error": 1.0221393451156544,
+            "dust_mass_error": 1.0588770022217526
+          }
+        ],
+        "exact_discrete_constraint": "passed on every complete-state sample",
+        "source_clock_fixed_time_refinement": "passed observed three-resolution control",
+        "exact_discrete_dust_mass_conservation": "failed by rational exponential bounds; drift converges in this family",
+        "universal_scalar_phase_over_mass_as_proper_time": "failed even in the target continuum solution",
+        "operational_clock_and_signal_transport": "not_tested",
+        "spatial_or_general_Einstein_acceptance": "not_tested",
+        "efficient_refinement_bit_cost": "failed; cubic projective growth remains",
+        "scope": "Each h is a separately fingerprinted immutable tensor in the same homogeneous equation/decoder family."
+      },
+      "source_sha256": {
+        "validation/unified_law/clock_acceptance.py": "55135b8e142d67cae9956e3b6b7600f705aa0127f66dc4a4924cd1aa60e2cbde",
+        "validation/unified_law/constrained_coordinates.py": "b85c84775e1b2ec8986110985f3f55705b6b88a5f7a7698ef4db282cb57912ac",
+        "validation/unified_law/common.py": "4eb2fb97d47273eb97e6c3dab68751b6d9f832f0ee2e7c968e22b31a7f841f75"
+      },
+      "physical_acceptance": "restricted homogeneous convergence evidence; operational clock not established"
+    },
+    "independent_review": {
+      "selected_candidate": "spinor_beta_mass1",
+      "independent_symbolic": {
+        "rank_one_cone_identity": true,
+        "independent_complex_pair_drift": true,
+        "all_five_physical_evolution_equations": true,
+        "direct_actual_full44_source_and_all33_constraints": true,
+        "spatial_Einstein_pressure": true,
+        "weighted_norm_decay": "d(-2k)/dt=-(p^2+dust^2)",
+        "future_continuum_domain": "Bounded spinor norm; finite beta on every finite proper-time interval",
+        "rational_seed_scope": "New representable seed; no exact rational lift of every prior full45 seed is asserted"
+      },
+      "actual_state": {
+        "rows": [
+          {
+            "tensor_sha256": "8d5f0fad5d094908afd4e78d05e60710b96c95943bb7aa791e5b753ff33e9df9",
+            "seed_sha256": "61b79e0831d775508ab04086aa4f4009d89bb6df95e2357e4ee7e5ff2777097f",
+            "dt": "1/24",
+            "denominator": 4,
+            "channels": 6,
+            "retained_integers_per_node": 18,
+            "steps": 3,
+            "nodes": 27,
+            "independent_complete_register_comparisons": 1458,
+            "all_six_remainders_retained": true,
+            "full_rewind": true,
+            "exact_constraint_each_step": true,
+            "beta_monotone": true,
+            "bits": [
+              3,
+              18,
+              66,
+              207
+            ]
+          },
+          {
+            "tensor_sha256": "8d5f0fad5d094908afd4e78d05e60710b96c95943bb7aa791e5b753ff33e9df9",
+            "seed_sha256": "5272119d94c18d5b3ee40cbca7ee078c1c365c80419928e1980c5d7ce4937298",
+            "dt": "1/24",
+            "denominator": 420,
+            "channels": 6,
+            "retained_integers_per_node": 18,
+            "steps": 3,
+            "nodes": 27,
+            "independent_complete_register_comparisons": 1458,
+            "all_six_remainders_retained": true,
+            "full_rewind": true,
+            "exact_constraint_each_step": true,
+            "beta_monotone": true,
+            "bits": [
+              9,
+              38,
+              126,
+              389
+            ]
+          }
+        ],
+        "onsite_only": true,
+        "interpretation": "One homogeneous sector; no spatial packet coupling in this tensor"
+      },
+      "wrong_dynamics_controls": [
+        {
+          "omitted_coordinate_velocity": "sc",
+          "tensor_sha256": "9e0f01030b522eaf7d1509d820af7bb5c31f50928f24ad916030466511aae2cb",
+          "actual_Engine_steps": 3,
+          "constraint_still_zero": true,
+          "complete_rewind": true,
+          "wrong_dynamics_rejected": true,
+          "reason": "At the seed, pdot=0 from the wrong map, while Klein-Gordon requires pdot=-1"
+        },
+        {
+          "omitted_coordinate_velocity": "beta",
+          "tensor_sha256": "358120ad029248a1c28e76731156ee8ef2d028cd775124d8cb54e36ce4b47db3",
+          "actual_Engine_steps": 3,
+          "constraint_still_zero": true,
+          "complete_rewind": true,
+          "wrong_dynamics_rejected": true,
+          "reason": "Frozen flat metric has zero Einstein tensor but nonzero positive matter density"
+        }
+      ],
+      "exact_input": {
+        "warm_cache_float_and_boolean_rejected": true,
+        "regression": "Validate exact input types before cache lookup"
+      },
+      "provenance": {
+        "source_hash_checks": 15,
+        "default_identity": {
+          "tensor_sha256": "8d5f0fad5d094908afd4e78d05e60710b96c95943bb7aa791e5b753ff33e9df9",
+          "seed_sha256": "61b79e0831d775508ab04086aa4f4009d89bb6df95e2357e4ee7e5ff2777097f",
+          "dt": "1/24",
+          "denominator": 4,
+          "channels": 6,
+          "retained_integers_per_node": 18
+        },
+        "common_metric_clock_exact_same_run": true,
+        "three_resolution_family_joins": true,
+        "wrong_timestep_or_carry_join_rejected": true,
+        "finite_step_dust_drift_remains_failed": true,
+        "separate_native_first_constraint_failure": "-4/9; not joined to the spinor theorem",
+        "generic_physical_gates_not_promoted": true,
+        "evidence_sha256": {
+          "runs/unified_law/00_common.json": "38d09355290752ec32200c0be6b2026b71bd26fd49b0015a6f28c8ee043338e9",
+          "runs/unified_law/01_coordinates.json": "793428c8ed4c7bb6ad06dcb0ed89cb948c7e3a66b9e2a75c4ecdf4acf8e1f51c",
+          "runs/unified_law/02_hamiltonian.json": "9f1ef923ceee3021f66566e7707787952971804ae9699c25b2860f7679f033fb",
+          "runs/unified_law/03_native_scheduler.json": "a1ababcc6fc1889817bce9368837b8e3bbabba9ced90776406a6b4560fa222c5",
+          "runs/unified_law/04_invariant_map.json": "5a94fc7b70717dc56b89caa66a51f2c1a0003476ba2d3eded686cd21c6a540b1",
+          "runs/unified_law/05_spatial_metric.json": "af846bd81e08fb5b13a60f183c1280ac3c9e4ceef3d8c4c7d28e2c4858d039e1",
+          "runs/unified_law/06_clock_acceptance.json": "07a0f9b85deb36b35a1a09e4314268ef8b33520c260fcb3cab3aac515edf8f8b"
+        }
+      },
+      "source_sha256": {
+        "validation/unified_law/independent_review.py": "ce9b2e42bcba09ab6d03c1ecc4f82b60ec5d3c2aaf9d1dc7d4a7bff50a361cf4",
+        "validation/unified_law/common.py": "4eb2fb97d47273eb97e6c3dab68751b6d9f832f0ee2e7c968e22b31a7f841f75",
+        "validation/unified_law/constrained_coordinates.py": "b85c84775e1b2ec8986110985f3f55705b6b88a5f7a7698ef4db282cb57912ac",
+        "validation/completion/formulation.py": "3364e0da09b838008a7931602bfc0a8f6cc9a10037a513eefe414e21da61402f",
+        "validation/research_eight/07_hyperbolic_symbol.py": "5a3acdc8a0641b83275275edadd0fe9479acc1d4cd7b10b7a6d031ad8aec586f",
+        "validation/geometry/team48/refinement_integer_projective.py": "7761440de3ab440d98e758432db2eba1360c83dbea0b7a54f039c756cf76e604",
+        "universe24/core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0"
+      },
+      "review": "passed for the declared homogeneous candidate and its evidence boundaries",
+      "open_gates": [
+        "Exact finite-step Einstein dynamics/source conservation is not claimed.",
+        "The compiled projective bit cost remains exponential in tick count.",
+        "No general spatial Einstein system, transported material packet or operational detector is implemented.",
+        "Any native harmonic alternative must be checked on its own tensor and decoder."
+      ]
+    }
+  },
+  "source_sha256": {
+    "validation/unified_law/clock_acceptance.py": "55135b8e142d67cae9956e3b6b7600f705aa0127f66dc4a4924cd1aa60e2cbde",
+    "validation/unified_law/common.py": "4eb2fb97d47273eb97e6c3dab68751b6d9f832f0ee2e7c968e22b31a7f841f75",
+    "validation/unified_law/constrained_coordinates.py": "b85c84775e1b2ec8986110985f3f55705b6b88a5f7a7698ef4db282cb57912ac",
+    "validation/unified_law/hamiltonian.py": "f69b404cfdfaccc73f111c73f16423292b0dc3cc28b6d78bf98e8d968dddd277",
+    "validation/unified_law/independent_review.py": "ce9b2e42bcba09ab6d03c1ecc4f82b60ec5d3c2aaf9d1dc7d4a7bff50a361cf4",
+    "validation/unified_law/invariant_map.py": "8d7ab2535a7712a1da8a46d60ea71d4c90549534f9e6e379033dfdd40ed66264",
+    "validation/unified_law/native_scheduler.py": "79015a6fcec2fbb949f7fe8999aebfdfb61a12b04bf73a6a69d25e8bfd5a9cde",
+    "validation/unified_law/run_all.py": "7811895c4dc7409a1204973575607f90e692c7e5f7b62312947a0da8d1eb9bbe",
+    "validation/unified_law/spatial_metric.py": "dbcb5afa7b2ac59de864c21237b6b2dc33fff2727252b2f556071fbfcb01def8"
+  },
+  "selected_candidate": "six-channel homogeneous constrained spinor + beta",
+  "native_scheduler_status": "separate arithmetic bridge; not the selected spinor tensor",
+  "general_spatial_Einstein_acceptance": "not_established",
+  "operational_detector": "not_implemented",
+  "efficient_projective_bit_cost": "failed",
+  "software_validation": {
+    "unittest": {
+      "tests": 395,
+      "status": "passed",
+      "command": "python -m unittest discover -s universe24/tests -t . -v",
+      "log_sha256": "5c3df866ed0492c05147c536b411528ec531b881f8b85bcdbfa9d3c24b11b7f8"
+    },
+    "generic_cli_smoke": {
+      "status": "passed",
+      "verification": {
+        "schema": "universe24/system/run/1",
+        "run_id": "989b87cd820c5e087304bce0d035fcbde086e16ae20d94ecd041614340e4be84",
+        "bundle_id": "43034d9f2d80d77df1efa9f4e2c651b1b0a04da946cde9b7182f67a73c9662dd",
+        "tensor_hash": "85dea207d1d00c16e0d2196fd52feaa6202351f556b9b2c6c5ecea800f1d9494",
+        "steps": 6,
+        "channels_per_node": 2,
+        "retained_integers_per_node": 6,
+        "nodes": 27,
+        "final_state_hash": "1df034246cd6fc931ecc8826c0cf5422cac49f51dca2b6e762e0dd3934b1ef4e",
+        "click_count": 304,
+        "maximum_integer_bits_by_step": [
+          31,
+          31,
+          31,
+          31,
+          31,
+          31,
+          31
+        ],
+        "trace_role": "external complete audit record; never fed into evolution",
+        "source_hashes": {
+          "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+          "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+          "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+          "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+          "system/bundle.py": "6a91f95f67b5730c8c426dc4669dfd9d8a535fd1d7eaaf20cc5ac2d0974969e6",
+          "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+          "system/runtime.py": "7bafea81e5912e26e49312c157a68fca3d50b75d893aa9198592696ea8f2cee4"
+        },
+        "files": {
+          "full_trace.jsonl.gz": "137730acea2746683d35f2be82f82e208025d4cdcd92e35fee65c13d251a96d7",
+          "clicks.jsonl.gz": "f0095655bd0616f92ded3092aceec944eaf4ec9ca6c1b675b4649923291f6c13"
+        },
+        "checks": {
+          "bundle_contract": "passed",
+          "complete_state_forward_replay": "passed",
+          "complete_state_step_inverse": "passed",
+          "complete_state_rewind_to_seed": "passed",
+          "canonical_click_parity": "passed"
+        },
+        "acceptance_gates": {
+          "A": {
+            "status": "partial",
+            "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests."
+          },
+          "B": {
+            "status": "partial",
+            "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established."
+          },
+          "C": {
+            "status": "not_tested",
+            "reason": "No independently validated Einstein geometry supplied by the generic executor."
+          },
+          "D": {
+            "status": "not_tested",
+            "reason": "One execution is not a space/time/quantization convergence study."
+          },
+          "E": {
+            "status": "not_tested",
+            "reason": "No shared-metric physical clock or motion evidence established."
+          },
+          "F": {
+            "status": "not_tested",
+            "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result."
+          }
+        }
+      }
+    },
+    "runtime_changed": false
+  }
+}
