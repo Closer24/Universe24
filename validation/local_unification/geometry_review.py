@@ -198,6 +198,12 @@ def _direction(value):
     return value
 
 
+def _exact_divmod6(values):
+    """Keep arbitrary-size signed Python integers in the independent oracle."""
+    pairs = [divmod(int(value), 6) for value in values]
+    return np.asarray(pairs, dtype=object).T
+
+
 def scalar_step(state, direction=(1, 0, 0)):
     """Independent expanded recurrence for all12 channels, including seams."""
     state = State(state.L, state.a, state.b, state.r)
@@ -222,7 +228,7 @@ def scalar_step(state, direction=(1, 0, 0)):
             offset = tuple((1-2*bank)*speed*v for v in direction)
             target = 4*bank+lane
             shifted = b[source+lane, state.lattice.shift_index(offset)]
-            quotient, remainder = np.divmod(6*(collision[lane]+shifted)+r[target], 6)
+            quotient, remainder = _exact_divmod6(6*(collision[lane]+shifted)+r[target])
             following[target], carries[target] = quotient-a[target], remainder
         for sign in range(2):
             target, origin = 8+2*bank+sign, 8+2*(1-bank)+sign
@@ -230,8 +236,8 @@ def scalar_step(state, direction=(1, 0, 0)):
             offset = tuple((2*bank-1)*speed*v for v in direction)
             neighbour = b[origin, state.lattice.shift_index(offset)]
             occupancy = b[source+sign]+b[source+sign+2]
-            quotient, remainder = np.divmod(
-                18*b[origin]-6*neighbour-6*occupancy+r[target], 6)
+            quotient, remainder = _exact_divmod6(
+                18*b[origin]-6*neighbour-6*occupancy+r[target])
             following[target], carries[target] = quotient-a[target], remainder
     return State(state.L, b.copy(), following, carries)
 

@@ -63,6 +63,15 @@ class GeometryReviewTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             review.saved_chart_review(self.run_dir, bad)
 
+    def test_scalar_oracle_retains_arbitrary_signed_integer_precision(self):
+        for offset in (2**200, -(2**200)):
+            changed = self.seed.copy()
+            changed.a[8:] += offset
+            changed.b[8:] += offset
+            expected = Engine(self.law).step(changed)
+            self.assertTrue(review.scalar_step(changed).same_as(expected))
+            self.assertTrue(Engine(self.law).inverse_step(expected).same_as(changed))
+
     def test_slice_constraint_does_not_certify_complete_history(self):
         changed = self.seed.copy()
         changed.a[8, :] += 1
