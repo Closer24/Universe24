@@ -1,0 +1,252 @@
+{
+  "schema": "universe24/generic-structure/independent-review/1",
+  "baseline_pin": "8c53e69f4b466dcbd2da7dab7e3c365bd9731766",
+  "signed_potential_to_native_schedule": {
+    "status": "passed",
+    "channels": 6,
+    "periods": 3,
+    "complete_integer_comparisons": 1458,
+    "potential": "-3*x_i^2/2 + 2*x_i*y_(i+ey)^2, summed over nodes",
+    "field_signs": [
+      1,
+      -1
+    ],
+    "read_matrix": [
+      [
+        2,
+        -1
+      ]
+    ],
+    "copy_matrix": [
+      [
+        1
+      ],
+      [
+        -2
+      ]
+    ],
+    "all_six_carries": true,
+    "face_direction": "y, including periodic seams",
+    "tensor_fingerprint": "55c6356005a89740d0824d596188975ca4d0ad65c8f9e1ad6f2c8b329cf7b75e",
+    "full_rewind": true
+  },
+  "forged_force_certificate": {
+    "status": "rejected",
+    "forgery": "Relabel genuine inertial-plus-force tensor as pure gradient while preserving matching tensor hash",
+    "required_authority": "Recomputed gradient from actual declared potential and gear signs"
+  },
+  "matrix_factorization_is_not_floor_factorization": {
+    "status": "expected_failure_reproduced",
+    "BA": "I_2",
+    "old_a": [
+      1,
+      2
+    ],
+    "workspace_carries": [
+      0,
+      0
+    ],
+    "actual_drift": [
+      1,
+      0
+    ],
+    "independent_floor_a_over_3_drift": [
+      0,
+      0
+    ],
+    "complete_rewind": true,
+    "hard_cap_override_rejected": true,
+    "scope": "Specific n+r+3 compiler layout; no universal channel lower bound"
+  },
+  "complete_history_constraint": {
+    "status": "passed_with_expected_failure",
+    "positive_symbolic_certificates": {
+      "linear_lorentz": {
+        "target": [
+          "2*b0 + b1",
+          "3*b0 + 2*b1"
+        ],
+        "inverse": [
+          "2*b0 - b1",
+          "-3*b0 + 2*b1"
+        ],
+        "quadratic": "3*b0**2 - b1**2",
+        "history_generators": [
+          "a0 - 2*b0 + b1",
+          "a1 + 3*b0 - 2*b1"
+        ],
+        "inverse_compositions_exact": true,
+        "quadratic_identity_exact": true,
+        "complete_history_ideal_remainders": [
+          "0",
+          "0",
+          "0"
+        ],
+        "commuting_encoding_identity": true
+      },
+      "cubic_null_rotation": {
+        "target": [
+          "b0",
+          "2*b0**2 + b1",
+          "-2*b0**3 - 2*b0*b1 + b2"
+        ],
+        "inverse": [
+          "b0",
+          "-2*b0**2 + b1",
+          "-2*b0**3 + 2*b0*b1 + b2"
+        ],
+        "quadratic": "2*b0*b2 + b1**2",
+        "history_generators": [
+          "a0 - b0",
+          "a1 + 2*b0**2 - b1",
+          "a2 + 2*b0**3 - 2*b0*b1 - b2"
+        ],
+        "inverse_compositions_exact": true,
+        "quadratic_identity_exact": true,
+        "complete_history_ideal_remainders": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "commuting_encoding_identity": true
+      }
+    },
+    "unprepared_cubic_null": {
+      "Q_old_a": 0,
+      "Q_old_b": 0,
+      "Q_next_b": -8,
+      "complete_inverse": true
+    },
+    "interpretation": "Separate constraints on two slices do not replace their encoding relation"
+  },
+  "exact_restricted_sector": {
+    "status": "passed",
+    "full_channels": 45,
+    "restricted_channels": 6,
+    "full_histories_and_carries": true,
+    "forward_and_reverse_conjugacy": true,
+    "illegal_carries_rejected": [
+      -1,
+      6
+    ],
+    "preserved_constraint_defect": "-7/4096",
+    "generic_45channel_compression": false
+  },
+  "packet": {
+    "status": "passed",
+    "independent_group_derivative_error": 2.4119595209981526e-13,
+    "actual_packet_control": {
+      "L": 24,
+      "axis": 2,
+      "carrier_mode": 4,
+      "steps": 24,
+      "amplitude_scale": 16777216,
+      "tensor_sha256": "ee2dd8c4f97cb3a4a07ba0bcc85e6830b623cddd02f3ef98f6d6043d41fe2ef4",
+      "complete_seed_sha256": "3211121343cc0106b2b4286476340dff041c40c91ee4779b2461d3e92fd3d993",
+      "complete_final_sha256": "fe6acecdc66f539ca51e0cc7e4c4823922081f5742ba215ac5c9c061b4d89264",
+      "full_rewind": true,
+      "changed_remainder_entries": 437760,
+      "max_retained_bits": 25,
+      "packet_is_localized_along_one_axis_only": true,
+      "envelope_circular_concentration_minimum": 0.5695345301267689,
+      "measured_displacement_nodes": 3.5741983947438687,
+      "measured_group_velocity": 0.14892080963887172,
+      "ideal_finite_band_centroid_velocity": 0.14892080501393723,
+      "spectrum_weighted_group_prediction": 0.15070380002437417,
+      "central_mode_omega_prediction": 0.3398369094541219,
+      "central_mode_omega_measured": 0.3398369083653241,
+      "final_field_rms_error": 8.489289359626176e-08,
+      "deterministic_error_bound": 1.473059970433417e-06,
+      "central_ray_phase_rate": 0.1795181806838889,
+      "central_ray_phase_over_rest_rate": 1.072082651054861,
+      "continuum_SR_rate_at_same_group_speed": 0.8882919002219934,
+      "proper_clock_from_packet": "not_established: FFT phase is a passive field diagnostic, not an independently ticking retained apparatus",
+      "same_law_as_common45": false
+    },
+    "scope": "One-axis localization on a three-dimensional lattice; fixed discrete mass/spacing, no curved common45 claim"
+  },
+  "frame_domain": {
+    "status": "passed",
+    "symbolic": {
+      "determinant_identity": "det(M B)=det(B)",
+      "matrix": [
+        [
+          "s*t + 1",
+          "s",
+          "0"
+        ],
+        [
+          "t",
+          "1",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "1"
+        ]
+      ],
+      "inverse": [
+        [
+          "1",
+          "-s",
+          "0"
+        ],
+        [
+          "-t",
+          "s*t + 1",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "1"
+        ]
+      ],
+      "all_finite_ticks": "B_n=M^n B_0, a_n=M^-1 B_n, r_n=r_0",
+      "scope": "arbitrary nonsingular initial integer frame; frozen nodewise s,t; prepared old slice"
+    },
+    "negative_controls": {
+      "unprepared_old_slice_invertible_to_singular": {
+        "status": "expected_failure_reproduced",
+        "det_before": 1,
+        "det_after": 0,
+        "complete_inverse": true
+      },
+      "isotropic_expansion_from_shears_alone": {
+        "status": "failed",
+        "shear_product_det": 1,
+        "dilation_2I_det": 8
+      },
+      "uniform_metric_conditioning_from_det1": {
+        "status": "failed",
+        "at_tick": 12,
+        "metric_det": 1,
+        "maximum_Gram_entry": "7778742049",
+        "exact_condition_number": "((3+sqrt(5))/2)^(4*n) for s=t=1, B0=I"
+      },
+      "dynamical_connection_or_source_coupling": "not_implemented",
+      "Einstein_constraints_and_convergence": "not_tested",
+      "Lorentz_gauge_transformation": false,
+      "volume_scope": "For inverse spatial frame B, sqrt(det(gamma))=1/abs(det(B)); fixed here."
+    },
+    "channels": 11,
+    "scalar_comparisons": 2673,
+    "full_rewind": true,
+    "scope": "Prepared onsite frame shears; determinant and metric domain only"
+  },
+  "production_changes": false,
+  "physical_acceptance": "not_established",
+  "source_sha256": {
+    "validation/generic_structure/constraint_certificate.py": "a72ef2cd56756ee3d36df9872356027d94bc9a6731b73efa3e3d55c4505fcd30",
+    "validation/generic_structure/contracts.py": "539d457b9e39091b3546cdac800d5c9ee1ce8d8e348fc173d04e0e438a9ed0de",
+    "validation/generic_structure/frame_primitive.py": "cb7cb2d42f19bd6042e6aa5c9d20c2facd2ccc3f437c8753c25083f3959d8d6c",
+    "validation/generic_structure/independent_review.py": "4ff1d8f5ef9980b1920aa5300c4d0967ecffafd7a131b20c0cdb13d0b9c0a94d",
+    "validation/generic_structure/interactions.py": "721416e1062e606c5703f61123033d885c6e1359899e2dffde2979aec4b22290",
+    "validation/generic_structure/native_schedule.py": "05627995a21f839618d67a8338490e5435e423a1e362bc08f45f9758c701ad95",
+    "validation/generic_structure/packet_clock.py": "2d4ac867d2b5377741de10c5b600d96d60c73deb2fb23bd0c9cab42bbb13a1af",
+    "validation/generic_structure/run_all.py": "64e27f56e8ba89b677fc593c796ef9f8f18ababe8b35ff5006d449fc068a9934",
+    "validation/generic_structure/symmetry_sector.py": "07c6885af331bbb9579963010b42595805bab62bf508b3ece45fbc53bba7b206"
+  }
+}

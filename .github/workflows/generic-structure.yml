@@ -1,0 +1,41 @@
+name: Generic interaction and complete-state proofs
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  generic-structure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.12']
+    env:
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install declared dependencies
+        run: python -m pip install '.[validation]'
+      - name: Execute all eight source-only audits and check evidence hashes
+        run: python -m validation.generic_structure.run_all
+      - name: Verify unchanged generic runtime
+        run: |
+          python -m validation.system_smoke --out runs/generic-structure/system-smoke
+          python -m universe24 verify --run runs/generic-structure/system-smoke/run
+      - name: Preserve complete audit evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: generic-structure-python-${{ matrix.python }}
+          path: |
+            runs/generic-structure/
+            runs/generic_structure/
+          if-no-files-found: error

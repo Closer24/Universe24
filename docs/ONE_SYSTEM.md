@@ -13,6 +13,14 @@ bundle can be executed and checked without declaring its fields to be physical
 geometry. Mechanical success and physical validation are separate results.
 The coordination and acceptance contract is [issue #40](https://github.com/Closer24/Universe24/issues/40).
 
+The source-only [generic interaction and proof structure](research/generic_structure/README.md)
+adds a reusable reciprocal-interaction compiler, counted native schedule,
+complete-history constraint examples, an exact homogeneous-sector extractor
+and a restricted massive packet/phase control. The packet uses a distinct
+three-channel linear law, not the common45 Einstein candidate. These are
+scoped constructions and falsifiers; no production law, physical gate or
+operational-clock interpretation is promoted by their mechanical success.
+
 ## Assumptions and exact law
 
 A node retains at most 48 channels. Each channel contains its complete integer

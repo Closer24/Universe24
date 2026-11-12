@@ -1,0 +1,88 @@
+{
+  "status": "passed_compatibility_controls_only",
+  "same_run_join": {
+    "compatibility": "same_verified_run_window_and_declared_interpretation",
+    "quantities": [
+      "inverse_spatial_metric",
+      "scalar_I_S"
+    ],
+    "input_kinds": [
+      "full_state_diagnostic",
+      "full_state_diagnostic"
+    ],
+    "physical_acceptance": "not_established"
+  },
+  "metric_receipt": {
+    "run_id": "59535206f71508e87451f22e0917e8e0ee5f634ef982e4272f886731bfb3b527",
+    "bundle_id": "cd601e2e6d255ddddfa64f6d2edd9abaa0aaa8792f8604b268fb79c1352a6544",
+    "tensor_sha256": "6ea453fa77a5a9d74af5bd4fc626cfcdc8f92942b10c301d2d00814bf4d05ba0",
+    "seed_sha256": "b53909631f3e14e3c09905275fe7b50a0dad2ecdec9ac431db2306127abd3b7c",
+    "full_trace_sha256": "0ece4e1fa517ade3d15ff21fbbf9d7442aadd1c210c07162926f91028657a6f3",
+    "click_trace_sha256": "399bb1bd3ecd77f6900fdd462d6183eb86f676cc911cdfe0d6bba1fb7f35e1f9",
+    "interpretation_sha256": "493548166e5fade1fc13f8d9044c7145bc1bf13cf55b325443be005f875ce7dd",
+    "start_step": 0,
+    "stop_step": 2,
+    "quantity": "inverse_spatial_metric",
+    "input_kind": "full_state_diagnostic",
+    "dependencies": [
+      "projective.B00",
+      "projective.B01",
+      "projective.B02",
+      "projective.B10",
+      "projective.B11",
+      "projective.B12",
+      "projective.B20",
+      "projective.B21",
+      "projective.B22",
+      "projective.denominator"
+    ]
+  },
+  "clock_receipt": {
+    "run_id": "59535206f71508e87451f22e0917e8e0ee5f634ef982e4272f886731bfb3b527",
+    "bundle_id": "cd601e2e6d255ddddfa64f6d2edd9abaa0aaa8792f8604b268fb79c1352a6544",
+    "tensor_sha256": "6ea453fa77a5a9d74af5bd4fc626cfcdc8f92942b10c301d2d00814bf4d05ba0",
+    "seed_sha256": "b53909631f3e14e3c09905275fe7b50a0dad2ecdec9ac431db2306127abd3b7c",
+    "full_trace_sha256": "0ece4e1fa517ade3d15ff21fbbf9d7442aadd1c210c07162926f91028657a6f3",
+    "click_trace_sha256": "399bb1bd3ecd77f6900fdd462d6183eb86f676cc911cdfe0d6bba1fb7f35e1f9",
+    "interpretation_sha256": "493548166e5fade1fc13f8d9044c7145bc1bf13cf55b325443be005f875ce7dd",
+    "start_step": 0,
+    "stop_step": 2,
+    "quantity": "scalar_I_S",
+    "input_kind": "full_state_diagnostic",
+    "dependencies": [
+      "projective.phi",
+      "projective.chi",
+      "projective.Pi_phi",
+      "projective.Pi_chi",
+      "projective.denominator"
+    ]
+  },
+  "rejected_controls": [
+    "different_physical_tick_scale",
+    "scheduler_relabelled_as_metric_clock",
+    "different_frame_order",
+    "different_invariant_domain",
+    "different_comparison_window",
+    "hidden_state_under_records_only_label",
+    "actual_massless_tensor_join",
+    "actual_different_complete_preparation",
+    "45_plus_4",
+    "duplicate_slot_claim"
+  ],
+  "hypothetical_45_plus_3": {
+    "channels": 48,
+    "retained_integers_per_node": 144,
+    "append_budget_only": true,
+    "coupled_tensor_exists": "not_established"
+  },
+  "verified_runs": [
+    "/workspace/scratch/d01c5ea2900a/universe24-generic/runs/generic_structure/contracts/contracts-t_fliwro/common45",
+    "/workspace/scratch/d01c5ea2900a/universe24-generic/runs/generic_structure/contracts/contracts-t_fliwro/massless",
+    "/workspace/scratch/d01c5ea2900a/universe24-generic/runs/generic_structure/contracts/contracts-t_fliwro/different-carry"
+  ],
+  "limitations": [
+    "Declared semantics are not independently proved by a hash.",
+    "No physical gate or invariant-domain theorem is certified.",
+    "Equal provenance permits comparison; it does not imply equal observables."
+  ]
+}
