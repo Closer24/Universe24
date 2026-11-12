@@ -589,3 +589,73 @@ neither Engine nor default allocation. The six-channel sector retains the
 original constraint/time-stability defects and excludes transported/charged
 and anisotropic modes; the three-channel reciprocal example is separate.
 Operational-clock, nonlinear Einstein, detector and quantum gates remain open.
+
+## Local carrier–record source construction
+
+The source-only package `validation/local_unification/` extends the research
+contract without changing the Engine, bundle, canonical decoder or physical
+acceptance gate. It uses one bounded four-rail collision,
+`1001 <-> 0110`, where the rails are record+/record-/carrier+/carrier-.
+Its cubic polynomial preserves positive packet energy and signed propagation
+momentum, with equal and opposite record/carrier recoil.
+
+A paired-bank first-order map `F(A,B)=(G(B),S(A))` is compiled using
+`u=3(F+F^-1)` and complete prepared history `a=F^-1(b)`. The resulting
+eight-channel invariant sector is Boolean for all time with every legal
+remainder retained. Two Engine microticks form one streaming macro; neither
+the two staggered populations nor their records are hidden workspace.
+
+The joined twelve-channel tensor retains four additional characteristic
+geometry profiles and includes actual packet-source terms in their update.
+On a plane-symmetric causal interior, `Delta²F=-n+` and `Delta²G=-n-`
+are preserved. Cubic cardinal B-spline reconstruction converts these exact
+difference identities into `f''=-sum(n+ B1)` and `g''=-sum(n- B1)`.
+For `R=f(u)+g(v)>0`, the metric
+`ds²=-2R^(-1/2)du dv+R(dy²+dz²)` has only
+`G_uu=-f''/R` and `G_vv=-g''/R` nonzero, supplying a restricted spatial
+null-source Einstein chart from the same retained run. The physical
+coordinates are `u=t-x,v=t+x`; packet-count invariants and local orthonormal
+stress are distinguished.
+
+This is not a globally periodic positive-source solution: summing the
+periodic discrete Laplacian proves that such a global profile is impossible
+for nonzero nonnegative source. The finite chart has an explicit causal and
+spline-support margin, a continuous positivity bound and even-microtick
+readout. Its exterior seam defects remain in the complete invertible state.
+Wrong-source, unsafe-readout and mixed-source evidence controls must fail.
+
+The package distinguishes finite repeated routing, record retention, full
+source replay and exact restricted physical identities from the still-open
+targets of massive localization, material proper-time clocks and sustained
+structural growth. The standard general physical gate remains blocked.
+Proofs, registered experiments and reproduction commands are indexed in
+[the local construction report](research/local_unification/README.md).
+
+### Finite gauge loops and complete connection histories
+
+[Gauge-loop research](research/gauge_loop/README.md), tracked in issue #66,
+adds two source-only constructions through the same bundle/Engine/runtime:
+a seven-channel static Z4 wave with a neutral retained intensity reader, and
+a separate ten-channel dynamic Z2 connection-exchange sector. Both use
+degree-two strict single-edge tensors and count all histories and carries.
+
+The static law proves a same-tensor two-path response to independent loop
+flux (intensities four and zero), and full-state invariance of physical
+readouts under time-independent local Z4 transformations. Its links are
+stationary on the declared preparation; its homogeneous matter mode grows
+as `1,3,11,41`, so it is not a stable Maxwell or probability evolution.
+
+The dynamic law uses `F(chi,eta,U)=(eta,U*Y,chi*Y)` with stationary neighboring
+sign `Y`. Preparing `a=F^-1(b)` and compiling `u=3(F+F^-1)` gives exact native
+evolution with all carries retained. It preserves group-valued links and
+supports complete-history charged-register/link feedback and changing
+plaquettes. The complete period divides three; evolving information stays
+within edge triplets. No electric Gauss law, propagating wave, energy-stress
+source, material clock or sustained complexity follows.
+
+The two tensor identities remain separate in saved evidence. Historical
+unit-norm drift, carry-source charge balance, multi-edge support rejection
+and raw C1/C2 gauge dependence remain explicit falsification controls.
+Run `python -m validation.gauge_loop.audit --out runs/gauge-loop` in a fresh
+directory. This extends mathematical validation, not physical acceptance
+or the supported runtime interface.

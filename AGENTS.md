@@ -1,6 +1,6 @@
 # Universe24 one-system development contract
 
-Issue #40 and the owner's instructions supersede the historical oversized ADM default and experiment menu. There is one supported interface: `python -m universe24` (status, prepare, run, verify), backed by `universe24/system/`. Do not introduce a default physical model until it meets the contract. Historical ADM/demo drivers and independent audit harnesses live in source-only `validation/` and are excluded from installation.
+The owner's instructions and docs/ONE_SYSTEM.md supersede the historical oversized ADM default and experiment menu. There is one supported interface: `python -m universe24` (status, prepare, run, verify), backed by `universe24/system/`. Do not introduce a default physical model until it meets the contract. Historical ADM/demo drivers and independent audit harnesses live in source-only `validation/` and are excluded from installation.
 
 1. Preserve exactly `ell,r_next = divmod(2*u+r,6); a_next=b; b_next=ell-a`. No scale parameter, dynamic divisor, normalization, runtime solver or hidden callback.
 2. Every forward output reads the same complete old snapshot. Never clip, project, veto, reset or discard retained information. Complete `(a,b,r)` state must rewind, including nonzero remainders.
@@ -11,6 +11,6 @@ Issue #40 and the owner's instructions supersede the historical oversized ADM de
 7. No alternate runtime modes or metric authorities. Historical proposals are catalogued in `docs/proposals/INDEX.md`; retained code provides validation references, not another supported universe. Do not merge a proposal just because its mechanical checks pass.
 8. Physical geometry, matter and operational apparatus must eventually share one coupling and metric. Exact rewind and arithmetic clicks do not prove Einstein equations, stable constraints, convergence, clocks, energy conservation, Born probabilities or Bell results.
 9. Reports distinguish passed/failed/not_tested/blocked. No accepted general <=48 coupled physical model currently exists. A user-supplied model name or successful replay cannot change that status.
-10. Keep fresh evidence in `runs/`, preserve pinned historical evidence unchanged, and update `docs/ONE_SYSTEM.md` for mathematical changes. Register interface/ownership changes on issue #40.
+10. Keep fresh evidence in `runs/`, preserve pinned historical evidence unchanged, and update `docs/ONE_SYSTEM.md` for mathematical changes. Register interface/ownership changes in docs/ONE_SYSTEM.md and docs/RESEARCH_AGENDA.md.
 
 For structural changes run full unittest discovery and the generic forward/replay smoke in README. Preserve independent scalar-oracle and physical negative controls. Review the diff and avoid claiming full physical acceptance from a green software suite.

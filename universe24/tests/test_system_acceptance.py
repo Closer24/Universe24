@@ -6,7 +6,7 @@ import unittest
 
 from universe24.system.runtime import run_bundle
 from validation.sourced_map import native, runtime
-from validation.system_acceptance.run import inspect_saved_run, require_same_run, run, source_hashes, _anisotropic_run
+from validation.system_acceptance.run import inspect_saved_run, inspect_claimed_run, require_same_run, run, source_hashes, _anisotropic_run
 
 
 class SystemAcceptanceTests(unittest.TestCase):
@@ -54,6 +54,17 @@ class SystemAcceptanceTests(unittest.TestCase):
         trace.write_bytes(b'not a saved complete trace')
         with self.assertRaises((ValueError, OSError, EOFError)):
             inspect_saved_run(broken)
+
+    def test_research_summary_cannot_substitute_another_complete_run(self):
+        receipt, _ = inspect_saved_run(self.path)
+        claim = dict(run_id=receipt.run_id, bundle_id=receipt.bundle_id,
+                     tensor_hash=receipt.tensor_sha256)
+        self.assertEqual(inspect_claimed_run(self.path, claim), receipt)
+        with self.assertRaises(ValueError):
+            inspect_claimed_run(self.changed, claim)
+        for key in claim:
+            with self.assertRaises(ValueError):
+                inspect_claimed_run(self.path, {**claim, key: 'incorrect'})
 
     def test_existing_output_is_rejected_before_any_research_runs(self):
         marker = self.out / 'retained.txt'
