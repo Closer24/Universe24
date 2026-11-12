@@ -19,6 +19,38 @@ bundle can be executed and checked without declaring its fields to be physical
 geometry. Mechanical success and physical validation are separate results.
 The coordination and acceptance contract is [issue #40](https://github.com/Closer24/Universe24/issues/40).
 
+The source-only [sourced complete-history map](research/sourced_map/README.md)
+implements an exact sampled expanding homogeneous massless-scalar plus dust
+FLRW solution in six retained channels. Its physical constraint includes both
+volume histories; one immutable linear tensor preserves that constraint and
+all carries. The existing runtime saves and verifies these research bundles.
+Passive root/log field reconstruction is explicitly bound to the physical
+coordinate chart and is distinct from canonical arithmetic clicks. This is a
+different research tensor from massive45; massive, spatial and operational
+clock extensions remain open. General physical gates and the default model
+are unchanged. The construction is tracked in [issue #58](https://github.com/Closer24/Universe24/issues/58).
+
+The [six-researcher conservation continuation](research/conservation_closure/README.md)
+extends that exact native massless sector to diagonal anisotropic Bianchi I in
+eight retained channels. Conserved mixed shear density, scalar momentum and
+dust charge join one complete-history constraint and one independently derived
+metric/source. All16 Einstein-component identities hold on the declared
+homogeneous domain. Conservation plus proper-time midpoint kinematics and a
+positive branch uniquely selects this restricted exact map; conservation alone
+does not select a physical law. Actual4096-step execution, scalar oracles and
+rewind use at most26 bits, with a logarithmic retained-bit theorem.
+
+A source-clock invariant reads elapsed comoving proper time from the volume
+history and dust; moving covector/geodesic calculations remain passive probes.
+Arithmetic clicks, scalar values and operational detector records are distinct.
+A separate face-interaction tensor proves carry-aware local continuity, while
+a nonhomogeneous same-Bianchi-tensor negative preserves local Hamiltonian
+constraints and violates momentum constraints. General spatial dynamics,
+operational detectors and efficient massive-source encoding remain open.
+The massive spinor result below is preserved as a different physical model.
+No default, Engine or installed-runtime change is introduced. Reproduce the
+six joined audits with `python -m validation.conservation_closure.run_all`.
+
 The source-only [node, clock and Einstein audit](research/einstein_node/README.md)
 separates identities of every valid Rule3 tensor from physical properties of a
 selected law. It adds exact clock-geometry and host-workload countercontrols,

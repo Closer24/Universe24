@@ -1,0 +1,287 @@
+{
+  "actual_domain": {
+    "D_P": "integer conserved coefficients; D>=0",
+    "N": "positive integer",
+    "branches": "B>0 and positive dust-amplitude decode; contracted/expanded branch must not cross V=0",
+    "initial": "V>0 rational, U rational, 4N^2 V and4N U integer; U^2=3P^2/2+3DV",
+    "mass_squared": 0,
+    "pure_massless": "D=0 andP!=0 excluded over rational U,P since(U/P)^2=3/2"
+  },
+  "arithmetic": {
+    "exact_representable_families": [
+      {
+        "D": 1,
+        "N": 12,
+        "P": -3,
+        "U": "-9",
+        "V": "45/2",
+        "constraint": 0,
+        "steps": 5
+      },
+      {
+        "D": 1,
+        "N": 12,
+        "P": -3,
+        "U": "9",
+        "V": "45/2",
+        "constraint": 0,
+        "steps": 5
+      },
+      {
+        "D": 1,
+        "N": 36,
+        "P": -1,
+        "U": "-5",
+        "V": "47/6",
+        "constraint": 0,
+        "steps": 5
+      },
+      {
+        "D": 1,
+        "N": 36,
+        "P": -1,
+        "U": "5",
+        "V": "47/6",
+        "constraint": 0,
+        "steps": 5
+      },
+      {
+        "D": 1,
+        "N": 6,
+        "P": 0,
+        "U": "-3",
+        "V": "3",
+        "constraint": 0,
+        "steps": 5
+      },
+      {
+        "D": 1,
+        "N": 6,
+        "P": 0,
+        "U": "3",
+        "V": "3",
+        "constraint": 0,
+        "steps": 5
+      },
+      {
+        "D": 1,
+        "N": 18,
+        "P": 2,
+        "U": "-7",
+        "V": "43/3",
+        "constraint": 0,
+        "steps": 5
+      },
+      {
+        "D": 1,
+        "N": 18,
+        "P": 2,
+        "U": "7",
+        "V": "43/3",
+        "constraint": 0,
+        "steps": 5
+      },
+      {
+        "D": 2,
+        "N": 24,
+        "P": -3,
+        "U": "-9",
+        "V": "45/4",
+        "constraint": 0,
+        "steps": 5
+      },
+      {
+        "D": 2,
+        "N": 24,
+        "P": -3,
+        "U": "9",
+        "V": "45/4",
+        "constraint": 0,
+        "steps": 5
+      },
+      {
+        "D": 2,
+        "N": 72,
+        "P": -1,
+        "U": "-5",
+        "V": "47/12",
+        "constraint": 0,
+        "steps": 5
+      },
+      {
+        "D": 2,
+        "N": 72,
+        "P": -1,
+        "U": "5",
+        "V": "47/12",
+        "constraint": 0,
+        "steps": 5
+      },
+      {
+        "D": 2,
+        "N": 12,
+        "P": 0,
+        "U": "-3",
+        "V": "3/2",
+        "constraint": 0,
+        "steps": 5
+      },
+      {
+        "D": 2,
+        "N": 12,
+        "P": 0,
+        "U": "3",
+        "V": "3/2",
+        "constraint": 0,
+        "steps": 5
+      },
+      {
+        "D": 2,
+        "N": 36,
+        "P": 2,
+        "U": "-7",
+        "V": "43/6",
+        "constraint": 0,
+        "steps": 5
+      },
+      {
+        "D": 2,
+        "N": 36,
+        "P": 2,
+        "U": "7",
+        "V": "43/6",
+        "constraint": 0,
+        "steps": 5
+      },
+      {
+        "D": 5,
+        "N": 12,
+        "P": -3,
+        "U": "-9",
+        "V": "9/2",
+        "constraint": 0,
+        "steps": 5
+      },
+      {
+        "D": 5,
+        "N": 12,
+        "P": -3,
+        "U": "9",
+        "V": "9/2",
+        "constraint": 0,
+        "steps": 5
+      },
+      {
+        "D": 5,
+        "N": 180,
+        "P": -1,
+        "U": "-5",
+        "V": "47/30",
+        "constraint": 0,
+        "steps": 5
+      },
+      {
+        "D": 5,
+        "N": 180,
+        "P": -1,
+        "U": "5",
+        "V": "47/30",
+        "constraint": 0,
+        "steps": 5
+      },
+      {
+        "D": 5,
+        "N": 30,
+        "P": 0,
+        "U": "-3",
+        "V": "3/5",
+        "constraint": 0,
+        "steps": 5
+      },
+      {
+        "D": 5,
+        "N": 30,
+        "P": 0,
+        "U": "3",
+        "V": "3/5",
+        "constraint": 0,
+        "steps": 5
+      },
+      {
+        "D": 5,
+        "N": 90,
+        "P": 2,
+        "U": "-7",
+        "V": "43/15",
+        "constraint": 0,
+        "steps": 5
+      },
+      {
+        "D": 5,
+        "N": 90,
+        "P": 2,
+        "U": "7",
+        "V": "43/15",
+        "constraint": 0,
+        "steps": 5
+      }
+    ],
+    "fixed_endpoint_refinement": [
+      {
+        "N": 24,
+        "T": "1/8",
+        "U": "51/16",
+        "V": "355/256",
+        "steps": 3
+      },
+      {
+        "N": 48,
+        "T": "1/8",
+        "U": "51/16",
+        "V": "355/256",
+        "steps": 6
+      },
+      {
+        "N": 96,
+        "T": "1/8",
+        "U": "51/16",
+        "V": "355/256",
+        "steps": 12
+      }
+    ],
+    "negative_controls": {
+      "constraint_failure": "Initial Einstein constraint is nonzero",
+      "nonconstant_dust_old_history": {
+        "actual_velocity": 33,
+        "constant_source_prediction": 30,
+        "difference": 3,
+        "interpretation": "The exact physical map requires a_D=b_D, not only an acceptable current source."
+      },
+      "nonpositive_volume": "Physical preparation needs V>0 and D>=0",
+      "unrepresentable_resolution": "Initial V or U is not exactly representable at this N"
+    },
+    "scope": "Independent integer-coordinate oracle; actual Engine proof belongs to the joined native audit."
+  },
+  "limitations": [
+    "Same sourced massless six-channel model as native.py; no massive Cayley implementation.",
+    "B,d and scalar phi require passive algebraic/logarithmic readouts; no exact rational field-value claim.",
+    "Source and reference constants must be retained with both histories equal; no hidden initial reference.",
+    "No inference to general spatial Einstein geometry, apparatus or source/matter quantum behavior."
+  ],
+  "schema": "universe24/sourced-map/projective/1",
+  "source_pin": "f4f64e062f07b3ca119eccf655df746be206908b",
+  "source_sha256": {
+    "validation/sourced_map/projective.py": "bf1c72cc135d485b13fde47c69c61b94fbd666e12fc507ac4660225c19e8cfaf"
+  },
+  "symbolic": {
+    "I": "(b_volume-a_volume+3D)^2-12D*b_volume-24N^2*P^2",
+    "affine_inverse": true,
+    "constraint_invariant": true,
+    "exact_flow": "V'=V+hU+3Dh^2/4; U'=U+3Dh/2",
+    "history_phase_bijection": true,
+    "massive_gate": "not this law: mass_squared must be zero",
+    "native_volume": "b'=2b+6D-a; u=6b+18D",
+    "physical_constraint": "H = 2*N^2*I/(3*q^2)",
+    "source_ODE_identities": "kdot=3k^2-d^2/2; pdot=3kp; ddot=3kd/2; Bdot=kB"
+  }
+}

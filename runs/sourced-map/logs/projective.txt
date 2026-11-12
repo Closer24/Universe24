@@ -1,0 +1,1 @@
+{"output": "/workspace/scratch/d01c5ea2900a/universe24-sourced/runs/sourced-map/projective.json", "symbolic_invariant": "passed", "exact_seed_families": 24, "fixed_endpoint_checks": 3, "mass_squared": 0}

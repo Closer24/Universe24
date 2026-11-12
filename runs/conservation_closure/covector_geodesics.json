@@ -1,0 +1,148 @@
+{
+  "schema": "universe24-conservation-covectors-v1",
+  "symbolic": {
+    "affine_geodesic_components": [
+      "0",
+      "0",
+      "0",
+      "0"
+    ],
+    "mass_shell": "g_munu P^mu P^nu=-m^2",
+    "covector_conservation": true,
+    "coordinate_velocity": "dx^i/dt=p_i/(a_i^2 E)",
+    "proper_time_rate": "d tau_probe/dt=m/E",
+    "measured_energy": "E=sqrt(m^2+sum p_i^2/a_i^2)",
+    "energy_rate": "dE/dt=-sum H_i p_i^2/(a_i^2 E)",
+    "dual_coordinate_transform_verified": true,
+    "constant_contravariant_momentum_negative_residual": "30"
+  },
+  "encoding": {
+    "fixed_rational_position_and_clock_encoding": "blocked for exact generic proper-time steps",
+    "witness": "Flat a_i=1, m=1, p=(1,0,0): dx/dt=d tau/dt=1/sqrt(2)",
+    "proof": "2*z^2-1 is irreducible over Q; a positive rational step has irrational displacement and proper interval, whereas a rational decoder of integer registers remains rational.",
+    "scope": "Excludes only exact rational decoded positions/proper times on all rational inputs. It does not exclude approximate, algebraic, implicit or nonlinear encodings.",
+    "flat_345_proper_rate": "4/5",
+    "null_proper_interval": "0",
+    "rest_proper_rate": "1",
+    "new_retained_probe_channels": 0,
+    "autonomous_worldline_or_detector": "not_implemented"
+  },
+  "same_state": {
+    "status": "passed",
+    "runs": [
+      {
+        "N": 24,
+        "steps": 3,
+        "target_proper_time": "1/8",
+        "tensor_sha256": "a51595cb6b4facd289fc40334527dc9ad4126c4f3244f70f8d5fcba53585231b",
+        "seed_sha256": "d1fcbb9266b7c9cb06ce10a33e900068ade4f83a01f7507c3f894efff103e1cc",
+        "source_state_constraint_exact": true,
+        "complete_inverse_and_rewind": true,
+        "channels": 8,
+        "peak_integer_bits": 13,
+        "metric_vs_independent_exact_solution_error": "1.8111358e-71",
+        "passive_trapezoid_proper_time": "0.110278335893431412735182985175",
+        "passive_trapezoid_x1": "0.0418906076658658977592841273202",
+        "proper_time_error": "8.45435528679362794e-6",
+        "x1_error": "0.0000280701533258245221",
+        "proved_proper_quadrature_error_bound": "25/131072",
+        "proved_x1_quadrature_error_bound": "929/1572864",
+        "proper_rate_initial": "0.87047214309597586783815781755",
+        "proper_rate_final": "0.892903817333826012722390657121",
+        "axis_null_redshifts": [
+          "0.121387589808123125384082084379",
+          "0.0177783579407419793685232856087",
+          "0.0683276743443641976478093066121"
+        ]
+      },
+      {
+        "N": 48,
+        "steps": 6,
+        "target_proper_time": "1/8",
+        "tensor_sha256": "a51595cb6b4facd289fc40334527dc9ad4126c4f3244f70f8d5fcba53585231b",
+        "seed_sha256": "dfbeb15e1dd827be70e6902b22bb61c279dcf39b511d2a1443e0106f6a4e2fef",
+        "source_state_constraint_exact": true,
+        "complete_inverse_and_rewind": true,
+        "channels": 8,
+        "peak_integer_bits": 15,
+        "metric_vs_independent_exact_solution_error": "1.8111358e-71",
+        "passive_trapezoid_proper_time": "0.110284675877417792747390746726",
+        "passive_trapezoid_x1": "0.0418695582969027214210185994589",
+        "proper_time_error": "2.11437130041361573e-6",
+        "x1_error": "7.02078436264818383e-6",
+        "proved_proper_quadrature_error_bound": "25/524288",
+        "proved_x1_quadrature_error_bound": "929/6291456",
+        "proper_rate_initial": "0.87047214309597586783815781755",
+        "proper_rate_final": "0.892903817333826012722390657121",
+        "axis_null_redshifts": [
+          "0.121387589808123125384082084379",
+          "0.0177783579407419793685232856087",
+          "0.0683276743443641976478093066121"
+        ]
+      },
+      {
+        "N": 96,
+        "steps": 12,
+        "target_proper_time": "1/8",
+        "tensor_sha256": "a51595cb6b4facd289fc40334527dc9ad4126c4f3244f70f8d5fcba53585231b",
+        "seed_sha256": "836d502c62486e39a1bdae8527b12f59eaadcb7c1e2451a5c9094f1fb3edfed4",
+        "source_state_constraint_exact": true,
+        "complete_inverse_and_rewind": true,
+        "channels": 8,
+        "peak_integer_bits": 17,
+        "metric_vs_independent_exact_solution_error": "1.8111358e-71",
+        "passive_trapezoid_proper_time": "0.110286261606916755668582465648",
+        "passive_trapezoid_x1": "0.0418642929119075833991007985078",
+        "proper_time_error": "5.2864180145069454e-7",
+        "x1_error": "1.75539936751016192e-6",
+        "proved_proper_quadrature_error_bound": "25/2097152",
+        "proved_x1_quadrature_error_bound": "929/25165824",
+        "proper_rate_initial": "0.87047214309597586783815781755",
+        "proper_rate_final": "0.892903817333826012722390657121",
+        "axis_null_redshifts": [
+          "0.121387589808123125384082084379",
+          "0.0177783579407419793685232856087",
+          "0.0683276743443641976478093066121"
+        ]
+      }
+    ],
+    "observed_diagnostic_orders": [
+      {
+        "proper_time_error": 1.9994659939345134,
+        "x1_error": 1.9993328215501451
+      },
+      {
+        "proper_time_error": 1.9998663344320498,
+        "x1_error": 1.9998329249242606
+      }
+    ],
+    "reference_proper_time": "0.1102867902487182063631219992453354549817",
+    "reference_x1": "0.04186253751254007323718448637808914292181",
+    "reference_70_vs_90_dps_gap": "4.31111382e-73",
+    "interpretation": "Convergent passive quadrature of a test-particle geodesic on the same exact native background; no retained worldline, signal transport, backreaction or detector.",
+    "moving_clock_equals_background_time": "failed, strictly less for nonzero covector",
+    "null_redshift_is_direction_dependent": true
+  },
+  "diagnostic_error_theorem": {
+    "proper_second_derivative_bound": "675/64",
+    "x1_second_derivative_bound": "8361/256",
+    "theorem": "For f in C^2[0,T], composite trapezoid error <= T*h^2*sup|f''|/12.",
+    "scope": "Default D1,P2,S=(1,-1,0),V0=7/3,U0=4; probe m4,p=(3,0,0); 0<=t<=1/8."
+  },
+  "primary_sources": [
+    {
+      "title": "Fleury, Pitrou, Uzan, Light propagation in a homogeneous and anisotropic universe",
+      "url": "https://arxiv.org/pdf/1410.8473",
+      "read": "sections II, IV; equations 4.1-4.7"
+    },
+    {
+      "title": "Scott A. Hughes, MIT 8.962 Lecture 9, Motion of an unforced body in curved spacetime",
+      "url": "https://web.mit.edu/sahughes/www/8.962/lec09.pdf",
+      "read": "sections 9.3-9.4; equations 9.24-9.31"
+    }
+  ],
+  "source_sha256": {
+    "validation/conservation_closure/covector_geodesics.py": "22b1850216e587fc69475515f2292ea03ef014d28ebe430ddfc7ac85df8f00a4",
+    "validation/conservation_closure/common.py": "a7a4704a9772bf25c26d010ab1b3607e580419be824dc63664d085d928baa153"
+  }
+}

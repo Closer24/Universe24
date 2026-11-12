@@ -1,0 +1,433 @@
+{
+  "schema": "universe24/conservation-closure-clocks/1",
+  "symbolic": {
+    "integer_clock_invariant": "J-Jref-6*D*T",
+    "invariant_pushforward_defect": "0",
+    "source_time": "(J-Jref)/(6*D*N)=2*(U-Uref)/(3*D)",
+    "source_time_step": "1/N",
+    "same_state_marker_relation": "tau_source=tau_marker+C_clock/(6*D*N)",
+    "dust_covector": "u_mu=-d_mu(tau)",
+    "dust_covector_norm": "-1",
+    "dust_material_time_rate": "u^mu d_mu(tau)=1",
+    "scalar_gradient_norm": "-P^2/V^2",
+    "domain": "D>0; shared synchronous comoving dust chart"
+  },
+  "same_candidate_cases": [
+    {
+      "tensor_sha256": "a51595cb6b4facd289fc40334527dc9ad4126c4f3244f70f8d5fcba53585231b",
+      "seed_sha256": "d1fcbb9266b7c9cb06ce10a33e900068ade4f83a01f7507c3f894efff103e1cc",
+      "N": 24,
+      "h": "1/24",
+      "channels": 8,
+      "retained_integers_per_node": 24,
+      "nodes": 27,
+      "steps": 3,
+      "source_time_by_step": [
+        "0",
+        "1/24",
+        "1/12",
+        "1/8"
+      ],
+      "clock_invariant_by_step": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_time_never_reads_tick_or_seed": true,
+      "endpoint_volume": "2185/768",
+      "endpoint_velocity": "67/16",
+      "scalar_increment": "0.096944666572335799804578673529766339",
+      "scalar_increment_rational_bounds": [
+        "192/2185",
+        "3/28"
+      ],
+      "scalar_interval_bounds": [
+        {
+          "lower": "64/1921",
+          "upper": "1/28",
+          "actual": "0.034490449599459211181837245133523062"
+        },
+        {
+          "lower": "16/513",
+          "upper": "64/1921",
+          "actual": "0.032231856105195813145876453851711536"
+        },
+        {
+          "lower": "64/2185",
+          "upper": "16/513",
+          "actual": "0.030222360867680775476864974544531741"
+        }
+      ],
+      "finite_scalar_future_limit": "1.2972734327035422034035684956287865",
+      "clicks": {
+        "interpretation": "arithmetic clicks only",
+        "events": 135,
+        "by_kind": {
+          "C0": 135,
+          "C1": 0,
+          "C2": 0
+        },
+        "signed_quotient_sum": 934578
+      },
+      "clicks_per_step": [
+        27,
+        54,
+        54
+      ],
+      "bits": [
+        13,
+        13,
+        13,
+        13
+      ],
+      "all_carries_retained_and_complete_rewind": true,
+      "operational_detector": "not implemented"
+    },
+    {
+      "tensor_sha256": "a51595cb6b4facd289fc40334527dc9ad4126c4f3244f70f8d5fcba53585231b",
+      "seed_sha256": "dfbeb15e1dd827be70e6902b22bb61c279dcf39b511d2a1443e0106f6a4e2fef",
+      "N": 48,
+      "h": "1/48",
+      "channels": 8,
+      "retained_integers_per_node": 24,
+      "nodes": 27,
+      "steps": 6,
+      "source_time_by_step": [
+        "0",
+        "1/48",
+        "1/24",
+        "1/16",
+        "1/12",
+        "5/48",
+        "1/8"
+      ],
+      "clock_invariant_by_step": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_time_never_reads_tick_or_seed": true,
+      "endpoint_volume": "2185/768",
+      "endpoint_velocity": "67/16",
+      "scalar_increment": "0.096944666572335799804578673529766339",
+      "scalar_increment_rational_bounds": [
+        "192/2185",
+        "3/28"
+      ],
+      "scalar_interval_bounds": [
+        {
+          "lower": "128/7425",
+          "upper": "1/56",
+          "actual": "0.017544872211582272380354945355605364"
+        },
+        {
+          "lower": "32/1921",
+          "upper": "128/7425",
+          "actual": "0.016945577387876938801482299777917698"
+        },
+        {
+          "lower": "128/7945",
+          "upper": "32/1921",
+          "actual": "0.016381679109423662016884917052510307"
+        },
+        {
+          "lower": "8/513",
+          "upper": "128/7945",
+          "actual": "0.015850176995772151128991536799201229"
+        },
+        {
+          "lower": "128/8473",
+          "upper": "8/513",
+          "actual": "0.015348399725543709693761508042777786"
+        },
+        {
+          "lower": "32/2185",
+          "upper": "128/8473",
+          "actual": "0.014873961142137065783103466501753955"
+        }
+      ],
+      "finite_scalar_future_limit": "1.2972734327035422034035684956287865",
+      "clicks": {
+        "interpretation": "arithmetic clicks only",
+        "events": 297,
+        "by_kind": {
+          "C0": 297,
+          "C1": 0,
+          "C2": 0
+        },
+        "signed_quotient_sum": 7600068
+      },
+      "clicks_per_step": [
+        27,
+        54,
+        54,
+        54,
+        54,
+        54
+      ],
+      "bits": [
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15
+      ],
+      "all_carries_retained_and_complete_rewind": true,
+      "operational_detector": "not implemented"
+    },
+    {
+      "tensor_sha256": "a51595cb6b4facd289fc40334527dc9ad4126c4f3244f70f8d5fcba53585231b",
+      "seed_sha256": "836d502c62486e39a1bdae8527b12f59eaadcb7c1e2451a5c9094f1fb3edfed4",
+      "N": 96,
+      "h": "1/96",
+      "channels": 8,
+      "retained_integers_per_node": 24,
+      "nodes": 27,
+      "steps": 12,
+      "source_time_by_step": [
+        "0",
+        "1/96",
+        "1/48",
+        "1/32",
+        "1/24",
+        "5/96",
+        "1/16",
+        "7/96",
+        "1/12",
+        "3/32",
+        "5/48",
+        "11/96",
+        "1/8"
+      ],
+      "clock_invariant_by_step": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_time_never_reads_tick_or_seed": true,
+      "endpoint_volume": "2185/768",
+      "endpoint_velocity": "67/16",
+      "scalar_increment": "0.096944666572335799804578673529766339",
+      "scalar_increment_rational_bounds": [
+        "192/2185",
+        "3/28"
+      ],
+      "scalar_interval_bounds": [
+        {
+          "lower": "256/29185",
+          "upper": "1/112",
+          "actual": "0.0088496874724640816707184849390506484"
+        },
+        {
+          "lower": "64/7425",
+          "upper": "256/29185",
+          "actual": "0.0086951847391181907096364604165547155"
+        },
+        {
+          "lower": "256/30217",
+          "upper": "64/7425",
+          "actual": "0.0085454137508184055174569138473050308"
+        },
+        {
+          "lower": "16/1921",
+          "upper": "256/30217",
+          "actual": "0.0084001636370585332840253859306126675"
+        },
+        {
+          "lower": "256/31257",
+          "upper": "16/1921",
+          "actual": "0.0082592358468999002287422720457433098"
+        },
+        {
+          "lower": "64/7945",
+          "upper": "256/31257",
+          "actual": "0.0081224432625237617881426450067669972"
+        },
+        {
+          "lower": "256/32305",
+          "upper": "64/7945",
+          "actual": "0.0079896093882360005847496762949851992"
+        },
+        {
+          "lower": "4/513",
+          "upper": "256/32305",
+          "actual": "0.0078605676075361505442418605042160297"
+        },
+        {
+          "lower": "256/33361",
+          "upper": "4/513",
+          "actual": "0.0077351605016781323418397808335912461"
+        },
+        {
+          "lower": "64/8473",
+          "upper": "256/33361",
+          "actual": "0.0076132392238655773519217272091865401"
+        },
+        {
+          "lower": "256/34425",
+          "upper": "64/8473",
+          "actual": "0.007494662923853660156422338423572325"
+        },
+        {
+          "lower": "16/2185",
+          "upper": "256/34425",
+          "actual": "0.0073792982182834056266811280781816301"
+        }
+      ],
+      "finite_scalar_future_limit": "1.2972734327035422034035684956287865",
+      "clicks": {
+        "interpretation": "arithmetic clicks only",
+        "events": 621,
+        "by_kind": {
+          "C0": 621,
+          "C1": 0,
+          "C2": 0
+        },
+        "signed_quotient_sum": 61300152
+      },
+      "clicks_per_step": [
+        27,
+        54,
+        54,
+        54,
+        54,
+        54,
+        54,
+        54,
+        54,
+        54,
+        54,
+        54
+      ],
+      "bits": [
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17,
+        17
+      ],
+      "all_carries_retained_and_complete_rewind": true,
+      "operational_detector": "not implemented"
+    }
+  ],
+  "interventions": {
+    "carry_intervention": {
+      "status": "passed",
+      "complete_seed_changed": true,
+      "physical_clock_and_canonical_clicks_unchanged": true,
+      "changed_carries_retained": true
+    },
+    "time_origin_intervention": {
+      "status": "passed",
+      "marker_minus_source": [
+        "7/24",
+        "7/24",
+        "7/24",
+        "7/24"
+      ],
+      "clock_integer_invariant": -42,
+      "same_scalar_and_metric": true,
+      "baseline_clicks": 135,
+      "shifted_clicks": 162,
+      "universal_click_count_clock": "failed"
+    },
+    "frozen_marker": {
+      "status": "rejected",
+      "clock_invariant": [
+        0,
+        6,
+        12,
+        18
+      ],
+      "common_decoder_rejected": true,
+      "complete_rewind": true
+    },
+    "disconnected_source": {
+      "status": "rejected",
+      "clock_invariant": [
+        0,
+        -6,
+        -12,
+        -18
+      ],
+      "complete_rewind": true
+    }
+  },
+  "threshold": {
+    "status": "proved_scoped_obstruction",
+    "claim": "No fixed finite number of polynomial/fixed-six steps gives a global exact sign bit on an unrestricted integer input with other registers fixed.",
+    "reason": "Finite-step outputs are quasipolynomial on finitely many residue classes; a globally bounded polynomial on each bi-infinite class is constant there.",
+    "floor_residue_polynomials": [
+      "72*q**3 - 42*q**2 + 5*q - 2",
+      "72*q**3 - 6*q**2 - 3*q - 2",
+      "72*q**3 + 30*q**2 + q - 3",
+      "72*q**3 + 66*q**2 + 17*q - 1",
+      "72*q**3 + 102*q**2 + 45*q + 4",
+      "72*q**3 + 138*q**2 + 85*q + 14"
+    ],
+    "fourth_difference_of_threshold_samples": 1,
+    "finite_alphabet_code": {
+      "-1": 0,
+      "0": 0,
+      "1": 2,
+      "2": 6,
+      "-2": 2
+    },
+    "not_excluded": [
+      "bounded input domains",
+      "variable-time algorithms",
+      "unbounded counters",
+      "passive canonical click decoding",
+      "other physical clock mechanisms"
+    ],
+    "installed_detector_channels": 0
+  },
+  "acceptance": {
+    "same_state_source_dust_proper_time": "passed",
+    "massless_scalar_as_unit_rate_periodic_clock": "failed",
+    "arithmetic_click_count_as_universal_proper_clock": "failed",
+    "transported_material_detector_and_autonomous_record": "not_tested"
+  },
+  "source_sha256": {
+    "validation/conservation_closure/clocks.py": "a8fb9325f95a0791e01919846e1f6fe6e0a3e0df0075866d457d1dccb2e2482e",
+    "validation/conservation_closure/common.py": "a7a4704a9772bf25c26d010ab1b3607e580419be824dc63664d085d928baa153"
+  },
+  "primary_readings": [
+    {
+      "title": "Brown and Kuchar, Dust as a Standard of Space and Time in Canonical Quantum Gravity",
+      "url": "https://arxiv.org/pdf/gr-qc/9409001",
+      "read": "Section II A-C, equations 2.2, 2.6-2.10 and 2.15-2.17"
+    },
+    {
+      "title": "Rovelli, Partial observables",
+      "url": "https://arxiv.org/pdf/gr-qc/0110035",
+      "read": "Sections II-III, especially the two-clock relation in equation 4"
+    }
+  ],
+  "scope": "Homogeneous comoving relational dust clock; no operational detector, moving retained clock or global-sign implementation."
+}

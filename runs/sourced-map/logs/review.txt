@@ -1,0 +1,5 @@
+{
+  "status": "independent_restricted_Einstein_and_adversarial_controls_passed",
+  "evidence": "runs/sourced-map/review.json",
+  "general_Einstein_acceptance": "not_established"
+}
