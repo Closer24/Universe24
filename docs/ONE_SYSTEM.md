@@ -1,5 +1,48 @@
 # Universe24: one system, specification and research status
 
+## Reviewed execution and acceptance
+
+The installed interface remains `python -m universe24`, with one fixed Rule3
+Engine, one saved-bundle runtime and one passive canonical decoder. The
+source-only command `python -m validation.system_acceptance --out NEW_DIRECTORY`
+executes a fixed evidence sequence through that runtime. It is not a physical
+model selector and does not combine different laws into one certificate.
+
+The complete disposition of retained ideas is
+`docs/research/system_acceptance/idea_ledger.md`; independent architecture
+review, physical-domain limits, the massive-encoding attempt and exhaustive
+burst/growth evidence are in the same directory. Current algebra is
+`docs/MODEL.md`. All saved receipts bind the complete seed, tensor, model,
+protocol, horizon, trace, observations and repository-owned Python sources.
+The collector rejects source changes during execution and requires fresh
+output, preserving historical evidence.
+
+Two distinct six-channel constructions now satisfy restricted physical gates:
+the native massless scalar/dust law gives exact sourced homogeneous sampling;
+the massive spinor law gives an exact decoded constraint and a finite-time
+convergence theorem on its prepared expanding domain. Neither repairs or
+inherits the old massive45 trajectory. The eight-channel massless Bianchi I
+extension adds conserved shear, a shared anisotropic metric and a source-based
+comoving proper-time invariant. Its moving probes remain passive diagnostics;
+its homogeneous acceptance does not extend to spatial momentum closure.
+General spatial geometry, operational
+apparatus, a justified Born measure and a joint recurrent-burst/complexity
+model remain unestablished. The generic runtime therefore retains blocked
+general physical acceptance and no default physical model.
+
+The repeated-activity search keeps one existing Boolean selector tensor and
+enumerates its complete ring domain. Recurrent event peaks are present,
+while no preparation passes the unchanged sustained structural-growth gate.
+For the separate massless homogeneous Einstein source, positive dust/scalar matter
+implies decreasing density and deceleration, excluding a bounce within that
+declared model. Neither result is relabeled as cosmological completion.
+
+The [central source ledger](research/central_integration/README.md) connects
+the board, completion, node-clock and retained-apparatus sources. The executable
+`validation.integration_contract.massive45` gate proves their shared massive45
+builder/state identity while retaining the first-step and tick-two constraint
+failures. This source integration changes no production law or physical status.
+
 ## Question and scope
 
 Can one fixed, local integer tensor and a complete seed generate a reversible
@@ -12,6 +55,52 @@ supply an accepted general Einstein tensor within that budget. A compatible
 bundle can be executed and checked without declaring its fields to be physical
 geometry. Mechanical success and physical validation are separate results.
 The coordination and acceptance contract is [issue #40](https://github.com/Closer24/Universe24/issues/40).
+
+The source-only [sourced complete-history map](research/sourced_map/README.md)
+implements an exact sampled expanding homogeneous massless-scalar plus dust
+FLRW solution in six retained channels. Its physical constraint includes both
+volume histories; one immutable linear tensor preserves that constraint and
+all carries. The existing runtime saves and verifies these research bundles.
+Passive root/log field reconstruction is explicitly bound to the physical
+coordinate chart and is distinct from canonical arithmetic clicks. This is a
+different research tensor from massive45; massive, spatial and operational
+clock extensions remain open. General physical gates and the default model
+are unchanged. The construction is tracked in [issue #58](https://github.com/Closer24/Universe24/issues/58).
+
+The [six-researcher conservation continuation](research/conservation_closure/README.md)
+extends that exact native massless sector to diagonal anisotropic Bianchi I in
+eight retained channels. Conserved mixed shear density, scalar momentum and
+dust charge join one complete-history constraint and one independently derived
+metric/source. All16 Einstein-component identities hold on the declared
+homogeneous domain. Conservation plus proper-time midpoint kinematics and a
+positive branch uniquely selects this restricted exact map; conservation alone
+does not select a physical law. Actual4096-step execution, scalar oracles and
+rewind use at most26 bits, with a logarithmic retained-bit theorem.
+
+A source-clock invariant reads elapsed comoving proper time from the volume
+history and dust; moving covector/geodesic calculations remain passive probes.
+Arithmetic clicks, scalar values and operational detector records are distinct.
+A separate face-interaction tensor proves carry-aware local continuity, while
+a nonhomogeneous same-Bianchi-tensor negative preserves local Hamiltonian
+constraints and violates momentum constraints. General spatial dynamics,
+operational detectors and efficient massive-source encoding remain open.
+The massive spinor result below is preserved as a different physical model.
+No default, Engine or installed-runtime change is introduced. Reproduce the
+six joined audits with `python -m validation.conservation_closure.run_all`.
+
+The source-only [node, clock and Einstein audit](research/einstein_node/README.md)
+separates identities of every valid Rule3 tensor from physical properties of a
+selected law. It adds exact clock-geometry and host-workload countercontrols,
+independently reproduces the published scalar/Maxwell common kinetic metric,
+and specifies a still-untested transported-field/phase experiment. No runtime
+model or physical acceptance gate is changed by that investigation.
+The source-only [generic interaction and proof structure](research/generic_structure/README.md)
+adds a reusable reciprocal-interaction compiler, counted native schedule,
+complete-history constraint examples, an exact homogeneous-sector extractor
+and a restricted massive packet/phase control. The packet uses a distinct
+three-channel linear law, not the common45 Einstein candidate. These are
+scoped constructions and falsifiers; no production law, physical gate or
+operational-clock interpretation is promoted by their mechanical success.
 
 ## Assumptions and exact law
 
@@ -370,6 +459,95 @@ apparatus-to-carrier selection or recurrent structural-growth evidence.
 The combined audit preserves these failures and rejects mixed run/source
 identities. See the plan for the next reciprocal-interaction, pointer,
 probability-measure and shared-metric acceptance sequence.
+
+The [November eight-researcher continuation](completion/README.md) supplies a
+shared **massive full45** builder, complete seed and ordinary system-bundle
+handoff for clock/stress and signal/metric observations. Its exact tensor and
+seed identity closes the earlier massless-full45 versus massive-triangular44
+handoff gap. The continuum principal certificate now covers arbitrary
+invertible frames and matter backgrounds; continuous linear constraint
+propagation is proved along a homogeneous massive scalar/dust family.
+
+Three distinct constructions must remain separate. The original projective
+time map has a proved wave-CFL instability and a constrained metric-singularity
+counterexample. A cubic full45 modification preserves full-frame
+nondegeneracy for every finite tick on its prepared memory domain, but adds a
+verified finite-h torsion defect and retains exponential bit growth. A separate
+three-channel native linear-wave tensor uses the unchanged fixed-six carries,
+has a uniform Fourier bound, and converges at fixed physical time with
+logarithmic per-integer bit cost. It has not been compiled into the nonlinear
+coupled full45 system. Native nonlinear arithmetic and a reduced sourced
+constraint target provide further building blocks, with their retained-history
+and workspace limitations explicitly tested.
+
+The massive clock audit now includes an actual sampled oscillation on a
+separately fingerprinted coarse-step tensor. Its Hamiltonian defect remains
+nonzero, and its fourteen-step cost reaches 174,385 bits. The exact phase
+formula includes an expansion correction; phase divided by mass is not a
+universal proper-time reading. Same-metric characteristic cones and conditional
+geodesic oracles do not establish moving material packets or an operational
+detector. No general physical gate is promoted by these results.
+
+Run `python -m validation.completion.run_all` for the shared runtime handoff,
+eight research audits and independent cross-law review. Fresh evidence belongs
+under `runs/completion/`; the published integration evidence is
+`docs/evidence/completion_nov12.json`. The unchanged Engine, one supported
+runtime and unresolved general physical acceptance remain part of this contract.
+### Retained preference and reciprocal apparatus follow-up
+
+[The eight-lane construction](RETAINED_SELECTION_PLAN.md) supplies a prepared
+three-channel reversible Boolean carrier with local preferred-port routing
+and retained origin memory. If `F` is the local collision plus one streamed
+lane, `u=3(F(b)+F^-1(b))` and complete preparation `a=F^-1(b)` make unchanged
+Rule3 follow `F` exactly, including every remainder. This is a native research
+control. It is not a physical encoding of the earlier 44-channel carrier.
+
+A separate corrected full-frame45 source, pinned to PR50
+`62202fdccdd9a40d5dbbec104de6f97d9587a999`, gains neutral `q,p` for 47 channels.
+The declared massive carrier uses `W=omega²*q²/2+g*q*(phi²+chi²)`, reciprocal
+forces, `rho_app=p²/2+W`, isotropic pressure `p²/2-W`, diagonal K source `-W`
+and Hamiltonian source `-2*rho_app`. Its homogeneous energy exchange cancels
+exactly at the continuum equation level. This cubic construction leaves one
+record slot. It has globally unbounded interaction energy, finite-step
+constraint drift and no general spatial apparatus momentum completion.
+
+Actual48 raw-record feedback changes later carrier positions and, on the
+declared textured fixture, normalized fixed-gauge phase links. Matched
+homogeneous controls preserve their phase despite amplitude response.
+The raw record has no supplied stress or continuum calibration; that48 result
+cannot inherit the47 homogeneous conservation identity. The native sorter,
+native pulse pointer, sourced47 and raw-feedback48 have separate model/seed
+identities through the same runtime, not interchangeable physical claims.
+
+All 36 declared native growth cases fail or lack enough episodes. Conditional
+exclusive routing is proved for single occupancy, but the unrestricted pointer
+retains double outcomes. Distinct stationary one-particle ensembles give
+different output measures. Born probabilities, physical Bell outcomes,
+shared-metric clocks and growing complexity between physical bursts remain
+unestablished. The joint runner checks shared truth tables, exact47-to48 bundle
+lineage, report/source hashes and independent replay of all19 saved runs;
+complete measure-control trials retain another4,080 transitions.
+
+The [seven-researcher unified-law continuation](research/unified_law/README.md)
+adds a single shared **six-channel homogeneous spinor/log-frame candidate**.
+Its quadratic physical decoder satisfies the sourced Hamiltonian constraint
+identically. An independently checked cubic proper-time vector field pushes
+forward to the existing full44 homogeneous Einstein–massive-scalar–dust source,
+and beta_dot=k supplies the same nondegenerate metric B=exp(beta). The actual
+retained-history map, ordinary runtime, source/stress and clock observations
+are joined by exact tensor/seed identities. Three fixed-proper-time resolutions
+pass physical-field, phase and dust-mass convergence; a finite-time first-order
+convergence/domain theorem covers the declared prepared family.
+
+This is a restricted new physical coordinate interpretation, not arbitrary-state
+compression of full45 or a solution of the general spatial problem. The old
+Euler and cross-history failures remain controls. Exact decoded constraint does
+not make finite-step source conservation exact: dust-mass drift is still
+nonzero and decreases with refinement. Exponential projective bit growth,
+spatial modes and operational clock/detector construction remain open. A
+separate native arithmetic bridge is not attributed to this tensor. No accepted
+default model or runtime mode is introduced. Reproduce the joint evidence with
+`python -m validation.unified_law.run_all`.
 
 The mathematical source ledger and derivations are preserved in
 [Frame48 research](FRAME48_RESEARCH.md), [integer ADM](INTEGER_ADM.md),

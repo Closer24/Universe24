@@ -1,0 +1,111 @@
+{
+  "schema": "universe24/sourced-map/review/1",
+  "baseline_pin": "f4f64e062f07b3ca119eccf655df746be206908b",
+  "independent_metric_Einstein_tensor": {
+    "status": "passed",
+    "construction": "metric -> all Christoffel coefficients -> Ricci -> all 16 Einstein components",
+    "units": "c=1, 8*pi*G=1, Lambda=0, signature -+++; unit lapse",
+    "G00": "3*Derivative(a(tau), tau)**2/a(tau)**2",
+    "G11": "-2*a(tau)*Derivative(a(tau), (tau, 2)) - Derivative(a(tau), tau)**2",
+    "rho": "D/V + P**2/(2*V**2)",
+    "pressure": "P**2/(2*V**2)",
+    "G00_minus_T00": "Q/(3*V^2)",
+    "Gii_minus_Tii_divided_by_a_squared": "Q/(3*V^2)",
+    "off_diagonal_G_minus_T": "all twelve exactly zero",
+    "massless_KG_and_dust_and_total_continuity": "passed",
+    "conclusion": "Q=0 and the exact volume flow give a genuinely sourced flat FLRW Einstein solution on V>0; this proves a restricted integrable subcase only"
+  },
+  "actual_native_solution": {
+    "status": "passed",
+    "endpoint_rows": [
+      {
+        "N": 24,
+        "steps": 3,
+        "tau": "1/8",
+        "V": "355/256",
+        "U": "51/16",
+        "metric_Einstein_residuals": "exactly zero",
+        "phase_vs_independent_quadrature_error": "5.2710989716152616122e-82"
+      },
+      {
+        "N": 48,
+        "steps": 6,
+        "tau": "1/8",
+        "V": "355/256",
+        "U": "51/16",
+        "metric_Einstein_residuals": "exactly zero",
+        "phase_vs_independent_quadrature_error": "5.2710989716152616122e-82"
+      }
+    ],
+    "off_constraint_integer_invariant": [
+      -12,
+      -12,
+      -12,
+      -12
+    ],
+    "off_constraint_physical_decoding": "rejected without projection",
+    "removed_dust_geometry_coupling_defect": -3420,
+    "removed_coupling_still_rewinds": true
+  },
+  "backward_domain": {
+    "status": "passed_negative_control",
+    "native_backward_ticks": 96,
+    "elapsed_proper_time": "-4",
+    "endpoint_V": "1",
+    "endpoint_U": "-3",
+    "invariant": 0,
+    "complete_roundtrip": true,
+    "physical_decoder": "rejected outside expanding chart",
+    "whole_interval": {
+      "whole_interval_valid": false,
+      "minimum_volume": "-2",
+      "minimum_time": "-2",
+      "initial_volume": "1",
+      "final_volume": "1",
+      "initial_velocity": "3",
+      "final_velocity": "-3",
+      "both_endpoints_positive": true,
+      "constraint_preserved": true,
+      "role": "passive exact physical-domain validation only"
+    },
+    "interpretation": "Mechanical reversibility across two zero-volume events is not a physical continuation"
+  },
+  "decoder_and_bundle_boundaries": {
+    "status": "passed",
+    "near_root_exact_U_decimal_digits": 90,
+    "exact_branch_gap_U_squared_minus_3P_squared_over_2": 1,
+    "near_root_anchor_phi": "0",
+    "coordinate_counter_not_field_lookup": true,
+    "nonzero_near_root_Engine_phase_vs_400digit_direct_error": "2.2189471986823969575e-82",
+    "large_near_root_Engine_step_and_inverse": true,
+    "massive_decoder_and_saved_metadata_rejected": true,
+    "different_complete_carry_seed_has_different_bundle_identity": true
+  },
+  "original_failure_controls": {
+    "status": "original_failures_preserved",
+    "independently_expanded_massive_Euler_defect": "-7*h**2",
+    "legacy_five_channel_tick_one": "0",
+    "legacy_five_channel_tick_two": "-211805381883956703960796807492009984/6648074056234057895988554997906461158237804299242833919931086162572083201",
+    "interpretation": "The six-channel massless law is a different exact physical encoding, not a repair or relabelling of those discrete trajectories"
+  },
+  "restricted_physics": "exact spatially flat homogeneous isotropic expanding massless-scalar plus positive-dust Einstein solution",
+  "not_established": [
+    "massive scalar",
+    "spatial interactions or general Einstein dynamics",
+    "operational clocks or detector records",
+    "physical passage through a singularity"
+  ],
+  "production_changes": false,
+  "source_sha256": {
+    "validation/sourced_map/__init__.py": "d24f13eb82b06581d61b0d7d54ef158669d438875fe1afc7aa089001592c069a",
+    "validation/sourced_map/domain.py": "2f40e23559d81e9cf530ba892544710d08028b97745c3caf6afa5d7caa5dad64",
+    "validation/sourced_map/native.py": "714aaf6d716c3e8877dd284a33562ba81b5c57221825b679e87e5d9827b7dee8",
+    "validation/sourced_map/oracle.py": "5cc59296ae64f08bc4a61ab5deaa51896843d4625c04ed22a1a8f3c276da152c",
+    "validation/sourced_map/physical_map.py": "457abf84385637b00f5adcb0aa071048fbbf17d12f7cb70168a0ce7f8b83d092",
+    "validation/sourced_map/projective.py": "bf1c72cc135d485b13fde47c69c61b94fbd666e12fc507ac4660225c19e8cfaf",
+    "validation/sourced_map/review.py": "a13abd5d5a39b805b490d1a4f887edf2023a994bb99be43a7ec56c0dbaa8ced8",
+    "validation/sourced_map/run_all.py": "4f050bddb66fc527945ba2d2f6c24c2dc75642e300be657f78c3452da8109a09",
+    "validation/sourced_map/runtime.py": "1592a294a4cf0c6e51b237a8efe6ee9ea4e39830a27350f3fd816ee5c1ac1697",
+    "validation/sourced_map/variational.py": "b9d60ba7c9a635cdd3d46f82c38942e402e999af288a828a7e040700ee624c64"
+  }
+}

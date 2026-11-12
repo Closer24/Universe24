@@ -1,0 +1,431 @@
+{
+  "schema": "universe24-conservation-closure-review-v1",
+  "symbolic": {
+    "integer_invariant_pushforward": "0",
+    "independent_Einstein_diagonal_residuals": [
+      "Q/(3*V^2)",
+      "Q/(3*V^2)",
+      "Q/(3*V^2)",
+      "Q/(3*V^2)"
+    ],
+    "source_continuity_and_massless_scalar": true,
+    "mixed_shear_eigenvalues_conserved": true,
+    "restricted_discrete_uniqueness": {
+      "assumptions": "D,P,S fixed; Q+=Q; V+-V=h*(U++U)/2; U++U>0; h is declared proper interval",
+      "factorization": "Q+-Q=(U++U)*(U+-U-3*D*h/2)",
+      "unique_map": "U+=U+3*D*h/2; V+=V+h*U+3*D*h^2/4",
+      "scope": "Midpoint kinematics and proper-time/branch assumptions are additional input, not consequences of conservation alone."
+    },
+    "conservation_does_not_fix_dynamics": {
+      "family": "V+=V+alpha*h*U+3*D*(alpha*h)^2/4; U+=U+3*D*alpha*h/2",
+      "Q_D_P_S_preserved_for_every_alpha": true,
+      "unit_proper_time_selects": "alpha=1",
+      "identity_counterexample": "alpha=0 preserves all charges but freezes geometry with positive density",
+      "scope": "Physical flow family; no claim that every alpha has this same native integer embedding."
+    }
+  },
+  "actual_complete_state": {
+    "cases": [
+      {
+        "tensor_sha256": "a51595cb6b4facd289fc40334527dc9ad4126c4f3244f70f8d5fcba53585231b",
+        "seed_sha256": "d1fcbb9266b7c9cb06ce10a33e900068ade4f83a01f7507c3f894efff103e1cc",
+        "N": 24,
+        "h": "1/24",
+        "channels": 8,
+        "retained_integers_per_node": 24,
+        "nodes": 27,
+        "steps": 3,
+        "scalar_register_comparisons": 1944,
+        "Q_exact": true,
+        "source_exact": true,
+        "all_six_carries": true,
+        "complete_inverse_and_rewind": true,
+        "peak_bits": 13
+      },
+      {
+        "tensor_sha256": "a51595cb6b4facd289fc40334527dc9ad4126c4f3244f70f8d5fcba53585231b",
+        "seed_sha256": "584766df53ad122db23950919f155cf6cccce04b3a75f12988a5abbd8958fc8d",
+        "N": 24,
+        "h": "1/24",
+        "channels": 8,
+        "retained_integers_per_node": 24,
+        "nodes": 27,
+        "steps": 3,
+        "scalar_register_comparisons": 1944,
+        "Q_exact": true,
+        "source_exact": true,
+        "all_six_carries": true,
+        "complete_inverse_and_rewind": true,
+        "peak_bits": 13
+      },
+      {
+        "tensor_sha256": "a51595cb6b4facd289fc40334527dc9ad4126c4f3244f70f8d5fcba53585231b",
+        "seed_sha256": "bca904c1569e0b4566a5a34ef4f76f5dc36c128954b5269ae463aa6531643c36",
+        "N": 24,
+        "h": "1/24",
+        "channels": 8,
+        "retained_integers_per_node": 24,
+        "nodes": 27,
+        "steps": 4,
+        "scalar_register_comparisons": 2592,
+        "Q_exact": true,
+        "source_exact": true,
+        "all_six_carries": true,
+        "complete_inverse_and_rewind": true,
+        "peak_bits": 14
+      }
+    ],
+    "allocation": {
+      "channels": 8,
+      "integers_per_node": 24,
+      "linear_monomials": 9,
+      "all_support_onsite": true,
+      "hidden_workspace_or_scheduler": 0
+    }
+  },
+  "conserved_constraint_wrong_clock": {
+    "tensor_sha256": "a51595cb6b4facd289fc40334527dc9ad4126c4f3244f70f8d5fcba53585231b",
+    "seed_sha256": "409a65775ef56b1d33361dba2e1bfa65112efa61996cf22631b059db678fa7c3",
+    "Q_by_step": [
+      "0",
+      "0",
+      "0",
+      "0"
+    ],
+    "source_proper_time": [
+      "0",
+      "1/24",
+      "1/12",
+      "1/8"
+    ],
+    "wrong_marker_time": [
+      "0",
+      "1/12",
+      "1/6",
+      "1/4"
+    ],
+    "actual_Engine_steps": 3,
+    "full_rewind": true,
+    "physical_preparation_rejected": true,
+    "reason": "Conservation and reversible execution alone do not calibrate a unit-lapse proper clock."
+  },
+  "cost": {
+    "all_forward_ticks_bound": "max retained magnitude <= C*(n+1)^2",
+    "C": 5763,
+    "bit_growth": "O(log(n+1)+log(N)) for the declared preparation family",
+    "actual_independent_256_step_oracle": [
+      {
+        "tick": 0,
+        "peak_bits": 13,
+        "bound_bits": 13
+      },
+      {
+        "tick": 1,
+        "peak_bits": 13,
+        "bound_bits": 15
+      },
+      {
+        "tick": 16,
+        "peak_bits": 14,
+        "bound_bits": 21
+      },
+      {
+        "tick": 256,
+        "peak_bits": 19,
+        "bound_bits": 29
+      }
+    ],
+    "fixed_time_refinement": [
+      {
+        "N": 24,
+        "steps": 3,
+        "bits": 13,
+        "V": "2185/768",
+        "U": "67/16"
+      },
+      {
+        "N": 48,
+        "steps": 6,
+        "bits": 15,
+        "V": "2185/768",
+        "U": "67/16"
+      },
+      {
+        "N": 96,
+        "steps": 12,
+        "bits": 17,
+        "V": "2185/768",
+        "U": "67/16"
+      }
+    ],
+    "comparison_boundary": "PR60 spinor6 is a different massive-scalar model. This efficient massless anisotropic law does not replace its massive dynamics."
+  },
+  "input_and_metric": {
+    "rejected_inputs": [
+      "invalid_N_True",
+      "invalid_N_24.0",
+      "invalid_N_Fraction(24, 1)",
+      "invalid_N_0",
+      "invalid_N_-24",
+      "float_V",
+      "boolean_shear",
+      "nonzero_trace_shear",
+      "drifting_dust_history",
+      "illegal_carry",
+      "off_constraint_bundle"
+    ],
+    "off_constraint_state_remains_off_constraint": true,
+    "review_found_and_fixed_backward_anchor_log_cancellation": true,
+    "near_branch_I": "-1.83801342331415490339461303259e-78",
+    "near_branch_relative_error": "2.336485865e-62",
+    "scope": "Extreme off-constraint diagnostic chart; no false physical acceptance or rational projection."
+  },
+  "evidence": {
+    "fresh_source_checks": [
+      {
+        "report": "native",
+        "source": "validation/conservation_closure/common.py",
+        "sha256": "a7a4704a9772bf25c26d010ab1b3607e580419be824dc63664d085d928baa153"
+      },
+      {
+        "report": "native",
+        "source": "validation/conservation_closure/native.py",
+        "sha256": "a09f90c774611b9ca2890767ac49ae6760df016019b2adaef1ea0c063ba36123"
+      },
+      {
+        "report": "native",
+        "source": "universe24/core/engine.py",
+        "sha256": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0"
+      },
+      {
+        "report": "native",
+        "source": "universe24/core/tensor.py",
+        "sha256": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3"
+      },
+      {
+        "report": "tensor_metric",
+        "source": "validation/conservation_closure/tensor_metric.py",
+        "sha256": "34350de46f2785bda84968f6dcb4fe7d0997a2cf0ddbf15aaccdbfb6f1776dec"
+      },
+      {
+        "report": "tensor_metric",
+        "source": "validation/conservation_closure/common.py",
+        "sha256": "a7a4704a9772bf25c26d010ab1b3607e580419be824dc63664d085d928baa153"
+      },
+      {
+        "report": "covector_geodesics",
+        "source": "validation/conservation_closure/covector_geodesics.py",
+        "sha256": "22b1850216e587fc69475515f2292ea03ef014d28ebe430ddfc7ac85df8f00a4"
+      },
+      {
+        "report": "covector_geodesics",
+        "source": "validation/conservation_closure/common.py",
+        "sha256": "a7a4704a9772bf25c26d010ab1b3607e580419be824dc63664d085d928baa153"
+      },
+      {
+        "report": "clocks",
+        "source": "validation/conservation_closure/clocks.py",
+        "sha256": "a8fb9325f95a0791e01919846e1f6fe6e0a3e0df0075866d457d1dccb2e2482e"
+      },
+      {
+        "report": "clocks",
+        "source": "validation/conservation_closure/common.py",
+        "sha256": "a7a4704a9772bf25c26d010ab1b3607e580419be824dc63664d085d928baa153"
+      },
+      {
+        "report": "noether_spatial",
+        "source": "validation/conservation_closure/noether_spatial.py",
+        "sha256": "e81295e89dc6f8abcbaf83b5ee44e8d95e03e909e832aa5eac261c8ce3953677"
+      },
+      {
+        "report": "noether_spatial",
+        "source": "validation/conservation_closure/common.py",
+        "sha256": "a7a4704a9772bf25c26d010ab1b3607e580419be824dc63664d085d928baa153"
+      },
+      {
+        "report": "noether_spatial",
+        "source": "validation/generic_structure/interactions.py",
+        "sha256": "721416e1062e606c5703f61123033d885c6e1359899e2dffde2979aec4b22290"
+      },
+      {
+        "report": "noether_spatial",
+        "source": "validation/generic_structure/native_schedule.py",
+        "sha256": "05627995a21f839618d67a8338490e5435e423a1e362bc08f45f9758c701ad95"
+      }
+    ],
+    "same_tensor_seed_resolution_joins": [
+      {
+        "lane": "native",
+        "tensor_sha256": "a51595cb6b4facd289fc40334527dc9ad4126c4f3244f70f8d5fcba53585231b",
+        "seed_sha256": "d1fcbb9266b7c9cb06ce10a33e900068ade4f83a01f7507c3f894efff103e1cc",
+        "N": 24,
+        "h": "1/24",
+        "channels": 8,
+        "retained_integers_per_node": 24,
+        "nodes": 27
+      },
+      {
+        "lane": "runtime",
+        "tensor_sha256": "a51595cb6b4facd289fc40334527dc9ad4126c4f3244f70f8d5fcba53585231b",
+        "seed_sha256": "d1fcbb9266b7c9cb06ce10a33e900068ade4f83a01f7507c3f894efff103e1cc",
+        "N": 24,
+        "h": "1/24",
+        "channels": 8,
+        "retained_integers_per_node": 24,
+        "nodes": 27
+      },
+      {
+        "lane": "metric",
+        "tensor_sha256": "a51595cb6b4facd289fc40334527dc9ad4126c4f3244f70f8d5fcba53585231b",
+        "seed_sha256": "d1fcbb9266b7c9cb06ce10a33e900068ade4f83a01f7507c3f894efff103e1cc",
+        "N": 24,
+        "h": "1/24",
+        "channels": 8,
+        "retained_integers_per_node": 24,
+        "nodes": 27
+      },
+      {
+        "lane": "covector_diagnostic",
+        "tensor_sha256": "a51595cb6b4facd289fc40334527dc9ad4126c4f3244f70f8d5fcba53585231b",
+        "seed_sha256": "d1fcbb9266b7c9cb06ce10a33e900068ade4f83a01f7507c3f894efff103e1cc",
+        "N": 24,
+        "h": "1/24",
+        "channels": 8,
+        "retained_integers_per_node": 24,
+        "nodes": 27
+      },
+      {
+        "lane": "clock",
+        "tensor_sha256": "a51595cb6b4facd289fc40334527dc9ad4126c4f3244f70f8d5fcba53585231b",
+        "seed_sha256": "d1fcbb9266b7c9cb06ce10a33e900068ade4f83a01f7507c3f894efff103e1cc",
+        "N": 24,
+        "h": "1/24",
+        "channels": 8,
+        "retained_integers_per_node": 24,
+        "nodes": 27
+      },
+      {
+        "lane": "native",
+        "tensor_sha256": "a51595cb6b4facd289fc40334527dc9ad4126c4f3244f70f8d5fcba53585231b",
+        "seed_sha256": "dfbeb15e1dd827be70e6902b22bb61c279dcf39b511d2a1443e0106f6a4e2fef",
+        "N": 48,
+        "h": "1/48",
+        "channels": 8,
+        "retained_integers_per_node": 24,
+        "nodes": 27
+      },
+      {
+        "lane": "runtime",
+        "tensor_sha256": "a51595cb6b4facd289fc40334527dc9ad4126c4f3244f70f8d5fcba53585231b",
+        "seed_sha256": "dfbeb15e1dd827be70e6902b22bb61c279dcf39b511d2a1443e0106f6a4e2fef",
+        "N": 48,
+        "h": "1/48",
+        "channels": 8,
+        "retained_integers_per_node": 24,
+        "nodes": 27
+      },
+      {
+        "lane": "metric",
+        "tensor_sha256": "a51595cb6b4facd289fc40334527dc9ad4126c4f3244f70f8d5fcba53585231b",
+        "seed_sha256": "dfbeb15e1dd827be70e6902b22bb61c279dcf39b511d2a1443e0106f6a4e2fef",
+        "N": 48,
+        "h": "1/48",
+        "channels": 8,
+        "retained_integers_per_node": 24,
+        "nodes": 27
+      },
+      {
+        "lane": "covector_diagnostic",
+        "tensor_sha256": "a51595cb6b4facd289fc40334527dc9ad4126c4f3244f70f8d5fcba53585231b",
+        "seed_sha256": "dfbeb15e1dd827be70e6902b22bb61c279dcf39b511d2a1443e0106f6a4e2fef",
+        "N": 48,
+        "h": "1/48",
+        "channels": 8,
+        "retained_integers_per_node": 24,
+        "nodes": 27
+      },
+      {
+        "lane": "clock",
+        "tensor_sha256": "a51595cb6b4facd289fc40334527dc9ad4126c4f3244f70f8d5fcba53585231b",
+        "seed_sha256": "dfbeb15e1dd827be70e6902b22bb61c279dcf39b511d2a1443e0106f6a4e2fef",
+        "N": 48,
+        "h": "1/48",
+        "channels": 8,
+        "retained_integers_per_node": 24,
+        "nodes": 27
+      },
+      {
+        "lane": "native",
+        "tensor_sha256": "a51595cb6b4facd289fc40334527dc9ad4126c4f3244f70f8d5fcba53585231b",
+        "seed_sha256": "836d502c62486e39a1bdae8527b12f59eaadcb7c1e2451a5c9094f1fb3edfed4",
+        "N": 96,
+        "h": "1/96",
+        "channels": 8,
+        "retained_integers_per_node": 24,
+        "nodes": 27
+      },
+      {
+        "lane": "runtime",
+        "tensor_sha256": "a51595cb6b4facd289fc40334527dc9ad4126c4f3244f70f8d5fcba53585231b",
+        "seed_sha256": "836d502c62486e39a1bdae8527b12f59eaadcb7c1e2451a5c9094f1fb3edfed4",
+        "N": 96,
+        "h": "1/96",
+        "channels": 8,
+        "retained_integers_per_node": 24,
+        "nodes": 27
+      },
+      {
+        "lane": "metric",
+        "tensor_sha256": "a51595cb6b4facd289fc40334527dc9ad4126c4f3244f70f8d5fcba53585231b",
+        "seed_sha256": "836d502c62486e39a1bdae8527b12f59eaadcb7c1e2451a5c9094f1fb3edfed4",
+        "N": 96,
+        "h": "1/96",
+        "channels": 8,
+        "retained_integers_per_node": 24,
+        "nodes": 27
+      },
+      {
+        "lane": "covector_diagnostic",
+        "tensor_sha256": "a51595cb6b4facd289fc40334527dc9ad4126c4f3244f70f8d5fcba53585231b",
+        "seed_sha256": "836d502c62486e39a1bdae8527b12f59eaadcb7c1e2451a5c9094f1fb3edfed4",
+        "N": 96,
+        "h": "1/96",
+        "channels": 8,
+        "retained_integers_per_node": 24,
+        "nodes": 27
+      },
+      {
+        "lane": "clock",
+        "tensor_sha256": "a51595cb6b4facd289fc40334527dc9ad4126c4f3244f70f8d5fcba53585231b",
+        "seed_sha256": "836d502c62486e39a1bdae8527b12f59eaadcb7c1e2451a5c9094f1fb3edfed4",
+        "N": 96,
+        "h": "1/96",
+        "channels": 8,
+        "retained_integers_per_node": 24,
+        "nodes": 27
+      }
+    ],
+    "passive_covector_diagnostics_not_retained_probe": true,
+    "Noether_same_candidate_balance_join": true,
+    "different_nonuniform_seed_Q_zero_does_not_imply_spatial_Einstein": true,
+    "Noether_bridge_cannot_inherit_Bianchi_Einstein_acceptance": true,
+    "general_spatial_source_detector_and_massive_extension": "not established"
+  },
+  "primary_readings": [
+    {
+      "title": "Khalatnikov and Kamenshchik, A generalisation of the Heckmann-Schucking cosmological solution",
+      "url": "https://arxiv.org/pdf/gr-qc/0301022",
+      "read": "Section 2 equations 14-23; section 3 equations 27-31. Conserved shear and dust/stiff-matter exact solutions."
+    },
+    {
+      "title": "Noether, Invariant Variation Problems, Tavel translation",
+      "url": "https://arxiv.org/pdf/physics/0503066",
+      "read": "Section 1 theorems I and II, and the general-relativity example; section 2 equations 11-13."
+    }
+  ],
+  "source_sha256": {
+    "validation/conservation_closure/review.py": "678c300f20a698b3ba5c247b5490e85e851526573e2eb90cd6fa51f311b47b3e",
+    "validation/conservation_closure/common.py": "a7a4704a9772bf25c26d010ab1b3607e580419be824dc63664d085d928baa153"
+  },
+  "accepted_scope": "One exact native homogeneous anisotropic massless-scalar+dust solution family; no uniqueness or general Einstein/operational detector claim"
+}

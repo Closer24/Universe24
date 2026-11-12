@@ -1,0 +1,398 @@
+{
+  "status": "passed_scoped_exact_domain_controls",
+  "symbolic": {
+    "invariant": "v^2-3*M*q-(3/2)*P^2",
+    "exact_target": "q1=q+h*v+(3/4)*M*h^2; v1=v+(3/2)*M*h",
+    "inverse": "elapsed -> -elapsed",
+    "physical_constraint": "6*k^2-p^2-2*d^2 = (2/(3*q^2))*invariant",
+    "physical_fields": "k=-v/(3*q), p=P/q, d^2=M/q, B=q^(-1/3)",
+    "scope": "mu=0, homogeneous/isotropic/neutral sourced sector; scalar phase handled separately",
+    "identities_passed": true
+  },
+  "domain": {
+    "cases": [
+      {
+        "elapsed": "0",
+        "whole_interval_valid": true,
+        "minimum_volume": "1",
+        "minimum_time": "0",
+        "initial_volume": "1",
+        "final_volume": "1",
+        "initial_velocity": "3",
+        "final_velocity": "3",
+        "both_endpoints_positive": true,
+        "constraint_preserved": true,
+        "role": "passive exact physical-domain validation only"
+      },
+      {
+        "elapsed": "1/16",
+        "whole_interval_valid": true,
+        "minimum_volume": "1",
+        "minimum_time": "0",
+        "initial_volume": "1",
+        "final_volume": "1219/1024",
+        "initial_velocity": "3",
+        "final_velocity": "99/32",
+        "both_endpoints_positive": true,
+        "constraint_preserved": true,
+        "role": "passive exact physical-domain validation only"
+      },
+      {
+        "elapsed": "1/4",
+        "whole_interval_valid": true,
+        "minimum_volume": "1",
+        "minimum_time": "0",
+        "initial_volume": "1",
+        "final_volume": "115/64",
+        "initial_velocity": "3",
+        "final_velocity": "27/8",
+        "both_endpoints_positive": true,
+        "constraint_preserved": true,
+        "role": "passive exact physical-domain validation only"
+      },
+      {
+        "elapsed": "-1/16",
+        "whole_interval_valid": true,
+        "minimum_volume": "835/1024",
+        "minimum_time": "-1/16",
+        "initial_volume": "1",
+        "final_volume": "835/1024",
+        "initial_velocity": "3",
+        "final_velocity": "93/32",
+        "both_endpoints_positive": true,
+        "constraint_preserved": true,
+        "role": "passive exact physical-domain validation only"
+      },
+      {
+        "elapsed": "-1/4",
+        "whole_interval_valid": true,
+        "minimum_volume": "19/64",
+        "minimum_time": "-1/4",
+        "initial_volume": "1",
+        "final_volume": "19/64",
+        "initial_velocity": "3",
+        "final_velocity": "21/8",
+        "both_endpoints_positive": true,
+        "constraint_preserved": true,
+        "role": "passive exact physical-domain validation only"
+      },
+      {
+        "elapsed": "4",
+        "whole_interval_valid": true,
+        "minimum_volume": "1",
+        "minimum_time": "0",
+        "initial_volume": "1",
+        "final_volume": "25",
+        "initial_velocity": "3",
+        "final_velocity": "9",
+        "both_endpoints_positive": true,
+        "constraint_preserved": true,
+        "role": "passive exact physical-domain validation only"
+      },
+      {
+        "elapsed": "-4",
+        "whole_interval_valid": false,
+        "minimum_volume": "-2",
+        "minimum_time": "-2",
+        "initial_volume": "1",
+        "final_volume": "1",
+        "initial_velocity": "3",
+        "final_velocity": "-3",
+        "both_endpoints_positive": true,
+        "constraint_preserved": true,
+        "role": "passive exact physical-domain validation only"
+      },
+      {
+        "elapsed": "0",
+        "whole_interval_valid": true,
+        "minimum_volume": "1",
+        "minimum_time": "0",
+        "initial_volume": "1",
+        "final_volume": "1",
+        "initial_velocity": "-3",
+        "final_velocity": "-3",
+        "both_endpoints_positive": true,
+        "constraint_preserved": true,
+        "role": "passive exact physical-domain validation only"
+      },
+      {
+        "elapsed": "1/16",
+        "whole_interval_valid": true,
+        "minimum_volume": "835/1024",
+        "minimum_time": "1/16",
+        "initial_volume": "1",
+        "final_volume": "835/1024",
+        "initial_velocity": "-3",
+        "final_velocity": "-93/32",
+        "both_endpoints_positive": true,
+        "constraint_preserved": true,
+        "role": "passive exact physical-domain validation only"
+      },
+      {
+        "elapsed": "1/4",
+        "whole_interval_valid": true,
+        "minimum_volume": "19/64",
+        "minimum_time": "1/4",
+        "initial_volume": "1",
+        "final_volume": "19/64",
+        "initial_velocity": "-3",
+        "final_velocity": "-21/8",
+        "both_endpoints_positive": true,
+        "constraint_preserved": true,
+        "role": "passive exact physical-domain validation only"
+      },
+      {
+        "elapsed": "-1/16",
+        "whole_interval_valid": true,
+        "minimum_volume": "1",
+        "minimum_time": "0",
+        "initial_volume": "1",
+        "final_volume": "1219/1024",
+        "initial_velocity": "-3",
+        "final_velocity": "-99/32",
+        "both_endpoints_positive": true,
+        "constraint_preserved": true,
+        "role": "passive exact physical-domain validation only"
+      },
+      {
+        "elapsed": "-1/4",
+        "whole_interval_valid": true,
+        "minimum_volume": "1",
+        "minimum_time": "0",
+        "initial_volume": "1",
+        "final_volume": "115/64",
+        "initial_velocity": "-3",
+        "final_velocity": "-27/8",
+        "both_endpoints_positive": true,
+        "constraint_preserved": true,
+        "role": "passive exact physical-domain validation only"
+      },
+      {
+        "elapsed": "4",
+        "whole_interval_valid": false,
+        "minimum_volume": "-2",
+        "minimum_time": "2",
+        "initial_volume": "1",
+        "final_volume": "1",
+        "initial_velocity": "-3",
+        "final_velocity": "3",
+        "both_endpoints_positive": true,
+        "constraint_preserved": true,
+        "role": "passive exact physical-domain validation only"
+      },
+      {
+        "elapsed": "-4",
+        "whole_interval_valid": true,
+        "minimum_volume": "1",
+        "minimum_time": "0",
+        "initial_volume": "1",
+        "final_volume": "25",
+        "initial_velocity": "-3",
+        "final_velocity": "-9",
+        "both_endpoints_positive": true,
+        "constraint_preserved": true,
+        "role": "passive exact physical-domain validation only"
+      }
+    ],
+    "rational_forward_domain_checks": 915,
+    "cross_and_return_negative": {
+      "whole_interval_valid": false,
+      "minimum_volume": "-2",
+      "minimum_time": "2",
+      "initial_volume": "1",
+      "final_volume": "1",
+      "initial_velocity": "-3",
+      "final_velocity": "3",
+      "both_endpoints_positive": true,
+      "constraint_preserved": true,
+      "role": "passive exact physical-domain validation only"
+    },
+    "touching_singularity_negative": {
+      "whole_interval_valid": false,
+      "minimum_volume": "0",
+      "minimum_time": "2",
+      "initial_volume": "3",
+      "final_volume": "3",
+      "initial_velocity": "-3",
+      "final_velocity": "3",
+      "both_endpoints_positive": true,
+      "constraint_preserved": true,
+      "role": "passive exact physical-domain validation only"
+    },
+    "rejected_malformed_or_invalid_inputs": [
+      "True",
+      "0.5",
+      "'1/2'",
+      "VolumePoint(q=Fraction(0, 1), v=Fraction(0, 1), scalar_charge=Fraction(0, 1), dust_mass=Fraction(0, 1))",
+      "VolumePoint(q=Fraction(1, 1), v=Fraction(3, 1), scalar_charge=Fraction(2, 1), dust_mass=Fraction(-1, 1))",
+      "VolumePoint(q=Fraction(1, 1), v=Fraction(4, 1), scalar_charge=Fraction(2, 1), dust_mass=Fraction(1, 1))"
+    ],
+    "all_forward_time_theorem": "q>0, M>=0, v>=0 imply q(t)>=q(0)>0 for every t>=0",
+    "backward_scope": "For nonzero sourced expanding solutions, physical validity ends at a finite past singularity.",
+    "no_runtime_veto": true
+  },
+  "integer_cost": {
+    "recurrence": "Q_next=2*Q-Q_old+6*M",
+    "closed_form": "Q_n=b+n*(b-a)+3*M*n*(n+1)",
+    "bound": "|Q_n|<=|b|+N*|b-a|+3*|M|*N*(N+1), |n|<=N",
+    "all_history_bound": "Use radius N+1 to cover a_n=Q_(n-1) as well.",
+    "growth": "O(log N) retained bits for fixed initial integers and fixed M; no rounding or discarded carries",
+    "scalar_comparisons": 960,
+    "cases": [
+      {
+        "a": 7,
+        "b": 12,
+        "mass": 1,
+        "radius": 0,
+        "actual_max_abs": 12,
+        "absolute_bound": 12,
+        "bit_bound": 4
+      },
+      {
+        "a": 7,
+        "b": 12,
+        "mass": 1,
+        "radius": 1,
+        "actual_max_abs": 23,
+        "absolute_bound": 23,
+        "bit_bound": 5
+      },
+      {
+        "a": 7,
+        "b": 12,
+        "mass": 1,
+        "radius": 17,
+        "actual_max_abs": 1015,
+        "absolute_bound": 1015,
+        "bit_bound": 10
+      },
+      {
+        "a": 7,
+        "b": 12,
+        "mass": 1,
+        "radius": 100,
+        "actual_max_abs": 30812,
+        "absolute_bound": 30812,
+        "bit_bound": 15
+      },
+      {
+        "a": -19,
+        "b": 3,
+        "mass": 7,
+        "radius": 0,
+        "actual_max_abs": 3,
+        "absolute_bound": 3,
+        "bit_bound": 2
+      },
+      {
+        "a": -19,
+        "b": 3,
+        "mass": 7,
+        "radius": 1,
+        "actual_max_abs": 67,
+        "absolute_bound": 67,
+        "bit_bound": 7
+      },
+      {
+        "a": -19,
+        "b": 3,
+        "mass": 7,
+        "radius": 17,
+        "actual_max_abs": 6803,
+        "absolute_bound": 6803,
+        "bit_bound": 13
+      },
+      {
+        "a": -19,
+        "b": 3,
+        "mass": 7,
+        "radius": 100,
+        "actual_max_abs": 214303,
+        "absolute_bound": 214303,
+        "bit_bound": 18
+      },
+      {
+        "a": 1267650600228229401496703205376,
+        "b": -633825300114114700748351602688,
+        "mass": -11,
+        "radius": 0,
+        "actual_max_abs": 633825300114114700748351602688,
+        "absolute_bound": 633825300114114700748351602688,
+        "bit_bound": 100
+      },
+      {
+        "a": 1267650600228229401496703205376,
+        "b": -633825300114114700748351602688,
+        "mass": -11,
+        "radius": 1,
+        "actual_max_abs": 2535301200456458802993406410818,
+        "absolute_bound": 2535301200456458802993406410818,
+        "bit_bound": 102
+      },
+      {
+        "a": 1267650600228229401496703205376,
+        "b": -633825300114114700748351602688,
+        "mass": -11,
+        "radius": 17,
+        "actual_max_abs": 32958915605933964438914283349874,
+        "absolute_bound": 32958915605933964438914283349874,
+        "bit_bound": 105
+      },
+      {
+        "a": 1267650600228229401496703205376,
+        "b": -633825300114114700748351602688,
+        "mass": -11,
+        "radius": 100,
+        "actual_max_abs": 190781415334348524925253832742388,
+        "absolute_bound": 190781415334348524925253832742388,
+        "bit_bound": 108
+      },
+      {
+        "a": 0,
+        "b": 0,
+        "mass": 0,
+        "radius": 0,
+        "actual_max_abs": 0,
+        "absolute_bound": 0,
+        "bit_bound": 0
+      },
+      {
+        "a": 0,
+        "b": 0,
+        "mass": 0,
+        "radius": 1,
+        "actual_max_abs": 0,
+        "absolute_bound": 0,
+        "bit_bound": 0
+      },
+      {
+        "a": 0,
+        "b": 0,
+        "mass": 0,
+        "radius": 17,
+        "actual_max_abs": 0,
+        "absolute_bound": 0,
+        "bit_bound": 0
+      },
+      {
+        "a": 0,
+        "b": 0,
+        "mass": 0,
+        "radius": 100,
+        "actual_max_abs": 0,
+        "absolute_bound": 0,
+        "bit_bound": 0
+      }
+    ],
+    "engine_status": "This section proves the recurrence bound; the native compiler audit must establish its actual Engine realization."
+  },
+  "source_sha256": {
+    "validation/sourced_map/domain.py": "2f40e23559d81e9cf530ba892544710d08028b97745c3caf6afa5d7caa5dad64"
+  },
+  "limitations": [
+    "Massless sourced homogeneous sector only.",
+    "No physical continuation through zero volume.",
+    "A complete native encoding is a separate obligation; this validator cannot repair an Engine trajectory.",
+    "Proper clocks, spatial modes and massive-scalar closure are not established."
+  ]
+}

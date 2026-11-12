@@ -1,0 +1,235 @@
+{
+  "schema": "universe24.generic-constraint-certificate.v1",
+  "positive_complete_state_examples": {
+    "linear_lorentz": {
+      "symbolic": {
+        "target": [
+          "2*b0 + b1",
+          "3*b0 + 2*b1"
+        ],
+        "inverse": [
+          "2*b0 - b1",
+          "-3*b0 + 2*b1"
+        ],
+        "quadratic": "3*b0**2 - b1**2",
+        "history_generators": [
+          "a0 - 2*b0 + b1",
+          "a1 + 3*b0 - 2*b1"
+        ],
+        "inverse_compositions_exact": true,
+        "quadratic_identity_exact": true,
+        "complete_history_ideal_remainders": [
+          "0",
+          "0",
+          "0"
+        ],
+        "commuting_encoding_identity": true
+      },
+      "engine": {
+        "status": "passed",
+        "channels": 2,
+        "retained_integers_per_node": 6,
+        "monomials": 2,
+        "degree_bound": 1,
+        "tensor_sha256": "04e5a7ef923691a1fdadf0d6f86d030e9dc4dc91c6c05b59b8d9f8c46c85f02d",
+        "nodes": 27,
+        "complete_carry_cases": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "ticks_per_case": 24,
+        "node_transitions": 3888,
+        "max_retained_bits": 48,
+        "independent_scalar_oracle": true,
+        "target_oracle": true,
+        "inverse_each_step_and_full_rewind": true,
+        "complete_history_invariant": true,
+        "quadratic_invariant": true,
+        "spatial_coupling": "onsite only; no Einstein or signal claim"
+      }
+    },
+    "cubic_null_rotation": {
+      "symbolic": {
+        "target": [
+          "b0",
+          "2*b0**2 + b1",
+          "-2*b0**3 - 2*b0*b1 + b2"
+        ],
+        "inverse": [
+          "b0",
+          "-2*b0**2 + b1",
+          "-2*b0**3 + 2*b0*b1 + b2"
+        ],
+        "quadratic": "2*b0*b2 + b1**2",
+        "history_generators": [
+          "a0 - b0",
+          "a1 + 2*b0**2 - b1",
+          "a2 + 2*b0**3 - 2*b0*b1 - b2"
+        ],
+        "inverse_compositions_exact": true,
+        "quadratic_identity_exact": true,
+        "complete_history_ideal_remainders": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "commuting_encoding_identity": true
+      },
+      "engine": {
+        "status": "passed",
+        "channels": 3,
+        "retained_integers_per_node": 9,
+        "monomials": 4,
+        "degree_bound": 3,
+        "tensor_sha256": "4a2810adbb73f5a70c43a5ba6158f6050e96e05fab1dff70657a658c235743d0",
+        "nodes": 27,
+        "complete_carry_cases": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "ticks_per_case": 24,
+        "node_transitions": 3888,
+        "max_retained_bits": 15,
+        "independent_scalar_oracle": true,
+        "target_oracle": true,
+        "inverse_each_step_and_full_rewind": true,
+        "complete_history_invariant": true,
+        "quadratic_invariant": true,
+        "spatial_coupling": "onsite only; no Einstein or signal claim"
+      }
+    }
+  },
+  "two_individually_constrained_histories_are_insufficient": {
+    "status": "counterexample_verified",
+    "complete_history_compatible": false,
+    "both_individual_histories_constrained": true,
+    "cases": [
+      {
+        "carry": 0,
+        "Q_a": 3,
+        "Q_b": 3,
+        "Q_next_b": 27,
+        "constraint_defect_relative_to_Q_3": 24
+      },
+      {
+        "carry": 1,
+        "Q_a": 3,
+        "Q_b": 3,
+        "Q_next_b": 27,
+        "constraint_defect_relative_to_Q_3": 24
+      },
+      {
+        "carry": 2,
+        "Q_a": 3,
+        "Q_b": 3,
+        "Q_next_b": 27,
+        "constraint_defect_relative_to_Q_3": 24
+      },
+      {
+        "carry": 3,
+        "Q_a": 3,
+        "Q_b": 3,
+        "Q_next_b": 27,
+        "constraint_defect_relative_to_Q_3": 24
+      },
+      {
+        "carry": 4,
+        "Q_a": 3,
+        "Q_b": 3,
+        "Q_next_b": 27,
+        "constraint_defect_relative_to_Q_3": 24
+      },
+      {
+        "carry": 5,
+        "Q_a": 3,
+        "Q_b": 3,
+        "Q_next_b": 27,
+        "constraint_defect_relative_to_Q_3": 24
+      }
+    ],
+    "mechanical_inverse_still_passes": true
+  },
+  "continuous_vs_discrete_and_rational_target": {
+    "continuous_constraint_identity": "Cdot=6*k*C",
+    "Euler_identity": "C(z+hF)=(1+6*h*k)*C(z)+h^2*F.T*form_metric*F",
+    "Euler_defect": "-(-3*dust**4 + 45*dust**2*k**2 - 6*dust**2*mu*phi**2 - 108*k**4 + 36*k**2*mu*phi**2 + 18*k**2*p**2 - 12*k*mu*p*phi - 3*mu**2*phi**4 + 2*mu**2*phi**2 + 2*mu*p**2)/2",
+    "Euler_defect_mod_constraint": "-(3*dust**2*mu*phi**2 + 3*dust**2*p**2 - 24*k*mu*p*phi + 4*mu**2*phi**2 + 6*mu*p**2*phi**2 + 4*mu*p**2)/4",
+    "strong_massive_coefficient": "-7",
+    "massless_coefficient": "-3",
+    "Cayley_generator_skew_identity": true,
+    "Cayley_delta": "-(3*dust**2*h**4*mu + 12*dust**2*h**2 + 24*h**2*mu*phi**2 - 16*h**2*mu - 64)/64",
+    "target_constraint_cofactor": "(1-3*h*k)^(-2)",
+    "target_first_order_consistency": true,
+    "target_numerator_degrees": [
+      3,
+      3,
+      3,
+      3
+    ],
+    "target_denominator_degree": 3,
+    "target_domain": "delta!=0 and 1-3*h*k!=0; no global domain or invertibility theorem",
+    "target_status": "exact constrained rational target; not a Rule3 implementation"
+  },
+  "actual_reduced_five_channel_failure": {
+    "channels": 5,
+    "retained_integers_per_node": 15,
+    "degree": 3,
+    "monomials": 28,
+    "multiplier": 67108864,
+    "tensor_sha256": "e33be737ff30660efc4293c73e2ef4c715fdc08f22f73f288d4adbe2eecabb4c",
+    "strict_face_support": true,
+    "nodes": 27,
+    "all_six_remainders": true,
+    "oracle_and_full_rewind": true,
+    "first_tick_constraint_zero": true,
+    "second_tick_constraint_gate": "failed",
+    "cross_history_defect_identity": true,
+    "rows": [
+      {
+        "tick": 1,
+        "constraint": "0",
+        "constraint_float": 0.0,
+        "max_retained_bits": 34
+      },
+      {
+        "tick": 2,
+        "constraint": "-211805381883956703960796807492009984/6648074056234057895988554997906461158237804299242833919931086162572083201",
+        "constraint_float": -3.185966042080138e-38,
+        "max_retained_bits": 124
+      },
+      {
+        "tick": 3,
+        "constraint": "-10420589463869193300314271942354389516564343483731017429273970736943433605365585246686568323522365096869959558218741913873125652843888169447468172113096734521346002742189081394088692624590012153856/457483872749720340617839906745518833604507496765742027224603304449576413607825931224199998703509689928208441880353089342978706089442520596566190328942917256446768618255823950903713125947882368759700184635509714160450438071971399496881",
+        "constraint_float": -2.2778047674633714e-38,
+        "max_retained_bits": 397
+      }
+    ],
+    "scope": "Reduced homogeneous four-field target only; not appended to full45"
+  },
+  "source_sha256": {
+    "validation/generic_structure/constraint_certificate.py": "a72ef2cd56756ee3d36df9872356027d94bc9a6731b73efa3e3d55c4505fcd30",
+    "validation/completion/constraint_closure.py": "a1f4a775c7a112912e08cdbb7f4d4f3a8c12841fd1af61dfb6edb9a965287cd8"
+  },
+  "claim_status": {
+    "complete_state_sufficient_criterion": "proved_conditionally",
+    "onsite_integer_quadratic_constraint_examples": "passed",
+    "existing_reduced_Einstein_lift_constraint_gate": "failed",
+    "rational_Einstein_target_compiled_with_valid_history": "not_implemented",
+    "general_Einstein_constraints": "blocked"
+  },
+  "limitations": [
+    "Positive examples are onsite mathematical fixtures, not physical gravity.",
+    "An invariant constraint is insufficient to identify Einstein dynamics.",
+    "No rational state-dependent denominator or hidden solver is added to the Engine.",
+    "General nonzero-denominator, full45 domain and constraint closure remain open."
+  ]
+}

@@ -1,271 +1,120 @@
-# Fixed-divisor Rule3 algebra
+# Fixed Rule3 algebra and physical interpretation
 
-> Historical research/reference document. The current supported interface and acceptance status are defined in [ONE_SYSTEM.md](ONE_SYSTEM.md). Commands and default-model descriptions below refer to the earlier construction; see [the 0.6 migration](MIGRATION_0_6.md). No general ≤48-channel physical model is accepted.
+This is the current algebra of the supported bundle-driven execution system. Historical variable-divisor and oversized default constructions are retained only as research history. There is no accepted default physical universe.
 
+## State, tensor and budget
 
-The 0.5.0 consolidation adds disjoint channel ownership, local communication and explicit probe experiments; see [UNIFIED_SYSTEM.md](UNIFIED_SYSTEM.md) and [fresh validation](evidence/universe24_unification.json). The physical Einstein metric remains the sole metric of the main event board.
+On a periodic cubic lattice of side L at least three, each node stores G at most48 channels. Every channel has two signed integer histories a,b and one remainder r in0..5. All matter, geometry, apparatus, clocks, workspace and schedules count in G. Integer precision is unbounded and its cost must be measured.
 
-## Integrated Einstein event board
+A fixed integer polynomial supplies each local input:
 
-The default is now `python -m universe24`: nonlinear ADM, complex scalar matter with opposite U(1) charges and geodesic dark dust. All updates use the fixed-six Engine; the metric, stress and event records come from the same retained state. See [equations](INTEGER_ADM.md), [events and matter conventions](UNIVERSE24_EVENTS.md), and [commands](../README.md).
+    u[x,i] = sum_m c[m] product_f z[x+offset[f], gear[f], bank[f]]
 
-The reference baseline and fixed-six research results below remain controls; they no longer describe the CLI default. Retired variable-divisor calibrations stay retired.
+Each bank is old a or old b. There are at most three nonconstant factors per term. The complete physical support, including endpoints of link channels, is the target and at most one face edge. The old-a dependency graph is acyclic. Static matrix or quaternion data may generate coefficients before preparation; no algebra solver runs during evolution.
 
-The optional [compact null-wave sector](COMPACT_NULL_WAVE.md) stores a prepared
-pp-wave profile in two retained integer channels and decodes its coframe with
-a fixed null covector. Its invariant-sector proof includes both histories and
-frozen remainders. It is a separate model with passive fixed-denominator
-geometry readouts, not a replacement for the default ADM metric.
+The polynomial coupling tensor is not a spacetime metric. A rank-four coefficient notation counts the output index and up to three input factors, not spacetime tensor rank. The binary octahedral group's48 elements do not require a48-channel matter inventory or prove particle content.
 
-The [Frame48 candidate](FRAME48_RESEARCH.md) adds a horizon-independent,
-48-channel exact lift of a nonlinear vacuum-frame time stencil. Its general
-constraint, nondegeneracy, refinement and physical-clock gates remain false.
-It is an explicitly separate research model with a published source ledger.
+## One forward map and its inverse
 
+All targets use the same old snapshot:
 
-This is the current mathematical contract for the executable model. A node's
-state, a fixed integer coupling tensor, and the complete seed specify a run.
-The scalar divisor is the constant six. There is no adjustable divisor scale,
-per-channel numerator/denominator, hidden arithmetic rescaling, or second
-state-update rule.
-
-### A0. Overview: what the algebra does
-
-Write the full state as `S_n=(a_n,b_n,r_n)` and augment the old register vector
-with a constant component, `v_n=(1,b_n,a_n)`. The fixed tensor supplies a local
-integer polynomial `u_n=T(v_n,v_n,v_n)`, with unused input slots represented
-by the constant component. The one evolution map and passive observation are
-
-    S_(n+1) = W_T(S_n),       O_n = Theta(S_n,S_(n+1)).
-
-The tensor and seed are construction choices. They are not derived from the
-scalar recurrence alone. The reference cube block and the geometric examples
-are possible constructions, not necessary models of nature.
-
-### A1. Space, registers and degrees of freedom
-
-The implemented storage lattice is a periodic cubic graph with six face
-neighbors. At each node `x` and gear type `i`, retain
-
-    S_(x,i) = (a_(x,i), b_(x,i), r_(x,i)),
-    a,b in Z,       r in {0,1,2,3,4,5}.
-
-For `G` gear types, a node has `2G` unbounded signed integer registers and `G`
-six-state remainders. Signed integers can be stored as natural numbers via
-`z -> 2*z` for `z>=0` and `z -> -2*z-1` otherwise; this is an injective
-encoding, not an extra update. The old and current histories `a,b` are not independent
-physical boards by definition. Interpreting them as two interacting boards
-requires a separate construction and observation map.
-
-Since the incoming numerator is even, each remainder's parity is invariant.
-After choosing that parity, its accessible remainder alphabet has three
-values. This is a sector restriction, not an additional coordinate.
-
-The graph is closed by periodic boundaries. That does not imply that every
-continuum coordinate chart assigned to its samples is globally periodic or
-satisfies physical field equations across the seams.
-
-### A2. Cube rotations, quaternions and reflections
-
-The proper rotations of the cube form a group of order 24. Unit quaternions
-act on spatial vectors by `v -> q v q^-1`; opposite quaternions give the same
-spatial rotation. Lifting the cube rotations gives the binary octahedral
-group `2O`, with 48 elements. Quarter-turn generators may be written
-
-    q_x=(1+i)/sqrt(2), q_y=(1+j)/sqrt(2), q_z=(1+k)/sqrt(2),
-    i^2=j^2=k^2=ijk=-1.
-
-These formulas construct fixed algebraic matrices. The runtime register
-values remain integers; it does not update floating quaternion components.
-The 48-element double cover is not the 48-element cube group obtained by
-adding spatial reflections. A reflection convention and its action on the
-state must be specified separately.
-
-### A3. The 48-channel reference block and its matrices
-
-The reference block labels one channel by each element of `2O`. Multiplying
-a group label gives a fixed permutation of the 48 coordinates. Neighbor
-transport is represented by six fixed integer matrices `P_d`, each 48 by 48,
-with the selected signs and direction conventions supplied by the builder.
-The current default uses `body_signs=(1,-1,1)`, 288 nonzero linear terms
-and actual tensor order two; the format also permits order-four examples:
-
-    u_x = sum_(six directions d) P_d b_(x+d).
-
-The matrices specify which channel at a face neighbor contributes to a local
-channel. Opposite directions, sign choices, reciprocity and rotation
-covariance are properties to verify for the chosen matrices. Merely naming
-the group does not prove them for every coupled tensor.
-
-The same coupling may be stored sparsely as nonzero matrix/tensor entries.
-That storage choice does not add a lookup-dependent update law. The global
-operator is assembled from these local blocks and the six spatial shifts;
-a node never evaluates a dense global matrix.
-
-### A4. Representations and the role of an ideal
-
-The complex regular representation decomposes into irreducible group
-representations. Appropriate linear readouts can therefore transform as
-scalars, vectors, tensor components or spinorial representations of this
-finite group. These are transformations of a shared integer state, not four
-different scalar update rules. They do not by themselves establish photons,
-fermions, continuous Lorentz symmetry or quantum statistics.
-
-The group ring can be described by generators `[g]` with `[g][h]=[gh]`.
-Equivalently, a two-sided ideal imposes the relations
-
-    X_e-1=0,       X_g X_h-X_(gh)=0.
-
-An ideal identifies algebraic expressions representing the same group
-operation. It does not authorize deleting distinct dynamic states or division
-remainders. A prepared invariant sector may also be expressed by polynomial
-relations; its preservation must be proved under the full update and inverse.
-
-### A5. One fixed polynomial coupling tensor
-
-For each output gear, the input is
-
-    u_(x,i) = sum_m c_m product_(f in m) v_(x+offset_f, gear_f),
-    c_m in Z,       number of input factors <= 3.
-
-This is an order-at-most-four tensor when the output index is counted. It is
-not the rank-four Riemann curvature tensor. Its entries remain fixed during
-the run. An effective link strength may depend on evolving registers because
-the polynomial contains products; that is different from replacing tensor
-entries at runtime.
-
-Every monomial reads only its target node and at most one face neighbor.
-For physical link gears, both geometric endpoints must be counted when
-checking strict single-edge support. Storage-local reads alone are not a
-proof of that stronger condition.
-
-Old-`a` reads are permitted only when their gear dependency graph is acyclic.
-All forward inputs still read one complete old snapshot; the ordering is
-used by the inverse, not by the forward loop.
-
-### A6. The single scalar operation
-
-At every node and gear, use the same Euclidean division:
-
-    ell, r_next = divmod(2*u+r, 6)
+    ell, r_next = divmod(2*u + r, 6)
     a_next = b
-    b_next = ell-a
+    b_next = ell - a
 
-Equivalently,
+The denominator is always six. A retained projective denominator used by a research decoder is an ordinary counted channel, not a replacement for this divisor. A static timestep used to compile coefficients is fixed before a run.
 
-    2*u+r = 6*(b_next+a)+r_next,       0 <= r_next < 6.
+The exact identity is
 
-The convention also applies to negative input. All intermediate values,
-quotients and remainders are exact integers. There is no adjustable divisor
-argument in the engine or tensor. The previous variable-divisor models are
-superseded; their calibrated predictions do not automatically transfer to
-this law. See the [migration note](DIVISOR_AUDIT.md).
+    6*(b_next + a) = 2*u + r - r_next.
 
-### A6a. Exact inverse and the distinction from a mirror
+From the new state, old b is a_next. Recover old-a inputs in the validated dependency order, then compute
 
-Recover old `b=a_next`. In the validated dependency order, evaluate each old
-input using the recovered old `b` and any earlier recovered old `a`, then set
+    r = (r_next - 2*u) mod 6
+    a = (2*u + r - r_next)//6 - b_next.
 
-    r = (r_next-2*u) mod 6,
-    a = (2*u+r-r_next)//6 - b_next.
+The division is exact. This recovers both histories and every remainder. Inversion is not a physical time-reversal or CPT theorem. No reset, projection, normalization, future-state lookup or click callback is permitted.
 
-The division is exact. This recovers the full retained state. Invertibility
-is not boundedness, physical energy conservation or a proof of a preferred
-arrow of time. For b-only inputs, `M(a,b,r)=(b,a,5-r)` is a reversor; that
-particular mirror need not apply to general old-history couplings.
+The integer pair q=a+b, p=6*a+r is an alternative lossless encoding: a,r=divmod(p,6) and b=q-a. This coordinate identity is not itself a physical canonical-momentum or Hamiltonian derivation.
 
-### A7. Node code and connection to the rest of the board
+## Readout, clocks and conservation
 
-The elementary operation is
+For a saved transition, ell=b_next+a. A canonical arithmetic event requires ell nonzero and a changed complete triple. Its remainder displacement is delta=(r_next-r) mod6. Classes are C0 for delta0/3, C1 for1/2 and C2 for4/5. Legal Rule3 transitions preserve remainder parity, so their emitted class is C_(u mod3). A retained oscillator can evolve while emitting no such events.
 
-```python
-def rule3(a, b, r, u):
-    quotient, remainder = divmod(2 * u + r, 6)
-    return b, quotient - a, remainder
-```
+The decoder is passive and versioned. Tensor labels identify an observation convention; they do not turn an arithmetic event into a physical detector outcome. A material record and its backreaction require counted retained channels and source terms.
 
-The shared engine first evaluates the fixed local tensor from the old
-snapshot, then applies this operation componentwise. Preparation constructs
-the graph, tensor and complete integer seed before the first update.
-Observers read histories and never inject state, choose branches, reset
-clocks or alter links between updates.
+Summing the recurrence gives
 
-### A8. What remains free
+    6*sum(ell) = 2*sum(u) + r_initial - r_final.
 
-The model designer chooses the number and interpretation of gear types,
-the allowed graph and boundary conditions, fixed integer tensor entries,
-and the initial `a,b,r` arrays. A decoder and any physical-unit calibration
-must also be declared. They are not hidden dynamic variables.
+This is an exact integer ledger, not a physical energy law. Reciprocal force derivatives can establish a common potential under their stated assumptions; they do not automatically bound discrete trajectories or conserve physical stress. Conditional uniform-remainder counts do not establish a preparation measure or the Born rule.
 
-There is no independently chosen `num/den` for a channel. Effective families
-with other coefficients are hypotheses about collective or retimed dynamics.
-An exact claim needs an injective encoding `E` and a fixed number of steps
-`m` satisfying `W_T^m E = E F` on a declared invariant sector, including all
-retained information required for reversal. Matching one frequency is weaker.
+## Exact native homogeneous massless source
 
-### A9. What a click means in the code
+A six-channel construction stores volume W, dust charge D, scalar charge P, reference velocity, scalar offset and a coordinate-time counter. Its unchanged Engine input is u_W=6W+18D and u_i=6b_i for the other channels. Prepared source/reference histories are equal; all carries remain explicit.
 
-An official click is a passive record with nonzero quotient when the complete
-local triple changes, subject to its declared observation label. For the
-remainder increment modulo six, classes distinguish zero, positive and
-negative turns. They do not select the next state.
+For a positive integer calibration N, define
 
-An absent record does not always mean the quotient was zero: a nonzero
-stationary triple can have a nonzero quotient and no click. Reconstructing a
-state from clicks therefore needs a proved decoder and its declared initial
-information. The [geodesic example](PPWAVE_OPERATIONAL_ROUTE.md) makes this
-restriction explicit.
+    h=1/N, V=W/(4*N*N), J=W-W_old+3*D, U=J/(4*N).
+    W_next=2*W-W_old+6*D.
 
-### A10. Balances, clocks and stability
+The full-history invariant is
 
-The quotient-remainder ledger is exact by construction. A physical charge,
-energy or stress balance needs its own definition and proof for the selected
-tensor. Reciprocity can be checked as the existence of a polynomial potential,
-but it is not sufficient to establish Einstein constraints or physical energy.
+    J*J - 12*D*W - 24*N*N*P*P = 0.
 
-Periodic registers, transported patterns and prepared interacting cycles can
-serve as clock candidates. A finite return of the complete state proves
-repetition of that orbit, not stability for all seeds. Unbounded integer
-orbits remain possible even under an invertible rule.
+It gives the exact physical flow
 
-A score on a closed periodic orbit cannot increase strictly at every step.
-A proposed complexity-oriented selection mechanism must retain the information
-needed for reversal and define how observable outcomes follow from the state.
-No such physical collapse or global optimization law is supplied by Rule3 alone.
+    V_next=V+h*U+3*D*h*h/4, U_next=U+3*D*h/2,
+    U*U-3*D*V-3*P*P/2=0.
 
-### A11. Retained constructive examples
+On the declared expanding chart, scale factor A=V^(1/3), k=-U/(3V), scalar velocity=P/V and dust density=D/V reconstruct the sourced flat homogeneous Einstein solution. Roots and anchored logarithms are passive readouts; they do not feed the Engine. The counter calibrates coordinate proper time, not an operational material clock.
 
-The [bounded circuit](BOUNDED_CIRCUITS.md) realizes routing and periodic clocks
-on a proved Boolean sector. The [integer reciprocal examples](INTEGER_RECIPROCAL_GEOMETRY.md)
-show prepared coupled cycles and explicit instability controls.
+The source has rho=P*P/(2*V*V)+D/V and fluid pressure=P*P/(2*V*V). With H=U/(3V),
 
-The [local pp-wave example](PPWAVE_PALATINI_LOCAL.md) transports a chosen
-nonflat vacuum metric sector and checks exact interior geometric residuals.
-Its periodic chart seams fail those equations. The [geodesic extension](PPWAVE_OPERATIONAL_ROUTE.md)
-encodes selected one-axis worldlines at a carrier node, with exact calibrated
-readouts. It does not yet produce a packet moving on board links, universal
-clocks or matter backreaction.
+    H_dot=-D/(2V)-P*P/(2*V*V),
+    A_ddot/A=-D/(6V)-P*P/(3*V*V).
 
-Each construction must be validated under the fixed-six engine. Historical
-large-divisor run records are not evidence for the migrated construction.
+For positive D and the expanding chart, density decreases and no bounce or repeated homogeneous density burst occurs. The long-time integer cost is logarithmic in update count for this exact native recurrence. Spatial modes and a mass term are outside this construction.
 
-### A12. Physical acceptance requirements
+## Native anisotropic extension and source clock
 
-A common spacetime metric must be inferred consistently from local clock
-comparisons and signal propagation, and predict other test bodies without
-species-specific fits. Geodesic motion is not enough: the metric must obey
-a stated source equation and preserve its constraints. A coordinate chart,
-local graph or set of tensor-named counters does not establish Einstein space.
+The separate eight-channel diagonal Bianchi I candidate adds two frozen shear charges S1,S2, with S3=-S1-S2, to the native massless state. The same linear volume recurrence preserves
 
-Quantum claims separately require observable probabilities, interference,
-contextuality or Bell-test consistency under stated assumptions, and appropriate
-scaling of the state space. No reference to a finite group, complex readout,
-reversible branch or click alone proves those properties.
+    J*J-12*D*W-24*N*N*(P*P+sum_i(S_i*S_i))=0.
 
-### A13. Validation and source of truth
+The common source and metric obey
 
-The executable tensor, complete seed, scalar engine and declared decoder are
-the reproducible specification. Compare complete states, inverse results,
-local support and event records. Keep exact theorems, finite run evidence and
-physical hypotheses separate. See [validation](VALIDATION.md) for commands and
-current scope; superseded record files must not be promoted by wording alone.
+    H_i=U/(3*V)+S_i/V, I_dot=1/V,
+    A_i=V^(1/3)*exp(S_i*I), phi=phi_ref+P*I,
+    ds²=-dt²+sum_i(A_i*A_i*dx_i*dx_i).
+
+The anchored integral I is a passive logarithm of actual U and retained Uref. All sixteen Einstein components match the declared homogeneous massless scalar and comoving dust source. The exact source clock is tau_source=(J-Jref)/(6*D*N); J-Jref-6*D*T is invariant when the retained marker T advances by one. The source clock does not read that marker. It is a comoving proper-time diagnostic, not an autonomous emitter, receiver or record.
+
+Conserved probe covectors give E²=m²+sum_i(p_i²/A_i²), dx_i/dt=p_i/(A_i²*E), and d(tau_probe)/dt=m/E. These are passive geodesic diagnostics, not retained particle evolution. Spatially varying shear can keep the pointwise Hamiltonian constraint zero while violating momentum constraints; the homogeneous reader rejects that preparation. Thus the added shear charges do not establish a spatial Einstein law.
+
+The exact generic carry-aware momentum identity is pi=6*(b-a)+r and Delta pi=2*(u-6*b). Suitable reciprocal, shift-invariant face potentials can therefore conserve a contracted charge. The separate face control proves local transport, not a stress-complete coupling to this Bianchi source or automatic energy stability.
+
+## Constrained massive homogeneous coordinates
+
+A distinct six-channel candidate stores one projective denominator and numerators for four coordinates x,y,z,w and log-frame beta. Define
+
+    sigma=(x*x+3*y*y)/2, q=z*z+3*w*w,
+    p=x*z+3*y*w, eta=y*z-x*w,
+    k=-sigma-q/12, phi=2*sigma-q/6-eta, d=sigma-q/12+eta.
+
+Then 6*k*k-p*p-phi*phi-2*d*d is identically zero. This identity is accompanied by an independently checked cubic coordinate force whose pushforward is
+
+    k_dot=3*k*k-(phi*phi+d*d)/2,
+    p_dot=3*k*p-phi, phi_dot=p, d_dot=3*k*d/2, beta_dot=k.
+
+The same beta defines ds²=-dt²+exp(-2beta)(dx²+dy²+dz²). Exponentiation is passive and absent from the homogeneous polynomial force. The actual retained-history recurrence, not an assumed Euler surrogate, has a first-order finite-time convergence proof on its stated prepared expanding family. Constraint-only wrong-force and wrong-metric controls are rejected.
+
+The old-history subtraction acts in coordinate space, so the earlier obstruction for separately null physical vectors does not prohibit this law. This is a changed physical encoding, not a repair or equivalence claim for old massive45 traces. Exact finite-step dust-mass conservation still fails, scalar phase divided by mass is not universal proper time, and projective integer growth prevents efficient long-time refinement.
+
+## Compatibility and acceptance
+
+Equal decoded fields do not imply equal complete states. The two six-channel restrictions of full45 use different default omitted carries and reduced labels. Their common evolution polynomial does not authorize cross-default projection. A separately prepared compatible embedding can be checked without modifying an existing trajectory.
+
+A complete certificate joins tensor, full seed, interpretation, protocol, horizon, trace and current source. Different candidates or timestep laws retain separate identities. A native compiler's successful workspace proof cannot certify a different physical tensor.
+
+Source locations: `validation/sourced_map/`, `validation/unified_law/`, `validation/integration_contract/`, `validation/system_acceptance/`. The one installed implementation is `universe24/system/`; the source-only acceptance command reports both positive scoped results and rejected/blocked physical claims.

@@ -1,0 +1,190 @@
+{
+  "scope": "exact continuum/readout controls; no new retained clock, Engine law or physical acceptance",
+  "checks": {
+    "rindler_nonuniform_clocks_zero_riemann": "passed",
+    "equal_rest_rates_flat_and_de_sitter_different_curvature": "passed",
+    "de_sitter_einstein_lambda_3H_squared": "passed",
+    "ten_timelike_rates_reconstruct_all_metric_entries": "passed",
+    "held_out_rate_predictions": "passed",
+    "stationary_only_wrong_metric_rejected_by_moving_rates": "passed"
+  },
+  "rindler": {
+    "domain": "1+a*x>0",
+    "clock_rate": "a*x + 1",
+    "coordinate_acceleration_connection": "a*(a*x + 1)",
+    "riemann_nonzero_entries": 0,
+    "ricci_scalar": "0"
+  },
+  "same_rest_clock_control": {
+    "flat_rate": "1",
+    "de_sitter_rate": "1",
+    "flat_ricci_scalar": "0",
+    "de_sitter_ricci_scalar": "12*H**2",
+    "de_sitter_tidal_R_x_t_x_t": "-H**2",
+    "interpretation": "de Sitter is a kinematic/Einstein-Lambda oracle, not a current Universe24 solution"
+  },
+  "tomography": {
+    "input_metric": [
+      [
+        "-652571/226800",
+        "31/90",
+        "-263/630",
+        "53/126"
+      ],
+      [
+        "31/90",
+        "2",
+        "1/3",
+        "0"
+      ],
+      [
+        "-263/630",
+        "1/3",
+        "3",
+        "1/7"
+      ],
+      [
+        "53/126",
+        "0",
+        "1/7",
+        "4"
+      ]
+    ],
+    "recovered_metric": [
+      [
+        "-652571/226800",
+        "31/90",
+        "-263/630",
+        "53/126"
+      ],
+      [
+        "31/90",
+        "2",
+        "1/3",
+        "0"
+      ],
+      [
+        "-263/630",
+        "1/3",
+        "3",
+        "1/7"
+      ],
+      [
+        "53/126",
+        "0",
+        "1/7",
+        "4"
+      ]
+    ],
+    "samples": [
+      {
+        "velocity": [
+          "0",
+          "0",
+          "0"
+        ],
+        "rate_squared": "652571/226800"
+      },
+      {
+        "velocity": [
+          "1/10",
+          "0",
+          "0"
+        ],
+        "rate_squared": "632411/226800"
+      },
+      {
+        "velocity": [
+          "-1/10",
+          "0",
+          "0"
+        ],
+        "rate_squared": "663659/226800"
+      },
+      {
+        "velocity": [
+          "0",
+          "1/10",
+          "0"
+        ],
+        "rate_squared": "664703/226800"
+      },
+      {
+        "velocity": [
+          "0",
+          "-1/10",
+          "0"
+        ],
+        "rate_squared": "626831/226800"
+      },
+      {
+        "velocity": [
+          "0",
+          "0",
+          "1/10"
+        ],
+        "rate_squared": "624419/226800"
+      },
+      {
+        "velocity": [
+          "0",
+          "0",
+          "-1/10"
+        ],
+        "rate_squared": "662579/226800"
+      },
+      {
+        "velocity": [
+          "1/10",
+          "1/10",
+          "0"
+        ],
+        "rate_squared": "643031/226800"
+      },
+      {
+        "velocity": [
+          "1/10",
+          "0",
+          "1/10"
+        ],
+        "rate_squared": "604259/226800"
+      },
+      {
+        "velocity": [
+          "0",
+          "1/10",
+          "1/10"
+        ],
+        "rate_squared": "635903/226800"
+      }
+    ],
+    "held_out": [
+      {
+        "velocity": [
+          "1/8",
+          "-1/12",
+          "1/16"
+        ],
+        "rate_squared": "2367569/907200"
+      },
+      {
+        "velocity": [
+          "-1/7",
+          "1/20",
+          "-1/15"
+        ],
+        "rate_squared": "2391847/793800"
+      }
+    ],
+    "apparatus_status": "not_tested: samples call the passive readout"
+  },
+  "physical_gates": {
+    "operational_clock": "not_tested",
+    "engine_geodesics": "not_tested",
+    "einstein_limit": "not_tested"
+  },
+  "source_sha256": {
+    "validation/einstein_node_audit/clock_geometry.py": "9a78e0b3882331cda312546cf34f3020b776d8bbb5e90d5d279f84be43a31104",
+    "universe24/observe/metric_clocks.py": "d65590f41e31f382de83196f54ab7ece27da5d69e5bba9da3562fc839823d190"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "output": "/workspace/scratch/d01c5ea2900a/universe24-sourced/runs/sourced-map/variational.json",
+  "massive_native": "not_implemented",
+  "midpoint_irreducible_degree": 8,
+  "split_refinement": [
+    {
+      "steps": 2,
+      "dt": "0.0625",
+      "max_field_error": "0.00057383505190567188771661",
+      "abs_H": "0.000461462361612375522595514",
+      "observed_order": null
+    },
+    {
+      "steps": 4,
+      "dt": "0.03125",
+      "max_field_error": "0.000143621578417834568439303",
+      "abs_H": "0.000115164506721481339264004",
+      "observed_order": "1.99836357269219"
+    },
+    {
+      "steps": 8,
+      "dt": "0.015625",
+      "max_field_error": "0.0000359155805945725641208681",
+      "abs_H": "0.0000287786009022506019341228",
+      "observed_order": "1.9995907803401"
+    },
+    {
+      "steps": 16,
+      "dt": "0.0078125",
+      "max_field_error": "0.0000089795319299402936836339",
+      "abs_H": "0.00000719386802680225902862494",
+      "observed_order": "1.99989768800843"
+    }
+  ]
+}
