@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "scope": "JavaScript DOM/canvas smoke; not browser layout or screenshot verification",
+  "script_source_sha256": "dbf00a870a59e4ece5b465fe1cb375b4a8c9448ffe3361e8005269ee31ac3288",
+  "harness_source_sha256": "1affb2ba4ab40ea3f52d817d4063ed942dedbf35dfd94b97ad2d3c8200b7d7ca",
+  "report_identity": {
+    "schema": "universe24/geodesic-board/1",
+    "run_id": "219f1421653726571b0bafa14cd6d8ca00eff24f39b7fb79a7ee1d226796f2d6",
+    "bundle_id": "6ac70caef83b8d2383304623f2ea9eede427afb26503c2e9fe7afdd4b0fc2ca4",
+    "tensor_sha256": "fbbf8f9b4128563e786ff0b57069fe18320698451c0ac9acb0c947c568cfc617"
+  },
+  "tested": {
+    "saved_slices": 5,
+    "selected_state_checks": 12,
+    "playback_starts": 2,
+    "playback_pause": true,
+    "playback_completion": true,
+    "finite_coordinate_arguments": 2700,
+    "canvas_strokes": 220,
+    "exact_replay_passed_tag": true,
+    "source_energy_and_constraint_text": true
+  }
+}

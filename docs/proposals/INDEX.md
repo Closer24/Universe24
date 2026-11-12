@@ -8,6 +8,7 @@ Historical results keep their original source revision and limitations.
 
 | Work | Reference | Use in current research | Integration blocker |
 | --- | --- | --- | --- |
+| Projective sourced refinement | [Report](../TEAM48_REFINEMENT.md), `validation/geometry/team48/` | Actual 41/44-channel rational-step integer encoding; positive-frame invariant; sourced temporal and exploratory joint convergence evidence | General Einstein/spatial stability unestablished; several refinement groups fail; exponential integer bit growth; no apparatus. Same supported bundle/runtime only. |
 | Integer ADM | [Derivation](../INTEGER_ADM.md), [baseline](https://github.com/Closer24/Universe24/tree/7d238e84a2167a4d3fe7bc7942da0cbf97bd29b2) | Independent coupled equation and geometric source reference | 4,771 Einstein channels plus historical communication; finite-horizon workspace. |
 | Vacuum frame | [Frame48](../FRAME48_RESEARCH.md), [PR #36](https://github.com/Closer24/Universe24/pull/36) | Polynomial frame evolution and exact reversible lift | 48 channels consumed by vacuum alone; constraints, nondegeneracy and refinement unresolved. |
 | Paired coupled frame | [PR #39](https://github.com/Closer24/Universe24/pull/39), [pinned derivation](https://github.com/Closer24/Universe24/blob/35344a1ba5c12c857404115e893911411ece7d35/docs/FRAME_MATTER.md) | Scalar/dust backreaction, stress signs and independent spacetime checks | 70 channels; constraint drift, refinement and stability; no apparatus. |
@@ -17,6 +18,7 @@ Historical results keep their original source revision and limitations.
 | Fixed-six reference | [Pinned source](https://github.com/Closer24/Universe24/blob/7d238e84a2167a4d3fe7bc7942da0cbf97bd29b2/universe24/layers/reference_model.py) | Mechanical fixture and scalar-oracle control | No established physical metric, apparatus or Born law. |
 | Clock/click/Born/Bell/complexity audits | [PR #38](https://github.com/Closer24/Universe24/pull/38) | Negative controls and independent acceptance criteria | Audits identify missing coupling and physical laws; they do not supply them. |
 | Local history and phase mechanisms | [PR #43](https://github.com/Closer24/Universe24/pull/43), [pinned synthesis](https://github.com/Closer24/Universe24/blob/3a02ade62f09db68e2c78d7b0eb7db8f88f81304/docs/COMPLEXITY_MECHANISMS.md) | 31-channel sensor/rotor with retained-history-dependent routing; phase/intensity checks | All 16 declared growth/persistence cases fail; no shared-metric apparatus or Born law. Adding it to 44 geometry/matter channels would require 75. |
+| Same-board phase observer | [Staged plan and evidence](../CLOCK_LINK_OBSERVER_PLAN.md), [issue #45](https://github.com/Closer24/Universe24/issues/45) | Existing44 carrier plus four reversible local/face intensity records; one48-channel bundle with history-sensitive canonical events | One-way apparatus without calibrated clock/backreaction; no complexity selection, exclusive Born measurement or Bell result. |
 
 At inspection on 2026-11-11, #38 and #43 remained open; #39 and #42 remained
 open drafts. #42 reports passing CI for its pinned head. These are proposal
