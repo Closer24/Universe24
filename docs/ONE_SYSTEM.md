@@ -1,5 +1,38 @@
 # Universe24: one system, specification and research status
 
+## Reviewed execution and acceptance
+
+The installed interface remains `python -m universe24`, with one fixed Rule3
+Engine, one saved-bundle runtime and one passive canonical decoder. The
+source-only command `python -m validation.system_acceptance --out NEW_DIRECTORY`
+executes a fixed evidence sequence through that runtime. It is not a physical
+model selector and does not combine different laws into one certificate.
+
+The complete disposition of retained ideas is
+`docs/research/system_acceptance/idea_ledger.md`; independent architecture
+review, physical-domain limits, the massive-encoding attempt and exhaustive
+burst/growth evidence are in the same directory. Current algebra is
+`docs/MODEL.md`. All saved receipts bind the complete seed, tensor, model,
+protocol, horizon, trace, observations and repository-owned Python sources.
+The collector rejects source changes during execution and requires fresh
+output, preserving historical evidence.
+
+Two distinct six-channel constructions now satisfy restricted physical gates:
+the native massless scalar/dust law gives exact sourced homogeneous sampling;
+the massive spinor law gives an exact decoded constraint and a finite-time
+convergence theorem on its prepared expanding domain. Neither repairs or
+inherits the old massive45 trajectory. General spatial geometry, operational
+apparatus, a justified Born measure and a joint recurrent-burst/complexity
+model remain unestablished. The generic runtime therefore retains blocked
+general physical acceptance and no default physical model.
+
+The repeated-activity search keeps one existing Boolean selector tensor and
+enumerates its complete ring domain. Recurrent event peaks are present,
+while no preparation passes the unchanged sustained structural-growth gate.
+For the separate massless homogeneous Einstein source, positive dust/scalar matter
+implies decreasing density and deceleration, excluding a bounce within that
+declared model. Neither result is relabeled as cosmological completion.
+
 The [central source ledger](research/central_integration/README.md) connects
 the board, completion, node-clock and retained-apparatus sources. The executable
 `validation.integration_contract.massive45` gate proves their shared massive45
@@ -18,6 +51,17 @@ supply an accepted general Einstein tensor within that budget. A compatible
 bundle can be executed and checked without declaring its fields to be physical
 geometry. Mechanical success and physical validation are separate results.
 The coordination and acceptance contract is [issue #40](https://github.com/Closer24/Universe24/issues/40).
+
+The source-only [sourced complete-history map](research/sourced_map/README.md)
+implements an exact sampled expanding homogeneous massless-scalar plus dust
+FLRW solution in six retained channels. Its physical constraint includes both
+volume histories; one immutable linear tensor preserves that constraint and
+all carries. The existing runtime saves and verifies these research bundles.
+Passive root/log field reconstruction is explicitly bound to the physical
+coordinate chart and is distinct from canonical arithmetic clicks. This is a
+different research tensor from massive45; massive, spatial and operational
+clock extensions remain open. General physical gates and the default model
+are unchanged. The construction is tracked in [issue #58](https://github.com/Closer24/Universe24/issues/58).
 
 The source-only [node, clock and Einstein audit](research/einstein_node/README.md)
 separates identities of every valid Rule3 tensor from physical properties of a
@@ -458,6 +502,27 @@ shared-metric clocks and growing complexity between physical bursts remain
 unestablished. The joint runner checks shared truth tables, exact47-to48 bundle
 lineage, report/source hashes and independent replay of all19 saved runs;
 complete measure-control trials retain another4,080 transitions.
+
+The [seven-researcher unified-law continuation](research/unified_law/README.md)
+adds a single shared **six-channel homogeneous spinor/log-frame candidate**.
+Its quadratic physical decoder satisfies the sourced Hamiltonian constraint
+identically. An independently checked cubic proper-time vector field pushes
+forward to the existing full44 homogeneous Einstein–massive-scalar–dust source,
+and beta_dot=k supplies the same nondegenerate metric B=exp(beta). The actual
+retained-history map, ordinary runtime, source/stress and clock observations
+are joined by exact tensor/seed identities. Three fixed-proper-time resolutions
+pass physical-field, phase and dust-mass convergence; a finite-time first-order
+convergence/domain theorem covers the declared prepared family.
+
+This is a restricted new physical coordinate interpretation, not arbitrary-state
+compression of full45 or a solution of the general spatial problem. The old
+Euler and cross-history failures remain controls. Exact decoded constraint does
+not make finite-step source conservation exact: dust-mass drift is still
+nonzero and decreases with refinement. Exponential projective bit growth,
+spatial modes and operational clock/detector construction remain open. A
+separate native arithmetic bridge is not attributed to this tensor. No accepted
+default model or runtime mode is introduced. Reproduce the joint evidence with
+`python -m validation.unified_law.run_all`.
 
 The mathematical source ledger and derivations are preserved in
 [Frame48 research](FRAME48_RESEARCH.md), [integer ADM](INTEGER_ADM.md),

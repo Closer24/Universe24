@@ -1,5 +1,13 @@
 # Central source integration
 
+Current execution/decision review is in
+`docs/research/system_acceptance/architecture_review.md` and
+`docs/research/system_acceptance/idea_ledger.md`. Run
+`python -m validation.system_acceptance --out NEW_DIRECTORY` for fresh
+cross-source acceptance through the one supported runtime. The new constrained
+six-channel laws below are separate scoped physical constructions; the older
+massive45 defects remain valid controls.
+
 One supported runtime executes immutable prepared bundles through fixed Rule3.
 The one saved-run geodesic board is produced with:
 
@@ -22,6 +30,8 @@ Source integration does not grant a physical certificate or change a default.
 | #55 | `f83924d69367641751ee4815cefaf97996748774` | Guarded exact45→6 sector, native identities and saved full-state/click reconstruction |
 | #54 | `d4f281c0839887ac7af8c050c406b2081f7c9baf` | Reciprocal homogeneous apparatus47, record48 and preparation-measure controls |
 | #57 | `455cc5f3ec4ae4a3992ddf032f95c884321ff466` | Interaction-to-native composition, complete-state certificates and scoped packet controls |
+| #59 | `228f581d02971435c0cd70548ff56267378ffc31` | Exact native massless scalar/dust source, full-history constraint and proper-time sampling |
+| #60 | `6b82369830bf763cbaddcc37bd972c555faea782` | Constrained massive coordinates, same-source metric and finite-time convergence |
 
 The new cross-team gate runs in normal unittest discovery and CI:
 
@@ -71,12 +81,15 @@ as if they already shared one physical construction. A direct spatial scalar
 extension of apparatus47 needs three gradients: 50 channels, or 51 with record.
 Any proposed compression must prove closure for both histories and all carries.
 
-The immediate solution-search target is a complete-state temporal construction
-for the small homogeneous sector, with explicit workspace and a preserved
-constraint. It must retain the tick-two negative as a regression control.
-Only then can it support a broader coupled-model claim. See the
+That complete-state homogeneous target now has two distinct scoped results:
+native massless volume history and massive quadratic physical coordinates.
+Neither makes the old tick-two negative pass. The remaining target is an
+efficient massive encoding plus a valid sourced spatial/operational-apparatus
+extension within the total budget. See the
 [temporal handoff](temporal_handoff.md) for the restricted obstruction and
-acceptance sequence.
+its original acceptance sequence; the current boundaries are in
+`docs/research/system_acceptance/physical_boundary.md` and
+`docs/research/system_acceptance/massive_boundary.md`.
 
 ## Reproduce the imported research
 

@@ -21,10 +21,16 @@ Historical results keep their original source revision and limitations.
 | Same-board phase observer | [Staged plan and evidence](../CLOCK_LINK_OBSERVER_PLAN.md), [issue #45](https://github.com/Closer24/Universe24/issues/45) | Existing44 carrier plus four reversible local/face intensity records; one48-channel bundle with history-sensitive canonical events | One-way apparatus without calibrated clock/backreaction; no complexity selection, exclusive Born measurement or Bell result. |
 | Retained preference and reciprocal apparatus | [Eight-lane plan](../RETAINED_SELECTION_PLAN.md), [source ledger](../research/selection/08-acceptance.md) | Native3 reversible preferred-port routing with origin memory; separate sourced47 homogeneous reciprocal oscillator; raw-feedback48 changes later textured carrier phase | Native growth0/36; ready memory is consumed; Born measure unresolved; sourced47 energy unbounded/spatial momentum incomplete; raw48 record stress absent. |
 
-At inspection on 2026-11-11, #38 and #43 remained open; #39 and #42 remained
-open drafts. #42 reports passing CI for its pinned head. These are proposal
-results, not claims that the branches are merged or that their historical test
-counts apply to the current source.
+Branch status is not a scientific result. Use the exact source pin and current
+CI when reproducing any proposal; historical test counts do not certify a
+different tree. The current complete acceptance/disposition ledger is
+`docs/research/system_acceptance/idea_ledger.md`.
+
+| New integrated source | Accepted scope | Excluded claim |
+| --- | --- | --- |
+| `validation/sourced_map/`, source `228f581d02971435c0cd70548ff56267378ffc31` | Exact native six-channel expanding homogeneous massless scalar/dust Einstein flow, including retained-history constraint and source balance | General spatial gravity, mass term, bounce and operational detector |
+| `validation/unified_law/`, source `6b82369830bf763cbaddcc37bd972c555faea782` | Same-candidate massive constraint, source, metric and finite-time convergence | Efficient long-time massive encoding, exact finite-step dust conservation and spatial apparatus |
+| `validation/system_acceptance/` | Replayed per-law receipts, explicit rejected joins and exhaustive native-selector recurrence/growth controls | Pooling separate physical successes or promoting recurring activity to sustained complexity/cosmological bursts |
 
 The source-only adapter `validation/team48_contract.py` now imports #42's
 pinned `charged_positive` tensor and complete first-sector staggered audit seed

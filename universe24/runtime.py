@@ -16,9 +16,14 @@ def status():
         "locality": "target and at most one physical face edge per monomial",
         "accepted_physical_model": None,
         "full_physics_acceptance": "blocked",
+        "restricted_research_results": {
+            "native_massless_homogeneous_sector": "Exact sourced Einstein sampling on a declared complete-history domain",
+            "massive_homogeneous_spinor_sector": "Exact decoded constraint and finite-time convergence; costly integers and finite-step dust drift",
+            "joint_bursts_and_complexity_growth": "Not established by the separate recurrent-activity controls",
+        },
         "blockers": [
             "No validated <=48-channel coupled geometry, matter and apparatus encoding",
-            "Discrete Einstein constraints and convergent refinement unproved",
+            "General spatial Einstein constraints and convergent refinement unproved; restricted homogeneous sectors are separate research results",
             "Shared-metric operational clocks and detector physics unproved",
         ],
         "coordination": "https://github.com/Closer24/Universe24/issues/40",
@@ -63,8 +68,8 @@ def main(argv=None):
             from universe24.system.runtime import verify_run
             result = verify_run(args.run)
             if args.require_physics:
-                # Independent physical validators do not exist yet. A caller-supplied
-                # manifest, green arithmetic check or replay cannot grant this claim.
+                # Restricted research validators do not certify the general joint
+                # model. A manifest or successful replay cannot grant this claim.
                 result["full_physics_acceptance"] = "blocked"
                 print(json.dumps(result, indent=2))
                 parser.exit(1, "Einstein/clock/detector acceptance remains blocked; see issue #40.\n")

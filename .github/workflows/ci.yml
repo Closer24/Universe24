@@ -91,6 +91,8 @@ jobs:
           python -m validation.generic_couplings --out runs/generic-couplings
           python -m universe24 verify --run runs/generic-couplings/runtime/full
           python -m universe24 verify --run runs/generic-couplings/runtime/reduced
+      - name: Reviewed system acceptance and same-law burst growth controls
+        run: python -m validation.system_acceptance --out runs/system-acceptance
       - name: Test evidence
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
