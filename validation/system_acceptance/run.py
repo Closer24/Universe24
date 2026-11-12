@@ -80,6 +80,16 @@ def require_same_run(left, right):
     return True
 
 
+def inspect_claimed_run(path, claim):
+    """Bind a package's summary to independently replayed complete bytes."""
+    receipt, _ = inspect_saved_run(path)
+    for key, actual in (('run_id', receipt.run_id), ('bundle_id', receipt.bundle_id),
+                        ('tensor_hash', receipt.tensor_sha256)):
+        if claim.get(key) != actual:
+            raise ValueError('Research summary differs from saved run: ' + key)
+    return receipt
+
+
 def _massive_run(out):
     from validation.unified_law import common, constrained_coordinates, independent_review
     from validation.unified_law.clock_acceptance import same_candidate_audit
@@ -251,6 +261,17 @@ def run(out):
     massive, massive_receipt = _massive_run(out / 'massive')
     anisotropic, anisotropic_receipts = _anisotropic_run(out / 'anisotropic')
     bursts = burst_growth.audit(out / 'bursts')
+    from validation.local_unification.run_all import collect
+    from validation.gauge_loop.audit import run as gauge_audit
+    local = collect(out / 'local-unification')
+    gauge = gauge_audit(out / 'gauge-loop')
+    local_receipt = inspect_claimed_run(
+        out / 'local-unification/geometry/runtime', local['main_identity'])
+    gauge_receipts = {
+        name: inspect_claimed_run(out / 'gauge-loop/static' / name, claim)
+        for name, claim in gauge['static_loop']['saved_histories'].items()}
+    gauge_receipts['dynamic'] = inspect_claimed_run(
+        out / 'gauge-loop/dynamic', gauge['dynamic_saved_run'])
     native_receipt, _ = inspect_saved_run(out / 'massless/N24')
     repeated_receipt, _ = inspect_saved_run(out / 'massless/N24')
     require_same_run(native_receipt, repeated_receipt)
@@ -279,6 +300,10 @@ def run(out):
         else:
             raise AssertionError('Invalid physical evidence join accepted: ' + name)
     for name, left, right in (
+            ('local_source_vs_homogeneous_source', local_receipt, native_receipt),
+            ('local_source_vs_static_gauge', local_receipt, gauge_receipts['positive']),
+            ('static_gauge_vs_dynamic_gauge', gauge_receipts['positive'], gauge_receipts['dynamic']),
+            ('same_static_law_different_flux', gauge_receipts['positive'], gauge_receipts['negative']),
             ('anisotropic_vs_massive', anisotropic_receipts[0], massive_receipt),
             ('anisotropic_same_tensor_different_calibration', anisotropic_receipts[0], anisotropic_receipts[1])):
         try:
@@ -296,7 +321,8 @@ def run(out):
     final_sources = source_hashes()
     if initial_sources != final_sources:
         raise ValueError('Sources changed during the acceptance run')
-    evidence = {'massless': native, 'massive': massive, 'anisotropic': anisotropic, 'bursts': bursts}
+    evidence = {'massless': native, 'massive': massive, 'anisotropic': anisotropic,
+                'bursts': bursts, 'local_unification': local, 'gauge_loop': gauge}
     files = {}
     for name, report in evidence.items():
         path = out / (name + '.json')
@@ -314,11 +340,23 @@ def run(out):
         'representative_receipts': {'massless': asdict(native_receipt),
                                     'massive': asdict(massive_receipt),
                                     'anisotropic': asdict(anisotropic_receipts[0]),
+                                    'local_source_records': asdict(local_receipt),
+                                    **{'gauge_' + name: asdict(value)
+                                       for name, value in gauge_receipts.items()},
                                     'native_selector': asdict(burst_receipt),
                                     'native_selector_recurrent_witness': asdict(recurrent_receipt)},
         'same_run_join': 'passed for independent replay of the same saved bytes',
         'rejected_cross_run_joins': negative,
-        'idea_ledger': _ledger(native, massive, bursts, anisotropic),
+        'idea_ledger': _ledger(native, massive, bursts, anisotropic) + [
+            {'idea': 'local_carrier_records_and_finite_null_source_chart',
+             'decision': 'accepted_scoped', 'run_id': local_receipt.run_id,
+             'evidence': local['main_statuses'],
+             'growth_panel': local['supporting_reports']['organization'],
+             'scope': 'Finite positive causal chart and prepared packet supply; no global periodic positive source, massive body or operational clock.'},
+            {'idea': 'finite_gauge_loop_and_link_exchange_controls',
+             'decision': 'accepted_scoped', 'evidence': gauge['physical_gates'],
+             'scope': 'Separate static Z4 interference and period-three Z2 feedback laws; no combined propagating field.'},
+        ],
         'scope': 'One implementation and validation entry point, several explicitly separate research laws. Success is evidence reproduction, including failed and blocked physical gates.'}
     (out / 'acceptance.json').write_text(json.dumps(result, indent=2, allow_nan=False) + '\n', encoding='utf-8')
     return result

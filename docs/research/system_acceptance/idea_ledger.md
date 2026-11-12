@@ -39,12 +39,14 @@ publication parent. Neither baseline's tests certify its descendant. Fresh
 combined acceptance must record the final integration commit and current
 source hashes; this ledger is not a new CI result or an additive test count.
 
-The acceptance snapshot stops at published #64. The cube-wave work coordinated
-in issue #62 and the newer local-causal work coordinated in issue #40 are
-unpublished handoffs excluded from this snapshot. Coordination messages do not
-establish their execution, source integration or physical acceptance. They
-require a published exact source, complete allocation and fresh acceptance
-evidence before entering this ledger's positive results.
+The central acceptance also includes the published local-source construction
+at `fb4a09b2925a876d6c92493b2784fe30c16ed2e1` and gauge controls at
+`eb90805563c203625fbafbecc8696e39cba7ea2b`. Their full collections are executed
+and their main saved identities are independently replayed. Separate source,
+static gauge, dynamic gauge and flux preparations cannot be joined as one law.
+The detailed disposition of every formerly open PR and issue is in
+`docs/RESEARCH_AGENDA.md`. The cube-clock recovery checkpoint remains excluded
+from runnable acceptance because its implementation and metadata are incomplete.
 
 ## Geometry, sources and temporal construction
 
@@ -106,3 +108,17 @@ the successful complete-state constraint mechanism, a manageable precision
 cost and a calibrated retained apparatus. General Einstein geometry, Born
 statistics, antiparticles and sustained complexity remain separate acceptance
 obligations. None follows by summing the positive rows above.
+
+## Added local source and gauge results
+
+The twelve-channel local-source construction joins actual repeated carrier/record
+scattering, packet balance and a restricted positive finite null-source chart
+on the same saved history. The global positive periodic chart is disproved for
+this ansatz. Packet propagation does not receive geometry feedback. Bound bodies,
+material clocks and sustained structural growth are not established.
+
+The static seven-channel Z4 gauge law gives two-path interference with a neutral
+retained intensity reader but an unstable uniform mode. The separate ten-channel
+Z2 law preserves unit links and supports feedback, but its prepared complete
+period divides three and evolving information stays within edge triplets.
+Neither law establishes a combined propagating Maxwell/source/detector system.

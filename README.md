@@ -2,6 +2,12 @@
 
 [Repository](https://github.com/Closer24/Universe24)
 
+Universe24 asks whether the whole universe can follow one local integer law.
+Each node receives information only from its immediate face neighbors and
+updates its own retained integers. There is no direct communication across
+distant nodes. This is the research postulate; deriving quantum observations
+and gravity from it remains a task to test, not an assumed consequence.
+
 Universe24 implements one execution path:
 
 **complete integer seed + immutable local tensor → reversible Engine → passive records → independent verification**.
@@ -54,6 +60,8 @@ A bundle binds tensor, full seed, ownership, protocol and interpretation by hash
 | Retained selection and record feedback | Local memory can change future carrier trajectories and phase | Record stress, bounded interaction energy and general spatial source closure remain incomplete |
 | Repeated activity and structural growth | Exhaustive finite-sector recurrence and a fixed growth criterion are checked independently | Recurring activity is not a cosmological bang; sustained growth is not established |
 | Quantum controls | Complete-trial, non-detection, preparation-measure and locality countercontrols | No derived universal Born rule or physical Bell instrument |
+| Local carrier–record source, twelve channels | Repeated scattering, retained records, exact packet balances and a finite positive two-null-stream Einstein chart on the same saved history | Finite prepared supply; no globally periodic positive-source chart, massive bound body or operational clock |
+| Finite gauge links, seven and ten channels | Static Z4 loop interference and separate dynamic Z2 record/link feedback | Static wave is unstable; dynamic sector has period three and no successive-edge propagation; no combined Maxwell/gravity law |
 
 The anisotropic extension retains two shear charges in eight channels; its exact metric and source share the complete state. A 4,096-update check passed independent scalar comparisons, inverse and full rewind with 26-bit peak integers. Its moving-probe paths and proper-time integrals are passive diagnostics, with no retained transported body. A same-tensor spatial negative preserves pointwise Hamiltonian constraints but fails the momentum constraint.
 
@@ -84,6 +92,33 @@ Open `runs/geodesic-board/board.html`. This retained **massive45 negative-contro
 
 The architecture review is `docs/research/system_acceptance/architecture_review.md`. The complete idea decisions are in `docs/research/system_acceptance/idea_ledger.md`; the physical and massive-encoding boundaries are beside it. Current algebra is `docs/MODEL.md`, the execution contract is `docs/ONE_SYSTEM.md`, and source provenance is in `docs/research/central_integration/README.md`. Historical evidence retains its original source pin and is not relabeled as current validation.
 
+## What we need to research
+
+The research backlog is maintained in `docs/RESEARCH_AGENDA.md`, together with
+the disposition of the former PRs and issues. Closing those discussions means
+their work has been integrated, retained as a reference, or moved to this agenda.
+It does not mean the remaining physics is solved.
+
+1. Construct one spatial coupling that joins geometry, source flow, reusable
+   records and matter in the same complete state. Recover the validated
+   restricted limits and check all independent Einstein constraints.
+2. Build retained moving bodies and material clocks. Compare their actual
+   trajectories and records with the same metric, including backreaction.
+3. Demonstrate repeated bursts under that same fixed local law, without
+   injecting or resetting state. Specify what counts as a burst before running.
+4. Test whether structure persists and grows from burst to burst. Keep all
+   trials, finite-memory exhaustion, insufficient histories and failed cases.
+   Repeating a pattern or increasing amplitude is not structural growth.
+5. Derive a stable propagating field, its source/energy accounts and the
+   quantum preparation and detection statistics. Finite gauge symmetry and
+   arithmetic clicks alone do not establish them.
+6. Measure precision cost and convergence. Preserve exact rewind and the
+   total 48-channel limit for matter, geometry, records and all workspace.
+
+The current result is one software system with one execution path and one
+central acceptance command. It still contains separately identified research
+constructions. No single physical law has passed all six targets together.
+
 ```bash
 python -m unittest discover -s universe24/tests -t . -v
 python -m validation.system_smoke --out runs/new-smoke
@@ -91,3 +126,26 @@ python -m universe24 verify --run runs/new-smoke/run
 ```
 
 A regression test may pass by reproducing a failed physical hypothesis. The corresponding physical result stays failed. No research label, channel name or successful replay can promote it.
+
+## Local carrier–record interaction with a spatial source chart
+
+The [local unification package](docs/research/local_unification/README.md)
+constructs bounded, conservative record–carrier scattering and a twelve-channel
+source-dependent extension through the same saved-bundle runtime:
+
+```bash
+python -m validation.local_unification.run_all --out runs/local-unification
+python -m universe24 verify --run runs/local-unification/geometry/runtime
+```
+
+The declared preparation supports repeated encounters without resetting records.
+Independent current, recoil, complete-history and source tests inspect the same
+run. A cubic-spline readout gives an exact two-null-stream Einstein solution on
+a proved finite causal interior. Nonphysical periodic-seam defects are retained
+and exposed; the whole periodic board is not certified as an Einstein universe.
+
+This construction does not establish localized massive bodies, operational
+proper clocks, sustained complexity growth or a new production default.
+The central acceptance command also executes this collection and the gauge
+controls, binds their summaries to independently replayed saved runs, and
+rejects attempts to combine different laws or flux preparations as one result.
