@@ -589,3 +589,32 @@ neither Engine nor default allocation. The six-channel sector retains the
 original constraint/time-stability defects and excludes transported/charged
 and anisotropic modes; the three-channel reciprocal example is separate.
 Operational-clock, nonlinear Einstein, detector and quantum gates remain open.
+
+### Finite gauge loops and complete connection histories
+
+[Gauge-loop research](research/gauge_loop/README.md), tracked in issue #66,
+adds two source-only constructions through the same bundle/Engine/runtime:
+a seven-channel static Z4 wave with a neutral retained intensity reader, and
+a separate ten-channel dynamic Z2 connection-exchange sector. Both use
+degree-two strict single-edge tensors and count all histories and carries.
+
+The static law proves a same-tensor two-path response to independent loop
+flux (intensities four and zero), and full-state invariance of physical
+readouts under time-independent local Z4 transformations. Its links are
+stationary on the declared preparation; its homogeneous matter mode grows
+as `1,3,11,41`, so it is not a stable Maxwell or probability evolution.
+
+The dynamic law uses `F(chi,eta,U)=(eta,U*Y,chi*Y)` with stationary neighboring
+sign `Y`. Preparing `a=F^-1(b)` and compiling `u=3(F+F^-1)` gives exact native
+evolution with all carries retained. It preserves group-valued links and
+supports complete-history charged-register/link feedback and changing
+plaquettes. The complete period divides three; evolving information stays
+within edge triplets. No electric Gauss law, propagating wave, energy-stress
+source, material clock or sustained complexity follows.
+
+The two tensor identities remain separate in saved evidence. Historical
+unit-norm drift, carry-source charge balance, multi-edge support rejection
+and raw C1/C2 gauge dependence remain explicit falsification controls.
+Run `python -m validation.gauge_loop.audit --out runs/gauge-loop` in a fresh
+directory. This extends mathematical validation, not physical acceptance
+or the supported runtime interface.
