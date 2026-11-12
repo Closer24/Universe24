@@ -42,3 +42,9 @@ sector are not combined into a single accepted Einstein model.
 `.github/workflows/generic-structure.yml` repeats the eight audits and generic
 runtime verification on Python 3.11 and 3.12. CI results are reported separately
 on the pull request; the table above records local execution only.
+
+The first remote run passed all eight audits on both Python versions, then
+correctly refused to overwrite the checked-in smoke bundle. The workflow now
+uses the fresh `runs/generic-structure/ci-smoke` directory. That exact smoke and
+verification command also passed locally. This fixes the CI output path without
+changing any research source or proof evidence.

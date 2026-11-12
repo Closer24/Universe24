@@ -169,9 +169,13 @@ within48 channels remain unestablished.
 ```bash
 python -m validation.generic_structure.run_all
 python -m unittest discover -s universe24/tests -t .
-python -m validation.system_smoke --out runs/generic-structure/system-smoke
-python -m universe24 verify --run runs/generic-structure/system-smoke/run
+python -m validation.system_smoke --out runs/generic-structure/recheck-smoke
+python -m universe24 verify --run runs/generic-structure/recheck-smoke/run
 ```
+
+Use a fresh smoke output directory on each reproduction; the runtime correctly
+refuses to overwrite a saved bundle. The original checked-in smoke is at
+`runs/generic-structure/system-smoke` and can be verified directly.
 
 The runner executes the eight source-only audits, preserves raw evidence and
 checks its source hashes. Large complete traces are committed as deterministic

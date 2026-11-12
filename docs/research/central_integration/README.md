@@ -21,7 +21,7 @@ Source integration does not grant a physical certificate or change a default.
 | #53 | `73b24b788d5d3aa3c969a08ca5af16bfe532c4a4` | Node algebra, common clock/cone controls, load invariance |
 | #55 | `f83924d69367641751ee4815cefaf97996748774` | Guarded exact45→6 sector, native identities and saved full-state/click reconstruction |
 | #54 | `d4f281c0839887ac7af8c050c406b2081f7c9baf` | Reciprocal homogeneous apparatus47, record48 and preparation-measure controls |
-| #57 | `a3140de58c5359d0d0ab074eab1f6d1fa277aefb` | Interaction-to-native composition, complete-state certificates and scoped packet controls |
+| #57 | `455cc5f3ec4ae4a3992ddf032f95c884321ff466` | Interaction-to-native composition, complete-state certificates and scoped packet controls |
 
 The new cross-team gate runs in normal unittest discovery and CI:
 
