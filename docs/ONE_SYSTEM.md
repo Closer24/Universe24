@@ -386,3 +386,28 @@ repository test suite. Use the supported command's `--help` for bundle
 execution and verification; retain every emitted report and its hashes under
 `runs/`. Physical acceptance requires separate evidence for C–F, not merely a
 green software test suite.
+
+### Generic coupling integration and exact sector reconstruction
+
+[Generic coupling controls](GENERIC_COUPLINGS.md), implemented in
+`validation/generic_couplings/`, make the seven-specialist #40/#41 audit
+reproducible in the central source and CI. The current massive45 board builder
+is restricted by exact coefficient identities to six complete channels and
+14 terms on a declared homogeneous isotropic neutral scalar/dust invariant
+domain. Guarded embedding and projection preserve both histories and carries;
+projection rejects out-of-domain states rather than repairing them. The
+independently declared small tensor is compared against the extracted one.
+
+Both full and restricted bundles execute through `system.runtime.run_bundle`.
+The audit reconstructs each saved full transition from the six-channel state
+and verifies its complete canonical click stream after reconstruction. It does
+not identify raw six-channel event identities with full45 event identities.
+Code/tensor/seed/run provenance and integer growth are reported together.
+
+The same package checks generic carry/class identities, silent mechanical
+cycles, exact native packing with its old-history polynomial obstruction,
+reciprocal single-edge ports and clock/covector negative controls. It changes
+neither Engine nor default allocation. The six-channel sector retains the
+original constraint/time-stability defects and excludes transported/charged
+and anisotropic modes; the three-channel reciprocal example is separate.
+Operational-clock, nonlinear Einstein, detector and quantum gates remain open.
