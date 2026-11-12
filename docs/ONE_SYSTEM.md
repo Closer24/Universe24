@@ -589,3 +589,44 @@ neither Engine nor default allocation. The six-channel sector retains the
 original constraint/time-stability defects and excludes transported/charged
 and anisotropic modes; the three-channel reciprocal example is separate.
 Operational-clock, nonlinear Einstein, detector and quantum gates remain open.
+
+## Local carrier–record source construction
+
+The source-only package `validation/local_unification/` extends the research
+contract without changing the Engine, bundle, canonical decoder or physical
+acceptance gate. It uses one bounded four-rail collision,
+`1001 <-> 0110`, where the rails are record+/record-/carrier+/carrier-.
+Its cubic polynomial preserves positive packet energy and signed propagation
+momentum, with equal and opposite record/carrier recoil.
+
+A paired-bank first-order map `F(A,B)=(G(B),S(A))` is compiled using
+`u=3(F+F^-1)` and complete prepared history `a=F^-1(b)`. The resulting
+eight-channel invariant sector is Boolean for all time with every legal
+remainder retained. Two Engine microticks form one streaming macro; neither
+the two staggered populations nor their records are hidden workspace.
+
+The joined twelve-channel tensor retains four additional characteristic
+geometry profiles and includes actual packet-source terms in their update.
+On a plane-symmetric causal interior, `Delta²F=-n+` and `Delta²G=-n-`
+are preserved. Cubic cardinal B-spline reconstruction converts these exact
+difference identities into `f''=-sum(n+ B1)` and `g''=-sum(n- B1)`.
+For `R=f(u)+g(v)>0`, the metric
+`ds²=-2R^(-1/2)du dv+R(dy²+dz²)` has only
+`G_uu=-f''/R` and `G_vv=-g''/R` nonzero, supplying a restricted spatial
+null-source Einstein chart from the same retained run. The physical
+coordinates are `u=t-x,v=t+x`; packet-count invariants and local orthonormal
+stress are distinguished.
+
+This is not a globally periodic positive-source solution: summing the
+periodic discrete Laplacian proves that such a global profile is impossible
+for nonzero nonnegative source. The finite chart has an explicit causal and
+spline-support margin, a continuous positivity bound and even-microtick
+readout. Its exterior seam defects remain in the complete invertible state.
+Wrong-source, unsafe-readout and mixed-source evidence controls must fail.
+
+The package distinguishes finite repeated routing, record retention, full
+source replay and exact restricted physical identities from the still-open
+targets of massive localization, material proper-time clocks and sustained
+structural growth. The standard general physical gate remains blocked.
+Proofs, registered experiments and reproduction commands are indexed in
+[the local construction report](research/local_unification/README.md).

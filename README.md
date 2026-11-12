@@ -91,3 +91,25 @@ python -m universe24 verify --run runs/new-smoke/run
 ```
 
 A regression test may pass by reproducing a failed physical hypothesis. The corresponding physical result stays failed. No research label, channel name or successful replay can promote it.
+
+## Local carrier–record interaction with a spatial source chart
+
+The [local unification package](docs/research/local_unification/README.md)
+constructs bounded, conservative record–carrier scattering and a twelve-channel
+source-dependent extension through the same saved-bundle runtime:
+
+```bash
+python -m validation.local_unification.run_all --out runs/local-unification
+python -m universe24 verify --run runs/local-unification/geometry/runtime
+```
+
+The declared preparation supports repeated encounters without resetting records.
+Independent current, recoil, complete-history and source tests inspect the same
+run. A cubic-spline readout gives an exact two-null-stream Einstein solution on
+a proved finite causal interior. Nonphysical periodic-seam defects are retained
+and exposed; the whole periodic board is not certified as an Einstein universe.
+
+This construction does not establish localized massive bodies, operational
+proper clocks, sustained complexity growth or a new production default.
+See the linked construction report and its PR for
+the actual source-pinned validation outcome.
