@@ -7,7 +7,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from universe24.core import Engine
+from universe24.core import Engine, State
 from universe24.system.bundle import create_bundle
 from universe24.system.decoder import default_protocol
 from universe24.system.runtime import run_bundle
@@ -65,9 +65,11 @@ class GeometryReviewTests(unittest.TestCase):
 
     def test_scalar_oracle_retains_arbitrary_signed_integer_precision(self):
         for offset in (2**200, -(2**200)):
-            changed = self.seed.copy()
-            changed.a[8:] += offset
-            changed.b[8:] += offset
+            previous = self.seed.a.astype(object)
+            current = self.seed.b.astype(object)
+            previous[8:] += offset
+            current[8:] += offset
+            changed = State(self.seed.L, previous, current, self.seed.r.copy())
             expected = Engine(self.law).step(changed)
             self.assertTrue(review.scalar_step(changed).same_as(expected))
             self.assertTrue(Engine(self.law).inverse_step(expected).same_as(changed))
