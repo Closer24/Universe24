@@ -1,0 +1,89 @@
+{
+  "schema": "universe24/cube-clocks-evidence-recovery/1",
+  "implementation_published": false,
+  "execution_environment": "unavailable",
+  "original_source_baseline": "228f581d02971435c0cd70548ff56267378ffc31",
+  "local_integration_baseline": "e2d29499df418f498f7d81ec1a8cf1dd9e4db6a6",
+  "local_full_tests_passed": 447,
+  "final_integration_tests_outcome": "unknown",
+  "eight_scoped_audits": "passed_before_environment_loss",
+  "blobs": [
+    {
+      "sha": "00b1cef2c28482cac309b5885e56d7fc5beac882",
+      "paths": [
+        "runs/cube-clocks/integration-smoke/input/seed.json.gz",
+        "runs/cube-clocks/integration-smoke/run/bundle/seed.json.gz",
+        "runs/cube-clocks/smoke/input/seed.json.gz",
+        "runs/cube-clocks/smoke/run/bundle/seed.json.gz"
+      ]
+    },
+    {
+      "sha": "02c9893dab2a143cb6846f465e99fe2e0f69aef5",
+      "paths": [
+        "runs/cube-clocks/integration-smoke/run/clicks.jsonl.gz",
+        "runs/cube-clocks/smoke/run/clicks.jsonl.gz"
+      ]
+    },
+    {
+      "sha": "3402872c53f5306af95841fcc0af7a1d34ad0b79",
+      "paths": [
+        "runs/cube-clocks/integration-smoke/run/full_trace.jsonl.gz",
+        "runs/cube-clocks/smoke/run/full_trace.jsonl.gz"
+      ]
+    },
+    {
+      "sha": "2d5f9ba414246f88ba16bab7cdf2052085938e24",
+      "paths": [
+        "runs/cube-clocks/verified/complexity.json.gz"
+      ]
+    },
+    {
+      "sha": "075bfbf8e78ce81b56914a7be517067386c0a642",
+      "paths": [
+        "runs/cube-clocks/verified/runtime.json.gz"
+      ]
+    },
+    {
+      "sha": "2683012fc3916ad52dd354523ea89b3ee28fa96d",
+      "paths": [
+        "runs/cube-clocks/verified/runtime/nonuniform/bundle/seed.json.gz"
+      ]
+    },
+    {
+      "sha": "752c5f79b786fbd95dd83f026c8ded35684091a5",
+      "paths": [
+        "runs/cube-clocks/verified/runtime/nonuniform/clicks.jsonl.gz"
+      ]
+    },
+    {
+      "sha": "0aeafd245f4fde8a3885936432928874218747d2",
+      "paths": [
+        "runs/cube-clocks/verified/runtime/nonuniform/full_trace.jsonl.gz"
+      ]
+    },
+    {
+      "sha": "519a2fcde20adb2bea412ba563e805084a72afba",
+      "paths": [
+        "runs/cube-clocks/verified/runtime/periodic/bundle/seed.json.gz"
+      ]
+    },
+    {
+      "sha": "1fb11d1d38c0d25adac1459fa5b57d3b4c92f02b",
+      "paths": [
+        "runs/cube-clocks/verified/runtime/periodic/clicks.jsonl.gz"
+      ]
+    },
+    {
+      "sha": "4b79f45421aca9ab65803679f5c5b1330d8d208d",
+      "paths": [
+        "runs/cube-clocks/verified/runtime/periodic/full_trace.jsonl.gz"
+      ]
+    },
+    {
+      "sha": "a12417adfa9d5fa4f9e80c1d8454a3005dea1916",
+      "paths": [
+        "runs/cube-clocks/verified/runtime/runtime.json.gz"
+      ]
+    }
+  ]
+}
