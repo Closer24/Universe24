@@ -19,6 +19,17 @@ bundle can be executed and checked without declaring its fields to be physical
 geometry. Mechanical success and physical validation are separate results.
 The coordination and acceptance contract is [issue #40](https://github.com/Closer24/Universe24/issues/40).
 
+The source-only [sourced complete-history map](research/sourced_map/README.md)
+implements an exact sampled expanding homogeneous massless-scalar plus dust
+FLRW solution in six retained channels. Its physical constraint includes both
+volume histories; one immutable linear tensor preserves that constraint and
+all carries. The existing runtime saves and verifies these research bundles.
+Passive root/log field reconstruction is explicitly bound to the physical
+coordinate chart and is distinct from canonical arithmetic clicks. This is a
+different research tensor from massive45; massive, spatial and operational
+clock extensions remain open. General physical gates and the default model
+are unchanged. The construction is tracked in [issue #58](https://github.com/Closer24/Universe24/issues/58).
+
 The source-only [node, clock and Einstein audit](research/einstein_node/README.md)
 separates identities of every valid Rule3 tensor from physical properties of a
 selected law. It adds exact clock-geometry and host-workload countercontrols,

@@ -1,0 +1,7 @@
+{
+  "status": "saved-native-runtime-and-scoped-physical-diagnostics-passed",
+  "runs": 5,
+  "comparisons": 2,
+  "negative_controls": 9,
+  "out": "/workspace/scratch/d01c5ea2900a/universe24-sourced/runs/sourced-map/runtime.json"
+}

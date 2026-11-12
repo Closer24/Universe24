@@ -1,0 +1,6 @@
+{
+  "status": "passed_scoped_exact_domain_controls",
+  "output": "/workspace/scratch/d01c5ea2900a/universe24-sourced/runs/sourced-map/domain.json",
+  "rational_domain_checks": 915,
+  "integer_bound_comparisons": 960
+}
