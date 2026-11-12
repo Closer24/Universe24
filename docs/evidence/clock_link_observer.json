@@ -1,0 +1,1690 @@
+{
+  "bundle_id": "f15c3c342d4a9ee807640fcd6357996a1c878cb43e448f8371e3a6b6b662fad9",
+  "channels_per_node": 48,
+  "gates": {
+    "apparatus_stress_backreaction": "not_supplied",
+    "binary_born_frequencies": "failed",
+    "complete_state_scalar_oracle_replay": "passed",
+    "engine_bell_violation": "not_tested",
+    "local_complexity_selection": "not_implemented",
+    "local_gauge_covariant_clock_links": "failed",
+    "metric_calibrated_proper_clock": "not_tested",
+    "one_outcome_per_measurement": "failed",
+    "records_only_passive_observer": "passed",
+    "recurrent_structural_growth": "blocked",
+    "same_board_exact_phase_records": "passed"
+  },
+  "interpretation": "Finite one-way research apparatus on the same coupled carrier; no physical model promotion. Binary events, observed quotient weights and hidden intensities are distinct.",
+  "reference_law_source": "49b896c795203914a939e465d6d39e5b99343259",
+  "report_sha256": {
+    "acceptance": "3afb35220e547762e2af34c39bdd20d8a0c3950f8ee74a7d75014e7f711b858f",
+    "algebra": "d82fde29222147a2546e33686a6a9555b5c6977a2f1ad88f9a50c29662f71b7d",
+    "born_bell": "8e0d41e063367a6515d9ff1bbbdefe54c4096c299b04cf1d3a440101f28dc2d5",
+    "complexity": "312a8d570f91a94bce116215707699337c68d070375c2eef23472d97512b42c2",
+    "observer": "44c7d118b22c2422e08bb0d179b644bb3cc61094c87dcb11ff78a6f93f0c1c8b",
+    "phase": "2243f73fcf4bcd63fe5cb926377b41fc5798c3b30c7e007822b93509109585d9"
+  },
+  "reports": {
+    "acceptance": {
+      "bundle_id": "f15c3c342d4a9ee807640fcd6357996a1c878cb43e448f8371e3a6b6b662fad9",
+      "causality": {
+        "complete_state_causal_bound": "passed",
+        "observations": [
+          {
+            "affected_nodes": 1,
+            "bank": "a",
+            "origin": [
+              0,
+              0,
+              0
+            ],
+            "step": 1
+          },
+          {
+            "affected_nodes": 7,
+            "bank": "a",
+            "origin": [
+              0,
+              0,
+              0
+            ],
+            "step": 2
+          },
+          {
+            "affected_nodes": 7,
+            "bank": "b",
+            "origin": [
+              0,
+              0,
+              0
+            ],
+            "step": 1
+          },
+          {
+            "affected_nodes": 18,
+            "bank": "b",
+            "origin": [
+              0,
+              0,
+              0
+            ],
+            "step": 2
+          },
+          {
+            "affected_nodes": 1,
+            "bank": "r",
+            "origin": [
+              0,
+              0,
+              0
+            ],
+            "step": 1
+          },
+          {
+            "affected_nodes": 1,
+            "bank": "r",
+            "origin": [
+              0,
+              0,
+              0
+            ],
+            "step": 2
+          },
+          {
+            "affected_nodes": 1,
+            "bank": "a",
+            "origin": [
+              1,
+              0,
+              0
+            ],
+            "step": 1
+          },
+          {
+            "affected_nodes": 7,
+            "bank": "a",
+            "origin": [
+              1,
+              0,
+              0
+            ],
+            "step": 2
+          },
+          {
+            "affected_nodes": 7,
+            "bank": "b",
+            "origin": [
+              1,
+              0,
+              0
+            ],
+            "step": 1
+          },
+          {
+            "affected_nodes": 19,
+            "bank": "b",
+            "origin": [
+              1,
+              0,
+              0
+            ],
+            "step": 2
+          },
+          {
+            "affected_nodes": 1,
+            "bank": "r",
+            "origin": [
+              1,
+              0,
+              0
+            ],
+            "step": 1
+          },
+          {
+            "affected_nodes": 1,
+            "bank": "r",
+            "origin": [
+              1,
+              0,
+              0
+            ],
+            "step": 2
+          },
+          {
+            "affected_nodes": 1,
+            "bank": "a",
+            "origin": [
+              2,
+              0,
+              0
+            ],
+            "step": 1
+          },
+          {
+            "affected_nodes": 7,
+            "bank": "a",
+            "origin": [
+              2,
+              0,
+              0
+            ],
+            "step": 2
+          },
+          {
+            "affected_nodes": 7,
+            "bank": "b",
+            "origin": [
+              2,
+              0,
+              0
+            ],
+            "step": 1
+          },
+          {
+            "affected_nodes": 19,
+            "bank": "b",
+            "origin": [
+              2,
+              0,
+              0
+            ],
+            "step": 2
+          },
+          {
+            "affected_nodes": 1,
+            "bank": "r",
+            "origin": [
+              2,
+              0,
+              0
+            ],
+            "step": 1
+          },
+          {
+            "affected_nodes": 1,
+            "bank": "r",
+            "origin": [
+              2,
+              0,
+              0
+            ],
+            "step": 2
+          },
+          {
+            "affected_nodes": 1,
+            "bank": "a",
+            "origin": [
+              0,
+              1,
+              0
+            ],
+            "step": 1
+          },
+          {
+            "affected_nodes": 7,
+            "bank": "a",
+            "origin": [
+              0,
+              1,
+              0
+            ],
+            "step": 2
+          },
+          {
+            "affected_nodes": 7,
+            "bank": "b",
+            "origin": [
+              0,
+              1,
+              0
+            ],
+            "step": 1
+          },
+          {
+            "affected_nodes": 18,
+            "bank": "b",
+            "origin": [
+              0,
+              1,
+              0
+            ],
+            "step": 2
+          },
+          {
+            "affected_nodes": 1,
+            "bank": "r",
+            "origin": [
+              0,
+              1,
+              0
+            ],
+            "step": 1
+          },
+          {
+            "affected_nodes": 1,
+            "bank": "r",
+            "origin": [
+              0,
+              1,
+              0
+            ],
+            "step": 2
+          },
+          {
+            "affected_nodes": 1,
+            "bank": "a",
+            "origin": [
+              0,
+              2,
+              0
+            ],
+            "step": 1
+          },
+          {
+            "affected_nodes": 7,
+            "bank": "a",
+            "origin": [
+              0,
+              2,
+              0
+            ],
+            "step": 2
+          },
+          {
+            "affected_nodes": 7,
+            "bank": "b",
+            "origin": [
+              0,
+              2,
+              0
+            ],
+            "step": 1
+          },
+          {
+            "affected_nodes": 19,
+            "bank": "b",
+            "origin": [
+              0,
+              2,
+              0
+            ],
+            "step": 2
+          },
+          {
+            "affected_nodes": 1,
+            "bank": "r",
+            "origin": [
+              0,
+              2,
+              0
+            ],
+            "step": 1
+          },
+          {
+            "affected_nodes": 1,
+            "bank": "r",
+            "origin": [
+              0,
+              2,
+              0
+            ],
+            "step": 2
+          },
+          {
+            "affected_nodes": 1,
+            "bank": "a",
+            "origin": [
+              0,
+              0,
+              1
+            ],
+            "step": 1
+          },
+          {
+            "affected_nodes": 7,
+            "bank": "a",
+            "origin": [
+              0,
+              0,
+              1
+            ],
+            "step": 2
+          },
+          {
+            "affected_nodes": 7,
+            "bank": "b",
+            "origin": [
+              0,
+              0,
+              1
+            ],
+            "step": 1
+          },
+          {
+            "affected_nodes": 18,
+            "bank": "b",
+            "origin": [
+              0,
+              0,
+              1
+            ],
+            "step": 2
+          },
+          {
+            "affected_nodes": 1,
+            "bank": "r",
+            "origin": [
+              0,
+              0,
+              1
+            ],
+            "step": 1
+          },
+          {
+            "affected_nodes": 1,
+            "bank": "r",
+            "origin": [
+              0,
+              0,
+              1
+            ],
+            "step": 2
+          },
+          {
+            "affected_nodes": 1,
+            "bank": "a",
+            "origin": [
+              0,
+              0,
+              2
+            ],
+            "step": 1
+          },
+          {
+            "affected_nodes": 7,
+            "bank": "a",
+            "origin": [
+              0,
+              0,
+              2
+            ],
+            "step": 2
+          },
+          {
+            "affected_nodes": 7,
+            "bank": "b",
+            "origin": [
+              0,
+              0,
+              2
+            ],
+            "step": 1
+          },
+          {
+            "affected_nodes": 19,
+            "bank": "b",
+            "origin": [
+              0,
+              0,
+              2
+            ],
+            "step": 2
+          },
+          {
+            "affected_nodes": 1,
+            "bank": "r",
+            "origin": [
+              0,
+              0,
+              2
+            ],
+            "step": 1
+          },
+          {
+            "affected_nodes": 1,
+            "bank": "r",
+            "origin": [
+              0,
+              0,
+              2
+            ],
+            "step": 2
+          }
+        ],
+        "perturbations": 21,
+        "retained_integer_outside_cone_checks": 84672,
+        "scope": "computational face-edge cone; not a physical metric light cone",
+        "six_face_directions_and_periodic_seams": "passed",
+        "steps_per_perturbation": 2
+      },
+      "certificate": {
+        "channels": 48,
+        "degree_counts": [
+          0,
+          0,
+          20,
+          593
+        ],
+        "independent_inverse_stages": [
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            28,
+            32,
+            33,
+            34,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47
+          ],
+          [
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            29,
+            30,
+            31,
+            35,
+            36,
+            37
+          ]
+        ],
+        "retained_integers_per_node": 144,
+        "strict_physical_support": "passed",
+        "terms": 613
+      },
+      "interpretation": "Mechanical acceptance of the supplied finite run; synthetic stresses are not physically constrained seeds.",
+      "observation": {
+        "events": 992,
+        "independent_arithmetic_event_match": "passed",
+        "physical_measurement": "not_tested",
+        "state_and_tensor_passivity": "passed"
+      },
+      "physical_gates": {
+        "apparatus_backreaction": "absent_by_construction",
+        "complete_trial_bell_violation": "not_tested",
+        "complexity_selected_growth": "blocked_no_apparatus_feedback",
+        "derived_born_probability": "not_tested",
+        "einstein_constraints": "not_tested",
+        "metric_calibrated_material_clocks": "not_tested"
+      },
+      "saved_run": {
+        "canonical_clicks": 3461,
+        "complete_replay": "passed",
+        "run_id": "d6183f738b8c304fc549625e2352e62e0481c6c465cc562c8ce68da34946c8f3",
+        "saved_scalar_oracle": "passed",
+        "steps": 3
+      },
+      "schema": "universe24/clock-links/independent-acceptance/1",
+      "source_independence": {
+        "apparatus_backreaction": "absent by construction",
+        "arbitrary_apparatus_history_cannot_change_source": true,
+        "base_channels": 44,
+        "complexity_selection": "blocked: no apparatus-to-carrier dependency in this tensor",
+        "original_tensor_hash_verified": "cd91d0c9bd9de41de1f60061e79b6e43932dcc032b7a7d86e0de4f3ef9534c2b",
+        "retained_source_integer_comparisons": 21384,
+        "status": "passed",
+        "steps": 3
+      },
+      "source_sha256": "062753171b047ba2a89884f9c2fe6730617e75b13670794417a656bb5b44c84d",
+      "tensor_hash": "094bb4edbe243e4f7654073e64688ebc7b56d951724a21a0f3af1526153df611",
+      "trajectories": {
+        "mechanical_carry_0": {
+          "complete_rewind": "passed",
+          "independent_scalar_oracle": "passed",
+          "maximum_integer_bits_by_step": [
+            3,
+            10,
+            24
+          ],
+          "retained_integer_comparisons": 7776,
+          "steps": 2
+        },
+        "mechanical_carry_1": {
+          "complete_rewind": "passed",
+          "independent_scalar_oracle": "passed",
+          "maximum_integer_bits_by_step": [
+            3,
+            10,
+            24
+          ],
+          "retained_integer_comparisons": 7776,
+          "steps": 2
+        },
+        "mechanical_carry_2": {
+          "complete_rewind": "passed",
+          "independent_scalar_oracle": "passed",
+          "maximum_integer_bits_by_step": [
+            3,
+            10,
+            24
+          ],
+          "retained_integer_comparisons": 7776,
+          "steps": 2
+        },
+        "mechanical_carry_3": {
+          "complete_rewind": "passed",
+          "independent_scalar_oracle": "passed",
+          "maximum_integer_bits_by_step": [
+            3,
+            10,
+            24
+          ],
+          "retained_integer_comparisons": 7776,
+          "steps": 2
+        },
+        "mechanical_carry_4": {
+          "complete_rewind": "passed",
+          "independent_scalar_oracle": "passed",
+          "maximum_integer_bits_by_step": [
+            3,
+            10,
+            24
+          ],
+          "retained_integer_comparisons": 7776,
+          "steps": 2
+        },
+        "mechanical_carry_5": {
+          "complete_rewind": "passed",
+          "independent_scalar_oracle": "passed",
+          "maximum_integer_bits_by_step": [
+            110,
+            112,
+            313
+          ],
+          "retained_integer_comparisons": 7776,
+          "steps": 2
+        },
+        "supplied_seed": {
+          "complete_rewind": "passed",
+          "independent_scalar_oracle": "passed",
+          "maximum_integer_bits_by_step": [
+            3,
+            6,
+            12,
+            25
+          ],
+          "retained_integer_comparisons": 11664,
+          "steps": 3
+        }
+      }
+    },
+    "algebra": {
+      "all_six_remainders_covered": true,
+      "analytic_control_tensor_hash": "5b848a40219072e0cd722a3482084dcf8b8ac2fbbda2b7934f038256c70407b2",
+      "canonical_events_all_C0": 6842,
+      "complete_rewinds": 9,
+      "degree": 2,
+      "gates": {
+        "bell": "not_tested",
+        "born_selection": "not_tested",
+        "common_quarter_turn_invariance": "passed",
+        "intensity_equals_canonical_event_count": "failed",
+        "local_gauge_invariance_of_bare_link": "failed",
+        "phase_link_identity": "passed",
+        "proper_time_clock": "not_tested",
+        "retained_receiver_inverse": "passed",
+        "structural_growth": "not_tested"
+      },
+      "independent_equation_oracle_states": 64,
+      "independent_local_gauge_control": {
+        "after": [
+          1,
+          1,
+          0,
+          1,
+          2
+        ],
+        "before": [
+          1,
+          1,
+          1,
+          0,
+          4
+        ],
+        "status": "failed_local_gauge_invariance"
+      },
+      "integrated_allocation_proposed": {
+        "base": 44,
+        "new": 4,
+        "total": 48
+      },
+      "interpretation": "Exact algebra and independent small validation control, not another physical runtime. Integrated 48-channel oracle checks are separate. Bare links require a declared fixed gauge; all receiver events here are C0. No probability law is inferred from intensity or event counts.",
+      "maximum_retained_bits": 241,
+      "pair_identity_cases": 6561,
+      "same_empty_observation_different_intensity_ratios": {
+        "claim": "No decoder of this empty stream can distinguish the two ratios. Integrated-carrier extension is only a one-step receiver-only argument, not an eight-step theorem about the 44-channel source.",
+        "ratios": [
+          [
+            9,
+            1
+          ],
+          [
+            1,
+            9
+          ]
+        ],
+        "steps": 8
+      },
+      "schema": "universe24/validation/clock-link-algebra/1",
+      "signed_receiver_inverse_cases": 5586,
+      "single_edge_support_violations": 0,
+      "source_sha256": "dd105b3110147677d7756e006487239a16f97a577a237342bdb51bfa15e1b9a7",
+      "standalone_validation_control_channels": 6,
+      "stationary_positive_intensity_without_receiver_clicks": {
+        "link_intensity": 8,
+        "local_intensity": 2,
+        "nodes": 27,
+        "receiver_channels": 4,
+        "steps": 8
+      }
+    },
+    "born_bell": {
+      "Bell_violation_from_Engine": "not_tested",
+      "Born_binary_frequencies": "failed",
+      "all_rewinds_exact": true,
+      "base_bundle_id": "4b56e2b6171882fde68951ae90a349db4676cf3e5b16e820f56c61abda3e7b01",
+      "base_tensor_hash": "cd91d0c9bd9de41de1f60061e79b6e43932dcc032b7a7d86e0de4f3ef9534c2b",
+      "cases": [
+        {
+          "Born_ratio_reference": null,
+          "C2_selected_trials": 0,
+          "amplitudes": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "binary_counts": [
+            0,
+            0
+          ],
+          "case": "zero_source",
+          "classes": {},
+          "clicks_per_trial": [
+            "0",
+            "0"
+          ],
+          "intensities": [
+            0,
+            0
+          ],
+          "observed_quotient_weights": [
+            0,
+            0
+          ],
+          "outcomes": {
+            "multiple": 0,
+            "none": 36,
+            "single": 0
+          },
+          "share_of_binary_events": null,
+          "share_of_quotient_weights": null,
+          "stationary_apparatus": false,
+          "trials": 36
+        },
+        {
+          "Born_ratio_reference": [
+            "9/10",
+            "1/10"
+          ],
+          "C2_selected_trials": 0,
+          "amplitudes": [
+            [
+              3,
+              0
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "binary_counts": [
+            36,
+            36
+          ],
+          "case": "unequal_9_1",
+          "classes": {
+            "C0": 72
+          },
+          "clicks_per_trial": [
+            "1",
+            "1"
+          ],
+          "intensities": [
+            9,
+            1
+          ],
+          "observed_quotient_weights": [
+            324,
+            36
+          ],
+          "outcomes": {
+            "multiple": 36,
+            "none": 0,
+            "single": 0
+          },
+          "share_of_binary_events": [
+            "1/2",
+            "1/2"
+          ],
+          "share_of_quotient_weights": [
+            "9/10",
+            "1/10"
+          ],
+          "stationary_apparatus": false,
+          "trials": 36
+        },
+        {
+          "Born_ratio_reference": [
+            "9/10",
+            "1/10"
+          ],
+          "C2_selected_trials": 0,
+          "amplitudes": [
+            [
+              6,
+              0
+            ],
+            [
+              2,
+              0
+            ]
+          ],
+          "binary_counts": [
+            36,
+            36
+          ],
+          "case": "unequal_scaled_36_4",
+          "classes": {
+            "C0": 72
+          },
+          "clicks_per_trial": [
+            "1",
+            "1"
+          ],
+          "intensities": [
+            36,
+            4
+          ],
+          "observed_quotient_weights": [
+            1296,
+            144
+          ],
+          "outcomes": {
+            "multiple": 36,
+            "none": 0,
+            "single": 0
+          },
+          "share_of_binary_events": [
+            "1/2",
+            "1/2"
+          ],
+          "share_of_quotient_weights": [
+            "9/10",
+            "1/10"
+          ],
+          "stationary_apparatus": false,
+          "trials": 36
+        },
+        {
+          "Born_ratio_reference": [
+            "1/2",
+            "1/2"
+          ],
+          "C2_selected_trials": 0,
+          "amplitudes": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "binary_counts": [
+            36,
+            36
+          ],
+          "case": "balanced",
+          "classes": {
+            "C0": 72
+          },
+          "clicks_per_trial": [
+            "1",
+            "1"
+          ],
+          "intensities": [
+            1,
+            1
+          ],
+          "observed_quotient_weights": [
+            36,
+            36
+          ],
+          "outcomes": {
+            "multiple": 36,
+            "none": 0,
+            "single": 0
+          },
+          "share_of_binary_events": [
+            "1/2",
+            "1/2"
+          ],
+          "share_of_quotient_weights": [
+            "1/2",
+            "1/2"
+          ],
+          "stationary_apparatus": false,
+          "trials": 36
+        },
+        {
+          "Born_ratio_reference": [
+            "1",
+            "0"
+          ],
+          "C2_selected_trials": 0,
+          "amplitudes": [
+            [
+              2,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "binary_counts": [
+            36,
+            0
+          ],
+          "case": "one_dark",
+          "classes": {
+            "C0": 36
+          },
+          "clicks_per_trial": [
+            "1",
+            "0"
+          ],
+          "intensities": [
+            4,
+            0
+          ],
+          "observed_quotient_weights": [
+            144,
+            0
+          ],
+          "outcomes": {
+            "multiple": 0,
+            "none": 0,
+            "single": 36
+          },
+          "share_of_binary_events": [
+            "1",
+            "0"
+          ],
+          "share_of_quotient_weights": [
+            "1",
+            "0"
+          ],
+          "stationary_apparatus": false,
+          "trials": 36
+        },
+        {
+          "Born_ratio_reference": [
+            "9/10",
+            "1/10"
+          ],
+          "C2_selected_trials": 0,
+          "amplitudes": [
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "binary_counts": [
+            36,
+            36
+          ],
+          "case": "common_quarter_turn",
+          "classes": {
+            "C0": 72
+          },
+          "clicks_per_trial": [
+            "1",
+            "1"
+          ],
+          "intensities": [
+            9,
+            1
+          ],
+          "observed_quotient_weights": [
+            324,
+            36
+          ],
+          "outcomes": {
+            "multiple": 36,
+            "none": 0,
+            "single": 0
+          },
+          "share_of_binary_events": [
+            "1/2",
+            "1/2"
+          ],
+          "share_of_quotient_weights": [
+            "9/10",
+            "1/10"
+          ],
+          "stationary_apparatus": false,
+          "trials": 36
+        },
+        {
+          "Born_ratio_reference": [
+            "1/2",
+            "1/2"
+          ],
+          "C2_selected_trials": 0,
+          "amplitudes": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "binary_counts": [
+            0,
+            0
+          ],
+          "case": "stationary_nonzero",
+          "classes": {},
+          "clicks_per_trial": [
+            "0",
+            "0"
+          ],
+          "intensities": [
+            2,
+            2
+          ],
+          "observed_quotient_weights": [
+            0,
+            0
+          ],
+          "outcomes": {
+            "multiple": 0,
+            "none": 36,
+            "single": 0
+          },
+          "share_of_binary_events": null,
+          "share_of_quotient_weights": null,
+          "stationary_apparatus": true,
+          "trials": 36
+        }
+      ],
+      "channels_per_node": 48,
+      "coherent_intensity_identity": "passed",
+      "complete_trials_sha256": "99ec810f7fdc1436252746fec330928e7285658edb3696925c3276f28b123408",
+      "complexity_postweighting": {
+        "example": {
+          "Born_reference": [
+            "9/10",
+            "1/10"
+          ],
+          "complexity_multipliers": [
+            2,
+            1
+          ],
+          "intensities": [
+            9,
+            1
+          ],
+          "postweighted": [
+            "18/19",
+            "1/19"
+          ]
+        },
+        "identity": "I0*c0/(I0*c0+I1*c1)=I0/(I0+I1) iff c0=c1 for positive I0,I1,c0,c1",
+        "interpretation": "Outcome-dependent complexity postweighting generally changes Born ratios; a common multiplier cancels. This does not exclude complexity changing amplitudes before measurement.",
+        "positive_integer_cases": 1296
+      },
+      "conclusion": "The retained apparatus records coherent intensity, not a normalized one-winner Born measurement. The missing mechanism is demonstrated on the actual tensor, not repaired by resampling its clicks.",
+      "ensemble": "Each carry pair in 0..5 squared has equal assigned weight; no physical measure is derived. Every trial is kept.",
+      "local_CHSH": {
+        "assumptions": [
+          "same setting-independent distribution of the complete common-past state",
+          "conditional local response factorization",
+          "all predefined trials retained with fixed outcomes in [-1,1]"
+        ],
+        "engine_Bell_experiment": "not_tested: no entangled preparation or two-setting analyzer is supplied",
+        "local_response_mean_grid": [
+          "-1",
+          "-3/4",
+          "-1/2",
+          "-1/4",
+          "0",
+          "1/4",
+          "1/2",
+          "3/4",
+          "1"
+        ],
+        "maximum_CHSH": "2",
+        "models_checked": 6561,
+        "whole_board_clock_exemption": false
+      },
+      "one_outcome_per_trial": "failed",
+      "one_update_trials": 252,
+      "phase_controls": [
+        {
+          "case": "constructive",
+          "coherent_intensity": 4,
+          "rewind_exact": true,
+          "seed_sha256": "ff1153ff4c2e0c57892b604eafbb1746e7024ec94476da3d16fc925994766b54"
+        },
+        {
+          "case": "destructive",
+          "coherent_intensity": 0,
+          "rewind_exact": true,
+          "seed_sha256": "3c4e35d86f68b84770a537d061ea7613d9e0528ac88067a3de9729d621f210be"
+        },
+        {
+          "case": "quadrature",
+          "coherent_intensity": 2,
+          "rewind_exact": true,
+          "seed_sha256": "b15920335d3da705a648910ba938e41473e55348c3e14ac88bee30596353fa8a"
+        },
+        {
+          "case": "common_rotation",
+          "coherent_intensity": 4,
+          "rewind_exact": true,
+          "seed_sha256": "55605e8095144f88df2eda785e3d43c84534c2315caa22bf4b73b0910b0077de"
+        }
+      ],
+      "preparation": "One-update arrival-surface calibration. Both carrier a/b fields are cleared; the stated b amplitudes and all 36 detector carry pairs are prepared. Other base state is retained. This is not a constrained Einstein or transported emission fixture.",
+      "probability_sampling_feeds_Engine": false,
+      "receiver_indistinguishability": {
+        "cases": [
+          {
+            "Born_ratio_reference": [
+              "5/6",
+              "1/6"
+            ],
+            "case": "ratio_5_1",
+            "complete_rewind": true,
+            "final_sha256": "ad2864bf5c71e92f78d2baa1d7de1ae0d2ca22e4595e217a11d2325db8e3ef84",
+            "four_receiver_records": [],
+            "intensities": [
+              10,
+              2
+            ],
+            "seed_sha256": "907821f3ff5bf47e568fb6c23c922d250042b53f5c593af9a91b83561cc0c510"
+          },
+          {
+            "Born_ratio_reference": [
+              "1/6",
+              "5/6"
+            ],
+            "case": "ratio_1_5",
+            "complete_rewind": true,
+            "final_sha256": "b5eaa77d23941f4d078539945fac97bd9aa2c58e32501bd73a81de83cfc6248c",
+            "four_receiver_records": [],
+            "intensities": [
+              2,
+              10
+            ],
+            "seed_sha256": "61e78c241953836b203137511fc8c5ec81b91b6e34ac6e21cedc7a2a30396646"
+          }
+        ],
+        "different_positive_Born_ratios": true,
+        "identical_receiver_records": true,
+        "result": "No decoder using only these four receiver record streams can recover the required Born ratios for every admitted apparatus seed in this one-update window.",
+        "scope_limit": "This is not an impossibility proof for restricted preparations, longer windows, another interacting apparatus, or access to other channels."
+      },
+      "retained_integers_per_node": 144,
+      "saved_replay": {
+        "all_complete_rewinds": true,
+        "canonical_stream_parity": true,
+        "independent_scalar_oracle": true,
+        "saved_transitions_verified": 258,
+        "unique_complete_declared_trials": true
+      },
+      "schema": "universe24/validation/clock-link-born-bell/1",
+      "source_sha256": {
+        "universe24/core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+        "universe24/system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+        "validation/clock_links/acceptance_audit.py": "062753171b047ba2a89884f9c2fe6730617e75b13670794417a656bb5b44c84d",
+        "validation/clock_links/born_bell_audit.py": "ded6ab7a9545949826b55c12e8a393ce8c1e8e185dd5558dff328da9b8ce5df6",
+        "validation/clock_links/model.py": "d03c75ad239fa32cf24c3ab4c400fdeac4879ef290220476b561d715406b3afe"
+      },
+      "tensor_hash": "094bb4edbe243e4f7654073e64688ebc7b56d951724a21a0f3af1526153df611"
+    },
+    "complexity": {
+      "board_runs": [
+        {
+          "apparatus_to_base_tensor_terms": 0,
+          "bundle_id": "f15c3c342d4a9ee807640fcd6357996a1c878cb43e448f8371e3a6b6b662fad9",
+          "causal_selection": {
+            "reason": "The appended detector channels do not feed carrier evolution. Recorded history is not a complexity-selection law.",
+            "status": "blocked"
+          },
+          "channels": 48,
+          "detector_event_counts": [
+            100,
+            107,
+            107
+          ],
+          "exact_saved_replay": true,
+          "gauge_scope": "Raw carrier quadratic signs are interpreted in the prepared common-sign gauge; no local gauge invariance is claimed.",
+          "growth": {
+            "at_least_four_bursts": false,
+            "burst_steps": [],
+            "reason": "fewer than four strict interior apparatus-event maxima in declared trace",
+            "scores_at_bursts": [],
+            "status": "blocked",
+            "strict_growth": false
+          },
+          "maximum_integer_bits_by_step": [
+            3,
+            6,
+            12,
+            25
+          ],
+          "phase_link_scores": [
+            {
+              "motif_counts": [],
+              "newly_persistent_motif_count": 0,
+              "persistent_sites": 0,
+              "score": 0
+            },
+            {
+              "motif_counts": [],
+              "newly_persistent_motif_count": 0,
+              "persistent_sites": 0,
+              "score": 0
+            },
+            {
+              "motif_counts": [],
+              "newly_persistent_motif_count": 0,
+              "persistent_sites": 0,
+              "score": 0
+            },
+            {
+              "motif_counts": [],
+              "newly_persistent_motif_count": 0,
+              "persistent_sites": 0,
+              "score": 0
+            }
+          ],
+          "physical_burst_growth": "not_established",
+          "run_id": "d6183f738b8c304fc549625e2352e62e0481c6c465cc562c8ce68da34946c8f3",
+          "steps": 3,
+          "tensor_hash": "094bb4edbe243e4f7654073e64688ebc7b56d951724a21a0f3af1526153df611"
+        }
+      ],
+      "claim": "Finite phase-sign motif audit only; neither Born, Bell, physical proper time nor complexity selection is derived.",
+      "controls": {
+        "checks": {
+          "common_nonzero_complex_multiplier_invariant": true,
+          "four_periodic_peaks_do_not_pass_growth": true,
+          "node_relabelling_with_adjacency_invariant": true,
+          "periodic_common_phase_has_constant_score_after_first_checkpoint": true,
+          "positive_nodewise_amplitude_invariant": true,
+          "zero_source_score_is_zero": true
+        },
+        "limitation": "Frozen random phase fields can contain repeated persistent motifs and score positively. This proxy is not a universal detector of meaningful organization.",
+        "periodic_growth_control": {
+          "at_least_four_bursts": true,
+          "burst_steps": [
+            2,
+            5,
+            8,
+            11
+          ],
+          "reason": "current organization did not strictly increase",
+          "scores_at_bursts": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "status": "failed",
+          "strict_growth": false
+        },
+        "periodic_scores": [
+          0,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "random_controls": [
+          {
+            "fresh_scores": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "frozen_random_persistent_sites": 27,
+            "frozen_random_score": 13,
+            "seed": 101
+          },
+          {
+            "fresh_scores": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "frozen_random_persistent_sites": 30,
+            "frozen_random_score": 15,
+            "seed": 509
+          },
+          {
+            "fresh_scores": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "frozen_random_persistent_sites": 10,
+            "frozen_random_score": 5,
+            "seed": 2027
+          }
+        ]
+      },
+      "previous_pr43_failures": {
+        "failed_cases": 16,
+        "rerun_here": false,
+        "source": "https://github.com/Closer24/Universe24/pull/43",
+        "status": "preserved"
+      },
+      "protocol": {
+        "burst_rule": "strict interior local maximum of all four appended detector event counts; count >= 1",
+        "checkpoint_rule": "every complete saved state, including seed; no temporal subsampling",
+        "growth_rule": "strictly increasing current persistent nonuniform motif count at every consecutive detected burst",
+        "interpretation": "fixed-gauge carrier phase-sign organization; no gauge-invariant or physical complexity claim",
+        "minimum_bursts": 4,
+        "minimum_persistence_checkpoints": 2,
+        "minimum_repeat_sites": 2,
+        "preregistered_issue": "https://github.com/Closer24/Universe24/issues/45#issuecomment-6804437312",
+        "random_control_seeds": [
+          101,
+          509,
+          2027
+        ],
+        "relation": "(sign(dot),sign(cross)); inactive if either endpoint is zero",
+        "schema": "universe24/clock-link-organization/1"
+      },
+      "source_sha256": "b2e51358ad6ed1cef62f54c47ad80432149db227a94e0d8ebe8b69330d92bfcf"
+    },
+    "observer": {
+      "bundle_id": "f15c3c342d4a9ee807640fcd6357996a1c878cb43e448f8371e3a6b6b662fad9",
+      "channels_per_node": 48,
+      "complete_runtime_replay": true,
+      "complete_trial_windows": 81,
+      "input_record_sha256": "72b7dd4cbabc9536e2310b4f8a5fbc5dbaecf65a0e326d728fda81bf8a6adec1",
+      "observed_apparatus_records": 314,
+      "observer_inputs": [
+        "canonical click records",
+        "static complete-window protocol",
+        "run identity"
+      ],
+      "observer_reads_hidden_state": false,
+      "online_offline_parity": true,
+      "outcome_counts": {
+        "multiple": 81,
+        "none": 0,
+        "single": 0
+      },
+      "physical_acceptance": "not established: record windows are not emission trials or proper-time ticks; nonzero stationary intensity can be unrecorded",
+      "run_id": "d6183f738b8c304fc549625e2352e62e0481c6c465cc562c8ce68da34946c8f3",
+      "saved_run_unchanged": true,
+      "schema": "universe24/clock-link-observer-audit/1",
+      "source_sha256": {
+        "model.py": "d03c75ad239fa32cf24c3ab4c400fdeac4879ef290220476b561d715406b3afe",
+        "observer.py": "aab3772637ecb92a83df5b187e721d23a396762f0e9d123ab57a93dea1078a42",
+        "observer_audit.py": "697c2d252597afe06a19721eb5226cbf500b53d3d422b7f4ba9e8fcde06949fc"
+      },
+      "tensor_hash": "094bb4edbe243e4f7654073e64688ebc7b56d951724a21a0f3af1526153df611"
+    },
+    "phase": {
+      "apparatus_event_classes": {
+        "C0": 314
+      },
+      "base_bundle_id": "4b56e2b6171882fde68951ae90a349db4676cf3e5b16e820f56c61abda3e7b01",
+      "base_projection_unchanged": true,
+      "base_tensor_hash": "cd91d0c9bd9de41de1f60061e79b6e43932dcc032b7a7d86e0de4f3ef9534c2b",
+      "bundle_id": "f15c3c342d4a9ee807640fcd6357996a1c878cb43e448f8371e3a6b6b662fad9",
+      "channels_per_node": 48,
+      "coherent_phase_cases": [
+        {
+          "axis": 0,
+          "coherent_quotient": 4,
+          "neighbor": 9,
+          "neighbor_phase": [
+            1,
+            0
+          ],
+          "node": 0
+        },
+        {
+          "axis": 0,
+          "coherent_quotient": 0,
+          "neighbor": 9,
+          "neighbor_phase": [
+            -1,
+            0
+          ],
+          "node": 0
+        },
+        {
+          "axis": 0,
+          "coherent_quotient": 2,
+          "neighbor": 9,
+          "neighbor_phase": [
+            0,
+            1
+          ],
+          "node": 0
+        },
+        {
+          "axis": 0,
+          "coherent_quotient": 4,
+          "neighbor": 8,
+          "neighbor_phase": [
+            1,
+            0
+          ],
+          "node": 26
+        },
+        {
+          "axis": 0,
+          "coherent_quotient": 0,
+          "neighbor": 8,
+          "neighbor_phase": [
+            -1,
+            0
+          ],
+          "node": 26
+        },
+        {
+          "axis": 0,
+          "coherent_quotient": 2,
+          "neighbor": 8,
+          "neighbor_phase": [
+            0,
+            1
+          ],
+          "node": 26
+        },
+        {
+          "axis": 1,
+          "coherent_quotient": 4,
+          "neighbor": 3,
+          "neighbor_phase": [
+            1,
+            0
+          ],
+          "node": 0
+        },
+        {
+          "axis": 1,
+          "coherent_quotient": 0,
+          "neighbor": 3,
+          "neighbor_phase": [
+            -1,
+            0
+          ],
+          "node": 0
+        },
+        {
+          "axis": 1,
+          "coherent_quotient": 2,
+          "neighbor": 3,
+          "neighbor_phase": [
+            0,
+            1
+          ],
+          "node": 0
+        },
+        {
+          "axis": 1,
+          "coherent_quotient": 4,
+          "neighbor": 20,
+          "neighbor_phase": [
+            1,
+            0
+          ],
+          "node": 26
+        },
+        {
+          "axis": 1,
+          "coherent_quotient": 0,
+          "neighbor": 20,
+          "neighbor_phase": [
+            -1,
+            0
+          ],
+          "node": 26
+        },
+        {
+          "axis": 1,
+          "coherent_quotient": 2,
+          "neighbor": 20,
+          "neighbor_phase": [
+            0,
+            1
+          ],
+          "node": 26
+        },
+        {
+          "axis": 2,
+          "coherent_quotient": 4,
+          "neighbor": 1,
+          "neighbor_phase": [
+            1,
+            0
+          ],
+          "node": 0
+        },
+        {
+          "axis": 2,
+          "coherent_quotient": 0,
+          "neighbor": 1,
+          "neighbor_phase": [
+            -1,
+            0
+          ],
+          "node": 0
+        },
+        {
+          "axis": 2,
+          "coherent_quotient": 2,
+          "neighbor": 1,
+          "neighbor_phase": [
+            0,
+            1
+          ],
+          "node": 0
+        },
+        {
+          "axis": 2,
+          "coherent_quotient": 4,
+          "neighbor": 24,
+          "neighbor_phase": [
+            1,
+            0
+          ],
+          "node": 26
+        },
+        {
+          "axis": 2,
+          "coherent_quotient": 0,
+          "neighbor": 24,
+          "neighbor_phase": [
+            -1,
+            0
+          ],
+          "node": 26
+        },
+        {
+          "axis": 2,
+          "coherent_quotient": 2,
+          "neighbor": 24,
+          "neighbor_phase": [
+            0,
+            1
+          ],
+          "node": 26
+        }
+      ],
+      "common_quarter_turn_invariance": true,
+      "complete_rewind": true,
+      "controls_file": "controls.json.gz",
+      "controls_sha256": "a91c86c911231a2847540dd3b91108427fc4a220c9e89976bd2080f64030cf76",
+      "exact_intensity_quotient_comparisons": 324,
+      "history_intervention": [
+        {
+          "common_quotient": 2,
+          "empty_history_count": 1,
+          "stationary_history_count": 0,
+          "step": 1
+        },
+        {
+          "common_quotient": 2,
+          "empty_history_count": 1,
+          "stationary_history_count": 0,
+          "step": 2
+        },
+        {
+          "common_quotient": 530,
+          "empty_history_count": 1,
+          "stationary_history_count": 1,
+          "step": 3
+        }
+      ],
+      "interpretation": "Exact fixed-gauge phase-dependent retained records on one board. Click absence is many-to-one and does not reconstruct zero intensity. No new physical law is inferred.",
+      "maximum_integer_bits_by_step": [
+        6,
+        12,
+        25
+      ],
+      "nodes": 27,
+      "observer_history_can_change_arithmetic_event_presence": true,
+      "observer_history_changes_driving_intensity": false,
+      "observer_history_changes_source_dynamics": false,
+      "physical_gate_status": {
+        "Bell_violation": "not_derived",
+        "Born_probabilities": "not_derived",
+        "apparatus_stress_and_backreaction": "not_supplied",
+        "local_gauge_invariant_parallel_transport": "not_supplied",
+        "shared_metric_proper_clock": "not_tested",
+        "structural_complexity_selection": "not_implemented"
+      },
+      "retained_integers_per_node": 144,
+      "runtime_checks": {
+        "bundle_contract": "passed",
+        "canonical_click_parity": "passed",
+        "complete_state_forward_replay": "passed",
+        "complete_state_rewind_to_seed": "passed",
+        "complete_state_step_inverse": "passed"
+      },
+      "saved_control_runs_replayed": 20,
+      "schema": "universe24/validation/clock-links/1",
+      "source_sha256": {
+        "validation/clock_links/model.py": "d03c75ad239fa32cf24c3ab4c400fdeac4879ef290220476b561d715406b3afe",
+        "validation/clock_links/phase_audit.py": "41ea7d701675c66308a3744f9915b72abc0407dcda62f3a07ec99c26c2dea88e"
+      },
+      "steps": 3,
+      "tensor_hash": "094bb4edbe243e4f7654073e64688ebc7b56d951724a21a0f3af1526153df611"
+    }
+  },
+  "retained_integers_per_node": 144,
+  "schema": "universe24/validation/clock-links-synthesis/1",
+  "source_sha256": {
+    "universe24/core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+    "universe24/core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+    "universe24/core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+    "universe24/core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+    "universe24/system/bundle.py": "6a91f95f67b5730c8c426dc4669dfd9d8a535fd1d7eaaf20cc5ac2d0974969e6",
+    "universe24/system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+    "universe24/system/runtime.py": "7bafea81e5912e26e49312c157a68fca3d50b75d893aa9198592696ea8f2cee4",
+    "universe24/tests/test_clock_link_acceptance.py": "e46c4dfec9530e2c60cffd0052609bec5f60ff4cf98cea9ac1f65eac378fa70c",
+    "universe24/tests/test_clock_link_born_bell.py": "d2bc9aafaa6c17fcd708bbc69dc7f14962bdbb95d7a20b62e00bc7b21ea331c6",
+    "universe24/tests/test_clock_link_complexity.py": "9282480fa0055fc30a730fac5af0c4aa304f65c82af70f4d16bcbf8a225a110e",
+    "universe24/tests/test_clock_link_observer.py": "2777d1cd0cdceeb2a37e79d7b9ebe7156f380b4e05adeff2efb2569661e611a3",
+    "validation/clock_links/acceptance_audit.py": "062753171b047ba2a89884f9c2fe6730617e75b13670794417a656bb5b44c84d",
+    "validation/clock_links/algebra_audit.py": "dd105b3110147677d7756e006487239a16f97a577a237342bdb51bfa15e1b9a7",
+    "validation/clock_links/born_bell_audit.py": "ded6ab7a9545949826b55c12e8a393ce8c1e8e185dd5558dff328da9b8ce5df6",
+    "validation/clock_links/complexity_audit.py": "b2e51358ad6ed1cef62f54c47ad80432149db227a94e0d8ebe8b69330d92bfcf",
+    "validation/clock_links/model.py": "d03c75ad239fa32cf24c3ab4c400fdeac4879ef290220476b561d715406b3afe",
+    "validation/clock_links/observer.py": "aab3772637ecb92a83df5b187e721d23a396762f0e9d123ab57a93dea1078a42",
+    "validation/clock_links/observer_audit.py": "697c2d252597afe06a19721eb5226cbf500b53d3d422b7f4ba9e8fcde06949fc",
+    "validation/clock_links/phase_audit.py": "41ea7d701675c66308a3744f9915b72abc0407dcda62f3a07ec99c26c2dea88e",
+    "validation/clock_links/run_audits.py": "10d2c4cfda2c10db47422782f5b783c84335c242ec79bcf728119c9b335e312a",
+    "validation/team48_contract.py": "24c8d7740201cbe2d0434e555b006c9a08260899b8e3d402395eb717e7c199c4"
+  },
+  "tensor_hash": "094bb4edbe243e4f7654073e64688ebc7b56d951724a21a0f3af1526153df611",
+  "upstream_main": "4c494c1188f70eb8a677bf59765cc6e8571c6b88"
+}

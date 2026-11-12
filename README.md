@@ -78,4 +78,32 @@ remains the explicit open task in [issue #45](https://github.com/Closer24/Univer
 
 Tests retain independent Einstein equation checks and known counterexamples. A regression test can pass by confirming that a proposed physical construction fails; the corresponding physics gate remains failed.
 
+## Same-run geodesic board
+
+From this repository checkout, generate a complete saved run and an interactive,
+self-contained event board with one command:
+
+```bash
+python -m validation.geodesic_board --out runs/geodesic-board
+python -m universe24 verify --run runs/geodesic-board/runtime
+# Open runs/geodesic-board/board.html in a browser.
+```
+
+This prepares one explicitly massive corrected full-frame tensor with **45
+channels**, then executes it through the same bundle/runtime above. The saved
+metric supplies null and timelike geodesics, proper-time integrals, scalar/dust
+energy and the visible Einstein constraint residual. The HTML works offline;
+its time slider and playback inspect the saved run without evolving a second
+system. Exact inputs, transitions, arithmetic clicks, provenance and independent
+constraint/clock/quantum audit reports accompany it.
+
+The current fixture is a finite homogeneous scalar/dust preparation. Its
+geodesics are **passive test paths in the reconstructed metric**, not retained
+probe dynamics or evidence of general Einstein convergence. The initially zero
+Hamiltonian constraint becomes exactly `-7*dt**2` after the first update; this
+failure is displayed and tested. Quantum audits validate complete-trial and
+selection controls, not an Engine realization of Born or Bell physics. See the
+[integrated report](docs/research/geodesic_board/README.md) for the eight-agent
+results, domains and remaining work.
+
 [The standard model report](docs/ONE_SYSTEM.md) defines the research question, equations, module boundaries, methods, results and gates A–F. [The proposal index](docs/proposals/INDEX.md) records the inherited ADM, Frame48, null and FLRW work. [Issue #40](https://github.com/Closer24/Universe24/issues/40) coordinates the missing coupled encoding, refinement, shared-metric apparatus and detector physics.

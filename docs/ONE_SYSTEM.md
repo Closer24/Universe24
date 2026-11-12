@@ -92,7 +92,7 @@ not yet the physical null cone.
 | A — Mechanical | Exact integers, immutable tensor, ≤48 channels, strict locality, complete forward/inverse replay, scalar oracle and causality controls | Checked for an actual bundle/run only; not a physical theorem. |
 | B — Decoder | Online/offline equality, identity and class/sign checks, missing/duplicate/corrupt-record rejection, observer passivity and no-source controls | Arithmetic click semantics can be validated without assuming a detector model. |
 | C — Einstein geometry | Independent four-metric curvature; vacuum and sourced cases; six evolution equations, four constraints, metric signature and matter conservation | No accepted general ≤48 coupled model. |
-| D — Convergence | Separate and joint space/time/quantization refinement at fixed physical domain and endpoint; stable constraints and valid geometry | The compact general encoding has unresolved integrality, constraint and stability gates. |
+| D — Convergence | Separate and joint space/time/quantization refinement at fixed physical domain and endpoint; stable constraints and valid geometry | Projective integer refinement is now constructive; general spatial convergence, stability and efficient bit growth remain unresolved. |
 | E — Shared clocks and motion | Moving and stationary apparatus, null propagation and free fall using the same geometry; redshift/tidal and held-out controls | No accepted in-budget operational apparatus model. |
 | F — Detector physics | Coupled source/apparatus interaction, complete trials, calibrated response, interference and separately justified Born/Bell statistics | No derived real-world detector law from the present Engine. |
 
@@ -103,6 +103,18 @@ schema/replay checks cannot set C–F to passed. Evidence must identify the seed
 tensor, protocol, source revision, raw results and domain of its claim.
 
 ## Results and limitations of inherited and concurrent proposals
+
+The source-only [projective refinement follow-up](TEAM48_REFINEMENT.md) replaces
+the sign phase with a retained denominator in 41/44 channels. It proves the
+decoded update identity, supports rational physical time/space steps, and
+retains the unchanged fixed-six Engine and bundle interface. The protected
+cubic44 preparation has an exact positive-frame invariant with a vanishing
+physical memory perturbation. Actual sourced homogeneous and plane-symmetric
+tests show decreasing errors in specified refinement series. Several original
+spatial/joint sequences fail their declared comparison test and remain in the
+evidence. Integer bit length grows exponentially; no general physical gate or
+apparatus default is promoted. The historical limitations below refer to their
+original pinned laws, not to this changed projective integrator.
 
 The baseline for this consolidation is commit
 `7d238e84a2167a4d3fe7bc7942da0cbf97bd29b2`. Concurrent proposals #42 and #43
@@ -275,6 +287,89 @@ The #43 history/routing evidence narrows this task but does not establish the
 requested growth between bursts. This gate remains open.
 
 ## Sources and reproduction
+
+### One saved massive45 run and geodesic board
+
+The [integrated geodesic-board report](research/geodesic_board/README.md)
+connects the corrected full-frame, explicitly massive 45-channel tensor to the
+existing bundle/runtime, saved metric, homogeneous geodesic readout and offline
+board. Run `python -m validation.geodesic_board --out runs/geodesic-board`.
+All retained dynamics still use the unchanged Engine. The readout adds zero
+retained channels and cannot feed the Engine. Older #47–#50 source proposals
+are consolidated as validation evidence; they are not concatenated into this
+tensor or installed as competing physical models.
+
+The finite default run has 889 quadratic terms, 27 nodes and four updates.
+Independent complete-state replay and scalar-oracle checks accompany a
+continuum-derived first-step counterexample: from the constrained massive
+FLRW seed, the Hamiltonian residual becomes exactly `-7*dt**2`. The flat
+control remains zero, and the massless control gives `-3*dt**2`. Therefore
+continuum constraint additions and flat-symbol hyperbolicity do not by
+themselves repair this temporal discretization. Refinement evidence is limited
+to the stated homogeneous finite-time family, with explicit integer bit cost.
+
+Null/timelike curves use conserved spatial momenta in the same saved homogeneous
+metric with lapse one and shift zero. Floating quadrature is confined to passive
+readout, independently checked against analytic flat and expanding controls.
+It is not operational motion or an extra source inside the tensor. Clock
+intensity/phase and complete-trial quantum controls retain their failed or
+unimplemented physical gates. General acceptance C–F remains open.
+
+### Eight-review algebra and formulation follow-up
+
+The source-only [eight-review report](research_eight/README.md) investigates
+the two remaining #47 costs and the underlying evolution formulation. It
+proves the current positive projective denominator's exponential bit-length
+lower bound, records exact shifted-product/native-lattice identities, and
+adds executable positive and negative controls. None is an installed model.
+
+An exact principal-symbol audit of the actual full and triangular frame RHS
+finds off-constraint Jordan chains around flat space. A separately compiled
+full-frame constraint-added proposal has a square-free all-direction flat
+principal-symbol identity and fits the stated matter in **45 projective
+channels**. This is a new research law, not an equivalence assertion about
+the old off-constraint trajectories. Its three-step complete-state audit
+does not establish nonlinear constraint propagation, general metric
+positivity, stable time discretization or efficient integer growth; the old
+projective denominator cost remains. The triangular protected44 determinant
+proof cannot be transferred to this full-frame allocation.
+
+Native Rule3 coordinates expose an alternative denominator-free kick/drift
+search space without adding retained state. Generic nonseparable kinetics,
+rational refinement and a budgeted multi-tick compiler remain unimplemented.
+The matter clock work establishes a gauge-invariant diagnostic port and
+global phase-equivariance checks, not operational proper-clock or click-only
+acceptance. General gates C–F remain open.
+
+Run `python -m validation.research_eight.run_all` for the eight independent
+audits. Fresh logs, source hashes and expected physical failures remain in
+`runs/research_eight/`. The complete proposal and its precise domains are
+coordinated in #40, with apparatus-specific results in #41.
+The follow-up [integration synthesis](research/synthesis/08-interface-synthesis.md)
+connects the projective refinement proposal to held-out geometry, exact bit-growth,
+gauge/readout, reversible comparison, compatible-identity and reciprocal-matter
+controls. These are source-only research programs, not additional installed
+universes or a concatenated physical tensor. Their independently reproduced
+successes and failures are retained; no acceptance gate is promoted by their
+execution. Run `python -m validation.synthesis.run_all --out runs/synthesis`.
+### Clock-link observer follow-up
+
+[The staged clock/observer plan](CLOCK_LINK_OBSERVER_PLAN.md) implements a
+source-only construction on the pinned 44-channel bundle: four retained
+local/face coherent-intensity responses bring its total to 48. It uses the
+same Engine, complete trace, ownership ledger and canonical decoder. The
+added polynomial inputs are `u=3F`, with `F=|z|²` or a coherent face sum,
+so `ell=F` and each remainder is retained. The complete source44 projection
+is unchanged; this is one-way test apparatus, without supplied stress or
+backreaction, proper-time calibration or local gauge-covariant transport.
+
+The construction is a model change for the additional retained responses,
+not a default physical model. History-sensitive event suppression and exact
+interference records pass. Binary Born frequencies fail; there is no
+apparatus-to-carrier selection or recurrent structural-growth evidence.
+The combined audit preserves these failures and rejects mixed run/source
+identities. See the plan for the next reciprocal-interaction, pointer,
+probability-measure and shared-metric acceptance sequence.
 
 The mathematical source ledger and derivations are preserved in
 [Frame48 research](FRAME48_RESEARCH.md), [integer ADM](INTEGER_ADM.md),
