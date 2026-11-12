@@ -1,0 +1,656 @@
+{
+  "schema": "universe24/einstein-node/node-algebra/1",
+  "baseline_commit": "4c494c1188f70eb8a677bf59765cc6e8571c6b88",
+  "source_sha256": {
+    "validation/einstein_node_audit/node_algebra.py": "5c2ddc5ae51c0fbbf79119987d085de779be8fd7a4bf3bb1d52e99c3f12d657d",
+    "universe24/core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+    "universe24/core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3"
+  },
+  "generic_identities": {
+    "status": "passed",
+    "channels": 3,
+    "nodes": 27,
+    "seeds": 6,
+    "steps_each": 5,
+    "checked_triples": 2430,
+    "paired_click_rows": 2380,
+    "max_retained_bits": 4838,
+    "staged_old_a_layers": [
+      [
+        0
+      ],
+      [
+        1
+      ],
+      [
+        2
+      ]
+    ],
+    "reciprocal_gradient_is_automatic": false,
+    "missing_gradient_partners": 4,
+    "all_six_initial_remainders": true,
+    "independent_scalar_state_sha256": "a8209e03f46fbe32fc93d61d276afa5d1dd83197e78db4c419b51ce47ffc1d79",
+    "tensor": {
+      "format": "universe24/divisor-six/tensor/2",
+      "gears": [
+        {
+          "name": "q0",
+          "label": "official",
+          "link": null,
+          "sign": 1,
+          "sign_why": ""
+        },
+        {
+          "name": "q1",
+          "label": "official",
+          "link": null,
+          "sign": 1,
+          "sign_why": ""
+        },
+        {
+          "name": "q2",
+          "label": "official",
+          "link": null,
+          "sign": 1,
+          "sign_why": ""
+        }
+      ],
+      "monomials": [
+        [
+          "q0",
+          3,
+          []
+        ],
+        [
+          "q0",
+          2,
+          [
+            [
+              "q0",
+              [
+                0,
+                0,
+                0
+              ],
+              "b"
+            ]
+          ]
+        ],
+        [
+          "q0",
+          1,
+          [
+            [
+              "q1",
+              [
+                1,
+                0,
+                0
+              ],
+              "b"
+            ],
+            [
+              "q1",
+              [
+                1,
+                0,
+                0
+              ],
+              "b"
+            ]
+          ]
+        ],
+        [
+          "q1",
+          6,
+          [
+            [
+              "q1",
+              [
+                0,
+                0,
+                0
+              ],
+              "b"
+            ]
+          ]
+        ],
+        [
+          "q1",
+          1,
+          [
+            [
+              "q0",
+              [
+                0,
+                0,
+                0
+              ],
+              "a"
+            ],
+            [
+              "q2",
+              [
+                0,
+                1,
+                0
+              ],
+              "b"
+            ]
+          ]
+        ],
+        [
+          "q1",
+          -1,
+          [
+            [
+              "q0",
+              [
+                0,
+                0,
+                1
+              ],
+              "b"
+            ],
+            [
+              "q1",
+              [
+                0,
+                0,
+                0
+              ],
+              "b"
+            ],
+            [
+              "q2",
+              [
+                0,
+                0,
+                1
+              ],
+              "b"
+            ]
+          ]
+        ],
+        [
+          "q2",
+          1,
+          [
+            [
+              "q1",
+              [
+                -1,
+                0,
+                0
+              ],
+              "a"
+            ]
+          ]
+        ],
+        [
+          "q2",
+          -3,
+          [
+            [
+              "q2",
+              [
+                0,
+                0,
+                0
+              ],
+              "b"
+            ]
+          ]
+        ],
+        [
+          "q2",
+          1,
+          [
+            [
+              "q0",
+              [
+                0,
+                0,
+                0
+              ],
+              "b"
+            ],
+            [
+              "q0",
+              [
+                0,
+                0,
+                0
+              ],
+              "b"
+            ],
+            [
+              "q0",
+              [
+                0,
+                0,
+                0
+              ],
+              "b"
+            ]
+          ]
+        ]
+      ],
+      "designated_one_way": []
+    },
+    "claims": [
+      "native_qp_identity",
+      "inactive_remainder_parity",
+      "identical_ab_and_clicks_under_parity_flip",
+      "bounded_summed_acceleration_carry",
+      "complete_inverse"
+    ]
+  },
+  "negative_controls": {
+    "period_four": {
+      "tensor_u": "0*b+0",
+      "complete_triples": [
+        [
+          0,
+          1,
+          5
+        ],
+        [
+          1,
+          0,
+          5
+        ],
+        [
+          0,
+          -1,
+          5
+        ],
+        [
+          -1,
+          0,
+          5
+        ],
+        [
+          0,
+          1,
+          5
+        ],
+        [
+          1,
+          0,
+          5
+        ],
+        [
+          0,
+          -1,
+          5
+        ],
+        [
+          -1,
+          0,
+          5
+        ],
+        [
+          0,
+          1,
+          5
+        ],
+        [
+          1,
+          0,
+          5
+        ],
+        [
+          0,
+          -1,
+          5
+        ],
+        [
+          -1,
+          0,
+          5
+        ],
+        [
+          0,
+          1,
+          5
+        ]
+      ],
+      "a_squared_plus_b_squared": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "official_click_count_by_step_on_27_nodes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "complete_rewind": true
+    },
+    "inertial": {
+      "tensor_u": "6*b+0",
+      "complete_triples": [
+        [
+          0,
+          1,
+          5
+        ],
+        [
+          1,
+          2,
+          5
+        ],
+        [
+          2,
+          3,
+          5
+        ],
+        [
+          3,
+          4,
+          5
+        ],
+        [
+          4,
+          5,
+          5
+        ],
+        [
+          5,
+          6,
+          5
+        ],
+        [
+          6,
+          7,
+          5
+        ],
+        [
+          7,
+          8,
+          5
+        ],
+        [
+          8,
+          9,
+          5
+        ],
+        [
+          9,
+          10,
+          5
+        ],
+        [
+          10,
+          11,
+          5
+        ],
+        [
+          11,
+          12,
+          5
+        ],
+        [
+          12,
+          13,
+          5
+        ]
+      ],
+      "a_squared_plus_b_squared": [
+        1,
+        5,
+        13,
+        25,
+        41,
+        61,
+        85,
+        113,
+        145,
+        181,
+        221,
+        265,
+        313
+      ],
+      "official_click_count_by_step_on_27_nodes": [
+        27,
+        27,
+        27,
+        27,
+        27,
+        27,
+        27,
+        27,
+        27,
+        27,
+        27,
+        27
+      ],
+      "complete_rewind": true
+    },
+    "accelerated": {
+      "tensor_u": "6*b+3",
+      "complete_triples": [
+        [
+          0,
+          1,
+          5
+        ],
+        [
+          1,
+          3,
+          5
+        ],
+        [
+          3,
+          6,
+          5
+        ],
+        [
+          6,
+          10,
+          5
+        ],
+        [
+          10,
+          15,
+          5
+        ],
+        [
+          15,
+          21,
+          5
+        ],
+        [
+          21,
+          28,
+          5
+        ],
+        [
+          28,
+          36,
+          5
+        ],
+        [
+          36,
+          45,
+          5
+        ],
+        [
+          45,
+          55,
+          5
+        ],
+        [
+          55,
+          66,
+          5
+        ],
+        [
+          66,
+          78,
+          5
+        ],
+        [
+          78,
+          91,
+          5
+        ]
+      ],
+      "a_squared_plus_b_squared": [
+        1,
+        10,
+        45,
+        136,
+        325,
+        666,
+        1225,
+        2080,
+        3321,
+        5050,
+        7381,
+        10440,
+        14365
+      ],
+      "official_click_count_by_step_on_27_nodes": [
+        27,
+        27,
+        27,
+        27,
+        27,
+        27,
+        27,
+        27,
+        27,
+        27,
+        27,
+        27
+      ],
+      "complete_rewind": true
+    },
+    "exponential": {
+      "tensor_u": "9*b+0",
+      "complete_triples": [
+        [
+          0,
+          1,
+          5
+        ],
+        [
+          1,
+          3,
+          5
+        ],
+        [
+          3,
+          8,
+          5
+        ],
+        [
+          8,
+          21,
+          5
+        ],
+        [
+          21,
+          55,
+          5
+        ],
+        [
+          55,
+          144,
+          5
+        ],
+        [
+          144,
+          377,
+          5
+        ],
+        [
+          377,
+          987,
+          5
+        ],
+        [
+          987,
+          2584,
+          5
+        ],
+        [
+          2584,
+          6765,
+          5
+        ],
+        [
+          6765,
+          17711,
+          5
+        ],
+        [
+          17711,
+          46368,
+          5
+        ],
+        [
+          46368,
+          121393,
+          5
+        ]
+      ],
+      "a_squared_plus_b_squared": [
+        1,
+        10,
+        73,
+        505,
+        3466,
+        23761,
+        162865,
+        1116298,
+        7651225,
+        52442281,
+        359444746,
+        2463670945,
+        16886251873
+      ],
+      "official_click_count_by_step_on_27_nodes": [
+        27,
+        27,
+        27,
+        27,
+        27,
+        27,
+        27,
+        27,
+        27,
+        27,
+        27,
+        27
+      ],
+      "complete_rewind": true
+    },
+    "universal_strict_load_descent": "failed_by_nontrivial_period_four_control",
+    "universal_euclidean_norm_energy": "failed_by_inertial_and_exponential_controls",
+    "geodesic_and_proper_clock_identification": "not_tested"
+  },
+  "runtime_changed": false,
+  "einstein_acceptance": "not_established"
+}

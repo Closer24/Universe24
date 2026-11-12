@@ -1,0 +1,48 @@
+name: Node clocks and Einstein controls
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.12']
+    env:
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install declared dependencies
+        run: python -m pip install '.[validation]'
+      - name: Check out the exact published geometry proposal
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: 62202fdccdd9a40d5dbbec104de6f97d9587a999
+          path: node-clock-pr50-reference
+          persist-credentials: false
+      - name: Execute generic identities and physical negative controls
+        run: |
+          python -m validation.einstein_node_audit.node_algebra
+          python -m validation.einstein_node_audit.clock_geometry
+          python -m validation.einstein_node_audit.load_invariance
+          python -m validation.einstein_node_audit.principal_cones --source node-clock-pr50-reference
+          python -m validation.einstein_node_audit.independent_review
+      - name: Retain exact audit evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: node-clock-python-${{ matrix.python }}
+          path: |
+            runs/einstein-node/
+            runs/einstein_node/
+          if-no-files-found: error

@@ -74,6 +74,21 @@ jobs:
           python -m validation.geodesic_board --out runs/geodesic-board
           python -m universe24 verify --run runs/geodesic-board/runtime
           node validation/geodesic_board/check_board.cjs runs/geodesic-board/board.html
+      - name: Check out the pinned corrected full-frame source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: 62202fdccdd9a40d5dbbec104de6f97d9587a999
+          path: validation-reference-50
+          persist-credentials: false
+      - name: Eight-lane retained selection and reciprocal apparatus audit
+        run: python -m validation.selection.run_audits --reference validation-reference-50 --out runs/retained-selection
+      - name: Cross-team massive45 identity and preserved constraint failures
+        run: python -m validation.integration_contract.massive45 > runs/cross-team-integration.json
+      - name: Generic coupling identities and exact homogeneous sector reconstruction
+        run: |
+          python -m validation.generic_couplings --out runs/generic-couplings
+          python -m universe24 verify --run runs/generic-couplings/runtime/full
+          python -m universe24 verify --run runs/generic-couplings/runtime/reduced
       - name: Test evidence
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9

@@ -1,0 +1,31 @@
+{
+  "schema": "universe24/einstein-node/independent-review/1",
+  "checks": {
+    "rindler_flatness_independent_coordinate_pullback": "passed",
+    "de_sitter_all_256_constant_curvature_components": "passed",
+    "ten_velocity_design_rank_10": "passed",
+    "stationary_design_rank_1": "passed",
+    "every_missing_sample_rank_9": "passed",
+    "twenty_exact_symmetric_metric_reconstructions": "passed",
+    "nonmetric_impostor_fits_ten_samples": "passed_negative_control",
+    "held_out_velocity_rejects_impostor": "passed"
+  },
+  "negative_control": {
+    "added_nonmetric_term": "v_x (v_x^2 - epsilon^2)",
+    "epsilon": "1/10",
+    "held_out_velocity": [
+      "1/8",
+      "0",
+      "0"
+    ],
+    "metric_prediction_squared_rate": "63/64",
+    "nonmetric_squared_rate": "12609/12800",
+    "difference": "9/12800"
+  },
+  "scope": "Algebraic identifiability assumes a quadratic clock law in a known chart; it is not evidence for an operational material clock.",
+  "physical_acceptance": "not_established",
+  "source_sha256": {
+    "validation/einstein_node_audit/independent_review.py": "d128dc6a21767ae8eddc931f9e7a164d340c73202ccac7ff6e1517cff4882d8a",
+    "validation/einstein_node_audit/clock_geometry.py": "9a78e0b3882331cda312546cf34f3020b776d8bbb5e90d5d279f84be43a31104"
+  }
+}

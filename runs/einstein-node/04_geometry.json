@@ -1,0 +1,1011 @@
+{
+  "audit_sha256": "597ae6a7b310ea2228e6ac43a0d39044ef907b369e87203832aff0a2d4b9e7f7",
+  "independent_matter_principal_blocks": {
+    "Maxwell_characteristic_polynomial": "lambda^2 (lambda^2 - 146)^2",
+    "Maxwell_trace_A_squared": "4 n^T B^T B n",
+    "charge_coupling": 5,
+    "direction": [
+      1,
+      2,
+      3
+    ],
+    "frame_determinant": 13,
+    "interpretation": "The existing continuum matter equations encode a common metric in their principal spatial derivatives. This is not derived from Rule3 alone.",
+    "mass_squared": 7,
+    "metric_inverse": "diag(-1, B^T B)",
+    "metric_speed_squared": 146,
+    "nonorthogonal_frame": [
+      [
+        2,
+        1,
+        0
+      ],
+      [
+        0,
+        3,
+        1
+      ],
+      [
+        1,
+        0,
+        2
+      ]
+    ],
+    "scalar_and_Maxwell_annihilator": "A^3 - (n^T B^T B n) A = 0",
+    "scalar_characteristic_polynomial": "lambda^3 (lambda^2 - 146)",
+    "scalar_trace_A_squared": "2 n^T B^T B n",
+    "status": "passed",
+    "symbolic_domain": "Arbitrary real full frame B and covector n; physical metric requires det(B) != 0.",
+    "wrong_identity_frame_control": {
+      "matches_metric": false,
+      "speed_squared": 14
+    }
+  },
+  "not_established": [
+    "Full coupled matter/gravity symbol on nontrivial backgrounds",
+    "Nonlinear discrete constraint propagation",
+    "Finite-step scalar or Maxwell packet geodesics on the board",
+    "Independent material proper-clock ticks and operational decoder",
+    "Uniform fully discrete stability, general convergence or efficient bit growth"
+  ],
+  "published_PR50_45channel_audit_reexecuted": {
+    "all_six_remainders_and_full_rewind": true,
+    "bit_growth": "unchanged_projective_obstruction",
+    "channels": 45,
+    "degree": 2,
+    "homogeneous_sourced_constraint_surface_RHS_equality": true,
+    "independent_scalar_oracle": true,
+    "max_retained_bits": 77,
+    "metric_positivity": "not_established",
+    "monomials": 881,
+    "nodes": 27,
+    "nonlinear_discrete_constraint_propagation": "not_established",
+    "old_a_inputs": false,
+    "operational_apparatus": "not_implemented",
+    "retained_integers_per_node": 135,
+    "static_multiplier": 64,
+    "steps": 3,
+    "strict_face_support": true,
+    "tensor_sha256": "65f20153c7ce75e06497157f4e0dfa809c79bde4e3bad02e48b0f04b5a1208e3"
+  },
+  "published_PR50_symbol_audit_reexecuted": {
+    "Jordan_seed_linear_constraint_defects": {
+      "C010": "-1",
+      "Ricci_antisym12": "-1"
+    },
+    "TT_constraint_consistent_principal_change": 0,
+    "all_direction_square_free_annihilator": true,
+    "annihilator": "A (A^2-|n|^2 I) (A^2-|n|^2 I/2) (A^2-|n|^2 I/8)=0",
+    "direction_tests": {
+      "full24_constraint_added": [
+        {
+          "direction": [
+            1,
+            0,
+            0
+          ],
+          "eigenspaces": [
+            {
+              "algebraic": 14,
+              "geometric": 14,
+              "real": true,
+              "speed": "0"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "1"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "-1"
+            },
+            {
+              "algebraic": 1,
+              "geometric": 1,
+              "real": true,
+              "speed": "-sqrt(2)/2"
+            },
+            {
+              "algebraic": 1,
+              "geometric": 1,
+              "real": true,
+              "speed": "sqrt(2)/2"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "-sqrt(2)/4"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "sqrt(2)/4"
+            }
+          ],
+          "ranks_A_A2_A3": [
+            10,
+            10,
+            10
+          ],
+          "real_diagonalizable": true
+        },
+        {
+          "direction": [
+            0,
+            1,
+            0
+          ],
+          "eigenspaces": [
+            {
+              "algebraic": 14,
+              "geometric": 14,
+              "real": true,
+              "speed": "0"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "1"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "-1"
+            },
+            {
+              "algebraic": 1,
+              "geometric": 1,
+              "real": true,
+              "speed": "-sqrt(2)/2"
+            },
+            {
+              "algebraic": 1,
+              "geometric": 1,
+              "real": true,
+              "speed": "sqrt(2)/2"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "-sqrt(2)/4"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "sqrt(2)/4"
+            }
+          ],
+          "ranks_A_A2_A3": [
+            10,
+            10,
+            10
+          ],
+          "real_diagonalizable": true
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "eigenspaces": [
+            {
+              "algebraic": 14,
+              "geometric": 14,
+              "real": true,
+              "speed": "0"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "1"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "-1"
+            },
+            {
+              "algebraic": 1,
+              "geometric": 1,
+              "real": true,
+              "speed": "-sqrt(2)/2"
+            },
+            {
+              "algebraic": 1,
+              "geometric": 1,
+              "real": true,
+              "speed": "sqrt(2)/2"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "-sqrt(2)/4"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "sqrt(2)/4"
+            }
+          ],
+          "ranks_A_A2_A3": [
+            10,
+            10,
+            10
+          ],
+          "real_diagonalizable": true
+        },
+        {
+          "direction": [
+            1,
+            1,
+            0
+          ],
+          "eigenspaces": [
+            {
+              "algebraic": 14,
+              "geometric": 14,
+              "real": true,
+              "speed": "0"
+            },
+            {
+              "algebraic": 1,
+              "geometric": 1,
+              "real": true,
+              "speed": "1"
+            },
+            {
+              "algebraic": 1,
+              "geometric": 1,
+              "real": true,
+              "speed": "-1"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "1/2"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "-1/2"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "-sqrt(2)"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "sqrt(2)"
+            }
+          ],
+          "ranks_A_A2_A3": [
+            10,
+            10,
+            10
+          ],
+          "real_diagonalizable": true
+        },
+        {
+          "direction": [
+            1,
+            2,
+            3
+          ],
+          "eigenspaces": [
+            {
+              "algebraic": 14,
+              "geometric": 14,
+              "real": true,
+              "speed": "0"
+            },
+            {
+              "algebraic": 1,
+              "geometric": 1,
+              "real": true,
+              "speed": "-sqrt(7)"
+            },
+            {
+              "algebraic": 1,
+              "geometric": 1,
+              "real": true,
+              "speed": "sqrt(7)"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "-sqrt(14)"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "sqrt(14)"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "-sqrt(7)/2"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "sqrt(7)/2"
+            }
+          ],
+          "ranks_A_A2_A3": [
+            10,
+            10,
+            10
+          ],
+          "real_diagonalizable": true
+        }
+      ],
+      "full24_original": [
+        {
+          "direction": [
+            1,
+            0,
+            0
+          ],
+          "eigenspaces": [
+            {
+              "algebraic": 18,
+              "geometric": 16,
+              "real": true,
+              "speed": "0"
+            },
+            {
+              "algebraic": 3,
+              "geometric": 3,
+              "real": true,
+              "speed": "-1"
+            },
+            {
+              "algebraic": 3,
+              "geometric": 3,
+              "real": true,
+              "speed": "1"
+            }
+          ],
+          "ranks_A_A2_A3": [
+            8,
+            6,
+            6
+          ],
+          "real_diagonalizable": false
+        },
+        {
+          "direction": [
+            0,
+            1,
+            0
+          ],
+          "eigenspaces": [
+            {
+              "algebraic": 18,
+              "geometric": 15,
+              "real": true,
+              "speed": "0"
+            },
+            {
+              "algebraic": 3,
+              "geometric": 3,
+              "real": true,
+              "speed": "-1"
+            },
+            {
+              "algebraic": 3,
+              "geometric": 3,
+              "real": true,
+              "speed": "1"
+            }
+          ],
+          "ranks_A_A2_A3": [
+            9,
+            7,
+            6
+          ],
+          "real_diagonalizable": false
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "eigenspaces": [
+            {
+              "algebraic": 18,
+              "geometric": 14,
+              "real": true,
+              "speed": "0"
+            },
+            {
+              "algebraic": 3,
+              "geometric": 3,
+              "real": true,
+              "speed": "-1"
+            },
+            {
+              "algebraic": 3,
+              "geometric": 3,
+              "real": true,
+              "speed": "1"
+            }
+          ],
+          "ranks_A_A2_A3": [
+            10,
+            8,
+            6
+          ],
+          "real_diagonalizable": false
+        },
+        {
+          "direction": [
+            1,
+            1,
+            0
+          ],
+          "eigenspaces": [
+            {
+              "algebraic": 18,
+              "geometric": 15,
+              "real": true,
+              "speed": "0"
+            },
+            {
+              "algebraic": 3,
+              "geometric": 3,
+              "real": true,
+              "speed": "-sqrt(2)"
+            },
+            {
+              "algebraic": 3,
+              "geometric": 3,
+              "real": true,
+              "speed": "sqrt(2)"
+            }
+          ],
+          "ranks_A_A2_A3": [
+            9,
+            7,
+            6
+          ],
+          "real_diagonalizable": false
+        },
+        {
+          "direction": [
+            1,
+            2,
+            3
+          ],
+          "eigenspaces": [
+            {
+              "algebraic": 18,
+              "geometric": 14,
+              "real": true,
+              "speed": "0"
+            },
+            {
+              "algebraic": 3,
+              "geometric": 3,
+              "real": true,
+              "speed": "-sqrt(14)"
+            },
+            {
+              "algebraic": 3,
+              "geometric": 3,
+              "real": true,
+              "speed": "sqrt(14)"
+            }
+          ],
+          "ranks_A_A2_A3": [
+            10,
+            8,
+            6
+          ],
+          "real_diagonalizable": false
+        }
+      ],
+      "triangular20_constraint_added": [
+        {
+          "direction": [
+            1,
+            0,
+            0
+          ],
+          "eigenspaces": [
+            {
+              "algebraic": 10,
+              "geometric": 10,
+              "real": true,
+              "speed": "0"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "1"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "-1"
+            },
+            {
+              "algebraic": 1,
+              "geometric": 1,
+              "real": true,
+              "speed": "-sqrt(2)/2"
+            },
+            {
+              "algebraic": 1,
+              "geometric": 1,
+              "real": true,
+              "speed": "sqrt(2)/2"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "-sqrt(2)/4"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "sqrt(2)/4"
+            }
+          ],
+          "ranks_A_A2_A3": [
+            10,
+            10,
+            10
+          ],
+          "real_diagonalizable": true
+        },
+        {
+          "direction": [
+            0,
+            1,
+            0
+          ],
+          "eigenspaces": [
+            {
+              "algebraic": 10,
+              "geometric": 10,
+              "real": true,
+              "speed": "0"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "1"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "-1"
+            },
+            {
+              "algebraic": 1,
+              "geometric": 1,
+              "real": true,
+              "speed": "-sqrt(2)/2"
+            },
+            {
+              "algebraic": 1,
+              "geometric": 1,
+              "real": true,
+              "speed": "sqrt(2)/2"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "-sqrt(2)/4"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "sqrt(2)/4"
+            }
+          ],
+          "ranks_A_A2_A3": [
+            10,
+            10,
+            10
+          ],
+          "real_diagonalizable": true
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "eigenspaces": [
+            {
+              "algebraic": 10,
+              "geometric": 10,
+              "real": true,
+              "speed": "0"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "1"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "-1"
+            },
+            {
+              "algebraic": 1,
+              "geometric": 1,
+              "real": true,
+              "speed": "-sqrt(2)/2"
+            },
+            {
+              "algebraic": 1,
+              "geometric": 1,
+              "real": true,
+              "speed": "sqrt(2)/2"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "-sqrt(2)/4"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "sqrt(2)/4"
+            }
+          ],
+          "ranks_A_A2_A3": [
+            10,
+            10,
+            10
+          ],
+          "real_diagonalizable": true
+        },
+        {
+          "direction": [
+            1,
+            1,
+            0
+          ],
+          "eigenspaces": [
+            {
+              "algebraic": 10,
+              "geometric": 9,
+              "real": true,
+              "speed": "0"
+            },
+            {
+              "algebraic": 1,
+              "geometric": 1,
+              "real": true,
+              "speed": "1"
+            },
+            {
+              "algebraic": 1,
+              "geometric": 1,
+              "real": true,
+              "speed": "-1"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "1/2"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "-1/2"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "-sqrt(2)"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "sqrt(2)"
+            }
+          ],
+          "ranks_A_A2_A3": [
+            11,
+            10,
+            10
+          ],
+          "real_diagonalizable": false
+        },
+        {
+          "direction": [
+            1,
+            2,
+            3
+          ],
+          "eigenspaces": [
+            {
+              "algebraic": 10,
+              "geometric": 9,
+              "real": true,
+              "speed": "0"
+            },
+            {
+              "algebraic": 1,
+              "geometric": 1,
+              "real": true,
+              "speed": "-sqrt(7)"
+            },
+            {
+              "algebraic": 1,
+              "geometric": 1,
+              "real": true,
+              "speed": "sqrt(7)"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "-sqrt(14)"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "sqrt(14)"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "-sqrt(7)/2"
+            },
+            {
+              "algebraic": 2,
+              "geometric": 2,
+              "real": true,
+              "speed": "sqrt(7)/2"
+            }
+          ],
+          "ranks_A_A2_A3": [
+            11,
+            10,
+            10
+          ],
+          "real_diagonalizable": false
+        }
+      ],
+      "triangular20_original": [
+        {
+          "direction": [
+            1,
+            0,
+            0
+          ],
+          "eigenspaces": [
+            {
+              "algebraic": 14,
+              "geometric": 14,
+              "real": true,
+              "speed": "0"
+            },
+            {
+              "algebraic": 3,
+              "geometric": 3,
+              "real": true,
+              "speed": "-1"
+            },
+            {
+              "algebraic": 3,
+              "geometric": 3,
+              "real": true,
+              "speed": "1"
+            }
+          ],
+          "ranks_A_A2_A3": [
+            6,
+            6,
+            6
+          ],
+          "real_diagonalizable": true
+        },
+        {
+          "direction": [
+            0,
+            1,
+            0
+          ],
+          "eigenspaces": [
+            {
+              "algebraic": 14,
+              "geometric": 12,
+              "real": true,
+              "speed": "0"
+            },
+            {
+              "algebraic": 3,
+              "geometric": 3,
+              "real": true,
+              "speed": "-1"
+            },
+            {
+              "algebraic": 3,
+              "geometric": 3,
+              "real": true,
+              "speed": "1"
+            }
+          ],
+          "ranks_A_A2_A3": [
+            8,
+            7,
+            6
+          ],
+          "real_diagonalizable": false
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "eigenspaces": [
+            {
+              "algebraic": 14,
+              "geometric": 10,
+              "real": true,
+              "speed": "0"
+            },
+            {
+              "algebraic": 3,
+              "geometric": 3,
+              "real": true,
+              "speed": "-1"
+            },
+            {
+              "algebraic": 3,
+              "geometric": 3,
+              "real": true,
+              "speed": "1"
+            }
+          ],
+          "ranks_A_A2_A3": [
+            10,
+            8,
+            6
+          ],
+          "real_diagonalizable": false
+        },
+        {
+          "direction": [
+            1,
+            1,
+            0
+          ],
+          "eigenspaces": [
+            {
+              "algebraic": 14,
+              "geometric": 12,
+              "real": true,
+              "speed": "0"
+            },
+            {
+              "algebraic": 3,
+              "geometric": 3,
+              "real": true,
+              "speed": "-sqrt(2)"
+            },
+            {
+              "algebraic": 3,
+              "geometric": 3,
+              "real": true,
+              "speed": "sqrt(2)"
+            }
+          ],
+          "ranks_A_A2_A3": [
+            8,
+            7,
+            6
+          ],
+          "real_diagonalizable": false
+        },
+        {
+          "direction": [
+            1,
+            2,
+            3
+          ],
+          "eigenspaces": [
+            {
+              "algebraic": 14,
+              "geometric": 10,
+              "real": true,
+              "speed": "0"
+            },
+            {
+              "algebraic": 3,
+              "geometric": 3,
+              "real": true,
+              "speed": "-sqrt(14)"
+            },
+            {
+              "algebraic": 3,
+              "geometric": 3,
+              "real": true,
+              "speed": "sqrt(14)"
+            }
+          ],
+          "ranks_A_A2_A3": [
+            10,
+            8,
+            6
+          ],
+          "real_diagonalizable": false
+        }
+      ]
+    },
+    "original_triangular_Jordan_chain": [
+      "G010",
+      "-K12",
+      "2G122",
+      "0"
+    ],
+    "scope": "Continuum frozen principal symbol; not raw integer-microstep or full discrete stability."
+  },
+  "schema": "universe24/einstein-node/geometry/1",
+  "source_commit": "62202fdccdd9a40d5dbbec104de6f97d9587a999",
+  "source_pr": "https://github.com/Closer24/Universe24/pull/50",
+  "source_sha256": {
+    "universe24/algebra/frame_equations.py": "0414e93591cfaf7d1ab3c1c3ac45d958fa120a83c5a3bb337063622106162845",
+    "universe24/core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+    "universe24/core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+    "validation/geometry/team48/geometry_triangular.py": "71daf226d9ff699144a3dfc1ceeba42483c4736425baed3568d9db17e98abc1f",
+    "validation/geometry/team48/matter_charged.py": "8d57dc7b583ab9f0c657d5372ba3fa35f0b08cb8959eae2e6c03cca16d322fbc",
+    "validation/geometry/team48/matter_dust_square.py": "a32c65d536c14be036f8b9c02b87584decf333971fdb5e00eff4f7769c96ac3c",
+    "validation/geometry/team48/matter_equations.py": "394efe21ec4637d541a79c283d040f6afad0f36ba0143d190358b984396ba18e",
+    "validation/geometry/team48/refinement_integer_projective.py": "7761440de3ab440d98e758432db2eba1360c83dbea0b7a54f039c756cf76e604",
+    "validation/research_eight/07_hyperbolic_symbol.py": "5a3acdc8a0641b83275275edadd0fe9479acc1d4cd7b10b7a6d031ad8aec586f"
+  }
+}

@@ -1,5 +1,11 @@
 # Universe24: one system, specification and research status
 
+The [central source ledger](research/central_integration/README.md) connects
+the board, completion, node-clock and retained-apparatus sources. The executable
+`validation.integration_contract.massive45` gate proves their shared massive45
+builder/state identity while retaining the first-step and tick-two constraint
+failures. This source integration changes no production law or physical status.
+
 ## Question and scope
 
 Can one fixed, local integer tensor and a complete seed generate a reversible
@@ -12,6 +18,13 @@ supply an accepted general Einstein tensor within that budget. A compatible
 bundle can be executed and checked without declaring its fields to be physical
 geometry. Mechanical success and physical validation are separate results.
 The coordination and acceptance contract is [issue #40](https://github.com/Closer24/Universe24/issues/40).
+
+The source-only [node, clock and Einstein audit](research/einstein_node/README.md)
+separates identities of every valid Rule3 tensor from physical properties of a
+selected law. It adds exact clock-geometry and host-workload countercontrols,
+independently reproduces the published scalar/Maxwell common kinetic metric,
+and specifies a still-untested transported-field/phase experiment. No runtime
+model or physical acceptance gate is changed by that investigation.
 
 ## Assumptions and exact law
 
@@ -371,6 +384,74 @@ The combined audit preserves these failures and rejects mixed run/source
 identities. See the plan for the next reciprocal-interaction, pointer,
 probability-measure and shared-metric acceptance sequence.
 
+The [November eight-researcher continuation](completion/README.md) supplies a
+shared **massive full45** builder, complete seed and ordinary system-bundle
+handoff for clock/stress and signal/metric observations. Its exact tensor and
+seed identity closes the earlier massless-full45 versus massive-triangular44
+handoff gap. The continuum principal certificate now covers arbitrary
+invertible frames and matter backgrounds; continuous linear constraint
+propagation is proved along a homogeneous massive scalar/dust family.
+
+Three distinct constructions must remain separate. The original projective
+time map has a proved wave-CFL instability and a constrained metric-singularity
+counterexample. A cubic full45 modification preserves full-frame
+nondegeneracy for every finite tick on its prepared memory domain, but adds a
+verified finite-h torsion defect and retains exponential bit growth. A separate
+three-channel native linear-wave tensor uses the unchanged fixed-six carries,
+has a uniform Fourier bound, and converges at fixed physical time with
+logarithmic per-integer bit cost. It has not been compiled into the nonlinear
+coupled full45 system. Native nonlinear arithmetic and a reduced sourced
+constraint target provide further building blocks, with their retained-history
+and workspace limitations explicitly tested.
+
+The massive clock audit now includes an actual sampled oscillation on a
+separately fingerprinted coarse-step tensor. Its Hamiltonian defect remains
+nonzero, and its fourteen-step cost reaches 174,385 bits. The exact phase
+formula includes an expansion correction; phase divided by mass is not a
+universal proper-time reading. Same-metric characteristic cones and conditional
+geodesic oracles do not establish moving material packets or an operational
+detector. No general physical gate is promoted by these results.
+
+Run `python -m validation.completion.run_all` for the shared runtime handoff,
+eight research audits and independent cross-law review. Fresh evidence belongs
+under `runs/completion/`; the published integration evidence is
+`docs/evidence/completion_nov12.json`. The unchanged Engine, one supported
+runtime and unresolved general physical acceptance remain part of this contract.
+### Retained preference and reciprocal apparatus follow-up
+
+[The eight-lane construction](RETAINED_SELECTION_PLAN.md) supplies a prepared
+three-channel reversible Boolean carrier with local preferred-port routing
+and retained origin memory. If `F` is the local collision plus one streamed
+lane, `u=3(F(b)+F^-1(b))` and complete preparation `a=F^-1(b)` make unchanged
+Rule3 follow `F` exactly, including every remainder. This is a native research
+control. It is not a physical encoding of the earlier 44-channel carrier.
+
+A separate corrected full-frame45 source, pinned to PR50
+`62202fdccdd9a40d5dbbec104de6f97d9587a999`, gains neutral `q,p` for 47 channels.
+The declared massive carrier uses `W=omega²*q²/2+g*q*(phi²+chi²)`, reciprocal
+forces, `rho_app=p²/2+W`, isotropic pressure `p²/2-W`, diagonal K source `-W`
+and Hamiltonian source `-2*rho_app`. Its homogeneous energy exchange cancels
+exactly at the continuum equation level. This cubic construction leaves one
+record slot. It has globally unbounded interaction energy, finite-step
+constraint drift and no general spatial apparatus momentum completion.
+
+Actual48 raw-record feedback changes later carrier positions and, on the
+declared textured fixture, normalized fixed-gauge phase links. Matched
+homogeneous controls preserve their phase despite amplitude response.
+The raw record has no supplied stress or continuum calibration; that48 result
+cannot inherit the47 homogeneous conservation identity. The native sorter,
+native pulse pointer, sourced47 and raw-feedback48 have separate model/seed
+identities through the same runtime, not interchangeable physical claims.
+
+All 36 declared native growth cases fail or lack enough episodes. Conditional
+exclusive routing is proved for single occupancy, but the unrestricted pointer
+retains double outcomes. Distinct stationary one-particle ensembles give
+different output measures. Born probabilities, physical Bell outcomes,
+shared-metric clocks and growing complexity between physical bursts remain
+unestablished. The joint runner checks shared truth tables, exact47-to48 bundle
+lineage, report/source hashes and independent replay of all19 saved runs;
+complete measure-control trials retain another4,080 transitions.
+
 The mathematical source ledger and derivations are preserved in
 [Frame48 research](FRAME48_RESEARCH.md), [integer ADM](INTEGER_ADM.md),
 [compact FLRW](COMPACT_FLRW_CLOCKS.md), [compact null wave](COMPACT_NULL_WAVE.md),
@@ -386,3 +467,28 @@ repository test suite. Use the supported command's `--help` for bundle
 execution and verification; retain every emitted report and its hashes under
 `runs/`. Physical acceptance requires separate evidence for C–F, not merely a
 green software test suite.
+
+### Generic coupling integration and exact sector reconstruction
+
+[Generic coupling controls](GENERIC_COUPLINGS.md), implemented in
+`validation/generic_couplings/`, make the seven-specialist #40/#41 audit
+reproducible in the central source and CI. The current massive45 board builder
+is restricted by exact coefficient identities to six complete channels and
+14 terms on a declared homogeneous isotropic neutral scalar/dust invariant
+domain. Guarded embedding and projection preserve both histories and carries;
+projection rejects out-of-domain states rather than repairing them. The
+independently declared small tensor is compared against the extracted one.
+
+Both full and restricted bundles execute through `system.runtime.run_bundle`.
+The audit reconstructs each saved full transition from the six-channel state
+and verifies its complete canonical click stream after reconstruction. It does
+not identify raw six-channel event identities with full45 event identities.
+Code/tensor/seed/run provenance and integer growth are reported together.
+
+The same package checks generic carry/class identities, silent mechanical
+cycles, exact native packing with its old-history polynomial obstruction,
+reciprocal single-edge ports and clock/covector negative controls. It changes
+neither Engine nor default allocation. The six-channel sector retains the
+original constraint/time-stability defects and excludes transported/charged
+and anisotropic modes; the three-channel reciprocal example is separate.
+Operational-clock, nonlinear Einstein, detector and quantum gates remain open.

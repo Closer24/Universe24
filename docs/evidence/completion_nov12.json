@@ -1,0 +1,3116 @@
+{
+  "baseline_commit": "62202fdccdd9a40d5dbbec104de6f97d9587a999",
+  "researchers": 8,
+  "audits": [
+    {
+      "module": "common45",
+      "returncode": 0,
+      "seconds": 2.417,
+      "evidence": "runs/completion/00_common45.json",
+      "evidence_sha256": "7a7c195017547e7e52a173f1f725bd7ce52378443fc3da4320f13eb5a04cb98b"
+    },
+    {
+      "module": "formulation",
+      "returncode": 0,
+      "seconds": 7.864,
+      "evidence": "runs/completion/01_formulation.json",
+      "evidence_sha256": "0c299d868c8847c80fe9a1b03547e8df50cb8f12c64a5f3a423546a24432c670"
+    },
+    {
+      "module": "native_compiler",
+      "returncode": 0,
+      "seconds": 3.11,
+      "evidence": "runs/completion/native_compiler.json",
+      "evidence_sha256": "536605e8908f0925f9bb38724d8250aa8d435fdfc5a7113a86edb438b14ff0c2"
+    },
+    {
+      "module": "metric_domain",
+      "returncode": 0,
+      "seconds": 2.858,
+      "evidence": "runs/completion/03_metric_domain.json",
+      "evidence_sha256": "6f4084d4935aa642fada83e59eaa493b3cd5d86c5518e50c22d3c81a5fc50cac"
+    },
+    {
+      "module": "matter_clock",
+      "returncode": 0,
+      "seconds": 31.221,
+      "evidence": "runs/completion/04_matter_clock.json",
+      "evidence_sha256": "b220dfa461a8d4d552edb5c8ce598a22f444b7b0ac2e7122dce004912ad34c67"
+    },
+    {
+      "module": "geodesic_signals",
+      "returncode": 0,
+      "seconds": 1.891,
+      "evidence": "runs/completion/05_geodesic_signals.json",
+      "evidence_sha256": "8d5c2a55b89db421d44d33b92e03881e0120cbb68daa630ff0fdbcfb511e0523"
+    },
+    {
+      "module": "time_stability",
+      "returncode": 0,
+      "seconds": 8.188,
+      "evidence": "runs/completion/time_stability.json",
+      "evidence_sha256": "143ec9a2e2eff89cf1374c7d01fe1b2b2bb32987e2c0578e59c04ccbe58d9bb5"
+    },
+    {
+      "module": "constraint_closure",
+      "returncode": 0,
+      "seconds": 0.917,
+      "evidence": "runs/completion/07_constraint_closure.json",
+      "evidence_sha256": "1bffd7fbbb97343fcfe55560b207cab86f3a9ed7e66462151ab44dd372b88a60"
+    },
+    {
+      "module": "integration_review",
+      "returncode": 0,
+      "seconds": 1.746,
+      "evidence": "runs/completion/08_integration_review.json",
+      "evidence_sha256": "7f5c5c2f9d5ff7091358432eaf0b14ad12eec688de0a8c1bd27b354a21607d01",
+      "final_review_rerun": true
+    }
+  ],
+  "source_sha256": {
+    "validation/completion/common45.py": "5908d58795e7e6c786f1843e6a4563d213f0a8f5609fa1bdefdc7c5379d124a2",
+    "validation/completion/constraint_closure.py": "a1f4a775c7a112912e08cdbb7f4d4f3a8c12841fd1af61dfb6edb9a965287cd8",
+    "validation/completion/formulation.py": "3364e0da09b838008a7931602bfc0a8f6cc9a10037a513eefe414e21da61402f",
+    "validation/completion/geodesic_signals.py": "27e960b180035767bfbedf4a84505c7e33c1e94c10b6d6400fe2b5d41ad06d9e",
+    "validation/completion/integration_review.py": "3caf3dc452d94ab936211fbdd09d0beddf30f14df1f18e38737705952fdec4e5",
+    "validation/completion/matter_clock.py": "a0d957d42cdcbe01ca4e02bb37008e94d8bd01f9c1803125e3a79d003a292e15",
+    "validation/completion/metric_domain.py": "0e0e4d8f9bc3e2f5eefd52989a0666eec09732f1d46a5c10fd0c0aca1f023fc0",
+    "validation/completion/native_compiler.py": "7ca38af06460da07f0ece2fee332bb03616a0c7667a8b9f406a707bdded1000e",
+    "validation/completion/run_all.py": "616854cdb1e8d33802107b05259706a0dd994a0c36f6417d466d74e8744dbb6a",
+    "validation/completion/time_stability.py": "f12574916c00fb220b968bdd2d9c1b1a2b62f92d4e13c7e6b12f81aaa31e8f5d"
+  },
+  "evidence": {
+    "common45": {
+      "baseline": "62202fdccdd9a40d5dbbec104de6f97d9587a999",
+      "channels": 45,
+      "retained_integers_per_node": 135,
+      "degree": 2,
+      "monomials": 889,
+      "mass_squared": 1,
+      "dt": "1/64",
+      "dx": "1/4",
+      "tensor_sha256": "6ea453fa77a5a9d74af5bd4fc626cfcdc8f92942b10c301d2d00814bf4d05ba0",
+      "seed_sha256": "b53909631f3e14e3c09905275fe7b50a0dad2ecdec9ac431db2306127abd3b7c",
+      "bundle_id": "cd601e2e6d255ddddfa64f6d2edd9abaa0aaa8792f8604b268fb79c1352a6544",
+      "ownership": [
+        {
+          "index": 0,
+          "name": "projective.denominator",
+          "label": "audit",
+          "owner": "encoding",
+          "purpose": "Common denominator and reversible memory; no physical clock",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator"
+          ]
+        },
+        {
+          "index": 1,
+          "name": "projective.B00",
+          "label": "audit",
+          "owner": "geometry",
+          "purpose": "Shared full-frame geometry numerator B00",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.B00"
+          ]
+        },
+        {
+          "index": 2,
+          "name": "projective.B01",
+          "label": "audit",
+          "owner": "geometry",
+          "purpose": "Shared full-frame geometry numerator B01",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.B01"
+          ]
+        },
+        {
+          "index": 3,
+          "name": "projective.B02",
+          "label": "audit",
+          "owner": "geometry",
+          "purpose": "Shared full-frame geometry numerator B02",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.B02"
+          ]
+        },
+        {
+          "index": 4,
+          "name": "projective.B10",
+          "label": "audit",
+          "owner": "geometry",
+          "purpose": "Shared full-frame geometry numerator B10",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.B10"
+          ]
+        },
+        {
+          "index": 5,
+          "name": "projective.B11",
+          "label": "audit",
+          "owner": "geometry",
+          "purpose": "Shared full-frame geometry numerator B11",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.B11"
+          ]
+        },
+        {
+          "index": 6,
+          "name": "projective.B12",
+          "label": "audit",
+          "owner": "geometry",
+          "purpose": "Shared full-frame geometry numerator B12",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.B12"
+          ]
+        },
+        {
+          "index": 7,
+          "name": "projective.B20",
+          "label": "audit",
+          "owner": "geometry",
+          "purpose": "Shared full-frame geometry numerator B20",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.B20"
+          ]
+        },
+        {
+          "index": 8,
+          "name": "projective.B21",
+          "label": "audit",
+          "owner": "geometry",
+          "purpose": "Shared full-frame geometry numerator B21",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.B21"
+          ]
+        },
+        {
+          "index": 9,
+          "name": "projective.B22",
+          "label": "audit",
+          "owner": "geometry",
+          "purpose": "Shared full-frame geometry numerator B22",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.B22"
+          ]
+        },
+        {
+          "index": 10,
+          "name": "projective.K00",
+          "label": "audit",
+          "owner": "geometry",
+          "purpose": "Shared full-frame geometry numerator K00",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.K00"
+          ]
+        },
+        {
+          "index": 11,
+          "name": "projective.K01",
+          "label": "audit",
+          "owner": "geometry",
+          "purpose": "Shared full-frame geometry numerator K01",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.K01"
+          ]
+        },
+        {
+          "index": 12,
+          "name": "projective.K02",
+          "label": "audit",
+          "owner": "geometry",
+          "purpose": "Shared full-frame geometry numerator K02",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.K02"
+          ]
+        },
+        {
+          "index": 13,
+          "name": "projective.K11",
+          "label": "audit",
+          "owner": "geometry",
+          "purpose": "Shared full-frame geometry numerator K11",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.K11"
+          ]
+        },
+        {
+          "index": 14,
+          "name": "projective.K12",
+          "label": "audit",
+          "owner": "geometry",
+          "purpose": "Shared full-frame geometry numerator K12",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.K12"
+          ]
+        },
+        {
+          "index": 15,
+          "name": "projective.K22",
+          "label": "audit",
+          "owner": "geometry",
+          "purpose": "Shared full-frame geometry numerator K22",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.K22"
+          ]
+        },
+        {
+          "index": 16,
+          "name": "projective.G010",
+          "label": "audit",
+          "owner": "geometry",
+          "purpose": "Shared full-frame geometry numerator G010",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.G010"
+          ]
+        },
+        {
+          "index": 17,
+          "name": "projective.G011",
+          "label": "audit",
+          "owner": "geometry",
+          "purpose": "Shared full-frame geometry numerator G011",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.G011"
+          ]
+        },
+        {
+          "index": 18,
+          "name": "projective.G012",
+          "label": "audit",
+          "owner": "geometry",
+          "purpose": "Shared full-frame geometry numerator G012",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.G012"
+          ]
+        },
+        {
+          "index": 19,
+          "name": "projective.G020",
+          "label": "audit",
+          "owner": "geometry",
+          "purpose": "Shared full-frame geometry numerator G020",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.G020"
+          ]
+        },
+        {
+          "index": 20,
+          "name": "projective.G021",
+          "label": "audit",
+          "owner": "geometry",
+          "purpose": "Shared full-frame geometry numerator G021",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.G021"
+          ]
+        },
+        {
+          "index": 21,
+          "name": "projective.G022",
+          "label": "audit",
+          "owner": "geometry",
+          "purpose": "Shared full-frame geometry numerator G022",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.G022"
+          ]
+        },
+        {
+          "index": 22,
+          "name": "projective.G120",
+          "label": "audit",
+          "owner": "geometry",
+          "purpose": "Shared full-frame geometry numerator G120",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.G120"
+          ]
+        },
+        {
+          "index": 23,
+          "name": "projective.G121",
+          "label": "audit",
+          "owner": "geometry",
+          "purpose": "Shared full-frame geometry numerator G121",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.G121"
+          ]
+        },
+        {
+          "index": 24,
+          "name": "projective.G122",
+          "label": "audit",
+          "owner": "geometry",
+          "purpose": "Shared full-frame geometry numerator G122",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.G122"
+          ]
+        },
+        {
+          "index": 25,
+          "name": "projective.phi",
+          "label": "audit",
+          "owner": "massive_scalar",
+          "purpose": "Shared-metric scalar numerator phi",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.phi"
+          ]
+        },
+        {
+          "index": 26,
+          "name": "projective.Pi_phi",
+          "label": "audit",
+          "owner": "massive_scalar",
+          "purpose": "Shared-metric scalar numerator Pi_phi",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.Pi_phi"
+          ]
+        },
+        {
+          "index": 27,
+          "name": "projective.Xi_phi0",
+          "label": "audit",
+          "owner": "massive_scalar",
+          "purpose": "Shared-metric scalar numerator Xi_phi0",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.Xi_phi0"
+          ]
+        },
+        {
+          "index": 28,
+          "name": "projective.Xi_phi1",
+          "label": "audit",
+          "owner": "massive_scalar",
+          "purpose": "Shared-metric scalar numerator Xi_phi1",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.Xi_phi1"
+          ]
+        },
+        {
+          "index": 29,
+          "name": "projective.Xi_phi2",
+          "label": "audit",
+          "owner": "massive_scalar",
+          "purpose": "Shared-metric scalar numerator Xi_phi2",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.Xi_phi2"
+          ]
+        },
+        {
+          "index": 30,
+          "name": "projective.chi",
+          "label": "audit",
+          "owner": "massive_scalar",
+          "purpose": "Shared-metric scalar numerator chi",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.chi"
+          ]
+        },
+        {
+          "index": 31,
+          "name": "projective.Pi_chi",
+          "label": "audit",
+          "owner": "massive_scalar",
+          "purpose": "Shared-metric scalar numerator Pi_chi",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.Pi_chi"
+          ]
+        },
+        {
+          "index": 32,
+          "name": "projective.Xi_chi0",
+          "label": "audit",
+          "owner": "massive_scalar",
+          "purpose": "Shared-metric scalar numerator Xi_chi0",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.Xi_chi0"
+          ]
+        },
+        {
+          "index": 33,
+          "name": "projective.Xi_chi1",
+          "label": "audit",
+          "owner": "massive_scalar",
+          "purpose": "Shared-metric scalar numerator Xi_chi1",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.Xi_chi1"
+          ]
+        },
+        {
+          "index": 34,
+          "name": "projective.Xi_chi2",
+          "label": "audit",
+          "owner": "massive_scalar",
+          "purpose": "Shared-metric scalar numerator Xi_chi2",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.Xi_chi2"
+          ]
+        },
+        {
+          "index": 35,
+          "name": "projective.dust_amplitude",
+          "label": "audit",
+          "owner": "dust",
+          "purpose": "Normal dust amplitude; density is its square",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.dust_amplitude"
+          ]
+        },
+        {
+          "index": 36,
+          "name": "projective.E0",
+          "label": "audit",
+          "owner": "electromagnetism",
+          "purpose": "Shared-metric electromagnetic numerator E0",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.E0"
+          ]
+        },
+        {
+          "index": 37,
+          "name": "projective.E1",
+          "label": "audit",
+          "owner": "electromagnetism",
+          "purpose": "Shared-metric electromagnetic numerator E1",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.E1"
+          ]
+        },
+        {
+          "index": 38,
+          "name": "projective.E2",
+          "label": "audit",
+          "owner": "electromagnetism",
+          "purpose": "Shared-metric electromagnetic numerator E2",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.E2"
+          ]
+        },
+        {
+          "index": 39,
+          "name": "projective.M0",
+          "label": "audit",
+          "owner": "electromagnetism",
+          "purpose": "Shared-metric electromagnetic numerator M0",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.M0"
+          ]
+        },
+        {
+          "index": 40,
+          "name": "projective.M1",
+          "label": "audit",
+          "owner": "electromagnetism",
+          "purpose": "Shared-metric electromagnetic numerator M1",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.M1"
+          ]
+        },
+        {
+          "index": 41,
+          "name": "projective.M2",
+          "label": "audit",
+          "owner": "electromagnetism",
+          "purpose": "Shared-metric electromagnetic numerator M2",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.M2"
+          ]
+        },
+        {
+          "index": 42,
+          "name": "projective.A0",
+          "label": "audit",
+          "owner": "electromagnetism",
+          "purpose": "Shared-metric electromagnetic numerator A0",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.A0"
+          ]
+        },
+        {
+          "index": 43,
+          "name": "projective.A1",
+          "label": "audit",
+          "owner": "electromagnetism",
+          "purpose": "Shared-metric electromagnetic numerator A1",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.A1"
+          ]
+        },
+        {
+          "index": 44,
+          "name": "projective.A2",
+          "label": "audit",
+          "owner": "electromagnetism",
+          "purpose": "Shared-metric electromagnetic numerator A2",
+          "retained_registers": [
+            "a",
+            "b",
+            "r"
+          ],
+          "readout_dependencies": [
+            "projective.denominator",
+            "projective.A2"
+          ]
+        }
+      ],
+      "strict_face_support": true,
+      "initial_all_constraints_zero": true,
+      "initial_rho": "3/100",
+      "steps": 3,
+      "nodes": 27,
+      "all_remainders_retained": true,
+      "independent_scalar_oracle": true,
+      "complete_rewind": true,
+      "existing_system_runtime_and_saved_trace_equal": true,
+      "runtime_report": {
+        "schema": "universe24/system/run/1",
+        "run_id": "06de86ec153ecc6125b68c61edf2725f529de955cb725c23c540550177582a72",
+        "bundle_id": "cd601e2e6d255ddddfa64f6d2edd9abaa0aaa8792f8604b268fb79c1352a6544",
+        "tensor_hash": "6ea453fa77a5a9d74af5bd4fc626cfcdc8f92942b10c301d2d00814bf4d05ba0",
+        "steps": 3,
+        "channels_per_node": 45,
+        "retained_integers_per_node": 135,
+        "nodes": 27,
+        "final_state_hash": "b3759193bbbca7dfbe156637290d99410e03425d01663e22c3f0be1e14c46bfe",
+        "click_count": 810,
+        "maximum_integer_bits_by_step": [
+          7,
+          22,
+          51,
+          110
+        ],
+        "trace_role": "external complete audit record; never fed into evolution",
+        "source_hashes": {
+          "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+          "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+          "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+          "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+          "system/bundle.py": "6a91f95f67b5730c8c426dc4669dfd9d8a535fd1d7eaaf20cc5ac2d0974969e6",
+          "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+          "system/runtime.py": "7bafea81e5912e26e49312c157a68fca3d50b75d893aa9198592696ea8f2cee4"
+        },
+        "files": {
+          "full_trace.jsonl.gz": "dae5d8e92b4e1b792a27d716216197440ee64cb1b8545ac763d6c972256fba5e",
+          "clicks.jsonl.gz": "986be08b1f70918658ca5de25df021c69a0b04b07db89064b9b09d313441714e"
+        },
+        "checks": {
+          "bundle_contract": "passed",
+          "complete_state_forward_replay": "passed",
+          "complete_state_step_inverse": "passed",
+          "complete_state_rewind_to_seed": "passed",
+          "canonical_click_parity": "passed"
+        },
+        "acceptance_gates": {
+          "A": {
+            "status": "partial",
+            "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests."
+          },
+          "B": {
+            "status": "partial",
+            "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established."
+          },
+          "C": {
+            "status": "not_tested",
+            "reason": "No independently validated Einstein geometry supplied by the generic executor."
+          },
+          "D": {
+            "status": "not_tested",
+            "reason": "One execution is not a space/time/quantization convergence study."
+          },
+          "E": {
+            "status": "not_tested",
+            "reason": "No shared-metric physical clock or motion evidence established."
+          },
+          "F": {
+            "status": "not_tested",
+            "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result."
+          }
+        }
+      },
+      "max_bits_by_step": [
+        22,
+        51,
+        110
+      ],
+      "limitations": [
+        "No nonlinear discrete constraint preservation theorem.",
+        "Unmodified time map has an unstable wave branch.",
+        "Unmodified metric update can become singular.",
+        "Passive clock readout is not an operational detector."
+      ]
+    },
+    "formulation": {
+      "baseline": "62202fdccdd9a40d5dbbec104de6f97d9587a999",
+      "principal": {
+        "arbitrary_background_exact_frame_covariance": true,
+        "geometry_matter_principal_cross_blocks_zero": true,
+        "matter_annihilator": "Am*(Am^2-|B*n|^2 I)=0",
+        "full44_annihilator": "A*(A^2-r^2 I)*(A^2-r^2 I/2)*(A^2-r^2 I/8)=0; r^2=|B*n|^2",
+        "mass_squared": 1,
+        "scope": "Frozen continuum principal system; uniform on compact sets of invertible B. No discrete stability claim."
+      },
+      "linear_constraints": [
+        {
+          "sourced": false,
+          "direction": [
+            "0",
+            "0",
+            "q"
+          ],
+          "constraints": 33,
+          "constraint_rank": 23,
+          "kernel_dimension": 21,
+          "kernel_invariant": true,
+          "nonzero_residual_entries": 0
+        },
+        {
+          "sourced": false,
+          "direction": [
+            "0",
+            "0",
+            "0"
+          ],
+          "constraints": 33,
+          "constraint_rank": 18,
+          "kernel_dimension": 26,
+          "kernel_invariant": true,
+          "nonzero_residual_entries": 0
+        },
+        {
+          "sourced": true,
+          "direction": [
+            "0",
+            "0",
+            "q"
+          ],
+          "constraints": 33,
+          "constraint_rank": 23,
+          "kernel_dimension": 21,
+          "kernel_invariant": true,
+          "nonzero_residual_entries": 0
+        },
+        {
+          "sourced": true,
+          "direction": [
+            "0",
+            "0",
+            "0"
+          ],
+          "constraints": 33,
+          "constraint_rank": 20,
+          "kernel_dimension": 24,
+          "kernel_invariant": true,
+          "nonzero_residual_entries": 0
+        }
+      ],
+      "massive45": {
+        "tensor_sha256": "02c1aa0ecd76f242c3bfb02233d59e6c873275b5f5b78392bf1a00b5e8ab145b",
+        "fields": 44,
+        "channels": 45,
+        "retained_integers_per_node": 135,
+        "degree": 2,
+        "monomials": 889,
+        "multiplier": 64,
+        "mass_squared": 1,
+        "strict_face_support": true,
+        "old_a_reads": false,
+        "steps": 3,
+        "nodes": 27,
+        "all_six_remainders": true,
+        "independent_scalar_oracle": true,
+        "full_rewind": true,
+        "max_retained_bits": 77,
+        "nonlinear_discrete_constraints": "not_established",
+        "metric_nondegeneracy_all_time": "not_established"
+      },
+      "homogeneous_sourced_family": {
+        "branches": [
+          {
+            "phi_nonzero": true,
+            "Pi_phi_nonzero": true,
+            "nonzero_frequency": true,
+            "kernel_dimension": 21,
+            "basis_denominators": [
+              "1",
+              "2*k",
+              "2*k*q",
+              "f",
+              "f*q",
+              "k",
+              "q"
+            ],
+            "residuals_divisible_by_background_H": true,
+            "off_constraint_residuals": [
+              {
+                "row": "H",
+                "column": 6,
+                "residual_over_H": "I*q/k"
+              },
+              {
+                "row": "H",
+                "column": 9,
+                "residual_over_H": "I*q/k"
+              },
+              {
+                "row": "H",
+                "column": 11,
+                "residual_over_H": "p/k"
+              },
+              {
+                "row": "H",
+                "column": 12,
+                "residual_over_H": "-I*f/(k*q)"
+              },
+              {
+                "row": "H",
+                "column": 14,
+                "residual_over_H": "2*d/k"
+              }
+            ]
+          },
+          {
+            "phi_nonzero": true,
+            "Pi_phi_nonzero": true,
+            "nonzero_frequency": false,
+            "kernel_dimension": 24,
+            "basis_denominators": [
+              "1",
+              "2*k",
+              "k",
+              "p"
+            ],
+            "residuals_divisible_by_background_H": true,
+            "off_constraint_residuals": [
+              {
+                "row": "H",
+                "column": 14,
+                "residual_over_H": "f/k"
+              },
+              {
+                "row": "H",
+                "column": 15,
+                "residual_over_H": "p/k"
+              },
+              {
+                "row": "H",
+                "column": 17,
+                "residual_over_H": "2*d/k"
+              }
+            ]
+          },
+          {
+            "phi_nonzero": false,
+            "Pi_phi_nonzero": true,
+            "nonzero_frequency": true,
+            "kernel_dimension": 21,
+            "basis_denominators": [
+              "1",
+              "2*k",
+              "k",
+              "p",
+              "q"
+            ],
+            "residuals_divisible_by_background_H": true,
+            "off_constraint_residuals": [
+              {
+                "row": "H",
+                "column": 6,
+                "residual_over_H": "I*q/k"
+              },
+              {
+                "row": "H",
+                "column": 9,
+                "residual_over_H": "I*q/k"
+              },
+              {
+                "row": "H",
+                "column": 11,
+                "residual_over_H": "p/k"
+              },
+              {
+                "row": "H",
+                "column": 14,
+                "residual_over_H": "2*d/k"
+              }
+            ]
+          },
+          {
+            "phi_nonzero": false,
+            "Pi_phi_nonzero": true,
+            "nonzero_frequency": false,
+            "kernel_dimension": 24,
+            "basis_denominators": [
+              "1",
+              "2*k",
+              "k"
+            ],
+            "residuals_divisible_by_background_H": true,
+            "off_constraint_residuals": [
+              {
+                "row": "H",
+                "column": 15,
+                "residual_over_H": "p/k"
+              },
+              {
+                "row": "H",
+                "column": 17,
+                "residual_over_H": "2*d/k"
+              }
+            ]
+          },
+          {
+            "phi_nonzero": true,
+            "Pi_phi_nonzero": false,
+            "nonzero_frequency": true,
+            "kernel_dimension": 21,
+            "basis_denominators": [
+              "1",
+              "2*k",
+              "2*k*q",
+              "f",
+              "k",
+              "q"
+            ],
+            "residuals_divisible_by_background_H": true,
+            "off_constraint_residuals": [
+              {
+                "row": "H",
+                "column": 6,
+                "residual_over_H": "I*q/k"
+              },
+              {
+                "row": "H",
+                "column": 9,
+                "residual_over_H": "I*q/k"
+              },
+              {
+                "row": "H",
+                "column": 12,
+                "residual_over_H": "-I*f/(k*q)"
+              },
+              {
+                "row": "H",
+                "column": 14,
+                "residual_over_H": "2*d/k"
+              }
+            ]
+          },
+          {
+            "phi_nonzero": true,
+            "Pi_phi_nonzero": false,
+            "nonzero_frequency": false,
+            "kernel_dimension": 24,
+            "basis_denominators": [
+              "1",
+              "2*k",
+              "k"
+            ],
+            "residuals_divisible_by_background_H": true,
+            "off_constraint_residuals": [
+              {
+                "row": "H",
+                "column": 14,
+                "residual_over_H": "f/k"
+              },
+              {
+                "row": "H",
+                "column": 17,
+                "residual_over_H": "2*d/k"
+              }
+            ]
+          },
+          {
+            "phi_nonzero": false,
+            "Pi_phi_nonzero": false,
+            "nonzero_frequency": true,
+            "kernel_dimension": 21,
+            "basis_denominators": [
+              "1",
+              "2*k",
+              "k",
+              "q"
+            ],
+            "residuals_divisible_by_background_H": true,
+            "off_constraint_residuals": [
+              {
+                "row": "H",
+                "column": 6,
+                "residual_over_H": "I*q/k"
+              },
+              {
+                "row": "H",
+                "column": 9,
+                "residual_over_H": "I*q/k"
+              },
+              {
+                "row": "H",
+                "column": 15,
+                "residual_over_H": "2*d/k"
+              }
+            ]
+          },
+          {
+            "phi_nonzero": false,
+            "Pi_phi_nonzero": false,
+            "nonzero_frequency": false,
+            "kernel_dimension": 25,
+            "basis_denominators": [
+              "1",
+              "k"
+            ],
+            "residuals_divisible_by_background_H": true,
+            "off_constraint_residuals": [
+              {
+                "row": "H",
+                "column": 18,
+                "residual_over_H": "2*d/k"
+              }
+            ]
+          }
+        ],
+        "homogeneous_H_dot": "6*k*H",
+        "scope": "Linear continuous-time constraints along regular homogeneous isotropic massive scalar/dust backgrounds; all Fourier directions by spatial rotation and affine coordinate covariance. Not nonlinear/discrete propagation."
+      },
+      "triangular21_negative_control": [
+        {
+          "direction": [
+            1,
+            0,
+            0
+          ],
+          "rank_A": 10,
+          "rank_A_squared": 10,
+          "zero_Jordan_block": false
+        },
+        {
+          "direction": [
+            0,
+            1,
+            0
+          ],
+          "rank_A": 10,
+          "rank_A_squared": 10,
+          "zero_Jordan_block": false
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "rank_A": 10,
+          "rank_A_squared": 10,
+          "zero_Jordan_block": false
+        },
+        {
+          "direction": [
+            1,
+            1,
+            0
+          ],
+          "rank_A": 11,
+          "rank_A_squared": 10,
+          "zero_Jordan_block": true
+        },
+        {
+          "direction": [
+            1,
+            2,
+            3
+          ],
+          "rank_A": 11,
+          "rank_A_squared": 10,
+          "zero_Jordan_block": true
+        }
+      ],
+      "source_sha256": {
+        "validation/completion/formulation.py": "3364e0da09b838008a7931602bfc0a8f6cc9a10037a513eefe414e21da61402f",
+        "validation/research_eight/07_hyperbolic_symbol.py": "5a3acdc8a0641b83275275edadd0fe9479acc1d4cd7b10b7a6d031ad8aec586f",
+        "validation/geometry/team48/matter_equations.py": "394efe21ec4637d541a79c283d040f6afad0f36ba0143d190358b984396ba18e"
+      }
+    },
+    "native_compiler": {
+      "source_pin": "62202fdccdd9a40d5dbbec104de6f97d9587a999",
+      "source_sha256": "7ca38af06460da07f0ece2fee332bb03616a0c7667a8b9f406a707bdded1000e",
+      "status": "native k1 nonlinear compiler passed; arbitrary refinement blocked",
+      "allocation": {
+        "data_channels": 2,
+        "scheduler_channels": 1,
+        "workspace_channels": 0,
+        "total_channels": 3,
+        "integers_per_node": 9,
+        "terms_with_drift": 18,
+        "degree": 3,
+        "strict_single_face": true,
+        "retained_denominator_channels": 0,
+        "compatible_drop_in_to_corrected45": false
+      },
+      "identities": {
+        "edge_potential": "lambda*(g_i+g_j)*(phi_j-phi_i)^2",
+        "negative_gradient_reciprocity_and_shift_charge": "passed",
+        "clock_times_cubic_force_rejected": true,
+        "full_drift_refinement_obstruction": [
+          {
+            "Q": 3,
+            "requested_h": "1/3",
+            "required_force_multiplier_at_L1": "1/9",
+            "is_integer": false
+          },
+          {
+            "Q": 9,
+            "requested_h": "1/9",
+            "required_force_multiplier_at_L1": "1/243",
+            "is_integer": false
+          },
+          {
+            "Q": 27,
+            "requested_h": "1/27",
+            "required_force_multiplier_at_L1": "1/6561",
+            "is_integer": false
+          },
+          {
+            "Q": 81,
+            "requested_h": "1/81",
+            "required_force_multiplier_at_L1": "1/177147",
+            "is_integer": false
+          }
+        ],
+        "scope": "three-tick quadratic force plus integer drift and one common position scale"
+      },
+      "signed_all_remainders": [
+        {
+          "coupling": -2,
+          "drift": -1,
+          "periods": 6,
+          "nodes": 216,
+          "all_216_remainder_triples": true,
+          "macro_oracle_and_inverse": true,
+          "all_step_inverses_and_rewind": true,
+          "scheduler_full_state_restored": true,
+          "phi_shift_charge": 528,
+          "peak_complete_bits": 256,
+          "tensor_sha256": "1411cad613c3e9cecdc325aec02297cbd317eb48b0b29e1612ab05db4faa046b"
+        },
+        {
+          "coupling": -2,
+          "drift": 0,
+          "periods": 6,
+          "nodes": 216,
+          "all_216_remainder_triples": true,
+          "macro_oracle_and_inverse": true,
+          "all_step_inverses_and_rewind": true,
+          "scheduler_full_state_restored": true,
+          "phi_shift_charge": 528,
+          "peak_complete_bits": 9,
+          "tensor_sha256": "677571063b8b558b11cfa58df4424d035d9ccaa1ead7294fa40e118f386aa0d7"
+        },
+        {
+          "coupling": -2,
+          "drift": 1,
+          "periods": 6,
+          "nodes": 216,
+          "all_216_remainder_triples": true,
+          "macro_oracle_and_inverse": true,
+          "all_step_inverses_and_rewind": true,
+          "scheduler_full_state_restored": true,
+          "phi_shift_charge": 528,
+          "peak_complete_bits": 250,
+          "tensor_sha256": "ccabff342ba60361bb393bfcb023e786e98b9b37685988d545a87e6fab875c32"
+        },
+        {
+          "coupling": -2,
+          "drift": 2,
+          "periods": 6,
+          "nodes": 216,
+          "all_216_remainder_triples": true,
+          "macro_oracle_and_inverse": true,
+          "all_step_inverses_and_rewind": true,
+          "scheduler_full_state_restored": true,
+          "phi_shift_charge": 528,
+          "peak_complete_bits": 313,
+          "tensor_sha256": "edfc94722e181326db4e4dd5298b22ff540f9e08b5f8851a811c1d24bd75ea03"
+        },
+        {
+          "coupling": -1,
+          "drift": -1,
+          "periods": 6,
+          "nodes": 216,
+          "all_216_remainder_triples": true,
+          "macro_oracle_and_inverse": true,
+          "all_step_inverses_and_rewind": true,
+          "scheduler_full_state_restored": true,
+          "phi_shift_charge": 528,
+          "peak_complete_bits": 195,
+          "tensor_sha256": "b2be8eaab829bd46b041e0413cc8ab216207185951965c2901318336ef9f21f2"
+        },
+        {
+          "coupling": -1,
+          "drift": 0,
+          "periods": 6,
+          "nodes": 216,
+          "all_216_remainder_triples": true,
+          "macro_oracle_and_inverse": true,
+          "all_step_inverses_and_rewind": true,
+          "scheduler_full_state_restored": true,
+          "phi_shift_charge": 528,
+          "peak_complete_bits": 8,
+          "tensor_sha256": "0a952b2f1815a1b0d4ae73b4f79d498bd4314b13ca7ea37286460d0e4be65963"
+        },
+        {
+          "coupling": -1,
+          "drift": 1,
+          "periods": 6,
+          "nodes": 216,
+          "all_216_remainder_triples": true,
+          "macro_oracle_and_inverse": true,
+          "all_step_inverses_and_rewind": true,
+          "scheduler_full_state_restored": true,
+          "phi_shift_charge": 528,
+          "peak_complete_bits": 187,
+          "tensor_sha256": "c7660aacc2cc175497e93554fcd4d4f69da17c117b0a1aedbe02b6c9ecc56972"
+        },
+        {
+          "coupling": -1,
+          "drift": 2,
+          "periods": 6,
+          "nodes": 216,
+          "all_216_remainder_triples": true,
+          "macro_oracle_and_inverse": true,
+          "all_step_inverses_and_rewind": true,
+          "scheduler_full_state_restored": true,
+          "phi_shift_charge": 528,
+          "peak_complete_bits": 247,
+          "tensor_sha256": "4a3e5a3e138375a37f11d47f6ffa9d2a60735d1812e315358db871e62623c203"
+        },
+        {
+          "coupling": 0,
+          "drift": -1,
+          "periods": 6,
+          "nodes": 216,
+          "all_216_remainder_triples": true,
+          "macro_oracle_and_inverse": true,
+          "all_step_inverses_and_rewind": true,
+          "scheduler_full_state_restored": true,
+          "phi_shift_charge": 528,
+          "peak_complete_bits": 4,
+          "tensor_sha256": "c4f689cbc9bbcab1984d63c3870c18cfbf45bac4f41cb00bacf17659590a69d1"
+        },
+        {
+          "coupling": 0,
+          "drift": 0,
+          "periods": 6,
+          "nodes": 216,
+          "all_216_remainder_triples": true,
+          "macro_oracle_and_inverse": true,
+          "all_step_inverses_and_rewind": true,
+          "scheduler_full_state_restored": true,
+          "phi_shift_charge": 528,
+          "peak_complete_bits": 3,
+          "tensor_sha256": "f78c60f847a19d841f373b4a413f151b9dad625b36a3c82677f1497eb5180839"
+        },
+        {
+          "coupling": 0,
+          "drift": 1,
+          "periods": 6,
+          "nodes": 216,
+          "all_216_remainder_triples": true,
+          "macro_oracle_and_inverse": true,
+          "all_step_inverses_and_rewind": true,
+          "scheduler_full_state_restored": true,
+          "phi_shift_charge": 528,
+          "peak_complete_bits": 4,
+          "tensor_sha256": "400f7d37bcda87a3d024a3cf18e61c880c5bf5998e151b1095926fff0c07ce2c"
+        },
+        {
+          "coupling": 0,
+          "drift": 2,
+          "periods": 6,
+          "nodes": 216,
+          "all_216_remainder_triples": true,
+          "macro_oracle_and_inverse": true,
+          "all_step_inverses_and_rewind": true,
+          "scheduler_full_state_restored": true,
+          "phi_shift_charge": 528,
+          "peak_complete_bits": 5,
+          "tensor_sha256": "c60e602e062ae4a235025da2a0f1cd6e3826f8af9d855ee567ff8c78d5568e8b"
+        },
+        {
+          "coupling": 1,
+          "drift": -1,
+          "periods": 6,
+          "nodes": 216,
+          "all_216_remainder_triples": true,
+          "macro_oracle_and_inverse": true,
+          "all_step_inverses_and_rewind": true,
+          "scheduler_full_state_restored": true,
+          "phi_shift_charge": 528,
+          "peak_complete_bits": 189,
+          "tensor_sha256": "ef6746e3c0f1b861f37699daa5dfd5e9e15a99787276079c1f6cd6e6e6a71796"
+        },
+        {
+          "coupling": 1,
+          "drift": 0,
+          "periods": 6,
+          "nodes": 216,
+          "all_216_remainder_triples": true,
+          "macro_oracle_and_inverse": true,
+          "all_step_inverses_and_rewind": true,
+          "scheduler_full_state_restored": true,
+          "phi_shift_charge": 528,
+          "peak_complete_bits": 8,
+          "tensor_sha256": "ee8e2f1c3581ab83715ea305a54d4e0d223b6a55e6853da97818fc234116426d"
+        },
+        {
+          "coupling": 1,
+          "drift": 1,
+          "periods": 6,
+          "nodes": 216,
+          "all_216_remainder_triples": true,
+          "macro_oracle_and_inverse": true,
+          "all_step_inverses_and_rewind": true,
+          "scheduler_full_state_restored": true,
+          "phi_shift_charge": 528,
+          "peak_complete_bits": 198,
+          "tensor_sha256": "4d9b840d6326c727050495b9a063904d891806b42c963b796a3c5d0c63d0fc30"
+        },
+        {
+          "coupling": 1,
+          "drift": 2,
+          "periods": 6,
+          "nodes": 216,
+          "all_216_remainder_triples": true,
+          "macro_oracle_and_inverse": true,
+          "all_step_inverses_and_rewind": true,
+          "scheduler_full_state_restored": true,
+          "phi_shift_charge": 528,
+          "peak_complete_bits": 257,
+          "tensor_sha256": "c79d60a301dfa6bc06be4860f5f78ed44fec13c0a00c0a0c943a99e468044de0"
+        },
+        {
+          "coupling": 2,
+          "drift": -1,
+          "periods": 6,
+          "nodes": 216,
+          "all_216_remainder_triples": true,
+          "macro_oracle_and_inverse": true,
+          "all_step_inverses_and_rewind": true,
+          "scheduler_full_state_restored": true,
+          "phi_shift_charge": 528,
+          "peak_complete_bits": 254,
+          "tensor_sha256": "b5e794c045ce0a3c825a63d5c7791db84576b5dcaed8bd61d49ba80387ef7f91"
+        },
+        {
+          "coupling": 2,
+          "drift": 0,
+          "periods": 6,
+          "nodes": 216,
+          "all_216_remainder_triples": true,
+          "macro_oracle_and_inverse": true,
+          "all_step_inverses_and_rewind": true,
+          "scheduler_full_state_restored": true,
+          "phi_shift_charge": 528,
+          "peak_complete_bits": 9,
+          "tensor_sha256": "81bd4897f60c30f4631975eb9b614f1272bbb38b277c91051692471708f428f5"
+        },
+        {
+          "coupling": 2,
+          "drift": 1,
+          "periods": 6,
+          "nodes": 216,
+          "all_216_remainder_triples": true,
+          "macro_oracle_and_inverse": true,
+          "all_step_inverses_and_rewind": true,
+          "scheduler_full_state_restored": true,
+          "phi_shift_charge": 528,
+          "peak_complete_bits": 258,
+          "tensor_sha256": "67781a2b79bbb8fbef7c59c578beb64ef1835415b7997b1de23815044634fde5"
+        },
+        {
+          "coupling": 2,
+          "drift": 2,
+          "periods": 6,
+          "nodes": 216,
+          "all_216_remainder_triples": true,
+          "macro_oracle_and_inverse": true,
+          "all_step_inverses_and_rewind": true,
+          "scheduler_full_state_restored": true,
+          "phi_shift_charge": 528,
+          "peak_complete_bits": 318,
+          "tensor_sha256": "964c6db1f678234ea5abe971a4f143932ba3069c5a93fa21eb7e00fdef626f08"
+        }
+      ],
+      "native_quotient_compute_copy_uncompute": {
+        "status": "passed",
+        "channels": 6,
+        "integers_per_node": 18,
+        "terms": 24,
+        "degree": 3,
+        "strict_single_face": true,
+        "tensor_sha256": "728aaaba020b0b27e895aa8fe0af97c87563682c3bddfec7dd6321a7797c5a14",
+        "rows": [
+          {
+            "work_remainder": 0,
+            "periods": 12,
+            "microticks": 108,
+            "signed_data_a_range": [
+              -108,
+              108
+            ],
+            "all_six_data_and_clock_remainders": true,
+            "oracle_step_inverses_full_rewind": true,
+            "all_workspace_and_clock_state_restored_every_period": true,
+            "unbiased_floor_a_over3": true,
+            "peak_complete_bits": 10
+          },
+          {
+            "work_remainder": 1,
+            "periods": 12,
+            "microticks": 108,
+            "signed_data_a_range": [
+              -108,
+              108
+            ],
+            "all_six_data_and_clock_remainders": true,
+            "oracle_step_inverses_full_rewind": true,
+            "all_workspace_and_clock_state_restored_every_period": true,
+            "unbiased_floor_a_over3": true,
+            "peak_complete_bits": 10
+          },
+          {
+            "work_remainder": 2,
+            "periods": 12,
+            "microticks": 108,
+            "signed_data_a_range": [
+              -108,
+              108
+            ],
+            "all_six_data_and_clock_remainders": true,
+            "oracle_step_inverses_full_rewind": true,
+            "all_workspace_and_clock_state_restored_every_period": true,
+            "unbiased_floor_a_over3": false,
+            "peak_complete_bits": 10
+          },
+          {
+            "work_remainder": 3,
+            "periods": 12,
+            "microticks": 108,
+            "signed_data_a_range": [
+              -108,
+              108
+            ],
+            "all_six_data_and_clock_remainders": true,
+            "oracle_step_inverses_full_rewind": true,
+            "all_workspace_and_clock_state_restored_every_period": true,
+            "unbiased_floor_a_over3": false,
+            "peak_complete_bits": 10
+          },
+          {
+            "work_remainder": 4,
+            "periods": 12,
+            "microticks": 108,
+            "signed_data_a_range": [
+              -108,
+              108
+            ],
+            "all_six_data_and_clock_remainders": true,
+            "oracle_step_inverses_full_rewind": true,
+            "all_workspace_and_clock_state_restored_every_period": true,
+            "unbiased_floor_a_over3": false,
+            "peak_complete_bits": 10
+          },
+          {
+            "work_remainder": 5,
+            "periods": 12,
+            "microticks": 108,
+            "signed_data_a_range": [
+              -108,
+              108
+            ],
+            "all_six_data_and_clock_remainders": true,
+            "oracle_step_inverses_full_rewind": true,
+            "all_workspace_and_clock_state_restored_every_period": true,
+            "unbiased_floor_a_over3": false,
+            "peak_complete_bits": 10
+          }
+        ],
+        "exact_prepared_map": "S_j -> S_j+floor(a_j/3); a_j,r_j unchanged; workspace/clock restored",
+        "joint_nonlinear_potential_schedule": "see_seven_channel_joint_audit",
+        "arbitrary_k_division": "not_implemented",
+        "drop_in_corrected45": false
+      },
+      "joint_nonlinear_compiler": {
+        "status": "passed_finite_k1_nonlinear_compiler",
+        "channels": 7,
+        "data_channels": 2,
+        "workspace_channels": 2,
+        "scheduler_channels": 3,
+        "integers_per_node": 21,
+        "terms": 41,
+        "degree": 3,
+        "microticks_per_period": 9,
+        "strict_single_face": true,
+        "prepared_work_remainders": "0 or 1 gives exact floor(P/18) drift",
+        "macro_map": "S*=S+floor(P/18); P'=P+2*F(S*); S'=S*",
+        "arbitrary_k_or_continuum_refinement": "not_implemented",
+        "drop_in_corrected45": false,
+        "rows": [
+          {
+            "coupling": -2,
+            "work_remainders": "prepared_zero",
+            "periods": 6,
+            "microticks": 54,
+            "nodes": 216,
+            "all_six_data_and_clock_remainders": true,
+            "all_six_work_remainders": false,
+            "oracle_all_step_inverses_and_full_rewind": true,
+            "scheduler_workspace_full_state_restored": true,
+            "phi_shift_charge_conserved": true,
+            "boundary_complete_bits": [
+              3,
+              7,
+              13,
+              24,
+              46,
+              90,
+              179
+            ],
+            "peak_complete_bits": 179,
+            "tensor_sha256": "a702d105f7879f441d592e311431578325d1c73197be645156b6e5eaf482b579"
+          },
+          {
+            "coupling": -2,
+            "work_remainders": "all_six",
+            "periods": 6,
+            "microticks": 54,
+            "nodes": 216,
+            "all_six_data_and_clock_remainders": true,
+            "all_six_work_remainders": true,
+            "oracle_all_step_inverses_and_full_rewind": true,
+            "scheduler_workspace_full_state_restored": true,
+            "phi_shift_charge_conserved": true,
+            "boundary_complete_bits": [
+              3,
+              7,
+              13,
+              24,
+              47,
+              94,
+              185
+            ],
+            "peak_complete_bits": 185,
+            "tensor_sha256": "a702d105f7879f441d592e311431578325d1c73197be645156b6e5eaf482b579"
+          },
+          {
+            "coupling": -1,
+            "work_remainders": "prepared_zero",
+            "periods": 6,
+            "microticks": 54,
+            "nodes": 216,
+            "all_six_data_and_clock_remainders": true,
+            "all_six_work_remainders": false,
+            "oracle_all_step_inverses_and_full_rewind": true,
+            "scheduler_workspace_full_state_restored": true,
+            "phi_shift_charge_conserved": true,
+            "boundary_complete_bits": [
+              3,
+              6,
+              10,
+              18,
+              33,
+              63,
+              124
+            ],
+            "peak_complete_bits": 124,
+            "tensor_sha256": "e4ba7a8bc96e9fb6e30bc33b67ea310d5bbf45a79da910a5d1ab6daa4c9ddafb"
+          },
+          {
+            "coupling": -1,
+            "work_remainders": "all_six",
+            "periods": 6,
+            "microticks": 54,
+            "nodes": 216,
+            "all_six_data_and_clock_remainders": true,
+            "all_six_work_remainders": true,
+            "oracle_all_step_inverses_and_full_rewind": true,
+            "scheduler_workspace_full_state_restored": true,
+            "phi_shift_charge_conserved": true,
+            "boundary_complete_bits": [
+              3,
+              6,
+              10,
+              19,
+              35,
+              67,
+              132
+            ],
+            "peak_complete_bits": 132,
+            "tensor_sha256": "e4ba7a8bc96e9fb6e30bc33b67ea310d5bbf45a79da910a5d1ab6daa4c9ddafb"
+          },
+          {
+            "coupling": 0,
+            "work_remainders": "prepared_zero",
+            "periods": 6,
+            "microticks": 54,
+            "nodes": 216,
+            "all_six_data_and_clock_remainders": true,
+            "all_six_work_remainders": false,
+            "oracle_all_step_inverses_and_full_rewind": true,
+            "scheduler_workspace_full_state_restored": true,
+            "phi_shift_charge_conserved": true,
+            "boundary_complete_bits": [
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              4
+            ],
+            "peak_complete_bits": 4,
+            "tensor_sha256": "2777bef39fc9d71687260552328061b53fcf441b576f2d015544711c02dd965e"
+          },
+          {
+            "coupling": 0,
+            "work_remainders": "all_six",
+            "periods": 6,
+            "microticks": 54,
+            "nodes": 216,
+            "all_six_data_and_clock_remainders": true,
+            "all_six_work_remainders": true,
+            "oracle_all_step_inverses_and_full_rewind": true,
+            "scheduler_workspace_full_state_restored": true,
+            "phi_shift_charge_conserved": true,
+            "boundary_complete_bits": [
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              4
+            ],
+            "peak_complete_bits": 4,
+            "tensor_sha256": "2777bef39fc9d71687260552328061b53fcf441b576f2d015544711c02dd965e"
+          },
+          {
+            "coupling": 1,
+            "work_remainders": "prepared_zero",
+            "periods": 6,
+            "microticks": 54,
+            "nodes": 216,
+            "all_six_data_and_clock_remainders": true,
+            "all_six_work_remainders": false,
+            "oracle_all_step_inverses_and_full_rewind": true,
+            "scheduler_workspace_full_state_restored": true,
+            "phi_shift_charge_conserved": true,
+            "boundary_complete_bits": [
+              3,
+              6,
+              11,
+              19,
+              36,
+              70,
+              139
+            ],
+            "peak_complete_bits": 139,
+            "tensor_sha256": "e35d2691856235e6124dfc21172498c75a454a9b049cc70f75f54563f00dc2af"
+          },
+          {
+            "coupling": 1,
+            "work_remainders": "all_six",
+            "periods": 6,
+            "microticks": 54,
+            "nodes": 216,
+            "all_six_data_and_clock_remainders": true,
+            "all_six_work_remainders": true,
+            "oracle_all_step_inverses_and_full_rewind": true,
+            "scheduler_workspace_full_state_restored": true,
+            "phi_shift_charge_conserved": true,
+            "boundary_complete_bits": [
+              3,
+              6,
+              10,
+              18,
+              33,
+              64,
+              127
+            ],
+            "peak_complete_bits": 127,
+            "tensor_sha256": "e35d2691856235e6124dfc21172498c75a454a9b049cc70f75f54563f00dc2af"
+          },
+          {
+            "coupling": 2,
+            "work_remainders": "prepared_zero",
+            "periods": 6,
+            "microticks": 54,
+            "nodes": 216,
+            "all_six_data_and_clock_remainders": true,
+            "all_six_work_remainders": false,
+            "oracle_all_step_inverses_and_full_rewind": true,
+            "scheduler_workspace_full_state_restored": true,
+            "phi_shift_charge_conserved": true,
+            "boundary_complete_bits": [
+              3,
+              7,
+              14,
+              25,
+              50,
+              98,
+              194
+            ],
+            "peak_complete_bits": 194,
+            "tensor_sha256": "40f4b456ae7341b68add2ad369a592c7b704a182535e97657e725efd84a49618"
+          },
+          {
+            "coupling": 2,
+            "work_remainders": "all_six",
+            "periods": 6,
+            "microticks": 54,
+            "nodes": 216,
+            "all_six_data_and_clock_remainders": true,
+            "all_six_work_remainders": true,
+            "oracle_all_step_inverses_and_full_rewind": true,
+            "scheduler_workspace_full_state_restored": true,
+            "phi_shift_charge_conserved": true,
+            "boundary_complete_bits": [
+              3,
+              7,
+              13,
+              24,
+              46,
+              90,
+              179
+            ],
+            "peak_complete_bits": 179,
+            "tensor_sha256": "40f4b456ae7341b68add2ad369a592c7b704a182535e97657e725efd84a49618"
+          }
+        ]
+      },
+      "potential_flow_refinement": {
+        "status": "passed_for_potential_subflow_only",
+        "tensor_sha256": "ee8e2f1c3581ab83715ea305a54d4e0d223b6a55e6853da97818fc234116426d",
+        "rows": [
+          {
+            "position_scale": 3,
+            "momentum_scale": 54,
+            "h": "1/3",
+            "T": 1,
+            "periods": 3,
+            "microticks": 9,
+            "exact_potential_flow_error": "0",
+            "full_rewind": true,
+            "peak_complete_bits": 7
+          },
+          {
+            "position_scale": 9,
+            "momentum_scale": 1458,
+            "h": "1/9",
+            "T": 1,
+            "periods": 9,
+            "microticks": 27,
+            "exact_potential_flow_error": "0",
+            "full_rewind": true,
+            "peak_complete_bits": 12
+          },
+          {
+            "position_scale": 27,
+            "momentum_scale": 39366,
+            "h": "1/27",
+            "T": 1,
+            "periods": 27,
+            "microticks": 81,
+            "exact_potential_flow_error": "0",
+            "full_rewind": true,
+            "peak_complete_bits": 17
+          },
+          {
+            "position_scale": 81,
+            "momentum_scale": 1062882,
+            "h": "1/81",
+            "T": 1,
+            "periods": 81,
+            "microticks": 243,
+            "exact_potential_flow_error": "0",
+            "full_rewind": true,
+            "peak_complete_bits": 22
+          },
+          {
+            "position_scale": 243,
+            "momentum_scale": 28697814,
+            "h": "1/243",
+            "T": 1,
+            "periods": 243,
+            "microticks": 729,
+            "exact_potential_flow_error": "0",
+            "full_rewind": true,
+            "peak_complete_bits": 26
+          }
+        ],
+        "kinetic_plus_potential_refinement": "blocked_in_this_ansatz"
+      },
+      "not_claimed": [
+        "kinetic/nonlinear full-equation convergence",
+        "Einstein geometry",
+        "physical momentum or energy conservation",
+        "metric positivity",
+        "proper-time clock",
+        "general cubic-force arithmetic compiler"
+      ]
+    },
+    "metric_domain": {
+      "scope": "Distinct source-only cubic metric candidate; no accepted physical model",
+      "baseline": "62202fdccdd9a40d5dbbec104de6f97d9587a999",
+      "symbolic": {
+        "principal_change_exactly_zero": true,
+        "correction_vanishes_as_h_to_zero": true,
+        "R_complete_square_identity": true,
+        "vacuum_negative_seed_constraints_zero": true,
+        "positive_diagonal_is_not_full_determinant_protection": true,
+        "finite_h_constraint_vanishing_correction": false
+      },
+      "constraint_defect": {
+        "status": "passed_negative_control",
+        "initial_TT_linear_constraints_zero": true,
+        "original_constraint_velocity_zero_for_this_mode": true,
+        "cubic_added_constraint_velocity": {
+          "C020": "2*I*h*q",
+          "C121": "-2*I*h*q"
+        },
+        "finite_h_continuum_constraint_invariance_for_cubic_candidate": "failed",
+        "scope": "Sourced isotropic background B=I,K=-I,Pi_phi=2,dust=1; TT K00=-K11, direction z"
+      },
+      "negative_control": {
+        "status": "passed_negative_control",
+        "original_tensor_sha256": "02c1aa0ecd76f242c3bfb02233d59e6c873275b5f5b78392bf1a00b5e8ab145b",
+        "repaired_tensor_sha256": "a5b7e60314726bf8f69f60039180e7e8dcb2beae90f87aa308fc1d0a7cea04de",
+        "original_det_after": "0",
+        "repaired_det_after": "1",
+        "continuum_B00_at_h": "1/2",
+        "initial_all_continuum_constraints_zero": true,
+        "independent_scalar_oracle": true,
+        "singular_state_still_exactly_rewinds": true,
+        "original_global_metric_preservation": "failed"
+      },
+      "actual_Engine": {
+        "status": "passed",
+        "channels": 45,
+        "retained_integers_per_node": 135,
+        "degree": 3,
+        "monomials": 970,
+        "static_multiplier": 256,
+        "tensor_sha256": "a5b7e60314726bf8f69f60039180e7e8dcb2beae90f87aa308fc1d0a7cea04de",
+        "strict_single_face_support": true,
+        "old_a_inputs": false,
+        "mass_squared": 1,
+        "nodes": 27,
+        "steps": 4,
+        "records": [
+          {
+            "tick": 1,
+            "denominator_bits": 21,
+            "max_retained_bits": 21,
+            "all_nodes_positive_orientation": true,
+            "history_operator_norm_bound_2_exact": true,
+            "epsilon_le_1_over_7_exact": true
+          },
+          {
+            "tick": 2,
+            "denominator_bits": 68,
+            "max_retained_bits": 69,
+            "all_nodes_positive_orientation": true,
+            "history_operator_norm_bound_2_exact": true,
+            "epsilon_le_1_over_7_exact": true
+          },
+          {
+            "tick": 3,
+            "denominator_bits": 212,
+            "max_retained_bits": 213,
+            "all_nodes_positive_orientation": true,
+            "history_operator_norm_bound_2_exact": true,
+            "epsilon_le_1_over_7_exact": true
+          },
+          {
+            "tick": 4,
+            "denominator_bits": 644,
+            "max_retained_bits": 645,
+            "all_nodes_positive_orientation": true,
+            "history_operator_norm_bound_2_exact": true,
+            "epsilon_le_1_over_7_exact": true
+          }
+        ],
+        "independent_scalar_oracle": true,
+        "all_six_carries_and_full_rewind": true,
+        "seed": "inhomogeneous rational full frame and nonzero matter; not constraint solved",
+        "zero_old_memory_assumption_negative_control": "passed: arbitrary old memory can produce det=0",
+        "global_metric_domain_theorem": "passed under stated initialization, C>=2, D0>=2, symmetric K",
+        "uniform_infinite_time_conditioning": "not_established",
+        "nonlinear_discrete_Einstein_constraints": "not_established",
+        "convergence_and_time_stability": "not_established",
+        "retained_apparatus": "not_implemented",
+        "bit_cost": "cubic projective growth remains exponential"
+      },
+      "source_sha256": {
+        "validation/completion/metric_domain.py": "0e0e4d8f9bc3e2f5eefd52989a0666eec09732f1d46a5c10fd0c0aca1f023fc0",
+        "validation/completion/formulation.py": "3364e0da09b838008a7931602bfc0a8f6cc9a10037a513eefe414e21da61402f",
+        "validation/geometry/team48/refinement_integer_projective.py": "7761440de3ab440d98e758432db2eba1360c83dbea0b7a54f039c756cf76e604"
+      }
+    },
+    "matter_clock": {
+      "baseline_pin": "62202fdccdd9a40d5dbbec104de6f97d9587a999",
+      "identities": {
+        "same_builder_mass1_exact_identities": true,
+        "pointwise_covariant_SO2_invariants": true,
+        "I_derivative": "2*S",
+        "charge_derivative": "trK*charge",
+        "phase": "theta=arg(Q+iR)/2; E=m\u00b2I+P\u00b2, Q=m\u00b2I-P\u00b2, R=-2mS",
+        "phase_derivative": "m+trK*E*R/(2*(Q\u00b2+R\u00b2))",
+        "neutral_radial_phase_derivative": "m-trK*m*S/E",
+        "neutral_radial_domain": "m>0, E>0, zero charge, homogeneous covariant gradients; |trK|<2m ensures strict monotonicity",
+        "proper_time_relation": "theta(tau2)-theta(tau1)=m*(tau2-tau1)-integral(trK*m*S/E d_tau) in the radial sector",
+        "flat_non_circular_intensity_period": "pi/m",
+        "flat_circular_I_constant": true,
+        "circular_domain_warning": "Nonzero homogeneous charged circle violates periodic Gauss unless compensated; not accepted full45 data.",
+        "universal_theta_over_m_proper_time": "failed",
+        "scope": "Continuum algebra and conditional normal-proper-time interpretation; no lattice calibration theorem."
+      },
+      "common45": {
+        "mass_squared": 1,
+        "dt": "1/64",
+        "dx": "1/4",
+        "tensor_sha256": "6ea453fa77a5a9d74af5bd4fc626cfcdc8f92942b10c301d2d00814bf4d05ba0",
+        "seed_sha256": "b53909631f3e14e3c09905275fe7b50a0dad2ecdec9ac431db2306127abd3b7c",
+        "phase_rotated_seed_sha256": "92eb69a8e32ea31d953791476ec754fc65663b47a6971e5a6f627c2902f16d14",
+        "channels": 45,
+        "retained_integers_per_node": 135,
+        "added_clock_channels": 0,
+        "sites": 27,
+        "updates": 3,
+        "monomials": 889,
+        "single_face_violations": 0,
+        "initial_all_constraints_zero": true,
+        "initial_rho": "3/100",
+        "exact_phase_equivariance_I_S_stress_geometry": true,
+        "nonzero_carries_oracle_inverse_and_full_rewind": true,
+        "maximum_state_bits": [
+          7,
+          22,
+          51,
+          110
+        ],
+        "samples": [
+          {
+            "tick": 0,
+            "I": "1/25",
+            "S": "0"
+          },
+          {
+            "tick": 1,
+            "I": "1/25",
+            "S": "-1/1600"
+          },
+          {
+            "tick": 2,
+            "I": "281337554534366453760000001/7036874417765561139200000025",
+            "S": "-50133433319421011084800/40210710958660349366857143"
+          },
+          {
+            "tick": 3,
+            "I": "3164493168058142578037438201092073099758773769/79228162514245448127612472881045122842624000000",
+            "S": "-1477382478189729374034720076743800942517113947/792281625142454481276124728810451228426240000000"
+          }
+        ],
+        "scalar_source_changes_first_K_update": {
+          "K00": "-1/3200",
+          "K11": "-1/3200",
+          "K22": "-1/3200"
+        },
+        "source_removal_control_constraint_warning": "Same geometric seed with scalar removed is intentionally off the Einstein constraint surface.",
+        "official_arithmetic_clicks": 810,
+        "all_click_kinds_C0": true,
+        "click_only_physical_clock": "not_tested",
+        "proper_time_calibration": "not_tested",
+        "resolved_oscillation_on_shared_dt_1_64": "not_tested",
+        "scope": "Global phase equivariance does not establish local lattice gauge symmetry or a retained detector."
+      },
+      "negative_controls": {
+        "massive_zero_source_flat_state_stationary": true,
+        "massive_tensor_sha256": "6ea453fa77a5a9d74af5bd4fc626cfcdc8f92942b10c301d2d00814bf4d05ba0",
+        "massless_stationary_scalar_not_a_clock": true,
+        "massless_tensor_sha256": "9e648cc82a85a58e40693955d83336108d7b9c318fc1dd1744afe8dc719d77ea",
+        "massless_is_separate_control_law": true,
+        "massless_seed_constraint_warning": "Holding the massive geometric/dust seed fixed after mass removal is off-constraint; this is an algebraic no-oscillator control.",
+        "flat_circular_control": "proved analytically; I constant and Q=R=0, so the intensity-phase clock is undefined"
+      },
+      "coarse_oscillation": {
+        "mass_squared": 1,
+        "dt": "1/4",
+        "dx": "1/4",
+        "tensor_sha256": "5383a9d4354b2ac3bc64692e4075986d53998e0852fe9381237ce72cd795105b",
+        "seed_sha256": "b53909631f3e14e3c09905275fe7b50a0dad2ecdec9ac431db2306127abd3b7c",
+        "different_protocol_from_shared_dt_1_64": true,
+        "channels": 45,
+        "sites": 27,
+        "updates": 14,
+        "maximum_state_bits": [
+          7,
+          18,
+          39,
+          82,
+          167,
+          337,
+          678,
+          1359,
+          2721,
+          5446,
+          10896,
+          21795,
+          43594,
+          87191,
+          174385
+        ],
+        "exact_oracle_inverse_full_rewind": true,
+        "sampled_intensity_minimum_tick": 7,
+        "sampled_intensity_maximum_tick": 13,
+        "sampled_S_sign_change_intervals": [
+          [
+            1.5,
+            1.75
+          ],
+          [
+            3.0,
+            3.25
+          ]
+        ],
+        "actual_sampled_oscillation": "passed",
+        "exact_recurrence_at_sampled_peak": "failed",
+        "constraint_preservation": "failed",
+        "converged_proper_time_clock": "not_tested",
+        "all_sampled_detB_positive_and_abs_traceK_below_2m": true,
+        "continuum_between_samples_domain_theorem": "not_tested",
+        "rows": [
+          {
+            "tick": 0,
+            "coordinate_time": 0.0,
+            "I": 0.04,
+            "S": 0.0,
+            "traceK": -0.3,
+            "detB": 1.0,
+            "rho": 0.03,
+            "Hamiltonian_constraint": 0.0,
+            "passive_phase_minus_coordinate_time": -0.0
+          },
+          {
+            "tick": 1,
+            "coordinate_time": 0.25,
+            "I": 0.04,
+            "S": -0.01,
+            "traceK": -0.29625,
+            "detB": 0.926859375,
+            "rho": 0.0305140625,
+            "Hamiltonian_constraint": -0.00251875,
+            "passive_phase_minus_coordinate_time": -0.0050213368731358565
+          },
+          {
+            "tick": 2,
+            "coordinate_time": 0.5,
+            "I": 0.03515624999885559,
+            "S": -0.018055664066614248,
+            "traceK": -0.292783007810738,
+            "detB": 0.8598945929860128,
+            "rho": 0.030805315873591244,
+            "Hamiltonian_constraint": -0.004462705305380693,
+            "passive_phase_minus_coordinate_time": -0.025544868188137393
+          },
+          {
+            "tick": 3,
+            "coordinate_time": 0.75,
+            "I": 0.026707985974254313,
+            "S": -0.02224606528380026,
+            "traceK": -0.28775762169632696,
+            "detB": 0.7984771346036017,
+            "rho": 0.030592130885080764,
+            "Hamiltonian_constraint": -0.005981295873943911,
+            "passive_phase_minus_coordinate_time": -0.05549576895837005
+          },
+          {
+            "tick": 4,
+            "coordinate_time": 1.0,
+            "I": 0.016743051281709477,
+            "S": -0.02163317370176111,
+            "traceK": -0.28006201208925746,
+            "detB": 0.7424016010564176,
+            "rho": 0.029757371742460546,
+            "Hamiltonian_constraint": -0.0072249230745988335,
+            "passive_phase_minus_coordinate_time": -0.0878590474194283
+          },
+          {
+            "tick": 5,
+            "coordinate_time": 1.25,
+            "I": 0.007673436191443044,
+            "S": -0.01645357901101472,
+            "traceK": -0.26951075067228747,
+            "detB": 0.6916256684459946,
+            "rho": 0.02837714495473533,
+            "Hamiltonian_constraint": -0.008330260090844057,
+            "passive_phase_minus_coordinate_time": -0.11558622115527561
+          },
+          {
+            "tick": 6,
+            "coordinate_time": 1.5,
+            "I": 0.0016516583612591453,
+            "S": -0.008009212913624707,
+            "traceK": -0.25681690310825345,
+            "detB": 0.6460642980611779,
+            "rho": 0.026688181841972046,
+            "Hamiltonian_constraint": -0.00940641586920141,
+            "passive_phase_minus_coordinate_time": -0.13257260312634322
+          },
+          {
+            "tick": 7,
+            "coordinate_time": 1.75,
+            "I": 7.444143761233207e-05,
+            "S": 0.0016788370874821809,
+            "traceK": -0.24336375821170392,
+            "detB": 0.6054656387701811,
+            "rho": 0.025004362141885277,
+            "Hamiltonian_constraint": -0.010524778409820768,
+            "passive_phase_minus_coordinate_time": -0.1348916262293327
+          },
+          {
+            "tick": 8,
+            "coordinate_time": 2.0,
+            "I": 0.0032802284791176436,
+            "S": 0.010342743044479947,
+            "traceK": -0.23084876658843936,
+            "detB": 0.5693705580743875,
+            "rho": 0.023620268285883917,
+            "Hamiltonian_constraint": -0.011713101214831994,
+            "passive_phase_minus_coordinate_time": -0.12208571406988145
+          },
+          {
+            "tick": 9,
+            "coordinate_time": 2.25,
+            "I": 0.010489802796626643,
+            "S": 0.015961656695411837,
+            "traceK": -0.22088401339082236,
+            "detB": 0.537139015388929,
+            "rho": 0.022740580475277335,
+            "Hamiltonian_constraint": -0.01295466270279667,
+            "passive_phase_minus_coordinate_time": -0.09779224405104703
+          },
+          {
+            "tick": 10,
+            "coordinate_time": 2.5,
+            "I": 0.01998862014637627,
+            "S": 0.01719684026009997,
+            "traceK": -0.2146271652443785,
+            "detB": 0.5080202866926561,
+            "rho": 0.022452119044164644,
+            "Hamiltonian_constraint": -0.014194358047770788,
+            "passive_phase_minus_coordinate_time": -0.06886890403385726
+          },
+          {
+            "tick": 11,
+            "coordinate_time": 2.75,
+            "I": 0.029511726775437196,
+            "S": 0.013702438592224529,
+            "traceK": -0.21250431165114353,
+            "detB": 0.481246180361303,
+            "rho": 0.022729356736892362,
+            "Hamiltonian_constraint": -0.015353325160233836,
+            "passive_phase_minus_coordinate_time": -0.043093323760825086
+          },
+          {
+            "tick": 12,
+            "coordinate_time": 3.0,
+            "I": 0.036760577885849875,
+            "S": 0.006246176448318672,
+            "traceK": -0.2140788531373898,
+            "detB": 0.4561295389552527,
+            "rho": 0.023452165598150214,
+            "Hamiltonian_constraint": -0.016351160955887015,
+            "passive_phase_minus_coordinate_time": -0.026714965433043858
+          },
+          {
+            "tick": 13,
+            "coordinate_time": 3.25,
+            "I": 0.03994999858229903,
+            "S": -0.0034175181142354887,
+            "traceK": -0.21810958733326852,
+            "detB": 0.43215053337055853,
+            "rho": 0.024422599062951862,
+            "Hamiltonian_constraint": -0.017130670068111267,
+            "passive_phase_minus_coordinate_time": -0.023070218387106323
+          },
+          {
+            "tick": 14,
+            "coordinate_time": 3.5,
+            "I": 0.038259511475236964,
+            "S": -0.012935971998534235,
+            "traceK": -0.2228109228442173,
+            "detB": 0.4090121901951048,
+            "rho": 0.025386730692475986,
+            "Hamiltonian_constraint": -0.017676989825824132,
+            "passive_phase_minus_coordinate_time": -0.03236283069935997
+          }
+        ],
+        "fine_protocol_cost_lower_bound": "At dt=1/64, pi/m requires at least 202 updates. D_n >= D_0^(2^n) makes a resolved fine cycle computationally blocked for this encoding.",
+        "scope": "Passive floats/atan2 appear only after Engine snapshots, never in tensor, preparation feedback, or runtime updates."
+      },
+      "source_sha256": {
+        "validation/completion/matter_clock.py": "a0d957d42cdcbe01ca4e02bb37008e94d8bd01f9c1803125e3a79d003a292e15",
+        "validation/completion/common45.py": "5908d58795e7e6c786f1843e6a4563d213f0a8f5609fa1bdefdc7c5379d124a2",
+        "validation/completion/formulation.py": "3364e0da09b838008a7931602bfc0a8f6cc9a10037a513eefe414e21da61402f"
+      }
+    },
+    "geodesic_signals": {
+      "baseline": "62202fdccdd9a40d5dbbec104de6f97d9587a999",
+      "cones": {
+        "status": "passed",
+        "arbitrary_frame_covector_and_background": true,
+        "scalar_speeds": "0 (x2), +/-sqrt(n.T*B.T*B*n), per real component",
+        "maxwell_speeds": "0 (x2), +/-sqrt(n.T*B.T*B*n) (each x2)",
+        "massive_KG_principal_characteristics": "null, not timelike",
+        "wrong_metric_control_rejected": true,
+        "heldout_cone_squared": "16381/900",
+        "wrong_Euclidean_cone_squared": "6",
+        "scope": "Continuum principal equations from the shared builder, not a discrete dispersion theorem."
+      },
+      "phase_stress": {
+        "status": "passed",
+        "amplitude_phase_decomposition": true,
+        "actual_builder_plane_wave_stress": "T_ab=R^2 k_a k_b on k.k=-m^2, constant amplitude",
+        "actual_builder_current": "J^a=q R^2 k^a",
+        "covariant_phase_rate": "(dS-q A_mu dx^mu)/d_tau=-m, at leading semiclassical order",
+        "proper_time_rate": "d_tau/dt=m/sqrt(m^2+n.T*gamma_inverse*n)",
+        "bare_phase_gauge_control_rejected": true,
+        "scope": "Local mass-shell conditional identity, not an Engine packet or detector."
+      },
+      "geodesic_oracles": {
+        "status": "passed",
+        "generic_FLRW_null_and_timelike_geodesic_residuals": 0,
+        "heldout_curved_scale_factor": "a(t)=1+t^2/50",
+        "heldout_Ricci_scalar": "12*(3*t**2 + 50)/(t**2 + 50)**2",
+        "Milne_moving_clock": {
+          "t0": 3,
+          "t1": 8,
+          "P": 4,
+          "coordinate_elapsed": 5,
+          "proper_elapsed": "-5 + 4*sqrt(5)",
+          "proper_elapsed_decimal": 3.9442719099991588
+        },
+        "charged_geodesic_negative_control": "nonzero k^nu*d_nu k^x=q F (E+q F X); Lorentz residual zero",
+        "scope": "Independent continuum metric/trajectory oracles; no trajectory is supplied to the Engine."
+      },
+      "actual_snapshots": {
+        "status": "passed",
+        "tensor_sha256": "6ea453fa77a5a9d74af5bd4fc626cfcdc8f92942b10c301d2d00814bf4d05ba0",
+        "seed_sha256": "b53909631f3e14e3c09905275fe7b50a0dad2ecdec9ac431db2306127abd3b7c",
+        "channels": 45,
+        "additional_retained_probe_channels": 0,
+        "actual_Engine_steps": 3,
+        "all_snapshot_cones_use_retained_B": true,
+        "rewind_exact": true,
+        "snapshots": [
+          {
+            "step": 0,
+            "frame_determinant": "1",
+            "null_frequency_squared": "14",
+            "conditional_moving_proper_rate_squared": "1/15",
+            "wrong_fixed_Euclidean_metric_rejected": false,
+            "max_bits": 7
+          },
+          {
+            "step": 1,
+            "frame_determinant": "260917119/262144000",
+            "null_frequency_squared": "2858247/204800",
+            "conditional_moving_proper_rate_squared": "204800/3063047",
+            "wrong_fixed_Euclidean_metric_rejected": true,
+            "max_bits": 22
+          },
+          {
+            "step": 2,
+            "frame_determinant": "91614635264364048478974542043709/92477899954800592305450187259709",
+            "null_frequency_squared": "28451463251842149007454/2044993691637102647961",
+            "conditional_moving_proper_rate_squared": "2044993691637102647961/30496456943479251655415",
+            "wrong_fixed_Euclidean_metric_rejected": true,
+            "max_bits": 51
+          },
+          {
+            "step": 3,
+            "frame_determinant": "11258539748724967164545935466208941973985690965883617292630593175076999509759/11417981541643595660063236980812231083393539135082724797588701184000000000000",
+            "null_frequency_squared": "3516301319627913884541211214702520258169663401208327/253530120045585434008359913219344393096396800000000",
+            "conditional_moving_proper_rate_squared": "253530120045585434008359913219344393096396800000000/3769831439673499318549571127921864651266060201208327",
+            "wrong_fixed_Euclidean_metric_rejected": true,
+            "max_bits": 110
+          }
+        ],
+        "moving_matter_packet": "not_tested",
+        "operational_moving_clock": "not_tested",
+        "scope": "Actual evolving metric snapshots, with conditional passive rates only."
+      },
+      "physical_geodesic_and_clock_acceptance": "not_tested",
+      "source_sha256": {
+        "validation/completion/geodesic_signals.py": "27e960b180035767bfbedf4a84505c7e33c1e94c10b6d6400fe2b5d41ad06d9e",
+        "validation/completion/formulation.py": "3364e0da09b838008a7931602bfc0a8f6cc9a10037a513eefe414e21da61402f",
+        "validation/completion/common45.py": "5908d58795e7e6c786f1843e6a4563d213f0a8f5609fa1bdefdc7c5379d124a2",
+        "validation/geometry/team48/matter_equations.py": "394efe21ec4637d541a79c283d040f6afad0f36ba0143d190358b984396ba18e",
+        "validation/geometry/team48/matter_charged.py": "8d57dc7b583ab9f0c657d5372ba3fa35f0b08cb8959eae2e6c03cca16d322fbc"
+      }
+    },
+    "time_stability": {
+      "status": "passed",
+      "scope": "projective frozen-mode failure and native linear wave only",
+      "source_sha256": "f12574916c00fb220b968bdd2d9c1b1a2b62f92d4e13c7e6b12f81aaa31e8f5d",
+      "projective_modes": [
+        {
+          "status": "passed",
+          "physical_stability_gate": "failed",
+          "degree": 2,
+          "theta": "1/3",
+          "channels": 3,
+          "exact_mode_comparisons": 270,
+          "all_six_remainders": true,
+          "full_rewind": true,
+          "trace": [
+            {
+              "step": 1,
+              "max_retained_bits": 6,
+              "amplitude_ratio": 1.0540925533894598,
+              "proved_lower_bound": 1.0540925533894598
+            },
+            {
+              "step": 2,
+              "max_retained_bits": 14,
+              "amplitude_ratio": 1.1112913108217004,
+              "proved_lower_bound": 1.1111111111111112
+            },
+            {
+              "step": 3,
+              "max_retained_bits": 28,
+              "amplitude_ratio": 1.1714040054672519,
+              "proved_lower_bound": 1.1712139482105108
+            },
+            {
+              "step": 4,
+              "max_retained_bits": 57,
+              "amplitude_ratio": 1.2347682391736552,
+              "proved_lower_bound": 1.2345679012345678
+            },
+            {
+              "step": 5,
+              "max_retained_bits": 114,
+              "amplitude_ratio": 1.3015600060747652,
+              "proved_lower_bound": 1.3013488313450121
+            },
+            {
+              "step": 6,
+              "max_retained_bits": 229,
+              "amplitude_ratio": 1.3719647101929502,
+              "proved_lower_bound": 1.3717421124828533
+            },
+            {
+              "step": 7,
+              "max_retained_bits": 458,
+              "amplitude_ratio": 1.446177784527517,
+              "proved_lower_bound": 1.4459431459389023
+            },
+            {
+              "step": 8,
+              "max_retained_bits": 917,
+              "amplitude_ratio": 1.5244052335477223,
+              "proved_lower_bound": 1.5241579027587258
+            },
+            {
+              "step": 9,
+              "max_retained_bits": 1835,
+              "amplitude_ratio": 1.6068642050305744,
+              "proved_lower_bound": 1.6066034954876691
+            },
+            {
+              "step": 10,
+              "max_retained_bits": 3671,
+              "amplitude_ratio": 1.6937835928308025,
+              "proved_lower_bound": 1.6935087808430287
+            }
+          ]
+        },
+        {
+          "status": "passed",
+          "physical_stability_gate": "failed",
+          "degree": 3,
+          "theta": "1/3",
+          "channels": 3,
+          "exact_mode_comparisons": 162,
+          "all_six_remainders": true,
+          "full_rewind": true,
+          "trace": [
+            {
+              "step": 1,
+              "max_retained_bits": 8,
+              "amplitude_ratio": 1.0540925533894598,
+              "proved_lower_bound": 1.0540925533894598
+            },
+            {
+              "step": 2,
+              "max_retained_bits": 25,
+              "amplitude_ratio": 1.1111111697182738,
+              "proved_lower_bound": 1.1111111111111112
+            },
+            {
+              "step": 3,
+              "max_retained_bits": 75,
+              "amplitude_ratio": 1.1712140099878847,
+              "proved_lower_bound": 1.1712139482105108
+            },
+            {
+              "step": 4,
+              "max_retained_bits": 226,
+              "amplitude_ratio": 1.2345679663536375,
+              "proved_lower_bound": 1.2345679012345678
+            },
+            {
+              "step": 5,
+              "max_retained_bits": 679,
+              "amplitude_ratio": 1.3013488999865386,
+              "proved_lower_bound": 1.3013488313450121
+            },
+            {
+              "step": 6,
+              "max_retained_bits": 2036,
+              "amplitude_ratio": 1.371742184837375,
+              "proved_lower_bound": 1.3717421124828533
+            }
+          ]
+        }
+      ],
+      "cayley_linear_denominator_negative_control": {
+        "status": "passed",
+        "stability_gate": "failed",
+        "steps": 120,
+        "first_decoded_step_unit_norm": true,
+        "final_amplitude": 753.4398639871026,
+        "max_retained_bits": 282,
+        "denominator_bit_growth": "linear in steps",
+        "full_rewind": true,
+        "all_six_remainders": true
+      },
+      "native_fourier_identity": {
+        "status": "passed",
+        "identity": "M* H M = H",
+        "H_eigenvalues": [
+          "1-a",
+          "1+a"
+        ],
+        "nu": "1/3",
+        "uniform_Euclidean_power_bound": "sqrt(2)"
+      },
+      "native_scalar_oracle": {
+        "status": "passed",
+        "steps": 180,
+        "scalar_register_comparisons": 43740,
+        "changed_remainder_entries": 6485,
+        "all_six_remainders": true,
+        "signed_seeds": true,
+        "full_rewind": true,
+        "max_retained_bits": 8,
+        "channels": 3,
+        "retained_integers_per_node": 9,
+        "degree": 3,
+        "strict_support_violations": 0,
+        "tensor_fingerprint": "fc12313fdbe2110e55d26c64cf4eb5ffe6c3a3b4ab4486fdc827eeb7205900d4"
+      },
+      "native_fixed_time_refinement": [
+        {
+          "L": 12,
+          "steps": 12,
+          "physical_time": "1/3",
+          "dt": "1/36",
+          "amplitude_scale": 1728,
+          "continuum_rms_error": 0.055487915991165565,
+          "carry_pair_rms_error": 0.0008287144833874664,
+          "proved_carry_bound": 0.00818410626373319,
+          "max_retained_bits": 11,
+          "full_rewind": true,
+          "tensor_fingerprint": "fc12313fdbe2110e55d26c64cf4eb5ffe6c3a3b4ab4486fdc827eeb7205900d4"
+        },
+        {
+          "L": 24,
+          "steps": 24,
+          "physical_time": "1/3",
+          "dt": "1/72",
+          "amplitude_scale": 13824,
+          "continuum_rms_error": 0.013432056500527452,
+          "carry_pair_rms_error": 0.0001430218881630721,
+          "proved_carry_bound": 0.0020460265659332975,
+          "max_retained_bits": 14,
+          "full_rewind": true,
+          "tensor_fingerprint": "fc12313fdbe2110e55d26c64cf4eb5ffe6c3a3b4ab4486fdc827eeb7205900d4",
+          "observed_order": 2.0464934154856693
+        },
+        {
+          "L": 48,
+          "steps": 48,
+          "physical_time": "1/3",
+          "dt": "1/144",
+          "amplitude_scale": 110592,
+          "continuum_rms_error": 0.003300177424628602,
+          "carry_pair_rms_error": 2.6404427235601508e-05,
+          "proved_carry_bound": 0.0005115066414833244,
+          "max_retained_bits": 17,
+          "full_rewind": true,
+          "tensor_fingerprint": "fc12313fdbe2110e55d26c64cf4eb5ffe6c3a3b4ab4486fdc827eeb7205900d4",
+          "observed_order": 2.0250647098909926
+        }
+      ],
+      "native_negative_controls": [
+        {
+          "nu": "1",
+          "steps": 40,
+          "amplitude": 40,
+          "seed_amplitude": 1,
+          "full_rewind": true,
+          "stability_gate": "failed",
+          "negative_control": "passed"
+        },
+        {
+          "nu": "4/3",
+          "steps": 40,
+          "amplitude": 43201214264023,
+          "seed_amplitude": 1,
+          "full_rewind": true,
+          "stability_gate": "failed",
+          "negative_control": "passed"
+        }
+      ],
+      "nonlinear_einstein_time_integration": "blocked",
+      "same_tensor_as_corrected45": false,
+      "physical_proper_clock": "not_tested",
+      "full_coupled_physical_acceptance": "not_tested"
+    },
+    "constraint_closure": {
+      "algebra": {
+        "continuous_constraint_identity": "Cdot=6*k*C",
+        "Euler_identity": "C(z+hF)=(1+6*h*k)*C(z)+h^2*F.T*form_metric*F",
+        "Euler_defect": "-(-3*dust**4 + 45*dust**2*k**2 - 6*dust**2*mu*phi**2 - 108*k**4 + 36*k**2*mu*phi**2 + 18*k**2*p**2 - 12*k*mu*p*phi - 3*mu**2*phi**4 + 2*mu**2*phi**2 + 2*mu*p**2)/2",
+        "Euler_defect_mod_constraint": "-(3*dust**2*mu*phi**2 + 3*dust**2*p**2 - 24*k*mu*p*phi + 4*mu**2*phi**2 + 6*mu*p**2*phi**2 + 4*mu*p**2)/4",
+        "strong_massive_coefficient": "-7",
+        "massless_coefficient": "-3",
+        "Cayley_generator_skew_identity": true,
+        "Cayley_delta": "-(3*dust**2*h**4*mu + 12*dust**2*h**2 + 24*h**2*mu*phi**2 - 16*h**2*mu - 64)/64",
+        "target_constraint_cofactor": "(1-3*h*k)^(-2)",
+        "target_first_order_consistency": true,
+        "target_numerator_degrees": [
+          3,
+          3,
+          3,
+          3
+        ],
+        "target_denominator_degree": 3,
+        "target_domain": "delta!=0 and 1-3*h*k!=0; no global domain or invertibility theorem",
+        "target_status": "exact constrained rational target; not a Rule3 implementation"
+      },
+      "actual_reduced_history_lift": {
+        "channels": 5,
+        "retained_integers_per_node": 15,
+        "degree": 3,
+        "monomials": 28,
+        "multiplier": 67108864,
+        "tensor_sha256": "e33be737ff30660efc4293c73e2ef4c715fdc08f22f73f288d4adbe2eecabb4c",
+        "strict_face_support": true,
+        "nodes": 27,
+        "all_six_remainders": true,
+        "oracle_and_full_rewind": true,
+        "first_tick_constraint_zero": true,
+        "second_tick_constraint_gate": "failed",
+        "cross_history_defect_identity": true,
+        "rows": [
+          {
+            "tick": 1,
+            "constraint": "0",
+            "constraint_float": 0.0,
+            "max_retained_bits": 34
+          },
+          {
+            "tick": 2,
+            "constraint": "-211805381883956703960796807492009984/6648074056234057895988554997906461158237804299242833919931086162572083201",
+            "constraint_float": -3.185966042080138e-38,
+            "max_retained_bits": 124
+          },
+          {
+            "tick": 3,
+            "constraint": "-10420589463869193300314271942354389516564343483731017429273970736943433605365585246686568323522365096869959558218741913873125652843888169447468172113096734521346002742189081394088692624590012153856/457483872749720340617839906745518833604507496765742027224603304449576413607825931224199998703509689928208441880353089342978706089442520596566190328942917256446768618255823950903713125947882368759700184635509714160450438071971399496881",
+            "constraint_float": -2.2778047674633714e-38,
+            "max_retained_bits": 397
+          }
+        ],
+        "scope": "Reduced homogeneous four-field target only; not appended to full45"
+      },
+      "common45": {
+        "tensor_sha256": "6ea453fa77a5a9d74af5bd4fc626cfcdc8f92942b10c301d2d00814bf4d05ba0",
+        "seed_sha256": "b53909631f3e14e3c09905275fe7b50a0dad2ecdec9ac431db2306127abd3b7c",
+        "initial_constraint": "0",
+        "first_step_constraint": "-403/40960000",
+        "general_identity_matches_actual_full45": true,
+        "discrete_constraint_gate": "failed"
+      },
+      "source_sha256": {
+        "validation/completion/constraint_closure.py": "a1f4a775c7a112912e08cdbb7f4d4f3a8c12841fd1af61dfb6edb9a965287cd8"
+      },
+      "status": "target theorem passed; mandatory-memory implementation constraint gate failed",
+      "limitations": [
+        "No full45 constraint-preserving tensor supplied.",
+        "Rational target needs nonzero denominators and is not a global map theorem.",
+        "Removing old history, resetting it or feeding an external solver is forbidden.",
+        "Native linear-wave and nonlinear potential laws do not implement this target."
+      ]
+    },
+    "integration_review": {
+      "baseline": "62202fdccdd9a40d5dbbec104de6f97d9587a999",
+      "same_run_identity": {
+        "status": "passed",
+        "tensor_sha256": "6ea453fa77a5a9d74af5bd4fc626cfcdc8f92942b10c301d2d00814bf4d05ba0",
+        "seed_sha256": "b53909631f3e14e3c09905275fe7b50a0dad2ecdec9ac431db2306127abd3b7c",
+        "common_clock_signals_runtime_same_run": true,
+        "rejected_distinct_law_transfers": {
+          "coarse_clock": "5383a9d4354b2ac3bc64692e4075986d53998e0852fe9381237ce72cd795105b",
+          "massless_control": "9e648cc82a85a58e40693955d83336108d7b9c318fc1dd1744afe8dc719d77ea",
+          "cubic_metric": "a5b7e60314726bf8f69f60039180e7e8dcb2beae90f87aa308fc1d0a7cea04de",
+          "native_potential": "ee8e2f1c3581ab83715ea305a54d4e0d223b6a55e6853da97818fc234116426d",
+          "native_wave": "fc12313fdbe2110e55d26c64cf4eb5ffe6c3a3b4ab4486fdc827eeb7205900d4",
+          "native_joint_compiler": "e35d2691856235e6124dfc21172498c75a454a9b049cc70f75f54563f00dc2af",
+          "reduced_constraint_history_lift": "e33be737ff30660efc4293c73e2ef4c715fdc08f22f73f288d4adbe2eecabb4c"
+        },
+        "wrong_seed_rejected": true,
+        "shared_channels": 45,
+        "shared_retained_integers_per_node": 135,
+        "joint_unallocated_channels": 3,
+        "physical_acceptance": "not_established"
+      },
+      "input_guards": {
+        "status": "passed",
+        "massless_law_under_massive_metadata_rejected": true,
+        "changed_complete_seed_under_fixed_metadata_rejected": true,
+        "49_channel_joint_allocation_rejected_by_real_bundle": true,
+        "45_plus_3_budget_only": "48 fits arithmetically; no compatible coupling has been supplied"
+      },
+      "independent_native_lift": {
+        "status": "passed",
+        "nodes": 27,
+        "cases": [
+          {
+            "coupling": -3,
+            "drift": -2,
+            "maximum_bits": 11,
+            "macro_identity_and_rewind": true
+          },
+          {
+            "coupling": 0,
+            "drift": 4,
+            "maximum_bits": 6,
+            "macro_identity_and_rewind": true
+          },
+          {
+            "coupling": 2,
+            "drift": 3,
+            "maximum_bits": 11,
+            "macro_identity_and_rewind": true
+          }
+        ],
+        "independent_edge_potential_force": true,
+        "scope": "Three-channel mechanical primitive; no Einstein metric or proper clock"
+      },
+      "independent_nine_tick_compiler": {
+        "status": "passed",
+        "channels": 7,
+        "retained_integers_per_node": 21,
+        "data_channels": 2,
+        "workspace_channels": 2,
+        "scheduler_channels": 3,
+        "nodes": 27,
+        "microticks": 9,
+        "prepared_workspace_carries": [
+          0,
+          1
+        ],
+        "all_workspace_and_scheduler_triples_restored": true,
+        "macro_map": "S*=S+floor(P/18); Pnew=P+2F(S*); Snew=S*",
+        "cases": [
+          {
+            "coupling": -3,
+            "tensor_sha256": "4815327f2f115946a56eeda2b95936c8005c0c2f78bc9282f96129e28cab3495",
+            "maximum_bits": 13,
+            "independent_macro_identity_and_rewind": true
+          },
+          {
+            "coupling": 2,
+            "tensor_sha256": "40f4b456ae7341b68add2ad369a592c7b704a182535e97657e725efd84a49618",
+            "maximum_bits": 12,
+            "independent_macro_identity_and_rewind": true
+          }
+        ],
+        "arbitrary_refinement_or_full45_drop_in": "not_established"
+      },
+      "independent_math": {
+        "status": "passed",
+        "native_wave_symmetrizer_rederived": true,
+        "sharper_carry_bound": "|eta|<=2/(3*S), because r_next and r have the same parity",
+        "sharper_native_pair_error_bound": "||e_N||<=sqrt(2)*2*N/(3*S)",
+        "original_5_over_6_bound": "valid but not sharp",
+        "metric_history_lower_bound_at_worst_epsilon": "4/7",
+        "metric_history_next_inverse_norm_bound": "7/4 < 2",
+        "neutral_phase_derivative_independently_rederived": "m-k*m*x*p/(m\u00b2*x\u00b2+p\u00b2)",
+        "theta_over_m_is_not_universal_proper_time": true
+      },
+      "independent_shared_constraint": {
+        "status": "passed_negative_control",
+        "tensor_sha256": "6ea453fa77a5a9d74af5bd4fc626cfcdc8f92942b10c301d2d00814bf4d05ba0",
+        "continuum_constraint_identity": "Cdot=6*k*C",
+        "exact_Euler_identity": "Cnext=(1+6*h*k)*C+h\u00b2*(6*vk\u00b2-vp\u00b2-vphi\u00b2-2*vd\u00b2)",
+        "shared_seed_first_step_H": "-403/40960000",
+        "nonlinear_discrete_constraint_preservation": "failed",
+        "scope": "Actual common45 weak homogeneous preparation and its first Engine step"
+      },
+      "provenance": {
+        "status": "passed",
+        "source_evidence_hash_checks": [
+          {
+            "evidence": "01_formulation.json",
+            "source": "validation/completion/formulation.py",
+            "sha256": "3364e0da09b838008a7931602bfc0a8f6cc9a10037a513eefe414e21da61402f"
+          },
+          {
+            "evidence": "01_formulation.json",
+            "source": "validation/research_eight/07_hyperbolic_symbol.py",
+            "sha256": "5a3acdc8a0641b83275275edadd0fe9479acc1d4cd7b10b7a6d031ad8aec586f"
+          },
+          {
+            "evidence": "01_formulation.json",
+            "source": "validation/geometry/team48/matter_equations.py",
+            "sha256": "394efe21ec4637d541a79c283d040f6afad0f36ba0143d190358b984396ba18e"
+          },
+          {
+            "evidence": "03_metric_domain.json",
+            "source": "validation/completion/metric_domain.py",
+            "sha256": "0e0e4d8f9bc3e2f5eefd52989a0666eec09732f1d46a5c10fd0c0aca1f023fc0"
+          },
+          {
+            "evidence": "03_metric_domain.json",
+            "source": "validation/completion/formulation.py",
+            "sha256": "3364e0da09b838008a7931602bfc0a8f6cc9a10037a513eefe414e21da61402f"
+          },
+          {
+            "evidence": "03_metric_domain.json",
+            "source": "validation/geometry/team48/refinement_integer_projective.py",
+            "sha256": "7761440de3ab440d98e758432db2eba1360c83dbea0b7a54f039c756cf76e604"
+          },
+          {
+            "evidence": "04_matter_clock.json",
+            "source": "validation/completion/matter_clock.py",
+            "sha256": "a0d957d42cdcbe01ca4e02bb37008e94d8bd01f9c1803125e3a79d003a292e15"
+          },
+          {
+            "evidence": "04_matter_clock.json",
+            "source": "validation/completion/common45.py",
+            "sha256": "5908d58795e7e6c786f1843e6a4563d213f0a8f5609fa1bdefdc7c5379d124a2"
+          },
+          {
+            "evidence": "04_matter_clock.json",
+            "source": "validation/completion/formulation.py",
+            "sha256": "3364e0da09b838008a7931602bfc0a8f6cc9a10037a513eefe414e21da61402f"
+          },
+          {
+            "evidence": "05_geodesic_signals.json",
+            "source": "validation/completion/geodesic_signals.py",
+            "sha256": "27e960b180035767bfbedf4a84505c7e33c1e94c10b6d6400fe2b5d41ad06d9e"
+          },
+          {
+            "evidence": "05_geodesic_signals.json",
+            "source": "validation/completion/formulation.py",
+            "sha256": "3364e0da09b838008a7931602bfc0a8f6cc9a10037a513eefe414e21da61402f"
+          },
+          {
+            "evidence": "05_geodesic_signals.json",
+            "source": "validation/completion/common45.py",
+            "sha256": "5908d58795e7e6c786f1843e6a4563d213f0a8f5609fa1bdefdc7c5379d124a2"
+          },
+          {
+            "evidence": "05_geodesic_signals.json",
+            "source": "validation/geometry/team48/matter_equations.py",
+            "sha256": "394efe21ec4637d541a79c283d040f6afad0f36ba0143d190358b984396ba18e"
+          },
+          {
+            "evidence": "05_geodesic_signals.json",
+            "source": "validation/geometry/team48/matter_charged.py",
+            "sha256": "8d57dc7b583ab9f0c657d5372ba3fa35f0b08cb8959eae2e6c03cca16d322fbc"
+          },
+          {
+            "evidence": "07_constraint_closure.json",
+            "source": "validation/completion/constraint_closure.py",
+            "sha256": "a1f4a775c7a112912e08cdbb7f4d4f3a8c12841fd1af61dfb6edb9a965287cd8"
+          },
+          {
+            "evidence": "native_compiler.json",
+            "source": "validation/completion/native_compiler.py",
+            "sha256": "7ca38af06460da07f0ece2fee332bb03616a0c7667a8b9f406a707bdded1000e"
+          },
+          {
+            "evidence": "time_stability.json",
+            "source": "validation/completion/time_stability.py",
+            "sha256": "f12574916c00fb220b968bdd2d9c1b1a2b62f92d4e13c7e6b12f81aaa31e8f5d"
+          }
+        ]
+      },
+      "final_physical_acceptance": "not_established",
+      "remaining_dependencies": [
+        "Nonlinear same-law Einstein constraint closure.",
+        "A stable, refinable nonlinear native compiler within the joint 48-channel budget.",
+        "Localized material motion and operational clock/detector calibration."
+      ],
+      "source_sha256": "3caf3dc452d94ab936211fbdd09d0beddf30f14df1f18e38737705952fdec4e5"
+    }
+  },
+  "general_coupled_Einstein_acceptance": "blocked",
+  "scope": "Distinct laws have distinct evidence; successful software audits do not combine physical gates.",
+  "software_validation": {
+    "unittest": {
+      "command": "python -m unittest discover -s universe24/tests -t . -v",
+      "tests": 286,
+      "status": "passed",
+      "log_sha256": "bebd5301b47101e1b058aa7d561adcfeed2a7f944e57ef9c36b99b65b10cf45b"
+    },
+    "generic_smoke": {
+      "command": "python -m validation.system_smoke --out runs/completion/generic-smoke; python -m universe24 verify --run runs/completion/generic-smoke/run",
+      "status": "passed",
+      "verification": {
+        "schema": "universe24/system/run/1",
+        "run_id": "989b87cd820c5e087304bce0d035fcbde086e16ae20d94ecd041614340e4be84",
+        "bundle_id": "43034d9f2d80d77df1efa9f4e2c651b1b0a04da946cde9b7182f67a73c9662dd",
+        "tensor_hash": "85dea207d1d00c16e0d2196fd52feaa6202351f556b9b2c6c5ecea800f1d9494",
+        "steps": 6,
+        "channels_per_node": 2,
+        "retained_integers_per_node": 6,
+        "nodes": 27,
+        "final_state_hash": "1df034246cd6fc931ecc8826c0cf5422cac49f51dca2b6e762e0dd3934b1ef4e",
+        "click_count": 304,
+        "maximum_integer_bits_by_step": [
+          31,
+          31,
+          31,
+          31,
+          31,
+          31,
+          31
+        ],
+        "trace_role": "external complete audit record; never fed into evolution",
+        "source_hashes": {
+          "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+          "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+          "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+          "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+          "system/bundle.py": "6a91f95f67b5730c8c426dc4669dfd9d8a535fd1d7eaaf20cc5ac2d0974969e6",
+          "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+          "system/runtime.py": "7bafea81e5912e26e49312c157a68fca3d50b75d893aa9198592696ea8f2cee4"
+        },
+        "files": {
+          "full_trace.jsonl.gz": "137730acea2746683d35f2be82f82e208025d4cdcd92e35fee65c13d251a96d7",
+          "clicks.jsonl.gz": "f0095655bd0616f92ded3092aceec944eaf4ec9ca6c1b675b4649923291f6c13"
+        },
+        "checks": {
+          "bundle_contract": "passed",
+          "complete_state_forward_replay": "passed",
+          "complete_state_step_inverse": "passed",
+          "complete_state_rewind_to_seed": "passed",
+          "canonical_click_parity": "passed"
+        },
+        "acceptance_gates": {
+          "A": {
+            "status": "partial",
+            "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests."
+          },
+          "B": {
+            "status": "partial",
+            "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established."
+          },
+          "C": {
+            "status": "not_tested",
+            "reason": "No independently validated Einstein geometry supplied by the generic executor."
+          },
+          "D": {
+            "status": "not_tested",
+            "reason": "One execution is not a space/time/quantization convergence study."
+          },
+          "E": {
+            "status": "not_tested",
+            "reason": "No shared-metric physical clock or motion evidence established."
+          },
+          "F": {
+            "status": "not_tested",
+            "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result."
+          }
+        }
+      }
+    },
+    "runtime_changed": false
+  }
+}
