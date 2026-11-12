@@ -1,0 +1,20 @@
+name: Archive reviewed branches and keep main
+on:
+  push:
+    branches: [main]
+    paths: ['.github/branch-cleanup.json']
+permissions:
+  contents: write
+jobs:
+  archive-reviewed-branches:
+    if: github.repository == 'Closer24/Universe24'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+      - name: Archive exact reviewed heads and atomically remove their branches
+        run: |
+          python .github/scripts/test_archive_branches.py
+          python .github/scripts/archive_branches.py --apply
