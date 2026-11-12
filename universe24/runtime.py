@@ -18,6 +18,7 @@ def status():
         "full_physics_acceptance": "blocked",
         "restricted_research_results": {
             "native_massless_homogeneous_sector": "Exact sourced Einstein sampling on a declared complete-history domain",
+            "native_anisotropic_massless_sector": "Exact homogeneous Bianchi I source and source-clock invariant; moving probes remain passive",
             "massive_homogeneous_spinor_sector": "Exact decoded constraint and finite-time convergence; costly integers and finite-step dust drift",
             "joint_bursts_and_complexity_growth": "Not established by the separate recurrent-activity controls",
         },

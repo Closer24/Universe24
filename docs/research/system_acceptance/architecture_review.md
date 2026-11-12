@@ -166,3 +166,45 @@ No unresolved software-architecture blocker was found in these final changes.
 The coordinator must still validate the final published source tree and its
 complete CI before a merge claim. Software approval does not convert the open
 physical gates into successful results.
+
+## Native anisotropic extension
+
+The conservation-closure source at commit
+`97e3a42f31fee76826305af314540c05323edf32` adds an eight-channel homogeneous
+diagonal Bianchi I construction with massless scalar, positive dust and retained
+shear charges. It uses the existing Engine and saved-run runtime without changing
+Rule3 or installing a physical default. Its tensor is a separate candidate from
+the preceding isotropic and massive constructions; sharing the runtime does not
+combine their physical claims.
+
+All seven added regression tests passed independently. A separate review created
+fresh saved runs at resolutions 24, 48 and 96, replayed every transition, compared
+complete states with the independent scalar oracle, checked the independent
+physical projection and all diagonal curvature/source residuals, and checked
+source-clock increments. The three runs reached the same exact physical endpoint.
+The altered-clock control retained the constraint and reversibility while being
+rejected by the physical preparation domain. The spatially varying shear control
+retained its pointwise scalar constraint but failed the momentum constraint.
+
+The package's aggregate runner and runtime helper write fixed evidence paths.
+The central collector must instead call the pure preparation/readout helpers and
+the existing runtime with collector-owned fresh paths. Its complete-run receipts
+must bind the static resolution and physical calibration through model metadata,
+as well as the tensor and complete seed. The repository-wide source closure
+already includes this added package.
+
+The review accepts this extension as a restricted, independently testable source
+construction. Passive geodesic covectors are not retained moving probes or
+operational detector records. Conservation alone does not select the dynamics;
+the conditional reduced uniqueness result also assumes midpoint kinematics,
+proper-time normalization and the positive branch. This addition does not close
+general spatial Einstein dynamics, native massive encoding, recurrent
+cosmological bursts or sustained complexity growth.
+
+The final collector adapter was reviewed after integration. It uses fresh output
+paths, compares saved complete states with both independent projections, checks
+source-time increments and conserved charges, and rejects joins across laws and
+across resolution calibrations. It explicitly leaves the broader six-audit proof
+suite to its separate command. All five collector regression tests passed
+independently, including the three fresh anisotropic runs and refusal to reuse
+their output directory. No additional software-architecture blocker was found.

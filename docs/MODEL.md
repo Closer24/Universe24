@@ -76,6 +76,24 @@ The source has rho=P*P/(2*V*V)+D/V and fluid pressure=P*P/(2*V*V). With H=U/(3V)
 
 For positive D and the expanding chart, density decreases and no bounce or repeated homogeneous density burst occurs. The long-time integer cost is logarithmic in update count for this exact native recurrence. Spatial modes and a mass term are outside this construction.
 
+## Native anisotropic extension and source clock
+
+The separate eight-channel diagonal Bianchi I candidate adds two frozen shear charges S1,S2, with S3=-S1-S2, to the native massless state. The same linear volume recurrence preserves
+
+    J*J-12*D*W-24*N*N*(P*P+sum_i(S_i*S_i))=0.
+
+The common source and metric obey
+
+    H_i=U/(3*V)+S_i/V, I_dot=1/V,
+    A_i=V^(1/3)*exp(S_i*I), phi=phi_ref+P*I,
+    ds²=-dt²+sum_i(A_i*A_i*dx_i*dx_i).
+
+The anchored integral I is a passive logarithm of actual U and retained Uref. All sixteen Einstein components match the declared homogeneous massless scalar and comoving dust source. The exact source clock is tau_source=(J-Jref)/(6*D*N); J-Jref-6*D*T is invariant when the retained marker T advances by one. The source clock does not read that marker. It is a comoving proper-time diagnostic, not an autonomous emitter, receiver or record.
+
+Conserved probe covectors give E²=m²+sum_i(p_i²/A_i²), dx_i/dt=p_i/(A_i²*E), and d(tau_probe)/dt=m/E. These are passive geodesic diagnostics, not retained particle evolution. Spatially varying shear can keep the pointwise Hamiltonian constraint zero while violating momentum constraints; the homogeneous reader rejects that preparation. Thus the added shear charges do not establish a spatial Einstein law.
+
+The exact generic carry-aware momentum identity is pi=6*(b-a)+r and Delta pi=2*(u-6*b). Suitable reciprocal, shift-invariant face potentials can therefore conserve a contracted charge. The separate face control proves local transport, not a stress-complete coupling to this Bianchi source or automatic energy stability.
+
 ## Constrained massive homogeneous coordinates
 
 A distinct six-channel candidate stores one projective denominator and numerators for four coordinates x,y,z,w and log-frame beta. Define

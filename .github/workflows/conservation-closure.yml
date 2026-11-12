@@ -1,0 +1,41 @@
+name: Six-researcher conservation and clock closure
+on:
+  pull_request:
+    paths:
+      - 'validation/conservation_closure/**'
+      - 'docs/research/conservation_closure/**'
+      - 'universe24/tests/test_conservation_closure.py'
+      - '.github/workflows/conservation-closure.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  conservation-closure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.12']
+    env:
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install '.[validation]'
+      - run: python -m validation.conservation_closure.run_all
+      - run: python -m unittest universe24.tests.test_conservation_closure -v
+      - run: python -m validation.system_smoke --out runs/conservation_closure/ci-smoke
+      - run: python -m universe24 verify --run runs/conservation_closure/ci-smoke/run
+      - name: Preserve same-state evidence and unresolved gates
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: conservation-closure-python-${{ matrix.python }}
+          path: runs/conservation_closure/
+          if-no-files-found: error

@@ -47,12 +47,15 @@ A bundle binds tensor, full seed, ownership, protocol and interpretation by hash
 | Construction | Verified result | Boundary |
 | --- | --- | --- |
 | Native massless scalar + dust, six channels | Exact sourced expanding homogeneous FLRW flow, complete-history constraint, positive declared chart and independent Einstein-component checks | No mass term, spatial modes, detector or cosmological bounce |
+| Native anisotropic massless scalar + dust, eight channels | Exact diagonal Bianchi I source, shear charges and source-based comoving proper-time invariant; independent metric and passive geodesic checks | Homogeneous only; passive moving probes; no retained detector or spatial momentum closure |
 | Massive scalar + dust spinor coordinates, six channels | Exact decoded constraint, correct source pushforward and finite-time first-order convergence on a stated preparation family | Exponential integer cost; nonzero finite-step dust drift; no spatial detector |
 | Generic interaction compiler | One local potential produces all declared reciprocal forces; counted native composition executes through the same Engine | Separate compiler controls do not implement the full gravity model |
 | Full45 to six-channel symmetry restriction | Exact guarded reconstruction of both histories and all carries | Only the declared homogeneous neutral sector; the old massive45 constraint defect remains |
 | Retained selection and record feedback | Local memory can change future carrier trajectories and phase | Record stress, bounded interaction energy and general spatial source closure remain incomplete |
 | Repeated activity and structural growth | Exhaustive finite-sector recurrence and a fixed growth criterion are checked independently | Recurring activity is not a cosmological bang; sustained growth is not established |
 | Quantum controls | Complete-trial, non-detection, preparation-measure and locality countercontrols | No derived universal Born rule or physical Bell instrument |
+
+The anisotropic extension retains two shear charges in eight channels; its exact metric and source share the complete state. A 4,096-update check passed independent scalar comparisons, inverse and full rewind with 26-bit peak integers. Its moving-probe paths and proper-time integrals are passive diagnostics, with no retained transported body. A same-tensor spatial negative preserves pointwise Hamiltonian constraints but fails the momentum constraint.
 
 The native massless experiment has also passed 16,384 actual updates and full rewind with 30-bit peak integers. This efficient result belongs to its linear native volume law. It does not transfer to the massive projective spinor law, whose three-resolution checks reach 207, 649 and 6101 bits.
 

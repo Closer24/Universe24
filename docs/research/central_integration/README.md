@@ -31,6 +31,7 @@ Source integration does not grant a physical certificate or change a default.
 | #54 | `d4f281c0839887ac7af8c050c406b2081f7c9baf` | Reciprocal homogeneous apparatus47, record48 and preparation-measure controls |
 | #57 | `455cc5f3ec4ae4a3992ddf032f95c884321ff466` | Interaction-to-native composition, complete-state certificates and scoped packet controls |
 | #59 | `228f581d02971435c0cd70548ff56267378ffc31` | Exact native massless scalar/dust source, full-history constraint and proper-time sampling |
+| #64 | `97e3a42f31fee76826305af314540c05323edf32` | Exact native anisotropic massless source, conserved shear, source-clock and spatial negative controls |
 | #60 | `6b82369830bf763cbaddcc37bd972c555faea782` | Constrained massive coordinates, same-source metric and finite-time convergence |
 
 The new cross-team gate runs in normal unittest discovery and CI:

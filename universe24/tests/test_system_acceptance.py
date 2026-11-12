@@ -6,7 +6,7 @@ import unittest
 
 from universe24.system.runtime import run_bundle
 from validation.sourced_map import native, runtime
-from validation.system_acceptance.run import inspect_saved_run, require_same_run, run, source_hashes
+from validation.system_acceptance.run import inspect_saved_run, require_same_run, run, source_hashes, _anisotropic_run
 
 
 class SystemAcceptanceTests(unittest.TestCase):
@@ -70,6 +70,26 @@ class SystemAcceptanceTests(unittest.TestCase):
                      'validation/research_eight/07_hyperbolic_symbol.py'):
             self.assertIn(name, sources)
             self.assertEqual(len(sources[name]), 64)
+
+    def test_anisotropic_saved_source_metric_and_distinct_calibration(self):
+        destination = self.out / 'anisotropic'
+        report, receipts = _anisotropic_run(destination)
+        self.assertTrue(report['exact_shared_physical_endpoint'])
+        self.assertEqual([row['N'] for row in report['runs']], [24, 48, 96])
+        self.assertEqual(len({receipt.tensor_sha256 for receipt in receipts}), 1)
+        self.assertEqual(len({receipt.seed_sha256 for receipt in receipts}), 3)
+        for row in report['runs']:
+            self.assertEqual(row['saved_samples'][-1]['source_elapsed_proper_time'], '1/8')
+            for sample in row['saved_samples']:
+                self.assertEqual(sample['normalized_diagonal_errors'], ['0'] * 4)
+                self.assertEqual(sample['off_diagonal_errors'], ['0'] * 12)
+        isotropic, _ = inspect_saved_run(self.path)
+        with self.assertRaises(ValueError):
+            require_same_run(receipts[0], isotropic)
+        with self.assertRaises(ValueError):
+            require_same_run(receipts[0], receipts[1])
+        with self.assertRaises(ValueError):
+            _anisotropic_run(destination)
 
 
 if __name__ == '__main__':

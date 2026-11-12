@@ -51,3 +51,5 @@ same execution interface, count every retained channel, include exact
 seed/tensor/protocol provenance, disclose failed gates and supply independent
 physical validation. An additional runtime switch or a metric/readout label
 is not an integration argument.
+
+The reviewed native anisotropic extension is `validation/conservation_closure/` at #64 `97e3a42f31fee76826305af314540c05323edf32`: eight channels, exact homogeneous massless source and source clock. Geodesic probes remain passive; spatial momentum and operational apparatus are unclosed. It is included as a separate scoped law in the central acceptance pipeline.
