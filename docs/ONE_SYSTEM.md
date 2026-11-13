@@ -39,6 +39,18 @@ central research collector is not a supported schema-3 execution path.
 
 ## Reviewed execution and acceptance
 
+The current-schema [light/link resonance audit](research/light_link_resonance/README.md)
+tests restoring motion and optical coupling without changing the installed
+light component. It constructs exact 48-channel, 2O-covariant research
+tensors in the existing saved-run interface. A homogeneous central-contrast
+oscillator can be completely invisible to light. A matched-phase cubic
+control gives exact alternating move/hold plane transport with positive
+integer histories; nonuniform clock and reciprocal-source controls retain
+their failures. This restricted transport construction is not a measured
+shared edge length, an operational clock or dynamic Einstein geometry.
+No channel ownership or installed interface is added: central-pair sums and
+contrasts are passive readouts of the existing 144 retained integers.
+
 The installed `universe24/detection.py` adds a prepared 48-channel light/memory
 exchange law through `prepare-detector`, followed by the same `run` and `verify`.
 Its 624 quadratic-or-linear monomials pass mandatory 2O covariance and strict

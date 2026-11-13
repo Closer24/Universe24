@@ -73,6 +73,17 @@ single agenda, the algebra and the same-law acceptance evidence together.
 
 ## Mandatory allocation and symmetry contract
 
+The [current light/link resonance audit](research/light_link_resonance/README.md)
+adds admitted 48-channel controls under the existing interface. Its positive
+result is an exactly reversible homogeneous move/hold light sector driven by
+a retained restoring phase, with positive integers and unchanged plane-field
+energy. A dark oscillator, a varying-coefficient optical failure, reciprocal
+source instabilities and a nonuniform-clock failure are preserved separately.
+The next physical gates are a shared undirected edge interpretation, stable
+spatial clock dynamics, reciprocal source accounting and a retained proper
+clock measuring round-trip light. None is supplied by joining distinct-law
+successes, and no installed physical model or ownership interface is promoted.
+
 Every supported run now supplies exactly 48 node channels (144 retained
 integers per node) and must satisfy `2O-left-regular-cube/1`, independent of
 model role. Omitted metadata and `research` cannot waive the coefficient check.
