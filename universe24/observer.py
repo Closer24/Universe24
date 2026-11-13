@@ -1,9 +1,9 @@
-"""Passive arithmetic-click views and calibrated retained-memory inference.
+"""Passive arithmetic-click views and explicitly calibrated channel inference.
 
 These functions read click files, never complete traces or hidden Engine state.
 Addresses and step indices are computational identifiers, not physical geometry
-or proper-time measurements. Memory reconstruction requires the stated public
-initial calibration and nonnegative detector sector; it is not a photon count.
+or proper-time measurements. Channel reconstruction requires public initial calibration and the positive
+constant-carry sector; it is not a photon count.
 """
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ import hashlib
 from pathlib import Path
 
 from .core import exact_json
-from .detection import detector_tensor
+from .model import coupling_tensor
 from .system.bundle import canonical_bytes
 from .system.decoder import verify_click_records
 
@@ -95,39 +95,47 @@ def compare_click_files(left, right):
     }
 
 
-def reconstruct_memory_from_clicks(path, *, memory_channel, node_count, steps):
-    """Infer calibrated nonnegative detector memory from clicks and quiet ticks.
+def reconstruct_channel_from_clicks(path, *, channel, node_count, steps,
+                                    initial_a, initial_b):
+    """Reconstruct one positive channel from clicks and explicit public history.
 
-    Public calibration: the declared detector law, zero initial (a,b) memory,
-    node addresses 0..node_count-1, and a complete observation horizon. These
-    are explicit assumptions, not quantities discovered in a hidden trace.
-
-    A recorded quotient is m_next+m_old. If there is no event, either the
-    complete triple is fixed, or this sum is zero. Nonnegative amplitudes and
-    known old histories make these alternatives unambiguous. Constant carries
-    follow from this detector tensor's coefficients being multiples of three.
+    Rule3 gives b_next = quotient - a. In this constant-carry sector a fixed
+    triple emits no click. Positive histories exclude a zero quotient, so a
+    quiet update requires a=b=b_next. Missing records cannot in general be
+    authenticated by this observer; complete-stream replay is a separate audit.
     """
-    if any(type(v) is not int for v in (memory_channel, node_count, steps)):
+    if any(type(v) is not int for v in (channel, node_count, steps)):
         raise ValueError('public calibration requires exact integers')
-    if not 0 <= memory_channel < 48 or node_count < 1 or steps < 0:
+    if not 0 <= channel < 48 or node_count < 1 or steps < 0:
         raise ValueError('invalid public calibration')
+
+    def history(value):
+        if type(value) is int:
+            values = [value] * node_count
+        else:
+            try:
+                values = list(value)
+            except TypeError as exc:
+                raise ValueError('calibration requires positive integer histories') from exc
+        if len(values) != node_count or any(type(v) is not int or v < 1 for v in values):
+            raise ValueError('calibration requires complete positive integer histories')
+        return values
+
+    old, current = history(initial_a), history(initial_b)
+    initial_old, initial_current = old[:], current[:]
     records = read_clicks(path)
-    fingerprint = detector_tensor().fingerprint
+    fingerprint = coupling_tensor().fingerprint
     events_by_key = {}
     for event in records:
         if event['tensor_hash'] != fingerprint:
-            raise ValueError('clicks do not use the calibrated detector law')
+            raise ValueError('clicks do not use the calibrated coupling law')
         if event['step'] > steps or event['node'] >= node_count:
             raise ValueError('event is outside the declared observation window')
         if event['kind'] != 'C0' or event['sign'] != 1:
-            raise ValueError('outside the declared nonnegative constant-carry sector')
-        if event['channel'] == memory_channel:
-            if (event['step'], event['node']) in events_by_key:
-                raise ValueError('duplicate memory event key')
+            raise ValueError('outside the declared positive constant-carry sector')
+        if event['channel'] == channel:
             events_by_key[event['step'], event['node']] = event
-    old = [0] * node_count
-    current = [0] * node_count
-    changes, accounts = [], []
+    changes, values_by_step = [], []
     for tick in range(1, steps + 1):
         next_values = []
         for node in range(node_count):
@@ -135,40 +143,32 @@ def reconstruct_memory_from_clicks(path, *, memory_channel, node_count, steps):
             if event is not None:
                 value = event['quotient'] - old[node]
                 if old[node] == current[node] == value:
-                    raise ValueError('a fixed memory triple unexpectedly emitted a click')
+                    raise ValueError('a fixed channel triple unexpectedly emitted a click')
             else:
-                value = current[node] if old[node] == current[node] else -old[node]
-            if value < 0:
-                raise ValueError('clicks/calibration imply negative retained memory')
+                if old[node] != current[node]:
+                    raise ValueError('missing required nonquiet channel record')
+                value = current[node]
+            if value < 1:
+                raise ValueError('clicks/calibration imply a nonpositive channel value')
             if value != current[node]:
-                kind = ('capture' if current[node] == 0 else
-                        'release' if value == 0 else 'exchange')
-                changes.append({
-                    'step': tick, 'node': node, 'kind': kind,
-                    'memory_before': exact_json.dumps(current[node]), 'memory_after': exact_json.dumps(value),
-                    'energy_to_memory': exact_json.dumps(value * value - current[node] * current[node]),
-                    'arithmetic_event_id': event['event_id'] if event is not None else None,
-                    'inference_uses_quiet_tick': event is None,
-                    'photon_number': None,
-                })
+                changes.append({'step':tick, 'node':node,
+                                'before':exact_json.dumps(current[node]),
+                                'after':exact_json.dumps(value),
+                                'arithmetic_event_id':event['event_id']})
             next_values.append(value)
         old, current = current, next_values
-        accounts.append({'step': tick, 'memory_account': exact_json.dumps(sum(v * v for v in current))})
+        values_by_step.append([exact_json.dumps(value) for value in current])
     return {
-        'schema': 'universe24/click-only-memory/1',
-        'input': 'canonical click stream and explicit public calibration only',
-        'calibration': {'tensor_hash': fingerprint, 'memory_channel': memory_channel,
-                        'node_count': node_count, 'steps': steps,
-                        'initial_a_memory': 'all zero', 'initial_b_memory': 'all zero',
-                        'domain': 'nonnegative amplitudes; constant carries; complete click stream'},
-        'memory_arithmetic_clicks': len(events_by_key),
-        'outcomes': {kind: sum(e['kind'] == kind for e in changes)
-                     for kind in ('capture', 'release', 'exchange')},
-        'events': changes, 'accounts': accounts,
-        'limitations': ['arithmetic transition count is not capture count',
-                        'calibration is required; arbitrary latent state is not inferred',
-                        'no incoming-light, arming, spacetime metric or proper-time readout',
-                        'photon number and Born probabilities are not calibrated'],
+        'schema':'universe24/click-only-channel/1',
+        'input':'canonical click stream and explicit public calibration only',
+        'calibration':{'tensor_hash':fingerprint, 'channel':channel,
+                       'node_count':node_count, 'steps':steps,
+                       'initial_a':[exact_json.dumps(v) for v in initial_old],
+                       'initial_b':[exact_json.dumps(v) for v in initial_current],
+                       'domain':'positive histories; constant carries; complete click stream'},
+        'channel_arithmetic_clicks':len(events_by_key),
+        'changes':changes, 'values_by_step':values_by_step,
+        'limitations':['the initial calibration is supplied, not inferred',
+                       'no metric, proper time, photon count or quantum probabilities are inferred',
+                       'a standalone click file does not prove stream completeness'],
     }
-
-

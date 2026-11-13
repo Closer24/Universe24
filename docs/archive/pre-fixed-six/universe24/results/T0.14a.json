@@ -1,9 +1,0 @@
-{
- "test": "T0.14a",
- "written_utc": "Tue Nov 10 10:10:54 UTC 2026",
- "Q7_block_under_Engine_Q5": "raises",
- "compose_Q7_with_Q5": "raises",
- "vacuum_state_mismatch": "raises",
- "Q_None_block_with_Q7": "tensor.Q = 7",
- "undeclared_tensor_any_Q": "runs"
-}

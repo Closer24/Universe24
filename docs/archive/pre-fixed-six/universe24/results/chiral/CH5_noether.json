@@ -1,9 +1,0 @@
-{
- "checks": 486,
- "failures": 0,
- "max_abs_J2": 94850865229757742,
- "max_abs_remainder_term2": 13369322660937642,
- "max_abs_matter_only_change": 2400302603191176,
- "written": "Tue Nov 10 13:24:35 UTC 2026",
- "Q": 8589934593
-}

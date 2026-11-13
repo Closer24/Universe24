@@ -7,7 +7,7 @@ import numpy as np
 from universe24.algebra.group_2o import group
 from universe24.core import Engine, State
 from universe24.core.lattice import DIRECTIONS
-from universe24.light import make_light_bundle
+from universe24.model import make_model_bundle
 from universe24.node import EdgeRef, FacePort, NodeView, face_channels
 
 
@@ -71,7 +71,7 @@ class NodePortContractTests(unittest.TestCase):
                                  set(groups[target]))
 
     def test_views_do_not_copy_advance_or_write_retained_state(self):
-        bundle = make_light_bundle(L=3, center=1, order=2)
+        bundle = make_model_bundle(L=3)
         state = bundle.seed
         before = state.copy()
         node = NodeView(state, 0)

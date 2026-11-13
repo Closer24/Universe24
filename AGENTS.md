@@ -1,17 +1,34 @@
 # Universe24 one-system development contract
 
-The owner's instructions and docs/ONE_SYSTEM.md supersede the historical oversized ADM default and experiment menu. There is one supported interface: `python -m universe24` (status, prepare, run, verify), backed by `universe24/system/`. Do not introduce a default physical model until it meets the contract. Historical ADM/demo drivers and independent audit harnesses live in source-only `validation/` and are excluded from installation.
+The repository has one installed CLI, one built-in signal/clock law and one
+Engine. The owner's cleanup instruction removes historical experiments from
+the current tree; their source remains in the Git revision linked in README.
+Do not restore an experiment menu or present separate laws as one universe.
 
-1. Preserve exactly `ell,r_next = divmod(2*u+r,6); a_next=b; b_next=ell-a`. No scale parameter, dynamic divisor, normalization, runtime solver or hidden callback.
-2. Every forward output reads the same complete old snapshot. Never clip, project, veto, reset or discard retained information. Complete `(a,b,r)` state must rewind, including nonzero remainders.
-3. Exactly 48 explicitly supplied TOTAL retained channels per node in every supported prepared bundle, including geometry, matter, apparatus, scheduling and workspace. Preparation does not pad or repair incomplete representations. Count three retained integers per channel. No extra link state, hidden histories or second bank. Report integer bit growth.
-4. The fixed integer polynomial tensor has degree at most three. Each monomial's complete physical support is the target and at most one face edge, including link endpoints. Old-`a` dependencies are acyclic. No diagonal/global reads or remote settings.
-5. Preparation produces complete inputs before evolution. The Engine alone advances state. The decoder is passive and can lose information in its output; it never changes the retained state. Independent validation cannot feed the Engine.
-6. One immutable tensor, complete seed, exhaustive ownership and static protocol form the versioned bundle. Revalidate budget, integer types, strict locality and hashes before execution; reject corruption, unknown schemas and incomplete records.
-7. No alternate runtime modes or metric authorities. Historical proposals are catalogued in `docs/proposals/INDEX.md`; retained code provides validation references, not another supported universe. Do not merge a proposal just because its mechanical checks pass.
-8. Physical geometry, matter and operational apparatus must eventually share one coupling and metric. Exact rewind and arithmetic clicks do not prove Einstein equations, stable constraints, convergence, clocks, energy conservation, Born probabilities or Bell results.
-9. Reports distinguish passed/failed/not_tested/blocked. No accepted general <=48 coupled physical model currently exists. A user-supplied model name or successful replay cannot change that status.
-10. Keep fresh evidence in `runs/`, preserve pinned historical evidence unchanged, and update `docs/ONE_SYSTEM.md` for mathematical changes. Register interface/ownership changes in docs/ONE_SYSTEM.md and docs/RESEARCH_AGENDA.md.
-11. EVERY supported bundle must satisfy `2O-left-regular-cube/1`: exact joint channel/cube covariance of its polynomial on all three retained banks. Roles, including `research` and missing metadata, cannot bypass this check. Schema 3 requires fresh preparation of compatible inputs; never silently upgrade old evidence or change a research law to make it pass. Keep automated tests and CI focused on engine, tensor algebra and supported input/output contracts; research unit tests and research CI jobs are outside the active suite.
+1. Preserve exactly `ell,r_next=divmod(2*u+r,6); a_next=b; b_next=ell-a`.
+2. All outputs read one complete old snapshot. Never clip, project, veto,
+   reset or discard state. Rewind all `(a,b,r)`, including nonzero carries.
+3. Exactly 48 explicitly supplied TOTAL channels per node: 144 integers,
+   including clocks, geometry, matter, apparatus and workspace. No padding,
+   extra link state, hidden history or uncounted runtime queue. Report bit growth.
+4. The fixed integer polynomial has degree <=3. Each monomial's physical
+   support is target plus at most one face edge. Old-a dependencies are acyclic.
+5. Preparation completes all inputs before evolution. Only Engine advances
+   state. Observers and independent oracles never feed the evolution.
+6. Immutable schema-3 bundles bind tensor, full seed, ownership, protocol and
+   metadata. Reject corruption, unknown schemas, inexact integers and missing rows.
+7. Every supported bundle must satisfy `2O-left-regular-cube/1` exactly. No
+   role, research label or missing metadata bypasses the symmetry contract.
+8. Mechanical correctness, positive preparation and a conserved logical
+   account do not prove Einstein geometry, matter, dark matter, quantum theory
+   or a Big Bang. State domains and limitations precisely in docs/PHYSICS.md.
+9. The current proved Boolean sector has six independent simultaneous face
+   circuits. Every face counts three data and five retained marker bits. Do
+   not infer cross-face interactions or Einstein geometry from their closure.
+10. Keep generated evidence in ignored runs/. Update README and current docs
+    for model/interface changes; do not commit experiment archives or run outputs.
 
-For structural changes run full unittest discovery and the generic forward/replay smoke in README. Preserve the independent scalar oracle, research source programs and historical evidence. Review the diff and avoid claiming full physical acceptance from a green software suite.
+For structural changes run full unittest discovery and the independent scalar
+forward/replay smoke in README. Keep tests for the Engine, algebra, supported
+model and I/O contracts. Review the diff and installed package. Green CI never
+changes the physical acceptance gate by itself.

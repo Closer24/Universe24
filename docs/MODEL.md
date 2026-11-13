@@ -1,427 +1,127 @@
-# Fixed Rule3 algebra and physical interpretation
-
-This is the current algebra of the supported bundle-driven execution system. Historical variable-divisor and oversized default constructions are retained only as research history. There is no accepted default physical universe.
-
-Schema 3 admits only the regular 48-node-channel action defined in
-`COUPLING_ALGEBRA.md`, for every role. The research sectors later in this
-file, except the explicitly installed native light and memory components, describe
-mathematical results from pre-schema-3 source at commit
-`e281f7e7b251641a741d185116656fedaa5396f8`; they are not automatically
-admissible current bundles. Their evidence remains bound to that source.
-
-## Central postulate: one local integer universe
-
-The research starts from this assumption: the whole universe is one network,
-and the same fixed local rule acts at every node. A node can read its own
-retained integers and those of its immediate face neighbors. It cannot read a
-distant node directly. A signal must cross the intervening edges, one update
-at a time. Fields, links, matter, clocks and memory must all live in that same
-counted state; there is no external controller that chooses the next outcome.
-
-This is a research postulate, not a consequence already proved by quantum
-mechanics. The project must still derive the relevant quantum observations,
-including interference, outcome probabilities and Bell correlations with their
-stated preparation assumptions. Integer state, reversible evolution and local
-communication alone do not establish those results.
-
-The current cubic lattice is the implemented version of this postulate. Its
-six face neighbors define the communication graph, not an already derived
-physical spacetime metric. Prepared distant correlations do not permit a
-distant input to change a node in one update.
-
-## State, tensor and budget
-
-On a periodic cubic lattice of side L at least three, each supported prepared node stores exactly 48 explicitly supplied node channels, with mandatory 2O covariance. Smaller source research sectors remain historical examples and cannot bypass this boundary. Every channel has two signed integer histories a,b and one remainder r in 0..5. All matter, geometry, apparatus, clocks, workspace and schedules count in G. Integer precision is unbounded and its cost must be measured.
-
-A fixed integer polynomial supplies each local input:
-
-    u[x,i] = sum_m c[m] product_f z[x+offset[f], gear[f], bank[f]]
-
-Each bank is old a or old b. There are at most three nonconstant factors per term. The complete physical support, including endpoints of link channels, is the target and at most one face edge. The old-a dependency graph is acyclic. Static matrix or quaternion data may generate coefficients before preparation; no algebra solver runs during evolution.
-
-The polynomial coupling tensor is not a spacetime metric. A rank-four coefficient notation counts the output index and up to three input factors, not spacetime tensor rank. The binary octahedral group's 48 elements do not require a 48-channel matter inventory or prove particle content.
-
-## One forward map and its inverse
-
-All targets use the same old snapshot:
-
-    ell, r_next = divmod(2*u + r, 6)
-    a_next = b
-    b_next = ell - a
-
-The denominator is always six. A retained projective denominator used by a research decoder is an ordinary counted channel, not a replacement for this divisor. A static timestep used to compile coefficients is fixed before a run.
-
-The exact identity is
-
-    6*(b_next + a) = 2*u + r - r_next.
-
-From the new state, old b is a_next. Recover old-a inputs in the validated dependency order, then compute
-
-    r = (r_next - 2*u) mod 6
-    a = (2*u + r - r_next)//6 - b_next.
-
-The division is exact. This recovers both histories and every remainder. Inversion is not a physical time-reversal or CPT theorem. No reset, projection, normalization, future-state lookup or click callback is permitted.
-
-The integer pair q=a+b, p=6*a+r is an alternative lossless encoding: a,r=divmod(p,6) and b=q-a. This coordinate identity is not itself a physical canonical-momentum or Hamiltonian derivation.
-
-## Readout, clocks and conservation
-
-For a saved transition, ell=b_next+a. A canonical arithmetic event requires ell nonzero and a changed complete triple. Its remainder displacement is delta=(r_next-r) mod 6. Classes are C0 for delta 0/3, C1 for 1/2 and C2 for 4/5. Legal Rule3 transitions preserve remainder parity, so their emitted class is C_(u mod 3). A retained oscillator can evolve while emitting no such events.
-
-The decoder is passive and versioned. Tensor labels identify an observation convention; they do not turn an arithmetic event into a physical detector outcome. A material record and its backreaction require counted retained channels and source terms.
-
-Writing r=2*s+epsilon, with s in {0,1,2} and epsilon in {0,1}, makes the
-retained remainder explicit:
-
-    ell=floor((u+s)/3), s_next=(u+s) mod 3, epsilon_next=epsilon.
-    (r_next-r) mod 6=2*(u mod 3).
-
-C2 is the name of a class, not every third event and not an active choice.
-No event count or comparison of possible futures is hidden in the decoder.
-
-Summing the recurrence gives
-
-    6*sum(ell) = 2*sum(u) + r_initial - r_final.
-
-This is an exact integer ledger, not a physical energy law. Reciprocal force derivatives can establish a common potential under their stated assumptions; they do not automatically bound discrete trajectories or conserve physical stress. Conditional uniform-remainder counts do not establish a preparation measure or the Born rule.
-
-## Exact native homogeneous massless source
-
-A six-channel construction stores volume W, dust charge D, scalar charge P, reference velocity, scalar offset and a coordinate-time counter. Its unchanged Engine input is u_W=6W+18D and u_i=6b_i for the other channels. Prepared source/reference histories are equal; all carries remain explicit.
-
-For a positive integer calibration N, define
-
-    h=1/N, V=W/(4*N*N), J=W-W_old+3*D, U=J/(4*N).
-    W_next=2*W-W_old+6*D.
-
-The full-history invariant is
-
-    J*J - 12*D*W - 24*N*N*P*P = 0.
-
-It gives the exact physical flow
-
-    V_next=V+h*U+3*D*h*h/4, U_next=U+3*D*h/2,
-    U*U-3*D*V-3*P*P/2=0.
-
-On the declared expanding chart, scale factor A=V^(1/3), k=-U/(3V), scalar velocity=P/V and dust density=D/V reconstruct the sourced flat homogeneous Einstein solution. Roots and anchored logarithms are passive readouts; they do not feed the Engine. The counter calibrates coordinate proper time, not an operational material clock.
-
-The source has rho=P*P/(2*V*V)+D/V and fluid pressure=P*P/(2*V*V). With H=U/(3V),
-
-    H_dot=-D/(2V)-P*P/(2*V*V),
-    A_ddot/A=-D/(6V)-P*P/(3*V*V).
-
-For positive D and the expanding chart, density decreases and no bounce or repeated homogeneous density burst occurs. The long-time integer cost is logarithmic in update count for this exact native recurrence. Spatial modes and a mass term are outside this construction.
-
-## Native anisotropic extension and source clock
-
-The separate eight-channel diagonal Bianchi I candidate adds two frozen shear charges S1,S2, with S3=-S1-S2, to the native massless state. The same linear volume recurrence preserves
-
-    J*J-12*D*W-24*N*N*(P*P+sum_i(S_i*S_i))=0.
-
-The common source and metric obey
-
-    H_i=U/(3*V)+S_i/V, I_dot=1/V,
-    A_i=V^(1/3)*exp(S_i*I), phi=phi_ref+P*I,
-    ds²=-dt²+sum_i(A_i*A_i*dx_i*dx_i).
-
-The anchored integral I is a passive logarithm of actual U and retained Uref. All sixteen Einstein components match the declared homogeneous massless scalar and comoving dust source. The exact source clock is tau_source=(J-Jref)/(6*D*N); J-Jref-6*D*T is invariant when the retained marker T advances by one. The source clock does not read that marker. It is a comoving proper-time diagnostic, not an autonomous emitter, receiver or record.
-
-More explicitly, K_flow=U^2-3*D*V is constant. For q=sqrt(K_flow)>0
-and the declared positive chart U,Uref>q,
-
-    I=(1/q)*log(((U-q)*(Uref+q))/((U+q)*(Uref-q))).
-
-This makes I=0 at the retained reference Uref and gives I_dot=1/V.
-The implementation evaluates an equivalent stable logarithm. It uses the
-actual flow constant rather than replacing it with a desired constraint;
-the passive reader must not repair an incorrect source state.
-
-Conserved probe covectors give E²=m²+sum_i(p_i²/A_i²), dx_i/dt=p_i/(A_i²*E), and d(tau_probe)/dt=m/E. These are passive geodesic diagnostics, not retained particle evolution. Spatially varying shear can keep the pointwise Hamiltonian constraint zero while violating momentum constraints; the homogeneous reader rejects that preparation. Thus the added shear charges do not establish a spatial Einstein law.
-
-The exact generic carry-aware momentum identity is pi=6*(b-a)+r and Delta pi=2*(u-6*b). Suitable reciprocal, shift-invariant face potentials can therefore conserve a contracted charge. The separate face control proves local transport, not a stress-complete coupling to this Bianchi source or automatic energy stability.
-
-## Constrained massive homogeneous coordinates
-
-A distinct six-channel candidate stores one projective denominator and numerators for four coordinates x,y,z,w and log-frame beta. Define
-
-    sigma=(x*x+3*y*y)/2, q=z*z+3*w*w,
-    p=x*z+3*y*w, eta=y*z-x*w,
-    k=-sigma-q/12, phi=2*sigma-q/6-eta, d=sigma-q/12+eta.
-
-Then 6*k*k-p*p-phi*phi-2*d*d is identically zero. This identity is accompanied by an independently checked cubic coordinate force whose pushforward is
-
-    k_dot=3*k*k-(phi*phi+d*d)/2,
-    p_dot=3*k*p-phi, phi_dot=p, d_dot=3*k*d/2, beta_dot=k.
-
-The coordinate force itself uses A=d-phi and B=d+2*phi:
-
-    x_dot=3*x*k/2+x*B/4+y/2+z/6-w*A/4,
-    y_dot=-x/6+3*y*k/2+y*B/4+z*A/12+w/6,
-    z_dot=-x+3*y*A/2+3*z*k/2-z*B/4-w/2,
-    w_dot=-x*A/2-y+z/6+3*w*k/2-w*B/4,
-    beta_dot=k.
-
-Here the scalar mass squared is one, lapse is one and shift is zero. With
-X=(x,y,z,w,beta), numerator vector P, retained denominator Q and X=P/Q,
-let F_hom(P,Q)=Q^3*F(P/Q). A fixed integer M clears the rational
-coefficients of h*F. The actual compiled integer recurrence is
-
-    Q_next=M*Q^3-Q_old,
-    P_next=M*(Q^2*P+h*F_hom(P,Q))-P_old,
-    r_next=r.
-
-Every product has degree at most three. M is part of the fixed tensor;
-Rule3 still divides by six. The old numerators and denominator are retained,
-so this is not an ordinary Euler step. Preparation sets Q_old=P_old=0;
-only the first decoded step is exactly Euler. These older registers are a
-memory boundary, not another physical state obtained by dividing by zero.
-The stated convergence proof concerns the seed X=(1,0,0,0,0),
-Q_initial at least 2, this complete older history, and h=1/m with m at
-least 16, over time at most 1/8. It is not a
-proof for arbitrary constrained initial data.
-
-The same beta defines ds²=-dt²+exp(-2beta)(dx²+dy²+dz²). Exponentiation is passive and absent from the homogeneous polynomial force. The actual retained-history recurrence, not an assumed Euler surrogate, has a first-order finite-time convergence proof on its stated prepared expanding family. Constraint-only wrong-force and wrong-metric controls are rejected.
-
-The old-history subtraction acts in coordinate space, so the earlier obstruction for separately null physical vectors does not prohibit this law. This is a changed physical encoding, not a repair or equivalence claim for old massive45 traces. Exact finite-step dust-mass conservation still fails, scalar phase divided by mass is not universal proper time, and projective integer growth prevents efficient long-time refinement.
-
-## Reversible local records and their source
-
-The bounded collision uses four Boolean rails (p,q,x,y): a record moving in
-the positive direction, a record moving in the negative direction, and the
-two corresponding carrier rails. It exchanges 1001 and 0110 and leaves the
-other fourteen Boolean inputs unchanged. Its integer polynomial is
-
-    delta=p*y*(1-q-x)-q*x*(1-p-y),
-    G(p,q,x,y)=(p-delta,q+delta,x+delta,y-delta).
-
-The quartic terms cancel, leaving degree three. On the Boolean domain G is
-an involution. It preserves n_plus=p+x, n_minus=q+y, n_record=p+q and
-n_carrier=x+y. The packet accounts E=n_plus+n_minus and
-P=n_plus-n_minus therefore balance exactly; record recoil is opposite to
-carrier recoil. A ready record can route a carrier while retaining its origin.
-The ready record supply is part of the initial state and is finite.
-
-Two counted groups A and B each hold these four rails. Let S move positive
-rails one edge forward and negative rails one edge backward. Define
-
-    F(A,B)=(G(B),S(A)), F_inverse(A,B)=(S_inverse(B),G(A)),
-    u=3*(F(b)+F_inverse(b)), a=F_inverse(b) at preparation.
-
-Then Rule3 gives b_next=F(b), a_next=b and r_next=r. The prepared relation
-is preserved at every step. This uses eight channels and 24 integers per node.
-The groups A and B are channel groups within the existing state, not extra
-history banks. Each polynomial term is onsite or on one face edge. Two
-updates give F^2(A,B)=(G S(A),S G(B)). Their phase is a computational
-ordering, not an operational proper-time clock.
-
-The source extension adds four retained profiles A_plus,A_minus,B_plus,B_minus,
-for twelve channels and 36 integers per node. For the plus profiles the inputs
-are
-
-    u_Aplus=3*(3*B_plus(x)-B_plus(x-e)-n_Bplus(x)),
-    u_Bplus=3*(3*A_plus(x)-A_plus(x+e)-n_Aplus(x)).
-
-Reverse e for the minus profiles. The n terms are the corresponding record
-plus carrier occupancy in the opposite group. There is no runtime solve.
-Preparation imposes the interior difference constraints
-
-    Delta^2 A_plus=-n_Aplus, Delta^2 A_minus=-n_Aminus,
-    Delta^2 B_plus=-n_Bplus, Delta^2 B_minus=-n_Bminus,
-    Delta^2 f(x)=f(x+e)-2*f(x)+f(x-e).
-
-They are preserved on the stated finite causal interior. At even updates,
-cubic cardinal B-spline interpolation gives characteristic profiles f(u),g(v)
-with f''=-sum_j(n_plus[j]*B1(u-j)) and
-g''=-sum_j(n_minus[j]*B1(v-j)); B1 is the linear hat function. For
-u=t-x, v=t+x and R=f(u)+g(v)>0, the passive metric is
-
-    ds^2=-2*R^(-1/2)*du*dv+R*(dy^2+dz^2),
-    G_uu=-f''/R, G_vv=-g''/R,
-    other Einstein components=0.
-
-In units 8*pi*G=c=1 these components give the two null source streams from
-the same retained run. The finite causal margin and spline support must be
-checked before reading the metric. Summing a periodic second difference
-gives zero, so a globally periodic profile with a nonzero nonnegative source
-cannot satisfy this chart. The seam remains in the invertible board and is
-excluded from the physical chart, not deleted. Repeated finite encounters
-are established; massive bound bodies, material clocks and sustained growth
-are not established by this construction.
-
-## Finite gauge links and interference
-
-The static control has seven channels: complex matter psi=phi+i*chi,
-complex links on the positive x and y edges, and one neutral reader. The
-stored U_k(x) transports the neighbor at x+e_k to x. Define
-
-    (H_U*psi)(x)=sum_k[U_k(x)*psi(x+e_k)
-                       +conj(U_k(x-e_k))*psi(x-e_k)].
-    u_matter=3*H_U*b, u_link=6*b_link,
-    u_reader=3*(phi^2+chi^2).
-
-The resulting exact recurrences are
-
-    psi_next=H_U*psi-psi_old,
-    U_next=2*U-U_old,
-    ell_reader=|psi|^2, reader_next=|psi|^2-reader_old,
-    r_next=r.
-
-Equal link histories with U in {1,i,-1,-i} remain stationary. A local
-time-independent phase g_x in this finite group acts by psi_x -> g_x*psi_x
-and U_xy -> g_x*U_xy*g_y^-1. Apply its signed permutation to both histories.
-A negative component also sends r -> 5-r. The identity
-
-    -2*u+5-r=6*(-ell)+(5-r_next)
-
-proves that this action respects the complete update. The passive loop
-
-    W(x)=U_x(x)*U_y(x+e_x)*conj(U_x(x+e_y))*conj(U_y(x))
-
-is gauge invariant. It is a readout across several edges, never a multi-edge
-input term. In the prepared two-path experiment, flux w=+1 or -1 gives
-amplitude 1+w after two updates, hence intensity 4 or 0; the reader quotient
-reports it one update later. The uniform matter mode instead obeys
-q_next=4*q-q_old and grows 1,3,11,41. Thus this law does not supply stable
-wave propagation or a conserved probability norm.
-
-A separate ten-channel dynamic control retains a charged sign y and three
-registers (chi,eta,U) for each positive spatial edge. With Y=y(x+e),
-
-    F(chi,eta,U)=(eta,U*Y,chi*Y),
-    F_inverse(chi,eta,U)=(U*Y,chi,eta*Y), y_next=y.
-
-For signs in {-1,+1}, the tuple (chi,eta,U*Y) has a three-cycle. The same
-prepared-history compilation u=3*(F+F_inverse) gives exact period dividing
-three, including all carries. Under local Z2 signs g_x, the charged values
-transform by g_x and U_xy by g_x*g_y. Links and invariant loops can change,
-and charged-register changes feed back through a link. Evolving information
-nevertheless stays within each edge triplet. There is no propagated signal
-through successive edges, electric Gauss law, shared stress source or
-operational detector. The static and dynamic controls are distinct tensors;
-their successful parts do not constitute one physical gauge field theory.
-
-## Native 48-channel 2O light streams
-
-The installed `universe24/light.py` labels all 48 channels by the ordered 2O
-quaternions. Let (n_g,e_g,m_g)=(R_g e_x,R_g e_y,R_g e_z). Its fixed input is
-
-    u_g(x)=3[b_g(x-n_g)+b_g(x+n_g)].
-
-It has 96 degree-one monomials, one face per term and no old-a reads. Every
-channel has dynamics; there is no padding. Define S b_g(x)=b_g(x-n_g).
-The complete preparation a=S_inverse b gives u=3(S+S_inverse)b, and Rule3
-therefore yields b_next=S b, a_next=b and r_next=r for every integer tick.
-All carries and both histories remain in the 144-integer allocation. The
-prepared sector is invariant without a finite-horizon scale.
-
-Because n_(kg)=R_k n_g, the polynomial obeys the exact regular-channel/cube
-2O action for every state. The same identity holds for the inverse. E=sum_g
-e_g b_g and B=sum_g m_g b_g transform as spatial vectors under this action.
-The central -1 exchanges lift labels without changing their vector frames;
-the field readout is not injective and does not discard retained state.
-
-For b_g(x,t)=f_g(n_g·x-t), E_g=e_g f_g and B_g=m_g f_g satisfy the flat vacuum
-Maxwell equations for any differentiable periodic profile interpolation:
-div E_g=div B_g=0, partial_t E_g=curl B_g and partial_t B_g=-curl E_g.
-Here n_g cross e_g=m_g. At integer sites and times the Engine exactly samples
-translation by one cell. Each ray has ds²=-dt²+|dx|²=0 in h=dt=1 units.
-Two independent transverse basis polarizations occur for every signed axis.
-This is a restricted plane-wave sector and six directions, not a proof of a
-full arbitrary-direction Maxwell continuum limit or a retained proper clock.
-
-The sum of squared stream amplitudes is invariant on the prepared shift sector.
-For the single-plane preparation, the passive electromagnetic energy is also
-constant. No physical energy interpretation is assigned to all invisible
-regular-representation modes. Geometry/source backreaction and photon
-statistics are absent; algebraic candidate acceptance is not full physics.
-
-## Retained light-to-memory exchange
-The installed light/memory extension is specified in [DETECTOR.md](DETECTOR.md).
-Its fixed quadratic tensor realizes a reversible controlled exchange on a
-closed prepared sector, with exact sum(p²+m²) conservation and full 2O
-covariance. Retained arming and selector rows share the 48-channel allocation.
-This account is not a photon-number or hbar*omega calibration.
-
-## Archived 18-channel optical test field
-
-The following earlier construction is preserved in documentation and pinned
-trace evidence. It is not the installed light component above.
-
-
-The archived optical construction counts twelve field
-channels in two groups X=(D_X,B_X), Y=(D_Y,B_Y), and six entries of a symmetric
-positive optical matrix C. All eighteen channels retain complete (a,b,r): 54
-active-sector integers per node. A former schema-2 embedding appended 30
-disconnected zero-initialized channels, giving 48 channels / 144 integers.
-It is rejected by schema 3. X/Y are counted channels, not extra history storage.
-
-Let R_C(V) be the unscaled centered lattice curl of C V. Each summand reads C
-and V together at one face neighbor. The fixed tensor is
-
-    u_DX=6 D_Y+R_C(B_Y), u_BX=6 B_Y+R_C(D_Y),
-    u_DY=6 D_X-R_C(B_X), u_BY=6 B_X-R_C(D_X), u_C=6 C.
-
-It has 162 monomials, maximum degree two and no old-a reads. With equal C
-histories the background remains frozen. Define shears
-
-    K(D,B)=(D+R_C(B)/3,B), L(D,B)=(D,B-R_C(D)/3),
-    F(X,Y,C)=(K(Y),L(X),C).
-
-Then u=3(F+F_inverse). Preparation sets a=F_inverse(b) and scales the initial
-fields by Q=3^(H+1) for the declared H-tick horizon. On this integer prepared
-sector, Rule3 yields b_next=F(b), a_next=b and r_next=r. The divisions in this
-derivation and passive decoding do not change the Engine's divisor or supply
-runtime inputs. Arbitrary low-precision seeds need not stay in this sector;
-that failure is retained as a control. A fixed Q does not prove indefinite
-integer divisibility or long-time stability.
-
-Starting with Y=0, even ticks give complete fields in X, with macro-update
-
-    B_new=B-R_C(D)/3, D_new=D+R_C(B_new)/3.
-
-For lattice spacing h and macro-time 2h/3 the long-wave target is
-partial_t D=curl(CB), partial_t B=-curl(CD), with divergence constraints. For
-constant positive C both transverse polarizations have target dispersion
-omega²=k^T adj(C) k, compatible with the optical conformal metric
-g=Omega² diag(-1,C/det(C)). Light alone does not determine Omega. For
-C=diag(1,q,q), the target x-coordinate speed is q. The discrete dispersion is
-omega=(3/h) asin(sqrt(s^T adj(C) s)/3), s_i=sin(k_i h); the strict frozen-
-coefficient stability condition is max(s^T adj(C) s)<9. Centered differences
-also have unwanted Nyquist modes. These are long-wave statements, not exact
-finite-grid Lorentz symmetry.
-
-The periodic modified ledger
-J=3 sum(D^T C D+B^T C B)-sum(D^T C R_C(B)) is exactly conserved on complete
-prepared macrosteps for static symmetric C. The plotted energy proxy
-u_field=(D^T C D+B^T C B)/2 is not asserted to be the exact conserved ledger.
-
-The padded tensor does not satisfy `2O-left-regular-cube/1`. This action is
-transitive on all 48 output channels; a tensor with 30 identically zero output
-polynomials and nonzero active outputs cannot be equivariant under that
-action. The exact coefficient checker supplies a counterexample, and a
-bundle is rejected regardless of model role. Padding is an allocation
-embedding, not a symmetry proof or a new physical encoding.
-
-All exact prepared clicks have unchanged remainder, hence class C0. The
-archived 41³ runs produced identical click count/location/class maps on three
-backgrounds, while quotient magnitudes and energy trajectories differed.
-Doubling amplitude quadrupled the energy proxy without changing click counts.
-Tiny nonzero tails produced clicks outside the intended continuum cone while
-respecting the wider computational face-neighbor cone. Thus raw clicks do not
-establish photon detection or strict physical null propagation. C has no
-source backreaction; no Einstein/detector model is accepted by this result.
-
-## Compatibility and acceptance
-
-Equal decoded fields do not imply equal complete states. The two six-channel restrictions of full45 use different default omitted carries and reduced labels. Their common evolution polynomial does not authorize cross-default projection. A separately prepared compatible embedding can be checked without modifying an existing trajectory.
-
-A complete certificate joins tensor, full seed, interpretation, protocol, horizon, trace and current source. Different candidates or timestep laws retain separate identities. A native compiler's successful workspace proof cannot certify a different physical tensor.
-
-Source locations: `validation/sourced_map/`, `validation/conservation_closure/`,
-`validation/unified_law/`, `validation/local_unification/`,
-`validation/gauge_loop/`, `validation/integration_contract/` and
-`validation/system_acceptance/`. The one installed implementation is
-`universe24/system/`; the source-only acceptance command reports both positive
-scoped results and rejected/blocked physical claims. This document collects
-the common algebra and the integrated constructions; detailed proofs and
-historical counterexamples remain in their respective research reports.
+# The single signal/clock coupling
+
+`universe24/model.py` defines the fixed built-in tensor. This document states
+its exact invariant domain and does not interpret a successful simulation as
+a solution of Einstein's equations.
+
+## Boolean reversible transmission
+
+For each directional face, let n=R_g e_x. Signal p streams by one face along n;
+local memory m and clock phase c remain onsite. All three are Boolean. The
+collision is
+
+\[
+ C(p,m,c)=(p+mc-pm,\quad c+pm-pc,\quad m+pc-mc).
+\]
+
+| Before p,m,c | After p,m,c |
+| --- | --- |
+| 000 | 000 |
+| 001 | 010 |
+| 010 | 001 |
+| 011 | 110 |
+| 100 | 100 |
+| 101 | 101 |
+| 110 | 011 |
+| 111 | 111 |
+
+C is an involution and preserves p+m+c. Each face has F=C S, with S the
+signal stream; F inverse is S inverse C. All six face maps act simultaneously
+on disjoint sets of retained channels. They do not scatter into other faces.
+
+The eight labels of a face are g h^k, k=0..7, where h is the order-eight
+stabilizer generator (group label 1) of e_x. Positions 0,1,2 retain p,m,c;
+positions 3..7 retain marker bits 0,0,0,1,1. The eight cyclic orientations
+and eight live triples give 64 distinct eight-bit words, so the marker phase
+is uniquely decodable. Each direction may select its own phase, spatially
+uniform across the lattice. Markers are counted state, not an external
+selector, hidden clock or runtime setting.
+
+The fixed cubic prototypes FORWARD3 and INVERSE3 evaluate 3F and 3F inverse
+for a target row. Their exact identities cover all 512 local/neighbor/phase
+cases each (8 local triples times 8 neighbor triples times 8 phases).
+They are fixed integer coefficients in the source; no interpolation solver
+runs during preparation or evolution. Applying the prototypes at all 48
+labels gives exact left 2O covariance and one-face support.
+
+With deviations x=b-1 the raw tensor is
+
+\[
+ u(b)=6+3F(x)+3F^{-1}(x).
+\]
+
+Affine expansion gives 2,400 monomials of degree at most three. Initialize
+b=1+x and a=1+F inverse(x). Rule3 then advances b to 1+F(x) exactly.
+All six faces can have arbitrary spatial Boolean p,m,c simultaneously.
+All future a,b are in {1,2}; arbitrary explicitly supplied carries in 1..5
+remain fixed. Thus the complete prepared state stays positive indefinitely.
+
+Every face uses eight retained integers per bank; six faces use all 48 rows,
+or 144 integers across a,b,r. There is no separate unbounded counter. The
+Engine index orders execution, while physical time must eventually be
+calibrated using retained phase clocks and observable exchanges.
+
+Preparation supplies every row and carry. The Engine alone evolves it;
+`sector_map` is an independent truth-table oracle, never an evolution callback.
+There is no projection back into the prepared domain. An arbitrary raw state
+outside the domain still has the exact Engine inverse, but positivity and
+Boolean transmission are not claimed there.
+
+## Exact accounts and what can slow down
+
+Let M=m+c-mc and K=p+mc. Streaming followed by collision gives
+
+\[
+ M_{t+1}(x)=M_t(x),\qquad
+ K_{t+1}(x)-K_t(x)=p_t(x-n)-p_t(x).
+\]
+
+Thus M is a pointwise frozen clock-site indicator and total K is conserved.
+The two clock phases are not separate matter species. The stored signal is mc.
+A site with m=c=1 retains this stored unit while incoming p=1 continues;
+it releases on incoming p=0. This is state-dependent residence, with finite
+storage and no externally managed queue. With the same initial m=1,c=0 at x=3, incoming runs of 1, 2 and 3 ones
+capture at update 1 and release at updates 2, 3 and 4: stored occupancy lasts
+1, 2 and 3 updates. This is checked against the actual production Engine.
+Further ones pass while occupancy remains stored, so this does not identify
+individual photons or establish FIFO delay. A permanently occupied input can
+keep stored occupancy indefinitely; finite latency for every identifiable
+message is not guaranteed. A collision phase can also delay an
+isolated pulse by one update. There is no independent, evolving edge-length
+variable in this implementation.
+
+A paired-run intervention measures information transfer rather than occupancy
+alone. Keep the same clock phase and later traffic, but remove only the first
+incoming bit in the control. For burst lengths 1,2,3 on each of the six faces,
+the first outgoing signal difference at the storage site occurs on updates
+2,3,4; the downstream neighbor sees it on updates 3,4,5. The fixed law therefore
+delays this causal bit difference more under the longer busy background.
+No particle identity or universal FIFO latency is inferred from the comparison.
+
+These identities hold independently in all six directional circuits. The
+busy-input contract tests also activate all six directions together. Their
+independence is a limitation: there is no cross-face recoil or scattering,
+no movable massive body and no universal gravitational source coupling.
+
+## Transverse signal readout
+
+Decode the retained marker phase of each face to obtain its root g and signal
+p. The passive field readout sums
+
+\[
+ E=\sum_{faces}(R_g e_y)p,\qquad
+ B=\sum_{faces}(R_g e_z)p.
+\]
+
+This full-state audit reads the counted markers rather than a root parameter.
+It is separate from the click-only observer, which needs public calibration. It transforms covariantly under the joint 2O action.
+With no clock sites, an individual transverse plane profile moves one face
+per Engine update, with B=n cross E, E dot B=0 and E squared=B squared,
+in lattice units c=1. These null identities apply to each single plane mode;
+multiple crossing modes need not have zero field invariants. This is a
+restricted light-like transport sector. General Maxwell evolution, continuous
+rotations, Lorentz invariance and photon calibration remain unproved.
+
+All tensor coefficients are divisible by three, so carries remain fixed.
+Arithmetic event emission still depends on the changed full triple and
+nonzero quotient. The model emits only C0, not C1 or C2.

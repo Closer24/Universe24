@@ -30,7 +30,7 @@ jobs:
         run: python -m unittest discover -s universe24/tests -t . -v
       - name: One-system bundle, forward run, offline decoder and exact replay
         run: |
-          python -m validation.system_smoke --out runs/system-smoke
+          python -m universe24.system.checks --out runs/system-smoke
           python -m universe24 verify --run runs/system-smoke/run
           python -m universe24 status
       - name: Physical acceptance cannot be inferred from mechanical success
