@@ -1,1 +1,0 @@
-{"output": "/workspace/scratch/d01c5ea2900a/universe24-sourced/runs/sourced-map/oracle.json", "fixtures": 6, "native_runs": 12, "proper_final_time": "1/8", "all_actual_macro_counts": [3, 6, 12, 24], "physical_time_semantics": "passed", "massive_relabel_control": "failed as required"}

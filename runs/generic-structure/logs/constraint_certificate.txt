@@ -1,8 +1,0 @@
-{
-  "complete_state_sufficient_criterion": "proved_conditionally",
-  "onsite_integer_quadratic_constraint_examples": "passed",
-  "existing_reduced_Einstein_lift_constraint_gate": "failed",
-  "rational_Einstein_target_compiled_with_valid_history": "not_implemented",
-  "general_Einstein_constraints": "blocked"
-}
-runs/generic-structure/constraints.json

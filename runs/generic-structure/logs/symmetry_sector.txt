@@ -1,1 +1,0 @@
-{"output": "/workspace/scratch/d01c5ea2900a/universe24-generic/runs/generic-structure/symmetry_sector.json", "channels": 6, "monomials": 14, "mechanical": "passed", "source_constraint_gate": "failed"}

@@ -1,9 +1,16 @@
 # Contributing to Universe24
 
-Read [AGENTS.md](AGENTS.md) and [the system contract](docs/ONE_SYSTEM.md). Coordinate module interfaces and channel ownership on [issue #40](https://github.com/Closer24/Universe24/issues/40). Submit a focused change on a branch, with the exact tensor configuration, complete seed, decoder protocol and validation commands needed to reproduce the result.
+Read [AGENTS.md](AGENTS.md), [the system contract](docs/ONE_SYSTEM.md) and
+[the physical criteria](docs/PHYSICS.md). Explain changes to the one fixed law
+with an exact tensor, complete seed domain and inverse/conservation argument.
+Do not add runtime switches for alternate physical constructions.
 
-Every active scalar update uses `divmod(2*u+r,6)`. Do not add a divisor parameter, hide one in tensor metadata, or introduce a per-channel numerator/denominator. Effective coefficient families need a declared encoding and proof.
+Preserve fixed-six Rule3, the total 48-channel budget, mandatory 2O covariance
+and one-face support. Never hide scheduling or link history outside counted
+state. A fixed number of channels is not a bound on integer bit cost.
 
-Preserve complete integer state traces for refactors. For mathematical changes, explain which assumptions changed and include an inverse proof or a precise limitation. A new tensor is a change to the model even if the scalar Rule3 function is unchanged.
-
-Run the commands in [README](README.md#verification-and-research). Use `runs/` for generated output. Keep proposals and independent references under the research/validation boundary, with no alternate supported runtime selectors. The bundle must reject allocations above 48 total channels. A passing test of an expected failure is not evidence for the rejected physical claim.
+Run the verification commands in [README](README.md#verification-and-scope).
+Generate evidence under ignored runs/. Historical experiments are recoverable
+from the pinned Git history, not copied into the current tree. Include failures
+and domain boundaries; a test of an expected failure does not validate the
+failed physical hypothesis.

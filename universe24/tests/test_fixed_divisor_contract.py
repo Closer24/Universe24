@@ -4,8 +4,7 @@ import inspect
 from pathlib import Path
 import unittest
 
-from universe24.core import Engine, Tensor
-from universe24.layers.reference_model import reference_system
+from universe24.core import Engine, Tensor, reference_block
 from universe24.core.tensor import compose
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -14,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[2]
 class FixedDivisorContractTests(unittest.TestCase):
     def test_runtime_sources_have_no_scale_parameter_or_attribute(self):
         failures = []
-        for directory in (ROOT/"universe24", ROOT/"validation"):
+        for directory in (ROOT/"universe24",):
             for path in directory.rglob("*.py"):
                 if "tests" in path.parts:
                     continue
@@ -30,11 +29,9 @@ class FixedDivisorContractTests(unittest.TestCase):
 
     def test_default_law_has_only_fixed_six_arithmetic(self):
         self.assertEqual(list(inspect.signature(Engine).parameters), ["tensor"])
-        system = reference_system()
-        tensor = compose(*system.blocks)
+        tensor = compose(reference_block((1, -1, 1)))
         engine = Engine(tensor)
         self.assertEqual(engine.D, 6)
-        self.assertFalse(hasattr(system, "Q"))
         self.assertFalse(hasattr(tensor, "Q"))
         self.assertFalse(hasattr(engine, "Q"))
         self.assertNotIn("Q", tensor.to_dict())

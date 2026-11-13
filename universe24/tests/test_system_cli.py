@@ -11,7 +11,7 @@ import numpy as np
 from universe24.core import Engine, State, Tensor
 from universe24.runtime import main
 from universe24.system.bundle import canonical_bytes, create_bundle
-from validation.system_smoke import fixture, scalar_step
+from universe24.system.checks import fixture, scalar_step
 
 
 class OneSystemCLITests(unittest.TestCase):

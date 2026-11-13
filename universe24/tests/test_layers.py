@@ -14,7 +14,7 @@ if str(ROOT) not in sys.path:
 from universe24.core import (Block, Engine, GearType, State, Tensor, build, check_reciprocity,
                                              compose, reference_block)
 from universe24.core.lattice import DIRECTIONS, OFFSETS, ZERO
-from universe24.layers import build_reference
+from dataclasses import replace
 from universe24.tests import randgen
 from universe24.tests.test_core import record
 
@@ -127,7 +127,7 @@ class T09Compose(unittest.TestCase):
             compose(A, Block((GearType("w"),), (("w", 1, (("A.nope", ZERO, "b"),)),), name="D"))
         with self.assertRaises(ValueError):
             compose(A, Block((GearType("w"),), (), name="A"))
-        ref_ns = compose(build_reference(name="ref"))
+        ref_ns = compose(replace(reference_block(), name="ref"))
         ref_plain = build(reference_block())
         self.assertTrue(ref_ns.same_dynamics(ref_plain))
         self.assertEqual(ref_ns.dynamics_fingerprint, ref_plain.dynamics_fingerprint)

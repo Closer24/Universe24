@@ -1,13 +1,21 @@
 """Regressions for readout isolation, exact data and a fixed tensor contract."""
-import math
+import gzip
+import hashlib
+from pathlib import Path
+import tempfile
 import unittest
 import numpy as np
-from universe24.core import Engine, GearType, State, Tensor
+from universe24.core import Engine, GearType, State, Tensor, exact_json, handedness_kind
 from universe24.core.engine import OBJ
 from universe24.core.lattice import ZERO
-from universe24.observe.choice import kinds
-from universe24.observe.reference_model import state_hash
-from universe24.observe.readout import official_clicks, own_frame_series
+from universe24.system.bundle import canonical_bytes
+from universe24.system.checks import fixture
+from universe24.system.decoder import verify_click_records
+from universe24.system.runtime import run_bundle, verify_run
+
+
+def state_hash(state):
+    return hashlib.sha256(canonical_bytes(state.to_dict())).hexdigest()
 
 class ContractRegression(unittest.TestCase):
     def test_official_readout_excludes_audit_gears(self):
@@ -16,7 +24,7 @@ class ContractRegression(unittest.TestCase):
         e = Engine(t)
         s = e.vacuum(3, [0, 0]); n = e.step(s)
         self.assertEqual(len(e.clicks(s, n)), 54)
-        log = official_clicks(e, s, n)
+        log = e.clicks(s, n, stream='official').select('official')
         self.assertEqual(len(log), 27)
         self.assertEqual(set(log.label), {'official'})
         self.assertTrue(np.all(log.gear == 0))
@@ -30,21 +38,22 @@ class ContractRegression(unittest.TestCase):
         n = e.step(s)
         self.assertTrue(n.same_as(s))
         self.assertEqual(len(e.clicks(s, n, stream='raw')), 27)
-        self.assertEqual(len(official_clicks(e, s, n)), 0)
+        self.assertEqual(len(e.clicks(s, n, stream='official').select('official')), 0)
 
     def test_hash_is_storage_independent(self):
         a = np.arange(27, dtype=np.int64).reshape(1, 27)
         s = State(3, a, a-2, a % 6)
         obj = State._raw(3, s.a.astype(OBJ), s.b.astype(OBJ), s.r.astype(OBJ))
-        self.assertEqual(state_hash(s, [0]), state_hash(obj, [0]))
+        self.assertEqual(state_hash(s), state_hash(obj))
         obj.r[0, 0] += 1
-        self.assertNotEqual(state_hash(s, [0]), state_hash(obj, [0]))
+        self.assertNotEqual(state_hash(s), state_hash(obj))
 
     def test_large_coefficient_kind_is_exact(self):
         amplitude = 1 << 80
         t = Tensor(['g'], [('g', 2*amplitude, ())])
         e = Engine(t); s = e.vacuum(3, [0]); n = e.step(s)
-        np.testing.assert_array_equal(kinds(t, e.D, s, n, 'g'), np.full(27, 2))
+        delta = (n.r[0] - s.r[0]) % e.D
+        np.testing.assert_array_equal(handedness_kind(delta, e.D), np.full(27, 2))
 
     def test_clicks_survive_large_counter_snapshot_reload(self):
         import json
@@ -101,41 +110,36 @@ class ContractRegression(unittest.TestCase):
             with self.assertRaises(AttributeError):setattr(e,field,value)
             with self.assertRaises(AttributeError):delattr(e,field)
 
-    def test_carrier_decoder_rejects_unsupported_angle(self):
-        with self.assertRaises(ValueError): own_frame_series([1,2,3], 0.2)
-        self.assertEqual(own_frame_series([1,2,3], math.pi/2), [1,-3])
-
     def test_run_report_keeps_each_update_and_actual_click_counts(self):
-        from argparse import Namespace
-        from validation.demos.reference_model.run_reference import run, build, compare
-        args=Namespace(L=3,bang='pulse',rng=13,tmax=3,budget=120,tag='test',
-                       max_bits=256,rewind=True)
-        report=run(args)
-        self.assertEqual(report['t_end'],3)
-        self.assertEqual([row['step'] for row in report['rows']],[1,2,3])
-        _,t,e,s,_=build(3,'pulse',13)
-        count=0
-        for step in range(1,4):
-            n=e.step(s)
-            log=official_clicks(e,s,n,step)
-            count+=len(log)
-            s=n
-        self.assertEqual(sum(row['official_records'] for row in report['rows']),count)
-        self.assertTrue(report['rewind']['exact'])
-        with self.assertRaises(ValueError):compare({'hashes':[]},report)
+        bundle = fixture()
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory)/'run'
+            report = run_bundle(bundle, path, 3)
+            self.assertEqual(report['steps'], 3)
+            with gzip.open(path/'full_trace.jsonl.gz', 'rt') as stream:
+                rows = [exact_json.loads(line) for line in stream]
+            self.assertEqual([row['step'] for row in rows], [1, 2, 3])
+            engine, state, count = Engine(bundle.tensor), bundle.seed, 0
+            for step in range(1, 4):
+                following = engine.step(state)
+                count += len(engine.clicks(state, following, step, stream='official'))
+                state = following
+            self.assertEqual(report['click_count'], count)
+            self.assertTrue(engine.rewind(state, 3).same_as(bundle.seed))
+            self.assertEqual(report, verify_run(path))
 
-    def test_offline_decoder_rejects_nonofficial_or_duplicate_records(self):
-        import gzip,json,tempfile
-        from pathlib import Path
-        from validation.tools.audit_contract import decode_saved_clicks
-        row=dict(step=1,xyz=[0,0,0],gear='cosmic.M1',kind=1,quotient=2,label='official')
-        with tempfile.TemporaryDirectory(dir='.') as tmp:
-            p=Path(tmp)/'events.jsonl.gz'
-            def write(rows):
-                with gzip.open(p,'wt') as f:
-                    for r in rows:f.write(json.dumps(r)+'\n')
-            write([row]);self.assertEqual(decode_saved_clicks(p)['records'],1)
-            for rows in ([row,row],[dict(row,label='audit')],[dict(row,quotient=0)],
-                         [dict(row,step=2),dict(row,step=1)]):
-                write(rows)
-                with self.assertRaises(ValueError):decode_saved_clicks(p)
+    def test_offline_decoder_rejects_corrupted_or_duplicate_records(self):
+        bundle = fixture()
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory)/'run'
+            run_bundle(bundle, path, 1)
+            with gzip.open(path/'clicks.jsonl.gz', 'rt') as stream:
+                records = [exact_json.loads(line) for line in stream]
+            verify_click_records(records, records)
+            self.assertGreater(len(records), 1)
+            changed_label = [dict(records[0], label='audit')] + records[1:]
+            zero_quotient = [dict(records[0], quotient=0)] + records[1:]
+            reordered = [records[1], records[0]] + records[2:]
+            for changed in (records + records[:1], changed_label, zero_quotient, reordered):
+                with self.assertRaises(ValueError):
+                    verify_click_records(changed, records)

@@ -10,7 +10,7 @@ from universe24.system.bundle import (
 )
 from universe24.system.decoder import default_protocol
 from universe24.system.runtime import run_bundle, verify_run
-from validation.system_smoke import scalar_step
+from universe24.system.checks import scalar_step
 
 
 def source(count):

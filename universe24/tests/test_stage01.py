@@ -21,7 +21,7 @@ from universe24.core import (Engine, GearType, LocalityError, State, Tensor, bui
 from universe24.core.engine import OBJ
 from universe24.core.lattice import ZERO, lattice
 from universe24.core.tensor import Block
-from universe24.layers import build_reference
+from dataclasses import replace
 from universe24.tests import randgen
 from universe24.tests.test_core import record
 
@@ -152,7 +152,7 @@ class T12StrictSupport(unittest.TestCase):
         out["hop_through_link"] = f"ACCEPTED in strict mode ({len(T)} monomials)"
         # node-gear tensors are unaffected
         build(reference_block(), strict_support=True)
-        compose(build_reference(name="ref"), strict_support=True)
+        compose(replace(reference_block(), name="ref"), strict_support=True)
         for seed in range(10, 16):
             for a_reads in (False, True):
                 build(randgen.random_tensor_block(seed, G=6, a_reads=a_reads), strict_support=True)
