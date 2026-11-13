@@ -97,13 +97,14 @@ def compare_click_files(left, right):
 
 def reconstruct_channel_from_clicks(path, *, channel, node_count, steps,
                                     initial_a, initial_b):
-    """Reconstruct one positive channel from clicks and explicit public history.
+    """Read canonical clicks once and apply explicit positive-history calibration."""
+    initial_a, initial_b = _channel_calibration(channel, node_count, steps, initial_a, initial_b)
+    return _reconstruct_channel_records(
+        read_clicks(path), channel=channel, node_count=node_count, steps=steps,
+        initial_a=initial_a, initial_b=initial_b)
 
-    Rule3 gives b_next = quotient - a. In this constant-carry sector a fixed
-    triple emits no click. Positive histories exclude a zero quotient, so a
-    quiet update requires a=b=b_next. Missing records cannot in general be
-    authenticated by this observer; complete-stream replay is a separate audit.
-    """
+
+def _channel_calibration(channel, node_count, steps, initial_a, initial_b):
     if any(type(v) is not int for v in (channel, node_count, steps)):
         raise ValueError('public calibration requires exact integers')
     if not 0 <= channel < 48 or node_count < 1 or steps < 0:
@@ -121,9 +122,24 @@ def reconstruct_channel_from_clicks(path, *, channel, node_count, steps,
             raise ValueError('calibration requires complete positive integer histories')
         return values
 
-    old, current = history(initial_a), history(initial_b)
+    return history(initial_a), history(initial_b)
+
+
+def _reconstruct_channel_records(records, *, channel, node_count, steps,
+                                 initial_a, initial_b):
+    """Reconstruct one channel from already validated canonical records.
+
+    Callers must use read_clicks; this internal helper avoids repeated parsing
+    when a passive board reconstructs all 48 calibrated channels. It retains
+    every law/domain/window check of the public single-channel interface.
+
+    Rule3 gives b_next = quotient - a. In this constant-carry sector a fixed
+    triple emits no click. Positive histories exclude a zero quotient, so a
+    quiet update requires a=b=b_next. Missing records cannot in general be
+    authenticated by this observer; complete-stream replay is a separate audit.
+    """
+    old, current = _channel_calibration(channel, node_count, steps, initial_a, initial_b)
     initial_old, initial_current = old[:], current[:]
-    records = read_clicks(path)
     fingerprint = coupling_tensor().fingerprint
     events_by_key = {}
     for event in records:

@@ -1,7 +1,7 @@
-"""One fixed six-face law: exact algebra, positive sectors and saved replay.
+"""Reversible capacity scattering: algebra, causal controls and honest limits.
 
-These are mechanical contracts, not Einstein or quantum acceptance tests.
-The truth-table and scalar oracles do not call the Engine evaluator.
+Independent local gates and transport oracles never feed the Engine. Passing
+these tests does not establish Einstein geometry or universal load balancing.
 """
 import contextlib
 import io
@@ -15,39 +15,74 @@ import numpy as np
 from universe24.algebra.group_2o import group
 from universe24.core import Engine, State
 from universe24.core.symmetry import act, require_equivariant
-from universe24.model import (MODEL_ID, coupling_tensor, face_roots, face_roles,
-                              decode_faces, sector_map, make_model_bundle,
-                              prepare_fields, electromagnetic_fields)
+from universe24.model import (MODEL_ID, coupling_tensor, frames, decode_occupation,
+                              edge_quartets, edge_gate, sector_map,
+                              make_model_bundle, prepare_occupation)
 from universe24.runtime import main
 from universe24.system.bundle import load_bundle
 from universe24.system.checks import scalar_step
 from universe24.system.runtime import run_bundle, verify_run
 
 
-COLLISION = {
-    (0, 0, 0): (0, 0, 0), (0, 0, 1): (0, 1, 0),
-    (0, 1, 0): (0, 0, 1), (0, 1, 1): (1, 1, 0),
-    (1, 0, 0): (1, 0, 0), (1, 0, 1): (1, 0, 1),
-    (1, 1, 0): (0, 1, 1), (1, 1, 1): (1, 1, 1),
-}
+GROUP = group()
+TAB = GROUP.multiplication
+FRAME = tuple(tuple(rotation[i][0] for i in range(3)) for rotation in GROUP.rotations)
+EDGE = next(g for g in range(48) if GROUP.power(g, 2) == GROUP.central
+            and FRAME[g] == (-1, 0, 0))
+TURN = next(g for g, rotation in enumerate(GROUP.rotations)
+            if tuple(rotation[i][0] for i in range(3)) == (0, 1, 0)
+            and tuple(rotation[i][1] for i in range(3)) == (0, 0, 1))
+ONSITE = TAB[GROUP.inverses[TURN]][EDGE]
 
 
-def independent_step(values, L, rr):
-    """Stream one face, then apply an independent eight-entry collision table."""
-    direction = rr['direction']
-    axis = next(i for i, value in enumerate(direction) if value)
-    p, m, c = [(values[rr[name]] - 1).reshape(L, L, L)
-               for name in ('signal', 'memory', 'clock')]
-    p = np.roll(p, direction[axis], axis=axis)
-    triples = [COLLISION[tuple(map(int, bits))] for bits in zip(p.flat, m.flat, c.flat)]
-    return np.asarray(triples, dtype=object).T + 1
+def independent_gate(word, inverse=False):
+    """Exactly three occupied slots hold; otherwise the quartet rotates."""
+    if sum(word) == 3:
+        return tuple(word)
+    return tuple(word[(i + (1 if inverse else -1)) % 4] for i in range(4))
 
 
-def encoded_face(rr, triple):
-    values = {channel: 1 for channel in rr['labels']}
-    values.update({channel: 2 for channel in rr['marker_one']})
-    values.update({rr[name]: bit + 1 for name, bit in zip(('signal', 'memory', 'clock'), triple)})
-    return values
+def independent_quartets(L):
+    used, result = set(), []
+    for label in range(48):
+        for at in range(L**3):
+            if (label, at) in used:
+                continue
+            xyz = np.unravel_index(at, (L, L, L))
+            near = np.ravel_multi_index(tuple((xyz[i] + FRAME[label][i]) % L
+                                             for i in range(3)), (L, L, L))
+            quartet = tuple((TAB[label][GROUP.power(EDGE, k)], at if k % 2 == 0 else near)
+                            for k in range(4))
+            if used.intersection(quartet):
+                raise AssertionError('edge partition overlaps')
+            used.update(quartet)
+            result.append(quartet)
+    if len(used) != 48 * L**3:
+        raise AssertionError('edge partition is incomplete')
+    return tuple(result)
+
+
+def independent_step(bits, L, inverse=False):
+    if inverse:
+        bits = bits[[TAB[label][GROUP.inverses[ONSITE]] for label in range(48)]]
+    result = np.empty_like(bits)
+    for quartet in independent_quartets(L):
+        word = tuple(int(bits[index]) for index in quartet)
+        for index, value in zip(quartet, independent_gate(word, inverse)):
+            result[index] = value
+    if not inverse:
+        result = result[[TAB[label][ONSITE] for label in range(48)]]
+    return result
+
+
+def unconditional_transport(bits, L):
+    """Permutation-only control: same turns and hops, with no capacity hold."""
+    result = np.empty_like(bits)
+    for label, direction in enumerate(FRAME):
+        axis = next(i for i, value in enumerate(direction) if value)
+        result[TAB[label][TURN]] = np.roll(bits[label].reshape(L, L, L),
+                                         direction[axis], axis=axis).reshape(-1)
+    return result
 
 
 class UnifiedModelContractTests(unittest.TestCase):
@@ -58,15 +93,15 @@ class UnifiedModelContractTests(unittest.TestCase):
 
     def test_fixed_cubic_tensor_scalar_oracle_and_all_48_covariances(self):
         law = self.tensor
+        self.assertEqual(tuple(frames()), FRAME)
         self.assertEqual(law.G, 48)
-        self.assertEqual(len(law.monomials), 2400)
-        self.assertEqual({m.target for m in law.monomials}, set(range(48)))
-        self.assertEqual(max(len(m.factors) for m in law.monomials), 3)
-        self.assertTrue(all(m.coeff % 3 == 0 for m in law.monomials))
+        self.assertEqual(len(law.monomials), 672)
+        self.assertEqual({term.target for term in law.monomials}, set(range(48)))
+        self.assertEqual(max(len(term.factors) for term in law.monomials), 3)
+        self.assertTrue(all(term.coeff % 3 == 0 for term in law.monomials))
         require_equivariant(law)
-        rng = np.random.default_rng(7113)
-        state = State(3, rng.integers(-4, 5, (48, 27)),
-                      rng.integers(-4, 5, (48, 27)),
+        rng = np.random.default_rng(4501)
+        state = State(3, rng.integers(-4, 5, (48, 27)), rng.integers(-4, 5, (48, 27)),
                       rng.integers(0, 6, (48, 27)))
         after = self.engine.step(state)
         self.assertTrue(after.same_as(scalar_step(law, state)))
@@ -75,217 +110,177 @@ class UnifiedModelContractTests(unittest.TestCase):
             with self.subTest(rotation=k):
                 self.assertTrue(self.engine.step(act(state, k)).same_as(act(after, k)))
 
-    def test_complete_local_polynomial_identity_on_all_phase_and_neighbor_codes(self):
-        # Exhaust all 8 local, 8 incoming and 8 outgoing triples in each of 8
-        # marker phases. Exact covariance carries this identity to every face.
+    def test_all_local_gate_words_and_complete_cubic_identity(self):
+        for word in itertools.product((0, 1), repeat=4):
+            expected = independent_gate(word)
+            self.assertEqual(tuple(edge_gate(word)), expected)
+            self.assertEqual(tuple(edge_gate(expected, inverse=True)), word)
+            self.assertEqual(sum(expected), sum(word))
+        for L in (3, 4):
+            self.assertEqual(tuple(edge_quartets(L)), independent_quartets(L))
         terms = [term for term in self.tensor.monomials if term.target == 0]
-        direction = face_roles(0)['direction']
-        zero, plus = (0, 0, 0), tuple(direction)
-        minus = tuple(-v for v in direction)
-        bits = tuple(itertools.product((0, 1), repeat=3))
-        for phase in range(8):
-            rr = face_roles(group().power(1, phase))
-            for local, incoming, outgoing in itertools.product(bits, repeat=3):
-                values = {zero: encoded_face(rr, local), minus: encoded_face(rr, incoming),
-                          plus: encoded_face(rr, outgoing)}
-                forward = COLLISION[(incoming[0], local[1], local[2])]
-                inverse = (COLLISION[outgoing][0], *COLLISION[local][1:])
-                expected = 3 * (encoded_face(rr, forward)[0] + encoded_face(rr, inverse)[0])
-                actual = 0
-                for term in terms:
-                    value = term.coeff
-                    for factor in term.factors:
-                        self.assertEqual(factor.field, 'b')
-                        value *= values[factor.offset][factor.gear]
-                    actual += value
-                self.assertEqual(actual, expected, (phase, local, incoming, outgoing))
-        for before, after in COLLISION.items():
-            self.assertEqual(COLLISION[after], before)
-            self.assertEqual(sum(before), sum(after))
+        zero = (0, 0, 0)
+        forward_root = TAB[0][ONSITE]
+        forward = [(TAB[forward_root][GROUP.power(EDGE, k)],
+                    zero if k % 2 == 0 else FRAME[forward_root]) for k in range(4)]
+        inverse = [(TAB[TAB[0][GROUP.power(EDGE, k)]][GROUP.inverses[ONSITE]],
+                    zero if k % 2 == 0 else FRAME[0]) for k in range(4)]
+        keys = tuple(sorted(set(forward + inverse)))
+        for bits in itertools.product((0, 1), repeat=len(keys)):
+            values = dict(zip(keys, bits))
+            expected = 6 + 3 * independent_gate(tuple(values[key] for key in forward))[0]
+            expected += 3 * independent_gate(tuple(values[key] for key in inverse), True)[0]
+            actual = 0
+            for term in terms:
+                value = term.coeff
+                for factor in term.factors:
+                    self.assertEqual(factor.field, 'b')
+                    value *= 1 + values[factor.gear, factor.offset]
+                actual += value
+            self.assertEqual(actual, expected, bits)
 
-    def test_all_six_faces_preserve_spatial_positive_sectors_in_all_marker_phases(self):
-        rng = np.random.default_rng(7114)
-        for phase in range(8):
-            with self.subTest(phase=phase):
-                fields = {name: rng.integers(0, 2, (6, 27)).astype(object)
-                          for name in ('signal', 'memory', 'clock')}
-                carry = rng.integers(1, 6, (48, 27))
-                initial = prepare_fields(L=3, phases=tuple((phase + face) % 8 for face in range(6)),
-                                         carry=carry, **fields)
-                decoded = decode_faces(initial.b, 3)
-                self.assertEqual(len(decoded), 6)
-                self.assertEqual(sorted(g for rr in decoded for g in rr['labels']), list(range(48)))
+    def test_arbitrary_spatial_occupation_is_positive_conservative_and_reversible(self):
+        rng = np.random.default_rng(4502)
+        for case in range(6):
+            with self.subTest(case=case):
+                initial = prepare_occupation(L=3, occupation=rng.integers(0, 2, (48, 27)),
+                                             carry=rng.integers(1, 6, (48, 27)))
+                charge = int(sum((initial.b - 1).flat))
                 state = initial
-                for _ in range(4):
-                    next_state = self.engine.step(state)
-                    np.testing.assert_array_equal(next_state.b, sector_map(state.b, 3))
-                    np.testing.assert_array_equal(next_state.a, sector_map(next_state.b, 3, inverse=True))
-                    np.testing.assert_array_equal(next_state.r, initial.r)
-                    self.assertTrue(all(int(v) in (1, 2) for bank in (next_state.a, next_state.b) for v in bank.flat))
-                    for rr in decoded:
-                        expected = independent_step(state.b, 3, rr)
-                        for name, row in zip(('signal', 'memory', 'clock'), expected):
-                            np.testing.assert_array_equal(next_state.b[rr[name]], row)
-                        for marker in rr['marker_zero'] + rr['marker_one']:
-                            np.testing.assert_array_equal(next_state.b[marker], initial.b[marker])
-                        p, m, c = [state.b[rr[name]] - 1 for name in ('signal', 'memory', 'clock')]
-                        pn, mn, cn = [next_state.b[rr[name]] - 1 for name in ('signal', 'memory', 'clock')]
-                        np.testing.assert_array_equal(mn + cn - mn * cn, m + c - m * c)
-                        direction = rr['direction']
-                        axis = next(i for i, value in enumerate(direction) if value)
-                        incoming = np.roll(p.reshape(3, 3, 3), direction[axis], axis=axis).reshape(-1)
-                        np.testing.assert_array_equal(pn + mn * cn - p - m * c, incoming - p)
-                    self.assertTrue(self.engine.inverse_step(next_state).same_as(state))
-                    state = next_state
-                self.assertTrue(self.engine.rewind(state, 4).same_as(initial))
+                for _ in range(6):
+                    after = self.engine.step(state)
+                    np.testing.assert_array_equal(after.b, 1 + independent_step(state.b - 1, 3))
+                    np.testing.assert_array_equal(after.a, 1 + independent_step(after.b - 1, 3, True))
+                    np.testing.assert_array_equal(after.b, sector_map(state.b, 3))
+                    np.testing.assert_array_equal(after.r, initial.r)
+                    self.assertTrue(all(int(v) in (1, 2) for bank in (after.a, after.b) for v in bank.flat))
+                    self.assertEqual(int(sum((after.b - 1).flat)), charge)
+                    self.assertTrue(self.engine.inverse_step(after).same_as(state))
+                    state = after
+                self.assertTrue(self.engine.rewind(state, 6).same_as(initial))
 
-    def test_free_signal_translates_and_transverse_readout_in_all_48_modes(self):
+    def test_free_carrier_has_explicit_microscopic_turning_path(self):
+        L = 7
         for root in range(48):
             with self.subTest(root=root):
-                bundle = make_model_bundle(L=3, root=root, signal_sites=(0,), memory_sites=(), clock_sites=())
-                rr, rotation = face_roles(root), group().rotations[root]
-                direction = rr['direction']
-                axis = next(i for i, value in enumerate(direction) if value)
-                after = self.engine.step(bundle.seed)
-                expected = np.roll(bundle.seed.b[rr['signal']].reshape(3, 3, 3), direction[axis], axis=axis)
-                np.testing.assert_array_equal(after.b[rr['signal']], expected.reshape(-1))
-                electric, magnetic = electromagnetic_fields(after)
-                p = after.b[rr['signal']] - 1
-                for i in range(3):
-                    np.testing.assert_array_equal(electric[i], rotation[i][1] * p)
-                    np.testing.assert_array_equal(magnetic[i], rotation[i][2] * p)
-                self.assertTrue(all(v == 0 for v in electric[axis]))
-                self.assertTrue(all(v == 0 for v in sum(electric[i] * magnetic[i] for i in range(3))))
-                self.assertTrue(all(v == 0 for v in sum(electric[i] ** 2 - magnetic[i] ** 2 for i in range(3))))
+                occupation = np.zeros((48, L**3), dtype=object)
+                xyz = np.array((3, 3, 3))
+                occupation[root, np.ravel_multi_index(tuple(xyz), (L, L, L))] = 1
+                state = prepare_occupation(L=L, occupation=occupation)
+                label = root
+                for _ in range(6):
+                    xyz = (xyz + np.array(FRAME[label])) % L
+                    label = TAB[label][TURN]
+                    state = self.engine.step(state)
+                    expected = np.zeros_like(occupation)
+                    expected[label, np.ravel_multi_index(tuple(xyz), (L, L, L))] = 1
+                    np.testing.assert_array_equal(state.b - 1, expected)
+                self.assertEqual(label, root)
 
-    def test_clock_phase_intervention_and_reciprocal_feedback(self):
-        memory_phase = make_model_bundle(L=5, root=0, signal_sites=(0,), memory_sites=(2,), clock_sites=())
-        clock_phase = make_model_bundle(L=5, root=0, signal_sites=(0,), memory_sites=(), clock_sites=(2,))
-        self.assertEqual(memory_phase.tensor.fingerprint, clock_phase.tensor.fingerprint)
-        a, b = memory_phase.seed, clock_phase.seed
-        rr = face_roles(0)
-        quiet = make_model_bundle(L=5, root=0, signal_sites=(), memory_sites=(), clock_sites=(2,)).seed
-        np.testing.assert_array_equal(a.b[rr['signal']], b.b[rr['signal']])
-        differences, feedback = [], []
-        for _ in range(4):
-            a, b, quiet = (self.engine.step(state) for state in (a, b, quiet))
-            differences.append(not np.array_equal(a.b[rr['signal']], b.b[rr['signal']]))
-            feedback.append(any(not np.array_equal(b.b[rr[name]], quiet.b[rr[name]])
-                                for name in ('memory', 'clock')))
-        self.assertTrue(any(differences))
-        self.assertTrue(any(feedback))
-        self.assertTrue(self.engine.rewind(a, 4).same_as(memory_phase.seed))
-        self.assertTrue(self.engine.rewind(b, 4).same_as(clock_phase.seed))
+    def test_downstream_congestion_changes_node_load_not_only_channel_phase(self):
+        L, N = 5, 125
+        empty = np.zeros((48, N), dtype=object)
+        probe, background = empty.copy(), empty.copy()
+        source = np.ravel_multi_index((2, 2, 2), (L, L, L))
+        downstream = np.ravel_multi_index((3, 2, 2), (L, L, L))
+        probe[0, source] = 1
+        background[EDGE, downstream] = 1
+        background[GROUP.power(EDGE, 3), downstream] = 1
+        bits = (empty, probe, background, probe + background)
+        states = [prepare_occupation(L=L, occupation=values) for values in bits]
+        # No nonlinear interaction is smuggled into preparation histories.
+        for bank in ('a', 'b'):
+            np.testing.assert_array_equal(getattr(states[3], bank) - getattr(states[2], bank),
+                                          getattr(states[1], bank) - getattr(states[0], bank))
+        states = [self.engine.step(state) for state in states]
+        interaction = states[3].b - states[2].b - states[1].b + states[0].b
+        node_interaction = interaction.sum(axis=0)
+        self.assertEqual(int(node_interaction[source]), -1)
+        self.assertEqual(int(node_interaction[downstream]), 1)
+        self.assertEqual(int(sum(abs(v) for v in node_interaction)), 2)
+        self.assertEqual(int(sum((states[3].b - states[2].b).flat)), 1)
+        control = [unconditional_transport(values, L) for values in bits]
+        self.assertFalse(np.any(control[3] - control[2] - control[1] + control[0]))
 
-    def test_six_simultaneous_bursts_have_exact_busy_intervals(self):
-        L = 7
-        coords = np.indices((L, L, L)).reshape(3, -1)
-        fields = {name: np.zeros((6, L**3), dtype=object) for name in ('signal', 'memory', 'clock')}
-        for face, root in enumerate(face_roots()):
-            direction = face_roles(root)['direction']
-            axis = next(k for k, value in enumerate(direction) if value)
-            size = face % 3 + 1
-            fields['memory'][face] = (coords[axis] == 3).astype(object) * 1
-            fields['signal'][face] = np.isin(coords[axis], [(3 - direction[axis] * k) % L
-                                                           for k in range(1, size + 1)]).astype(object) * 1
-        initial = prepare_fields(L=L, **fields)
-        state = initial
-        occupied = [[] for _ in range(6)]
-        for tick in range(1, 5):
+    def test_default_burst_halo_activates_capacity_feedback(self):
+        bundle = make_model_bundle(L=5, pattern='burst', radius=0)
+        bits = bundle.seed.b - 1
+        self.assertEqual(int(sum(bits.flat)), 54)
+        after = self.engine.step(bundle.seed).b - 1
+        control = unconditional_transport(bits, 5)
+        self.assertFalse(np.array_equal(after.sum(axis=0), control.sum(axis=0)))
+        self.assertEqual(int(sum(after.flat)), 54)
+        symmetric = make_model_bundle(L=5, pattern='burst', radius=0, halo=False)
+        self.assertEqual(int(sum((symmetric.seed.b - 1).flat)), 48)
+        np.testing.assert_array_equal(self.engine.step(symmetric.seed).b - 1,
+                                      unconditional_transport(symmetric.seed.b - 1, 5))
+
+    def test_symmetric_burst_is_a_free_control_not_adaptive_redistribution(self):
+        L = 5
+        occupation = np.zeros((48, L**3), dtype=object)
+        occupation[:, np.ravel_multi_index((2, 2, 2), (L, L, L))] = 1
+        state = prepare_occupation(L=L, occupation=occupation)
+        control = occupation.copy()
+        for _ in range(15):
             state = self.engine.step(state)
-            for face, rr in enumerate(decode_faces(state.b, L)):
-                direction = rr['direction']
-                axis = next(k for k, value in enumerate(direction) if value)
-                site = [0, 0, 0]
-                site[axis] = 3
-                node = state.lattice.index(*site)
-                m, c = (int(state.b[rr[name], node]) - 1 for name in ('memory', 'clock'))
-                if m * c:
-                    occupied[face].append(tick)
-        for face, ticks in enumerate(occupied):
-            self.assertEqual(ticks, list(range(1, face % 3 + 2)))
-        self.assertTrue(self.engine.rewind(state, 4).same_as(initial))
+            control = unconditional_transport(control, L)
+            np.testing.assert_array_equal(state.b - 1, control)
 
-    def test_actual_busy_traffic_delays_causal_output_difference(self):
-        # Paired interventions differ only in the leading incoming bit. Later
-        # traffic is identical: this tests information delay, not packet IDs.
-        L = 7
+    def test_capacity_scattering_can_improve_or_worsen_window_concentration(self):
+        # Preserve both outcomes. A finite reversible gate is not a universal
+        # equalizer, and cherry-picking only the better seed would hide that.
+        L = 5
         coords = np.indices((L, L, L)).reshape(3, -1)
-        fields = {name: np.zeros((6, L**3), dtype=object)
-                  for name in ('signal', 'memory', 'clock')}
-        targets, neighbours, lengths = [], [], []
-        for face, root in enumerate(face_roots()):
-            direction = face_roles(root)['direction']
-            axis = next(k for k, value in enumerate(direction) if value)
-            length = face % 3 + 1
-            lengths.append(length)
-            fields['memory'][face] = (coords[axis] == 3).astype(object) * 1
-            fields['signal'][face] = np.isin(coords[axis],
-                [(3 - direction[axis] * k) % L for k in range(1, length + 1)]).astype(object) * 1
-            target = [0, 0, 0]
-            target[axis] = 3
-            neighbour = target.copy()
-            neighbour[axis] += direction[axis]
-            targets.append(tuple(target))
-            neighbours.append(tuple(neighbour))
-        control_signal = fields['signal'].copy()
-        for face, root in enumerate(face_roots()):
-            direction = face_roles(root)['direction']
-            axis = next(k for k, value in enumerate(direction) if value)
-            control_signal[face, coords[axis] == (3 - direction[axis]) % L] = 0
-        experiment = prepare_fields(L=L, **fields)
-        control = prepare_fields(L=L, signal=control_signal,
-                                 memory=fields['memory'], clock=fields['clock'])
-        decoded = decode_faces(experiment.b, L)
-        differences = {'target': [[] for _ in range(6)],
-                       'neighbour': [[] for _ in range(6)]}
-        for tick in range(1, 6):
-            experiment, control = self.engine.step(experiment), self.engine.step(control)
-            for face, rr in enumerate(decoded):
-                for name, locations in (('target', targets), ('neighbour', neighbours)):
-                    node = experiment.lattice.index(*locations[face])
-                    if experiment.b[rr['signal'], node] != control.b[rr['signal'], node]:
-                        differences[name][face].append(tick)
-        for face, length in enumerate(lengths):
-            with self.subTest(face=face, burst_length=length):
-                self.assertTrue(differences['target'][face])
-                self.assertTrue(differences['neighbour'][face])
-                self.assertEqual(differences['target'][face][0], length + 1)
-                self.assertEqual(differences['neighbour'][face][0], length + 2)
+        patch = np.all((coords >= 1) & (coords <= 2), axis=0)
+        differences = {}
+        for seed in (9200, 9205):
+            rng = np.random.default_rng(seed)
+            occupation = np.zeros((48, L**3), dtype=object)
+            occupation[:, patch] = rng.integers(0, 2, (48, int(sum(patch))))
+            state = prepare_occupation(L=L, occupation=occupation)
+            control = occupation.copy()
+            accumulated = 0
+            for _ in range(30):
+                state = self.engine.step(state)
+                control = unconditional_transport(control, L)
+                q, q0 = (state.b - 1).sum(axis=0), control.sum(axis=0)
+                self.assertEqual(int(sum(q)), int(sum(q0)))
+                accumulated += int(sum(q*q) - sum(q0*q0))
+            differences[seed] = accumulated
+        self.assertGreater(differences[9200], 0)
+        self.assertLess(differences[9205], 0)
+
+    def test_homogeneous_preparation_does_not_create_spatial_load_gradient(self):
+        channels = np.random.default_rng(4503).integers(0, 2, (48, 1))
+        state = prepare_occupation(L=3, occupation=np.repeat(channels, 27, axis=1))
+        for _ in range(8):
+            state = self.engine.step(state)
+            np.testing.assert_array_equal(state.b, np.repeat(state.b[:, :1], 27, axis=1))
 
     def test_arbitrary_bigint_state_rewinds_exactly(self):
-        rng = np.random.default_rng(7115)
+        rng = np.random.default_rng(4504)
         banks = [rng.integers(-2, 3, (48, 27)).astype(object) * (1 << 70) for _ in range(2)]
-        arbitrary = State(3, *banks, rng.integers(0, 6, (48, 27)))
-        after = self.engine.step(arbitrary)
-        self.assertTrue(after.same_as(scalar_step(self.tensor, arbitrary)))
-        self.assertTrue(self.engine.inverse_step(after).same_as(arbitrary))
+        state = State(3, *banks, rng.integers(0, 6, (48, 27)))
+        after = self.engine.step(state)
+        self.assertTrue(after.same_as(scalar_step(self.tensor, state)))
+        self.assertTrue(self.engine.inverse_step(after).same_as(state))
 
-    def test_input_contract_rejects_inexact_incomplete_or_unmarked_preparations(self):
+    def test_input_contract_rejects_inexact_incomplete_preparations(self):
         for options in ({'root': True}, {'root': 48}, {'L': True}, {'L': 2},
-                        {'signal_sites': (3,), 'L': 3}):
+                        {'pattern': 'matter'}, {'radius': -1}):
             with self.subTest(options=options), self.assertRaises(ValueError):
                 make_model_bundle(**options)
-        empty = np.zeros((6, 27), dtype=object)
-        for invalid in (np.zeros((6, 26), dtype=object), np.full((6, 27), 2, dtype=object),
-                        np.full((6, 27), 0.5, dtype=object), np.full((6, 27), True, dtype=object)):
+        for occupation in (np.zeros((48, 26), dtype=object), np.full((48, 27), 2, dtype=object),
+                           np.full((48, 27), 0.5, dtype=object), np.full((48, 27), True, dtype=object)):
             with self.assertRaises(ValueError):
-                prepare_fields(L=3, signal=invalid, memory=empty, clock=empty)
-        for phases in ((0,) * 5, (0,) * 5 + (8,), (0,) * 5 + (True,)):
-            with self.assertRaises(ValueError):
-                prepare_fields(L=3, signal=empty, memory=empty, clock=empty, phases=phases)
+                prepare_occupation(L=3, occupation=occupation)
+        empty = np.zeros((48, 27), dtype=object)
         for carry in (np.zeros((48, 27), dtype=int), np.full((48, 27), 6),
                       np.ones((48, 26)), np.full((48, 27), 1.5)):
             with self.assertRaises(ValueError):
-                prepare_fields(L=3, signal=empty, memory=empty, clock=empty, carry=carry)
-        values = make_model_bundle(L=3, root=0).seed.b.copy()
-        values[face_roles(0)['signal'], 0] = 3
+                prepare_occupation(L=3, occupation=empty, carry=carry)
         with self.assertRaises(ValueError):
-            sector_map(values, 3)
-        values = make_model_bundle(L=3, root=0).seed.b.copy()
-        values[face_roles(0)['marker_one'][0], 0] = 1
-        with self.assertRaises(ValueError):
-            decode_faces(values, 3)
+            decode_occupation(np.full((48, 27), 3), 3)
 
     def test_canonical_bundle_replay_and_physics_gate(self):
         with tempfile.TemporaryDirectory() as tmp, contextlib.redirect_stdout(io.StringIO()):
