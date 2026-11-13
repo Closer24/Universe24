@@ -24,7 +24,7 @@ distant input to change a node in one update.
 
 ## State, tensor and budget
 
-On a periodic cubic lattice of side L at least three, each node stores G at most 48 channels. Every channel has two signed integer histories a,b and one remainder r in 0..5. All matter, geometry, apparatus, clocks, workspace and schedules count in G. Integer precision is unbounded and its cost must be measured.
+On a periodic cubic lattice of side L at least three, each supported prepared node stores exactly 48 channels (including idle padding). Source research sectors may use fewer active channels. Every channel has two signed integer histories a,b and one remainder r in 0..5. All matter, geometry, apparatus, clocks, workspace and schedules count in G. Integer precision is unbounded and its cost must be measured.
 
 A fixed integer polynomial supplies each local input:
 

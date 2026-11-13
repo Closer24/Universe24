@@ -4,6 +4,8 @@ from __future__ import annotations
 import gzip
 from pathlib import Path
 
+from universe24.system.bundle import pad_state
+from validation.padding import sector_state
 from universe24.core import State, exact_json
 from universe24.system.bundle import create_bundle
 from universe24.system.decoder import decode_transition, default_protocol, make_transition
@@ -62,14 +64,14 @@ def run_runtime_pair(out: Path, steps: int = 4) -> dict:
     for source, small in zip(full_trace, reduced_trace):
         if source['step'] != small['step']:
             raise AssertionError('sector trace step mismatch')
-        before, after = [embed_state(reduction, State.from_dict(small[key]))
+        before, after = [pad_state(embed_state(reduction, sector_state(State.from_dict(small[key]), 6)))
                          for key in ('before', 'after')]
         for key, state in (('before', before), ('after', after)):
             if not state.same_as(State.from_dict(source[key])):
                 raise AssertionError('saved complete-state reconstruction mismatch')
-        reconstructed = make_transition(reduction.full_tensor, before, after,
+        reconstructed = make_transition(full_bundle.tensor, before, after,
                                         run_id=full['run_id'], step=source['step'])
-        reconstructed_clicks.extend(decode_transition(reconstructed, reduction.full_tensor))
+        reconstructed_clicks.extend(decode_transition(reconstructed, full_bundle.tensor))
     full_clicks = _read(out / 'full' / 'clicks.jsonl.gz')
     if reconstructed_clicks != full_clicks:
         raise AssertionError('reconstructed canonical source clicks differ')
@@ -78,7 +80,8 @@ def run_runtime_pair(out: Path, steps: int = 4) -> dict:
             raise AssertionError('mechanical reduction must not promote physical acceptance')
     return {'status': 'passed', 'steps': steps, 'full_channels': full_bundle.tensor.G,
             'reduced_channels': reduced_bundle.tensor.G,
-            'full_tensor_hash': FULL_HASH, 'reduced_tensor_hash': REDUCED_HASH,
+            'full_tensor_hash': full_bundle.tensor.fingerprint, 'reduced_tensor_hash': reduced_bundle.tensor.fingerprint,
+            'active_full_channels': 45, 'active_reduced_channels': 6,
             'full_bundle_id': full_bundle.bundle_id, 'reduced_bundle_id': reduced_bundle.bundle_id,
             'full_run_id': full['run_id'], 'reduced_run_id': reduced['run_id'],
             'reconstructed_transitions': len(full_trace),

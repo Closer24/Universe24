@@ -14,6 +14,7 @@ from itertools import product
 from pathlib import Path
 import platform
 
+from universe24.system.bundle import pad_state, pad_tensor
 from universe24.core import State, exact_json
 from universe24.system.bundle import canonical_bytes, load_bundle, state_from_data
 from validation.local_unification import (
@@ -217,16 +218,16 @@ def inspect_joint_run(run_dir, protocol, *, source_paths=None, out=None):
     identity = contracts.run_identity(run_dir, source_paths=paths)
     bundle, states = _saved_states(run_dir)
     direction = tuple(protocol["direction"])
-    if (identity["channels"] != 12
-            or bundle.tensor.fingerprint != geometry.build_tensor(direction).fingerprint
+    if (identity["channels"] != 48
+            or bundle.tensor.fingerprint != pad_tensor(geometry.build_tensor(direction)).fingerprint
             or protocol["L"] != bundle.seed.L
             or protocol["microsteps"] != identity["steps"]
             or len(states) != identity["steps"] + 1):
         raise ValueError("joint evidence requires one declared source-bearing geometry run")
     expected_tensor, expected_seed, expected_protocol = geometry.prepare_fixture(
         L=bundle.seed.L, steps=identity["steps"], direction=direction)
-    if (expected_tensor.fingerprint != bundle.tensor.fingerprint
-            or not expected_seed.same_as(bundle.seed)
+    if (pad_tensor(expected_tensor).fingerprint != bundle.tensor.fingerprint
+            or not pad_state(expected_seed).same_as(bundle.seed)
             or canonical_bytes(protocol) != canonical_bytes(expected_protocol)):
         raise ValueError("chart protocol and complete seed differ from the declared prepared fixture")
     axis = next(i for i, value in enumerate(direction) if value)

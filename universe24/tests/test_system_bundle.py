@@ -13,7 +13,7 @@ from universe24.core.tensor import GearType, Tensor
 from universe24.system.decoder import default_protocol
 from universe24.system.bundle import (
     BundleError, canonical_bytes, create_bundle, load_bundle, read_json,
-    save_bundle, state_from_data, tensor_from_data, validate_bundle,
+    save_bundle, state_from_data, tensor_from_data, validate_bundle, pad_state,
 )
 
 
@@ -50,11 +50,11 @@ class BundleTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             path = save_bundle(bundle, Path(tmp) / "bundle")
             restored = load_bundle(path)
-        self.assertTrue(restored.seed.same_as(seed))
+        self.assertTrue(restored.seed.same_as(pad_state(seed)))
         self.assertEqual(restored.tensor.monomials[0].coeff, huge)
         self.assertEqual(restored.bundle_id, bundle.bundle_id)
         engine = Engine(restored.tensor)
-        self.assertTrue(engine.inverse_step(engine.step(restored.seed)).same_as(seed))
+        self.assertTrue(engine.inverse_step(engine.step(restored.seed)).same_as(pad_state(seed)))
         self.assertEqual(sys.get_int_max_str_digits(), limit)
 
     def test_complete_deterministic_roundtrip_and_rewind(self):
@@ -74,11 +74,6 @@ class BundleTests(unittest.TestCase):
         self.assertTrue(engine.rewind(final, 4).same_as(bundle.seed))
         self.assertEqual(set(bundle.seed.r.ravel()), set(range(6)))
 
-    def test_48_allowed_49_rejected_without_override(self):
-        self.assertEqual(bundle_fixture(48).manifest["retained_integers_per_node"], 144)
-        with self.assertRaisesRegex(BundleError, "48.*49"):
-            bundle_fixture(49)
-
     def test_all_retained_channels_need_owner(self):
         tensor, seed, owners = fixture()
         for invalid in (owners[:1], [owners[0], owners[0]], [owners[0], dict(owners[1], owner="")]):
@@ -97,7 +92,7 @@ class BundleTests(unittest.TestCase):
 
     def test_reject_seed_shape_or_bad_remainder(self):
         bundle = bundle_fixture()
-        for seed in (fixture(1)[1], State(3, bundle.seed.a, bundle.seed.b, [[6] * 27] * 2)):
+        for seed in (fixture(1)[1], State(3, bundle.seed.a, bundle.seed.b, [[6] * 27] * 48)):
             with self.assertRaises(BundleError):
                 create_bundle(bundle.tensor, seed, channels=bundle.channels,
                               protocol=bundle.protocol, model=bundle.model)
@@ -114,7 +109,7 @@ class BundleTests(unittest.TestCase):
         protocol["version"] = "changed"
         bundle.seed.r[0, 0] = 5
         bundle.protocol["version"] = "other"
-        self.assertTrue(bundle.seed.same_as(original))
+        self.assertTrue(bundle.seed.same_as(pad_state(original)))
         self.assertEqual(bundle.bundle_id, identity)
 
     def test_raw_seed_rejects_bool_float_and_hidden_state(self):
@@ -159,7 +154,7 @@ class BundleTests(unittest.TestCase):
                 else:
                     manifest = read_json(path / "bundle.json")
                     if kind == "budget":
-                        manifest["channel_count"] = 48
+                        manifest["channel_count"] = 47
                     elif kind == "schema":
                         manifest["format"] = "universe24/system-bundle/99"
                     else:

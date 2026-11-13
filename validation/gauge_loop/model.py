@@ -19,6 +19,7 @@ from collections.abc import Sequence
 
 import numpy as np
 
+from validation.padding import sector_state
 from universe24.core import State, Tensor
 from universe24.core.lattice import DIRECTIONS, ZERO, lattice
 from universe24.core.tensor import TensorBuilder
@@ -81,6 +82,7 @@ def _integer(value: object, name: str) -> int:
 def _check_state(state: State) -> None:
     if not isinstance(state, State):
         raise ValueError(f"expected a complete {G}-channel State")
+    state = sector_state(state, G)
     count = lattice(state.L).N
     # State's constructor checks exact integers, but its arrays are mutable.
     # Validate again before any int conversion can conceal caller corruption.

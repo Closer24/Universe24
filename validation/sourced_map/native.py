@@ -122,6 +122,8 @@ def read_conserved(program, state):
     require the constraint to vanish, so off-constraint controls remain visible.
     Nonuniform carries are allowed; physical a,b fields must be homogeneous.
     """
+    from validation.padding import sector_state
+    state = sector_state(state, 6)
     _program_check(program)
     if not isinstance(state, State) or state.G != 6 or state.N != state.L**3:
         raise ValueError("complete six-channel State required")
@@ -149,7 +151,7 @@ def read_conserved(program, state):
 
 def scalar_step(state, *, source_coupling=True):
     """Independent direct scalar recurrence, no Tensor evaluation or plan."""
-    a, b, r = (np.zeros((6, state.N), dtype=object) for _ in range(3))
+    a, b, r = (np.zeros((state.G, state.N), dtype=object) for _ in range(3))
     for node in range(state.N):
         for gear in range(6):
             u = 6*int(state.b[gear,node])
@@ -157,6 +159,8 @@ def scalar_step(state, *, source_coupling=True):
                 u += 18*int(state.b[1,node])
             quotient, carry = divmod(2*u+int(state.r[gear,node]), 6)
             a[gear,node], b[gear,node], r[gear,node] = int(state.b[gear,node]), quotient-int(state.a[gear,node]), carry
+    for gear in range(6, state.G):
+        a[gear], b[gear], r[gear] = state.b[gear], -state.a[gear], state.r[gear]
     return State(state.L, a, b, r)
 
 

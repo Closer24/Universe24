@@ -213,7 +213,7 @@ def audit(out):
     changed_seed = seed.copy()
     changed_seed.r[0, 0] = (int(changed_seed.r[0, 0]) + 1) % 6
     changed_bundle = create_bundle(program.tensor, changed_seed,
-        channels=bundle.channels, protocol=bundle.protocol, model=bundle.model)
+        channels=common45.channel_manifest(program), protocol=bundle.protocol, model=bundle.model)
     changed_path = directory / "different-carry"
     run_bundle(changed_bundle, changed_path, 2)
     changed = bind_observation(changed_path, meaning, clock_spec)

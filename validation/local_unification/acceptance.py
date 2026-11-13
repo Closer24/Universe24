@@ -9,6 +9,7 @@ import argparse
 import gzip
 import hashlib
 from pathlib import Path
+from validation.padding import sector_tensor
 from universe24.core import exact_json
 from universe24.system.bundle import load_bundle
 
@@ -69,6 +70,7 @@ def _shift(node, offset, L):
 def validate_tensor(tensor, direction=(1, 0, 0)):
     """Compare every coefficient to an independently stated joined law."""
     direction = _direction(direction)
+    tensor = sector_tensor(tensor, 12)
     if tensor.G != 12 or tuple(tensor.names) != RAIL_NAMES+PROFILE_NAMES:
         raise ValueError("acceptance requires the complete declared twelve-channel law")
     expected = {}
@@ -221,7 +223,11 @@ def inspect_history(states, direction=(1, 0, 0), *, protocol=None):
     collisions, energy, momentum, populations = [], [], [], []
     balances = constraints = macro_checks = 0
     for tick, state in enumerate(states):
-        _state(state, 12)
+        _state(state, len(state["a"]))
+        if len(state["a"]) not in (12, 48):
+            raise ValueError("expected 12-sector or 48-channel history")
+        if any(value != 0 for field in ("a", "b", "r") for row in state[field][12:] for value in row):
+            raise ValueError("nonzero idle research channel")
         if state["L"] != L or any(v not in (0, 1) for row in state["b"][:8] for v in row):
             raise ValueError("packet domain or lattice changed")
         b = state["b"]
@@ -298,7 +304,7 @@ def audit_saved_run(run_dir, *, protocol=None, out=None):
     run_id = _hash({"schema": "universe24/system/run/1", "bundle_id": bundle.bundle_id, "steps": steps})
     if (report.get("schema") != "universe24/system/run/1" or report.get("run_id") != run_id
             or report.get("bundle_id") != bundle.bundle_id or report.get("tensor_hash") != bundle.tensor.fingerprint
-            or report.get("channels_per_node") != 12 or report.get("nodes") != bundle.seed.N):
+            or report.get("channels_per_node") != 48 or report.get("nodes") != bundle.seed.N):
         raise ValueError("saved report is not bound to complete joined bundle")
     for name in ("full_trace.jsonl.gz", "clicks.jsonl.gz"):
         if hashlib.sha256((run_dir/name).read_bytes()).hexdigest() != report.get("files", {}).get(name):
@@ -312,19 +318,19 @@ def audit_saved_run(run_dir, *, protocol=None, out=None):
         if type(record) is not dict:
             raise ValueError("transition record must be a mapping")
         _integer(record.get("step"), "transition step", 1)
-        _state(record.get("before"), 12)
+        _state(record.get("before"), 48)
         if (count > steps or record.get("step") != count or record.get("run_id") != run_id
                 or record.get("tensor_hash") != bundle.tensor.fingerprint
                 or record.get("schema") != "universe24/transition/1"
                 or set(record) != {"schema", "run_id", "tensor_hash", "step", "before", "after"}
                 or record.get("before") != current):
             raise ValueError("noncontiguous or mixed complete trace")
-        after = _state(record["after"], 12)
+        after = _state(record["after"], 48)
         if after != scalar_step(bundle.tensor, current):
             raise ValueError(f"independent scalar forward mismatch at step{count}")
         if scalar_inverse(bundle.tensor, after) != current:
             raise ValueError(f"independent scalar inverse mismatch at step{count}")
-        comparisons += 2*3*12*current["L"]**3
+        comparisons += 2*3*48*current["L"]**3
         for expected_click in scalar_clicks(current, after, bundle.tensor, run_id, count):
             saved = next(saved_clicks, missing)
             if saved is missing or _dump(saved) != _dump(expected_click):
@@ -339,7 +345,7 @@ def audit_saved_run(run_dir, *, protocol=None, out=None):
     ledger = inspect_history(states, direction, protocol=protocol)
     result = {"schema": SCHEMA, "tensor_hash": bundle.tensor.fingerprint,
               "bundle_id": bundle.bundle_id, "run_id": run_id, "seed_hash": _hash(states[0]),
-              "steps": steps, "channels_per_node": 12, "nodes": bundle.seed.N,
+              "steps": steps, "channels_per_node": 48, "nodes": bundle.seed.N,
               "scalar_forward_inverse_register_comparisons": comparisons,
               "independent_canonical_clicks": clicks, "complete_contiguous_history": True,
               "complete_legal_carry_classes": sorted({v for row in states[0]["r"] for v in row}),

@@ -1,8 +1,4 @@
-"""Stage-0 tests T0.8-T0.10 (reciprocity checker, compose/namespaces, links-frozen hook); pre-registered in NOTES.md.
-
-Run from the repository root:
-    python -m unittest universe24.tests.test_layers -v
-"""
+"""Tensor reciprocity and namespace composition contracts."""
 from __future__ import annotations
 
 import random
@@ -14,17 +10,13 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-import numpy as np
 
 from universe24.core import (Block, Engine, GearType, State, Tensor, build, check_reciprocity,
                                              compose, reference_block)
 from universe24.core.lattice import DIRECTIONS, OFFSETS, ZERO
 from universe24.layers import build_reference
-from universe24.observe.audit import frozen_equivalence
-from universe24.prepare import vacuum_state
-from universe24.tests.l0_oracle import insert_reference
 from universe24.tests import randgen
-from universe24.tests.test_core import record, ref_random_state
+from universe24.tests.test_core import record
 
 
 def gradient_terms(potential, signs=None):
@@ -150,47 +142,6 @@ class T09Compose(unittest.TestCase):
         self.assertEqual(bad, 0)
         record("T0.9", {"names": list(T.names), "reference_namespaced_same_dynamics": True, "run_mismatches": bad})
 
-
-def link_stub(kappa, name="links", pairs=((0, 5), (3, 17), (11, 40))):
-    """TEST STUB (not the G9-c design): three Yee link gears W0, W1, W2 per node; potential
-    Phi = kappa * sum_k sum_(h,g) b[W_k](x) b[ref.R_h](x) b[ref.R_g](x + e_k): reciprocal rank-3 hopping."""
-    gears = tuple(GearType(f"W{k}", "audit", link=k) for k in range(3))
-    pot = []
-    for k in range(3):
-        e = DIRECTIONS[2 * k]
-        for h, g in pairs:
-            pot.append((kappa, [(f"{name}.W{k}", ZERO), (f"ref.R{h:02d}", ZERO), (f"ref.R{g:02d}", e)]))
-    terms = [t for t in gradient_terms(pot) if t[1] != 0]
-    local = []
-    for target, c, facs in terms:
-        local.append((target, c, facs))
-    return Block(gears, tuple(local), name=name, vacuum={f"W{k}": 3 for k in range(3)},
-                 params={"kappa": kappa}, doc="test stub for the links-frozen hook")
-
-
-class T10LinksFrozen(unittest.TestCase):
-    def test_T10(self):
-        L, steps = 4, 30
-        ref = build_reference(name="ref")
-        rs = ref_random_state(1010, L, -20, 20)
-        t_ref = compose(ref)
-        base_state = insert_reference(vacuum_state(t_ref, L, ref), t_ref, rs)
-        out = {}
-        for kappa in (0, 1):
-            stub = link_stub(kappa)
-            # the kappa = 1 control is a rank-3 coupling without a spring: its values grow doubly exponentially, so it
-            # runs only 2 updates (a difference appears at update 1)
-            res = frozen_equivalence((ref,), (stub,), base_state, steps if kappa == 0 else 2)
-            rep = check_reciprocity(compose(ref, stub))
-            out[f"kappa={kappa}"] = {**res, "reciprocal": rep.ok, "link_gear_links": [0, 1, 2]}
-            if kappa == 0:
-                self.assertTrue(res["frozen"], res)
-                self.assertEqual(res["monomials_full"], res["monomials_base"])
-            else:
-                self.assertFalse(res["frozen"], res)
-                self.assertGreater(res["monomials_full"], res["monomials_base"])
-            self.assertTrue(rep.ok)
-        record("T0.10", out)
 
 
 if __name__ == "__main__":

@@ -13,6 +13,7 @@ from pathlib import Path
 
 import numpy as np
 
+from validation.padding import construction_inputs
 from universe24.core import exact_json
 from universe24.core.engine import Engine, State, exact_array
 from universe24.core.lattice import DIRECTIONS, ZERO
@@ -41,43 +42,44 @@ def append_native_pointer(base, *, writer_name, writer_power=1, clock_name=None,
     preparation happens before evolution; this function supplies no callbacks.
     """
     base = validate_bundle(base)
-    if base.tensor.G >= 48:
+    base_tensor, base_seed, base_channels = construction_inputs(base)
+    if base_tensor.G >= 48:
         raise ValueError("one pointer channel would exceed 48")
-    if POINTER_NAME in base.tensor.names:
+    if POINTER_NAME in base_tensor.names:
         raise ValueError("pointer memory already present")
     if type(writer_power) is not int or not 1 <= writer_power <= 3:
         raise ValueError("writer_power must be 1, 2 or 3")
     if type(feedback) is not int:
         raise ValueError("feedback must be an exact integer")
-    writer = base.tensor.gear_index(writer_name)
+    writer = base_tensor.gear_index(writer_name)
     factors = [Factor(writer, ZERO, "b")] * writer_power
     if clock_name is not None:
-        factors.append(Factor(base.tensor.gear_index(clock_name), ZERO, "b"))
+        factors.append(Factor(base_tensor.gear_index(clock_name), ZERO, "b"))
     if len(factors) > 3:
         raise ValueError("clock-gated writer exceeds degree three")
-    if any(base.tensor.gears[f.gear].link is not None for f in factors):
+    if any(base_tensor.gears[f.gear].link is not None for f in factors):
         raise ValueError("pointer writer ports must be node fields")
-    index = base.tensor.G
-    gears = list(base.tensor.gears) + [GearType(POINTER_NAME, label="audit")]
-    terms = list(base.tensor.monomials) + [
+    index = base_tensor.G
+    gears = list(base_tensor.gears) + [GearType(POINTER_NAME, label="audit")]
+    terms = list(base_tensor.monomials) + [
         Monomial(index, 6, (Factor(index, ZERO, "b"),)),
         Monomial(index, 3, tuple(factors))]
     if feedback_target is not None:
-        target = base.tensor.gear_index(feedback_target)
-        if base.tensor.gears[target].link is not None:
+        target = base_tensor.gear_index(feedback_target)
+        if base_tensor.gears[target].link is not None:
             raise ValueError("feedback target must be a node field")
         terms.extend((Monomial(target, 3 * feedback, (Factor(index, ZERO, "b"),)),
                       Monomial(target, -3 * feedback, (Factor(index, ZERO, "a"),))))
     designations = [(target, factors, why)
-                    for (target, factors), why in base.tensor.designations.items()]
+                    for (target, factors), why in base_tensor.designations.items()]
     tensor = Tensor(gears, terms, designated_one_way=designations, strict_support=True)
-    original = base.seed
+    original = base_seed
     arrays = []
     for field, value in (("a", memory_a), ("b", memory_b), ("r", memory_r)):
         extra = (np.zeros((1, original.N), dtype=object) if value is None
                  else exact_array(value, (1, original.N)))
         arrays.append(np.concatenate((getattr(original, field).astype(object), extra), axis=0))
-    channels = list(base.channels) + [{
+    channels = list(base_channels) + [{
         "index": index, "name": POINTER_NAME, "label": "audit", "owner": "test_pointer",
         "purpose": "Raw integer persistent velocity record; zero declared physical stress is a test approximation",
         "readout_dependencies": [POINTER_NAME, writer_name] + ([] if clock_name is None else [clock_name])}]
@@ -147,8 +149,8 @@ def _oracle(state, *, direction, feedback):
     """Hand-expanded independent scalar update; never evaluates Tensor or Engine."""
     old = state.to_dict()
     a, b, r = (old[name] for name in ("a", "b", "r"))
-    nxt_b = [[0] * state.N for _ in range(3)]
-    nxt_r = [[0] * state.N for _ in range(3)]
+    nxt_b = [[-v for v in row] for row in a]
+    nxt_r = [row[:] for row in r]
     for node in range(state.N):
         plus = state.lattice.neighbour(node, direction)
         minus = state.lattice.neighbour(node, direction ^ 1)
@@ -214,7 +216,7 @@ def audit_appended(base, out, *, steps=4):
 
     if not hasattr(base, "tensor"):
         base = load_bundle(base)
-    if base.tensor.G != 47:
+    if construction_inputs(base)[0].G != 47:
         raise ValueError("actual handoff audit requires the declared 47-channel source")
     if type(steps) is not int or not 3 <= steps <= 5:
         raise ValueError("actual handoff audit supports three/four updates plus an explicit exploratory fifth")
@@ -253,7 +255,7 @@ def audit_appended(base, out, *, steps=4):
             assert engines[name].inverse_step(state).same_as(before[name])
             assert np.array_equal(velocity(state, 47), velocity(before[name], 47) + before[name].b[writer])
         quiet_state, active_state, history_state = (states[name] for name in bundles)
-        assert all(np.array_equal(getattr(quiet_state, field)[:47], getattr(physical, field))
+        assert all(np.array_equal(getattr(quiet_state, field)[:47], getattr(physical, field)[:47])
                    for field in ("a", "b", "r"))
         rows.append({"tick": tick,
                      "source_preserving_projection_equal": True,

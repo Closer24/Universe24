@@ -223,10 +223,10 @@ def audit(out=None):
              'validation/selection/clocks.py', 'validation/selection/complexity.py')
     report = {
         'schema': 'universe24/system-acceptance/burst-growth/1', 'protocol': PROTOCOL,
-        'tensor_hash': law.fingerprint, 'bundle_id': bundle.bundle_id,
-        'seed_hash': hashlib.sha256(canonical_bytes(representative_seed.to_dict())).hexdigest(),
+        'tensor_hash': bundle.tensor.fingerprint, 'bundle_id': bundle.bundle_id,
+        'seed_hash': hashlib.sha256(canonical_bytes(bundle.seed.to_dict())).hexdigest(),
         'run_id': saved['run_id'] if saved is not None else None,
-        'channels': 3, 'retained_integers_per_node': 9, 'actual_nodes': 27,
+        'channels': 48, 'active_channels': 3, 'retained_integers_per_node': 144, 'actual_nodes': 27,
         'maximum_retained_integer_bits': 3, 'all_six_carry_classes': True,
         'exhaustive_ring_states': 512, 'independent_complete_register_comparisons': 512*3*3*27,
         'cycle_count': len(cycles), 'cycle_length_histogram': dict(sorted(histogram.items())),
