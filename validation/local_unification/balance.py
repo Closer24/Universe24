@@ -15,6 +15,7 @@ from pathlib import Path
 
 import numpy as np
 
+from validation.padding import sector_state, sector_tensor
 from universe24.core import DIRECTIONS, Engine, State, exact_json, lattice
 
 
@@ -178,6 +179,8 @@ def source_transition_ledgers(before, after, tensor, direction=(1, 0, 0)):
     from universe24.core import Tensor
     from validation.local_unification.native import build_tensor
 
+    tensor = sector_tensor(tensor, 12)
+    before, after = sector_state(before, 12), sector_state(after, 12)
     if tensor.G != 12 or before.G != 12 or after.G != 12:
         raise ValueError("the joined source ledger requires exactly12complete channels")
     prefix_terms = []

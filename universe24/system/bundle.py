@@ -1,7 +1,7 @@
 """Versioned, complete input for the single supported Rule3 execution path.
 
 This boundary certifies mechanical admissibility, not Einstein/Born physics.
-Every retained register is one of the tensor's <=48 complete (a,b,r) channels.
+Every prepared bundle has exactly 48 complete (a,b,r) channels and 2O covariance.
 Model and protocol metadata are passive data; neither can inject an update.
 """
 from __future__ import annotations
@@ -17,15 +17,49 @@ import tempfile
 from universe24.core.engine import State
 from universe24.core import exact_json
 from universe24.core.tensor import FORMAT as TENSOR_FORMAT, Tensor
+from universe24.core.symmetry import CONTRACT, require_equivariant
 from universe24.system.decoder import validate_protocol
 
-FORMAT = "universe24/system-bundle/1"
+FORMAT = "universe24/system-bundle/3"
 MAX_CHANNELS = 48
 _FILES = ("tensor.json", "seed.json.gz", "channels.json", "protocol.json", "model.json")
 
 
 class BundleError(ValueError):
     """An input does not satisfy the supported system contract."""
+
+
+def pad_tensor(tensor: Tensor) -> Tensor:
+    """Historical construction utility; it does not certify or admit a bundle."""
+    if not 1 <= tensor.G <= MAX_CHANNELS:
+        raise BundleError(f"at most {MAX_CHANNELS} source channels; got {tensor.G}")
+    data = tensor.to_dict()
+    names = set(tensor.names)
+    for index in range(tensor.G, MAX_CHANNELS):
+        name = f"__idle_{index:02d}"
+        while name in names:
+            name += "_"
+        names.add(name)
+        data["gears"].append(dict(name=name, label="audit", link=None, sign=1, sign_why=""))
+    return Tensor.from_dict(data, strict_support=True)
+
+
+def pad_state(seed: State) -> State:
+    """Historical construction utility; append zeros without granting admission."""
+    if not 1 <= seed.G <= MAX_CHANNELS:
+        raise BundleError(f"at most {MAX_CHANNELS} source channels; got {seed.G}")
+    checked = State(seed.L, seed.a, seed.b, seed.r)
+    data = checked.to_dict()
+    for bank in ("a", "b", "r"):
+        data[bank].extend([[0] * seed.N for _ in range(MAX_CHANNELS - seed.G)])
+    return State.from_dict(data)
+
+
+def require_48_channels(tensor: Tensor, seed: State) -> None:
+    """Fail loudly at execution/load boundaries; never repair a sealed input."""
+    if tensor.G != MAX_CHANNELS or seed.G != MAX_CHANNELS:
+        raise BundleError(f"exactly 48 channels required: tensor={tensor.G}, seed={seed.G}; "
+                          "supply a complete 48-channel 2O-equivariant tensor and seed")
 
 
 def _exact_json(value, path="metadata"):
@@ -136,6 +170,25 @@ def _check_metadata(tensor, channels, protocol, model):
         _exact_json(value, name)
 
 
+def model_contract(tensor: Tensor, model: dict) -> dict:
+    """Require the same action for every supported model, regardless of its role.
+
+    Omitted symmetry means the mandatory system contract; null or an alternate
+    action cannot disable it. Model roles are passive descriptions only.
+    """
+    role = model.get("role", "research")
+    if role not in ("research", "universe-candidate"):
+        raise BundleError("model.role must be research or universe-candidate")
+    symmetry = model.get("symmetry", CONTRACT)
+    if symmetry != CONTRACT:
+        raise BundleError(f"unsupported model.symmetry; expected {CONTRACT}")
+    try:
+        require_equivariant(tensor)
+    except ValueError as exc:
+        raise BundleError(str(exc)) from exc
+    return {"role": role, "symmetry": CONTRACT, "status": "passed"}
+
+
 @dataclass(frozen=True)
 class SystemBundle:
     """Immutable serialized inputs; mutable readouts are returned as independent copies.
@@ -166,6 +219,10 @@ class SystemBundle:
     def model(self) -> dict:
         return _read_json(self._model_bytes)
 
+    @property
+    def model_contract(self) -> dict:
+        return model_contract(self.tensor, self.model)
+
     def _files(self) -> dict[str, bytes]:
         return {
             "tensor.json": canonical_bytes(self.tensor.to_dict()),
@@ -182,7 +239,8 @@ class SystemBundle:
             "channel_count": self.tensor.G,
             "retained_integers_per_node": 3 * self.tensor.G,
             "lattice": {"kind": "periodic-cube", "L": self.seed.L},
-            "law": {"divisor": 6, "max_degree": 3, "strict_face_support": True},
+            "law": {"divisor": 6, "max_degree": 3, "strict_face_support": True,
+                    "symmetry": CONTRACT},
             "tensor_hash": self.tensor.fingerprint,
             "inverse_stages": [list(stage) for stage in self.tensor.stages],
             "files": {name: _digest(data) for name, data in self._files().items()},
@@ -194,11 +252,10 @@ class SystemBundle:
 
 
 def create_bundle(tensor: Tensor, seed: State, *, channels, protocol, model) -> SystemBundle:
-    """Validate all retained data before execution and detach it from caller mutation."""
+    """Validate a complete 48-channel equivariant input and detach caller mutation."""
     if not isinstance(tensor, Tensor) or not isinstance(seed, State):
         raise BundleError("tensor and seed must be Tensor and State instances")
-    if not 1 <= tensor.G <= MAX_CHANNELS:
-        raise BundleError(f"at most {MAX_CHANNELS} total retained channels per node; got {tensor.G}")
+    require_48_channels(tensor, seed)
     try:
         tensor = Tensor.from_dict(tensor.to_dict(), strict_support=True)
         # Revalidate raw arrays, rather than coercing them through State.to_dict().
@@ -210,6 +267,7 @@ def create_bundle(tensor: Tensor, seed: State, *, channels, protocol, model) -> 
     if bool((seed.r < 0).any()) or bool((seed.r >= 6).any()):
         raise BundleError("every retained remainder must be an integer in 0..5")
     _check_metadata(tensor, channels, protocol, model)
+    model_contract(tensor, model)
     return SystemBundle(tensor, canonical_bytes(seed.to_dict()), canonical_bytes(channels),
                         canonical_bytes(protocol), canonical_bytes(model))
 
@@ -218,6 +276,7 @@ def validate_bundle(bundle: SystemBundle) -> SystemBundle:
     """Revalidate even a directly constructed dataclass before trusting its certificate."""
     if not isinstance(bundle, SystemBundle):
         raise BundleError("expected a SystemBundle")
+    require_48_channels(bundle.tensor, bundle.seed)
     return create_bundle(bundle.tensor, bundle.seed, channels=bundle.channels,
                          protocol=bundle.protocol, model=bundle.model)
 
@@ -263,7 +322,9 @@ def load_bundle(path) -> SystemBundle:
         tensor_data = _read_json(files["tensor.json"])
         tensor = tensor_from_data(tensor_data)
         seed_data = _read_json(gzip.decompress(files["seed.json.gz"]))
-        bundle = create_bundle(tensor, state_from_data(seed_data),
+        seed = state_from_data(seed_data)
+        require_48_channels(tensor, seed)
+        bundle = create_bundle(tensor, seed,
                                channels=_read_json(files["channels.json"]),
                                protocol=_read_json(files["protocol.json"]),
                                model=_read_json(files["model.json"]))

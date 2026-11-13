@@ -32,7 +32,7 @@ SOURCES = [
 
 def scalar_oracle(state):
     """Explicit scalar update, independent of common.scalar_step and Tensor."""
-    next_a, next_b, next_r = (np.empty((8, state.N), dtype=object) for _ in range(3))
+    next_a, next_b, next_r = (np.empty((state.G, state.N), dtype=object) for _ in range(3))
     for node in range(state.N):
         for gear in range(8):
             current = int(state.b[gear, node])
@@ -41,11 +41,15 @@ def scalar_oracle(state):
             next_a[gear, node] = current
             next_b[gear, node] = quotient-int(state.a[gear, node])
             next_r[gear, node] = remainder
+    for gear in range(8, state.G):
+        next_a[gear], next_b[gear], next_r[gear] = state.b[gear], -state.a[gear], state.r[gear]
     return State(state.L, next_a, next_b, next_r)
 
 
 def physical_oracle(program, state):
     """Independent rational projection; deliberately not a domain validator."""
+    from validation.padding import sector_state
+    state = sector_state(state, 8)
     values = [int(x) for x in state.b[:, 0]]
     w, dust, scalar, reference, offset, tick, s1, s2 = values
     shear = (s1, s2, -s1-s2)

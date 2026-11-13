@@ -18,6 +18,7 @@ import random
 
 import numpy as np
 
+from validation.padding import sector_state
 from universe24.core import Engine, GearType, State, Tensor, lattice
 
 ZERO = (0, 0, 0)
@@ -102,6 +103,7 @@ def _checked_complete_banks(state):
     """Validate even a State whose mutable arrays were altered after creation."""
     if not isinstance(state, State):
         raise ValueError("provide a complete State")
+    state = sector_state(state, len(NAMES))
     grid = lattice(state.L)
     shape = (len(NAMES), grid.N)
     banks = []

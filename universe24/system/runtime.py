@@ -85,6 +85,7 @@ def _bits(state):
 def _source_hashes():
     package = Path(__file__).resolve().parents[1]
     paths = ("core/engine.py", "core/tensor.py", "core/lattice.py", "core/exact_json.py",
+             "core/symmetry.py", "algebra/group_2o.py",
              "system/bundle.py", "system/decoder.py", "system/runtime.py")
     return {name: _file_hash(package / name) for name in paths}
 
@@ -99,6 +100,7 @@ def _report(bundle, steps, run_id, final, bit_sizes, click_count, directory):
         "run_id": run_id,
         "bundle_id": bundle.bundle_id,
         "tensor_hash": bundle.tensor.fingerprint,
+        "model_contract": bundle.model_contract,
         "steps": steps,
         "channels_per_node": bundle.tensor.G,
         "retained_integers_per_node": 3 * bundle.tensor.G,
@@ -111,6 +113,7 @@ def _report(bundle, steps, run_id, final, bit_sizes, click_count, directory):
         "files": {name: _file_hash(directory / name) for name in (TRACE_FILE, CLICK_FILE)},
         "checks": {
             "bundle_contract": "passed",
+            "2o_equivariance": "passed",
             "complete_state_forward_replay": "passed",
             "complete_state_step_inverse": "passed",
             "complete_state_rewind_to_seed": "passed",

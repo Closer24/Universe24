@@ -11,17 +11,23 @@ def status():
     return {
         "architecture": "one bundle -> one fixed tensor Engine -> one passive decoder",
         "maximum_channels_per_node": 48,
+        "required_channels_per_node": 48,
+        "preparation_padding": "none; supply all 48 channels explicitly",
+        "required_symmetry": "2O-left-regular-cube/1; exact polynomial covariance for every supported model",
+        "undeclared_model_role": "research; same mandatory symmetry checks as every other role",
         "retained_entries_per_channel": ["a", "b", "r"],
         "arithmetic": "exact integers; divmod(2*u+r, 6)",
         "locality": "target and at most one physical face edge per monomial",
         "accepted_physical_model": None,
         "full_physics_acceptance": "blocked",
+        "installed_components": {
+            "native_light_stream48": "48-channel 2O-covariant light tensor; exact axis-aligned transverse plane-wave sector on flat spacetime",
+        },
         "restricted_research_results": {
             "native_massless_homogeneous_sector": "Exact sourced Einstein sampling on a declared complete-history domain",
             "native_anisotropic_massless_sector": "Exact homogeneous Bianchi I source and source-clock invariant; moving probes remain passive",
             "massive_homogeneous_spinor_sector": "Exact decoded constraint and finite-time convergence; costly integers and finite-step dust drift",
             "joint_bursts_and_complexity_growth": "Not established by the separate recurrent-activity controls",
-            "prepared_maxwell_test_field": "18-channel static-background candidate; finite precision horizon, target-cone tails and non-photon arithmetic clicks",
         },
         "blockers": [
             "No validated <=48-channel coupled geometry, matter and apparatus encoding",
@@ -40,6 +46,15 @@ def main(argv=None):
     for name in ("tensor", "seed", "channels", "protocol", "model"):
         prepare.add_argument("--" + name, type=Path, required=True)
     prepare.add_argument("--out", type=Path, required=True)
+    light = sub.add_parser("prepare-light", help="Prepare the native 48-channel 2O light component")
+    light.add_argument("--out", type=Path, required=True)
+    light.add_argument("--size", type=int, default=13)
+    light.add_argument("--axis", choices=('x', 'y', 'z'), default='x')
+    light.add_argument("--sign", type=int, choices=(-1, 1), default=1)
+    light.add_argument("--polarization", choices=('x', 'y', 'z'))
+    light.add_argument("--center", type=int, default=4)
+    light.add_argument("--order", type=int, default=4)
+    light.add_argument("--amplitude", type=int, default=1)
     run = sub.add_parser("run", help="Run the complete saved seed through its immutable tensor")
     run.add_argument("--bundle", type=Path, required=True)
     run.add_argument("--steps", type=int, required=True)
@@ -52,6 +67,16 @@ def main(argv=None):
     try:
         if args.command in (None, "status"):
             result = status()
+        elif args.command == "prepare-light":
+            from universe24.light import make_light_bundle
+            from universe24.system.bundle import save_bundle
+            bundle = make_light_bundle(L=args.size, axis='xyz'.index(args.axis), sign=args.sign,
+                                       polarization=None if args.polarization is None else 'xyz'.index(args.polarization),
+                                       center=args.center, order=args.order, amplitude=args.amplitude)
+            save_bundle(bundle, args.out)
+            result = {"bundle_id": bundle.bundle_id, "channels": bundle.tensor.G,
+                      "path": str(args.out), "model_contract": bundle.model_contract,
+                      "physics_acceptance": "not_tested"}
         elif args.command == "prepare":
             from universe24.system.bundle import (create_bundle, save_bundle, read_json,
                                                   tensor_from_data, state_from_data)

@@ -123,20 +123,18 @@ Z2 law preserves unit links and supports feedback, but its prepared complete
 period divides three and evolving information stays within edge triplets.
 Neither law establishes a combined propagating Maxwell/source/detector system.
 
-## Added prepared Maxwell packet and click controls
+## Installed native light component
 
-`validation/light_packet/` supplies an eighteen-channel fixed-six classical
-test field, with a static symmetric optical background in the counted state.
-The central command executes small full canonical runs and binds their claims
-to independently replayed receipts. Their successes cannot be joined with a
-different sourced law as a coupled Einstein result.
+`universe24/light.py` supplies the 48-channel regular-2O null-stream tensor.
+It is installed and prepared by the main CLI, not a source-only experiment.
+The exact specified covariance, full-history shift sector and unit axis-null
+propagation pass; all channels are dynamic, with no idle padding or precision
+horizon. `validation/light_runtime.py` reads its saved canonical runs; the
+archived central collector is not a supported schema-3 execution path.
 
-Prepared finite-horizon propagation and modified-energy conservation are
-accepted within their stated domain. The archived 41³ experiment shows
-background-dependent packet motion, but identical raw count/location/class
-maps in its three backgrounds. An amplitude intervention changes energy by
-four while leaving counts unchanged. Tiny lattice tails violate the intended
-strict continuum null cone; the wider computational cone remains intact.
-The identification of every arithmetic click with a photon is rejected. A
-physical detector, source backreaction, internal proper-clock calibration and
-controlled joint refinement remain blocked or not tested.
+The physical domain is transverse plane waves along six signed axes in a flat
+metric. General Maxwell convergence, dynamic Einstein backreaction, proper
+material clocks and photon detection remain unestablished. Raw click counts
+are not photon counts. Different source/gravity receipts cannot be pooled as
+one complete physical law. The original 18-channel optical experiment and its
+negative results remain historical evidence, not data for the new tensor.

@@ -13,6 +13,7 @@ from pathlib import Path
 
 import numpy as np
 
+from universe24.system.bundle import pad_tensor
 from universe24.core import State, Tensor, exact_json
 from universe24.core.lattice import DIRECTIONS, lattice
 from universe24.system.bundle import create_bundle, load_bundle, state_from_data
@@ -232,7 +233,7 @@ def inspect_saved_run(path, *, direction=(1, 0, 0), coupled=True,
     if type(allow_native_prefix) is not bool:
         raise ValueError("allow_native_prefix must be Boolean")
     source_channels = bundle.tensor.G
-    if bundle.tensor.fingerprint != expected.fingerprint:
+    if bundle.tensor.fingerprint != pad_tensor(expected).fingerprint:
         if (not allow_native_prefix or source_channels <= 8
                 or tuple(bundle.tensor.names[:8]) != tuple(expected.names)):
             raise ValueError("saved run is not the exact declared shared tensor")

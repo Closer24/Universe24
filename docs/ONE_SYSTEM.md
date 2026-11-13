@@ -1,38 +1,51 @@
 # Universe24: one system, specification and research status
 
-## Integrated light-packet candidate
+## Installed native light component
 
-`validation/light_packet/` prepares an eighteen-channel static-background
-Maxwell test field and audits complete runs of the existing
-`universe24.system.runtime`. The installed interface remains prepare/run/verify/
-status. No runtime selector, alternate scalar update, or accepted default
-physical universe is added. The central acceptance sequence runs a fixed small
-collection and independently replays its representative receipts. Cross-run
-joins with sourced gravity or another background are rejected.
+`universe24/light.py` belongs to the installed main package. The supported
+`python -m universe24 prepare-light` command constructs one complete bundle;
+existing `run` and `verify` perform all evolution and replay. This is a
+preparation entry point, not another Engine, mode or callback.
 
-The allocation is six D/B entries in group X, six in group Y and six symmetric
-C entries, each with a,b,r. All 54 integers are counted. The tensor has 162
-integer monomials of degree at most two; all support is target plus one face
-edge and no old-a input dependency exists. Divisor six and the complete old
-snapshot update are unchanged. The preparation scale Q=3^(H+1) is data in the
-complete seed, not a new Engine parameter; finite-horizon division hypotheses
-and integer bit cost are explicit. See [the algebra](MODEL.md#prepared-maxwell-test-field-on-a-static-optical-background).
+All 48 channels have a fixed one-face transport polynomial. With quaternion
+label g, define n_g=R_g e_x, e_g=R_g e_y and m_g=R_g e_z. The input is
+u_g(x)=3[b_g(x-n_g)+b_g(x+n_g)]. There are 96 linear integer monomials,
+no old-a dependencies, no idle padding and 144 retained integers per node.
+The exact candidate contract `2O-left-regular-cube/1` passes on the entire
+polynomial, including the central group element and all three retained banks.
+The bundle declares `role=universe-candidate` and the checked symmetry.
 
-The experiment shows actual wave-packet motion and background-dependent
-coordinate speeds, with exact prepared macrostep modified-energy conservation.
-It also retains failed strict target-cone and raw-click/photon interpretations:
-tiny lattice tails outrun the continuum target cone; amplitude changes alter
-energy without altering the tested click counts. The background has no dynamic
-Einstein source, and no retained operational detector or clock was supplied.
-Passing replay or the expected negative controls does not close those gates.
+Preparation sets a_g(x)=b_g(x+n_g). With arbitrary retained remainders in
+0…5, unchanged Rule3 gives b_next,g(x)=b_g(x-n_g) and r_next=r at every tick.
+The relation is invariant for unlimited integer time: no finite-precision
+preparation scale, reset or external updater is used. For the prepared
+transverse plane profiles, E=sum_g e_g b_g and B=sum_g m_g b_g are passive
+vector readouts of flat axis-aligned Maxwell waves. Coordinate units h=dt=1
+give exact null displacement. This does not derive a material clock.
 
-The [report and reproduction commands](research/light_packet/README.md) retain
-the original experiment at source pin e582960 and its lossless plane-compressed
-evidence under `runs/light-packet-clicks-v2/`. Current integrated runs save the
-ordinary full canonical traces and click records. The original compression is
-an archived observation format, not a new runtime schema or evolving register.
+The component supplies six signed propagation axes and two physical transverse
+polarizations per axis. It is not arbitrary-direction Maxwell convergence,
+dynamic Einstein backreaction, an operational detector or a quantum photon
+model. Full physical acceptance remains blocked despite algebraic candidate
+acceptance. Raw clicks are still arithmetic records.
+
+[Component documentation](research/light_packet/README.md) preserves the
+original 18-channel optical experiment, pinned to e582960, separately. Its
+speed errors, finite-grid tails and identical-background click maps are not
+results of this new tensor. Historical bytes are not relabeled. Core tests
+cover the installed input/output and algebra contracts. The passive observer
+`validation/light_runtime.py` inspects saved schema-3 light runs; the archived
+central research collector is not a supported schema-3 execution path.
 
 ## Reviewed execution and acceptance
+
+**Current admission boundary:** bundle schema 3 requires 48 explicitly supplied
+node channels and exact 2O covariance for every model. There is no research
+exemption or automatic padding. Research constructions and commands documented
+below record the pre-schema-3 snapshot at commit
+`e281f7e7b251641a741d185116656fedaa5396f8`; their smaller or non-equivariant
+bundles cannot execute through the current supported runtime. Historical
+receipts remain evidence of their original source version.
 
 The installed interface remains `python -m universe24`, with one fixed Rule3
 Engine, one saved-bundle runtime and one passive canonical decoder. The
@@ -76,6 +89,29 @@ builder/state identity while retaining the first-step and tick-two constraint
 failures. This source integration changes no production law or physical status.
 
 ## Question and scope
+
+### Mandatory algebra contract
+
+Every supported model must pass exact coefficient covariance under all 48
+joint channel/cube actions of `2O-left-regular-cube/1`, at preparation, save,
+load and execution boundaries. Roles are descriptive only: `research`,
+`universe-candidate` and an omitted role all face the same check. Omitted
+symmetry selects the mandatory action; explicit null or an unknown action
+fails. The action permutes all of `(a,b,r)` and uses one regular orbit of 48
+node channels with invariant passive labels. No invariant seed is required.
+This algebra certificate is not physical acceptance. See
+[the exact action and limitations](COUPLING_ALGEBRA.md).
+
+The automated suite and CI cover engine, tensor algebra and supported
+input/output contracts only: exact arithmetic, scalar-oracle agreement,
+locality, invertibility, 48-channel allocation, mandatory 2O covariance,
+ownership, decoding and complete saved-run replay. Research unit tests and
+research CI jobs are removed. The source research programs and their saved
+historical evidence remain available, but their physical claims are not
+revalidated by the current CI. Ordinary unittest discovery runs the whole
+remaining suite; there is no extra suite selector.
+
+### Physical target
 
 Can one fixed, local integer tensor and a complete seed generate a reversible
 spacetime dynamics with at most 48 retained channels per node, whose operational
@@ -136,9 +172,9 @@ operational-clock interpretation is promoted by their mechanical success.
 
 ## Assumptions and exact law
 
-A node retains at most 48 channels. Each channel contains its complete integer
-triple `(a,b,r)`, with `0 <= r < 6`; consequently the cap permits at most 144
-integer entries per node. Integers have unbounded bit length. Geometry, matter,
+Every supported prepared bundle retains exactly 48 channels per node. Each
+channel contains its complete integer triple `(a,b,r)`, with `0 <= r < 6`,
+so every node retains exactly 144 integer entries. Integers have unbounded bit length. Geometry, matter,
 clock, detector, scheduler and workspace state all count. A recorded trace is
 an output, never an additional state bank read during evolution.
 
@@ -163,7 +199,7 @@ not a derivation of quantum collapse.
 | Module | Inputs and outputs | Responsibility |
 | --- | --- | --- |
 | Construction and preparation | Declared model and initial data → tensor and complete seed | All coefficients, apparatus and calibration are fixed before execution; any initial-data solve is disclosed. |
-| `system.bundle` | Tensor, seed, ownership and protocol → versioned, hashed bundle | Reject invalid integers, allocation above 48, locality violations, incompatible schema and corrupted components. |
+| `system.bundle` | Tensor, seed, ownership and protocol → versioned, hashed bundle | Require exactly 48 explicit channels and exact 2O covariance; reject invalid integers, locality violations, incompatible schema and corrupted components. |
 | `core.engine` | Tensor plus complete old state → complete next state | Apply the unchanged fixed-six update; exact arbitrary-precision fallback and inverse. |
 | `system.decoder` | Declared transition records → canonical arithmetic clicks | Passive extraction with event identity, node/channel/tick, quotient sign and C0/C1/C2 classification. |
 | `system.runtime` | Valid bundle plus finite run request → trace, clicks and validation report | One execution/replay path; provenance and exact complete-state reconstruction. |
@@ -691,3 +727,43 @@ and raw C1/C2 gauge dependence remain explicit falsification controls.
 Run `python -m validation.gauge_loop.audit --out runs/gauge-loop` in a fresh
 directory. This extends mathematical validation, not physical acceptance
 or the supported runtime interface.
+
+## Exact allocation and symmetry (bundle schema 3)
+
+`create_bundle` requires exactly 48 source channels and every integer in their
+complete seed. It neither adds idle channels nor changes a polynomial. The
+same strict support, degree, remainder, ownership and acyclic-dependency checks
+remain. Every role passes the exact 2O coefficient certificate before a bundle
+is returned. Save, load and execution repeat validation even for directly
+constructed dataclasses or rehashed input files.
+
+The manifest records `law.symmetry`; CLI status reports the required action.
+The tests reject every allocation 1..47 and 49, test all 144 retained registers
+against a scalar oracle, reject asymmetric research and omitted-declaration
+bypasses, and exercise saved replay and the full nonlinear symmetry action.
+The lower-level Tensor/Engine algebra primitives remain generic so independent
+oracle, integer-boundary and inverse tests can exercise them directly.
+
+Schema-1/2 evidence remains pinned historical evidence. Compatible tensor and
+seed inputs must be freshly prepared as schema 3 and run in a new directory.
+A non-equivariant law requires a new mathematical construction; changing its
+role or adding zero channels is not a migration. Padding helpers remain pure
+construction utilities for historical source code and are never an admission
+exception. The old research acceptance collector is not a supported schema-3
+smoke; use `python -m validation.system_smoke --out NEW_DIRECTORY`.
+
+## GitHub merge policy
+
+`.github/main-protection.json` records the intended main-branch policy:
+require both `universe24 (3.11)` and `universe24 (3.12)` checks, a branch up to
+date with main, pull requests, and enforcement for administrators. No approving
+human review is required. Force pushes and branch deletion are disabled.
+This file is a configuration payload, not evidence that GitHub has applied it.
+An authenticated repository administrator can apply it with:
+
+```bash
+gh api --method PUT repos/Closer24/Universe24/branches/main/protection --input .github/main-protection.json
+```
+
+Verify the live branch protection after applying it. CI alone does not enforce
+the merge policy.

@@ -12,6 +12,7 @@ import mpmath as mp
 import numpy as np
 import sympy as sp
 
+from universe24.system.bundle import pad_state
 from universe24.core import Engine, GearType, State, Tensor, exact_json
 from universe24.core.lattice import ZERO
 from universe24.system.decoder import decode_trace
@@ -107,8 +108,8 @@ def runtime_case(N):
     assert len(records) == N//8
     for n, row in enumerate(records):
         before, after = (State.from_dict(row[key]) for key in ('before', 'after'))
-        assert before.same_as(data['states'][n])
-        assert after.same_as(data['states'][n+1])
+        assert before.same_as(pad_state(data['states'][n]))
+        assert after.same_as(pad_state(data['states'][n+1]))
         assert after.same_as(c.scalar_step(before))
         assert c.read_conserved(data['program'], after)['Q'] == 0
     assert clicks == decode_trace(records, bundle.tensor, run_id=report['run_id'],
@@ -116,6 +117,9 @@ def runtime_case(N):
     assert all(report['acceptance_gates'][key]['status'] == 'not_tested' for key in 'CDEF')
     return {**c.identity(data['program'], data['seed']),
             'path': str(out.relative_to(c.ROOT)), 'bundle_id': bundle.bundle_id,
+            'tensor_sha256': bundle.tensor.fingerprint,
+            'seed_sha256': sha256(c.canonical_bytes(bundle.seed.to_dict())).hexdigest(),
+            'channels': 48, 'active_channels': 8, 'retained_integers_per_node': 144,
             'run_id': report['run_id'], 'steps': N//8,
             'trace_sha256': report['files']['full_trace.jsonl.gz'],
             'saved_complete_states_equal_independent_oracle': True,

@@ -12,6 +12,7 @@ import mpmath as mp
 import numpy as np
 import sympy as sp
 
+from validation.padding import sector_state
 from universe24.core import Engine, GearType, State, Tensor
 from universe24.core.lattice import ZERO
 from universe24.system.decoder import make_transition, decode_transition, summarize_clicks
@@ -44,6 +45,7 @@ def source_clock(program, state):
     No run step, seed trace, proper_tick register or reference ODE is read here.
     This positive-dust chart is not valid at D=0.
     """
+    state = sector_state(state, 8)
     common._check_program(program)
     if not isinstance(state, State) or state.G != 8:
         raise ValueError('source clock requires the complete eight-channel state')

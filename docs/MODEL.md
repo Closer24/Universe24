@@ -2,6 +2,13 @@
 
 This is the current algebra of the supported bundle-driven execution system. Historical variable-divisor and oversized default constructions are retained only as research history. There is no accepted default physical universe.
 
+Schema 3 admits only the regular 48-node-channel action defined in
+`COUPLING_ALGEBRA.md`, for every role. The research sectors later in this
+file, except the explicitly installed native light component, describe
+mathematical results from pre-schema-3 source at commit
+`e281f7e7b251641a741d185116656fedaa5396f8`; they are not automatically
+admissible current bundles. Their evidence remains bound to that source.
+
 ## Central postulate: one local integer universe
 
 The research starts from this assumption: the whole universe is one network,
@@ -24,7 +31,7 @@ distant input to change a node in one update.
 
 ## State, tensor and budget
 
-On a periodic cubic lattice of side L at least three, each node stores G at most 48 channels. Every channel has two signed integer histories a,b and one remainder r in 0..5. All matter, geometry, apparatus, clocks, workspace and schedules count in G. Integer precision is unbounded and its cost must be measured.
+On a periodic cubic lattice of side L at least three, each supported prepared node stores exactly 48 explicitly supplied node channels, with mandatory 2O covariance. Smaller source research sectors remain historical examples and cannot bypass this boundary. Every channel has two signed integer histories a,b and one remainder r in 0..5. All matter, geometry, apparatus, clocks, workspace and schedules count in G. Integer precision is unbounded and its cost must be measured.
 
 A fixed integer polynomial supplies each local input:
 
@@ -293,12 +300,53 @@ through successive edges, electric Gauss law, shared stress source or
 operational detector. The static and dynamic controls are distinct tensors;
 their successful parts do not constitute one physical gauge field theory.
 
-## Prepared Maxwell test field on a static optical background
+## Native 48-channel 2O light streams
 
-The source-only construction `validation/light_packet/` counts twelve field
+The installed `universe24/light.py` labels all 48 channels by the ordered 2O
+quaternions. Let (n_g,e_g,m_g)=(R_g e_x,R_g e_y,R_g e_z). Its fixed input is
+
+    u_g(x)=3[b_g(x-n_g)+b_g(x+n_g)].
+
+It has 96 degree-one monomials, one face per term and no old-a reads. Every
+channel has dynamics; there is no padding. Define S b_g(x)=b_g(x-n_g).
+The complete preparation a=S_inverse b gives u=3(S+S_inverse)b, and Rule3
+therefore yields b_next=S b, a_next=b and r_next=r for every integer tick.
+All carries and both histories remain in the 144-integer allocation. The
+prepared sector is invariant without a finite-horizon scale.
+
+Because n_(kg)=R_k n_g, the polynomial obeys the exact regular-channel/cube
+2O action for every state. The same identity holds for the inverse. E=sum_g
+e_g b_g and B=sum_g m_g b_g transform as spatial vectors under this action.
+The central -1 exchanges lift labels without changing their vector frames;
+the field readout is not injective and does not discard retained state.
+
+For b_g(x,t)=f_g(n_g·x-t), E_g=e_g f_g and B_g=m_g f_g satisfy the flat vacuum
+Maxwell equations for any differentiable periodic profile interpolation:
+div E_g=div B_g=0, partial_t E_g=curl B_g and partial_t B_g=-curl E_g.
+Here n_g cross e_g=m_g. At integer sites and times the Engine exactly samples
+translation by one cell. Each ray has ds²=-dt²+|dx|²=0 in h=dt=1 units.
+Two independent transverse basis polarizations occur for every signed axis.
+This is a restricted plane-wave sector and six directions, not a proof of a
+full arbitrary-direction Maxwell continuum limit or a retained proper clock.
+
+The sum of squared stream amplitudes is invariant on the prepared shift sector.
+For the single-plane preparation, the passive electromagnetic energy is also
+constant. No physical energy interpretation is assigned to all invisible
+regular-representation modes. Geometry/source backreaction and photon
+statistics are absent; algebraic candidate acceptance is not full physics.
+
+## Archived 18-channel optical test field
+
+The following earlier construction is preserved in documentation and pinned
+trace evidence. It is not the installed light component above.
+
+
+The archived optical construction counts twelve field
 channels in two groups X=(D_X,B_X), Y=(D_Y,B_Y), and six entries of a symmetric
 positive optical matrix C. All eighteen channels retain complete (a,b,r): 54
-integers per node. X/Y are counted channels, not extra history storage.
+active-sector integers per node. A former schema-2 embedding appended 30
+disconnected zero-initialized channels, giving 48 channels / 144 integers.
+It is rejected by schema 3. X/Y are counted channels, not extra history storage.
 
 Let R_C(V) be the unscaled centered lattice curl of C V. Each summand reads C
 and V together at one face neighbor. The fixed tensor is
@@ -340,6 +388,13 @@ J=3 sum(D^T C D+B^T C B)-sum(D^T C R_C(B)) is exactly conserved on complete
 prepared macrosteps for static symmetric C. The plotted energy proxy
 u_field=(D^T C D+B^T C B)/2 is not asserted to be the exact conserved ledger.
 
+The padded tensor does not satisfy `2O-left-regular-cube/1`. This action is
+transitive on all 48 output channels; a tensor with 30 identically zero output
+polynomials and nonzero active outputs cannot be equivariant under that
+action. The exact coefficient checker supplies a counterexample, and a
+bundle is rejected regardless of model role. Padding is an allocation
+embedding, not a symmetry proof or a new physical encoding.
+
 All exact prepared clicks have unchanged remainder, hence class C0. The
 archived 41³ runs produced identical click count/location/class maps on three
 backgrounds, while quotient magnitudes and energy trajectories differed.
@@ -357,7 +412,7 @@ A complete certificate joins tensor, full seed, interpretation, protocol, horizo
 
 Source locations: `validation/sourced_map/`, `validation/conservation_closure/`,
 `validation/unified_law/`, `validation/local_unification/`,
-`validation/gauge_loop/`, `validation/light_packet/`, `validation/integration_contract/` and
+`validation/gauge_loop/`, `validation/integration_contract/` and
 `validation/system_acceptance/`. The one installed implementation is
 `universe24/system/`; the source-only acceptance command reports both positive
 scoped results and rejected/blocked physical claims. This document collects

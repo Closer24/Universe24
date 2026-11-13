@@ -23,7 +23,7 @@ and persistent organization must be derived and tested within that proposal.
 | Reusable records and moving matter | Local collision with recoil and finite repeated records; free directional packet populations | Bound massive structures and retained moving apparatus with source accounts, no reset, independent trajectory and proper-time predictions |
 | Repeated cosmological bursts | Recurrent activity exists; the expanding massless chart has no repeated density bang | Predeclared physically interpreted burst event, several episodes from local dynamics, complete state retained and no external trigger |
 | Growth between bursts | Boolean selector: 72 recurrent preparations among 512, zero growth passes; local-source panel: zero growth passes, 19 failures and 197 insufficient histories | A declared amplitude-insensitive persistent structure measure, all trials, longer horizons, matched memory interventions, exhausted-supply and disconnected controls |
-| Propagating gauge field | Static Z4 interference, separate period-three Z2 link feedback, and an 18-channel finite prepared Maxwell test field with static optical response | Control lattice target-cone tails and Nyquist modes; derive shared dynamic source, operational detection and a fixed-domain continuum limit; raw click counts are not photon intensity |
+| Propagating gauge field | Static Z4 interference, separate period-three Z2 link feedback, and an installed 48-channel 2O-covariant axis-null light component | Extend the six-axis plane-wave sector to general Maxwell propagation, shared dynamic source and operational detection; preserve 2O covariance; raw click counts are not photon intensity |
 | Quantum outcomes | Integer/carry identities, finite covariance and explicit postselection/measure counterexamples | Justified preparation measure, retained source/settings/detectors, all no/double detections, independently predicted Born/Bell statistics |
 | Manageable resource cost | Logarithmic bits in the native massless sectors; expensive massive projective coordinates | Report precision and channel cost on fixed physical-time refinement; retain every history, carry, clock and workspace |
 | Cube covariance and organization | Incomplete published recovery checkpoint only | Recover the missing source and metadata, independently reproduce complete saved runs; do not count reported tests without the source |
@@ -70,3 +70,25 @@ They are not additional active production branches or selectable universes.
 These discussions are administratively closed at the owner's request. Their
 closure does not certify the unresolved claims. New research must update this
 single agenda, the algebra and the same-law acceptance evidence together.
+
+## Mandatory allocation and symmetry contract
+
+Every supported run now supplies exactly 48 node channels (144 retained
+integers per node) and must satisfy `2O-left-regular-cube/1`, independent of
+model role. Omitted metadata and `research` cannot waive the coefficient check.
+Schema 3 does not automatically pad or upgrade earlier bundles. The implemented
+action is one regular orbit of node channels with invariant passive labels;
+it does not represent Yee links or several differently transforming sectors.
+Its transitivity and the acyclic inverse requirement exclude old-a reads.
+Nonlinear b-only interactions remain allowed.
+
+The 6/8/12-channel constructions above remain historical research results,
+not current supported bundles. Their reproduction source is pinned at
+`e281f7e7b251641a741d185116656fedaa5396f8`. A new compatible encoding needs
+mathematical justification, not a role change or zero padding. Preserve old
+evidence and use fresh hashes and directories for new constructions.
+
+Automated tests and CI cover the engine and its algebra/input-output contracts.
+Research unit tests and workflows are removed. The intended GitHub merge
+policy is stored in `.github/main-protection.json`; it must be applied to
+GitHub separately and verified there. See `ONE_SYSTEM.md`.

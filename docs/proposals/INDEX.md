@@ -28,7 +28,6 @@ different tree. The current complete acceptance/disposition ledger is
 
 | New integrated source | Accepted scope | Excluded claim |
 | --- | --- | --- |
-| `validation/light_packet/`, [report](../research/light_packet/README.md) | 18-channel finite prepared Maxwell test field through the main runtime; exact saved-state and click controls | Dynamic Einstein source, strict finite-grid target cone, physical photon detector and indefinite prepared precision |
 | `validation/sourced_map/`, source `228f581d02971435c0cd70548ff56267378ffc31` | Exact native six-channel expanding homogeneous massless scalar/dust Einstein flow, including retained-history constraint and source balance | General spatial gravity, mass term, bounce and operational detector |
 | `validation/unified_law/`, source `6b82369830bf763cbaddcc37bd972c555faea782` | Same-candidate massive constraint, source, metric and finite-time convergence | Efficient long-time massive encoding, exact finite-step dust conservation and spatial apparatus |
 | `validation/system_acceptance/` | Replayed per-law receipts, explicit rejected joins and exhaustive native-selector recurrence/growth controls | Pooling separate physical successes or promoting recurring activity to sustained complexity/cosmological bursts |
@@ -54,3 +53,8 @@ physical validation. An additional runtime switch or a metric/readout label
 is not an integration argument.
 
 The reviewed native anisotropic extension is `validation/conservation_closure/` at #64 `97e3a42f31fee76826305af314540c05323edf32`: eight channels, exact homogeneous massless source and source clock. Geodesic probes remain passive; spatial momentum and operational apparatus are unclosed. It is included as a separate scoped law in the central acceptance pipeline.
+
+The installed native light component is `universe24/light.py`, documented in
+[the light contract](../research/light_packet/README.md). Its exact 48-channel
+2O algebra and restricted axis-null plane sector do not establish general
+Maxwell/Einstein coupling. The earlier optical experiment is archived separately.

@@ -15,7 +15,7 @@ import json
 from pathlib import Path
 
 from universe24.core import State, exact_json
-from universe24.system.bundle import canonical_bytes, load_bundle
+from universe24.system.bundle import canonical_bytes, load_bundle, pad_state, pad_tensor
 from universe24.system.runtime import run_bundle, verify_run
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -105,7 +105,7 @@ def _massive_run(out):
         raise AssertionError('Missing declared massive-candidate transitions')
     for index, row in enumerate(rows):
         before, after = (State.from_dict(row[key]) for key in ('before', 'after'))
-        if not before.same_as(data['states'][index]) or not after.same_as(data['states'][index + 1]):
+        if not before.same_as(pad_state(data['states'][index])) or not after.same_as(pad_state(data['states'][index + 1])):
             raise AssertionError('Runtime differs from independent complete-state trajectory')
         oracle = independent_review.scalar_step_oracle(data['program'], before)
         if not after.same_as(oracle):
@@ -114,8 +114,8 @@ def _massive_run(out):
     source_match = constrained_coordinates.source_builder_audit()
     wrong = independent_review.wrong_dynamics_audit()
     refinement = same_candidate_audit()
-    if (refinement['shared_default_tensor_sha256'] != receipt.tensor_sha256
-            or refinement['shared_default_seed_sha256'] != receipt.seed_sha256):
+    if (refinement['shared_default_tensor_sha256'] != data['program'].tensor.fingerprint
+            or refinement['shared_default_seed_sha256'] != digest(data['seed'].to_dict())):
         raise AssertionError('Default runtime and clock/source audit identities differ')
     if not all(row['wrong_dynamics_rejected'] for row in wrong):
         raise AssertionError('Constraint-only false acceptance control was lost')
@@ -147,21 +147,20 @@ def _anisotropic_run(out):
         bundle = common.make_bundle(program, seed)
         run_bundle(bundle, path, steps)
         receipt, execution = inspect_saved_run(path)
-        expected = common.identity(program, seed)
-        if (receipt.tensor_sha256 != expected['tensor_sha256']
-                or receipt.seed_sha256 != expected['seed_sha256']
+        if (receipt.tensor_sha256 != pad_tensor(program.tensor).fingerprint
+                or receipt.seed_sha256 != digest(pad_state(seed).to_dict())
                 or receipt.bundle_id != bundle.bundle_id
-                or receipt.steps != steps or receipt.channels != 8):
+                or receipt.steps != steps or receipt.channels != 48):
             raise ValueError('Anisotropic interpretation differs from saved run identity')
         with gzip.open(path / 'full_trace.jsonl.gz', 'rt', encoding='utf-8') as stream:
             records = [exact_json.loads(line) for line in stream]
         if len(records) != steps:
             raise ValueError('Incomplete anisotropic saved trajectory')
-        states = [seed]
+        states = [bundle.seed]
         for index, record in enumerate(records):
             before, after = (State.from_dict(record[key]) for key in ('before', 'after'))
             if (not before.same_as(states[-1])
-                    or not after.same_as(data['states'][index + 1])
+                    or not after.same_as(pad_state(data['states'][index + 1]))
                     or not after.same_as(review.scalar_oracle(before))):
                 raise ValueError('Saved Bianchi-I trajectory differs from independent scalar oracle')
             states.append(after)
@@ -193,14 +192,14 @@ def _anisotropic_run(out):
             raise ValueError('Exact physical endpoint differs across declared Bianchi resolutions')
         endpoints.append(endpoint)
         rows.append({'N': resolution, 'receipt': asdict(receipt), 'execution': execution,
-                     'saved_samples': samples, 'independent_integer_comparisons': steps * 3 * seed.G * seed.N,
+                     'saved_samples': samples, 'independent_integer_comparisons': steps * 3 * bundle.seed.G * seed.N,
                      'source_metric_from_same_saved_states': 'passed',
                      'independent_scalar_oracle_and_replay': 'passed',
                      'source_clock_role': 'passive source/history proper-time diagnostic; not a material detector'})
         receipts.append(receipt)
     if len({receipt.tensor_sha256 for receipt in receipts}) != 1:
         raise ValueError('Bianchi resolution family changed the declared native tensor')
-    return {'runs': rows, 'channels': 8, 'exact_shared_physical_endpoint': True,
+    return {'runs': rows, 'channels': 48, 'active_channels': 8, 'exact_shared_physical_endpoint': True,
             'same_law_different_seed_and_calibration_is_same_run': False,
             'full_six_audit_proof_suite': 'not_run_here; separate conservation_closure.run_all command',
             'scope': 'Exact homogeneous diagonal expanding Bianchi I, massless scalar and dust. No spatial gradients, massive extension, retained geodesic probe or operational detector.'}, receipts
@@ -263,13 +262,8 @@ def run(out):
     bursts = burst_growth.audit(out / 'bursts')
     from validation.local_unification.run_all import collect
     from validation.gauge_loop.audit import run as gauge_audit
-    from validation.light_packet.audit import collect as light_audit
     local = collect(out / 'local-unification')
     gauge = gauge_audit(out / 'gauge-loop')
-    light = light_audit(out / 'light-packet')
-    light_receipts = {
-        name: inspect_claimed_run(out / 'light-packet' / name, claim)
-        for name, claim in light['cases'].items()}
     local_receipt = inspect_claimed_run(
         out / 'local-unification/geometry/runtime', local['main_identity'])
     gauge_receipts = {
@@ -309,8 +303,6 @@ def run(out):
             ('local_source_vs_static_gauge', local_receipt, gauge_receipts['positive']),
             ('static_gauge_vs_dynamic_gauge', gauge_receipts['positive'], gauge_receipts['dynamic']),
             ('same_static_law_different_flux', gauge_receipts['positive'], gauge_receipts['negative']),
-            ('light_test_field_vs_sourced_geometry', light_receipts['flat'], local_receipt),
-            ('same_light_tensor_different_background', light_receipts['flat'], light_receipts['fast']),
             ('anisotropic_vs_massive', anisotropic_receipts[0], massive_receipt),
             ('anisotropic_same_tensor_different_calibration', anisotropic_receipts[0], anisotropic_receipts[1])):
         try:
@@ -329,8 +321,7 @@ def run(out):
     if initial_sources != final_sources:
         raise ValueError('Sources changed during the acceptance run')
     evidence = {'massless': native, 'massive': massive, 'anisotropic': anisotropic,
-                'bursts': bursts, 'local_unification': local, 'gauge_loop': gauge,
-                'light_packet': light}
+                'bursts': bursts, 'local_unification': local, 'gauge_loop': gauge}
     files = {}
     for name, report in evidence.items():
         path = out / (name + '.json')
@@ -351,8 +342,6 @@ def run(out):
                                     'local_source_records': asdict(local_receipt),
                                     **{'gauge_' + name: asdict(value)
                                        for name, value in gauge_receipts.items()},
-                                    **{'light_' + name: asdict(value)
-                                       for name, value in light_receipts.items()},
                                     'native_selector': asdict(burst_receipt),
                                     'native_selector_recurrent_witness': asdict(recurrent_receipt)},
         'same_run_join': 'passed for independent replay of the same saved bytes',
@@ -366,13 +355,6 @@ def run(out):
             {'idea': 'finite_gauge_loop_and_link_exchange_controls',
              'decision': 'accepted_scoped', 'evidence': gauge['physical_gates'],
              'scope': 'Separate static Z4 interference and period-three Z2 feedback laws; no combined propagating field.'},
-            {'idea': 'prepared_maxwell_test_field_on_static_background',
-             'decision': 'accepted_scoped', 'run_id': light_receipts['flat'].run_id,
-             'evidence': light['comparisons'],
-             'scope': '18 counted channels; finite prepared classical test field; background has no Einstein backreaction.'},
-            {'idea': 'identify_every_arithmetic_light_click_as_a_photon',
-             'decision': 'rejected', 'evidence': light['physical_gates'],
-             'scope': 'Count/energy mismatch and finite-grid target-cone tails retained; no physical detector supplied.'},
         ],
         'scope': 'One implementation and validation entry point, several explicitly separate research laws. Success is evidence reproduction, including failed and blocked physical gates.'}
     (out / 'acceptance.json').write_text(json.dumps(result, indent=2, allow_nan=False) + '\n', encoding='utf-8')

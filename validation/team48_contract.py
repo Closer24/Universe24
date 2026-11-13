@@ -17,7 +17,7 @@ import subprocess
 import sys
 
 from universe24.core import exact_json
-from universe24.system.bundle import create_bundle, read_json, state_from_data, tensor_from_data
+from universe24.system.bundle import pad_state, create_bundle, read_json, state_from_data, tensor_from_data
 from universe24.system.decoder import default_protocol
 from universe24.system.runtime import run_bundle, verify_run
 
@@ -120,8 +120,8 @@ def audit(source: str | Path, out: str | Path) -> dict:
     with gzip.open(run / "full_trace.jsonl.gz", "rt", encoding="utf-8") as stream:
         for index, line in enumerate(stream, start=1):
             record = exact_json.loads(line)
-            if (exact_json.dumps(record["before"], sort_keys=True) != exact_json.dumps(reference["states"][index-1], sort_keys=True)
-                    or exact_json.dumps(record["after"], sort_keys=True) != exact_json.dumps(reference["states"][index], sort_keys=True)):
+            if (exact_json.dumps(record["before"], sort_keys=True) != exact_json.dumps(pad_state(state_from_data(reference["states"][index-1])).to_dict(), sort_keys=True)
+                    or exact_json.dumps(record["after"], sort_keys=True) != exact_json.dumps(pad_state(state_from_data(reference["states"][index])).to_dict(), sort_keys=True)):
                 raise ValueError(f"proposal/generic runtime complete-state mismatch at step {index}")
             seen = index
     if seen != 3:
@@ -137,10 +137,10 @@ def audit(source: str | Path, out: str | Path) -> dict:
         "adapter_source_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "proposal_source_sha256": reference["source_sha256"],
         "bundle_id": runtime_report["bundle_id"], "run_id": runtime_report["run_id"],
-        "tensor_hash": tensor.fingerprint, "channels_per_node": tensor.G,
+        "tensor_hash": bundle.tensor.fingerprint, "channels_per_node": bundle.tensor.G, "active_channels": tensor.G,
         "parameters": {"dt": 1, "dx": 1, "mass_squared": 1, "coupling": 1, "cosmological": 0},
         "protocol": default_protocol(),
-        "retained_integer_entries_per_node": 3 * tensor.G, "nodes": seed.N, "steps": 3,
+        "retained_integer_entries_per_node": 3 * bundle.tensor.G, "nodes": seed.N, "steps": 3,
         "monomials": len(tensor.monomials), "strict_physical_support_violations": len(tensor.support_violations()),
         "all_retained_states_and_remainders_match_proposal": True,
         "proposal_scalar_oracle_agreement": reference["proposal_scalar_oracle_agreement"],

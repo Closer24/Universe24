@@ -15,6 +15,7 @@ from pathlib import Path
 import numpy as np
 import sympy as sp
 
+from validation.padding import sector_state
 from universe24.core import DIRECTIONS, State, exact_json
 from universe24.system.bundle import load_bundle, state_from_data
 
@@ -207,11 +208,11 @@ def _exact_divmod6(values):
 def scalar_step(state, direction=(1, 0, 0)):
     """Independent expanded recurrence for all12 channels, including seams."""
     state = State(state.L, state.a, state.b, state.r)
-    if state.b.shape[0] != 12:
+    if state.b.shape[0] not in (12, 48):
         raise ValueError("exactly12 retained channels required")
     direction = _direction(direction)
     a, b, r = (getattr(state, field).astype(object) for field in ("a", "b", "r"))
-    following, carries = np.empty_like(b), np.empty_like(r)
+    following, carries = -a.copy(), r.copy()
     for bank in range(2):
         source = 4*(1-bank)
         collision = b[source:source+4].copy()
@@ -298,14 +299,14 @@ def saved_chart_review(run_dir, protocol):
     bundle = load_bundle(Path(run_dir)/"bundle")
     seed = bundle.seed
     direction = _direction(protocol["direction"])
-    if type(protocol["L"]) is not int or protocol["L"] != seed.L or seed.b.shape[0] != 12:
+    if type(protocol["L"]) is not int or protocol["L"] != seed.L or seed.b.shape[0] != 48:
         raise ValueError("different chart/bundle")
     horizon = protocol["microsteps"]
     if type(horizon) is not int or horizon < 2 or horizon % 2:
         raise ValueError("positive even exact-integer horizon required")
     if seed.L < 2*(horizon+3)+1:
         raise ValueError("requested horizon reaches the seam")
-    _prepared_history(seed, direction)
+    _prepared_history(sector_state(seed, 12), direction)
     initial_rows = _plane_rows(seed, direction)
     fp0, fm0, np0, nm0 = _profiles(initial_rows)
     for profile, plus, minus in ((8, 0, 2), (9, 1, 3), (10, 4, 6), (11, 5, 7)):
@@ -336,7 +337,7 @@ def saved_chart_review(run_dir, protocol):
                 raise ValueError("disconnected saved transitions")
             if not scalar_step(before, direction).same_as(after):
                 raise ValueError("saved state differs from independent source/collision recurrence")
-            comparisons += 3*12*seed.N
+            comparisons += 3*48*seed.N
             rows_by_tick.append(_plane_rows(after, direction))
             previous = after
     if len(rows_by_tick) != horizon+1:

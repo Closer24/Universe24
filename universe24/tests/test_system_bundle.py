@@ -17,9 +17,9 @@ from universe24.system.bundle import (
 )
 
 
-def fixture(channels=2):
+def fixture(channels=48):
     tensor = Tensor([f"q{i}" for i in range(channels)],
-                    [("q0", 3, [("q0", (1, 0, 0), "b")])])
+                    [(i, 3, [(i, (0, 0, 0), "b")]) for i in range(channels)])
     a = [[(-1 if n % 2 else 1) * (2 ** 100 + n) for n in range(27)] for _ in range(channels)]
     b = [[n - 10 for n in range(27)] for _ in range(channels)]
     r = [[n % 6 for n in range(27)] for _ in range(channels)]
@@ -30,7 +30,7 @@ def fixture(channels=2):
     return tensor, seed, owners
 
 
-def bundle_fixture(channels=2):
+def bundle_fixture(channels=48):
     tensor, seed, owners = fixture(channels)
     return create_bundle(tensor, seed, channels=owners,
                          protocol=default_protocol(),
@@ -41,10 +41,12 @@ class BundleTests(unittest.TestCase):
     def test_decimal_integers_beyond_interpreter_digit_limit_roundtrip(self):
         limit = sys.get_int_max_str_digits()
         huge = 2 ** 20000
-        tensor = Tensor(["q0"], [("q0", huge, [("q0", (1, 0, 0), "b")])])
-        seed = State(3, [[-huge] * 27], [[huge + n for n in range(27)]], [[n % 6 for n in range(27)]])
-        owners = [{"index": 0, "name": "q0", "label": "official",
-                   "owner": "test-fixture", "purpose": "huge integer roundtrip"}]
+        _, seed, owners = fixture()
+        tensor = Tensor([f"q{i}" for i in range(48)],
+                        [(i, huge, [(i, (0, 0, 0), "b")]) for i in range(48)])
+        seed.a = seed.a.astype(object)
+        seed.b = seed.b.astype(object)
+        seed.a[0, 0], seed.b[1, 1] = -huge, huge + 1
         bundle = create_bundle(tensor, seed, channels=owners, protocol=default_protocol(),
                                model={"id": "huge", "version": "1", "domain": "mechanical fixture"})
         with tempfile.TemporaryDirectory() as tmp:
@@ -74,22 +76,19 @@ class BundleTests(unittest.TestCase):
         self.assertTrue(engine.rewind(final, 4).same_as(bundle.seed))
         self.assertEqual(set(bundle.seed.r.ravel()), set(range(6)))
 
-    def test_48_allowed_49_rejected_without_override(self):
-        self.assertEqual(bundle_fixture(48).manifest["retained_integers_per_node"], 144)
-        with self.assertRaisesRegex(BundleError, "48.*49"):
-            bundle_fixture(49)
-
     def test_all_retained_channels_need_owner(self):
         tensor, seed, owners = fixture()
-        for invalid in (owners[:1], [owners[0], owners[0]], [owners[0], dict(owners[1], owner="")]):
+        for invalid in (owners[:1], [owners[0], owners[0], *owners[2:]],
+                        [owners[0], dict(owners[1], owner=""), *owners[2:]]):
             with self.subTest(invalid=invalid), self.assertRaises(BundleError):
                 create_bundle(tensor, seed, channels=invalid, protocol=default_protocol(),
                               model={"id": "t", "version": "1", "domain": "test"})
 
     def test_reject_strict_physical_edge_violation(self):
         # Storage reads remain neighboring; the target's link endpoint creates a third node.
-        tensor = Tensor([GearType("link", link=0)], [("link", 1, [("link", (1, 0, 0), "b")])])
-        _, seed, owners = fixture(1)
+        tensor = Tensor([GearType("link", link=0)] + [f"q{i}" for i in range(1, 48)],
+                        [("link", 1, [("link", (1, 0, 0), "b")])])
+        _, seed, owners = fixture()
         owners[0]["name"] = "link"
         with self.assertRaisesRegex(BundleError, "strict_support"):
             create_bundle(tensor, seed, channels=owners, protocol=default_protocol(),
@@ -97,7 +96,7 @@ class BundleTests(unittest.TestCase):
 
     def test_reject_seed_shape_or_bad_remainder(self):
         bundle = bundle_fixture()
-        for seed in (fixture(1)[1], State(3, bundle.seed.a, bundle.seed.b, [[6] * 27] * 2)):
+        for seed in (fixture(1)[1], State(3, bundle.seed.a, bundle.seed.b, [[6] * 27] * 48)):
             with self.assertRaises(BundleError):
                 create_bundle(bundle.tensor, seed, channels=bundle.channels,
                               protocol=bundle.protocol, model=bundle.model)
@@ -149,7 +148,7 @@ class BundleTests(unittest.TestCase):
 
     def test_reject_tamper_missing_file_and_manifest_changes(self):
         with tempfile.TemporaryDirectory() as tmp:
-            for kind in ("tensor", "missing", "budget", "schema", "bool-divisor"):
+            for kind in ("tensor", "missing", "budget", "schema", "old-schema", "bool-divisor"):
                 path = Path(tmp) / kind
                 save_bundle(bundle_fixture(), path)
                 if kind == "tensor":
@@ -159,9 +158,11 @@ class BundleTests(unittest.TestCase):
                 else:
                     manifest = read_json(path / "bundle.json")
                     if kind == "budget":
-                        manifest["channel_count"] = 48
+                        manifest["channel_count"] = 47
                     elif kind == "schema":
                         manifest["format"] = "universe24/system-bundle/99"
+                    elif kind == "old-schema":
+                        manifest["format"] = "universe24/system-bundle/2"
                     else:
                         manifest["law"]["strict_face_support"] = 1
                     (path / "bundle.json").write_bytes(canonical_bytes(manifest))

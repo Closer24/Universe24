@@ -24,7 +24,8 @@ class OneSystemCLITests(unittest.TestCase):
         self.assertIsNone(result['accepted_physical_model'])
         self.assertEqual(result['maximum_channels_per_node'], 48)
         self.assertEqual(result['full_physics_acceptance'], 'blocked')
-        for option in ('--causal-wave', '--probe-experiment', '--no-communication', '--max-channels', '--case'):
+        for option in ('--causal-wave', '--probe-experiment', '--no-communication', '--max-channels', '--case',
+                       '--skip-symmetry', '--research'):
             with self.assertRaises(SystemExit) as error:
                 self.call([option])
             self.assertEqual(error.exception.code, 2)
@@ -56,6 +57,25 @@ class OneSystemCLITests(unittest.TestCase):
                 self.call(args)
             self.assertEqual(error.exception.code, 2)
             self.assertFalse((root / 'invalid').exists())
+
+    def test_prepare_rejects_asymmetric_research_before_writing(self):
+        bundle = fixture()
+        tensor = Tensor(bundle.tensor.gears, [(0, 1, ())])
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            inputs = dict(tensor=tensor.to_dict(), seed=bundle.seed.to_dict(),
+                          channels=list(bundle.channels), protocol=bundle.protocol,
+                          model=dict(id="test", version="1", domain="test", role="research"))
+            args = ['prepare']
+            for key, value in inputs.items():
+                path = root / (key + '.json')
+                path.write_bytes(canonical_bytes(value))
+                args += ['--' + key, str(path)]
+            args += ['--out', str(root / 'output')]
+            with self.assertRaises(SystemExit) as error:
+                self.call(args)
+            self.assertEqual(error.exception.code, 2)
+            self.assertFalse((root / 'output').exists())
 
     def test_exact_48_boundary_and_independent_scalar_oracle(self):
         for count in (48, 49):

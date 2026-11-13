@@ -12,7 +12,7 @@ Universe24 implements one execution path:
 
 **complete integer seed + immutable local tensor → reversible Engine → passive records → independent verification**.
 
-The same Rule3 updates every retained channel. Geometry, matter, clocks, apparatus, scheduling and workspace share a hard budget of **48 total channels per node**. Each channel retains all three integers `(a,b,r)`:
+The same Rule3 updates every retained channel. Geometry, matter, clocks, apparatus, scheduling and workspace share **exactly 48 explicitly supplied node channels**, obeying the mandatory joint 2O channel/cube action. Each channel retains all three integers `(a,b,r)`:
 
 ```text
 ell, r_next = divmod(2*u + r, 6)
@@ -26,15 +26,26 @@ The software execution system is implemented and reviewed. Restricted sourced Ei
 
 ## Run and verify
 
-From the repository checkout, install the research dependencies and run the integrated acceptance entry point into a new directory:
+From the repository checkout, install the package and run the supported mechanical smoke into a new directory:
 
 ```bash
-python -m pip install '.[validation]'
+python -m pip install .
 python -m universe24 status
-python -m validation.system_acceptance --out runs/system-acceptance
+python -m validation.system_smoke --out runs/system-smoke
+python -m universe24 verify --run runs/system-smoke/run
 ```
 
-Read `runs/system-acceptance/acceptance.json`. The command creates fresh saved experiments, replays complete states and canonical clicks, rejects mixed-run evidence, and records accepted, rejected and blocked ideas. A successful command means the evidence and expected negative controls reproduced. Its joint physical gate remains explicit.
+New preparations use bundle schema 3. Every model must supply 48 channels and
+pass exact polynomial covariance under `2O-left-regular-cube/1`, for all 48
+group elements. `research`, an omitted role, or an omitted symmetry declaration
+does not disable the check. Explicit null or alternate symmetry values fail.
+Preparation does not add padding or change the law to make it symmetric.
+See [the action and representation limits](docs/COUPLING_ALGEBRA.md).
+
+Read `runs/system-smoke/smoke.json` and `run/validation.json` under that
+directory. The smoke compares complete states with an independent scalar
+oracle and verifies exact rewind and canonical clicks. Success does not
+establish physical acceptance.
 
 The installed interface is always `python -m universe24`. To execute your own complete prepared input:
 
@@ -50,6 +61,12 @@ A bundle binds tensor, full seed, ownership, protocol and interpretation by hash
 
 ## What is integrated
 
+The research results and reproduction commands below are historical records
+from the [pre-schema-3 snapshot](https://github.com/Closer24/Universe24/tree/e281f7e7b251641a741d185116656fedaa5396f8).
+Their source remains inspectable. Incompatible smaller or non-equivariant laws
+are rejected by the current runtime, including the old system acceptance
+collector; reproducing those old experiments requires their pinned source.
+
 | Construction | Verified result | Boundary |
 | --- | --- | --- |
 | Native massless scalar + dust, six channels | Exact sourced expanding homogeneous FLRW flow, complete-history constraint, positive declared chart and independent Einstein-component checks | No mass term, spatial modes, detector or cosmological bounce |
@@ -62,7 +79,7 @@ A bundle binds tensor, full seed, ownership, protocol and interpretation by hash
 | Quantum controls | Complete-trial, non-detection, preparation-measure and locality countercontrols | No derived universal Born rule or physical Bell instrument |
 | Local carrier–record source, twelve channels | Repeated scattering, retained records, exact packet balances and a finite positive two-null-stream Einstein chart on the same saved history | Finite prepared supply; no globally periodic positive-source chart, massive bound body or operational clock |
 | Finite gauge links, seven and ten channels | Static Z4 loop interference and separate dynamic Z2 record/link feedback | Static wave is unstable; dynamic sector has period three and no successive-edge propagation; no combined Maxwell/gravity law |
-| Prepared Maxwell test field, eighteen channels | Moving transverse packet, static optical-background response, exact finite-horizon shear map and independently checked canonical clicks | Finite-grid target-cone tails; click counts do not track intensity; no dynamic Einstein source or detector |
+| Installed light component, 48 dynamical channels | Exact 2O covariance and unit-speed transverse plane streams through main prepare/run/verify | Six axis directions and flat background; no general Maxwell/Einstein coupling or photon detector |
 
 The anisotropic extension retains two shear charges in eight channels; its exact metric and source share the complete state. A 4,096-update check passed independent scalar comparisons, inverse and full rewind with 26-bit peak integers. Its moving-probe paths and proper-time integrals are passive diagnostics, with no retained transported body. A same-tensor spatial negative preserves pointwise Hamiltonian constraints but fails the momentum constraint.
 
@@ -84,6 +101,7 @@ Open `runs/geodesic-board/board.html`. This retained **massive45 negative-contro
 | Path | Responsibility |
 | --- | --- |
 | `universe24/core/` | Fixed tensor, lattice, exact state and Rule3 Engine |
+| `universe24/light.py` | Installed 48-channel 2O light tensor and complete plane-wave preparation |
 | `universe24/system/bundle.py` | Complete inputs, budget, strict locality and integrity |
 | `universe24/system/runtime.py` | The sole run/replay/verify implementation |
 | `universe24/system/decoder.py` | Canonical passive arithmetic records |
@@ -93,26 +111,26 @@ Open `runs/geodesic-board/board.html`. This retained **massive45 negative-contro
 
 The architecture review is `docs/research/system_acceptance/architecture_review.md`. The complete idea decisions are in `docs/research/system_acceptance/idea_ledger.md`; the physical and massive-encoding boundaries are beside it. Current algebra is `docs/MODEL.md`, the execution contract is `docs/ONE_SYSTEM.md`, and source provenance is in `docs/research/central_integration/README.md`. Historical evidence retains its original source pin and is not relabeled as current validation.
 
-## Run the light-packet candidate
+## Run the installed light component
 
-The [light-packet experiment](docs/research/light_packet/README.md) is included
-in the central acceptance sequence. Its compact regression runs through the
-same saved-bundle runtime. To run the original 41³ flat packet through the
-installed main interface, use fresh directories:
+`universe24/light.py` is part of the installed main package. Its 48 dynamical
+channels obey the exact `2O-left-regular-cube/1` polynomial contract, with no
+idle padding. The same Engine advances its sealed bundle:
 
 ```bash
-python -m validation.light_packet prepare-inputs --out runs/light-inputs
-python -m universe24 prepare --tensor runs/light-inputs/tensor.json --seed runs/light-inputs/seed.json --channels runs/light-inputs/channels.json --protocol runs/light-inputs/protocol.json --model runs/light-inputs/model.json --out runs/light-bundle
-python -m universe24 run --bundle runs/light-bundle --steps 24 --out runs/light-main
+python -m universe24 prepare-light --out runs/light-bundle
+python -m universe24 run --bundle runs/light-bundle --steps 6 --out runs/light-main
 python -m universe24 verify --run runs/light-main
-python -m validation.light_packet inspect --run runs/light-main --out runs/light-main-observations.json
 ```
 
-This retains the fixed divisor six, degree limit three, strict one-face support
-and 48-channel cap. The candidate uses 18 channels and degree two. All execution
-is integer-exact; its Maxwell interpretation is restricted to a prepared finite
-horizon. Arithmetic clicks are not promoted to photon detections. The archived
-larger comparison and its negative results remain available beside the report.
+Use `prepare-light --axis y --polarization x` for a different transverse mode,
+or `--sign -1` for the reverse direction. The prepared state translates one
+face per tick exactly, indefinitely, without a precision scale. This provides
+axis-aligned transverse plane light in flat spacetime; arbitrary-direction
+Maxwell convergence, a dynamic Einstein source and photon detection remain
+unestablished. The [component contract and archived experiment](docs/research/light_packet/README.md)
+keep those boundaries explicit. The older 18-channel optical experiment is
+preserved as historical evidence; it is a different tensor.
 
 ## What we need to research
 
@@ -148,6 +166,11 @@ python -m universe24 verify --run runs/new-smoke/run
 ```
 
 A regression test may pass by reproducing a failed physical hypothesis. The corresponding physical result stays failed. No research label, channel name or successful replay can promote it.
+
+The automated suite covers engine, tensor algebra, 48 channels, mandatory 2O
+symmetry and bundle/replay integrity. Research unit tests and research CI jobs
+are removed; source research programs and historical evidence remain. A green
+CI run certifies software checks, not those physical results.
 
 ## Local carrier–record interaction with a spatial source chart
 

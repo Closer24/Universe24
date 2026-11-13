@@ -13,15 +13,13 @@ from universe24.system.runtime import run_bundle, verify_run
 
 
 def fixture(huge=False, bits=100):
-    tensor = Tensor(["local", "neighbor"], [
-        ("local", 3, [("local", (0, 0, 0), "b")]),
-        ("neighbor", 3, [("local", (1, 0, 0), "a")]),
-    ], strict_support=True)
-    a = [[(n % 5) - 2 for n in range(27)] for _ in range(2)]
-    b = [[(n % 7) - 3 for n in range(27)] for _ in range(2)]
+    tensor = Tensor([f"g{i}" for i in range(48)],
+                    [(i, 3, [(i, (0, 0, 0), "b")]) for i in range(48)], strict_support=True)
+    a = [[(n % 5) - 2 for n in range(27)] for _ in range(48)]
+    b = [[(n % 7) - 3 for n in range(27)] for _ in range(48)]
     if huge:
         b[0][0] = 2 ** bits
-    seed = State(3, a, b, [[n % 6 for n in range(27)] for _ in range(2)])
+    seed = State(3, a, b, [[n % 6 for n in range(27)] for _ in range(48)])
     channels = [dict(index=i, name=name, owner="mechanical-fixture", purpose="test-only state",
                      label="official") for i, name in enumerate(tensor.names)]
     return create_bundle(tensor, seed, channels=channels, protocol=default_protocol(),
@@ -59,7 +57,7 @@ class SystemRuntimeTests(unittest.TestCase):
             run = Path(tmp) / "run"
             report = run_bundle(fixture(huge=True), run, 5)
             self.assertEqual(report, verify_run(run))
-            self.assertEqual(report["channels_per_node"], 2)
+            self.assertEqual(report["channels_per_node"], 48)
             self.assertGreaterEqual(max(report["maximum_integer_bits_by_step"]), 101)
             self.assertGreater(report["click_count"], 0)
             self.assertTrue(all(value == "passed" for value in report["checks"].values()))

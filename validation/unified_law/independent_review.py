@@ -105,7 +105,7 @@ def independent_symbolic_audit():
 
 def scalar_step_oracle(program, state):
     """Exact rational homogeneous recurrence, no Tensor or source evaluator."""
-    after_b = np.empty_like(state.b,dtype=object)
+    after_b = -state.a.astype(object)
     for node in range(state.N):
         denominator = int(state.b[0,node])
         values = {name:F(int(state.b[index+1,node]),denominator)
