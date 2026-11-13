@@ -39,6 +39,18 @@ central research collector is not a supported schema-3 execution path.
 
 ## Reviewed execution and acceptance
 
+The installed `universe24/detection.py` adds a prepared 48-channel light/memory
+exchange law through `prepare-detector`, followed by the same `run` and `verify`.
+Its 624 quadratic-or-linear monomials pass mandatory 2O covariance and strict
+one-face support. The retained selector and counterpropagating arming pulse
+are complete input state. A captured amplitude is stored locally and is
+released when the arming pulse revisits; the exact quadratic excitation
+account is conserved. The passive `detect` command reads capture, release,
+exchange and no-transfer records after full replay. It does not relabel raw
+arithmetic clicks as photons. [The detector contract](DETECTOR.md) specifies
+the polynomial, allocation, invariant sector, finite memory lifetime and open
+quantization, clock, recoil and Born gates. No physical default is introduced.
+
 **Current admission boundary:** bundle schema 3 requires 48 explicitly supplied
 node channels and exact 2O covariance for every model. There is no research
 exemption or automatic padding. Research constructions and commands documented

@@ -1,0 +1,233 @@
+{
+  "vacuum": {
+    "run_id": "6f97f6c87cb9c27d0f7785eb917ca375efb00c8787906ff5e947939c6725a886",
+    "tensor_hash": "0bfa6e7d87c32d69e2e0bf778b5965513355ee3682a8a7e9453bc5ffb82a4bd7",
+    "outcomes": {
+      "capture": 0,
+      "release": 0,
+      "exchange": 0,
+      "no_transfer": 1014
+    },
+    "arithmetic_click_count": 2028,
+    "accounts": [
+      {
+        "step": 0,
+        "light": "0",
+        "memory": "0",
+        "arming": "169",
+        "selector": "2197",
+        "light_plus_memory": "0"
+      },
+      {
+        "step": 1,
+        "light": "0",
+        "memory": "0",
+        "arming": "169",
+        "selector": "2197",
+        "light_plus_memory": "0"
+      },
+      {
+        "step": 2,
+        "light": "0",
+        "memory": "0",
+        "arming": "169",
+        "selector": "2197",
+        "light_plus_memory": "0"
+      },
+      {
+        "step": 3,
+        "light": "0",
+        "memory": "0",
+        "arming": "169",
+        "selector": "2197",
+        "light_plus_memory": "0"
+      },
+      {
+        "step": 4,
+        "light": "0",
+        "memory": "0",
+        "arming": "169",
+        "selector": "2197",
+        "light_plus_memory": "0"
+      },
+      {
+        "step": 5,
+        "light": "0",
+        "memory": "0",
+        "arming": "169",
+        "selector": "2197",
+        "light_plus_memory": "0"
+      },
+      {
+        "step": 6,
+        "light": "0",
+        "memory": "0",
+        "arming": "169",
+        "selector": "2197",
+        "light_plus_memory": "0"
+      }
+    ],
+    "physical_gates": {
+      "energy_frequency_calibration": "not_tested",
+      "photon_number": "not_tested",
+      "born_measure": "not_tested",
+      "single_photon_anticorrelation": "not_tested",
+      "material_clock_and_recoil": "not_tested",
+      "general_physical_acceptance": "blocked"
+    }
+  },
+  "unarmed": {
+    "run_id": "aa29ed2d891b8467ace11c82fcc0bdf9d68871dafe052fb2c1e65d695f37b6f7",
+    "tensor_hash": "0bfa6e7d87c32d69e2e0bf778b5965513355ee3682a8a7e9453bc5ffb82a4bd7",
+    "outcomes": {
+      "capture": 0,
+      "release": 0,
+      "exchange": 0,
+      "no_transfer": 0
+    },
+    "arithmetic_click_count": 2028,
+    "accounts": [
+      {
+        "step": 0,
+        "light": "169",
+        "memory": "0",
+        "arming": "0",
+        "selector": "2197",
+        "light_plus_memory": "169"
+      },
+      {
+        "step": 1,
+        "light": "169",
+        "memory": "0",
+        "arming": "0",
+        "selector": "2197",
+        "light_plus_memory": "169"
+      },
+      {
+        "step": 2,
+        "light": "169",
+        "memory": "0",
+        "arming": "0",
+        "selector": "2197",
+        "light_plus_memory": "169"
+      },
+      {
+        "step": 3,
+        "light": "169",
+        "memory": "0",
+        "arming": "0",
+        "selector": "2197",
+        "light_plus_memory": "169"
+      },
+      {
+        "step": 4,
+        "light": "169",
+        "memory": "0",
+        "arming": "0",
+        "selector": "2197",
+        "light_plus_memory": "169"
+      },
+      {
+        "step": 5,
+        "light": "169",
+        "memory": "0",
+        "arming": "0",
+        "selector": "2197",
+        "light_plus_memory": "169"
+      },
+      {
+        "step": 6,
+        "light": "169",
+        "memory": "0",
+        "arming": "0",
+        "selector": "2197",
+        "light_plus_memory": "169"
+      }
+    ],
+    "physical_gates": {
+      "energy_frequency_calibration": "not_tested",
+      "photon_number": "not_tested",
+      "born_measure": "not_tested",
+      "single_photon_anticorrelation": "not_tested",
+      "material_clock_and_recoil": "not_tested",
+      "general_physical_acceptance": "blocked"
+    }
+  },
+  "double_amplitude": {
+    "run_id": "cac8f1bda746385ff079d8e127bb65665af391a41df786ecf30d66f5558e101f",
+    "tensor_hash": "0bfa6e7d87c32d69e2e0bf778b5965513355ee3682a8a7e9453bc5ffb82a4bd7",
+    "outcomes": {
+      "capture": 169,
+      "release": 0,
+      "exchange": 0,
+      "no_transfer": 845
+    },
+    "arithmetic_click_count": 3380,
+    "accounts": [
+      {
+        "step": 0,
+        "light": "676",
+        "memory": "0",
+        "arming": "169",
+        "selector": "2197",
+        "light_plus_memory": "676"
+      },
+      {
+        "step": 1,
+        "light": "676",
+        "memory": "0",
+        "arming": "169",
+        "selector": "2197",
+        "light_plus_memory": "676"
+      },
+      {
+        "step": 2,
+        "light": "676",
+        "memory": "0",
+        "arming": "169",
+        "selector": "2197",
+        "light_plus_memory": "676"
+      },
+      {
+        "step": 3,
+        "light": "0",
+        "memory": "676",
+        "arming": "169",
+        "selector": "2197",
+        "light_plus_memory": "676"
+      },
+      {
+        "step": 4,
+        "light": "0",
+        "memory": "676",
+        "arming": "169",
+        "selector": "2197",
+        "light_plus_memory": "676"
+      },
+      {
+        "step": 5,
+        "light": "0",
+        "memory": "676",
+        "arming": "169",
+        "selector": "2197",
+        "light_plus_memory": "676"
+      },
+      {
+        "step": 6,
+        "light": "0",
+        "memory": "676",
+        "arming": "169",
+        "selector": "2197",
+        "light_plus_memory": "676"
+      }
+    ],
+    "physical_gates": {
+      "energy_frequency_calibration": "not_tested",
+      "photon_number": "not_tested",
+      "born_measure": "not_tested",
+      "single_photon_anticorrelation": "not_tested",
+      "material_clock_and_recoil": "not_tested",
+      "general_physical_acceptance": "blocked"
+    }
+  }
+}

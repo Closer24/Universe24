@@ -4,7 +4,7 @@ This is the current algebra of the supported bundle-driven execution system. His
 
 Schema 3 admits only the regular 48-node-channel action defined in
 `COUPLING_ALGEBRA.md`, for every role. The research sectors later in this
-file, except the explicitly installed native light component, describe
+file, except the explicitly installed native light and memory components, describe
 mathematical results from pre-schema-3 source at commit
 `e281f7e7b251641a741d185116656fedaa5396f8`; they are not automatically
 admissible current bundles. Their evidence remains bound to that source.
@@ -334,6 +334,13 @@ For the single-plane preparation, the passive electromagnetic energy is also
 constant. No physical energy interpretation is assigned to all invisible
 regular-representation modes. Geometry/source backreaction and photon
 statistics are absent; algebraic candidate acceptance is not full physics.
+
+## Retained light-to-memory exchange
+The installed light/memory extension is specified in [DETECTOR.md](DETECTOR.md).
+Its fixed quadratic tensor realizes a reversible controlled exchange on a
+closed prepared sector, with exact sum(p²+m²) conservation and full 2O
+covariance. Retained arming and selector rows share the 48-channel allocation.
+This account is not a photon-number or hbar*omega calibration.
 
 ## Archived 18-channel optical test field
 

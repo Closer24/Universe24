@@ -22,6 +22,7 @@ def status():
         "full_physics_acceptance": "blocked",
         "installed_components": {
             "native_light_stream48": "48-channel 2O-covariant light tensor; exact axis-aligned transverse plane-wave sector on flat spacetime",
+            "light_memory48": "Retained, reversible light-to-memory exchange with a conserved excitation account; photon calibration remains open",
         },
         "restricted_research_results": {
             "native_massless_homogeneous_sector": "Exact sourced Einstein sampling on a declared complete-history domain",
@@ -55,6 +56,17 @@ def main(argv=None):
     light.add_argument("--center", type=int, default=4)
     light.add_argument("--order", type=int, default=4)
     light.add_argument("--amplitude", type=int, default=1)
+    detector = sub.add_parser("prepare-detector", help="Prepare retained light-to-memory exchange in 48 channels")
+    detector.add_argument("--out", type=Path, required=True)
+    detector.add_argument("--size", type=int, default=13)
+    detector.add_argument("--root", type=int, default=0, help="2O orientation label, 0..47")
+    detector.add_argument("--light-position", type=int, default=2)
+    detector.add_argument("--arm-position", type=int, default=7)
+    detector.add_argument("--amplitude", type=int, default=1)
+    detector.add_argument("--unarmed", action="store_true", help="Prepare the same tensor without an arming pulse")
+    detect = sub.add_parser("detect", help="Replay a detector run and read retained capture/release records")
+    detect.add_argument("--run", type=Path, required=True)
+    detect.add_argument("--out", type=Path, required=True, help="New observation JSON file")
     run = sub.add_parser("run", help="Run the complete saved seed through its immutable tensor")
     run.add_argument("--bundle", type=Path, required=True)
     run.add_argument("--steps", type=int, required=True)
@@ -67,6 +79,24 @@ def main(argv=None):
     try:
         if args.command in (None, "status"):
             result = status()
+        elif args.command == "prepare-detector":
+            from universe24.detection import make_detector_bundle
+            from universe24.system.bundle import save_bundle
+            bundle = make_detector_bundle(L=args.size, root=args.root, light_position=args.light_position,
+                                          arm_position=args.arm_position, amplitude=args.amplitude,
+                                          armed=not args.unarmed)
+            save_bundle(bundle, args.out)
+            result = {"bundle_id": bundle.bundle_id, "channels": bundle.tensor.G,
+                      "path": str(args.out), "model_contract": bundle.model_contract,
+                      "physics_acceptance": "not_tested"}
+        elif args.command == "detect":
+            from universe24.detection import observe_detector_run
+            report = observe_detector_run(args.run)
+            with args.out.open('x', encoding='utf-8') as output:
+                json.dump(report, output, indent=2)
+                output.write('\n')
+            result = {key: value for key, value in report.items() if key not in ('events', 'accounts')}
+            result['observation_file'] = str(args.out)
         elif args.command == "prepare-light":
             from universe24.light import make_light_bundle
             from universe24.system.bundle import save_bundle
