@@ -39,6 +39,24 @@ central research collector is not a supported schema-3 execution path.
 
 ## Reviewed execution and acceptance
 
+The installed `universe24/node.py` exposes `NodeView`, `FacePort` and `EdgeRef`.
+Six internal faces partition the existing 48 channels (eight per face); each
+node still retains exactly 144 integers. Opposite endpoint ports agree on a
+canonical topological edge identity, including periodic seams. The interface
+adds no retained link variable, scheduler or geometric length. Face groups
+describe propagation-frame labels and do not enforce a coupled physical law.
+
+The installed `universe24/observer.py` and `observe-clicks` command consume
+standalone canonical click files only. Optional retained-memory reconstruction
+requires explicit public calibration: detector tensor, zero initial memory,
+nonnegative amplitudes, constant carries and a complete observation horizon.
+It rejects malformed, mixed or duplicate records. It never opens a bundle,
+full transition trace or metric; independent replay remains an auditor task.
+Arithmetic addresses and update indices are not physical distances or proper
+time. [The node/click integration](research/node_clicks/README.md) registers
+these passive interfaces, ownership limits, exact controls and blocked
+same-law matter/Einstein claims. Existing retained ownership is unchanged.
+
 The current-schema [light/link resonance audit](research/light_link_resonance/README.md)
 tests restoring motion and optical coupling without changing the installed
 light component. It constructs exact 48-channel, 2O-covariant research

@@ -103,6 +103,8 @@ Open `runs/geodesic-board/board.html`. This retained **massive45 negative-contro
 | `universe24/core/` | Fixed tensor, lattice, exact state and Rule3 Engine |
 | `universe24/light.py` | Installed 48-channel 2O light tensor and complete plane-wave preparation |
 | `universe24/detection.py` | Installed retained light/memory exchange, complete arming preparation and passive observation |
+| `universe24/node.py` | Six passive internal face views and shared topological edge references; no extra retained state |
+| `universe24/observer.py` | Click-file-only observation and explicitly calibrated memory reconstruction |
 | `universe24/system/bundle.py` | Complete inputs, budget, strict locality and integrity |
 | `universe24/system/runtime.py` | The sole run/replay/verify implementation |
 | `universe24/system/decoder.py` | Canonical passive arithmetic records |
@@ -151,6 +153,30 @@ on tick 16 when the arming pulse returns around the periodic lattice. `detect`
 reports transfers and no-transfer opportunities separately from arithmetic
 clicks. These records are not calibrated photon counts. See [DETECTOR.md](docs/DETECTOR.md)
 for the derivation, control preparations and remaining physical requirements.
+
+## Observe clicks without hidden-state access
+
+The installed `observe-clicks` command reads only a standalone canonical click
+file. It does not load a bundle or open full state histories:
+
+```bash
+python -m universe24 observe-clicks --clicks runs/detector-main/clicks.jsonl.gz
+```
+
+For the default detector preparation, public calibration specifies memory
+channel 1, 2197 node addresses and 18 recorded updates. Zero initial memory,
+the nonnegative detector sector and a complete observation horizon are required:
+
+```bash
+python -m universe24 observe-clicks --clicks runs/detector-main/clicks.jsonl.gz \
+  --memory-channel 1 --nodes 2197 --steps 18 --out runs/click-memory.json
+```
+
+This reconstructs retained memory changes; it does not count photons or infer
+proper time or an event metric. `detect` remains the independent full-state
+audit. See [the node/click integration](docs/research/node_clicks/README.md)
+for the six internal face interface, controls, failed common-law attempt and
+the preserved limits on matter, dark matter and gravitational-wave claims.
 
 ## What we need to research
 

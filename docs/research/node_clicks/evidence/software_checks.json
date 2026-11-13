@@ -1,0 +1,35 @@
+{
+  "schema": "universe24/node-click-integration/1",
+  "public_base": "535a4b7f6a65e7b9769a711db8ce99703b240b72",
+  "base_merge_pr": 73,
+  "unit_tests": {
+    "status": "passed",
+    "count": 139,
+    "elapsed_seconds": 50.453
+  },
+  "generic_smoke": "passed",
+  "standalone_click_cli": {
+    "status": "passed",
+    "captures": 25,
+    "releases": 25,
+    "hidden_bundle_or_trace_read": false
+  },
+  "new_saved_runs": 20,
+  "new_forward_updates": 127,
+  "existing_geodesic_replay_updates": 128,
+  "existing_phase_saved_runs": 31,
+  "existing_phase_forward_updates": 917,
+  "physical_acceptance": "blocked",
+  "source_sha256": {
+    "universe24/node.py": "f1c814ae21325009b59e68f9c11eb6c4e10e75247519b87e0954bbe3fa3472ce",
+    "universe24/observer.py": "f1246299374f678a62d9f254be0cc239f9343aa1865ebe83f394077cca2b6187",
+    "universe24/runtime.py": "6cfbf4afab98cf09f6b52dd0502d85a087906aba880789237e34eb5c3b77e6b5",
+    "universe24/tests/test_node_ports.py": "ee17ae2892741afc57f976ae26be9a5151e09d5635baa692c9b36ba732bacb10",
+    "universe24/tests/test_observer_contract.py": "41cb30c9c481660582784bf041fe9ccc33795e94f8ad8e7cd6b87389af6d9db8",
+    "universe24/tests/test_observer_cli.py": "88fc46caba8f8c8ccf7537c8b7138c797ceb472fe95a6c7fcc7177665a8fbd08",
+    "validation/click_observer_audit.py": "758b8382e4259c2416cd34876f7a22784b6e0f52558e97f8ada1d5dcf86fd272",
+    "validation/matter_dark_audit.py": "85a87ae6fd963353e5f6b3c076a390598f26b5e1c0f813443f4bf3d815b503af",
+    "validation/detector_clock_integration.py": "357973c41dcd0d9380cec45bb7e7b2f502b4e0055e798f1db807d0e220960330",
+    "validation/geodesic_link_audit.py": "6852f3ff9e32fd561b85c0a10b143de47532c311ecfbfe7706a67326955495ed"
+  }
+}

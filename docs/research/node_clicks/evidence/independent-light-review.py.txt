@@ -1,0 +1,144 @@
+"""Independent, finite phase-gate review; does not modify production sources."""
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+import sys
+
+import numpy as np
+
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+
+from universe24.core import Engine, State
+from universe24.light import electromagnetic_fields, orientations
+from validation.light_link_resonance import PAIRS, PARTNER, build_tensor, prepare
+
+FILES = [ROOT / 'validation/light_link_resonance.py', ROOT / 'universe24/light.py']
+FILES += sorted((ROOT / 'universe24/core').glob('*.py'))
+FILES += sorted((ROOT / 'universe24/algebra').glob('*.py'))
+
+
+def hashes():
+    return {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in FILES}
+
+
+def contrast(state, bank='b'):
+    b = getattr(state, bank).astype(object)
+    return b - b[list(PARTNER)]
+
+
+def total_plane_readout_energy(state):
+    return sum(int(v) ** 2 for field in electromagnetic_fields(state) for v in field.flat)
+
+
+def run():
+    sources = hashes()
+    tensor = build_tensor(gradient=3, spring=3, optical=0, backreaction=False, phase_gate=True)
+    engine = Engine(tensor)
+    adjacency = [set([g]) for g in range(48)]
+    for term in tensor.monomials:
+        for factor in term.factors:
+            adjacency[term.target].add(factor.gear)
+            adjacency[factor.gear].add(term.target)
+    remaining = set(range(48))
+    components = []
+    while remaining:
+        component = set([min(remaining)])
+        todo = list(component)
+        while todo:
+            for other in adjacency[todo.pop()] - component:
+                component.add(other)
+                todo.append(other)
+        remaining -= component
+        components.append(sorted(component))
+    assert len(components) == 24 and all(len(c) == 2 for c in components)
+    assert all(PARTNER[c[0]] == c[1] for c in components)
+    assert all(orientations()[c[0]][0] == orientations()[c[1]][0] for c in components)
+
+    # Independently eliminate p from the exact integer rule. Arbitrary raw
+    # positive integers test this identity outside the special plane seeds.
+    rng = np.random.default_rng(61593)
+    a = rng.integers(1, 20, size=(48, 27)).astype(object)
+    b = rng.integers(1, 20, size=(48, 27)).astype(object)
+    r = rng.integers(0, 6, size=(48, 27))
+    state = State(3, a, b, r)
+    q, old_q = contrast(state), contrast(state, 'a')
+    predicted = np.empty_like(q)
+    for g, (n, _, _) in enumerate(orientations()):
+        plus = state.lattice.shift_index(n)
+        minus = state.lattice.shift_index(tuple(-v for v in n))
+        predicted[g] = -old_q[g] - q[g] + q[g, plus] + q[g] ** 2 * (q[g, minus] - q[g, plus])
+    after = engine.step(state)
+    assert np.array_equal(contrast(after), predicted)
+    assert np.array_equal(after.r, state.r)
+    assert engine.inverse_step(after).same_as(state)
+
+    # Change p and old-p extensively while preserving q and old-q exactly.
+    changed = State(3, state.a, state.b, state.r)
+    for g, h in PAIRS:
+        da = rng.integers(0, 20, size=27)
+        db = rng.integers(0, 20, size=27)
+        for k in (g, h):
+            changed.a[k] += da
+            changed.b[k] += db
+    changed_after = engine.step(changed)
+    assert np.array_equal(contrast(after), contrast(changed_after))
+    assert not np.array_equal(after.b, changed_after.b)
+
+    histories = []
+    for amplitude in (0, 1, 17):
+        current, meta = prepare(paused_history=True, amplitude=amplitude)
+        q_hashes, energies = [], []
+        minimum = min(int(v) for field in (current.a, current.b, current.r) for v in field.flat)
+        for tick in range(33):
+            q_hashes.append(hashlib.sha256(json.dumps(contrast(current).tolist()).encode()).hexdigest())
+            energies.append(total_plane_readout_energy(current))
+            minimum = min(minimum, min(int(v) for field in (current.a, current.b, current.r) for v in field.flat))
+            if tick < 32:
+                current = engine.step(current)
+        assert len(set(energies)) == 1 and minimum >= 1
+        histories.append({'amplitude': amplitude, 'energy': energies[0], 'q_hashes': q_hashes,
+                          'minimum_retained_integer': minimum})
+    assert histories[0]['q_hashes'] == histories[1]['q_hashes'] == histories[2]['q_hashes']
+
+    # A contrast disturbance can cross a face on the optical hold update.
+    # This is a causal-cone check, not a claim of physical superluminality.
+    seed, meta = prepare(paused_history=True, amplitude=0)
+    hold = engine.step(seed)
+    disturbed = State(hold.L, hold.a, hold.b, hold.r)
+    g, h = meta['carrier_pair']
+    n = orientations()[g][0]
+    source = hold.lattice.index(1, 1, 1)
+    reached = hold.lattice.shift_index(tuple(-v for v in n))[source]
+    disturbed.b[g, source] += 1
+    disturbed.b[h, source] -= 1
+    ordinary_next, disturbed_next = engine.step(hold), engine.step(disturbed)
+    difference = contrast(disturbed_next)[g] - contrast(ordinary_next)[g]
+    assert difference[reached] == 2
+    assert all(np.array_equal(x, y) for x, y in zip(electromagnetic_fields(ordinary_next), electromagnetic_fields(disturbed_next)))
+    assert min(int(v) for field in (disturbed_next.a, disturbed_next.b, disturbed_next.r) for v in field.flat) >= 1
+
+    assert sources == hashes(), 'reviewed source changed during independent checks'
+    result = {
+        'schema': 'universe24/phase-review/1',
+        'git_head_at_review': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
+        'source_hashes': sources,
+        'tensor_hash': tensor.fingerprint,
+        'channels': 48, 'terms': len(tensor.monomials), 'components': components,
+        'general_contrast_identity': 'passed',
+        'source_to_contrast_backreaction': 'absent algebraically',
+        'p_intervention_preserves_next_q': True,
+        'prepared_amplitude_interventions': histories,
+        'hold_tick_contrast_signal': {'source': int(source), 'receiver': int(reached), 'response': int(difference[reached]),
+                                     'optical_readout_unchanged': True, 'retained_integers_positive': True},
+        'scope': 'Exact tensor and finite mechanical counterchecks, not a metric, detector or full Maxwell validation.'}
+    target = Path(__file__).with_name('results.json')
+    target.write_text(json.dumps(result, indent=2) + '\n')
+    print(json.dumps({k: v for k, v in result.items() if k not in ('source_hashes', 'components', 'prepared_amplitude_interventions')}, indent=2))
+
+
+if __name__ == '__main__':
+    run()

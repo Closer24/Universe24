@@ -73,6 +73,16 @@ single agenda, the algebra and the same-law acceptance evidence together.
 
 ## Mandatory allocation and symmetry contract
 
+Installed node/face accessors and a click-only observer are registered in
+[the node/click integration](research/node_clicks/README.md). They allocate
+no evolving state and introduce no alternative Engine. Calibrated detector
+memory can be inferred from clicks, while arithmetic clicks alone are not
+species labels, photon counts or a metric. The current phase law has no
+optical-to-contrast backreaction and no cross-face channel coupling; its
+direct sum with the detector correction fails both prepared domains. A new
+joint invariant preparation and reciprocal spatial law must close these
+gates before ordinary matter, dark matter or Einstein-wave claims advance.
+
 The [current light/link resonance audit](research/light_link_resonance/README.md)
 adds admitted 48-channel controls under the existing interface. Its positive
 result is an exactly reversible homogeneous move/hold light sector driven by

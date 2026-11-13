@@ -1,0 +1,257 @@
+{
+  "schema": "universe24/phase-review/1",
+  "git_head_at_review": "43b63f2f00525de580c92f20a05b83f74c99cc00",
+  "source_hashes": {
+    "validation/light_link_resonance.py": "c972b874290dd3c51a07740331ed047da25f61b1c1727868d6a630323540e93a",
+    "universe24/light.py": "0a21840615eb6c2cd673854ba0fc6d4689ea9d67313f3a89b0cf5f5d30e22ea9",
+    "universe24/core/__init__.py": "3a5fe3045078f81973c65f999038e77b854dc0021b26232adbcbac377d38ee9c",
+    "universe24/core/channels.py": "cbff6d1c98bc660d55ab9efd64d9f2cbf6624b265492ca639e21722defc83f5b",
+    "universe24/core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+    "universe24/core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+    "universe24/core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+    "universe24/core/reciprocity.py": "09ca244016fc911c9482e43e27f767a7dcc6577476d53c5b924f19758ec17569",
+    "universe24/core/reversors.py": "7063c86ec6c4097eef03a90a1f5d9186ad4f0bc7efe656229e5a0cf4fd28ab32",
+    "universe24/core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+    "universe24/core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+    "universe24/algebra/__init__.py": "239116c77d190d312f7b2cb2d03bd5670bee6f47d028998d6e023a1260b4b25d",
+    "universe24/algebra/coupling.py": "4d822203dbb75bd5192c4fddcbf8e2ffbab6c46c2a55cb19f101bcecaa4f6489",
+    "universe24/algebra/frame_equations.py": "0414e93591cfaf7d1ab3c1c3ac45d958fa120a83c5a3bb337063622106162845",
+    "universe24/algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+    "universe24/algebra/integer_circuit.py": "6b1a136079cc4e230bc899aa15f4ed7ae655d33b653595d3185be5d018aaa8e5",
+    "universe24/algebra/null_covector.py": "59ceb651bd4b547be94ff93163026d7ce9a800b78b722acdf82cfa48fb90716a"
+  },
+  "tensor_hash": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116",
+  "channels": 48,
+  "terms": 384,
+  "components": [
+    [
+      0,
+      14
+    ],
+    [
+      1,
+      23
+    ],
+    [
+      2,
+      24
+    ],
+    [
+      3,
+      33
+    ],
+    [
+      4,
+      34
+    ],
+    [
+      5,
+      35
+    ],
+    [
+      6,
+      36
+    ],
+    [
+      7,
+      43
+    ],
+    [
+      8,
+      32
+    ],
+    [
+      9,
+      44
+    ],
+    [
+      10,
+      31
+    ],
+    [
+      11,
+      27
+    ],
+    [
+      12,
+      26
+    ],
+    [
+      13,
+      45
+    ],
+    [
+      15,
+      39
+    ],
+    [
+      16,
+      42
+    ],
+    [
+      17,
+      21
+    ],
+    [
+      18,
+      37
+    ],
+    [
+      19,
+      41
+    ],
+    [
+      20,
+      38
+    ],
+    [
+      22,
+      40
+    ],
+    [
+      25,
+      47
+    ],
+    [
+      28,
+      46
+    ],
+    [
+      29,
+      30
+    ]
+  ],
+  "general_contrast_identity": "passed",
+  "source_to_contrast_backreaction": "absent algebraically",
+  "p_intervention_preserves_next_q": true,
+  "prepared_amplitude_interventions": [
+    {
+      "amplitude": 0,
+      "energy": 0,
+      "q_hashes": [
+        "5dea4c8bbee69443e354fe9f5a2067458bb81682bf11585d627e1e734f5e194a",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5a1c367a21fb26c01b7296139ce2123ac0a7969456f0adf4160076699feaca79",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5dea4c8bbee69443e354fe9f5a2067458bb81682bf11585d627e1e734f5e194a",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5a1c367a21fb26c01b7296139ce2123ac0a7969456f0adf4160076699feaca79",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5dea4c8bbee69443e354fe9f5a2067458bb81682bf11585d627e1e734f5e194a",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5a1c367a21fb26c01b7296139ce2123ac0a7969456f0adf4160076699feaca79",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5dea4c8bbee69443e354fe9f5a2067458bb81682bf11585d627e1e734f5e194a",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5a1c367a21fb26c01b7296139ce2123ac0a7969456f0adf4160076699feaca79",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5dea4c8bbee69443e354fe9f5a2067458bb81682bf11585d627e1e734f5e194a",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5a1c367a21fb26c01b7296139ce2123ac0a7969456f0adf4160076699feaca79",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5dea4c8bbee69443e354fe9f5a2067458bb81682bf11585d627e1e734f5e194a",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5a1c367a21fb26c01b7296139ce2123ac0a7969456f0adf4160076699feaca79",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5dea4c8bbee69443e354fe9f5a2067458bb81682bf11585d627e1e734f5e194a",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5a1c367a21fb26c01b7296139ce2123ac0a7969456f0adf4160076699feaca79",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5dea4c8bbee69443e354fe9f5a2067458bb81682bf11585d627e1e734f5e194a",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5a1c367a21fb26c01b7296139ce2123ac0a7969456f0adf4160076699feaca79",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5dea4c8bbee69443e354fe9f5a2067458bb81682bf11585d627e1e734f5e194a"
+      ],
+      "minimum_retained_integer": 1
+    },
+    {
+      "amplitude": 1,
+      "energy": 768,
+      "q_hashes": [
+        "5dea4c8bbee69443e354fe9f5a2067458bb81682bf11585d627e1e734f5e194a",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5a1c367a21fb26c01b7296139ce2123ac0a7969456f0adf4160076699feaca79",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5dea4c8bbee69443e354fe9f5a2067458bb81682bf11585d627e1e734f5e194a",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5a1c367a21fb26c01b7296139ce2123ac0a7969456f0adf4160076699feaca79",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5dea4c8bbee69443e354fe9f5a2067458bb81682bf11585d627e1e734f5e194a",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5a1c367a21fb26c01b7296139ce2123ac0a7969456f0adf4160076699feaca79",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5dea4c8bbee69443e354fe9f5a2067458bb81682bf11585d627e1e734f5e194a",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5a1c367a21fb26c01b7296139ce2123ac0a7969456f0adf4160076699feaca79",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5dea4c8bbee69443e354fe9f5a2067458bb81682bf11585d627e1e734f5e194a",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5a1c367a21fb26c01b7296139ce2123ac0a7969456f0adf4160076699feaca79",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5dea4c8bbee69443e354fe9f5a2067458bb81682bf11585d627e1e734f5e194a",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5a1c367a21fb26c01b7296139ce2123ac0a7969456f0adf4160076699feaca79",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5dea4c8bbee69443e354fe9f5a2067458bb81682bf11585d627e1e734f5e194a",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5a1c367a21fb26c01b7296139ce2123ac0a7969456f0adf4160076699feaca79",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5dea4c8bbee69443e354fe9f5a2067458bb81682bf11585d627e1e734f5e194a",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5a1c367a21fb26c01b7296139ce2123ac0a7969456f0adf4160076699feaca79",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5dea4c8bbee69443e354fe9f5a2067458bb81682bf11585d627e1e734f5e194a"
+      ],
+      "minimum_retained_integer": 1
+    },
+    {
+      "amplitude": 17,
+      "energy": 221952,
+      "q_hashes": [
+        "5dea4c8bbee69443e354fe9f5a2067458bb81682bf11585d627e1e734f5e194a",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5a1c367a21fb26c01b7296139ce2123ac0a7969456f0adf4160076699feaca79",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5dea4c8bbee69443e354fe9f5a2067458bb81682bf11585d627e1e734f5e194a",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5a1c367a21fb26c01b7296139ce2123ac0a7969456f0adf4160076699feaca79",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5dea4c8bbee69443e354fe9f5a2067458bb81682bf11585d627e1e734f5e194a",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5a1c367a21fb26c01b7296139ce2123ac0a7969456f0adf4160076699feaca79",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5dea4c8bbee69443e354fe9f5a2067458bb81682bf11585d627e1e734f5e194a",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5a1c367a21fb26c01b7296139ce2123ac0a7969456f0adf4160076699feaca79",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5dea4c8bbee69443e354fe9f5a2067458bb81682bf11585d627e1e734f5e194a",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5a1c367a21fb26c01b7296139ce2123ac0a7969456f0adf4160076699feaca79",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5dea4c8bbee69443e354fe9f5a2067458bb81682bf11585d627e1e734f5e194a",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5a1c367a21fb26c01b7296139ce2123ac0a7969456f0adf4160076699feaca79",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5dea4c8bbee69443e354fe9f5a2067458bb81682bf11585d627e1e734f5e194a",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5a1c367a21fb26c01b7296139ce2123ac0a7969456f0adf4160076699feaca79",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5dea4c8bbee69443e354fe9f5a2067458bb81682bf11585d627e1e734f5e194a",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5a1c367a21fb26c01b7296139ce2123ac0a7969456f0adf4160076699feaca79",
+        "9973eb6d2d9af7b8dfc3d5b8b3f81c101ea76c9da45c08df69279bf90a9be2c6",
+        "5dea4c8bbee69443e354fe9f5a2067458bb81682bf11585d627e1e734f5e194a"
+      ],
+      "minimum_retained_integer": 1
+    }
+  ],
+  "hold_tick_contrast_signal": {
+    "source": 21,
+    "receiver": 5,
+    "response": 2,
+    "optical_readout_unchanged": true,
+    "retained_integers_positive": true
+  },
+  "scope": "Exact tensor and finite mechanical counterchecks, not a metric, detector or full Maxwell validation."
+}

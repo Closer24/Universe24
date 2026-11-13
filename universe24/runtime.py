@@ -23,6 +23,8 @@ def status():
         "installed_components": {
             "native_light_stream48": "48-channel 2O-covariant light tensor; exact axis-aligned transverse plane-wave sector on flat spacetime",
             "light_memory48": "Retained, reversible light-to-memory exchange with a conserved excitation account; photon calibration remains open",
+            "node_face_views": "Six passive internal face views of existing state; shared adjacency identities add no link memory or metric",
+            "click_only_observer": "Reads canonical clicks; memory reconstruction requires explicit zero-memory, nonnegative-sector calibration",
         },
         "restricted_research_results": {
             "native_massless_homogeneous_sector": "Exact sourced Einstein sampling on a declared complete-history domain",
@@ -67,6 +69,12 @@ def main(argv=None):
     detect = sub.add_parser("detect", help="Replay a detector run and read retained capture/release records")
     detect.add_argument("--run", type=Path, required=True)
     detect.add_argument("--out", type=Path, required=True, help="New observation JSON file")
+    observe = sub.add_parser("observe-clicks", help="Observe a click file without opening hidden states or a bundle")
+    observe.add_argument("--clicks", type=Path, required=True)
+    observe.add_argument("--out", type=Path, help="Optional new observation JSON file")
+    observe.add_argument("--memory-channel", type=int, help="Explicit calibrated detector-memory channel")
+    observe.add_argument("--nodes", type=int, help="Public node-address count, not physical volume")
+    observe.add_argument("--steps", type=int, help="Declared complete observation horizon, not proper time")
     run = sub.add_parser("run", help="Run the complete saved seed through its immutable tensor")
     run.add_argument("--bundle", type=Path, required=True)
     run.add_argument("--steps", type=int, required=True)
@@ -97,6 +105,20 @@ def main(argv=None):
                 output.write('\n')
             result = {key: value for key, value in report.items() if key not in ('events', 'accounts')}
             result['observation_file'] = str(args.out)
+        elif args.command == "observe-clicks":
+            from universe24.observer import inspect_click_file, reconstruct_memory_from_clicks
+            calibration = (args.memory_channel, args.nodes, args.steps)
+            if any(value is not None for value in calibration) and any(value is None for value in calibration):
+                raise ValueError('memory calibration requires --memory-channel, --nodes and --steps together')
+            result = inspect_click_file(args.clicks)
+            if args.memory_channel is not None:
+                result['calibrated_memory'] = reconstruct_memory_from_clicks(
+                    args.clicks, memory_channel=args.memory_channel,
+                    node_count=args.nodes, steps=args.steps)
+            if args.out is not None:
+                with args.out.open('x', encoding='utf-8') as output:
+                    json.dump(result, output, indent=2)
+                    output.write('\n')
         elif args.command == "prepare-light":
             from universe24.light import make_light_bundle
             from universe24.system.bundle import save_bundle

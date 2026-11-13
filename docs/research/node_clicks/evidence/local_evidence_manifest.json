@@ -1,0 +1,940 @@
+{
+  "files": [
+    {
+      "path": "runs/click-observer-20261113-v2/detector-armed/bundle/bundle.json",
+      "bytes": 885,
+      "sha256": "e14ba661defde0d18ee458e2f45fdfe3c7b8ddfb413b70b6654c738500916a4a"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-armed/bundle/channels.json",
+      "bytes": 6903,
+      "sha256": "44f2b86ab9017c630e6859fef36f36a1a6757957b1bec52f26cd5636e53bb47b"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-armed/bundle/model.json",
+      "bytes": 724,
+      "sha256": "882c1d552bb6d40e0de432136718178163b0e839f125a6e83b41eddb0a8b3c91"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-armed/bundle/protocol.json",
+      "bytes": 43,
+      "sha256": "2f111c078c0608b53dd9647487292bd1ad66800a2a21a9fe710fc84dc6d6d79f"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-armed/bundle/seed.json.gz",
+      "bytes": 338,
+      "sha256": "4ecf367d7fdfcece357da05985109fac7c0d3f5183f9bebf62468272238c6be3"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-armed/bundle/tensor.json",
+      "bytes": 52700,
+      "sha256": "0bfa6e7d87c32d69e2e0bf778b5965513355ee3682a8a7e9453bc5ffb82a4bd7"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-armed/click-only-memory.json",
+      "bytes": 17730,
+      "sha256": "ad8fd2e4b2ce99f0c728be2f2ddad45aa5b1cb474823268d43727bee3411790f"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-armed/clicks.jsonl.gz",
+      "bytes": 30644,
+      "sha256": "630038992e687ef06cf55bc9894f14168f0aa15132942be35191bc538957207e"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-armed/full_trace.jsonl.gz",
+      "bytes": 5048,
+      "sha256": "3b240ba1f9fb6aba1c4574b0575c984eb8e79d4ab989b87a5fe24cb54fb4294f"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-armed/validation.json",
+      "bytes": 2615,
+      "sha256": "55751bd9c93396ba1f41d1385edc1e3ab48d0755e4c8c87ced4bd32ebd47f8d8"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-double-amplitude/bundle/bundle.json",
+      "bytes": 885,
+      "sha256": "4a226a0e341c5c6838a0f67f47ebbd63c42e54d48d4a06268fdc35f210799f08"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-double-amplitude/bundle/channels.json",
+      "bytes": 6903,
+      "sha256": "44f2b86ab9017c630e6859fef36f36a1a6757957b1bec52f26cd5636e53bb47b"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-double-amplitude/bundle/model.json",
+      "bytes": 724,
+      "sha256": "51ba1cc00e05c1cb6a63cfdb8560553bdd38d0e02bbaaf197d9fd4f58ca767e4"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-double-amplitude/bundle/protocol.json",
+      "bytes": 43,
+      "sha256": "2f111c078c0608b53dd9647487292bd1ad66800a2a21a9fe710fc84dc6d6d79f"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-double-amplitude/bundle/seed.json.gz",
+      "bytes": 339,
+      "sha256": "508231d803c8de80c0cc41563bec37976307645316569810d1651455e294f3d6"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-double-amplitude/bundle/tensor.json",
+      "bytes": 52700,
+      "sha256": "0bfa6e7d87c32d69e2e0bf778b5965513355ee3682a8a7e9453bc5ffb82a4bd7"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-double-amplitude/click-only-memory.json",
+      "bytes": 17735,
+      "sha256": "688ba840ac078d823374accd0072e79bf2194a7c57ce0867bd16f6092a1f2efc"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-double-amplitude/clicks.jsonl.gz",
+      "bytes": 30760,
+      "sha256": "52f353ab1760a5b571cbfe446110505a05d9782eb5731a70c6fee00b753c0e1a"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-double-amplitude/full_trace.jsonl.gz",
+      "bytes": 5099,
+      "sha256": "2ab14a225f5b86fce84ce0029f3117e6fd5a84d60ac4aefb8da8f1daa4f89486"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-double-amplitude/validation.json",
+      "bytes": 2615,
+      "sha256": "818e950cb41b88ba7adc08dd04818b8b459df62bbd07581f2a3f1be6d62c2b25"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-no-light/bundle/bundle.json",
+      "bytes": 885,
+      "sha256": "7aacbe86b2c0b768f0a9d41cedb4051fca76ad70798ebefbf617f35a27c0fa14"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-no-light/bundle/channels.json",
+      "bytes": 6903,
+      "sha256": "44f2b86ab9017c630e6859fef36f36a1a6757957b1bec52f26cd5636e53bb47b"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-no-light/bundle/model.json",
+      "bytes": 724,
+      "sha256": "aedd948c7bacf915a6d60afabf40f53888dbf25e8120e87b1dbc808aa44db1fe"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-no-light/bundle/protocol.json",
+      "bytes": 43,
+      "sha256": "2f111c078c0608b53dd9647487292bd1ad66800a2a21a9fe710fc84dc6d6d79f"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-no-light/bundle/seed.json.gz",
+      "bytes": 327,
+      "sha256": "98f0a7d74c47b3a6bf49c21acfc1e869de0b6f26e8ff8875d74f0090f893af53"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-no-light/bundle/tensor.json",
+      "bytes": 52700,
+      "sha256": "0bfa6e7d87c32d69e2e0bf778b5965513355ee3682a8a7e9453bc5ffb82a4bd7"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-no-light/click-only-memory.json",
+      "bytes": 1394,
+      "sha256": "93716d54365b7d669a3916f307861fb64fd0df5e8e15dd5998f054669f80b283"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-no-light/clicks.jsonl.gz",
+      "bytes": 18912,
+      "sha256": "64975d4d8ad802df39473a346678a904f745a696f1db7e4fa054130e41d6718f"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-no-light/full_trace.jsonl.gz",
+      "bytes": 4880,
+      "sha256": "451afbdb52cdf3213cc4e9a71bb7122c13becd48b9485649fa8da71fc2f60e94"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-no-light/validation.json",
+      "bytes": 2615,
+      "sha256": "3afbb948d98ef8471605f3d5c9a3acdc478ba6be8a71b248fe9c15a2ed5176c0"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-unarmed/bundle/bundle.json",
+      "bytes": 885,
+      "sha256": "1bd89cf3e7e0a95ea0864c72112a1858ecffeb7ee03cc3cab6f3e164c571c36a"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-unarmed/bundle/channels.json",
+      "bytes": 6903,
+      "sha256": "44f2b86ab9017c630e6859fef36f36a1a6757957b1bec52f26cd5636e53bb47b"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-unarmed/bundle/model.json",
+      "bytes": 725,
+      "sha256": "c1972eaa3604ed45e0db34949c50ac95ce457818e0a34eb532762a9c1e0b53ed"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-unarmed/bundle/protocol.json",
+      "bytes": 43,
+      "sha256": "2f111c078c0608b53dd9647487292bd1ad66800a2a21a9fe710fc84dc6d6d79f"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-unarmed/bundle/seed.json.gz",
+      "bytes": 329,
+      "sha256": "1c4c7c2501f67fddbf2e718e736c4e902caf29e442717b78f77502984d177cd5"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-unarmed/bundle/tensor.json",
+      "bytes": 52700,
+      "sha256": "0bfa6e7d87c32d69e2e0bf778b5965513355ee3682a8a7e9453bc5ffb82a4bd7"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-unarmed/click-only-memory.json",
+      "bytes": 1394,
+      "sha256": "93716d54365b7d669a3916f307861fb64fd0df5e8e15dd5998f054669f80b283"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-unarmed/clicks.jsonl.gz",
+      "bytes": 18941,
+      "sha256": "e7e9cf175de17da5d17246a00d74f286b1e46f7cb9f2ac98777e71de8852b1be"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-unarmed/full_trace.jsonl.gz",
+      "bytes": 4945,
+      "sha256": "67cf3dcdfe829bcbce82a154f4f6d0c43deb1fe869f39b60d2e51a2d032c243c"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/detector-unarmed/validation.json",
+      "bytes": 2615,
+      "sha256": "3015cee7a859494cec49211436bfd9bbfbfd356ea294dd7d3e243cbf01566020"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/light-remainder-1/bundle/bundle.json",
+      "bytes": 885,
+      "sha256": "6192f9843e6e0e7e4816f1a1db77f1370c6ac3c59a3fce7fd8ebbf108c9b99c5"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/light-remainder-1/bundle/channels.json",
+      "bytes": 6471,
+      "sha256": "88935d8ef9ddf42e3e5c886cc422e3b803216f6a3c825dea23a7a6f0c1897026"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/light-remainder-1/bundle/model.json",
+      "bytes": 220,
+      "sha256": "a550f1a0f2a79b54e4ea54456dedf0a94cf5422c5d46f037a0637333a35232eb"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/light-remainder-1/bundle/protocol.json",
+      "bytes": 43,
+      "sha256": "2f111c078c0608b53dd9647487292bd1ad66800a2a21a9fe710fc84dc6d6d79f"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/light-remainder-1/bundle/seed.json.gz",
+      "bytes": 389,
+      "sha256": "2a967afb3bc786b864f68455220921b471c439bc4af814377c31022a34cdb475"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/light-remainder-1/bundle/tensor.json",
+      "bytes": 7964,
+      "sha256": "a3b4ab5293de5ca5ce143bf86c17bbe908277ea4ad7fdceeaa8bf86d39129be6"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/light-remainder-1/clicks.jsonl.gz",
+      "bytes": 68732,
+      "sha256": "c5b377bf44a664274cbfb4a6a45a444bee15d85eaf495f02ee13457aa08f1cd4"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/light-remainder-1/full_trace.jsonl.gz",
+      "bytes": 4986,
+      "sha256": "e2533da49bbc7e194b63b0d183552f692deff9a79a52b86dfaf2eadfbc5e0d10"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/light-remainder-1/validation.json",
+      "bytes": 2602,
+      "sha256": "79fa62294f8de41910cfb2ee8359ddf7518a1218e344989cdecd28ac5498bc20"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/light-remainder-2/bundle/bundle.json",
+      "bytes": 885,
+      "sha256": "4241f6ddb251ed12bd00ac194490335145896a3e2508acd6d56fc104ae1508d5"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/light-remainder-2/bundle/channels.json",
+      "bytes": 6471,
+      "sha256": "88935d8ef9ddf42e3e5c886cc422e3b803216f6a3c825dea23a7a6f0c1897026"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/light-remainder-2/bundle/model.json",
+      "bytes": 220,
+      "sha256": "a550f1a0f2a79b54e4ea54456dedf0a94cf5422c5d46f037a0637333a35232eb"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/light-remainder-2/bundle/protocol.json",
+      "bytes": 43,
+      "sha256": "2f111c078c0608b53dd9647487292bd1ad66800a2a21a9fe710fc84dc6d6d79f"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/light-remainder-2/bundle/seed.json.gz",
+      "bytes": 393,
+      "sha256": "e241119bc1f9a4a8d5407b2cd38639362b2178c1a90a17b6aeed341687a19394"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/light-remainder-2/bundle/tensor.json",
+      "bytes": 7964,
+      "sha256": "a3b4ab5293de5ca5ce143bf86c17bbe908277ea4ad7fdceeaa8bf86d39129be6"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/light-remainder-2/clicks.jsonl.gz",
+      "bytes": 68702,
+      "sha256": "6d8b94621f57b7e9f984f83b050e4c3aa514cad05035f2aab277e55967e2137d"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/light-remainder-2/full_trace.jsonl.gz",
+      "bytes": 5151,
+      "sha256": "97124d1ccb0941c12648499c1f93bdfee2a814b78ac64f7ee593c482e20429aa"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/light-remainder-2/validation.json",
+      "bytes": 2602,
+      "sha256": "e26b429dc72ea5f998b63a4d49c8f61118fc3bde6dd8d5c02ee54f9183ecd48e"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/phase-amplitude-0/bundle/bundle.json",
+      "bytes": 885,
+      "sha256": "e0dd87396828837ab10fa6c3b1f2d61db4b33a6832ee82b58b4053168812c55a"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/phase-amplitude-0/bundle/channels.json",
+      "bytes": 8583,
+      "sha256": "c9d84c0d5995f625f55765d960b819e5f1619fabab5cc0284dfb7394b4e46ec8"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/phase-amplitude-0/bundle/model.json",
+      "bytes": 544,
+      "sha256": "8bb9a77fd95ed7ab8ceffe9b8a66e7e8badc68c62f34180aaf757f46c0faf8b3"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/phase-amplitude-0/bundle/protocol.json",
+      "bytes": 43,
+      "sha256": "2f111c078c0608b53dd9647487292bd1ad66800a2a21a9fe710fc84dc6d6d79f"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/phase-amplitude-0/bundle/seed.json.gz",
+      "bytes": 129,
+      "sha256": "69ce8274055b03a2520317ae6dc90dc9a80e96ead40633201ac73995aa5213f6"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/phase-amplitude-0/bundle/tensor.json",
+      "bytes": 35876,
+      "sha256": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/phase-amplitude-0/clicks.jsonl.gz",
+      "bytes": 362359,
+      "sha256": "283fb4ec95ec1a43e3fddc278fa7a7cedc4deeb16f2c3a068b469c2aed4b5711"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/phase-amplitude-0/full_trace.jsonl.gz",
+      "bytes": 1182,
+      "sha256": "da94065e066ade88265a0b024e812c774286ac6aaaa707e0cf477c4a3c8038bc"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/phase-amplitude-0/validation.json",
+      "bytes": 2605,
+      "sha256": "3668195915149fa4433a6702a52c73e8ad4a2a85e72784145b00179d5321784f"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/phase-amplitude-1/bundle/bundle.json",
+      "bytes": 885,
+      "sha256": "4260abbbfd49916b7b72b32cd97a85085fca6b77c9553fdab6876b58dbc6c01e"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/phase-amplitude-1/bundle/channels.json",
+      "bytes": 8583,
+      "sha256": "c9d84c0d5995f625f55765d960b819e5f1619fabab5cc0284dfb7394b4e46ec8"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/phase-amplitude-1/bundle/model.json",
+      "bytes": 544,
+      "sha256": "2c93e4e430c0255a85e4facb336c9d119d2a633e11379e90861858fcda556d3e"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/phase-amplitude-1/bundle/protocol.json",
+      "bytes": 43,
+      "sha256": "2f111c078c0608b53dd9647487292bd1ad66800a2a21a9fe710fc84dc6d6d79f"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/phase-amplitude-1/bundle/seed.json.gz",
+      "bytes": 151,
+      "sha256": "4e9d88a22dbfa4ea745f5acc81b0b06c244a448d54cca98ee8cf5f21d34bd57c"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/phase-amplitude-1/bundle/tensor.json",
+      "bytes": 35876,
+      "sha256": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/phase-amplitude-1/clicks.jsonl.gz",
+      "bytes": 364930,
+      "sha256": "2612503ed30e5e101c4861518cc8a72e4e81bf0733336d4ea8db16ba63a99101"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/phase-amplitude-1/full_trace.jsonl.gz",
+      "bytes": 1311,
+      "sha256": "a5c1a9fc678bb05911efce53e622a69055443ff4a316daa5856d06f82169b2cd"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/phase-amplitude-1/validation.json",
+      "bytes": 2605,
+      "sha256": "8b422449f9d429a90f15f6f141dce8a82b4be0155cc17fcb602349047027cbe6"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/results.json",
+      "bytes": 95302,
+      "sha256": "deb45fa4788ac4a7979cbd75e817898ad9a2059fa509f559665f4a6dc2fde16a"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/stationary-1/bundle/bundle.json",
+      "bytes": 885,
+      "sha256": "aff87504d01acef46cc68cd0a16400ef4cc3bab3bd7a8ecc3eb569a95c0a8134"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/stationary-1/bundle/channels.json",
+      "bytes": 6471,
+      "sha256": "88935d8ef9ddf42e3e5c886cc422e3b803216f6a3c825dea23a7a6f0c1897026"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/stationary-1/bundle/model.json",
+      "bytes": 218,
+      "sha256": "4c429e593841f9d7bb5280d4a10fc7ea02d37192fd6ea0a28a8cb864696cde0b"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/stationary-1/bundle/protocol.json",
+      "bytes": 43,
+      "sha256": "2f111c078c0608b53dd9647487292bd1ad66800a2a21a9fe710fc84dc6d6d79f"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/stationary-1/bundle/seed.json.gz",
+      "bytes": 97,
+      "sha256": "ea759de5320897c0451a8f922ab0175450ed8c84e6d7e6252806b21dde362174"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/stationary-1/bundle/tensor.json",
+      "bytes": 7964,
+      "sha256": "a3b4ab5293de5ca5ce143bf86c17bbe908277ea4ad7fdceeaa8bf86d39129be6"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/stationary-1/clicks.jsonl.gz",
+      "bytes": 25,
+      "sha256": "471bca732c742e1b5e345b262c55c05c700029e1bd52440c7c5a9aefc5d3d518"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/stationary-1/full_trace.jsonl.gz",
+      "bytes": 388,
+      "sha256": "99c64b158d6a533d15132e1e125730568bdbddc69f95bca9f355b16021c8e684"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/stationary-1/validation.json",
+      "bytes": 2590,
+      "sha256": "dda1a28f00c69c4a135ee9008668042a616078f633f64612fd3523cce485b181"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/stationary-2/bundle/bundle.json",
+      "bytes": 885,
+      "sha256": "b122b7c1c7bf5dc180beba2e765361cbb5b3c74742f4ae98f04f697bb565dd50"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/stationary-2/bundle/channels.json",
+      "bytes": 6471,
+      "sha256": "88935d8ef9ddf42e3e5c886cc422e3b803216f6a3c825dea23a7a6f0c1897026"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/stationary-2/bundle/model.json",
+      "bytes": 218,
+      "sha256": "4c429e593841f9d7bb5280d4a10fc7ea02d37192fd6ea0a28a8cb864696cde0b"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/stationary-2/bundle/protocol.json",
+      "bytes": 43,
+      "sha256": "2f111c078c0608b53dd9647487292bd1ad66800a2a21a9fe710fc84dc6d6d79f"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/stationary-2/bundle/seed.json.gz",
+      "bytes": 104,
+      "sha256": "2b0e37f23d883c7d691f432421c93721a98d726632c4ae8e70ba9068afac8bf3"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/stationary-2/bundle/tensor.json",
+      "bytes": 7964,
+      "sha256": "a3b4ab5293de5ca5ce143bf86c17bbe908277ea4ad7fdceeaa8bf86d39129be6"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/stationary-2/clicks.jsonl.gz",
+      "bytes": 25,
+      "sha256": "471bca732c742e1b5e345b262c55c05c700029e1bd52440c7c5a9aefc5d3d518"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/stationary-2/full_trace.jsonl.gz",
+      "bytes": 391,
+      "sha256": "6f834f7e111977f876e7b1bcd0b0ca8238c61259f600e905b991c1527b77ab18"
+    },
+    {
+      "path": "runs/click-observer-20261113-v2/stationary-2/validation.json",
+      "bytes": 2590,
+      "sha256": "d7c4efd9b24406759b404776bd837e343c00d386a4ab9eb098809c1cbc5c6f6f"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/clock/bundle/bundle.json",
+      "bytes": 885,
+      "sha256": "bda15117500f39c08eb5aed6206ac5747302412d8628339809cd3e113b215a8c"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/clock/bundle/channels.json",
+      "bytes": 7767,
+      "sha256": "79b7a84a8eae542ed4a255ea9cbd7db5f7ae473fa82cc0c55823a4491f36b089"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/clock/bundle/model.json",
+      "bytes": 606,
+      "sha256": "5ab4310994f711b272066c0bfc1ba3a2cdafa024685ca03d52d46693758101b1"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/clock/bundle/protocol.json",
+      "bytes": 43,
+      "sha256": "2f111c078c0608b53dd9647487292bd1ad66800a2a21a9fe710fc84dc6d6d79f"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/clock/bundle/seed.json.gz",
+      "bytes": 300,
+      "sha256": "c4241f3daab59c26d2dec4f6a2f9b8f331edea2c2530c545a656a69939f59580"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/clock/bundle/tensor.json",
+      "bytes": 35876,
+      "sha256": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/clock/clicks.jsonl.gz",
+      "bytes": 1674261,
+      "sha256": "f13786824219bbbf4144558b7b59631d0c90850dda78cf684b7147824cd0ce4c"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/clock/full_trace.jsonl.gz",
+      "bytes": 5299,
+      "sha256": "6d8cdf04abc35b45068b93e698f2c16b6f02be01100e0de5a765290551dbdc9c"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/clock/validation.json",
+      "bytes": 2607,
+      "sha256": "1daea396329302e8656c0c5eecf472f253c7f3a87024632ce89ca97a24161cab"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/clock-light/bundle/bundle.json",
+      "bytes": 885,
+      "sha256": "d6a7ac774b9fdd3740e0c6da2b1e9541ecb20d589875c19c7250e3253ff97771"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/clock-light/bundle/channels.json",
+      "bytes": 7767,
+      "sha256": "79b7a84a8eae542ed4a255ea9cbd7db5f7ae473fa82cc0c55823a4491f36b089"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/clock-light/bundle/model.json",
+      "bytes": 612,
+      "sha256": "7ae4b6f9e84a7296c635920dfaf4a52c10cf15ef8300f8e1e20bebbfa0e47eec"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/clock-light/bundle/protocol.json",
+      "bytes": 43,
+      "sha256": "2f111c078c0608b53dd9647487292bd1ad66800a2a21a9fe710fc84dc6d6d79f"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/clock-light/bundle/seed.json.gz",
+      "bytes": 327,
+      "sha256": "30c376d7fb18d447c20ef8b22b21b23cbd820315d818d87d8c672f1ec5caee4b"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/clock-light/bundle/tensor.json",
+      "bytes": 35876,
+      "sha256": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/clock-light/clicks.jsonl.gz",
+      "bytes": 1687610,
+      "sha256": "e587243e6b59ba9658d7114a73d621b46258626acd101b9178450f9e3d782721"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/clock-light/full_trace.jsonl.gz",
+      "bytes": 5718,
+      "sha256": "527a0663558563f4bdb98c5d37a513001418d6fb78cd9a9592189e9ba35e9380"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/clock-light/validation.json",
+      "bytes": 2607,
+      "sha256": "b5b1803da71a38c17fca10645d3a7a21090ac55cfa18d5f673f6c61677aa4855"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/local-contrast/bundle/bundle.json",
+      "bytes": 885,
+      "sha256": "2b849adfa158c8230c35144368abb80ef9947d439d934779c6e1059abf023173"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/local-contrast/bundle/channels.json",
+      "bytes": 7767,
+      "sha256": "79b7a84a8eae542ed4a255ea9cbd7db5f7ae473fa82cc0c55823a4491f36b089"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/local-contrast/bundle/model.json",
+      "bytes": 615,
+      "sha256": "e631dc9ac3e80c42509b96bbb0e80c6fd1c9618d1abc7449f9c87807b137588b"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/local-contrast/bundle/protocol.json",
+      "bytes": 43,
+      "sha256": "2f111c078c0608b53dd9647487292bd1ad66800a2a21a9fe710fc84dc6d6d79f"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/local-contrast/bundle/seed.json.gz",
+      "bytes": 310,
+      "sha256": "8a3035093f71c6685896035f090cd6f9b6297bc612d212da032c639e698408a9"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/local-contrast/bundle/tensor.json",
+      "bytes": 35876,
+      "sha256": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/local-contrast/clicks.jsonl.gz",
+      "bytes": 837935,
+      "sha256": "28ab2963c8ebd36eeec8b7cff2406d24b3020b19913f2ea6bc546507ae7a6ed0"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/local-contrast/full_trace.jsonl.gz",
+      "bytes": 3056,
+      "sha256": "a35f6fe7a3b25b3429ff4dd7fd9cd4de7e7234f7874eb0abc63ecb253fd36e91"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/local-contrast/validation.json",
+      "bytes": 2600,
+      "sha256": "f4d42f65c7f676eaee0b66f3ff7fe4a6b419ffeed2335b33e783cbc72d35df01"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/local-contrast-light/bundle/bundle.json",
+      "bytes": 885,
+      "sha256": "b2142f5326fbdfb2fc9327880689d4ceb36797d67a119ef913fda49c10b9747c"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/local-contrast-light/bundle/channels.json",
+      "bytes": 7767,
+      "sha256": "79b7a84a8eae542ed4a255ea9cbd7db5f7ae473fa82cc0c55823a4491f36b089"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/local-contrast-light/bundle/model.json",
+      "bytes": 621,
+      "sha256": "5da66e91b47f8579a2f4c4ff2fcae3a69d9c48e3e10acea4ac104168e56925c6"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/local-contrast-light/bundle/protocol.json",
+      "bytes": 43,
+      "sha256": "2f111c078c0608b53dd9647487292bd1ad66800a2a21a9fe710fc84dc6d6d79f"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/local-contrast-light/bundle/seed.json.gz",
+      "bytes": 333,
+      "sha256": "656da2980dd73159858771d01d531c9df977bb47d251d8033d03cc90306702dc"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/local-contrast-light/bundle/tensor.json",
+      "bytes": 35876,
+      "sha256": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/local-contrast-light/clicks.jsonl.gz",
+      "bytes": 844254,
+      "sha256": "01537605463e04d8c75ebd5c13c832933b0bb320466a07c484b4acfa8ce21440"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/local-contrast-light/full_trace.jsonl.gz",
+      "bytes": 3260,
+      "sha256": "a4e3672a90b075ccc7880cdcd2dc5b850b495b7eee5b2143d25135fcf0209940"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/local-contrast-light/validation.json",
+      "bytes": 2601,
+      "sha256": "c76564abe73a501d03fc19726879c5087f3f9ca89c85fe9ca70c7cdb79db2695"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/local-pulse/bundle/bundle.json",
+      "bytes": 885,
+      "sha256": "563f26a153682066e49cd08d164de061ce5697c787c176bb9656478f6fa48db5"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/local-pulse/bundle/channels.json",
+      "bytes": 7767,
+      "sha256": "79b7a84a8eae542ed4a255ea9cbd7db5f7ae473fa82cc0c55823a4491f36b089"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/local-pulse/bundle/model.json",
+      "bytes": 612,
+      "sha256": "d122c8db4b7e643fedf567783d72cec423092ba8937d0bd01328354b1f4be5e9"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/local-pulse/bundle/protocol.json",
+      "bytes": 43,
+      "sha256": "2f111c078c0608b53dd9647487292bd1ad66800a2a21a9fe710fc84dc6d6d79f"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/local-pulse/bundle/seed.json.gz",
+      "bytes": 314,
+      "sha256": "f06e181ff971b9fe65a327f73ea57bc910152ca85ee7829d2dfd60987c6bafcf"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/local-pulse/bundle/tensor.json",
+      "bytes": 35876,
+      "sha256": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/local-pulse/clicks.jsonl.gz",
+      "bytes": 1674643,
+      "sha256": "3b20b0ca461963395d31533888dc46fda9504941de23d336b469338308955732"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/local-pulse/full_trace.jsonl.gz",
+      "bytes": 5573,
+      "sha256": "6fba38e782e8c8f6a76efe3df7f9c6e8f89bfd7f262a9fd7cfb3ef66b2808c8d"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/local-pulse/validation.json",
+      "bytes": 2607,
+      "sha256": "2ee68ecbdce644a1f76dd2d8f6bd88421815c36c09697d7f7d5dd880d3c06e32"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/results.json",
+      "bytes": 24207,
+      "sha256": "a9e05732e4de163acac283aa344e9fe3f983d51bb1efc93ed54826ea8f382d27"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/vacuum/bundle/bundle.json",
+      "bytes": 885,
+      "sha256": "990a5a3eaee340dcbe1fe30fd2fd767d8b3b3955d2a4810a862d3cd3d5c8dcbb"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/vacuum/bundle/channels.json",
+      "bytes": 7767,
+      "sha256": "79b7a84a8eae542ed4a255ea9cbd7db5f7ae473fa82cc0c55823a4491f36b089"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/vacuum/bundle/model.json",
+      "bytes": 607,
+      "sha256": "a3683f739c5ce5525efeafcc2a677b5e286571f4a37aec72b1eaab91edf79cff"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/vacuum/bundle/protocol.json",
+      "bytes": 43,
+      "sha256": "2f111c078c0608b53dd9647487292bd1ad66800a2a21a9fe710fc84dc6d6d79f"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/vacuum/bundle/seed.json.gz",
+      "bytes": 273,
+      "sha256": "b94cd3e517a227e3ff0149781fc0211d0e765c66537ff7bf288ac1ed6b53c8e5"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/vacuum/bundle/tensor.json",
+      "bytes": 35876,
+      "sha256": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/vacuum/clicks.jsonl.gz",
+      "bytes": 25,
+      "sha256": "471bca732c742e1b5e345b262c55c05c700029e1bd52440c7c5a9aefc5d3d518"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/vacuum/full_trace.jsonl.gz",
+      "bytes": 4907,
+      "sha256": "424e3f92a2ba991fe49f5c8c6641a79e70a136351ad11d9d09f0492bda23da3c"
+    },
+    {
+      "path": "runs/matter-dark-audit-20261113/vacuum/validation.json",
+      "bytes": 2603,
+      "sha256": "25b6d99fef794b1f6d12ac8863e0334a0c91e86b43f76e2300cd7352b0c180c0"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/combined-detector-preparation/bundle/bundle.json",
+      "bytes": 885,
+      "sha256": "16f5e5dafcc24ab5a1fc6d42f778adca4f160f6d2949403dadf5b69125067598"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/combined-detector-preparation/bundle/channels.json",
+      "bytes": 8247,
+      "sha256": "5f4efc5a0fed7291215438b37a2e44929f748748e8b3243700f21d34a22bf358"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/combined-detector-preparation/bundle/model.json",
+      "bytes": 321,
+      "sha256": "2e5327c62e22a897f8104d744d7499fc010c050cccffeadfac289ed4f90ac4a6"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/combined-detector-preparation/bundle/protocol.json",
+      "bytes": 43,
+      "sha256": "2f111c078c0608b53dd9647487292bd1ad66800a2a21a9fe710fc84dc6d6d79f"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/combined-detector-preparation/bundle/seed.json.gz",
+      "bytes": 338,
+      "sha256": "4ecf367d7fdfcece357da05985109fac7c0d3f5183f9bebf62468272238c6be3"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/combined-detector-preparation/bundle/tensor.json",
+      "bytes": 73316,
+      "sha256": "4905d1b87c14db34e307b2f9d88160f8ba6d2e1af05360b01d9e5c7dce95b8d0"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/combined-detector-preparation/clicks.jsonl.gz",
+      "bytes": 73513,
+      "sha256": "7faf751c58b5cc620326c7ae71396e4a5e85ec3dfb1853d4573bb37924303928"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/combined-detector-preparation/full_trace.jsonl.gz",
+      "bytes": 2683,
+      "sha256": "81e85d01d64d8042aa885e8801063a52944a8c156b2f0628e5bd4df98e36af51"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/combined-detector-preparation/validation.json",
+      "bytes": 2598,
+      "sha256": "62901cf18e559d4bacbef3f31fbd6190ab750260e7e073bf27f747e9416cafed"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/combined-phase-preparation/bundle/bundle.json",
+      "bytes": 885,
+      "sha256": "6884898972cc26bf590e3ff56b45b5418cfeef8e70cd9ae7cde89424d6753dfd"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/combined-phase-preparation/bundle/channels.json",
+      "bytes": 8247,
+      "sha256": "5f4efc5a0fed7291215438b37a2e44929f748748e8b3243700f21d34a22bf358"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/combined-phase-preparation/bundle/model.json",
+      "bytes": 318,
+      "sha256": "9c0bf10f3335009868ebb004da93451f6f88b7cad0dba05bc5144eff9312aca2"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/combined-phase-preparation/bundle/protocol.json",
+      "bytes": 43,
+      "sha256": "2f111c078c0608b53dd9647487292bd1ad66800a2a21a9fe710fc84dc6d6d79f"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/combined-phase-preparation/bundle/seed.json.gz",
+      "bytes": 267,
+      "sha256": "5dbaafe5f725a744d3dbeb2e435de92aac21e0ffd27a17e0b58b1ab3bd83d572"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/combined-phase-preparation/bundle/tensor.json",
+      "bytes": 73316,
+      "sha256": "4905d1b87c14db34e307b2f9d88160f8ba6d2e1af05360b01d9e5c7dce95b8d0"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/combined-phase-preparation/clicks.jsonl.gz",
+      "bytes": 854061,
+      "sha256": "8e4897d29253cccaee2ce88effc20e38e4ded83b73a09e7743ed65f6364cba07"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/combined-phase-preparation/full_trace.jsonl.gz",
+      "bytes": 4179,
+      "sha256": "8cfdb5e46e35be4b38ce13cfde126d30c82d01fb9dd5f02f6d694f1559d3885c"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/combined-phase-preparation/validation.json",
+      "bytes": 2598,
+      "sha256": "b763c47582ca4c419c5cd0b48be254f6ef40b95e2cc5d9d2b0aed8ee73e7384e"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/detector-control/bundle/bundle.json",
+      "bytes": 885,
+      "sha256": "e14ba661defde0d18ee458e2f45fdfe3c7b8ddfb413b70b6654c738500916a4a"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/detector-control/bundle/channels.json",
+      "bytes": 6903,
+      "sha256": "44f2b86ab9017c630e6859fef36f36a1a6757957b1bec52f26cd5636e53bb47b"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/detector-control/bundle/model.json",
+      "bytes": 724,
+      "sha256": "882c1d552bb6d40e0de432136718178163b0e839f125a6e83b41eddb0a8b3c91"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/detector-control/bundle/protocol.json",
+      "bytes": 43,
+      "sha256": "2f111c078c0608b53dd9647487292bd1ad66800a2a21a9fe710fc84dc6d6d79f"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/detector-control/bundle/seed.json.gz",
+      "bytes": 338,
+      "sha256": "4ecf367d7fdfcece357da05985109fac7c0d3f5183f9bebf62468272238c6be3"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/detector-control/bundle/tensor.json",
+      "bytes": 52700,
+      "sha256": "0bfa6e7d87c32d69e2e0bf778b5965513355ee3682a8a7e9453bc5ffb82a4bd7"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/detector-control/clicks.jsonl.gz",
+      "bytes": 30644,
+      "sha256": "630038992e687ef06cf55bc9894f14168f0aa15132942be35191bc538957207e"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/detector-control/full_trace.jsonl.gz",
+      "bytes": 5048,
+      "sha256": "3b240ba1f9fb6aba1c4574b0575c984eb8e79d4ab989b87a5fe24cb54fb4294f"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/detector-control/validation.json",
+      "bytes": 2615,
+      "sha256": "55751bd9c93396ba1f41d1385edc1e3ab48d0755e4c8c87ced4bd32ebd47f8d8"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/phase-control/bundle/bundle.json",
+      "bytes": 885,
+      "sha256": "703d0d70fe8aa38fb688d9053a8c4084c4961afcd57e437ccd4abf4ced08f12a"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/phase-control/bundle/channels.json",
+      "bytes": 8247,
+      "sha256": "5f4efc5a0fed7291215438b37a2e44929f748748e8b3243700f21d34a22bf358"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/phase-control/bundle/model.json",
+      "bytes": 305,
+      "sha256": "9c60c9c0aaf5990aa2af1c5292d14273faeeaadf8cb0b4ccdfb72075e685ac35"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/phase-control/bundle/protocol.json",
+      "bytes": 43,
+      "sha256": "2f111c078c0608b53dd9647487292bd1ad66800a2a21a9fe710fc84dc6d6d79f"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/phase-control/bundle/seed.json.gz",
+      "bytes": 267,
+      "sha256": "5dbaafe5f725a744d3dbeb2e435de92aac21e0ffd27a17e0b58b1ab3bd83d572"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/phase-control/bundle/tensor.json",
+      "bytes": 35876,
+      "sha256": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/phase-control/clicks.jsonl.gz",
+      "bytes": 1689038,
+      "sha256": "7a41c0390f48b412a3a5b69522b7b0ef21d6d8758a176ba7346abb95a4aa0b9f"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/phase-control/full_trace.jsonl.gz",
+      "bytes": 4758,
+      "sha256": "94a138aa987d7bbcac65dbdc1d2553caf03c3d6894fe4c1cdb55465027826558"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/phase-control/validation.json",
+      "bytes": 2607,
+      "sha256": "d45fe6ad901c8c540c52ae92f4126b1a3984d925e5422d113bc3dd5ae2fb1cb3"
+    },
+    {
+      "path": "runs/detector-clock-integration-20261113/results.json",
+      "bytes": 15675,
+      "sha256": "df741521f1a4f173df290590c115b2faf517178b5c8dffdcca84d01eee271db6"
+    }
+  ],
+  "raw_trace_storage": "Local; committed complete sources reproduce these registered runs"
+}
