@@ -28,6 +28,7 @@ different tree. The current complete acceptance/disposition ledger is
 
 | New integrated source | Accepted scope | Excluded claim |
 | --- | --- | --- |
+| `validation/light_packet/`, [report](../research/light_packet/README.md) | 18-channel finite prepared Maxwell test field through the main runtime; exact saved-state and click controls | Dynamic Einstein source, strict finite-grid target cone, physical photon detector and indefinite prepared precision |
 | `validation/sourced_map/`, source `228f581d02971435c0cd70548ff56267378ffc31` | Exact native six-channel expanding homogeneous massless scalar/dust Einstein flow, including retained-history constraint and source balance | General spatial gravity, mass term, bounce and operational detector |
 | `validation/unified_law/`, source `6b82369830bf763cbaddcc37bd972c555faea782` | Same-candidate massive constraint, source, metric and finite-time convergence | Efficient long-time massive encoding, exact finite-step dust conservation and spatial apparatus |
 | `validation/system_acceptance/` | Replayed per-law receipts, explicit rejected joins and exhaustive native-selector recurrence/growth controls | Pooling separate physical successes or promoting recurring activity to sustained complexity/cosmological bursts |

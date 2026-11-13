@@ -62,6 +62,7 @@ A bundle binds tensor, full seed, ownership, protocol and interpretation by hash
 | Quantum controls | Complete-trial, non-detection, preparation-measure and locality countercontrols | No derived universal Born rule or physical Bell instrument |
 | Local carrier–record source, twelve channels | Repeated scattering, retained records, exact packet balances and a finite positive two-null-stream Einstein chart on the same saved history | Finite prepared supply; no globally periodic positive-source chart, massive bound body or operational clock |
 | Finite gauge links, seven and ten channels | Static Z4 loop interference and separate dynamic Z2 record/link feedback | Static wave is unstable; dynamic sector has period three and no successive-edge propagation; no combined Maxwell/gravity law |
+| Prepared Maxwell test field, eighteen channels | Moving transverse packet, static optical-background response, exact finite-horizon shear map and independently checked canonical clicks | Finite-grid target-cone tails; click counts do not track intensity; no dynamic Einstein source or detector |
 
 The anisotropic extension retains two shear charges in eight channels; its exact metric and source share the complete state. A 4,096-update check passed independent scalar comparisons, inverse and full rewind with 26-bit peak integers. Its moving-probe paths and proper-time integrals are passive diagnostics, with no retained transported body. A same-tensor spatial negative preserves pointwise Hamiltonian constraints but fails the momentum constraint.
 
@@ -91,6 +92,27 @@ Open `runs/geodesic-board/board.html`. This retained **massive45 negative-contro
 | `validation/` | Independent research constructions and falsification controls, excluded from installation |
 
 The architecture review is `docs/research/system_acceptance/architecture_review.md`. The complete idea decisions are in `docs/research/system_acceptance/idea_ledger.md`; the physical and massive-encoding boundaries are beside it. Current algebra is `docs/MODEL.md`, the execution contract is `docs/ONE_SYSTEM.md`, and source provenance is in `docs/research/central_integration/README.md`. Historical evidence retains its original source pin and is not relabeled as current validation.
+
+## Run the light-packet candidate
+
+The [light-packet experiment](docs/research/light_packet/README.md) is included
+in the central acceptance sequence. Its compact regression runs through the
+same saved-bundle runtime. To run the original 41³ flat packet through the
+installed main interface, use fresh directories:
+
+```bash
+python -m validation.light_packet prepare-inputs --out runs/light-inputs
+python -m universe24 prepare --tensor runs/light-inputs/tensor.json --seed runs/light-inputs/seed.json --channels runs/light-inputs/channels.json --protocol runs/light-inputs/protocol.json --model runs/light-inputs/model.json --out runs/light-bundle
+python -m universe24 run --bundle runs/light-bundle --steps 24 --out runs/light-main
+python -m universe24 verify --run runs/light-main
+python -m validation.light_packet inspect --run runs/light-main --out runs/light-main-observations.json
+```
+
+This retains the fixed divisor six, degree limit three, strict one-face support
+and 48-channel cap. The candidate uses 18 channels and degree two. All execution
+is integer-exact; its Maxwell interpretation is restricted to a prepared finite
+horizon. Arithmetic clicks are not promoted to photon detections. The archived
+larger comparison and its negative results remain available beside the report.
 
 ## What we need to research
 

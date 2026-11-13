@@ -1,0 +1,29 @@
+{
+  "purpose": "Actual packet propagation and unfiltered canonical arithmetic clicks",
+  "main_cases": [
+    "flat",
+    "fast",
+    "step"
+  ],
+  "L": 41,
+  "ticks": 24,
+  "binomial_order": 12,
+  "center": 10,
+  "cases_same_tensor": true,
+  "interventions": "Only complete seeds differ",
+  "metrics": [
+    "coordinate energy centroid and width",
+    "C0/C1/C2 count",
+    "first click time",
+    "quotient magnitude",
+    "zero-field clicks",
+    "full-support graph cone",
+    "flat target metric cone"
+  ],
+  "controls": [
+    "empty field",
+    "double amplitude",
+    "low initial precision"
+  ],
+  "no_detector_or_photon_claim": true
+}

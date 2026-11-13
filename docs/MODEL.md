@@ -293,6 +293,62 @@ through successive edges, electric Gauss law, shared stress source or
 operational detector. The static and dynamic controls are distinct tensors;
 their successful parts do not constitute one physical gauge field theory.
 
+## Prepared Maxwell test field on a static optical background
+
+The source-only construction `validation/light_packet/` counts twelve field
+channels in two groups X=(D_X,B_X), Y=(D_Y,B_Y), and six entries of a symmetric
+positive optical matrix C. All eighteen channels retain complete (a,b,r): 54
+integers per node. X/Y are counted channels, not extra history storage.
+
+Let R_C(V) be the unscaled centered lattice curl of C V. Each summand reads C
+and V together at one face neighbor. The fixed tensor is
+
+    u_DX=6 D_Y+R_C(B_Y), u_BX=6 B_Y+R_C(D_Y),
+    u_DY=6 D_X-R_C(B_X), u_BY=6 B_X-R_C(D_X), u_C=6 C.
+
+It has 162 monomials, maximum degree two and no old-a reads. With equal C
+histories the background remains frozen. Define shears
+
+    K(D,B)=(D+R_C(B)/3,B), L(D,B)=(D,B-R_C(D)/3),
+    F(X,Y,C)=(K(Y),L(X),C).
+
+Then u=3(F+F_inverse). Preparation sets a=F_inverse(b) and scales the initial
+fields by Q=3^(H+1) for the declared H-tick horizon. On this integer prepared
+sector, Rule3 yields b_next=F(b), a_next=b and r_next=r. The divisions in this
+derivation and passive decoding do not change the Engine's divisor or supply
+runtime inputs. Arbitrary low-precision seeds need not stay in this sector;
+that failure is retained as a control. A fixed Q does not prove indefinite
+integer divisibility or long-time stability.
+
+Starting with Y=0, even ticks give complete fields in X, with macro-update
+
+    B_new=B-R_C(D)/3, D_new=D+R_C(B_new)/3.
+
+For lattice spacing h and macro-time 2h/3 the long-wave target is
+partial_t D=curl(CB), partial_t B=-curl(CD), with divergence constraints. For
+constant positive C both transverse polarizations have target dispersion
+omega²=k^T adj(C) k, compatible with the optical conformal metric
+g=Omega² diag(-1,C/det(C)). Light alone does not determine Omega. For
+C=diag(1,q,q), the target x-coordinate speed is q. The discrete dispersion is
+omega=(3/h) asin(sqrt(s^T adj(C) s)/3), s_i=sin(k_i h); the strict frozen-
+coefficient stability condition is max(s^T adj(C) s)<9. Centered differences
+also have unwanted Nyquist modes. These are long-wave statements, not exact
+finite-grid Lorentz symmetry.
+
+The periodic modified ledger
+J=3 sum(D^T C D+B^T C B)-sum(D^T C R_C(B)) is exactly conserved on complete
+prepared macrosteps for static symmetric C. The plotted energy proxy
+u_field=(D^T C D+B^T C B)/2 is not asserted to be the exact conserved ledger.
+
+All exact prepared clicks have unchanged remainder, hence class C0. The
+archived 41³ runs produced identical click count/location/class maps on three
+backgrounds, while quotient magnitudes and energy trajectories differed.
+Doubling amplitude quadrupled the energy proxy without changing click counts.
+Tiny nonzero tails produced clicks outside the intended continuum cone while
+respecting the wider computational face-neighbor cone. Thus raw clicks do not
+establish photon detection or strict physical null propagation. C has no
+source backreaction; no Einstein/detector model is accepted by this result.
+
 ## Compatibility and acceptance
 
 Equal decoded fields do not imply equal complete states. The two six-channel restrictions of full45 use different default omitted carries and reduced labels. Their common evolution polynomial does not authorize cross-default projection. A separately prepared compatible embedding can be checked without modifying an existing trajectory.
@@ -301,7 +357,7 @@ A complete certificate joins tensor, full seed, interpretation, protocol, horizo
 
 Source locations: `validation/sourced_map/`, `validation/conservation_closure/`,
 `validation/unified_law/`, `validation/local_unification/`,
-`validation/gauge_loop/`, `validation/integration_contract/` and
+`validation/gauge_loop/`, `validation/light_packet/`, `validation/integration_contract/` and
 `validation/system_acceptance/`. The one installed implementation is
 `universe24/system/`; the source-only acceptance command reports both positive
 scoped results and rejected/blocked physical claims. This document collects

@@ -21,6 +21,7 @@ def status():
             "native_anisotropic_massless_sector": "Exact homogeneous Bianchi I source and source-clock invariant; moving probes remain passive",
             "massive_homogeneous_spinor_sector": "Exact decoded constraint and finite-time convergence; costly integers and finite-step dust drift",
             "joint_bursts_and_complexity_growth": "Not established by the separate recurrent-activity controls",
+            "prepared_maxwell_test_field": "18-channel static-background candidate; finite precision horizon, target-cone tails and non-photon arithmetic clicks",
         },
         "blockers": [
             "No validated <=48-channel coupled geometry, matter and apparatus encoding",

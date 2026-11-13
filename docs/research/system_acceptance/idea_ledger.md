@@ -122,3 +122,21 @@ retained intensity reader but an unstable uniform mode. The separate ten-channel
 Z2 law preserves unit links and supports feedback, but its prepared complete
 period divides three and evolving information stays within edge triplets.
 Neither law establishes a combined propagating Maxwell/source/detector system.
+
+## Added prepared Maxwell packet and click controls
+
+`validation/light_packet/` supplies an eighteen-channel fixed-six classical
+test field, with a static symmetric optical background in the counted state.
+The central command executes small full canonical runs and binds their claims
+to independently replayed receipts. Their successes cannot be joined with a
+different sourced law as a coupled Einstein result.
+
+Prepared finite-horizon propagation and modified-energy conservation are
+accepted within their stated domain. The archived 41³ experiment shows
+background-dependent packet motion, but identical raw count/location/class
+maps in its three backgrounds. An amplitude intervention changes energy by
+four while leaving counts unchanged. Tiny lattice tails violate the intended
+strict continuum null cone; the wider computational cone remains intact.
+The identification of every arithmetic click with a photon is rejected. A
+physical detector, source backreaction, internal proper-clock calibration and
+controlled joint refinement remain blocked or not tested.

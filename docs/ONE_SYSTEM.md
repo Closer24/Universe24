@@ -1,5 +1,37 @@
 # Universe24: one system, specification and research status
 
+## Integrated light-packet candidate
+
+`validation/light_packet/` prepares an eighteen-channel static-background
+Maxwell test field and audits complete runs of the existing
+`universe24.system.runtime`. The installed interface remains prepare/run/verify/
+status. No runtime selector, alternate scalar update, or accepted default
+physical universe is added. The central acceptance sequence runs a fixed small
+collection and independently replays its representative receipts. Cross-run
+joins with sourced gravity or another background are rejected.
+
+The allocation is six D/B entries in group X, six in group Y and six symmetric
+C entries, each with a,b,r. All 54 integers are counted. The tensor has 162
+integer monomials of degree at most two; all support is target plus one face
+edge and no old-a input dependency exists. Divisor six and the complete old
+snapshot update are unchanged. The preparation scale Q=3^(H+1) is data in the
+complete seed, not a new Engine parameter; finite-horizon division hypotheses
+and integer bit cost are explicit. See [the algebra](MODEL.md#prepared-maxwell-test-field-on-a-static-optical-background).
+
+The experiment shows actual wave-packet motion and background-dependent
+coordinate speeds, with exact prepared macrostep modified-energy conservation.
+It also retains failed strict target-cone and raw-click/photon interpretations:
+tiny lattice tails outrun the continuum target cone; amplitude changes alter
+energy without altering the tested click counts. The background has no dynamic
+Einstein source, and no retained operational detector or clock was supplied.
+Passing replay or the expected negative controls does not close those gates.
+
+The [report and reproduction commands](research/light_packet/README.md) retain
+the original experiment at source pin e582960 and its lossless plane-compressed
+evidence under `runs/light-packet-clicks-v2/`. Current integrated runs save the
+ordinary full canonical traces and click records. The original compression is
+an archived observation format, not a new runtime schema or evolving register.
+
 ## Reviewed execution and acceptance
 
 The installed interface remains `python -m universe24`, with one fixed Rule3
