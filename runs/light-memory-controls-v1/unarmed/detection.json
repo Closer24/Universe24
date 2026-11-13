@@ -1,0 +1,98 @@
+{
+  "schema": "universe24/light-memory-observation/1",
+  "run_id": "aa29ed2d891b8467ace11c82fcc0bdf9d68871dafe052fb2c1e65d695f37b6f7",
+  "bundle_id": "7b743d206a03c74934ee2a5694dd6e0a6871559b3e9fc15f742326555abea947",
+  "tensor_hash": "0bfa6e7d87c32d69e2e0bf778b5965513355ee3682a8a7e9453bc5ffb82a4bd7",
+  "model_contract": {
+    "role": "universe-candidate",
+    "symmetry": "2O-left-regular-cube/1",
+    "status": "passed"
+  },
+  "steps": 6,
+  "observer_source_sha256": "243b2d5ab02fa6b3c83109614d496a30eda15663617facea9617c0ae5ee14bfe",
+  "channels": 48,
+  "retained_integers_per_node": 144,
+  "arithmetic_click_count": 2028,
+  "arming_opportunities": 0,
+  "outcomes": {
+    "capture": 0,
+    "release": 0,
+    "exchange": 0,
+    "no_transfer": 0
+  },
+  "events": [],
+  "accounts": [
+    {
+      "step": 0,
+      "light": "169",
+      "memory": "0",
+      "arming": "0",
+      "selector": "2197",
+      "light_plus_memory": "169"
+    },
+    {
+      "step": 1,
+      "light": "169",
+      "memory": "0",
+      "arming": "0",
+      "selector": "2197",
+      "light_plus_memory": "169"
+    },
+    {
+      "step": 2,
+      "light": "169",
+      "memory": "0",
+      "arming": "0",
+      "selector": "2197",
+      "light_plus_memory": "169"
+    },
+    {
+      "step": 3,
+      "light": "169",
+      "memory": "0",
+      "arming": "0",
+      "selector": "2197",
+      "light_plus_memory": "169"
+    },
+    {
+      "step": 4,
+      "light": "169",
+      "memory": "0",
+      "arming": "0",
+      "selector": "2197",
+      "light_plus_memory": "169"
+    },
+    {
+      "step": 5,
+      "light": "169",
+      "memory": "0",
+      "arming": "0",
+      "selector": "2197",
+      "light_plus_memory": "169"
+    },
+    {
+      "step": 6,
+      "light": "169",
+      "memory": "0",
+      "arming": "0",
+      "selector": "2197",
+      "light_plus_memory": "169"
+    }
+  ],
+  "checks": {
+    "complete_replay": "passed",
+    "independent_exchange_rule": "passed",
+    "exact_excitation_account": "passed",
+    "2o_covariance": "passed"
+  },
+  "interpretation": "retained amplitude transfer; capture events are not calibrated photon counts",
+  "memory_lifetime": "until the retained arming pulse revisits; releases are included",
+  "physical_gates": {
+    "energy_frequency_calibration": "not_tested",
+    "photon_number": "not_tested",
+    "born_measure": "not_tested",
+    "single_photon_anticorrelation": "not_tested",
+    "material_clock_and_recoil": "not_tested",
+    "general_physical_acceptance": "blocked"
+  }
+}

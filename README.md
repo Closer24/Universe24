@@ -102,6 +102,7 @@ Open `runs/geodesic-board/board.html`. This retained **massive45 negative-contro
 | --- | --- |
 | `universe24/core/` | Fixed tensor, lattice, exact state and Rule3 Engine |
 | `universe24/light.py` | Installed 48-channel 2O light tensor and complete plane-wave preparation |
+| `universe24/detection.py` | Installed retained light/memory exchange, complete arming preparation and passive observation |
 | `universe24/system/bundle.py` | Complete inputs, budget, strict locality and integrity |
 | `universe24/system/runtime.py` | The sole run/replay/verify implementation |
 | `universe24/system/decoder.py` | Canonical passive arithmetic records |
@@ -131,6 +132,25 @@ Maxwell convergence, a dynamic Einstein source and photon detection remain
 unestablished. The [component contract and archived experiment](docs/research/light_packet/README.md)
 keep those boundaries explicit. The older 18-channel optical experiment is
 preserved as historical evidence; it is a different tensor.
+
+## Run retained light-to-memory exchange
+
+The installed detector precursor transfers an incoming integer amplitude into
+local memory using a retained arming pulse. The complete 48-channel tensor
+passes 2O covariance and preserves an exact quadratic excitation account.
+
+```bash
+python -m universe24 prepare-detector --out runs/detector-input
+python -m universe24 run --bundle runs/detector-input --steps 18 --out runs/detector-main
+python -m universe24 verify --run runs/detector-main
+python -m universe24 detect --run runs/detector-main --out runs/detector-observations.json
+```
+
+The default packet is captured on tick 3, stored through tick 15, and released
+on tick 16 when the arming pulse returns around the periodic lattice. `detect`
+reports transfers and no-transfer opportunities separately from arithmetic
+clicks. These records are not calibrated photon counts. See [DETECTOR.md](docs/DETECTOR.md)
+for the derivation, control preparations and remaining physical requirements.
 
 ## What we need to research
 
