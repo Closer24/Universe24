@@ -1,6 +1,6 @@
 # Universe24 one-system development contract
 
-The repository has one installed CLI, one built-in signal/clock law and one
+The repository has one installed CLI, one built-in finite-capacity law and one
 Engine. The owner's cleanup instruction removes historical experiments from
 the current tree; their source remains in the Git revision linked in README.
 Do not restore an experiment menu or present separate laws as one universe.
@@ -22,9 +22,11 @@ Do not restore an experiment menu or present separate laws as one universe.
 8. Mechanical correctness, positive preparation and a conserved logical
    account do not prove Einstein geometry, matter, dark matter, quantum theory
    or a Big Bang. State domains and limitations precisely in docs/PHYSICS.md.
-9. The current proved Boolean sector has six independent simultaneous face
-   circuits. Every face counts three data and five retained marker bits. Do
-   not infer cross-face interactions or Einstein geometry from their closure.
+9. The current proved Boolean sector has 48 live occupation slots, eight per
+   face. Edge quartets couple neighbors and onsite turning changes faces.
+   Preserve scalar occupation and exact node continuity; distinguish local
+   capacity feedback from global balancing, CPU work and Einstein gravity.
+   Retain the symmetric free-transport control and unfavorable comparisons.
 10. Keep generated evidence in ignored runs/. Update README and current docs
     for model/interface changes; do not commit experiment archives or run outputs.
 

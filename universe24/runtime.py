@@ -21,16 +21,17 @@ def status():
         "accepted_physical_model": None,
         "full_physics_acceptance": "blocked",
         "installed_components": {
-            "six_face_clock48": "one fixed cubic coupling; six simultaneous positive Boolean face circuits",
+            "capacity_scatter48": "one fixed cubic coupling; conservative occupancy-dependent edge transport and face turning",
             "node_face_views": "six internal directional views; no extra link state",
             "click_only_observer": "canonical clicks with optional explicit positive-history calibration",
+            "load_board": "passive saved-click replay with public initial calibration; capacity and concentration",
         },
-        "verified_sector": "all six faces simultaneously; arbitrary spatial Boolean profiles; retained uniform marker phase per face",
+        "verified_sector": "48 live Boolean occupation channels; capacity 48 per node; exact local continuity",
         "blockers": [
-            "Six directional circuits are independent; cross-face scattering and universal source coupling are unproved",
-            "State-dependent residence time does not establish a Lorentzian metric or Einstein equations",
+            "Local congestion feedback is verified; global equalization can improve or worsen depending on preparation",
+            "Capacity-sensitive transport and fixed turning do not establish a Lorentzian metric or Einstein equations",
             "Massive bodies, dark matter, gravitational waves and cosmological bang dynamics remain unproved",
-            "Local phase clocks are not calibrated proper clocks; the bounded prepared sector recurs",
+            "Free paths zigzag through three axes; proper clocks and general Maxwell propagation are unproved",
             "No Born/Bell mechanism or physical interpretation of a third click is established",
         ],
         "coordination": "https://github.com/Closer24/Universe24/issues/40",
@@ -45,13 +46,17 @@ def main(argv=None):
     for name in ("tensor", "seed", "channels", "protocol", "model"):
         prepare.add_argument("--" + name, type=Path, required=True)
     prepare.add_argument("--out", type=Path, required=True)
-    model = sub.add_parser("prepare-model", help="Prepare the one fixed signal/clock coupling")
+    model = sub.add_parser("prepare-model", help="Prepare the one fixed finite-capacity coupling")
     model.add_argument("--out", type=Path, required=True)
     model.add_argument("--size", type=int, default=7)
-    model.add_argument("--root", type=int, help="Select one oriented face (0..47); default prepares all six")
-    model.add_argument("--signal-sites", nargs='*', type=int, default=[0])
-    model.add_argument("--memory-sites", nargs='*', type=int, default=[])
-    model.add_argument("--clock-sites", nargs='*', type=int, default=[2])
+    model.add_argument("--pattern", choices=('burst','pulse','vacuum'), default='burst')
+    model.add_argument("--radius", type=int, default=0, help="Burst core radius in periodic lattice steps")
+    model.add_argument("--root", type=int, default=0, help="Pulse channel or burst halo orientation, 0..47")
+    model.add_argument("--center", nargs=3, type=int, help="Initial node coordinates; default cube center")
+    model.add_argument("--no-halo", action='store_true', help="Prepare a centrally paired burst as a free-transport control")
+    board = sub.add_parser("board", help="Build a passive board from saved clicks and public initial calibration")
+    board.add_argument("--run", type=Path, required=True)
+    board.add_argument("--out", type=Path, required=True)
     observe = sub.add_parser("observe-clicks", help="Observe a click file without opening hidden states or a bundle")
     observe.add_argument("--clicks", type=Path, required=True)
     observe.add_argument("--out", type=Path, help="Optional new observation JSON file")
@@ -75,13 +80,15 @@ def main(argv=None):
         elif args.command == "prepare-model":
             from universe24.model import make_model_bundle
             from universe24.system.bundle import save_bundle
-            bundle = make_model_bundle(L=args.size, root=args.root,
-                signal_sites=args.signal_sites, memory_sites=args.memory_sites,
-                clock_sites=args.clock_sites)
+            bundle = make_model_bundle(L=args.size, pattern=args.pattern, radius=args.radius,
+                root=args.root, center=args.center, halo=not args.no_halo)
             save_bundle(bundle, args.out)
             result = {"bundle_id":bundle.bundle_id, "channels":bundle.tensor.G,
                       "path":str(args.out), "model_contract":bundle.model_contract,
                       "physics_acceptance":"blocked"}
+        elif args.command == "board":
+            from universe24.board import build_board
+            result = build_board(args.run, args.out)
         elif args.command == "observe-clicks":
             from universe24.observer import inspect_click_file, reconstruct_channel_from_clicks
             calibration = (args.channel, args.nodes, args.steps, args.initial_a, args.initial_b)

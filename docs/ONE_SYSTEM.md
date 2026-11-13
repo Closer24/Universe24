@@ -1,14 +1,15 @@
 # One execution and state contract
 
 There is one supported CLI (`python -m universe24`), one built-in coupling
-(`model.py`), and one Engine. Preparation seals a complete immutable bundle;
-execution saves transitions and passive canonical clicks; verification checks
-reexecution, inverse and every record. Trace files never feed the dynamics.
+(`universe24/capacity-scatter48` in `model.py`), and one Engine. Preparation
+seals a complete immutable bundle; execution saves transitions and passive
+canonical clicks; verification checks reexecution, inverse and every record.
+Trace files and load measurements never feed the dynamics.
 
 1. Every channel uses exactly `ell,r_next=divmod(2*u+r,6); a_next=b; b_next=ell-a`.
 2. Exactly 48 explicit channels retain `(a,b,r)` at each node: 144 integers,
-   including scheduling, memories and clocks. No padding, hidden link queue,
-   edge history, discarded carry or extra dynamically evolving workspace.
+   including any proposed memories, clocks or geometry. No padding, hidden link
+   queue, edge history, discarded carry or extra dynamically evolving workspace.
 3. Updates are synchronous from one complete old snapshot. The tensor has
    integer coefficients and degree at most three. Each monomial has target plus
    at most one face edge support. No diagonal reads or runtime callback.
@@ -19,19 +20,44 @@ reexecution, inverse and every record. Trace files never feed the dynamics.
    by hashes. Execution rejects corruption and recomputes the law certificate.
    A model name, role or user-supplied physics label grants no acceptance.
 6. Raw engine arithmetic supports arbitrary signed integers. The selected
-   built-in preparation proves a narrower future-positive six-face Boolean
-   domain. These are different assertions.
+   built-in preparation proves a narrower positive Boolean occupation domain
+   under forward and inverse evolution. These are different assertions.
 7. Fixed operation count does not bound integer bit growth or wall-clock cost.
    Run reports expose integer costs. Global update index orders computation;
    it is not a privileged physical proper time inferred from observations.
 
 The six node ports group eight regular channels each by direction. An edge
 reference identifies the same periodic adjacency from either endpoint; it
-adds no dynamical state or shared metric length. Channel grouping does not
-force each polynomial to read exclusively that port, while the current proved
-sector runs all six directional circuits simultaneously. Each uses three live
-Boolean fields plus five retained marker bits; the circuits do not exchange
-signals between faces. See [the observer contract](OBSERVATION.md).
+adds no dynamical state or shared metric length. All 48 current rows encode
+live occupation through `b=1+z`, with Boolean z. There are no static marker rows
+or separate clock counters. Edge quartets contain two slots inside each
+endpoint. Exactly three occupied slots hold the quartet during the edge
+stage; other words rotate across the edge. A fixed onsite permutation then
+turns channels between faces. The 672-term cubic tensor performs both stages
+within the unchanged Engine. See [MODEL.md](MODEL.md) for the exact map.
+
+The same rule applies regardless of observer labels. Node occupation Q is
+between 0 and 48, its global total is conserved, and its local change equals
+signed edge currents. This supplies real occupation-dependent feedback, but
+not a guarantee that every distribution becomes more uniform. Retain both
+the symmetric free-transport preparation and unfavorable concentration
+comparisons. Local holding is not a stored geometric edge length, and the
+scalar Q is not a stress-energy tensor.
+
+The default burst has a fully occupied core and an explicitly prepared
+asymmetric boundary halo. It activates capacity feedback without adding a
+runtime source. Pulse and vacuum preparations use the same tensor. Preparation
+choices are sealed initial data, not species definitions or evidence of a
+cosmological Big Bang.
+
+The board reconstructs recorded histories from canonical clicks and the sealed
+initial state, explicitly disclosed as public calibration and checked against
+the proved positive forward sector. It does not open the full transition trace
+or advance a second Engine. Its checksum and provenance checks do not replace
+independent replay for completeness. Constant
+carries give only C0 clicks in this sector. Neither addresses nor host update
+indices are inferred metric coordinates or proper time. See
+[the observer contract](OBSERVATION.md).
 
 One physical interpretation must ultimately use the same tensor, seed domain,
 source accounts and metric for every retained subsystem. Separate tensors'
