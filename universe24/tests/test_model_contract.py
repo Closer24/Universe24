@@ -206,6 +206,53 @@ class UnifiedModelContractTests(unittest.TestCase):
             self.assertEqual(ticks, list(range(1, face % 3 + 2)))
         self.assertTrue(self.engine.rewind(state, 4).same_as(initial))
 
+    def test_actual_busy_traffic_delays_causal_output_difference(self):
+        # Paired interventions differ only in the leading incoming bit. Later
+        # traffic is identical: this tests information delay, not packet IDs.
+        L = 7
+        coords = np.indices((L, L, L)).reshape(3, -1)
+        fields = {name: np.zeros((6, L**3), dtype=object)
+                  for name in ('signal', 'memory', 'clock')}
+        targets, neighbours, lengths = [], [], []
+        for face, root in enumerate(face_roots()):
+            direction = face_roles(root)['direction']
+            axis = next(k for k, value in enumerate(direction) if value)
+            length = face % 3 + 1
+            lengths.append(length)
+            fields['memory'][face] = (coords[axis] == 3).astype(object) * 1
+            fields['signal'][face] = np.isin(coords[axis],
+                [(3 - direction[axis] * k) % L for k in range(1, length + 1)]).astype(object) * 1
+            target = [0, 0, 0]
+            target[axis] = 3
+            neighbour = target.copy()
+            neighbour[axis] += direction[axis]
+            targets.append(tuple(target))
+            neighbours.append(tuple(neighbour))
+        control_signal = fields['signal'].copy()
+        for face, root in enumerate(face_roots()):
+            direction = face_roles(root)['direction']
+            axis = next(k for k, value in enumerate(direction) if value)
+            control_signal[face, coords[axis] == (3 - direction[axis]) % L] = 0
+        experiment = prepare_fields(L=L, **fields)
+        control = prepare_fields(L=L, signal=control_signal,
+                                 memory=fields['memory'], clock=fields['clock'])
+        decoded = decode_faces(experiment.b, L)
+        differences = {'target': [[] for _ in range(6)],
+                       'neighbour': [[] for _ in range(6)]}
+        for tick in range(1, 6):
+            experiment, control = self.engine.step(experiment), self.engine.step(control)
+            for face, rr in enumerate(decoded):
+                for name, locations in (('target', targets), ('neighbour', neighbours)):
+                    node = experiment.lattice.index(*locations[face])
+                    if experiment.b[rr['signal'], node] != control.b[rr['signal'], node]:
+                        differences[name][face].append(tick)
+        for face, length in enumerate(lengths):
+            with self.subTest(face=face, burst_length=length):
+                self.assertTrue(differences['target'][face])
+                self.assertTrue(differences['neighbour'][face])
+                self.assertEqual(differences['target'][face][0], length + 1)
+                self.assertEqual(differences['neighbour'][face][0], length + 2)
+
     def test_arbitrary_bigint_state_rewinds_exactly(self):
         rng = np.random.default_rng(7115)
         banks = [rng.integers(-2, 3, (48, 27)).astype(object) * (1 << 70) for _ in range(2)]

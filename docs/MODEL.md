@@ -90,6 +90,14 @@ message is not guaranteed. A collision phase can also delay an
 isolated pulse by one update. There is no independent, evolving edge-length
 variable in this implementation.
 
+A paired-run intervention measures information transfer rather than occupancy
+alone. Keep the same clock phase and later traffic, but remove only the first
+incoming bit in the control. For burst lengths 1,2,3 on each of the six faces,
+the first outgoing signal difference at the storage site occurs on updates
+2,3,4; the downstream neighbor sees it on updates 3,4,5. The fixed law therefore
+delays this causal bit difference more under the longer busy background.
+No particle identity or universal FIFO latency is inferred from the comparison.
+
 These identities hold independently in all six directional circuits. The
 busy-input contract tests also activate all six directions together. Their
 independence is a limitation: there is no cross-face recoil or scattering,

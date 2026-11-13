@@ -60,7 +60,9 @@ reversible collision conserves both clock-site occupation and free-plus-stored
 signal. The clock-site locations themselves do not move or cluster. In the same
 initial clock phase, bursts of 1, 2 and 3 occupied input updates retain stored
 occupancy for 1, 2 and 3 updates. Further incoming ones pass during storage;
-this is not a FIFO queue or proof of geometric link stretching.
+this is not a FIFO queue or proof of geometric link stretching. A paired run
+that removes only the first bit produces its first downstream output difference
+on updates 3, 4 and 5 respectively: longer busy traffic delays that information.
 
 A fixed polynomial gives a fixed arithmetic operation schedule per node. It
 does **not** guarantee fixed CPU time: integer arithmetic cost depends on bit
