@@ -1,203 +1,223 @@
-"""One fixed reversible signal/clock coupling, with an explicit positive sector.
+"""All-six-face clock/signal collision on exactly 48 regular 2O channels.
 
-Six directional face views share the 48-channel node budget. The proven
-Boolean sector selects one orientation at a time; simultaneous independent
-six-face populations, a Lorentzian metric and Einstein dynamics are unproved.
-Preparation and readouts never advance the Engine.
+Each directional face has eight retained channels. Three are spatial Boolean
+signal/memory/clock fields and five are retained marker bits. Markers are part
+of b, not an external orientation or scheduling table. The fixed tensor is
+defined on every raw state; its natural invariant domain is the coded sector.
 """
 from __future__ import annotations
 from functools import lru_cache
 import itertools
 import numpy as np
-from universe24.algebra.group_2o import group
-from universe24.core import State, Tensor, GearType
+from universe24.algebra.group_2o import group,DIRECTIONS
+from universe24.core import Tensor,GearType,State
 from universe24.core.symmetry import require_equivariant, CONTRACT
 from universe24.system.bundle import create_bundle
 from universe24.system.decoder import default_protocol
 
-MODEL_ID = 'universe24/clock-collision48'
-ZERO = (0, 0, 0)
-MEMORY, CLOCK, SELECTOR, COUNTER = 2, 6, 1, 4
+MODEL_ID = 'universe24/six-face-clock48'
 
+ZERO=(0,0,0)
+H_GENERATOR=1
+LIVE=(0,1,2)
+FIXED={3:0,4:0,5:0,6:1,7:1}
+FORWARD3 = ((-3, (0,)),
+ (3, (8,)),
+ (6, (0, 1)),
+ (3, (0, 5)),
+ (-3, (0, 6)),
+ (3, (0, 14)),
+ (3, (0, 15)),
+ (3, (1, 6)),
+ (-3, (1, 8)),
+ (-3, (1, 15)),
+ (-3, (3, 7)),
+ (3, (4, 7)),
+ (-3, (5, 8)),
+ (-6, (0, 1, 6)),
+ (3, (0, 3, 7)),
+ (3, (0, 4, 6)),
+ (-3, (0, 4, 7)),
+ (-3, (0, 4, 15)),
+ (3, (1, 2, 6)),
+ (3, (1, 5, 8)))
+INVERSE3 = ((-3, (0,)),
+ (-3, (1,)),
+ (3, (8,)),
+ (3, (9,)),
+ (6, (0, 1)),
+ (3, (0, 5)),
+ (3, (0, 7)),
+ (6, (1, 6)),
+ (-3, (1, 7)),
+ (-3, (3, 7)),
+ (3, (4, 7)),
+ (-3, (5, 8)),
+ (-3, (6, 9)),
+ (-3, (8, 9)),
+ (-6, (0, 1, 6)),
+ (3, (0, 3, 7)),
+ (3, (0, 4, 6)),
+ (-6, (0, 4, 7)),
+ (3, (5, 8, 9)),
+ (3, (6, 9, 10)))
+TABLE={(0,0,0):(0,0,0),(0,0,1):(0,1,0),(0,1,0):(0,0,1),(0,1,1):(1,1,0),
+       (1,0,0):(1,0,0),(1,0,1):(1,0,1),(1,1,0):(0,1,1),(1,1,1):(1,1,1)}
 
+@lru_cache(maxsize=1)
 def frames():
-    return tuple(tuple(r[i][0] for i in range(3)) for r in group().rotations)
+    return tuple(tuple(rotation[i][0] for i in range(3)) for rotation in group().rotations)
 
+@lru_cache(maxsize=1)
+def stabilizer():return tuple(group().power(H_GENERATOR,k) for k in range(8))
 
-def roles(root=0):
-    if type(root) is not int or not 0 <= root < 48: raise ValueError('root must be an exact label in 0..47')
-    row=group().multiplication[root]
-    return dict(signal=root,memory=row[MEMORY],clock=row[CLOCK],selector=row[SELECTOR],counter=row[COUNTER])
+@lru_cache(maxsize=1)
+def face_roots():
+    directions=frames()
+    return tuple(next(g for g,n in enumerate(directions) if n==direction) for direction in DIRECTIONS)
 
+def face_roles(root):
+    if type(root) is not int or not 0<=root<48:raise ValueError('root must be exact label in 0..47')
+    labels=tuple(group().multiplication[root][h] for h in stabilizer())
+    return {'root':root,'direction':frames()[root],'signal':labels[0],'memory':labels[1],'clock':labels[2],
+            'marker_zero':labels[3:6],'marker_one':labels[6:8],'labels':labels}
 
-def collision(p,m,c):
-    return p+m*c-p*m,c+p*m-p*c,m+p*c-m*c
+def decode_faces(values,L):
+    """Passive full-state domain check and unique retained-marker decoding."""
+    if type(L) is not int or L < 3:raise ValueError('L must be an exact integer >=3')
+    raw=np.asarray(values,dtype=object)
+    if raw.shape!=(48,L**3):raise ValueError('complete 48-channel state required')
+    if any(type(v) is not int and not isinstance(v,np.integer) for v in raw.flat):raise ValueError('exact integer values required')
+    x=raw-1
+    if np.any((x!=0)&(x!=1)):raise ValueError('all retained deviations must be Boolean')
+    decoded=[];tab=group().multiplication
+    for base in face_roots():
+        matches=[]
+        for h in stabilizer():
+            root=tab[base][h];roles=face_roles(root)
+            if all(np.all(x[roles['labels'][k]]==value) for k,value in FIXED.items()):matches.append(roles)
+        if len(matches)!=1:raise ValueError('each face needs one spatially uniform retained marker phase')
+        decoded.append(matches[0])
+    return decoded
 
+def sector_map(values,L,*,inverse=False):
+    """Independent three-bit truth-table oracle; never used by Engine updates."""
+    decoded=decode_faces(values,L);x=np.asarray(values,dtype=object)-1;out=x.copy()
+    for roles in decoded:
+        p,m,c=(x[roles[name]].reshape(L,L,L) for name in ('signal','memory','clock'))
+        n=roles['direction'];axis=next(k for k,v in enumerate(n) if v);sign=n[axis]
+        if not inverse:p=np.roll(p,sign,axis=axis)
+        result=np.empty((3,L**3),dtype=object)
+        for at,triple in enumerate(zip(p.flat,m.flat,c.flat)):result[:,at]=TABLE[tuple(map(int,triple))]
+        if inverse:result[0]=np.roll(result[0].reshape(L,L,L),-sign,axis=axis).reshape(-1)
+        for name,row in zip(('signal','memory','clock'),result):out[roles[name]]=row
+    return out+1
 
 @lru_cache(maxsize=1)
 def coupling_tensor():
-    """The sole built-in law; all retained values use the fixed positive bias."""
-    bias = 1
-    original=[(g,6,[(g,ZERO,'b')]) for g in range(48)]
-    def add(target,coef,*args): original.append((target,coef,[(g,at,'b') for g,at in args]))
-    tab=group().multiplication
-    for g,n in enumerate(frames()):
-        minus=tuple(-v for v in n)
-        m,c,s=(tab[g][v] for v in (MEMORY,CLOCK,SELECTOR))
-        gate=(s,ZERO)
-        # F=C S: stream signal, then an onsite reversible collision.
-        for coef,factors in [(3,[(g,minus)]),(-3,[(g,ZERO)]),(3,[(m,ZERO),(c,ZERO)]),(-3,[(g,minus),(m,ZERO)])]:
-            add(g,coef,gate,*factors)
-        for target,items in [(m,[(3,[(c,ZERO)]),(-3,[(m,ZERO)]),(3,[(g,minus),(m,ZERO)]),(-3,[(g,minus),(c,ZERO)])]),
-                             (c,[(3,[(m,ZERO)]),(-3,[(c,ZERO)]),(3,[(g,minus),(c,ZERO)]),(-3,[(m,ZERO),(c,ZERO)])])]:
-            for coef,factors in items:add(target,coef,gate,*factors)
-        # F^-1=S^-1 C: inverse collision is C itself.
-        for coef,factors in [(3,[(g,n)]),(-3,[(g,ZERO)]),(3,[(m,n),(c,n)]),(-3,[(g,n),(m,n)])]:
-            add(g,coef,gate,*factors)
-        for target,items in [(m,[(3,[(c,ZERO)]),(-3,[(m,ZERO)]),(3,[(g,ZERO),(m,ZERO)]),(-3,[(g,ZERO),(c,ZERO)])]),
-                             (c,[(3,[(m,ZERO)]),(-3,[(c,ZERO)]),(3,[(g,ZERO),(c,ZERO)]),(-3,[(m,ZERO),(c,ZERO)])])]:
-            for coef,factors in items:add(target,coef,gate,*factors)
-    terms=[]
-    # Affine conjugation b=bias+x retains exactly the same Rule3 divider.
-    for target,coefficient,factors in original:
-        for chosen in itertools.product((False,True),repeat=len(factors)):
-            omitted=len(factors)-sum(chosen)
-            coefficient_shifted=coefficient*(-bias)**omitted
-            if coefficient_shifted:
-                terms.append((target,coefficient_shifted,[factor for factor,keep in zip(factors,chosen) if keep]))
-    terms.extend((g,6*bias,[]) for g in range(48) if bias)
-    law=Tensor([GearType(f'clock_g{g:02d}','official') for g in range(48)],terms,strict_support=True)
-    require_equivariant(law)
-    return law
+    """A single fixed integer cubic tensor; no runtime interpolation or callbacks."""
+    terms=[];tab=group().multiplication;hs=stabilizer()
+    for target,n in enumerate(frames()):
+        for prototype,offset in ((FORWARD3,tuple(-v for v in n)),(INVERSE3,n)):
+            for coefficient,monomial in prototype:
+                factors=[(tab[target][hs[k%8]],ZERO if k<8 else offset,'b') for k in monomial]
+                # Raw retained state b=1+x, and u_raw=6+3F(x)+3F^-1(x).
+                for keep in itertools.product((False,True),repeat=len(factors)):
+                    terms.append((target,coefficient*(-1)**(len(factors)-sum(keep)),[factor for factor,use in zip(factors,keep) if use]))
+        terms.append((target,6,[]))
+    tensor=Tensor([GearType(f'face_clock_g{g:02d}','official') for g in range(48)],terms,strict_support=True)
+    require_equivariant(tensor)
+    return tensor
+
+def prepare_fields(*,L,signal,memory,clock,phases=(0,0,0,0,0,0),carry=None):
+    """Complete six-face preparation. Fields have shape (6,N) or (6,L,L,L)."""
+    if type(L) is not int or L<3:raise ValueError('L must be an exact integer >=3')
+    if len(phases)!=6 or any(type(k) is not int or not 0<=k<8 for k in phases):raise ValueError('six exact phases 0..7 required')
+    rows=[]
+    for supplied in (signal,memory,clock):
+        raw=np.asarray(supplied,dtype=object)
+        if raw.shape not in ((6,L**3),(6,L,L,L)):raise ValueError('every field must cover all six faces and all nodes')
+        if any(type(v) is not int and not isinstance(v,np.integer) for v in raw.flat):raise ValueError('exact Boolean integers required')
+        if np.any((raw!=0)&(raw!=1)):raise ValueError('Boolean field values required')
+        rows.append(raw.reshape(6,L**3))
+    values=np.ones((48,L**3),dtype=object);tab=group().multiplication;hs=stabilizer()
+    for face,(base,phase) in enumerate(zip(face_roots(),phases)):
+        roles=face_roles(tab[base][hs[phase]])
+        for k,value in FIXED.items():values[roles['labels'][k]]+=value
+        for name,field in zip(('signal','memory','clock'),rows):values[roles[name]]+=field[face]
+    old=sector_map(values,L,inverse=True)
+    if carry is None:
+        carry=np.ones((48,L**3),dtype=int)
+    else:
+        carry=np.asarray(carry,dtype=object)
+        if carry.shape!=(48,L**3):raise ValueError('every carry must be explicitly supplied')
+        if any(type(v) is not int and not isinstance(v,np.integer) for v in carry.flat):
+            raise ValueError('exact integer carries required')
+        if np.any((carry<1)|(carry>5)):raise ValueError('positive preparation carries must be in 1..5')
+    return State(L,old,values,carry)
+
+def electromagnetic_fields(state):
+    """Passive marker-decoded transverse frame readout, not general Maxwell."""
+    E=np.zeros((3,state.N),dtype=object);B=np.zeros_like(E)
+    for roles in decode_faces(state.b,state.L):
+        rotation=group().rotations[roles['root']];p=state.b[roles['signal']]-1
+        for axis in range(3):
+            E[axis]+=rotation[axis][1]*p;B[axis]+=rotation[axis][2]*p
+    return E,B
 
 
-def _size(L):
-    if type(L) is not int or L < 3:
-        raise ValueError('L must be an exact integer >=3')
-
-
-def _exact_array(values):
-    result = np.asarray(values, dtype=object)
-    if any(isinstance(v, (bool, np.bool_)) or
-           not isinstance(v, (int, np.integer)) for v in result.flat):
-        raise ValueError('exact integers required')
-    return result
-
-
-def sector_map(values, L, root=0, *, inverse=False):
-    """Independent Boolean oracle on the declared sector, never runtime input.
-
-    The isolated retained counter advances by one. Its inverse at raw value
-    one reaches zero; future-positive seeds therefore start it at two or more.
-    """
-    _size(L)
-    rr = roles(root)
-    x = _exact_array(values) - 1
-    if x.shape != (48, L**3):
-        raise ValueError('48 complete channel rows required')
-    if np.any(np.delete(x, list(rr.values()), axis=0)) or np.any(x[rr['selector']] != 1):
-        raise ValueError('outside selector-separated prepared sector')
-    bits = x[[rr[k] for k in ('signal', 'memory', 'clock')]]
-    if np.any((bits != 0) & (bits != 1)) or np.any(x[rr['counter']] < 0):
-        raise ValueError('Boolean deviations and positive counter required')
-    p, m, c = (x[rr[k]].reshape(L, L, L) for k in ('signal', 'memory', 'clock'))
-    direction = frames()[root]
-    axis = next(k for k, v in enumerate(direction) if v)
-    sign = direction[axis]
-    table = {(0,0,0):(0,0,0), (0,0,1):(0,1,0), (0,1,0):(0,0,1), (0,1,1):(1,1,0),
-             (1,0,0):(1,0,0), (1,0,1):(1,0,1), (1,1,0):(0,1,1), (1,1,1):(1,1,1)}
-    if not inverse:
-        p = np.roll(p, sign, axis=axis)
-    output = np.empty((3, L**3), dtype=object)
-    for site, triple in enumerate(zip(p.flat, m.flat, c.flat)):
-        output[:, site] = table[tuple(map(int, triple))]
-    if inverse:
-        output[0] = np.roll(output[0].reshape(L,L,L), -sign, axis=axis).reshape(-1)
-    result = x.copy()
-    for name, row in zip(('signal', 'memory', 'clock'), output):
-        result[rr[name]] = row
-    result[rr['counter']] += -1 if inverse else 1
-    return result + 1
-
-
-def prepare_fields(*, L, signal, memory, clock, root=0, counter_start=2):
-    """Prepare explicit spatial Boolean fields and a counted coordinate clock."""
-    _size(L)
-    rr = roles(root)
-    if type(counter_start) is not int or counter_start < 2:
-        raise ValueError('counter_start must be an exact integer >=2')
-    values = np.ones((48, L**3), dtype=object)
-    values[rr['selector']] = 2
-    values[rr['counter']] = counter_start
-    for name, supplied in (('signal', signal), ('memory', memory), ('clock', clock)):
-        raw = _exact_array(supplied)
-        if raw.shape not in ((L**3,), (L,L,L)):
-            raise ValueError('every field must explicitly cover the lattice')
-        if np.any((raw != 0) & (raw != 1)):
-            raise ValueError('Boolean deviations required')
-        values[rr[name]] += raw.reshape(-1)
-    previous = sector_map(values, L, root, inverse=True)
-    return State(L, previous, values, np.ones((48,L**3), dtype=int))
-
-
-def _planes(L, root, sites):
-    sites = tuple(sites)
-    if any(type(site) is not int or not 0 <= site < L for site in sites):
+def _planes(L, direction, sites):
+    sites=tuple(sites)
+    if any(type(site) is not int or not 0<=site<L for site in sites):
         raise ValueError('plane positions must be exact integers in 0..L-1')
-    axis = next(k for k, v in enumerate(frames()[root]) if v)
-    coordinates = np.indices((L,L,L))[axis].reshape(-1)
-    return np.isin(coordinates, sites).astype(object) * 1
+    axis=next(k for k,v in enumerate(direction) if v)
+    return np.isin(np.indices((L,L,L))[axis].reshape(-1),sites).astype(object)*1
 
 
-def make_model_bundle(*, L=7, root=0, signal_sites=(0,), memory_sites=(),
-                      clock_sites=(2,), counter_start=2):
-    """Seal the one built-in model; these are preparations of the same tensor."""
-    _size(L)
-    rr = roles(root)
-    seed = prepare_fields(L=L, root=root, counter_start=counter_start,
-                          signal=_planes(L,root,signal_sites),
-                          memory=_planes(L,root,memory_sites),
-                          clock=_planes(L,root,clock_sites))
-    tensor = coupling_tensor()
-    return create_bundle(tensor, seed,
-        channels=[{'index':g, 'name':gear.name, 'label':gear.label,
-                   'owner':'clock-collision48',
-                   'purpose':'complete regular channel; no uncounted link state'}
+def make_model_bundle(*, L=7, root=None, signal_sites=(0,), memory_sites=(), clock_sites=(2,)):
+    """Seal one law with all six faces active by default.
+
+    An explicit root selects one face and its marker phase for a directional
+    preparation. The other faces retain their complete empty coded states.
+    This changes only the seed, never the coupling.
+    """
+    if type(L) is not int or L<3:raise ValueError('L must be an exact integer >=3')
+    bases=face_roots();hs=stabilizer();tab=group().multiplication
+    phases=[0]*6
+    if root is None:
+        active=tuple(range(6))
+    else:
+        selected=face_roles(root)
+        face=DIRECTIONS.index(selected['direction'])
+        phases[face]=next(k for k,h in enumerate(hs) if tab[bases[face]][h]==root)
+        active=(face,)
+    signal_sites, memory_sites, clock_sites = map(tuple, (signal_sites, memory_sites, clock_sites))
+    fields=[np.zeros((6,L**3),dtype=object) for _ in range(3)]
+    for face in active:
+        direction=frames()[bases[face]]
+        for values,sites in zip(fields,(signal_sites,memory_sites,clock_sites)):
+            values[face]=_planes(L,direction,sites)
+    seed=prepare_fields(L=L,signal=fields[0],memory=fields[1],clock=fields[2],phases=tuple(phases))
+    tensor=coupling_tensor()
+    return create_bundle(tensor,seed,
+        channels=[{'index':g,'name':gear.name,'label':gear.label,'owner':'six-face-clock48',
+                   'purpose':'counted internal face channel; data or retained marker, no extra link state'}
                   for g,gear in enumerate(tensor.gears)],
         protocol=default_protocol(),
-        model={'id':MODEL_ID, 'version':'1', 'role':'universe-candidate',
-               'symmetry':CONTRACT, 'root':root, 'bias':1, 'roles':rr,
-               'domain':'one selected orientation; spatial Boolean signal/clock fields',
-               'counter':'prepared coordinate counter, not material proper time',
+        model={'id':MODEL_ID,'version':'1','role':'universe-candidate','symmetry':CONTRACT,
+               'domain':'six simultaneous spatial Boolean face circuits with uniform retained marker phases',
+               'bias':1,'active_faces':list(active),'marker_phases':phases,
+               'clock':'local reversible phase; Engine index is not retained proper time',
                'physics_acceptance':'blocked'})
 
 
-def electromagnetic_fields(state):
-    """Root-independent 2O-vector readout selected by retained selectors.
-
-    On the prepared sector this is E=e_root*p, B=m_root*p. It is not the
-    prior ungated sum of all channel frames and establishes no general
-    Maxwell equation or photon-number interpretation.
-    """
-    if state.G!=48:raise ValueError('48 complete channels required')
-    x=state.b.astype(object)-1
-    electric=np.zeros((3,state.N),dtype=object)
-    magnetic=np.zeros_like(electric)
-    tab=group().multiplication
-    for g,rotation in enumerate(group().rotations):
-        weight=x[g]*x[tab[g][SELECTOR]]
-        for axis in range(3):
-            electric[axis]+=rotation[axis][1]*weight
-            magnetic[axis]+=rotation[axis][2]*weight
-    return electric,magnetic
-
-
-def excitation_account(state, root=0):
-    """Logical charges on the declared sector, not a calibrated physical energy."""
-    sector_map(state.b, state.L, root)  # validate the readout domain
-    rr = roles(root)
-    p, m, c = (state.b[rr[k]] - 1 for k in ('signal', 'memory', 'clock'))
-    return {'free_signal': sum(map(int, p)),
-            'stored_signal': sum(map(int, m*c)),
-            'signal_charge': sum(map(int, p+m*c)),
-            'clock_sites': sum(map(int, m+c-m*c))}
+def excitation_account(state):
+    """Conserved logical accounts per face, not calibrated physical energy."""
+    accounts=[]
+    for face,roles in enumerate(decode_faces(state.b,state.L)):
+        p,m,c=(state.b[roles[name]]-1 for name in ('signal','memory','clock'))
+        accounts.append({'face':face,'direction':roles['direction'],
+                         'free_signal':sum(map(int,p)), 'stored_signal':sum(map(int,m*c)),
+                         'signal_charge':sum(map(int,p+m*c)),
+                         'clock_sites':sum(map(int,m+c-m*c))})
+    return accounts

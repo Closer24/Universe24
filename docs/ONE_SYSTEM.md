@@ -19,7 +19,7 @@ reexecution, inverse and every record. Trace files never feed the dynamics.
    by hashes. Execution rejects corruption and recomputes the law certificate.
    A model name, role or user-supplied physics label grants no acceptance.
 6. Raw engine arithmetic supports arbitrary signed integers. The selected
-   built-in preparation proves a narrower future-positive Boolean/counter
+   built-in preparation proves a narrower future-positive six-face Boolean
    domain. These are different assertions.
 7. Fixed operation count does not bound integer bit growth or wall-clock cost.
    Run reports expose integer costs. Global update index orders computation;
@@ -28,8 +28,10 @@ reexecution, inverse and every record. Trace files never feed the dynamics.
 The six node ports group eight regular channels each by direction. An edge
 reference identifies the same periodic adjacency from either endpoint; it
 adds no dynamical state or shared metric length. Channel grouping does not
-force each polynomial to read exclusively that port, and the current proved
-sector uses one selected orientation. See [the observer contract](OBSERVATION.md).
+force each polynomial to read exclusively that port, while the current proved
+sector runs all six directional circuits simultaneously. Each uses three live
+Boolean fields plus five retained marker bits; the circuits do not exchange
+signals between faces. See [the observer contract](OBSERVATION.md).
 
 One physical interpretation must ultimately use the same tensor, seed domain,
 source accounts and metric for every retained subsystem. Separate tensors'

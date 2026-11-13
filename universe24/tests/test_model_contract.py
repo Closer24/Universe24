@@ -1,7 +1,7 @@
-"""One fixed 48-channel law: exact algebra, prepared sectors and saved replay.
+"""One fixed six-face law: exact algebra, positive sectors and saved replay.
 
-These are mechanical contracts and finite sector checks, not Einstein or
-quantum acceptance tests. The truth-table oracle does not evaluate the tensor.
+These are mechanical contracts, not Einstein or quantum acceptance tests.
+The truth-table and scalar oracles do not call the Engine evaluator.
 """
 import contextlib
 import io
@@ -15,16 +15,15 @@ import numpy as np
 from universe24.algebra.group_2o import group
 from universe24.core import Engine, State
 from universe24.core.symmetry import act, require_equivariant
-from universe24.model import (MODEL_ID, coupling_tensor, roles, sector_map,
-                              make_model_bundle, prepare_fields,
-                              electromagnetic_fields)
+from universe24.model import (MODEL_ID, coupling_tensor, face_roots, face_roles,
+                              decode_faces, sector_map, make_model_bundle,
+                              prepare_fields, electromagnetic_fields)
 from universe24.runtime import main
 from universe24.system.bundle import load_bundle
 from universe24.system.checks import scalar_step
 from universe24.system.runtime import run_bundle, verify_run
 
 
-# Independent Boolean permutation: signal, retained memory, clock phase.
 COLLISION = {
     (0, 0, 0): (0, 0, 0), (0, 0, 1): (0, 1, 0),
     (0, 1, 0): (0, 0, 1), (0, 1, 1): (1, 1, 0),
@@ -33,16 +32,22 @@ COLLISION = {
 }
 
 
-def independent_step(values, L, root):
-    """Stream along the selected cube face, then apply the eight-entry table."""
-    rr = roles(root)
-    direction = tuple(row[0] for row in group().rotations[root])
+def independent_step(values, L, rr):
+    """Stream one face, then apply an independent eight-entry collision table."""
+    direction = rr['direction']
     axis = next(i for i, value in enumerate(direction) if value)
     p, m, c = [(values[rr[name]] - 1).reshape(L, L, L)
                for name in ('signal', 'memory', 'clock')]
     p = np.roll(p, direction[axis], axis=axis)
     triples = [COLLISION[tuple(map(int, bits))] for bits in zip(p.flat, m.flat, c.flat)]
     return np.asarray(triples, dtype=object).T + 1
+
+
+def encoded_face(rr, triple):
+    values = {channel: 1 for channel in rr['labels']}
+    values.update({channel: 2 for channel in rr['marker_one']})
+    values.update({rr[name]: bit + 1 for name, bit in zip(('signal', 'memory', 'clock'), triple)})
+    return values
 
 
 class UnifiedModelContractTests(unittest.TestCase):
@@ -54,9 +59,10 @@ class UnifiedModelContractTests(unittest.TestCase):
     def test_fixed_cubic_tensor_scalar_oracle_and_all_48_covariances(self):
         law = self.tensor
         self.assertEqual(law.G, 48)
-        self.assertEqual(len(law.monomials), 1968)
+        self.assertEqual(len(law.monomials), 2400)
         self.assertEqual({m.target for m in law.monomials}, set(range(48)))
         self.assertEqual(max(len(m.factors) for m in law.monomials), 3)
+        self.assertTrue(all(m.coeff % 3 == 0 for m in law.monomials))
         require_equivariant(law)
         rng = np.random.default_rng(7113)
         state = State(3, rng.integers(-4, 5, (48, 27)),
@@ -69,62 +75,76 @@ class UnifiedModelContractTests(unittest.TestCase):
             with self.subTest(rotation=k):
                 self.assertTrue(self.engine.step(act(state, k)).same_as(act(after, k)))
 
-    def test_boolean_collision_is_closed_involutive_and_conservative(self):
-        self.assertEqual(set(COLLISION), set(itertools.product((0, 1), repeat=3)))
-        rr = roles()
+    def test_complete_local_polynomial_identity_on_all_phase_and_neighbor_codes(self):
+        # Exhaust all 8 local, 8 incoming and 8 outgoing triples in each of 8
+        # marker phases. Exact covariance carries this identity to every face.
+        terms = [term for term in self.tensor.monomials if term.target == 0]
+        direction = face_roles(0)['direction']
+        zero, plus = (0, 0, 0), tuple(direction)
+        minus = tuple(-v for v in direction)
+        bits = tuple(itertools.product((0, 1), repeat=3))
+        for phase in range(8):
+            rr = face_roles(group().power(1, phase))
+            for local, incoming, outgoing in itertools.product(bits, repeat=3):
+                values = {zero: encoded_face(rr, local), minus: encoded_face(rr, incoming),
+                          plus: encoded_face(rr, outgoing)}
+                forward = COLLISION[(incoming[0], local[1], local[2])]
+                inverse = (COLLISION[outgoing][0], *COLLISION[local][1:])
+                expected = 3 * (encoded_face(rr, forward)[0] + encoded_face(rr, inverse)[0])
+                actual = 0
+                for term in terms:
+                    value = term.coeff
+                    for factor in term.factors:
+                        self.assertEqual(factor.field, 'b')
+                        value *= values[factor.offset][factor.gear]
+                    actual += value
+                self.assertEqual(actual, expected, (phase, local, incoming, outgoing))
         for before, after in COLLISION.items():
-            self.assertTrue(all(v in (0, 1) for v in after))
             self.assertEqual(COLLISION[after], before)
             self.assertEqual(sum(before), sum(after))
-            fields = {name: np.full(27, bit, dtype=object)
-                      for name, bit in zip(('signal', 'memory', 'clock'), before)}
-            state = self.engine.step(prepare_fields(L=3, **fields))
-            for name, bit in zip(('signal', 'memory', 'clock'), after):
-                np.testing.assert_array_equal(state.b[rr[name]], np.full(27, bit + 1))
 
-    def test_all_orientations_preserve_arbitrary_spatial_positive_sectors(self):
+    def test_all_six_faces_preserve_spatial_positive_sectors_in_all_marker_phases(self):
         rng = np.random.default_rng(7114)
-        for root in range(48):
-            with self.subTest(root=root):
-                rr = roles(root)
-                self.assertEqual(len(set(rr.values())), 5)
-                fields = {name: rng.integers(0, 2, 27).astype(object)
+        for phase in range(8):
+            with self.subTest(phase=phase):
+                fields = {name: rng.integers(0, 2, (6, 27)).astype(object)
                           for name in ('signal', 'memory', 'clock')}
-                initial = prepare_fields(L=3, root=root, counter_start=2, **fields)
+                carry = rng.integers(1, 6, (48, 27))
+                initial = prepare_fields(L=3, phases=tuple((phase + face) % 8 for face in range(6)),
+                                         carry=carry, **fields)
+                decoded = decode_faces(initial.b, 3)
+                self.assertEqual(len(decoded), 6)
+                self.assertEqual(sorted(g for rr in decoded for g in rr['labels']), list(range(48)))
                 state = initial
-                initial_count = sum(int(v) - 1 for name in fields for v in initial.b[rr[name]])
-                for tick in range(1, 3):
-                    expected = independent_step(state.b, 3, root)
+                for _ in range(4):
                     next_state = self.engine.step(state)
-                    np.testing.assert_array_equal(next_state.b, sector_map(state.b, 3, root))
-                    for name, row in zip(('signal', 'memory', 'clock'), expected):
-                        np.testing.assert_array_equal(next_state.b[rr[name]], row)
-                    np.testing.assert_array_equal(next_state.a,
-                                                  sector_map(next_state.b, 3, root, inverse=True))
+                    np.testing.assert_array_equal(next_state.b, sector_map(state.b, 3))
+                    np.testing.assert_array_equal(next_state.a, sector_map(next_state.b, 3, inverse=True))
                     np.testing.assert_array_equal(next_state.r, initial.r)
-                    self.assertTrue(all(int(v) >= 1 for bank in
-                                        (next_state.a, next_state.b, next_state.r) for v in bank.flat))
-                    count = sum(int(v) - 1 for name in fields for v in next_state.b[rr[name]])
-                    self.assertEqual(count, initial_count)
-                    p, m, c = [state.b[rr[name]] - 1 for name in ('signal', 'memory', 'clock')]
-                    pn, mn, cn = [next_state.b[rr[name]] - 1 for name in ('signal', 'memory', 'clock')]
-                    np.testing.assert_array_equal(mn + cn - mn * cn, m + c - m * c)
-                    direction = tuple(row[0] for row in group().rotations[root])
-                    axis = next(i for i, value in enumerate(direction) if value)
-                    incoming = np.roll(p.reshape(3, 3, 3), direction[axis], axis=axis).reshape(-1)
-                    np.testing.assert_array_equal(pn + mn * cn - p - m * c, incoming - p)
-                    np.testing.assert_array_equal(next_state.b[rr['counter']],
-                                                  initial.b[rr['counter']] + tick)
+                    self.assertTrue(all(int(v) in (1, 2) for bank in (next_state.a, next_state.b) for v in bank.flat))
+                    for rr in decoded:
+                        expected = independent_step(state.b, 3, rr)
+                        for name, row in zip(('signal', 'memory', 'clock'), expected):
+                            np.testing.assert_array_equal(next_state.b[rr[name]], row)
+                        for marker in rr['marker_zero'] + rr['marker_one']:
+                            np.testing.assert_array_equal(next_state.b[marker], initial.b[marker])
+                        p, m, c = [state.b[rr[name]] - 1 for name in ('signal', 'memory', 'clock')]
+                        pn, mn, cn = [next_state.b[rr[name]] - 1 for name in ('signal', 'memory', 'clock')]
+                        np.testing.assert_array_equal(mn + cn - mn * cn, m + c - m * c)
+                        direction = rr['direction']
+                        axis = next(i for i, value in enumerate(direction) if value)
+                        incoming = np.roll(p.reshape(3, 3, 3), direction[axis], axis=axis).reshape(-1)
+                        np.testing.assert_array_equal(pn + mn * cn - p - m * c, incoming - p)
                     self.assertTrue(self.engine.inverse_step(next_state).same_as(state))
                     state = next_state
-                self.assertTrue(self.engine.rewind(state, 2).same_as(initial))
+                self.assertTrue(self.engine.rewind(state, 4).same_as(initial))
 
-    def test_free_signal_translates_and_transverse_readout_in_every_orientation(self):
+    def test_free_signal_translates_and_transverse_readout_in_all_48_modes(self):
         for root in range(48):
             with self.subTest(root=root):
                 bundle = make_model_bundle(L=3, root=root, signal_sites=(0,), memory_sites=(), clock_sites=())
-                rr, rotation = roles(root), group().rotations[root]
-                direction = tuple(row[0] for row in rotation)
+                rr, rotation = face_roles(root), group().rotations[root]
+                direction = rr['direction']
                 axis = next(i for i, value in enumerate(direction) if value)
                 after = self.engine.step(bundle.seed)
                 expected = np.roll(bundle.seed.b[rr['signal']].reshape(3, 3, 3), direction[axis], axis=axis)
@@ -138,20 +158,18 @@ class UnifiedModelContractTests(unittest.TestCase):
                 self.assertTrue(all(v == 0 for v in sum(electric[i] * magnetic[i] for i in range(3))))
                 self.assertTrue(all(v == 0 for v in sum(electric[i] ** 2 - magnetic[i] ** 2 for i in range(3))))
 
-    def test_clock_phase_intervention_changes_signal_under_same_tensor(self):
-        memory_phase = make_model_bundle(L=5, signal_sites=(0,), memory_sites=(2,), clock_sites=())
-        clock_phase = make_model_bundle(L=5, signal_sites=(0,), memory_sites=(), clock_sites=(2,))
+    def test_clock_phase_intervention_and_reciprocal_feedback(self):
+        memory_phase = make_model_bundle(L=5, root=0, signal_sites=(0,), memory_sites=(2,), clock_sites=())
+        clock_phase = make_model_bundle(L=5, root=0, signal_sites=(0,), memory_sites=(), clock_sites=(2,))
         self.assertEqual(memory_phase.tensor.fingerprint, clock_phase.tensor.fingerprint)
         a, b = memory_phase.seed, clock_phase.seed
-        rr = roles()
-        signal = rr['signal']
-        quiet = make_model_bundle(L=5, signal_sites=(), memory_sites=(), clock_sites=(2,)).seed
-        np.testing.assert_array_equal(a.b[signal], b.b[signal])
+        rr = face_roles(0)
+        quiet = make_model_bundle(L=5, root=0, signal_sites=(), memory_sites=(), clock_sites=(2,)).seed
+        np.testing.assert_array_equal(a.b[rr['signal']], b.b[rr['signal']])
         differences, feedback = [], []
         for _ in range(4):
-            a, b = self.engine.step(a), self.engine.step(b)
-            quiet = self.engine.step(quiet)
-            differences.append(not np.array_equal(a.b[signal], b.b[signal]))
+            a, b, quiet = (self.engine.step(state) for state in (a, b, quiet))
+            differences.append(not np.array_equal(a.b[rr['signal']], b.b[rr['signal']]))
             feedback.append(any(not np.array_equal(b.b[rr[name]], quiet.b[rr[name]])
                                 for name in ('memory', 'clock')))
         self.assertTrue(any(differences))
@@ -159,13 +177,36 @@ class UnifiedModelContractTests(unittest.TestCase):
         self.assertTrue(self.engine.rewind(a, 4).same_as(memory_phase.seed))
         self.assertTrue(self.engine.rewind(b, 4).same_as(clock_phase.seed))
 
-    def test_unbounded_counter_and_arbitrary_bigint_state_rewind_exactly(self):
-        initial = make_model_bundle(L=3, counter_start=1 << 90).seed
-        state, counter = initial, roles()['counter']
+    def test_six_simultaneous_bursts_have_exact_busy_intervals(self):
+        L = 7
+        coords = np.indices((L, L, L)).reshape(3, -1)
+        fields = {name: np.zeros((6, L**3), dtype=object) for name in ('signal', 'memory', 'clock')}
+        for face, root in enumerate(face_roots()):
+            direction = face_roles(root)['direction']
+            axis = next(k for k, value in enumerate(direction) if value)
+            size = face % 3 + 1
+            fields['memory'][face] = (coords[axis] == 3).astype(object) * 1
+            fields['signal'][face] = np.isin(coords[axis], [(3 - direction[axis] * k) % L
+                                                           for k in range(1, size + 1)]).astype(object) * 1
+        initial = prepare_fields(L=L, **fields)
+        state = initial
+        occupied = [[] for _ in range(6)]
         for tick in range(1, 5):
             state = self.engine.step(state)
-            np.testing.assert_array_equal(state.b[counter], initial.b[counter] + tick)
+            for face, rr in enumerate(decode_faces(state.b, L)):
+                direction = rr['direction']
+                axis = next(k for k, value in enumerate(direction) if value)
+                site = [0, 0, 0]
+                site[axis] = 3
+                node = state.lattice.index(*site)
+                m, c = (int(state.b[rr[name], node]) - 1 for name in ('memory', 'clock'))
+                if m * c:
+                    occupied[face].append(tick)
+        for face, ticks in enumerate(occupied):
+            self.assertEqual(ticks, list(range(1, face % 3 + 2)))
         self.assertTrue(self.engine.rewind(state, 4).same_as(initial))
+
+    def test_arbitrary_bigint_state_rewinds_exactly(self):
         rng = np.random.default_rng(7115)
         banks = [rng.integers(-2, 3, (48, 27)).astype(object) * (1 << 70) for _ in range(2)]
         arbitrary = State(3, *banks, rng.integers(0, 6, (48, 27)))
@@ -173,44 +214,31 @@ class UnifiedModelContractTests(unittest.TestCase):
         self.assertTrue(after.same_as(scalar_step(self.tensor, arbitrary)))
         self.assertTrue(self.engine.inverse_step(after).same_as(arbitrary))
 
-    def test_busy_input_prolongs_stored_occupancy_without_losing_signal(self):
-        # Same initial clock phase in every case. Extra incoming ones pass
-        # while occupancy remains stored: this is residence, not a FIFO claim.
-        rr, target, L = roles(), 3, 7
-        for length in (1, 2, 3):
-            with self.subTest(incoming_burst=length):
-                initial = make_model_bundle(
-                    L=L, signal_sites=tuple(target-k for k in range(1, length+1)),
-                    memory_sites=(target,), clock_sites=()).seed
-                state, stored = initial, []
-                node = state.lattice.index(target, 0, 0)
-                for tick in range(5):
-                    p, m, c = [state.b[rr[name]]-1 for name in ('signal', 'memory', 'clock')]
-                    stored.append(int(m[node]*c[node]))
-                    self.assertEqual(sum(map(int, p+m*c)), length*L*L)
-                    if tick < 4:
-                        state = self.engine.step(state)
-                self.assertEqual(stored, [0]+[1]*length+[0]*(4-length))
-                self.assertTrue(self.engine.rewind(state, 4).same_as(initial))
-
-    def test_input_contract_rejects_inexact_or_incomplete_preparations(self):
+    def test_input_contract_rejects_inexact_incomplete_or_unmarked_preparations(self):
         for options in ({'root': True}, {'root': 48}, {'L': True}, {'L': 2},
-                        {'signal_sites': (3,), 'L': 3}, {'counter_start': 1.5}):
+                        {'signal_sites': (3,), 'L': 3}):
             with self.subTest(options=options), self.assertRaises(ValueError):
                 make_model_bundle(**options)
-        empty = np.zeros(27, dtype=object)
-        for invalid in (np.zeros(26, dtype=object), np.full(27, 2, dtype=object),
-                        np.full(27, 0.5, dtype=object), np.full(27, True, dtype=object)):
-            with self.subTest(invalid=invalid[0]), self.assertRaises(ValueError):
+        empty = np.zeros((6, 27), dtype=object)
+        for invalid in (np.zeros((6, 26), dtype=object), np.full((6, 27), 2, dtype=object),
+                        np.full((6, 27), 0.5, dtype=object), np.full((6, 27), True, dtype=object)):
+            with self.assertRaises(ValueError):
                 prepare_fields(L=3, signal=invalid, memory=empty, clock=empty)
-        values = make_model_bundle(L=3).seed.b.copy()
-        values[roles()['signal'], 0] = 3
+        for phases in ((0,) * 5, (0,) * 5 + (8,), (0,) * 5 + (True,)):
+            with self.assertRaises(ValueError):
+                prepare_fields(L=3, signal=empty, memory=empty, clock=empty, phases=phases)
+        for carry in (np.zeros((48, 27), dtype=int), np.full((48, 27), 6),
+                      np.ones((48, 26)), np.full((48, 27), 1.5)):
+            with self.assertRaises(ValueError):
+                prepare_fields(L=3, signal=empty, memory=empty, clock=empty, carry=carry)
+        values = make_model_bundle(L=3, root=0).seed.b.copy()
+        values[face_roles(0)['signal'], 0] = 3
         with self.assertRaises(ValueError):
             sector_map(values, 3)
-        values = make_model_bundle(L=3).seed.b.copy()
-        values[roles()['selector'], 0] = 1
+        values = make_model_bundle(L=3, root=0).seed.b.copy()
+        values[face_roles(0)['marker_one'][0], 0] = 1
         with self.assertRaises(ValueError):
-            sector_map(values, 3)
+            decode_faces(values, 3)
 
     def test_canonical_bundle_replay_and_physics_gate(self):
         with tempfile.TemporaryDirectory() as tmp, contextlib.redirect_stdout(io.StringIO()):

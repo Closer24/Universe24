@@ -22,8 +22,9 @@ Do not restore an experiment menu or present separate laws as one universe.
 8. Mechanical correctness, positive preparation and a conserved logical
    account do not prove Einstein geometry, matter, dark matter, quantum theory
    or a Big Bang. State domains and limitations precisely in docs/PHYSICS.md.
-9. The current proved Boolean sector selects one orientation at a time.
-   Six passive face views do not establish simultaneous six-face closure.
+9. The current proved Boolean sector has six independent simultaneous face
+   circuits. Every face counts three data and five retained marker bits. Do
+   not infer cross-face interactions or Einstein geometry from their closure.
 10. Keep generated evidence in ignored runs/. Update README and current docs
     for model/interface changes; do not commit experiment archives or run outputs.
 

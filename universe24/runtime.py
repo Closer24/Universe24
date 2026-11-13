@@ -21,16 +21,16 @@ def status():
         "accepted_physical_model": None,
         "full_physics_acceptance": "blocked",
         "installed_components": {
-            "clock_collision48": "one fixed cubic signal/clock coupling; positive Boolean sector with retained coordinate counter",
+            "six_face_clock48": "one fixed cubic coupling; six simultaneous positive Boolean face circuits",
             "node_face_views": "six internal directional views; no extra link state",
             "click_only_observer": "canonical clicks with optional explicit positive-history calibration",
         },
-        "verified_sector": "one selected orientation at a time; arbitrary spatial Boolean profiles",
+        "verified_sector": "all six faces simultaneously; arbitrary spatial Boolean profiles; retained uniform marker phase per face",
         "blockers": [
-            "Simultaneous independent six-direction populations are not established",
+            "Six directional circuits are independent; cross-face scattering and universal source coupling are unproved",
             "State-dependent residence time does not establish a Lorentzian metric or Einstein equations",
             "Massive bodies, dark matter, gravitational waves and cosmological bang dynamics remain unproved",
-            "The coordinate counter is not a material proper clock; structural complexity need not grow",
+            "Local phase clocks are not calibrated proper clocks; the bounded prepared sector recurs",
             "No Born/Bell mechanism or physical interpretation of a third click is established",
         ],
         "coordination": "https://github.com/Closer24/Universe24/issues/40",
@@ -48,11 +48,10 @@ def main(argv=None):
     model = sub.add_parser("prepare-model", help="Prepare the one fixed signal/clock coupling")
     model.add_argument("--out", type=Path, required=True)
     model.add_argument("--size", type=int, default=7)
-    model.add_argument("--root", type=int, default=0, help="2O orientation label, 0..47")
+    model.add_argument("--root", type=int, help="Select one oriented face (0..47); default prepares all six")
     model.add_argument("--signal-sites", nargs='*', type=int, default=[0])
     model.add_argument("--memory-sites", nargs='*', type=int, default=[])
     model.add_argument("--clock-sites", nargs='*', type=int, default=[2])
-    model.add_argument("--counter-start", type=int, default=2)
     observe = sub.add_parser("observe-clicks", help="Observe a click file without opening hidden states or a bundle")
     observe.add_argument("--clicks", type=Path, required=True)
     observe.add_argument("--out", type=Path, help="Optional new observation JSON file")
@@ -78,7 +77,7 @@ def main(argv=None):
             from universe24.system.bundle import save_bundle
             bundle = make_model_bundle(L=args.size, root=args.root,
                 signal_sites=args.signal_sites, memory_sites=args.memory_sites,
-                clock_sites=args.clock_sites, counter_start=args.counter_start)
+                clock_sites=args.clock_sites)
             save_bundle(bundle, args.out)
             result = {"bundle_id":bundle.bundle_id, "channels":bundle.tensor.G,
                       "path":str(args.out), "model_contract":bundle.model_contract,

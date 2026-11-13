@@ -9,9 +9,10 @@ Views are snapshots: construct a new view for a new Engine state.
 
 `b` is the current gear state; `a` is its prior value and `r` its retained
 remainder. A face-specific transmission rule must emerge from the fixed
-polynomial over these rows. The current implementation proves a signal/clock
-circuit for each orientation separately. The six port groups do not prove
-six independent simultaneous circuits or a scalar common length per edge.
+polynomial over these rows. The current implementation proves six independent
+signal/clock circuits acting simultaneously. Three live Boolean values and
+five marker bits occupy each face. This does not provide cross-face scattering
+or a scalar common metric length per edge.
 
 ## The observer boundary
 
@@ -29,7 +30,11 @@ the selected coupling and constant-carry positive domain:
 - a quiet update requires `old == current == next`;
 - an impossible missing record or nonpositive inferred value is rejected.
 
-All outputs are derived from those public inputs. Large integers are serialized
+All outputs are derived from those public inputs. Static marker rows normally
+emit no clicks; their phases cannot be discovered from an unaided click file.
+A field/orientation reconstruction would require explicit marker calibration.
+The `electromagnetic_fields` full-state readout is an independent passive audit,
+not a hidden-state shortcut inside the click-only observer. Large integers are serialized
 as decimal strings without changing the process-wide integer digit limit.
 The CLI supports uniform scalar initial histories; the Python API also supports
 arrays. No arbitrary latent state is inferred without calibration.

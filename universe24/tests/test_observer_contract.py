@@ -7,7 +7,7 @@ import tempfile
 import unittest
 
 from universe24.core import Engine, exact_json
-from universe24.model import make_model_bundle, roles
+from universe24.model import make_model_bundle, face_roles
 from universe24.observer import (read_clicks, observed_payload, inspect_click_file,
                                  reconstruct_channel_from_clicks)
 from universe24.system.checks import fixture
@@ -19,7 +19,7 @@ class ClickObserverContract(unittest.TestCase):
     def setUpClass(cls):
         cls.bundle = make_model_bundle(L=3, root=0, signal_sites=(0,),
                                        memory_sites=(), clock_sites=(2,))
-        cls.channel = roles()['memory']
+        cls.channel = face_roles(0)['memory']
         engine, state = Engine(cls.bundle.tensor), cls.bundle.seed
         cls.initial_a = [int(v) for v in state.a[cls.channel]]
         cls.initial_b = [int(v) for v in state.b[cls.channel]]

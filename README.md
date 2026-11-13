@@ -21,16 +21,18 @@ python -m universe24 verify --run runs/output
 python -m universe24 observe-clicks --clicks runs/output/clicks.jsonl.gz
 ```
 
-Use new output paths. The default preparation has a signal plane at x=0, a
-clock plane at x=2, and a retained coordinate counter. `--root 0..47` changes
-the orientation. `--signal-sites`, `--memory-sites` and `--clock-sites` change
+Use new output paths. The default preparation has signal and clock planes at
+coordinates 0 and 2 along each face axis, in all six directions. All six face
+circuits run simultaneously. `--root 0..47` prepares just one oriented face.
+`--signal-sites`, `--memory-sites` and `--clock-sites` change
 initial planes under the **same tensor**, not the update rule. The Python
 `prepare_fields` API accepts complete spatial Boolean profiles.
 
-The verified positive domain selects one orientation at a time. Every cube
-orientation is supported separately; arbitrary simultaneous independent
-six-direction populations are not proved. The six face groups are views of
-the complete state, not six independently certified circuits.
+Each face uses eight of the 48 channels: three spatial Boolean signal/memory/
+clock values and five retained marker bits. Marker phases are uniform across
+the lattice for each direction, but the three data fields can vary arbitrarily
+at every node. The six circuits operate independently; cross-face scattering
+and a common gravitational geometry are not yet implemented.
 
 ## The gears and the clock
 
@@ -47,9 +49,10 @@ b_next = ell - a
 same old snapshot; each monomial touches the target and at most one face edge.
 There is no runtime solver, queue, reset, clipping, injection or discarded
 history. Exactly 48 channels means 144 retained integers per node, including
-the local coordinate counter. Integers can grow without a fixed bit limit.
+all clock phases and marker bits. Generic Engine inputs can grow without a
+fixed bit limit; the prepared Boolean sector remains bounded.
 
-The built-in tensor has 1,968 monomials and exact joint binary-octahedral
+The built-in tensor has 2,400 monomials and exact joint binary-octahedral
 channel/cube covariance. Its prepared signal and clock values are encoded as
 `b=1+bit`; the complete future histories and carries remain natural numbers.
 The three Boolean roles are an incoming signal, memory and clock phase. Their
@@ -61,8 +64,9 @@ this is not a FIFO queue or proof of geometric link stretching.
 
 A fixed polynomial gives a fixed arithmetic operation schedule per node. It
 does **not** guarantee fixed CPU time: integer arithmetic cost depends on bit
-length. A counter increasing by one is a prepared coordinate clock, not a
-material proper clock and not proof of growing structural complexity.
+length. The local phase clocks are not yet calibrated material proper clocks.
+The bounded prepared sector recurs, so it cannot enforce indefinitely increasing
+structural complexity.
 
 See [the model equations](docs/MODEL.md), [node and click interfaces](docs/OBSERVATION.md),
 [the execution contract](docs/ONE_SYSTEM.md) and [the physical acceptance criteria](docs/PHYSICS.md).
@@ -71,13 +75,19 @@ See [the model equations](docs/MODEL.md), [node and click interfaces](docs/OBSER
 
 The observer reads the standalone click file, without opening a bundle or
 hidden state trace. Given explicit public initial channel histories, it can
-reconstruct that channel. For the default root=0 counter (channel 4):
+reconstruct that channel. To inspect a uniform phase clock under the same law:
 
 ```bash
-python -m universe24 observe-clicks --clicks runs/output/clicks.jsonl.gz \
-  --channel 4 --nodes 343 --steps 12 --initial-a 1 --initial-b 2 \
-  --out runs/counter-observation.json
+python -m universe24 prepare-model --size 3 --root 0 --signal-sites \
+  --memory-sites 0 1 2 --clock-sites --out runs/clock-input
+python -m universe24 run --bundle runs/clock-input --steps 6 --out runs/clock-output
+python -m universe24 observe-clicks --clicks runs/clock-output/clicks.jsonl.gz \
+  --channel 3 --nodes 27 --steps 6 --initial-a 2 --initial-b 1 \
+  --out runs/clock-observation.json
 ```
+
+The channel alternates 2,1,2,1,2,1. An update index orders the saved events;
+it is not an additional retained clock or an inferred proper-time measurement.
 
 These are arithmetic records, not calibrated photon counts. Stream completeness
 is checked by separate full-state replay. The selected law has constant
@@ -95,8 +105,8 @@ python -m universe24 status
 
 The suite checks the independent scalar oracle, exact inverse, arbitrary large
 integers, all 48 symmetry actions, the Boolean collision/streaming domain,
-positive histories, reciprocal phase feedback, conserved logical accounts,
-bundle integrity and calibrated click-only reconstruction. The generic smoke
+positive histories, all six simultaneous faces, reciprocal phase feedback,
+conserved logical accounts, bundle integrity and calibrated click-only reconstruction. The generic smoke
 is an engine/I/O test, not a second physical model.
 
 `verify --require-physics` deliberately fails while the physical criteria are

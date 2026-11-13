@@ -6,7 +6,7 @@ a solution of Einstein's equations.
 
 ## Boolean reversible transmission
 
-For one orientation g, let n=R_g e_x. Signal p streams by one face along n;
+For each directional face, let n=R_g e_x. Signal p streams by one face along n;
 local memory m and clock phase c remain onsite. All three are Boolean. The
 collision is
 
@@ -25,29 +25,47 @@ collision is
 | 110 | 011 |
 | 111 | 111 |
 
-C is an involution on all eight Boolean inputs and preserves p+m+c. Set
-F=C S, with S the signal stream; then F inverse is S inverse C. The second-order
-Rule3 law implements F on histories initialized with a=F inverse(b).
+C is an involution and preserves p+m+c. Each face has F=C S, with S the
+signal stream; F inverse is S inverse C. All six face maps act simultaneously
+on disjoint sets of retained channels. They do not scatter into other faces.
 
-Relative group labels are signal=0, memory=2, clock=6, selector=1, counter=4;
-left multiplication by g gives the selected orientation. The selector is a
-retained constant bit, not an external runtime switch. The full polynomial is
-the left-equivariant sum of all 48 role assignments. On the selector-separated
-domain it reduces exactly to u=3(F(b)+F inverse(b)). Affine conjugation to
-b=1+bit fixes the positive baseline at one and yields 1,968 monomials of degree
-at most three. Every monomial obeys the one-face support rule.
+The eight labels of a face are g h^k, k=0..7, where h is the order-eight
+stabilizer generator (group label 1) of e_x. Positions 0,1,2 retain p,m,c;
+positions 3..7 retain marker bits 0,0,0,1,1. The eight cyclic orientations
+and eight live triples give 64 distinct eight-bit words, so the marker phase
+is uniquely decodable. Each direction may select its own phase, spatially
+uniform across the lattice. Markers are counted state, not an external
+selector, hidden clock or runtime setting.
 
-The isolated counter obeys u_counter=6*b_counter. With a=K-1,b=K and K>=2,
-its future values are a(t)=K+t-1,b(t)=K+t. It occupies one of the same 48 rows;
-there is no extra bank. The counter is not the Boolean clock phase and does not
-change signal transmission. Spatially differing counter offsets remain
-isolated in this domain.
+The fixed cubic prototypes FORWARD3 and INVERSE3 evaluate 3F and 3F inverse
+for a target row. Their exact identities cover all 512 local/neighbor/phase
+cases each (8 local triples times 8 neighbor triples times 8 phases).
+They are fixed integer coefficients in the source; no interpolation solver
+runs during preparation or evolution. Applying the prototypes at all 48
+labels gives exact left 2O covariance and one-face support.
 
-Preparation supplies every row and all carries. The Engine alone evolves it;
-`sector_map` is an independent truth-table oracle and is never an evolution
-callback. There is no projection back into the prepared domain. Future-positive
-histories can be rewound exactly to their seed; positivity is not asserted for
-arbitrary continuations before the specified preparation.
+With deviations x=b-1 the raw tensor is
+
+\[
+ u(b)=6+3F(x)+3F^{-1}(x).
+\]
+
+Affine expansion gives 2,400 monomials of degree at most three. Initialize
+b=1+x and a=1+F inverse(x). Rule3 then advances b to 1+F(x) exactly.
+All six faces can have arbitrary spatial Boolean p,m,c simultaneously.
+All future a,b are in {1,2}; arbitrary explicitly supplied carries in 1..5
+remain fixed. Thus the complete prepared state stays positive indefinitely.
+
+Every face uses eight retained integers per bank; six faces use all 48 rows,
+or 144 integers across a,b,r. There is no separate unbounded counter. The
+Engine index orders execution, while physical time must eventually be
+calibrated using retained phase clocks and observable exchanges.
+
+Preparation supplies every row and carry. The Engine alone evolves it;
+`sector_map` is an independent truth-table oracle, never an evolution callback.
+There is no projection back into the prepared domain. An arbitrary raw state
+outside the domain still has the exact Engine inverse, but positivity and
+Boolean transmission are not claimed there.
 
 ## Exact accounts and what can slow down
 
@@ -66,30 +84,35 @@ storage and no externally managed queue. With the same initial m=1,c=0 at x=3, i
 capture at update 1 and release at updates 2, 3 and 4: stored occupancy lasts
 1, 2 and 3 updates. This is checked against the actual production Engine.
 Further ones pass while occupancy remains stored, so this does not identify
-individual photons or establish FIFO delay. A collision phase can also delay an
+individual photons or establish FIFO delay. A permanently occupied input can
+keep stored occupancy indefinitely; finite latency for every identifiable
+message is not guaranteed. A collision phase can also delay an
 isolated pulse by one update. There is no independent, evolving edge-length
 variable in this implementation.
 
-These identities hold for arbitrary spatial Boolean profiles in a single
-selected orientation. Simultaneously populating independent rotated sectors
-can activate overlapping selectors. Closure and positivity for that combined
-preparation are not established; the API does not silently construct it.
+These identities hold independently in all six directional circuits. The
+busy-input contract tests also activate all six directions together. Their
+independence is a limitation: there is no cross-face recoil or scattering,
+no movable massive body and no universal gravitational source coupling.
 
 ## Transverse signal readout
 
-For deviations x=b-1 and selector relative label s=1,
+Decode the retained marker phase of each face to obtain its root g and signal
+p. The passive field readout sums
 
 \[
- E=\sum_g (R_g e_y)x_g x_{gs},\qquad
- B=\sum_g (R_g e_z)x_g x_{gs}.
+ E=\sum_{faces}(R_g e_y)p,\qquad
+ B=\sum_{faces}(R_g e_z)p.
 \]
 
-This is a root-independent covariant passive readout. In the declared sector
-it gives E=(R_g e_y)p and B=(R_g e_z)p. With no clock sites, a transverse plane
-profile moves one face per Engine update, with B=n cross E, E dot B=0 and
-E squared=B squared, in lattice units c=1. This is a restricted light-like
-transport sector. Arbitrary Maxwell superposition, general directions,
-Lorentz invariance and physical photon calibration do not follow from it.
+This full-state audit reads the counted markers rather than a root parameter.
+It is separate from the click-only observer, which needs public calibration. It transforms covariantly under the joint 2O action.
+With no clock sites, an individual transverse plane profile moves one face
+per Engine update, with B=n cross E, E dot B=0 and E squared=B squared,
+in lattice units c=1. These null identities apply to each single plane mode;
+multiple crossing modes need not have zero field invariants. This is a
+restricted light-like transport sector. General Maxwell evolution, continuous
+rotations, Lorentz invariance and photon calibration remain unproved.
 
 All tensor coefficients are divisible by three, so carries remain fixed.
 Arithmetic event emission still depends on the changed full triple and
