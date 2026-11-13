@@ -1,0 +1,40 @@
+{
+  "name": "amplitude_2",
+  "L": 9,
+  "nodes": 729,
+  "steps": 12,
+  "geometry": "flat",
+  "Q": "1594323",
+  "order": 4,
+  "center": 4,
+  "amplitude": 2,
+  "q_profile": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "tensor_hash": "256db395ebfd0456d72fb6bd7c65754896f984c3b4724f5462d6ac0dce96b177",
+  "source_pin": "e582960f6c9d2d134d3d6b28c08494e8bfafa86a",
+  "macro_time_per_two_ticks": 0.6666666666666666,
+  "length_per_cell": 1,
+  "initial_complete_field_support": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "trace_encoding": "Each a,b,r array is 18 by L. Expand each x column L^2 times in y,z order. Homogeneity checked against EVERY full-array value at EVERY step.",
+  "click_encoding": "Each row at x,gear represents all L^2 y,z coordinates with the exact same quotient and kind. No threshold or record filtering.",
+  "scope": "plane-symmetric classical test-field pulse; static optical geometry; no operational detector or Einstein source closure"
+}

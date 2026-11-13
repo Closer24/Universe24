@@ -1,5 +1,42 @@
 # Universe24: one system, specification and research status
 
+## Installed native light component
+
+`universe24/light.py` belongs to the installed main package. The supported
+`python -m universe24 prepare-light` command constructs one complete bundle;
+existing `run` and `verify` perform all evolution and replay. This is a
+preparation entry point, not another Engine, mode or callback.
+
+All 48 channels have a fixed one-face transport polynomial. With quaternion
+label g, define n_g=R_g e_x, e_g=R_g e_y and m_g=R_g e_z. The input is
+u_g(x)=3[b_g(x-n_g)+b_g(x+n_g)]. There are 96 linear integer monomials,
+no old-a dependencies, no idle padding and 144 retained integers per node.
+The exact candidate contract `2O-left-regular-cube/1` passes on the entire
+polynomial, including the central group element and all three retained banks.
+The bundle declares `role=universe-candidate` and the checked symmetry.
+
+Preparation sets a_g(x)=b_g(x+n_g). With arbitrary retained remainders in
+0…5, unchanged Rule3 gives b_next,g(x)=b_g(x-n_g) and r_next=r at every tick.
+The relation is invariant for unlimited integer time: no finite-precision
+preparation scale, reset or external updater is used. For the prepared
+transverse plane profiles, E=sum_g e_g b_g and B=sum_g m_g b_g are passive
+vector readouts of flat axis-aligned Maxwell waves. Coordinate units h=dt=1
+give exact null displacement. This does not derive a material clock.
+
+The component supplies six signed propagation axes and two physical transverse
+polarizations per axis. It is not arbitrary-direction Maxwell convergence,
+dynamic Einstein backreaction, an operational detector or a quantum photon
+model. Full physical acceptance remains blocked despite algebraic candidate
+acceptance. Raw clicks are still arithmetic records.
+
+[Component documentation](research/light_packet/README.md) preserves the
+original 18-channel optical experiment, pinned to e582960, separately. Its
+speed errors, finite-grid tails and identical-background click maps are not
+results of this new tensor. Historical bytes are not relabeled. Core tests
+cover the installed input/output and algebra contracts. The passive observer
+`validation/light_runtime.py` inspects saved schema-3 light runs; the archived
+central research collector is not a supported schema-3 execution path.
+
 ## Reviewed execution and acceptance
 
 **Current admission boundary:** bundle schema 3 requires 48 explicitly supplied
@@ -162,7 +199,7 @@ not a derivation of quantum collapse.
 | Module | Inputs and outputs | Responsibility |
 | --- | --- | --- |
 | Construction and preparation | Declared model and initial data → tensor and complete seed | All coefficients, apparatus and calibration are fixed before execution; any initial-data solve is disclosed. |
-| `system.bundle` | Tensor, seed, ownership and protocol → versioned, hashed bundle | Validate source inputs, pad to exactly 48 at preparation, and reject non-48 sealed allocations, invalid integers, locality violations, incompatible schema and corrupted components. |
+| `system.bundle` | Tensor, seed, ownership and protocol → versioned, hashed bundle | Require exactly 48 explicit channels and exact 2O covariance; reject invalid integers, locality violations, incompatible schema and corrupted components. |
 | `core.engine` | Tensor plus complete old state → complete next state | Apply the unchanged fixed-six update; exact arbitrary-precision fallback and inverse. |
 | `system.decoder` | Declared transition records → canonical arithmetic clicks | Passive extraction with event identity, node/channel/tick, quotient sign and C0/C1/C2 classification. |
 | `system.runtime` | Valid bundle plus finite run request → trace, clicks and validation report | One execution/replay path; provenance and exact complete-state reconstruction. |

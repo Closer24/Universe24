@@ -53,3 +53,8 @@ physical validation. An additional runtime switch or a metric/readout label
 is not an integration argument.
 
 The reviewed native anisotropic extension is `validation/conservation_closure/` at #64 `97e3a42f31fee76826305af314540c05323edf32`: eight channels, exact homogeneous massless source and source clock. Geodesic probes remain passive; spatial momentum and operational apparatus are unclosed. It is included as a separate scoped law in the central acceptance pipeline.
+
+The installed native light component is `universe24/light.py`, documented in
+[the light contract](../research/light_packet/README.md). Its exact 48-channel
+2O algebra and restricted axis-null plane sector do not establish general
+Maxwell/Einstein coupling. The earlier optical experiment is archived separately.

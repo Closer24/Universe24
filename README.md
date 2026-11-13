@@ -79,6 +79,7 @@ collector; reproducing those old experiments requires their pinned source.
 | Quantum controls | Complete-trial, non-detection, preparation-measure and locality countercontrols | No derived universal Born rule or physical Bell instrument |
 | Local carrier–record source, twelve channels | Repeated scattering, retained records, exact packet balances and a finite positive two-null-stream Einstein chart on the same saved history | Finite prepared supply; no globally periodic positive-source chart, massive bound body or operational clock |
 | Finite gauge links, seven and ten channels | Static Z4 loop interference and separate dynamic Z2 record/link feedback | Static wave is unstable; dynamic sector has period three and no successive-edge propagation; no combined Maxwell/gravity law |
+| Installed light component, 48 dynamical channels | Exact 2O covariance and unit-speed transverse plane streams through main prepare/run/verify | Six axis directions and flat background; no general Maxwell/Einstein coupling or photon detector |
 
 The anisotropic extension retains two shear charges in eight channels; its exact metric and source share the complete state. A 4,096-update check passed independent scalar comparisons, inverse and full rewind with 26-bit peak integers. Its moving-probe paths and proper-time integrals are passive diagnostics, with no retained transported body. A same-tensor spatial negative preserves pointwise Hamiltonian constraints but fails the momentum constraint.
 
@@ -100,6 +101,7 @@ Open `runs/geodesic-board/board.html`. This retained **massive45 negative-contro
 | Path | Responsibility |
 | --- | --- |
 | `universe24/core/` | Fixed tensor, lattice, exact state and Rule3 Engine |
+| `universe24/light.py` | Installed 48-channel 2O light tensor and complete plane-wave preparation |
 | `universe24/system/bundle.py` | Complete inputs, budget, strict locality and integrity |
 | `universe24/system/runtime.py` | The sole run/replay/verify implementation |
 | `universe24/system/decoder.py` | Canonical passive arithmetic records |
@@ -108,6 +110,27 @@ Open `runs/geodesic-board/board.html`. This retained **massive45 negative-contro
 | `validation/` | Independent research constructions and falsification controls, excluded from installation |
 
 The architecture review is `docs/research/system_acceptance/architecture_review.md`. The complete idea decisions are in `docs/research/system_acceptance/idea_ledger.md`; the physical and massive-encoding boundaries are beside it. Current algebra is `docs/MODEL.md`, the execution contract is `docs/ONE_SYSTEM.md`, and source provenance is in `docs/research/central_integration/README.md`. Historical evidence retains its original source pin and is not relabeled as current validation.
+
+## Run the installed light component
+
+`universe24/light.py` is part of the installed main package. Its 48 dynamical
+channels obey the exact `2O-left-regular-cube/1` polynomial contract, with no
+idle padding. The same Engine advances its sealed bundle:
+
+```bash
+python -m universe24 prepare-light --out runs/light-bundle
+python -m universe24 run --bundle runs/light-bundle --steps 6 --out runs/light-main
+python -m universe24 verify --run runs/light-main
+```
+
+Use `prepare-light --axis y --polarization x` for a different transverse mode,
+or `--sign -1` for the reverse direction. The prepared state translates one
+face per tick exactly, indefinitely, without a precision scale. This provides
+axis-aligned transverse plane light in flat spacetime; arbitrary-direction
+Maxwell convergence, a dynamic Einstein source and photon detection remain
+unestablished. The [component contract and archived experiment](docs/research/light_packet/README.md)
+keep those boundaries explicit. The older 18-channel optical experiment is
+preserved as historical evidence; it is a different tensor.
 
 ## What we need to research
 

@@ -122,3 +122,19 @@ retained intensity reader but an unstable uniform mode. The separate ten-channel
 Z2 law preserves unit links and supports feedback, but its prepared complete
 period divides three and evolving information stays within edge triplets.
 Neither law establishes a combined propagating Maxwell/source/detector system.
+
+## Installed native light component
+
+`universe24/light.py` supplies the 48-channel regular-2O null-stream tensor.
+It is installed and prepared by the main CLI, not a source-only experiment.
+The exact specified covariance, full-history shift sector and unit axis-null
+propagation pass; all channels are dynamic, with no idle padding or precision
+horizon. `validation/light_runtime.py` reads its saved canonical runs; the
+archived central collector is not a supported schema-3 execution path.
+
+The physical domain is transverse plane waves along six signed axes in a flat
+metric. General Maxwell convergence, dynamic Einstein backreaction, proper
+material clocks and photon detection remain unestablished. Raw click counts
+are not photon counts. Different source/gravity receipts cannot be pooled as
+one complete physical law. The original 18-channel optical experiment and its
+negative results remain historical evidence, not data for the new tensor.
