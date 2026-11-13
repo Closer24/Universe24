@@ -13,6 +13,38 @@ preparations disperse better than free transport; others disperse worse.
 Matter, dark matter, a shared spacetime metric and gravitational waves have
 not been identified under this law.
 
+The local [event-space energy and momentum audit](docs/ENERGY_MOMENTUM_CANDIDATE.md)
+records a conservative candidate, its transport calibration, and its failed
+overall load-distribution criterion. It has not replaced the installed law.
+
+## What we are trying to build
+
+The research goal is one local integer coupling in which finite node capacity
+changes transport through six internal face gears. Events and causal transfers
+define the candidate spacetime; an observer sees calibrated clicks. Host CPU
+time and the saved update index are not assumed to be physical proper time.
+
+We are testing whether the same rule can both distribute occupied capacity
+and support conserved energy and momentum, operational clocks and a common
+geometry reconstructed from propagation. Light, matter and dark matter would
+have to emerge as distinguishable persistent dynamics under that rule, rather
+than as branches selected by labels. Recovering Einstein geometry is a target
+requiring causal, metric and field-equation tests, not an assumption of the
+implementation.
+
+| Status | Result or next criterion |
+| --- | --- |
+| Installed and tested | Positive integer preparation, exact reversal, six-face capacity feedback, scalar continuity and calibrated click replay |
+| Local phase-routing candidate | Better average spreading in independent finite cohorts; the natural additive momentum account fails |
+| Local momentum candidate | Conserved occupation and vector momentum linked to event transport in a restricted 24-independent-bit sector; spreading improvement is inconsistent |
+| Next acceptance gate | One rule must satisfy conservation, causal transport and reliable spreading on declared independent controls |
+| Still open | A shared evolving metric, material proper clocks, Lorentz behavior, Einstein equations and identified particle species |
+
+The candidates are separate research results; their successes cannot be added
+together as if one tensor achieved them all. Their reports are committed below;
+prototype scripts and generated run outputs remain local in ignored `runs/`.
+The installed model is the reproducible code shipped by this repository.
+
 ## Run from a concentrated preparation
 
 ```bash
@@ -162,3 +194,11 @@ current tree; their sources remain in [Git history at
 The previous independent-face clock law remains in [revision
 2659ad8](https://github.com/Closer24/Universe24/tree/2659ad887f874eb67e15c57e5ebf8dead8c12f95).
 Its E/B and residence-time results do not transfer to this replacement law.
+
+A later [local-rule audit](docs/LOCAL_RULE_AUDIT.md) exhaustively checks the
+existing edge-gate class and records why greedy equalization is not an
+automatic reversible or Einstein-compatible extension.
+
+A subsequent [phase-routing candidate](docs/PHASE_ROUTING_CANDIDATE.md)
+passes independent finite load-distribution comparisons in the same Engine;
+it is documented separately from the installed law and its diagnostics.
