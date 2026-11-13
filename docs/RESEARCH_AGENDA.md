@@ -70,3 +70,27 @@ They are not additional active production branches or selectable universes.
 These discussions are administratively closed at the owner's request. Their
 closure does not certify the unresolved claims. New research must update this
 single agenda, the algebra and the same-law acceptance evidence together.
+
+## Fixed allocation contract
+
+Universe candidates now require the explicit `2O-left-regular-cube/1` symmetry
+declaration and exact polynomial covariance, independently of the 48-channel
+budget. Existing undeclared physical-sector experiments remain research; none
+has been automatically promoted. The implemented action is one regular orbit
+of node channels with invariant passive labels; it is not yet a representation
+for Yee links or several differently transforming physical sectors. Its
+transitivity together with the acyclic inverse rule excludes old-a reads;
+alternative representations require a new explicit contract and review.
+See `COUPLING_ALGEBRA.md` and `ONE_SYSTEM.md` for the full definition.
+
+Automated tests and CI now cover the engine and its algebra/input-output
+contracts only. Research unit tests and research CI jobs are removed. Research
+source programs and historical results remain; a green CI run makes no new
+claim about those physical results.
+
+Every newly prepared supported run now retains exactly 48 channels (144 integer
+entries per node), with zero-initialized disconnected padding where needed.
+The 6/8/12-channel research counts above describe active sectors; padding does
+not establish additional physics or a shared coupling. Bundle schema 2 rejects
+non-48 sealed inputs. Preserve old evidence and regenerate new padded evidence
+under fresh hashes and paths; see `ONE_SYSTEM.md`.

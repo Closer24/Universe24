@@ -45,6 +45,29 @@ failures. This source integration changes no production law or physical status.
 
 ## Question and scope
 
+### Candidate algebra contract
+
+The sealed model metadata distinguishes `role: universe-candidate` from
+`role: research` (the default when omitted). A candidate must declare
+`symmetry: 2O-left-regular-cube/1` and pass exact coefficient covariance under
+all 48 joint channel/cube actions, at every preparation/load/run boundary.
+The action permutes all of `(a,b,r)` and uses one regular orbit of 48 node
+channels. Research models may declare the same contract voluntarily; undeclared
+research retains no implied symmetry certificate. These are static claims,
+not alternate engines or runtime modes. Candidate status is not physical
+acceptance. See [the exact action and limitations](COUPLING_ALGEBRA.md).
+
+The automated suite and CI cover engine, tensor algebra and supported
+input/output contracts only: exact arithmetic, scalar-oracle agreement,
+locality, invertibility, 48-channel allocation, declared 2O covariance,
+ownership, decoding and complete saved-run replay. Research unit tests and
+research CI jobs are removed. The source research programs and their saved
+historical evidence remain available, but their physical claims are not
+revalidated by the current CI. Ordinary unittest discovery runs the whole
+remaining suite; there is no extra suite selector.
+
+### Physical target
+
 Can one fixed, local integer tensor and a complete seed generate a reversible
 spacetime dynamics with at most 48 retained channels per node, whose operational
 clock and detector records agree with Einstein gravity and the stated matter
@@ -104,9 +127,9 @@ operational-clock interpretation is promoted by their mechanical success.
 
 ## Assumptions and exact law
 
-A node retains at most 48 channels. Each channel contains its complete integer
-triple `(a,b,r)`, with `0 <= r < 6`; consequently the cap permits at most 144
-integer entries per node. Integers have unbounded bit length. Geometry, matter,
+Every supported prepared bundle retains exactly 48 channels per node. Each
+channel contains its complete integer triple `(a,b,r)`, with `0 <= r < 6`,
+so every node retains exactly 144 integer entries. Integers have unbounded bit length. Geometry, matter,
 clock, detector, scheduler and workspace state all count. A recorded trace is
 an output, never an additional state bank read during evolution.
 
@@ -131,7 +154,7 @@ not a derivation of quantum collapse.
 | Module | Inputs and outputs | Responsibility |
 | --- | --- | --- |
 | Construction and preparation | Declared model and initial data → tensor and complete seed | All coefficients, apparatus and calibration are fixed before execution; any initial-data solve is disclosed. |
-| `system.bundle` | Tensor, seed, ownership and protocol → versioned, hashed bundle | Reject invalid integers, allocation above 48, locality violations, incompatible schema and corrupted components. |
+| `system.bundle` | Tensor, seed, ownership and protocol → versioned, hashed bundle | Validate source inputs, pad to exactly 48 at preparation, and reject non-48 sealed allocations, invalid integers, locality violations, incompatible schema and corrupted components. |
 | `core.engine` | Tensor plus complete old state → complete next state | Apply the unchanged fixed-six update; exact arbitrary-precision fallback and inverse. |
 | `system.decoder` | Declared transition records → canonical arithmetic clicks | Passive extraction with event identity, node/channel/tick, quotient sign and C0/C1/C2 classification. |
 | `system.runtime` | Valid bundle plus finite run request → trace, clicks and validation report | One execution/replay path; provenance and exact complete-state reconstruction. |
@@ -659,3 +682,31 @@ and raw C1/C2 gauge dependence remain explicit falsification controls.
 Run `python -m validation.gauge_loop.audit --out runs/gauge-loop` in a fresh
 directory. This extends mathematical validation, not physical acceptance
 or the supported runtime interface.
+
+## Exact 48-channel preparation (bundle schema 2)
+
+`create_bundle` accepts 1..48 fully declared source channels and appends
+disconnected `audit` channels, each owned by `system-padding` and initialized
+with `(a,b,r)=(0,0,0)`. They have no input monomials and no outgoing references.
+The unchanged Rule3 therefore keeps them zero in both forward and inverse
+evolution. Original indices, coefficients and all three original integer banks
+are preserved. Idle channels are real counted state in seeds, traces and hashes.
+They are not extra physical degrees of freedom derived from 2O.
+
+`validate_bundle`, `save_bundle`, `load_bundle` and the supported runtime require
+exactly 48 channels and fail explicitly on any other count. Padding occurs only
+during preparation; a malformed sealed bundle is never repaired. The CLI status
+reports `required_channels_per_node=48`. The `test_exact_48_channels` suite checks
+every source size, scalar-oracle projection, idle invariance, inverse, complete
+saved replay, ownership, name collisions and rejection before output. CI runs
+this gate explicitly before the full suite.
+
+Schema-1 evidence remains pinned historical evidence. It is not overwritten or
+automatically upgraded: prepare a new schema-2 bundle and run it into a new
+directory. Padding changes the tensor, seed and bundle hashes. Source-only
+research sector builders and algebraic unit fixtures may remain smaller; their
+prepared public bundles always contain 48 channels. Research adapters compare
+the original sector through a passive view that first checks every idle integer
+is zero, while execution/replay retains and checks all 48 channels. Apparatus
+preparation may reclaim only verified disconnected zero idle tail slots before
+sealing a new 48-channel law. It may never discard live registers.

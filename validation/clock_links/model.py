@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import numpy as np
 
+from validation.padding import construction_inputs
 from universe24.core.engine import State
 from universe24.core.lattice import ZERO, link_direction
 from universe24.core.tensor import Factor, GearType, Monomial, Tensor
@@ -36,16 +37,17 @@ def append_phase_observers(base: SystemBundle, *, apparatus_a=None,
     apparatus history. This says nothing about binary click probabilities.
     """
     base = validate_bundle(base)
-    if base.tensor.G > 44:
+    base_tensor, base_seed, base_channels = construction_inputs(base)
+    if base_tensor.G > 44:
         raise ValueError("four apparatus channels must fit within 48 total")
-    carrier = tuple(base.tensor.gear_index(name) for name in CARRIER_NAMES)
-    if any(base.tensor.gears[index].link is not None for index in carrier):
+    carrier = tuple(base_tensor.gear_index(name) for name in CARRIER_NAMES)
+    if any(base_tensor.gears[index].link is not None for index in carrier):
         raise ValueError("carrier ports must be node fields")
-    if any(name in base.tensor.names for name in OBSERVER_NAMES):
+    if any(name in base_tensor.names for name in OBSERVER_NAMES):
         raise ValueError("apparatus channels already exist")
-    gears = list(base.tensor.gears) + [GearType(name, label="audit") for name in OBSERVER_NAMES]
-    terms = list(base.tensor.monomials)
-    start = base.tensor.G
+    gears = list(base_tensor.gears) + [GearType(name, label="audit") for name in OBSERVER_NAMES]
+    terms = list(base_tensor.monomials)
+    start = base_tensor.G
     for component in carrier:
         here = Factor(component, ZERO, "b")
         terms.append(Monomial(start, 3, (here, here)))
@@ -57,15 +59,15 @@ def append_phase_observers(base: SystemBundle, *, apparatus_a=None,
                           Monomial(target, 3, (there, there))))
     # Retain all declared one-way designations on the existing law.
     designations = [(target, factors, why)
-                    for (target, factors), why in base.tensor.designations.items()]
+                    for (target, factors), why in base_tensor.designations.items()]
     tensor = Tensor(gears, terms, designated_one_way=designations, strict_support=True)
-    original = base.seed
+    original = base_seed
     arrays = []
     for field, prepared in (("a", apparatus_a), ("b", apparatus_b), ("r", apparatus_r)):
         extra = _record_seed(prepared, original.N, field)
         arrays.append(np.concatenate((getattr(original, field).astype(object), extra), axis=0))
     seed = State(original.L, *arrays)
-    channels = list(base.channels)
+    channels = list(base_channels)
     for index, name in enumerate(OBSERVER_NAMES, start):
         channels.append({"index": index, "name": name, "label": "audit",
                          "owner": "phase_relation_test_apparatus",
@@ -76,8 +78,8 @@ def append_phase_observers(base: SystemBundle, *, apparatus_a=None,
                          model={"id": "proposal-clock-link-records", "version": VERSION,
                                 "domain": "Finite integer one-way phase relation apparatus on a declared base bundle; no operational clock/Born/Einstein acceptance",
                                 "base_model": base.model, "base_bundle_id": base.bundle_id,
-                                "base_tensor_hash": base.tensor.fingerprint,
-                                "base_channels": base.tensor.G,
+                                "base_tensor_hash": base_tensor.fingerprint,
+                                "base_channels": base_tensor.G,
                                 "phase_convention": "raw integer carrier, fixed gauge; a shared quarter turn preserves all records",
                                 "apparatus_backreaction": "not supplied"})
 

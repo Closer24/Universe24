@@ -12,7 +12,7 @@ Universe24 implements one execution path:
 
 **complete integer seed + immutable local tensor → reversible Engine → passive records → independent verification**.
 
-The same Rule3 updates every retained channel. Geometry, matter, clocks, apparatus, scheduling and workspace share a hard budget of **48 total channels per node**. Each channel retains all three integers `(a,b,r)`:
+The same Rule3 updates every retained channel. Geometry, matter, clocks, apparatus, scheduling and workspace share **exactly 48 retained channels per node**, including disconnected zero-initialized idle channels for smaller research sectors. Each channel retains all three integers `(a,b,r)`:
 
 ```text
 ell, r_next = divmod(2*u + r, 6)
@@ -33,6 +33,14 @@ python -m pip install '.[validation]'
 python -m universe24 status
 python -m validation.system_acceptance --out runs/system-acceptance
 ```
+
+New preparations use bundle schema 2 and always contain 48 channels. The research counts below describe active sectors. Older sealed bundles must be prepared and run anew; their evidence is preserved.
+
+Models declared with `"role": "universe-candidate"` must also declare
+`"symmetry": "2O-left-regular-cube/1"` and pass exact tensor covariance for all
+48 group elements. Undeclared models are research; padding does not grant a
+symmetry certificate. This permits nonlinear equivariant laws and does not
+certify their physics. See [the action on the cube and full state](docs/COUPLING_ALGEBRA.md).
 
 Read `runs/system-acceptance/acceptance.json`. The command creates fresh saved experiments, replays complete states and canonical clicks, rejects mixed-run evidence, and records accepted, rejected and blocked ideas. A successful command means the evidence and expected negative controls reproduced. Its joint physical gate remains explicit.
 
@@ -126,6 +134,11 @@ python -m universe24 verify --run runs/new-smoke/run
 ```
 
 A regression test may pass by reproducing a failed physical hypothesis. The corresponding physical result stays failed. No research label, channel name or successful replay can promote it.
+
+The automated suite covers engine, tensor algebra, 48 channels, declared 2O
+symmetry and bundle/replay integrity. Research unit tests and research CI jobs
+are removed; source research programs and historical evidence remain. A green
+CI run certifies software checks, not those physical results.
 
 ## Local carrier–record interaction with a spatial source chart
 

@@ -14,6 +14,7 @@ import hashlib
 from itertools import product
 from pathlib import Path
 
+from validation.padding import construction_inputs
 from universe24.core import Engine, State
 from universe24.core import exact_json as json
 from universe24.system.bundle import canonical_bytes, load_bundle, save_bundle
@@ -277,7 +278,7 @@ def main(argv=None):
     parser.add_argument("--out", type=Path, default=Path("runs/clock_links/born"))
     args = parser.parse_args(argv)
     base = load_bundle(args.base_bundle)
-    if base.tensor.G != 44:
+    if construction_inputs(base)[0].G != 44:
         raise ValueError("published integration report requires the declared 44-channel base")
     args.out.mkdir(parents=True, exist_ok=True)
     save_bundle(base, args.out / "input_bundle")

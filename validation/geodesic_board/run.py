@@ -17,6 +17,8 @@ from pathlib import Path
 import numpy as np
 import sympy as sp
 
+from validation.padding import sector_state
+from universe24.system.bundle import pad_state
 from universe24.core import exact_json
 from universe24.core.lattice import lattice
 from universe24.system.bundle import create_bundle, state_from_data
@@ -162,7 +164,7 @@ def run(out, *, steps=4, dt=F(1, 32), dx=F(1, 4)):
              'mass_squared': 1, 'units': 'c=8*pi*G=1',
              'physical_step': str(program.dt), 'coordinate_spacing': str(program.dx),
              'metric': 'g=-dt^2+gamma_ij dx^i dx^j; gamma_inverse=B.T B',
-             'total_channels': 45, 'retained_integers_per_node': 135,
+             'total_channels': 48, 'active_channels': 45, 'retained_integers_per_node': 144,
              'apparatus_channels': 0, 'hidden_evolution_state': 0,
              'old_a_boundary': 'zero encoding memory, not a physical earlier slice',
              'status': 'finite research fixture; general Einstein and quantum gates open'}
@@ -170,15 +172,15 @@ def run(out, *, steps=4, dt=F(1, 32), dx=F(1, 4)):
                            protocol=default_protocol(), model=model)
     report = run_bundle(bundle, out/'runtime', steps)
     assert verify_run(out/'runtime') == report
-    states = [seed]
+    states = [bundle.seed]
     with gzip.open(out/'runtime/full_trace.jsonl.gz', 'rt', encoding='utf-8') as stream:
         for record_line in stream:
             record = exact_json.loads(record_line)
             before, after = state_from_data(record['before']), state_from_data(record['after'])
             assert before.same_as(states[-1])
-            assert SYMBOL.scalar_oracle(program.tensor, before).same_as(after)
+            assert pad_state(SYMBOL.scalar_oracle(program.tensor, sector_state(before, 45))).same_as(after)
             states.append(after)
-    snapshots = [read_snapshot(program, state, step) for step, state in enumerate(states)]
+    snapshots = [read_snapshot(program, sector_state(state, 45), step) for step, state in enumerate(states)]
     assert all(snapshot['homogeneous'] for snapshot in snapshots)
     assert snapshots[0]['nodes'][0]['constraints_exact']['H'] == '0'
     # Independent reduced-FLRW algebra: B'=1-h, k'=-1+h/2,
@@ -193,14 +195,14 @@ def run(out, *, steps=4, dt=F(1, 32), dx=F(1, 4)):
                     'validation/geometry/team48/matter_equations.py',
                     'universe24/algebra/frame_equations.py')
     result = {'schema': SCHEMA, 'title': 'Universe24 — shared-metric event board',
-              'metadata': {'tensor_sha256': program.tensor.fingerprint, 'channels': 45,
+              'metadata': {'tensor_sha256': bundle.tensor.fingerprint, 'channels': 48, 'active_channels': 45,
                            'nodes': seed.N, 'steps': steps, 'mass_squared': 1,
                            'terms': len(program.tensor), 'degree': program.tensor.rank-1,
                            'max_bits': max(report['maximum_integer_bits_by_step']),
                            'dt': str(program.dt), 'dx': str(program.dx), 'position_units': 'physical_coordinates',
                            'units': model['units'], 'metric_convention': model['metric']},
               'provenance': {'run_id': report['run_id'], 'bundle_id': bundle.bundle_id,
-                             'tensor_sha256': program.tensor.fingerprint,
+                             'tensor_sha256': bundle.tensor.fingerprint,
                              'trace_sha256': report['files']['full_trace.jsonl.gz'],
                              'source_sha256': {name: hashlib.sha256((ROOT/name).read_bytes()).hexdigest()
                                                for name in source_names}},

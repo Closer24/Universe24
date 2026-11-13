@@ -59,7 +59,7 @@ class SystemRuntimeTests(unittest.TestCase):
             run = Path(tmp) / "run"
             report = run_bundle(fixture(huge=True), run, 5)
             self.assertEqual(report, verify_run(run))
-            self.assertEqual(report["channels_per_node"], 2)
+            self.assertEqual(report["channels_per_node"], 48)
             self.assertGreaterEqual(max(report["maximum_integer_bits_by_step"]), 101)
             self.assertGreater(report["click_count"], 0)
             self.assertTrue(all(value == "passed" for value in report["checks"].values()))

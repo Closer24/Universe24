@@ -116,6 +116,8 @@ def prepare(program, *, L=3, V=F(7, 3), U=F(4), D=1, P=2,
 
 def read_conserved(program, state):
     """Read actual complete history; off-constraint states remain off constraint."""
+    from validation.padding import sector_state
+    state = sector_state(state, 8)
     _check_program(program)
     if not isinstance(state, State) or state.G != 8 or state.N != state.L**3:
         raise ValueError('a complete eight-channel cube is required')
@@ -185,7 +187,7 @@ def physical(program, state, *, dps=60):
 
 def scalar_step(state, *, source_coupling=True):
     """Direct scalar Rule3 oracle with no tensor evaluator."""
-    a, b, r = (np.zeros((8, state.N), dtype=object) for _ in range(3))
+    a, b, r = (np.zeros((state.G, state.N), dtype=object) for _ in range(3))
     for g in range(8):
         for n in range(state.N):
             u = 6*int(state.b[g, n])
@@ -193,6 +195,8 @@ def scalar_step(state, *, source_coupling=True):
                 u += 18*int(state.b[1, n])
             ell, carry = divmod(2*u+int(state.r[g, n]), 6)
             a[g, n], b[g, n], r[g, n] = int(state.b[g, n]), ell-int(state.a[g, n]), carry
+    for gear in range(8, state.G):
+        a[gear], b[gear], r[gear] = state.b[gear], -state.a[gear], state.r[gear]
     return State(state.L, a, b, r)
 
 

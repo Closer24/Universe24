@@ -11,6 +11,10 @@ def status():
     return {
         "architecture": "one bundle -> one fixed tensor Engine -> one passive decoder",
         "maximum_channels_per_node": 48,
+        "required_channels_per_node": 48,
+        "preparation_padding": "disconnected zero-initialized channels to exactly 48",
+        "universe_candidate_symmetry": "2O-left-regular-cube/1; exact polynomial covariance required",
+        "undeclared_model_role": "research; no symmetry certificate inferred from channel count",
         "retained_entries_per_channel": ["a", "b", "r"],
         "arithmetic": "exact integers; divmod(2*u+r, 6)",
         "locality": "target and at most one physical face edge per monomial",

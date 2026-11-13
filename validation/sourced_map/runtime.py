@@ -73,11 +73,12 @@ def _check_interpretation(bundle):
     if type(model.get('N')) is not int:
         raise ValueError('saved source interpretation needs exact integer N')
     program = build_native(model['N'])
-    if bundle.tensor.fingerprint != program.tensor.fingerprint:
+    expected = make_bundle(program, prepare_native(program))
+    if bundle.tensor.fingerprint != expected.tensor.fingerprint:
         raise ValueError('saved tensor is not the declared sourced volume law')
     if model != model_metadata(program.N):
         raise ValueError('saved mass, physical-time calibration or coordinate declaration differs')
-    if bundle.protocol != default_protocol() or list(bundle.channels) != channel_manifest(program):
+    if bundle.protocol != default_protocol() or list(bundle.channels) != list(expected.channels):
         raise ValueError('saved observation protocol or channel ownership differs')
     validate_domain(read_conserved(program, bundle.seed))
     return program
@@ -284,7 +285,7 @@ def run_audit(out=None):
     runs.append(shifted_run)
     valid_bundle = make_bundle(program,seed)
     def relabel(**changes):
-        return create_bundle(valid_bundle.tensor,seed,channels=valid_bundle.channels,
+        return create_bundle(valid_bundle.tensor,valid_bundle.seed,channels=valid_bundle.channels,
                              protocol=valid_bundle.protocol,model=dict(valid_bundle.model,**changes))
     reject('massive_model_relabel',lambda: _check_interpretation(relabel(mass_squared=1)))
     reject('changed_time_calibration',lambda: _check_interpretation(relabel(proper_time_step='1/48')))
@@ -296,7 +297,7 @@ def run_audit(out=None):
              'universe24/system/decoder.py','universe24/system/runtime.py']
     return {'schema':'universe24/sourced-map/runtime/1',
             'status':'saved-native-runtime-and-scoped-physical-diagnostics-passed',
-            'channels':6,'retained_integers_per_node':18,
+            'channels':48,'active_channels':6,'retained_integers_per_node':144,
             'runs':runs,'explicit_resolution_comparisons':joins,
             'negative_controls':negative,
             'source_sha256':{name:sha256((ROOT/name).read_bytes()).hexdigest() for name in files},

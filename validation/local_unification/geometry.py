@@ -13,6 +13,7 @@ from pathlib import Path
 
 import numpy as np
 
+from validation.padding import sector_state
 from universe24.core import Engine, GearType, State, Tensor, lattice
 from universe24.core import exact_json
 from universe24.system.bundle import create_bundle
@@ -228,6 +229,7 @@ def readout(state, microstep, protocol, *, coordinate=None):
         state = State(state.L, state.a, state.b, state.r)
     except (TypeError, ValueError) as exc:
         raise ValueError("invalid exact retained State") from exc
+    state = sector_state(state, 12)
     if (state.L != protocol["L"] or state.b.shape[0] != 12
             or microstep % 2 or microstep > protocol["microsteps"]):
         raise ValueError("readout requires twelve channels and even in-horizon microticks")
@@ -398,7 +400,7 @@ def audit(out):
     verified = verify_run(out/"runtime")
     report = {
         "schema": "universe24/local-unification/geometry/1", "tensor_hash": law.fingerprint,
-        "channels": law.G, "retained_integers_per_node": 3*law.G, "degree": law.rank-1,
+        "channels": bundle.tensor.G, "active_channels": law.G, "retained_integers_per_node": 3*bundle.tensor.G, "degree": law.rank-1,
         "strict_support_violations": len(law.support_violations()),
         "protocol": protocol, "symbolic": symbolic_certificate(),
         "interior_coefficient_comparisons": comparisons, "interior_source_constraints": source_checks,

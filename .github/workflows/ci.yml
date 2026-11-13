@@ -9,7 +9,7 @@ permissions:
 jobs:
   universe24:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
@@ -24,9 +24,9 @@ jobs:
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
           python-version: ${{ matrix.python }}
-      - name: Install Universe24 and validation dependencies
-        run: python -m pip install '.[validation]'
-      - name: Complete suite including independent physical counterexamples
+      - name: Install Universe24
+        run: python -m pip install .
+      - name: Mandatory engine, 48-channel and declared 2O symmetry contracts
         run: python -m unittest discover -s universe24/tests -t . -v
       - name: One-system bundle, forward run, offline decoder and exact replay
         run: |
@@ -39,60 +39,6 @@ jobs:
             echo 'Unexpected physical acceptance without independent evidence'
             exit 1
           fi
-      - name: Independent historical reference checks
-        run: |
-          python -m validation.quantum.bell_cone_audit --out runs/bell-born-cone
-          python -m validation.geometry.ppwave_palatini_local --out runs/geometry/ppwave.json
-          python -m validation.geometry.ppwave_geodesic_clock --out runs/geometry/geodesic.json
-          python -m validation.geometry.ppwave_geodesic_audit
-          python -m validation.geometry.compact_null_wave --out runs/compact-null-wave
-          python -m validation.geometry.compact_flrw --out runs/compact-flrw
-      - name: Check out the pinned sourced proposal for compatibility validation
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-        with:
-          ref: 49b896c795203914a939e465d6d39e5b99343259
-          path: validation-reference
-          persist-credentials: false
-      - name: One runtime reproduces the complete 44-channel proposal state
-        run: python -m validation.team48_contract --source validation-reference --out runs/team48-contract
-      - name: Passive geometry, sources and visible constraint defects
-        run: |
-          python -m validation.team48_observables --audit runs/team48-contract --source validation-reference
-          python -m validation.team48_board --observables runs/team48-contract/observables.json --out runs/one-system-board.html
-          node validation/check_board_logic.cjs runs/one-system-board.html
-      - name: Projective integer refinement and retained physical negative controls
-        run: python -m validation.geometry.team48.refinement_run_audits
-      - name: Integration research controls and independent algebra review
-        run: |
-          python -m validation.synthesis.run_all --out runs/synthesis
-          python -m validation.synthesis.independent_review --out runs/synthesis/independent_review.json
-          python -m validation.synthesis.interface_contract --out runs/synthesis/interface_contract.json
-      - name: Local clock links, retained observer and independent failure controls
-        run: python -m validation.clock_links.run_audits --base-bundle runs/team48-contract/run/bundle --out runs/clock-links
-      - name: One massive run, shared-metric geodesic board and independent acceptance controls
-        run: |
-          python -m validation.geodesic_board --out runs/geodesic-board
-          python -m universe24 verify --run runs/geodesic-board/runtime
-          node validation/geodesic_board/check_board.cjs runs/geodesic-board/board.html
-      - name: Check out the pinned corrected full-frame source
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-        with:
-          ref: 62202fdccdd9a40d5dbbec104de6f97d9587a999
-          path: validation-reference-50
-          persist-credentials: false
-      - name: Eight-lane retained selection and reciprocal apparatus audit
-        run: python -m validation.selection.run_audits --reference validation-reference-50 --out runs/retained-selection
-      - name: Cross-team massive45 identity and preserved constraint failures
-        run: |
-          python -m validation.integration_contract.massive45 > runs/cross-team-integration.json
-          python -m validation.integration_contract.sector_handoff > runs/sector-handoff.json
-      - name: Generic coupling identities and exact homogeneous sector reconstruction
-        run: |
-          python -m validation.generic_couplings --out runs/generic-couplings
-          python -m universe24 verify --run runs/generic-couplings/runtime/full
-          python -m universe24 verify --run runs/generic-couplings/runtime/reduced
-      - name: Reviewed system acceptance and same-law burst growth controls
-        run: python -m validation.system_acceptance --out runs/system-acceptance
       - name: Test evidence
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9

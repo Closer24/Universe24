@@ -212,7 +212,7 @@ def decoder_precision_and_boundaries():
     program = native.build_native(24)
     seed = native.prepare_native(program)
     bundle = runtime.make_bundle(program, seed)
-    bad_mass = create_bundle(bundle.tensor, seed, channels=bundle.channels,
+    bad_mass = create_bundle(bundle.tensor, bundle.seed, channels=bundle.channels,
                              protocol=bundle.protocol, model=dict(bundle.model, mass_squared=1))
     reject(lambda: runtime._check_interpretation(bad_mass))
     changed = seed.copy()

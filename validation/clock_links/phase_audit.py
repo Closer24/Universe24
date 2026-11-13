@@ -13,6 +13,8 @@ from pathlib import Path
 
 import numpy as np
 
+from validation.padding import construction_inputs
+from universe24.system.bundle import pad_state
 from universe24.core import Engine, exact_json
 from universe24.core.lattice import link_direction
 from universe24.system.bundle import (SystemBundle, create_bundle, load_bundle,
@@ -37,7 +39,7 @@ def events(bundle, before, after, step=1):
 
 
 def audit(base: SystemBundle, out: str | Path, *, steps=3) -> dict:
-    if base.tensor.G != 44:
+    if construction_inputs(base)[0].G != 44:
         raise ValueError("integrated evidence requires the declared 44-channel source")
     if type(steps) is not int or not 1 <= steps <= 6:
         raise ValueError("predeclared finite audit supports one through six updates")
@@ -51,7 +53,7 @@ def audit(base: SystemBundle, out: str | Path, *, steps=3) -> dict:
     checked, kinds, max_bits = 0, Counter(), []
     for step in range(1, steps+1):
         next_full, next_original = full_engine.step(full), base_engine.step(original)
-        assert base_projection(next_full, 44).same_as(next_original)
+        assert pad_state(base_projection(next_full, 44)).same_as(next_original)
         expected = relation_values(full, appended.tensor)
         actual = next_full.b[44:].astype(object) + full.a[44:].astype(object)
         assert np.array_equal(actual, expected)

@@ -14,6 +14,8 @@ import hashlib
 from pathlib import Path
 import subprocess
 
+from universe24.system.bundle import pad_state
+from validation.padding import sector_state, sector_tensor
 from universe24.core import exact_json
 from universe24.core.engine import State
 from universe24.core.lattice import lattice
@@ -243,7 +245,7 @@ def validate_provenance(integration: dict, reference: dict, bundle, report: dict
     """Check the exact pinned readout authority, not just self-consistent hashes."""
     if integration.get("source_commit") != SOURCE_COMMIT:
         raise ValueError("unsupported proposal source commit")
-    if (integration.get("tensor_hash") != TENSOR_HASH or bundle.tensor.fingerprint != TENSOR_HASH
+    if (integration.get("tensor_hash") != bundle.tensor.fingerprint or sector_tensor(bundle.tensor, 44).fingerprint != TENSOR_HASH
             or reference.get("manifest", {}).get("fingerprint") != TENSOR_HASH):
         raise ValueError("pinned tensor fingerprint mismatch")
     for key in ("run_id", "bundle_id", "steps"):
@@ -293,9 +295,9 @@ def generate_observables(audit_dir: str | Path, *, source_dir=None) -> dict:
     if len(reference.get("states", [])) != len(states):
         raise ValueError("proposal reference snapshot count differs from verified trace")
     for step, state in states:
-        if exact_json.dumps(state.to_dict(), sort_keys=True) != exact_json.dumps(reference["states"][step], sort_keys=True):
+        if exact_json.dumps(state.to_dict(), sort_keys=True) != exact_json.dumps(pad_state(state_from_data(reference["states"][step])).to_dict(), sort_keys=True):
             raise ValueError("proposal reference state differs from verified retained trace")
-        fields, phase = decode_fields(state, bundle.tensor.names, manifest)
+        fields, phase = decode_fields(sector_state(state, 44), sector_tensor(bundle.tensor, 44).names, manifest)
         expanded = expand_fields(fields)
         nodes = [node_observables(expanded, L=state.L, node=node) for node in range(state.N)]
         snapshots.append({"step": step, "phase": phase, "nodes": nodes})

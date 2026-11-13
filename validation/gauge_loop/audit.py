@@ -80,7 +80,7 @@ def static_runs(out):
             directory = out / name
             execution = run_bundle(bundle, directory, 4)
             states = saved_states(directory)
-            compared += _scalar_replay(tensor, states)
+            compared += _scalar_replay(bundle.tensor, states)
             for state in states:
                 model.validate_static_domain(state)
                 _require(model.plaquette(state) == (flux, 0), "static flux changed")
@@ -92,7 +92,7 @@ def static_runs(out):
                          for a, b in zip(states, states[1:]) for n in range(a.N)),
                      "neutral receiver disagrees with independent intensity")
             cases[name] = {"bundle_id": bundle.bundle_id, "run_id": execution["run_id"],
-                           "tensor_hash": tensor.fingerprint,
+                           "tensor_hash": bundle.tensor.fingerprint,
                            "flux": list(model.plaquette(seed)),
                            "target_intensity_at_step_2": expected,
                            "target_receiver_quotient_at_step_3": expected,
@@ -114,7 +114,7 @@ def static_runs(out):
         uniform = Engine(tensor).step(uniform)
         growth.append(int(uniform.b[model.PHI, 0]))
     _require(growth == [1, 3, 11, 41], "homogeneous instability countercontrol changed")
-    return {"status": "passed", "channels": tensor.G,
+    return {"status": "passed", "channels": 48, "active_channels": tensor.G,
             "degree": max(term.degree for term in tensor.monomials),
             "strict_support_violations": len(tensor.support_violations()),
             "scalar_register_comparisons": compared, "saved_histories": cases,
@@ -155,14 +155,14 @@ def run(out):
                                  domain="prepared complete-history sign sector; periodic local matter-link cycle")
     execution = run_bundle(dynamic_bundle, out / "dynamic", 6)
     states = saved_states(out / "dynamic")
-    comparisons = _scalar_replay(dynamic_tensor, states)
+    comparisons = _scalar_replay(dynamic_bundle.tensor, states)
     for state in states:
         dynamic.validate_prepared_domain(state)
     _require(states[3].same_as(states[0]) and states[6].same_as(states[0]),
              "saved dynamic history lost its proved period")
     _require(any(dynamic.wilson_plaquettes(state) != dynamic.wilson_plaquettes(states[0])
                  for state in states[1:3]), "saved dynamic fixture has no changing loop")
-    report["dynamic_saved_run"] = {"tensor_hash": dynamic_tensor.fingerprint,
+    report["dynamic_saved_run"] = {"tensor_hash": dynamic_bundle.tensor.fingerprint,
                                    "bundle_id": dynamic_bundle.bundle_id,
                                    "run_id": execution["run_id"], "files": execution["files"],
                                    "steps": 6, "scalar_register_comparisons": comparisons,
