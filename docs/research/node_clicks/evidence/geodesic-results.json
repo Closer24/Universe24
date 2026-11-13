@@ -1,0 +1,2482 @@
+{
+  "schema": "universe24/geodesic-link-audit/1",
+  "source_hashes": {
+    "validation/geodesic_link_audit.py": "6852f3ff9e32fd561b85c0a10b143de47532c311ecfbfe7706a67326955495ed",
+    "validation/light_link_resonance.py": "c972b874290dd3c51a07740331ed047da25f61b1c1727868d6a630323540e93a",
+    "universe24/light.py": "0a21840615eb6c2cd673854ba0fc6d4689ea9d67313f3a89b0cf5f5d30e22ea9",
+    "universe24/system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5",
+    "universe24/system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+    "universe24/core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0"
+  },
+  "inputs": [
+    {
+      "run_id": "541de89b1634f39254f01be049e446edb8dc368dc16ac569e803cbf78a71ee6b",
+      "tensor_hash": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116",
+      "steps": 64,
+      "channels": 48,
+      "click_file_sha256": "c5aaaf8a664db7fa827780834fafc1a077e5d35d4d50ba1a68910cc19e199cee"
+    },
+    {
+      "run_id": "f65aeaa299d5a14e7112e2c39e841bc44116ab91fa192aebacb5b7b1b0224496",
+      "tensor_hash": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116",
+      "steps": 64,
+      "channels": 48,
+      "click_file_sha256": "1e8541a9720e9514db2403dfa94c2d2fc9325297aa6d8a972bc2150100a6dbfb"
+    }
+  ],
+  "passive_tt_reference": {
+    "status": "passed",
+    "role": "passive independent target only",
+    "approximation": "first order in epsilon; no long-wavelength approximation",
+    "c": 1,
+    "epsilon": 0.01,
+    "omega": 0.39269908169872414,
+    "coordinate_arm": 1.0,
+    "analytic_midpoint_max_error": 2.758504882849344e-11,
+    "samples": [
+      {
+        "emission_coordinate_time": 0.0,
+        "roundtrip_proper_time_x_first_order": 2.0090031631615712,
+        "roundtrip_proper_time_y_first_order": 1.990996836838429,
+        "differential_proper_time_first_order": 0.01800632632314212,
+        "tidal_R0x0x_first_order": 0.0007710628438351062,
+        "tidal_R0y0y_first_order": -0.0007710628438351062
+      },
+      {
+        "emission_coordinate_time": 2.0,
+        "roundtrip_proper_time_x_first_order": 2.0037292322857807,
+        "roundtrip_proper_time_y_first_order": 1.9962707677142195,
+        "differential_proper_time_first_order": 0.007458464571561134,
+        "tidal_R0x0x_first_order": 0.0005452237655967875,
+        "tidal_R0y0y_first_order": -0.0005452237655967875
+      },
+      {
+        "emission_coordinate_time": 4.0,
+        "roundtrip_proper_time_x_first_order": 1.9962707677142195,
+        "roundtrip_proper_time_y_first_order": 2.0037292322857807,
+        "differential_proper_time_first_order": -0.0074584645715611315,
+        "tidal_R0x0x_first_order": 4.7213982182205914e-20,
+        "tidal_R0y0y_first_order": -4.7213982182205914e-20
+      },
+      {
+        "emission_coordinate_time": 6.0,
+        "roundtrip_proper_time_x_first_order": 1.990996836838429,
+        "roundtrip_proper_time_y_first_order": 2.0090031631615712,
+        "differential_proper_time_first_order": -0.01800632632314212,
+        "tidal_R0x0x_first_order": -0.0005452237655967874,
+        "tidal_R0y0y_first_order": 0.0005452237655967874
+      },
+      {
+        "emission_coordinate_time": 8.0,
+        "roundtrip_proper_time_x_first_order": 1.990996836838429,
+        "roundtrip_proper_time_y_first_order": 2.0090031631615712,
+        "differential_proper_time_first_order": -0.018006326323142124,
+        "tidal_R0x0x_first_order": -0.0007710628438351062,
+        "tidal_R0y0y_first_order": 0.0007710628438351062
+      },
+      {
+        "emission_coordinate_time": 10.0,
+        "roundtrip_proper_time_x_first_order": 1.9962707677142195,
+        "roundtrip_proper_time_y_first_order": 2.0037292322857807,
+        "differential_proper_time_first_order": -0.007458464571561134,
+        "tidal_R0x0x_first_order": -0.0005452237655967876,
+        "tidal_R0y0y_first_order": 0.0005452237655967876
+      },
+      {
+        "emission_coordinate_time": 12.0,
+        "roundtrip_proper_time_x_first_order": 2.0037292322857807,
+        "roundtrip_proper_time_y_first_order": 1.9962707677142195,
+        "differential_proper_time_first_order": 0.007458464571561129,
+        "tidal_R0x0x_first_order": -1.4164194654661771e-19,
+        "tidal_R0y0y_first_order": 1.4164194654661771e-19
+      },
+      {
+        "emission_coordinate_time": 14.0,
+        "roundtrip_proper_time_x_first_order": 2.0090031631615712,
+        "roundtrip_proper_time_y_first_order": 1.990996836838429,
+        "differential_proper_time_first_order": 0.01800632632314212,
+        "tidal_R0x0x_first_order": 0.0005452237655967873,
+        "tidal_R0y0y_first_order": -0.0005452237655967873
+      }
+    ],
+    "runtime_receives_reference": false
+  },
+  "six_face_metric_counterexample": {
+    "six_axis_squared_lengths": [
+      [
+        "1",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1"
+      ],
+      [
+        "1",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1"
+      ]
+    ],
+    "xy_diagonal_squared_lengths": [
+      "2",
+      "3"
+    ],
+    "spatial_determinants": [
+      "1",
+      "3/4"
+    ],
+    "xy_angle_cosines": [
+      "0",
+      "1/2"
+    ],
+    "claim_six_face_lengths_determine_full_metric": "failed",
+    "scope": "Both metrics are positive definite and flat; this proves missing shear data, not curvature."
+  },
+  "click_only_control": {
+    "addresses": [
+      [
+        3,
+        0,
+        0
+      ],
+      [
+        0,
+        3,
+        0
+      ]
+    ],
+    "same_local_histograms_on_xy": true,
+    "x": [
+      {
+        "update_index": 1,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            17,
+            "C0",
+            1,
+            46
+          ],
+          [
+            18,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 2,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            18,
+            "C0",
+            1,
+            23
+          ],
+          [
+            19,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 3,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            19,
+            "C0",
+            1,
+            46
+          ],
+          [
+            22,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 4,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            20,
+            "C0",
+            1,
+            23
+          ],
+          [
+            23,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 5,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            21,
+            "C0",
+            1,
+            46
+          ],
+          [
+            24,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 6,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            22,
+            "C0",
+            1,
+            23
+          ],
+          [
+            25,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 7,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            23,
+            "C0",
+            1,
+            46
+          ],
+          [
+            24,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 8,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            24,
+            "C0",
+            1,
+            23
+          ],
+          [
+            25,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 9,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            25,
+            "C0",
+            1,
+            46
+          ],
+          [
+            26,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 10,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            26,
+            "C0",
+            1,
+            23
+          ],
+          [
+            27,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 11,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            27,
+            "C0",
+            1,
+            46
+          ],
+          [
+            30,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 12,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            28,
+            "C0",
+            1,
+            23
+          ],
+          [
+            31,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 13,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            29,
+            "C0",
+            1,
+            46
+          ],
+          [
+            32,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 14,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            30,
+            "C0",
+            1,
+            23
+          ],
+          [
+            33,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 15,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            31,
+            "C0",
+            1,
+            46
+          ],
+          [
+            32,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 16,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            32,
+            "C0",
+            1,
+            23
+          ],
+          [
+            33,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 17,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            33,
+            "C0",
+            1,
+            46
+          ],
+          [
+            34,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 18,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            34,
+            "C0",
+            1,
+            23
+          ],
+          [
+            35,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 19,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            35,
+            "C0",
+            1,
+            46
+          ],
+          [
+            38,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 20,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            36,
+            "C0",
+            1,
+            23
+          ],
+          [
+            39,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 21,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            37,
+            "C0",
+            1,
+            46
+          ],
+          [
+            40,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 22,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            38,
+            "C0",
+            1,
+            23
+          ],
+          [
+            41,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 23,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            39,
+            "C0",
+            1,
+            46
+          ],
+          [
+            40,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 24,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            40,
+            "C0",
+            1,
+            23
+          ],
+          [
+            41,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 25,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            41,
+            "C0",
+            1,
+            46
+          ],
+          [
+            42,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 26,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            42,
+            "C0",
+            1,
+            23
+          ],
+          [
+            43,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 27,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            43,
+            "C0",
+            1,
+            46
+          ],
+          [
+            46,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 28,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            44,
+            "C0",
+            1,
+            23
+          ],
+          [
+            47,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 29,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            45,
+            "C0",
+            1,
+            46
+          ],
+          [
+            48,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 30,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            46,
+            "C0",
+            1,
+            23
+          ],
+          [
+            49,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 31,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            47,
+            "C0",
+            1,
+            46
+          ],
+          [
+            48,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 32,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            48,
+            "C0",
+            1,
+            23
+          ],
+          [
+            49,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 33,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            49,
+            "C0",
+            1,
+            46
+          ],
+          [
+            50,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 34,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            50,
+            "C0",
+            1,
+            23
+          ],
+          [
+            51,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 35,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            51,
+            "C0",
+            1,
+            46
+          ],
+          [
+            54,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 36,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            52,
+            "C0",
+            1,
+            23
+          ],
+          [
+            55,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 37,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            53,
+            "C0",
+            1,
+            46
+          ],
+          [
+            56,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 38,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            54,
+            "C0",
+            1,
+            23
+          ],
+          [
+            57,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 39,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            55,
+            "C0",
+            1,
+            46
+          ],
+          [
+            56,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 40,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            56,
+            "C0",
+            1,
+            23
+          ],
+          [
+            57,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 41,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            57,
+            "C0",
+            1,
+            46
+          ],
+          [
+            58,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 42,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            58,
+            "C0",
+            1,
+            23
+          ],
+          [
+            59,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 43,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            59,
+            "C0",
+            1,
+            46
+          ],
+          [
+            62,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 44,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            60,
+            "C0",
+            1,
+            23
+          ],
+          [
+            63,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 45,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            61,
+            "C0",
+            1,
+            46
+          ],
+          [
+            64,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 46,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            62,
+            "C0",
+            1,
+            23
+          ],
+          [
+            65,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 47,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            63,
+            "C0",
+            1,
+            46
+          ],
+          [
+            64,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 48,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            64,
+            "C0",
+            1,
+            23
+          ],
+          [
+            65,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 49,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            65,
+            "C0",
+            1,
+            46
+          ],
+          [
+            66,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 50,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            66,
+            "C0",
+            1,
+            23
+          ],
+          [
+            67,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 51,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            67,
+            "C0",
+            1,
+            46
+          ],
+          [
+            70,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 52,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            68,
+            "C0",
+            1,
+            23
+          ],
+          [
+            71,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 53,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            69,
+            "C0",
+            1,
+            46
+          ],
+          [
+            72,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 54,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            70,
+            "C0",
+            1,
+            23
+          ],
+          [
+            73,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 55,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            71,
+            "C0",
+            1,
+            46
+          ],
+          [
+            72,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 56,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            72,
+            "C0",
+            1,
+            23
+          ],
+          [
+            73,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 57,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            73,
+            "C0",
+            1,
+            46
+          ],
+          [
+            74,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 58,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            74,
+            "C0",
+            1,
+            23
+          ],
+          [
+            75,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 59,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            75,
+            "C0",
+            1,
+            46
+          ],
+          [
+            78,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 60,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            76,
+            "C0",
+            1,
+            23
+          ],
+          [
+            79,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 61,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            77,
+            "C0",
+            1,
+            46
+          ],
+          [
+            80,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 62,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            78,
+            "C0",
+            1,
+            23
+          ],
+          [
+            81,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 63,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            79,
+            "C0",
+            1,
+            46
+          ],
+          [
+            80,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 64,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            80,
+            "C0",
+            1,
+            23
+          ],
+          [
+            81,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      }
+    ],
+    "y": [
+      {
+        "update_index": 1,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            17,
+            "C0",
+            1,
+            46
+          ],
+          [
+            18,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 2,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            18,
+            "C0",
+            1,
+            23
+          ],
+          [
+            19,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 3,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            19,
+            "C0",
+            1,
+            46
+          ],
+          [
+            22,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 4,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            20,
+            "C0",
+            1,
+            23
+          ],
+          [
+            23,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 5,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            21,
+            "C0",
+            1,
+            46
+          ],
+          [
+            24,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 6,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            22,
+            "C0",
+            1,
+            23
+          ],
+          [
+            25,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 7,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            23,
+            "C0",
+            1,
+            46
+          ],
+          [
+            24,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 8,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            24,
+            "C0",
+            1,
+            23
+          ],
+          [
+            25,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 9,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            25,
+            "C0",
+            1,
+            46
+          ],
+          [
+            26,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 10,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            26,
+            "C0",
+            1,
+            23
+          ],
+          [
+            27,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 11,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            27,
+            "C0",
+            1,
+            46
+          ],
+          [
+            30,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 12,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            28,
+            "C0",
+            1,
+            23
+          ],
+          [
+            31,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 13,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            29,
+            "C0",
+            1,
+            46
+          ],
+          [
+            32,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 14,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            30,
+            "C0",
+            1,
+            23
+          ],
+          [
+            33,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 15,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            31,
+            "C0",
+            1,
+            46
+          ],
+          [
+            32,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 16,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            32,
+            "C0",
+            1,
+            23
+          ],
+          [
+            33,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 17,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            33,
+            "C0",
+            1,
+            46
+          ],
+          [
+            34,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 18,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            34,
+            "C0",
+            1,
+            23
+          ],
+          [
+            35,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 19,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            35,
+            "C0",
+            1,
+            46
+          ],
+          [
+            38,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 20,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            36,
+            "C0",
+            1,
+            23
+          ],
+          [
+            39,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 21,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            37,
+            "C0",
+            1,
+            46
+          ],
+          [
+            40,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 22,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            38,
+            "C0",
+            1,
+            23
+          ],
+          [
+            41,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 23,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            39,
+            "C0",
+            1,
+            46
+          ],
+          [
+            40,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 24,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            40,
+            "C0",
+            1,
+            23
+          ],
+          [
+            41,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 25,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            41,
+            "C0",
+            1,
+            46
+          ],
+          [
+            42,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 26,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            42,
+            "C0",
+            1,
+            23
+          ],
+          [
+            43,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 27,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            43,
+            "C0",
+            1,
+            46
+          ],
+          [
+            46,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 28,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            44,
+            "C0",
+            1,
+            23
+          ],
+          [
+            47,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 29,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            45,
+            "C0",
+            1,
+            46
+          ],
+          [
+            48,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 30,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            46,
+            "C0",
+            1,
+            23
+          ],
+          [
+            49,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 31,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            47,
+            "C0",
+            1,
+            46
+          ],
+          [
+            48,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 32,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            48,
+            "C0",
+            1,
+            23
+          ],
+          [
+            49,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 33,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            49,
+            "C0",
+            1,
+            46
+          ],
+          [
+            50,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 34,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            50,
+            "C0",
+            1,
+            23
+          ],
+          [
+            51,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 35,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            51,
+            "C0",
+            1,
+            46
+          ],
+          [
+            54,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 36,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            52,
+            "C0",
+            1,
+            23
+          ],
+          [
+            55,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 37,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            53,
+            "C0",
+            1,
+            46
+          ],
+          [
+            56,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 38,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            54,
+            "C0",
+            1,
+            23
+          ],
+          [
+            57,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 39,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            55,
+            "C0",
+            1,
+            46
+          ],
+          [
+            56,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 40,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            56,
+            "C0",
+            1,
+            23
+          ],
+          [
+            57,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 41,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            57,
+            "C0",
+            1,
+            46
+          ],
+          [
+            58,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 42,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            58,
+            "C0",
+            1,
+            23
+          ],
+          [
+            59,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 43,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            59,
+            "C0",
+            1,
+            46
+          ],
+          [
+            62,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 44,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            60,
+            "C0",
+            1,
+            23
+          ],
+          [
+            63,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 45,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            61,
+            "C0",
+            1,
+            46
+          ],
+          [
+            64,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 46,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            62,
+            "C0",
+            1,
+            23
+          ],
+          [
+            65,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 47,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            63,
+            "C0",
+            1,
+            46
+          ],
+          [
+            64,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 48,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            64,
+            "C0",
+            1,
+            23
+          ],
+          [
+            65,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 49,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            65,
+            "C0",
+            1,
+            46
+          ],
+          [
+            66,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 50,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            66,
+            "C0",
+            1,
+            23
+          ],
+          [
+            67,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 51,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            67,
+            "C0",
+            1,
+            46
+          ],
+          [
+            70,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 52,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            68,
+            "C0",
+            1,
+            23
+          ],
+          [
+            71,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 53,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            69,
+            "C0",
+            1,
+            46
+          ],
+          [
+            72,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 54,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            70,
+            "C0",
+            1,
+            23
+          ],
+          [
+            73,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 55,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            71,
+            "C0",
+            1,
+            46
+          ],
+          [
+            72,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 56,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            72,
+            "C0",
+            1,
+            23
+          ],
+          [
+            73,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 57,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            73,
+            "C0",
+            1,
+            46
+          ],
+          [
+            74,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 58,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            74,
+            "C0",
+            1,
+            23
+          ],
+          [
+            75,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 59,
+        "arithmetic_event_count": 48,
+        "histogram": [
+          [
+            75,
+            "C0",
+            1,
+            46
+          ],
+          [
+            78,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 60,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            76,
+            "C0",
+            1,
+            23
+          ],
+          [
+            79,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 61,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            77,
+            "C0",
+            1,
+            46
+          ],
+          [
+            80,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 62,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            78,
+            "C0",
+            1,
+            23
+          ],
+          [
+            81,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "update_index": 63,
+        "arithmetic_event_count": 47,
+        "histogram": [
+          [
+            79,
+            "C0",
+            1,
+            46
+          ],
+          [
+            80,
+            "C0",
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "update_index": 64,
+        "arithmetic_event_count": 25,
+        "histogram": [
+          [
+            80,
+            "C0",
+            1,
+            23
+          ],
+          [
+            81,
+            "C0",
+            1,
+            2
+          ]
+        ]
+      }
+    ],
+    "proper_time_assignment": null,
+    "emission_reflection_return_assignment": null,
+    "scope": "Local quotient/class/sign histograms only; not a claim that all channel-labelled records coincide."
+  },
+  "time_chart_control": {
+    "smooth_positive_lapse": "ds^2=-N(t)^2 dt^2+dx^2+dy^2+dz^2; tau=int N dt makes this flat",
+    "phase_transport_count": "ceil(t/2)",
+    "microscopic_lorentzian_time_coordinate": "not_established",
+    "reason": "The move/hold transport count has plateaus; it is not an invertible time coordinate or a material clock."
+  },
+  "gates": {
+    "independent_tt_null_roundtrip_reference": "passed",
+    "current_bundle_replay_and_admission": "passed",
+    "homogeneous_equal_axis_click_control": "passed",
+    "six_axis_norms_determine_full_spatial_metric": "failed",
+    "homogeneous_scalar_gate_identifies_plus_polarized_gravity": "failed",
+    "source_coupled_einstein_equations": "not_tested",
+    "retained_clock_and_reflection_proper_time_measurement": "not_tested",
+    "general_gw_response_of_other_preparations": "not_tested",
+    "physical_event_geometry_acceptance": "blocked"
+  },
+  "scope": "No external metric drives evolution. The reference is a future target, not a calibrated numerical comparison to these arithmetic clicks."
+}

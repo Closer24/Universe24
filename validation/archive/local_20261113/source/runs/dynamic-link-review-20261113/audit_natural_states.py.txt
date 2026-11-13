@@ -1,0 +1,64 @@
+"""Passive sign audit of every saved complete state; never supplies evolution."""
+import gzip
+import hashlib
+import json
+from pathlib import Path
+
+from universe24.core import exact_json
+
+ROOT = Path(__file__).resolve().parents[2]
+
+
+def audit(directory):
+    rows = []
+    for trace in sorted(directory.rglob('full_trace.jsonl.gz')):
+        first_negative = None
+        first_zero = None
+        checks = 0
+        records = 0
+        max_bits = 0
+        with gzip.open(trace, 'rt', encoding='utf-8') as stream:
+            for record in stream:
+                row = exact_json.loads(record)
+                records += 1
+                for snapshot in ('before', 'after'):
+                    for field in ('a', 'b', 'r'):
+                        for channel, values in enumerate(row[snapshot][field]):
+                            for node, value in enumerate(values):
+                                if type(value) is not int:
+                                    raise TypeError('retained value is not an exact integer')
+                                bits = abs(value).bit_length()
+                                max_bits = max(max_bits, bits)
+                                checks += 1
+                                if (value < 0 and first_negative is None) or (value == 0 and first_zero is None):
+                                    witness = {'record_step': row['step'], 'snapshot': snapshot,
+                                               'field': field, 'channel': channel, 'node': node,
+                                               'value': value if bits <= 80 else 'negative bigint',
+                                               'integer_bits': bits}
+                                    if value < 0:
+                                        first_negative = witness
+                                    else:
+                                        first_zero = witness
+        rows.append({'run': str(trace.parent.relative_to(ROOT)), 'transitions': records,
+                     'integer_entries_checked_including_repeated_snapshots': checks,
+                     'peak_absolute_integer_bits': max_bits,
+                     'all_nonnegative_naturals': first_negative is None,
+                     'all_strictly_positive_naturals': first_negative is None and first_zero is None,
+                     'first_negative': first_negative, 'first_zero': first_zero,
+                     'trace_sha256': hashlib.sha256(trace.read_bytes()).hexdigest()})
+    return {'runs': rows, 'total_runs': len(rows),
+            'total_transitions': sum(row['transitions'] for row in rows),
+            'runs_with_negatives': sum(not row['all_nonnegative_naturals'] for row in rows),
+            'runs_strictly_positive': sum(row['all_strictly_positive_naturals'] for row in rows)}
+
+
+if __name__ == '__main__':
+    result = {name: audit(ROOT / 'runs' / path) for name, path in
+              (('central_acceptance', 'full-acceptance-20261113'),
+               ('dynamic_link_candidate', 'dynamic-link-naturals-20261113'))}
+    result['audit_source_sha256'] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+    result['scope'] = 'Every serialized retained entry in before/after snapshots; no interpretation of coefficients or decoded observables as naturals.'
+    destination = Path(__file__).with_name('natural_state_audit.json')
+    destination.write_text(json.dumps(result, indent=2) + '\n')
+    print(json.dumps({name: {k: v for k, v in result[name].items() if k != 'runs'}
+                      for name in ('central_acceptance', 'dynamic_link_candidate')}, indent=2))

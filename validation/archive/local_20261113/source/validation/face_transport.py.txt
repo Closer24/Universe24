@@ -1,0 +1,256 @@
+"""One native reversible face processor with traffic-dependent passage modes.
+
+No extra graph nodes or queue callbacks. Fixed streaming has a direct rail
+and a rail with one retained face stage. Reversible local gates select rails
+and update shared interface phases from both endpoints. Prepared raw states
+are strictly natural; this is not an accepted Einstein or spring model.
+"""
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+from pathlib import Path
+
+import numpy as np
+from universe24.core import CubicNetwork, Engine, NetworkLayout
+from universe24.core.lattice import DIRECTIONS, ZERO
+from universe24.system.bundle import create_bundle
+from universe24.system.decoder import default_protocol
+from universe24.system.runtime import run_bundle, verify_run
+from validation.system_smoke import scalar_step
+
+LAYOUT = NetworkLayout(
+    node_fields=tuple(f'{rail}{d}' for d in range(6) for rail in ('fast', 'slow')) + ('ticks',),
+    link_fields=('phase0', 'phase1', 'stage0', 'stage1'))
+CLOCK = LAYOUT.node_channel('ticks')
+BOOLEAN = tuple(g for g in range(LAYOUT.channel_count) if g != CLOCK)
+PAYLOAD = tuple(LAYOUT.node_channel(f'{rail}{d}') for d in range(6) for rail in ('fast', 'slow')) + tuple(
+    LAYOUT.link_channel(axis, f'stage{s}') for axis in range(3) for s in (0, 1))
+
+
+def build_tensor():
+    """Compile F and F^-1 into exact Rule3, using only construction-time algebra."""
+    terms = [(LAYOUT.gears[g].name, 6, ()) for g in BOOLEAN]
+    terms.append((LAYOUT.node_name('ticks'), 6, (LAYOUT.node_read('ticks'),)))
+
+    def emit(target, coefficient, factors=()):
+        name, offset = target
+        for mask in range(1 << len(factors)):
+            selected = []
+            for k, (gear, at) in enumerate(factors):
+                if mask & (1 << k):
+                    selected.append((gear, tuple(at[j] - offset[j] for j in range(3)), 'b'))
+            sign = (-1) ** (len(factors) - len(selected))
+            terms.append((name, 3 * coefficient * sign, tuple(selected)))
+
+    def xor3(target, x, y, q):
+        for f in (x, y, q):
+            emit(target, 1, (f,))
+        for a, b in ((x, y), (x, q), (y, q)):
+            emit(target, -2, (a, b))
+        emit(target, 4, (x, y, q))
+
+    def route(target, x, y, q, *, swap_at_zero):
+        # Output x if q=1 (or 0 for inverse), otherwise y.
+        if swap_at_zero:
+            emit(target, 1, (y,))
+            emit(target, 1, (q, x))
+            emit(target, -1, (q, y))
+        else:
+            emit(target, 1, (x,))
+            emit(target, 1, (q, y))
+            emit(target, -1, (q, x))
+
+    for axis in range(3):
+        edge = DIRECTIONS[2 * axis]
+        for sense in (0, 1):
+            d = 2 * axis + sense
+            start, end = (ZERO, edge) if sense == 0 else (edge, ZERO)
+            fast = LAYOUT.node_name(f'fast{d}')
+            slow = LAYOUT.node_name(f'slow{d}')
+            q = (LAYOUT.link_name(axis, f'phase{sense}'), ZERO)
+            other_q = (LAYOUT.link_name(axis, f'phase{1-sense}'), ZERO)
+            stage = (LAYOUT.link_name(axis, f'stage{sense}'), ZERO)
+            x, y = (fast, start), (slow, start)
+            # F: local controlled exchange, fixed streaming, exchange interface phases.
+            route((fast, end), x, y, q, swap_at_zero=True)
+            route(stage, y, x, q, swap_at_zero=True)
+            emit((slow, end), 1, (stage,))
+            xor3(other_q, x, y, q)
+            # F^-1: reverse streaming and phase exchange, then inverse gate.
+            route((fast, start), (fast, end), stage, other_q, swap_at_zero=False)
+            route((slow, start), stage, (fast, end), other_q, swap_at_zero=False)
+            emit(stage, 1, ((slow, end),))
+            xor3(q, (fast, end), stage, other_q)
+    return LAYOUT.tensor(terms)
+
+
+def permutation(values, L, *, inverse=False):
+    """Independent explicit Boolean gates/wiring, never called by Engine."""
+    bits = np.array(values, dtype=object) - 1
+    if bits.shape != (LAYOUT.channel_count, L**3) or not np.all((bits[list(BOOLEAN)] == 0) | (bits[list(BOOLEAN)] == 1)):
+        raise ValueError('face Boolean encoding requires raw 1/2 outside the tick counter')
+    result = bits.copy()
+    graph = CubicNetwork(L)
+    for edge in graph.links():
+        left, right = (n.index for n in edge.endpoints)
+        for sense in (0, 1):
+            d = 2 * edge.axis + sense
+            start, end = (left, right) if sense == 0 else (right, left)
+            f, s = (LAYOUT.node_channel(f'{rail}{d}') for rail in ('fast', 'slow'))
+            q = LAYOUT.link_channel(edge.axis, f'phase{sense}')
+            other = LAYOUT.link_channel(edge.axis, f'phase{1-sense}')
+            stage = LAYOUT.link_channel(edge.axis, f'stage{sense}')
+            base = edge.storage_node
+            if inverse:
+                x, y, phase = int(bits[f, end]), int(bits[stage, base]), int(bits[other, base])
+                result[f, start], result[s, start] = (y, x) if phase else (x, y)
+                result[q, base] = phase ^ x ^ y
+                result[stage, base] = bits[s, end]
+            else:
+                x, y, phase = int(bits[f, start]), int(bits[s, start]), int(bits[q, base])
+                result[f, end], result[stage, base] = (x, y) if phase else (y, x)
+                result[other, base] = phase ^ x ^ y
+                result[s, end] = bits[stage, base]
+    result[CLOCK] = bits[CLOCK] + (-1 if inverse else 1)
+    return result + 1
+
+
+def prepare(L=3, *, phase=1, direction=0, source=0, rail='fast', payload=True, random_seed=None):
+    if type(phase) is not int or phase not in (0, 1) or rail not in ('fast', 'slow'):
+        raise ValueError('phase must be a bit and rail fast/slow')
+    CubicNetwork(L).node(source).face(direction)
+    nodes = {f'{r}{d}': (1, 1, 1) for d in range(6) for r in ('fast', 'slow')}
+    nodes['ticks'] = (1, 2, 1)
+    links = {f'phase{s}': ((phase+1, phase+1, 1),)*3 for s in (0, 1)}
+    links.update({f'stage{s}': ((1, 1, 1),)*3 for s in (0, 1)})
+    state = LAYOUT.uniform_state(L, nodes=nodes, links=links)
+    if random_seed is not None:
+        rng = np.random.default_rng(random_seed)
+        state.b[list(BOOLEAN)] = rng.integers(1, 3, size=(len(BOOLEAN), state.N))
+    elif payload:
+        state.b[LAYOUT.node_channel(f'{rail}{direction}'), source] = 2
+    state.a = permutation(state.b, L, inverse=True)
+    state.r = np.array([[1 + (g+n) % 5 for n in range(state.N)] for g in range(state.G)])
+    return state
+
+
+def inspect(tensor, seed, steps, *, direction=0, source=0):
+    current, engine, expected = seed, Engine(tensor), seed.b
+    graph = CubicNetwork(seed.L)
+    receiver = graph.node(source).neighbour(direction).index
+    edge = graph.node(source).link(direction)
+    phases = [LAYOUT.link_channel(a, f'phase{s}') for a in range(3) for s in (0, 1)]
+    source_phases = [LAYOUT.link_channel(edge.axis, f'phase{s}') for s in (0, 1)]
+    initial_count = int(np.sum(seed.b[list(PAYLOAD)]-1))
+    first_arrival = None
+    phase_changes, increases, decreases, stage_releases = 0, 0, 0, 0
+    samples = []
+    for tick in range(steps+1):
+        assert np.array_equal(current.b, expected), 'independent circuit mismatch'
+        assert np.array_equal(current.a, permutation(current.b, seed.L, inverse=True)), 'history domain lost'
+        assert all(np.all(v >= 1) for v in (current.a, current.b, current.r)), 'natural domain lost'
+        assert np.array_equal(current.r, seed.r), 'carry changed'
+        assert int(np.sum(current.b[list(PAYLOAD)]-1)) == initial_count, 'payload lost'
+        assert np.array_equal(current.b[CLOCK], seed.b[CLOCK]+tick), 'native counter mismatch'
+        receiver_count = sum(int(current.b[LAYOUT.node_channel(f'{rail}{direction}'), receiver])-1
+                             for rail in ('fast', 'slow'))
+        if receiver_count and first_arrival is None:
+            first_arrival = tick
+        if tick < 12 or tick == steps:
+            samples.append({'tick': tick, 'native_counter': int(current.b[CLOCK, source]),
+                            'interface_phase_bits': [int(current.b[g, edge.storage_node])-1 for g in source_phases],
+                            'receiver_count': receiver_count})
+        if tick == steps:
+            break
+        after = engine.step(current)
+        assert after.same_as(scalar_step(tensor, current)), 'scalar oracle mismatch'
+        assert engine.inverse_step(after).same_as(current), 'step inverse mismatch'
+        delta = after.b[phases]-current.b[phases]
+        phase_changes += int(np.count_nonzero(delta))
+        # Canonical fast-port transit is N=2-phase, so phase decreases grow N.
+        increases += int(np.sum(delta < 0))
+        decreases += int(np.sum(delta > 0))
+        for face in graph.links():
+            ends = face.endpoints
+            for sense in (0, 1):
+                g = LAYOUT.link_channel(face.axis, f'stage{sense}')
+                out = LAYOUT.node_channel(f'slow{2*face.axis+sense}')
+                end = ends[1-sense].index
+                assert after.b[out, end] == current.b[g, face.storage_node], 'in-flight data stalled or overwritten'
+                stage_releases += int(current.b[g, face.storage_node])-1
+        expected = permutation(current.b, seed.L)
+        current = after
+    assert engine.rewind(current, steps).same_as(seed), 'full rewind mismatch'
+    return {'native_updates': steps, 'strict_naturals': 'passed', 'scalar_and_circuit_oracles': 'passed',
+            'complete_inverse': 'passed', 'payload_count': initial_count, 'payload_conservation': 'passed',
+            'first_neighbor_arrival': first_arrival, 'phase_changes': phase_changes,
+            'canonical_delay_increases': increases, 'canonical_delay_decreases': decreases,
+            'inflight_stage_releases': stage_releases, 'no_stalled_inflight_stage': 'passed',
+            'samples': samples}
+
+
+def source_hashes():
+    root = Path(__file__).resolve().parents[1]
+    paths = ['validation/face_transport.py', 'validation/system_smoke.py',
+             'universe24/core/network.py', 'universe24/core/engine.py', 'universe24/core/tensor.py',
+             'universe24/core/lattice.py', 'universe24/system/bundle.py', 'universe24/system/runtime.py']
+    return {p: hashlib.sha256((root/p).read_bytes()).hexdigest() for p in paths}
+
+
+def run(out):
+    out = Path(out)
+    if out.exists():
+        raise ValueError('use a fresh evidence directory')
+    out.mkdir(parents=True)
+    tensor = build_tensor()
+    sources = source_hashes()
+    cases = []
+
+    def execute(name, seed, steps, direction=0, source=0):
+        bundle = create_bundle(tensor, seed, channels=LAYOUT.manifest(), protocol=default_protocol(),
+                               model={'id': 'coupled-native-face-processor', 'version': '1',
+                                      'domain': 'Boolean ports/stages/phases shifted by1; complete a=F^-1(b); positive tick counter and nonzero carries',
+                                      'passage': 'fixed streaming; face gate chooses 1/2-update rail at admission; in-flight stage always exits next update',
+                                      'physics': 'passage is mode-dependent; no general metric, Einstein stress or spring acceptance'})
+        saved = run_bundle(bundle, out/name, steps)
+        assert saved == verify_run(out/name)
+        result = inspect(tensor, seed, steps, direction=direction, source=source)
+        result.update(name=name, run_id=saved['run_id'], tensor_hash=tensor.fingerprint,
+                      peak_integer_bits=max(saved['maximum_integer_bits_by_step']))
+        cases.append(result)
+
+    execute('empty-reference', prepare(payload=False), 32)
+    for phase in (0, 1):
+        for direction in range(6):
+            for rail in ('fast', 'slow'):
+                name = f'q{phase}-d{direction}-{rail}'
+                execute(name, prepare(phase=phase, direction=direction, rail=rail), 24, direction)
+                expected = 1 if ((rail == 'fast') == bool(phase)) else 2
+                assert cases[-1]['first_neighbor_arrival'] == expected, 'admission timing prediction failed'
+    for value in (7, 24, 2026):
+        execute(f'dense-{value}', prepare(random_seed=value), 64)
+    execute('L4-long', prepare(L=4, random_seed=42), 256)
+    assert sources == source_hashes(), 'sources changed during execution'
+    result = {'schema': 'universe24/coupled-face-transport/1', 'channels': tensor.G,
+              'retained_integers_per_node': 3*tensor.G, 'maximum_degree': tensor.rank-1,
+              'strict_support_violations': len(tensor.support_violations()), 'source_hashes': sources,
+              'cases': cases, 'total_native_updates': sum(c['native_updates'] for c in cases),
+              'gates': {'single_tensor_dynamic_face_and_transport': 'passed',
+                        'both_endpoint_feedback': 'passed', 'natural_prepared_domain': 'passed',
+                        'actual_mode_dependent_1_2_update_passage': 'passed',
+                        'inflight_delivery_during_face_changes': 'passed',
+                        'one_scalar_delay_for_all_internal_modes': 'failed',
+                        'arbitrary_unbounded_delay': 'not_tested', 'spring_restoring_law': 'not_tested',
+                        'einstein_equations_and_proper_clocks': 'not_tested',
+                        'general_einstein_spacetime': 'blocked'}}
+    (out/'results.json').write_text(json.dumps(result, indent=2)+'\n')
+    return result
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--out', type=Path, required=True)
+    result = run(parser.parse_args().out)
+    print(json.dumps({k: result[k] for k in ('channels', 'maximum_degree', 'total_native_updates', 'gates')}, indent=2))

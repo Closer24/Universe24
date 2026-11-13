@@ -1,0 +1,854 @@
+{
+  "schema": "universe24/matter-dark-audit/1",
+  "source_hashes": {
+    "universe24/core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+    "universe24/core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+    "universe24/core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+    "universe24/core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+    "universe24/core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+    "universe24/algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+    "universe24/system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+    "universe24/system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+    "universe24/system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5",
+    "validation/matter_dark_audit.py": "85a87ae6fd963353e5f6b3c076a390598f26b5e1c0f813443f4bf3d815b503af",
+    "validation/light_link_resonance.py": "c972b874290dd3c51a07740331ed047da25f61b1c1727868d6a630323540e93a",
+    "validation/system_smoke.py": "75a64e4abf14ff4d3fc5ff5e7bd913ef6a0d6bac68b2f0c5898ddc441557513b",
+    "universe24/light.py": "0a21840615eb6c2cd673854ba0fc6d4689ea9d67313f3a89b0cf5f5d30e22ea9"
+  },
+  "cases": {
+    "vacuum": {
+      "observer": {
+        "interpretation": "arithmetic clicks only",
+        "events": 0,
+        "by_kind": {
+          "C0": 0,
+          "C1": 0,
+          "C2": 0
+        },
+        "signed_quotient_sum": 0,
+        "events_by_recorded_step": {},
+        "active_channel_addresses": [],
+        "physical_species": null,
+        "source": "canonical arithmetic clicks only; step and node are recorded addresses"
+      },
+      "latent_audit": {
+        "case": "vacuum",
+        "run_id": "94a01909f4df524ff51c6487e7683ef2186bb81f59a70389b97fcc9aa3e435b1",
+        "tensor_hash": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116",
+        "steps": 8,
+        "complete_replay_and_inverse": "passed",
+        "independent_force_oracle_all_steps": "passed",
+        "scalar_oracle_first_two_steps": "passed",
+        "channels": 48,
+        "retained_integers_per_node": 144,
+        "maximum_integer_bits": 6,
+        "strict_naturals": "passed",
+        "first_nonpositive": null,
+        "samples": [
+          {
+            "tick": 0,
+            "em_readout_squared_norm": "0",
+            "max_abs_central_contrast": "0",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 1,
+            "em_readout_squared_norm": "0",
+            "max_abs_central_contrast": "0",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 2,
+            "em_readout_squared_norm": "0",
+            "max_abs_central_contrast": "0",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 3,
+            "em_readout_squared_norm": "0",
+            "max_abs_central_contrast": "0",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 4,
+            "em_readout_squared_norm": "0",
+            "max_abs_central_contrast": "0",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 5,
+            "em_readout_squared_norm": "0",
+            "max_abs_central_contrast": "0",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 6,
+            "em_readout_squared_norm": "0",
+            "max_abs_central_contrast": "0",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 7,
+            "em_readout_squared_norm": "0",
+            "max_abs_central_contrast": "0",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 8,
+            "em_readout_squared_norm": "0",
+            "max_abs_central_contrast": "0",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          }
+        ]
+      }
+    },
+    "clock": {
+      "observer": {
+        "interpretation": "arithmetic clicks only",
+        "events": 36000,
+        "by_kind": {
+          "C0": 36000,
+          "C1": 0,
+          "C2": 0
+        },
+        "signed_quotient_sum": 2460000,
+        "events_by_recorded_step": {
+          "1": 6000,
+          "2": 3000,
+          "3": 6000,
+          "4": 3000,
+          "5": 6000,
+          "6": 3000,
+          "7": 6000,
+          "8": 3000
+        },
+        "active_channel_addresses": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47
+        ],
+        "physical_species": null,
+        "source": "canonical arithmetic clicks only; step and node are recorded addresses"
+      },
+      "latent_audit": {
+        "case": "clock",
+        "run_id": "76bcc598a1e239e00cbc65614832577f4cd47018b514528123e08283466fddbd",
+        "tensor_hash": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116",
+        "steps": 8,
+        "complete_replay_and_inverse": "passed",
+        "independent_force_oracle_all_steps": "passed",
+        "scalar_oracle_first_two_steps": "passed",
+        "channels": 48,
+        "retained_integers_per_node": 144,
+        "maximum_integer_bits": 6,
+        "strict_naturals": "passed",
+        "first_nonpositive": null,
+        "samples": [
+          {
+            "tick": 0,
+            "em_readout_squared_norm": "0",
+            "max_abs_central_contrast": "1",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 1,
+            "em_readout_squared_norm": "0",
+            "max_abs_central_contrast": "0",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 2,
+            "em_readout_squared_norm": "0",
+            "max_abs_central_contrast": "1",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 3,
+            "em_readout_squared_norm": "0",
+            "max_abs_central_contrast": "0",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 4,
+            "em_readout_squared_norm": "0",
+            "max_abs_central_contrast": "1",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 5,
+            "em_readout_squared_norm": "0",
+            "max_abs_central_contrast": "0",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 6,
+            "em_readout_squared_norm": "0",
+            "max_abs_central_contrast": "1",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 7,
+            "em_readout_squared_norm": "0",
+            "max_abs_central_contrast": "0",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 8,
+            "em_readout_squared_norm": "0",
+            "max_abs_central_contrast": "1",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          }
+        ]
+      }
+    },
+    "clock-light": {
+      "observer": {
+        "interpretation": "arithmetic clicks only",
+        "events": 36200,
+        "by_kind": {
+          "C0": 36200,
+          "C1": 0,
+          "C2": 0
+        },
+        "signed_quotient_sum": 2476800,
+        "events_by_recorded_step": {
+          "1": 5950,
+          "2": 3100,
+          "3": 5950,
+          "4": 3100,
+          "5": 5950,
+          "6": 3100,
+          "7": 5950,
+          "8": 3100
+        },
+        "active_channel_addresses": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47
+        ],
+        "physical_species": null,
+        "source": "canonical arithmetic clicks only; step and node are recorded addresses"
+      },
+      "latent_audit": {
+        "case": "clock-light",
+        "run_id": "c6bff716aea5d47d4fc4aab7dcbd628cadc5ef81c24c3b19f23222462121a849",
+        "tensor_hash": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116",
+        "steps": 8,
+        "complete_replay_and_inverse": "passed",
+        "independent_force_oracle_all_steps": "passed",
+        "scalar_oracle_first_two_steps": "passed",
+        "channels": 48,
+        "retained_integers_per_node": 144,
+        "maximum_integer_bits": 6,
+        "strict_naturals": "passed",
+        "first_nonpositive": null,
+        "samples": [
+          {
+            "tick": 0,
+            "em_readout_squared_norm": "1200",
+            "max_abs_central_contrast": "1",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 1,
+            "em_readout_squared_norm": "1200",
+            "max_abs_central_contrast": "0",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 2,
+            "em_readout_squared_norm": "1200",
+            "max_abs_central_contrast": "1",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 3,
+            "em_readout_squared_norm": "1200",
+            "max_abs_central_contrast": "0",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 4,
+            "em_readout_squared_norm": "1200",
+            "max_abs_central_contrast": "1",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 5,
+            "em_readout_squared_norm": "1200",
+            "max_abs_central_contrast": "0",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 6,
+            "em_readout_squared_norm": "1200",
+            "max_abs_central_contrast": "1",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 7,
+            "em_readout_squared_norm": "1200",
+            "max_abs_central_contrast": "0",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 8,
+            "em_readout_squared_norm": "1200",
+            "max_abs_central_contrast": "1",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          }
+        ]
+      }
+    },
+    "local-contrast": {
+      "observer": {
+        "interpretation": "arithmetic clicks only",
+        "events": 18007,
+        "by_kind": {
+          "C0": 18007,
+          "C1": 0,
+          "C2": 0
+        },
+        "signed_quotient_sum": 1194474,
+        "events_by_recorded_step": {
+          "1": 5999,
+          "2": 3003,
+          "3": 6000,
+          "4": 3005
+        },
+        "active_channel_addresses": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47
+        ],
+        "physical_species": null,
+        "source": "canonical arithmetic clicks only; step and node are recorded addresses"
+      },
+      "latent_audit": {
+        "case": "local-contrast",
+        "run_id": "e1a00b024e64cd5be5473740b8806bea2ffea611c0b6659423f55e753583fe22",
+        "tensor_hash": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116",
+        "steps": 4,
+        "complete_replay_and_inverse": "passed",
+        "independent_force_oracle_all_steps": "passed",
+        "scalar_oracle_first_two_steps": "passed",
+        "channels": 48,
+        "retained_integers_per_node": 144,
+        "maximum_integer_bits": 27,
+        "strict_naturals": "failed",
+        "first_nonpositive": {
+          "tick": 3,
+          "bank": "b",
+          "channel": 0,
+          "node": 87,
+          "value": "-325"
+        },
+        "samples": [
+          {
+            "tick": 0,
+            "em_readout_squared_norm": "0",
+            "max_abs_central_contrast": "3",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 1,
+            "em_readout_squared_norm": "0",
+            "max_abs_central_contrast": "2",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 2,
+            "em_readout_squared_norm": "0",
+            "max_abs_central_contrast": "11",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 3,
+            "em_readout_squared_norm": "0",
+            "max_abs_central_contrast": "718",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 4,
+            "em_readout_squared_norm": "0",
+            "max_abs_central_contrast": "206210319",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          }
+        ]
+      }
+    },
+    "local-contrast-light": {
+      "observer": {
+        "interpretation": "arithmetic clicks only",
+        "events": 18103,
+        "by_kind": {
+          "C0": 18103,
+          "C1": 0,
+          "C2": 0
+        },
+        "signed_quotient_sum": -3537578514,
+        "events_by_recorded_step": {
+          "1": 5950,
+          "2": 3100,
+          "3": 5952,
+          "4": 3101
+        },
+        "active_channel_addresses": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47
+        ],
+        "physical_species": null,
+        "source": "canonical arithmetic clicks only; step and node are recorded addresses"
+      },
+      "latent_audit": {
+        "case": "local-contrast-light",
+        "run_id": "f7db3419d5763b781d5cc6d6e7fb60aaa8b513337d9ed38d6f8193e1ebd34360",
+        "tensor_hash": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116",
+        "steps": 4,
+        "complete_replay_and_inverse": "passed",
+        "independent_force_oracle_all_steps": "passed",
+        "scalar_oracle_first_two_steps": "passed",
+        "channels": 48,
+        "retained_integers_per_node": 144,
+        "maximum_integer_bits": 31,
+        "strict_naturals": "failed",
+        "first_nonpositive": {
+          "tick": 3,
+          "bank": "b",
+          "channel": 0,
+          "node": 37,
+          "value": "-69"
+        },
+        "samples": [
+          {
+            "tick": 0,
+            "em_readout_squared_norm": "1200",
+            "max_abs_central_contrast": "3",
+            "nonzero_centered_div_e_nodes": 0,
+            "nonzero_centered_div_b_nodes": 0
+          },
+          {
+            "tick": 1,
+            "em_readout_squared_norm": "3760",
+            "max_abs_central_contrast": "2",
+            "nonzero_centered_div_e_nodes": 2,
+            "nonzero_centered_div_b_nodes": 2
+          },
+          {
+            "tick": 2,
+            "em_readout_squared_norm": "48688",
+            "max_abs_central_contrast": "11",
+            "nonzero_centered_div_e_nodes": 6,
+            "nonzero_centered_div_b_nodes": 6
+          },
+          {
+            "tick": 3,
+            "em_readout_squared_norm": "97748784",
+            "max_abs_central_contrast": "718",
+            "nonzero_centered_div_e_nodes": 8,
+            "nonzero_centered_div_b_nodes": 8
+          },
+          {
+            "tick": 4,
+            "em_readout_squared_norm": "17055584424837344560",
+            "max_abs_central_contrast": "206210319",
+            "nonzero_centered_div_e_nodes": 10,
+            "nonzero_centered_div_b_nodes": 10
+          }
+        ]
+      }
+    },
+    "local-pulse": {
+      "observer": {
+        "interpretation": "arithmetic clicks only",
+        "events": 36004,
+        "by_kind": {
+          "C0": 36004,
+          "C1": 0,
+          "C2": 0
+        },
+        "signed_quotient_sum": 2460308,
+        "events_by_recorded_step": {
+          "1": 5999,
+          "2": 3002,
+          "3": 5999,
+          "4": 3002,
+          "5": 5999,
+          "6": 3002,
+          "7": 5999,
+          "8": 3002
+        },
+        "active_channel_addresses": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47
+        ],
+        "physical_species": null,
+        "source": "canonical arithmetic clicks only; step and node are recorded addresses"
+      },
+      "latent_audit": {
+        "case": "local-pulse",
+        "run_id": "a8aab9f6dc17aeb0791f60188bb0781d70be8de8240f652991fb0233ee13f7c7",
+        "tensor_hash": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116",
+        "steps": 8,
+        "complete_replay_and_inverse": "passed",
+        "independent_force_oracle_all_steps": "passed",
+        "scalar_oracle_first_two_steps": "passed",
+        "channels": 48,
+        "retained_integers_per_node": 144,
+        "maximum_integer_bits": 6,
+        "strict_naturals": "passed",
+        "first_nonpositive": null,
+        "samples": [
+          {
+            "tick": 0,
+            "em_readout_squared_norm": "8",
+            "max_abs_central_contrast": "1",
+            "nonzero_centered_div_e_nodes": 2,
+            "nonzero_centered_div_b_nodes": 2
+          },
+          {
+            "tick": 1,
+            "em_readout_squared_norm": "8",
+            "max_abs_central_contrast": "0",
+            "nonzero_centered_div_e_nodes": 2,
+            "nonzero_centered_div_b_nodes": 2
+          },
+          {
+            "tick": 2,
+            "em_readout_squared_norm": "8",
+            "max_abs_central_contrast": "1",
+            "nonzero_centered_div_e_nodes": 2,
+            "nonzero_centered_div_b_nodes": 2
+          },
+          {
+            "tick": 3,
+            "em_readout_squared_norm": "8",
+            "max_abs_central_contrast": "0",
+            "nonzero_centered_div_e_nodes": 2,
+            "nonzero_centered_div_b_nodes": 2
+          },
+          {
+            "tick": 4,
+            "em_readout_squared_norm": "8",
+            "max_abs_central_contrast": "1",
+            "nonzero_centered_div_e_nodes": 2,
+            "nonzero_centered_div_b_nodes": 2
+          },
+          {
+            "tick": 5,
+            "em_readout_squared_norm": "8",
+            "max_abs_central_contrast": "0",
+            "nonzero_centered_div_e_nodes": 2,
+            "nonzero_centered_div_b_nodes": 2
+          },
+          {
+            "tick": 6,
+            "em_readout_squared_norm": "8",
+            "max_abs_central_contrast": "1",
+            "nonzero_centered_div_e_nodes": 2,
+            "nonzero_centered_div_b_nodes": 2
+          },
+          {
+            "tick": 7,
+            "em_readout_squared_norm": "8",
+            "max_abs_central_contrast": "0",
+            "nonzero_centered_div_e_nodes": 2,
+            "nonzero_centered_div_b_nodes": 2
+          },
+          {
+            "tick": 8,
+            "em_readout_squared_norm": "8",
+            "max_abs_central_contrast": "1",
+            "nonzero_centered_div_e_nodes": 2,
+            "nonzero_centered_div_b_nodes": 2
+          }
+        ]
+      }
+    }
+  },
+  "same_tensor": {
+    "status": "passed",
+    "hash": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116",
+    "central_pair_blocks": 24,
+    "no_transverse_or_cross_pair_terms": true
+  },
+  "measured_comparisons": {
+    "dark_contrast_changes_optical_evolution": true,
+    "optical_pulse_changes_contrast_evolution": false,
+    "local_common_pulse_translates_exactly": true,
+    "local_common_pulse_is_stationary": false
+  },
+  "gates": {
+    "em_dark_internal_activity": "passed",
+    "em_dark_activity_produces_arithmetic_clicks": "passed",
+    "light_to_contrast_backreaction": "failed",
+    "tested_local_contrast_natural_domain": "failed",
+    "tested_point_pulse_as_stationary_rest_object": "failed",
+    "positive_rest_mass_and_dispersion": "not_tested",
+    "cold_matter_equation_of_state": "not_tested",
+    "gravitational_stress_source_and_clustering": "not_tested",
+    "operational_particle_classifier_from_clicks": "not_tested",
+    "ordinary_matter_acceptance": "blocked",
+    "dark_matter_acceptance": "blocked"
+  },
+  "interpretation": "One tensor, separate prepared controls. EM cancellation and arithmetic activity are not dark-matter evidence. The installed light-memory tensor is a different law and cannot close these gates."
+}

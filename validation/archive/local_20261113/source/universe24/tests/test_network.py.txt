@@ -1,0 +1,194 @@
+"""Canonical six-port shared state, tensor support and complete-state integration."""
+from dataclasses import FrozenInstanceError
+from fractions import Fraction
+import random
+import tempfile
+from pathlib import Path
+import unittest
+
+from universe24.core import CubicNetwork, Engine, GearType, Link, NetworkLayout, Node, State, Tensor
+from universe24.core.tensor import LocalityError
+from universe24.observe.network import link_length, static_crossing_time
+from universe24.system.bundle import create_bundle, load_bundle
+from universe24.system.decoder import default_protocol
+from universe24.system.runtime import run_bundle, verify_run
+from validation.network_smoke import fixture
+from validation.system_smoke import scalar_step
+
+
+class NetworkTopologyTests(unittest.TestCase):
+    def test_six_views_and_unique_owners_including_periodic_seams(self):
+        for L in (3, 4, 5):
+            graph = CubicNetwork(L)
+            counts = {}
+            for node in graph.nodes():
+                self.assertEqual(len(set(node.links)), 6)
+                self.assertEqual(len({node.neighbour(d) for d in range(6)}), 6)
+                for d, link in enumerate(node.links):
+                    other = node.neighbour(d)
+                    self.assertEqual(other.link(d ^ 1), link)
+                    self.assertEqual(link.other(other), node)
+                    counts[link] = counts.get(link, 0) + 1
+            self.assertEqual(set(counts), set(graph.links()))
+            self.assertEqual(set(counts.values()), {2})
+            self.assertEqual({link.index for link in graph.links()}, set(range(3 * L**3)))
+            self.assertEqual(graph.node(0).link(1).endpoints[0].coords, (L - 1, 0, 0))
+
+    def test_addresses_are_immutable_and_invalid_inputs_rejected(self):
+        graph = CubicNetwork(3)
+        for bad in (-1, 0, 2, True, 3.0):
+            with self.assertRaises(ValueError):
+                CubicNetwork(bad)
+        for bad in (-1, 27, True, 1.0):
+            with self.assertRaises(ValueError):
+                Node(graph, bad)
+        for bad in (-1, 6, True, 0.0):
+            with self.assertRaises(ValueError):
+                graph.node(0).link(bad)
+        with self.assertRaises(ValueError):
+            Link(graph, 0, 3)
+        with self.assertRaises(ValueError):
+            graph.link(0, 0).other(graph.node(1))
+        with self.assertRaises(ValueError):
+            graph.link(0, 0).other(CubicNetwork(4).node(0))
+        with self.assertRaises(FrozenInstanceError):
+            graph.node(0).index = 1
+
+
+class NetworkStateTests(unittest.TestCase):
+    def test_multi_field_allocation_and_shared_complete_values(self):
+        layout = NetworkLayout(node_fields=['matter', 'clock'], link_fields=['length', 'memory'])
+        self.assertEqual(layout.channel_count, 8)
+        state = layout.uniform_state(3, nodes={'matter': (4, 5, 1), 'clock': (7, 8, 2)},
+                                    links={'length': ((2, 3, 0), (4, 5, 3), (6, 7, 5)),
+                                           'memory': ((-1, 2, 1), (3, -4, 2), (5, 6, 3))})
+        tensor = layout.tensor([])
+        view = layout.bind(tensor, state)
+        for node in view.network.nodes():
+            self.assertEqual(view.node_value(node, 'clock'), (7, 8, 2))
+            for d in range(6):
+                edge = node.link(d)
+                expected = ((2, 3, 0), (4, 5, 3), (6, 7, 5))[edge.axis]
+                self.assertEqual(view.link_value(edge, 'length'), expected)
+                self.assertEqual(view.link_value(node.neighbour(d).link(d ^ 1), 'memory'),
+                                 view.link_value(edge, 'memory'))
+        changed = state.copy()
+        edge = view.network.node(0).link(1)
+        changed.b[layout.link_channel(edge.axis, 'length'), edge.storage_node] = 99
+        new_view = layout.bind(tensor, changed)
+        self.assertEqual(new_view.link_value(edge, 'length').b, 99)
+        self.assertEqual(view.link_value(edge, 'length').b, 3)
+        with self.assertRaises(ValueError):
+            view.node_value(CubicNetwork(4).node(0), 'clock')
+        with self.assertRaises(ValueError):
+            view.link_value(CubicNetwork(4).link(0, 0), 'length')
+        with self.assertRaises(ValueError):
+            layout.bind(Tensor(list(reversed(layout.gears)), []), state)
+
+    def test_budget_and_complete_preparation_fail_closed(self):
+        self.assertEqual(NetworkLayout(node_fields=tuple(f'n{i}' for i in range(45))).channel_count, 48)
+        for kwargs in ({'node_fields': tuple(f'n{i}' for i in range(46))},
+                       {'node_fields': ('a', 'a')}, {'link_fields': ('a.b',)},
+                       {'node_fields': (), 'link_fields': ()}):
+            with self.assertRaises(ValueError):
+                NetworkLayout(**kwargs)
+        layout = NetworkLayout()
+        for links in ({}, {'length': ((1, 1, 0),) * 2},
+                      {'length': ((1, 1, 6),) * 3}, {'length': ((1, 1.0, 0),) * 3},
+                      {'length': ((1, True, 0),) * 3}):
+            with self.assertRaises(ValueError):
+                layout.uniform_state(3, nodes={}, links=links)
+        with self.assertRaises(ValueError):
+            layout.link_read(-1, 'length')
+        with self.assertRaises(ValueError):
+            layout.link_read(0, 'length', history='r')
+
+    def test_link_factors_really_address_the_incident_shared_edges(self):
+        layout = NetworkLayout(node_fields=('receiver',))
+        tensor = layout.tensor([(layout.node_name('receiver'), d + 1,
+                                 (layout.link_read(d, 'length'),)) for d in range(6)])
+        state = layout.uniform_state(3, nodes={'receiver': (0, 0, 0)},
+                                    links={'length': ((1, 1, 0),) * 3})
+        for axis in range(3):
+            for n in range(27):
+                state.b[layout.link_channel(axis, 'length'), n] = 100 * axis + n
+        values = Engine(tensor).inputs(state)[0]
+        view = layout.bind(tensor, state)
+        for node in view.network.nodes():
+            expected = sum((d + 1) * view.link_value(node.link(d), 'length').b for d in range(6))
+            self.assertEqual(int(values[node.index]), expected)
+
+    def test_two_edges_cannot_be_hidden_by_shared_storage_node(self):
+        layout = NetworkLayout(node_fields=('signal',))
+        with self.assertRaises(LocalityError):
+            layout.tensor([(layout.node_name('signal'), 1,
+                            (layout.link_read(0, 'length'), layout.link_read(2, 'length')))])
+        with self.assertRaises(LocalityError):
+            layout.tensor([(layout.link_name(0, 'length'), 1, (layout.node_read('signal', 2),))])
+
+    def test_positive_length_readout_does_not_repair_state_or_advance_time(self):
+        layout = NetworkLayout()
+        state = layout.uniform_state(3, nodes={}, links={'length': ((3, 7, 5),) * 3})
+        view = layout.bind(layout.tensor([]), state)
+        edge = view.network.node(0).link(0)
+        before = state.copy()
+        self.assertEqual(link_length(view, edge), 7)
+        self.assertEqual(static_crossing_time(view, edge, c=Fraction(3, 2)), Fraction(14, 3))
+        self.assertTrue(state.same_as(before))
+        for bad in (0, -1, True, 1.0):
+            with self.assertRaises(ValueError):
+                static_crossing_time(view, edge, c=bad)
+        state.b[0, 0] = -2
+        before = state.copy()
+        with self.assertRaises(ValueError):
+            link_length(view, edge)
+        self.assertTrue(state.same_as(before))
+
+
+class NetworkEngineTests(unittest.TestCase):
+    def test_bidirectional_coupling_uses_the_same_old_snapshot(self):
+        layout, tensor, seed = fixture()
+        engine = Engine(tensor)
+        after = engine.step(seed)
+        self.assertTrue(after.same_as(scalar_step(tensor, seed)))
+        g = layout.link_channel(0, 'length')
+        changed = seed.copy()
+        changed.a[g, 0] = changed.b[g, 0] = 2
+        other = engine.step(changed)
+        self.assertNotEqual(int(after.b[0, 0]), int(other.b[0, 0]))
+        self.assertNotEqual(int(after.b[0, 9]), int(other.b[0, 9]))
+        self.assertEqual(int(after.b[g, 0]), 2)
+        no_pulse = seed.copy()
+        no_pulse.a[0, 0] = no_pulse.b[0, 0] = 0
+        self.assertEqual(int(engine.step(no_pulse).b[g, 0]), 1)
+        self.assertTrue(engine.inverse_step(after).same_as(seed))
+
+    def test_big_integer_random_histories_and_nonzero_carries_rewind(self):
+        _, tensor, _ = fixture()
+        for random_seed in (7, 24, 2026):
+            rng = random.Random(random_seed)
+            arrays = [[[rng.randint(-2**70, 2**70) for _ in range(27)] for _ in range(4)] for _ in range(2)]
+            carries = [[rng.randrange(6) for _ in range(27)] for _ in range(4)]
+            initial = State(3, *arrays, carries)
+            current, engine = initial, Engine(tensor)
+            for _ in range(3):
+                after = engine.step(current)
+                self.assertTrue(after.same_as(scalar_step(tensor, current)))
+                self.assertTrue(engine.inverse_step(after).same_as(current))
+                current = after
+            self.assertTrue(engine.rewind(current, 3).same_as(initial))
+
+    def test_saved_bundle_preserves_ownership_and_replay(self):
+        layout, tensor, seed = fixture()
+        bundle = create_bundle(tensor, seed, channels=layout.manifest(), protocol=default_protocol(),
+                               model={'id': 'network-test', 'version': '1', 'domain': 'mechanical only'})
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / 'run'
+            report = run_bundle(bundle, path, 3)
+            self.assertEqual(verify_run(path), report)
+            loaded = load_bundle(path / 'bundle')
+            self.assertEqual([g.link for g in loaded.tensor.gears], [None, 0, 1, 2])
+            self.assertEqual(loaded.channels, tuple(layout.manifest()))
+            self.assertTrue(loaded.seed.same_as(seed))
+            self.assertEqual(layout.bind(loaded.tensor, loaded.seed).network.link_count, 81)
+            self.assertEqual(report['retained_integers_per_node'], 12)
