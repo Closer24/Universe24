@@ -48,7 +48,7 @@ specific direction-dependent routing table is an additional model choice.
 It is not the regular representation g -> gh for fixed h, nor by itself a
 derivation of a Lie bracket, Clebsch-Gordan tensor or physical particle content.
 
-## Enforced candidate symmetry
+## Mandatory runtime symmetry
 
 The versioned contract `2O-left-regular-cube/1` in `core/symmetry.py` uses the
 ordered quaternion labels in `algebra/group_2o.py`. For every retained bank
@@ -80,23 +80,26 @@ is required: symmetry relates different preparations, including asymmetric ones.
 There is a modeling consequence: on a single transitive orbit, an invariant
 nonempty old-a dependency graph has positive indegree at every vertex and hence
 a directed cycle. The existing acyclic inverse requirement therefore excludes
-old-a reads in candidates with this particular representation. Nonlinear b-only
+old-a reads in supported bundles with this representation. Nonlinear b-only
 interactions and constants remain possible. Other representations would need
 their own explicit contract; merely using 48 slots is insufficient.
 
-To declare a candidate, include these fields alongside id, version and domain
-in the sealed model.json:
+The following metadata is accepted alongside id, version and domain in the
+sealed model.json; the symmetry remains mandatory even when these fields are omitted:
 
 ```json
 {"role": "universe-candidate", "symmetry": "2O-left-regular-cube/1"}
 ```
 
-Preparation, save, load and execution reject a candidate with a missing or
-broken symmetry contract. A research model may explicitly declare the same
-symmetry, in which case it is checked too. Absent role means research; absent
-symmetry is reported as `not_declared`, never inferred from padding. Run reports
-record `model_contract`; replay recomputes it and binds the checker and group
-source hashes. This does not establish any physical acceptance gate.
+Preparation, save, load and execution check every model, including `research`.
+Absent role still means research, but it grants no exemption. Absent symmetry
+means this mandatory system action; explicit null or a different action fails.
+Schema 3 requires all 48 channels before preparation, with no automatic
+padding. The manifest binds the symmetry in its law certificate. Run reports
+record `model_contract` with status `passed`; replay recomputes it and binds
+the checker and group source hashes. Old schemas must not be relabeled or
+silently upgraded. Compatible inputs require fresh preparation and execution.
+This does not establish any physical acceptance gate.
 
 ## Arithmetic clicks
 

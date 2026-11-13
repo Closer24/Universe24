@@ -12,7 +12,7 @@ Universe24 implements one execution path:
 
 **complete integer seed + immutable local tensor → reversible Engine → passive records → independent verification**.
 
-The same Rule3 updates every retained channel. Geometry, matter, clocks, apparatus, scheduling and workspace share **exactly 48 retained channels per node**, including disconnected zero-initialized idle channels for smaller research sectors. Each channel retains all three integers `(a,b,r)`:
+The same Rule3 updates every retained channel. Geometry, matter, clocks, apparatus, scheduling and workspace share **exactly 48 explicitly supplied node channels**, obeying the mandatory joint 2O channel/cube action. Each channel retains all three integers `(a,b,r)`:
 
 ```text
 ell, r_next = divmod(2*u + r, 6)
@@ -26,23 +26,26 @@ The software execution system is implemented and reviewed. Restricted sourced Ei
 
 ## Run and verify
 
-From the repository checkout, install the research dependencies and run the integrated acceptance entry point into a new directory:
+From the repository checkout, install the package and run the supported mechanical smoke into a new directory:
 
 ```bash
-python -m pip install '.[validation]'
+python -m pip install .
 python -m universe24 status
-python -m validation.system_acceptance --out runs/system-acceptance
+python -m validation.system_smoke --out runs/system-smoke
+python -m universe24 verify --run runs/system-smoke/run
 ```
 
-New preparations use bundle schema 2 and always contain 48 channels. The research counts below describe active sectors. Older sealed bundles must be prepared and run anew; their evidence is preserved.
+New preparations use bundle schema 3. Every model must supply 48 channels and
+pass exact polynomial covariance under `2O-left-regular-cube/1`, for all 48
+group elements. `research`, an omitted role, or an omitted symmetry declaration
+does not disable the check. Explicit null or alternate symmetry values fail.
+Preparation does not add padding or change the law to make it symmetric.
+See [the action and representation limits](docs/COUPLING_ALGEBRA.md).
 
-Models declared with `"role": "universe-candidate"` must also declare
-`"symmetry": "2O-left-regular-cube/1"` and pass exact tensor covariance for all
-48 group elements. Undeclared models are research; padding does not grant a
-symmetry certificate. This permits nonlinear equivariant laws and does not
-certify their physics. See [the action on the cube and full state](docs/COUPLING_ALGEBRA.md).
-
-Read `runs/system-acceptance/acceptance.json`. The command creates fresh saved experiments, replays complete states and canonical clicks, rejects mixed-run evidence, and records accepted, rejected and blocked ideas. A successful command means the evidence and expected negative controls reproduced. Its joint physical gate remains explicit.
+Read `runs/system-smoke/smoke.json` and `run/validation.json` under that
+directory. The smoke compares complete states with an independent scalar
+oracle and verifies exact rewind and canonical clicks. Success does not
+establish physical acceptance.
 
 The installed interface is always `python -m universe24`. To execute your own complete prepared input:
 
@@ -57,6 +60,12 @@ Use new output directories. Preparation validates and seals the inputs; it canno
 A bundle binds tensor, full seed, ownership, protocol and interpretation by hashes. A run saves its input bundle, full transitions, canonical records and validation. Replay checks every transition, inverse and emitted record. Stored traces are evidence, never extra evolving state.
 
 ## What is integrated
+
+The research results and reproduction commands below are historical records
+from the [pre-schema-3 snapshot](https://github.com/Closer24/Universe24/tree/e281f7e7b251641a741d185116656fedaa5396f8).
+Their source remains inspectable. Incompatible smaller or non-equivariant laws
+are rejected by the current runtime, including the old system acceptance
+collector; reproducing those old experiments requires their pinned source.
 
 | Construction | Verified result | Boundary |
 | --- | --- | --- |
@@ -135,7 +144,7 @@ python -m universe24 verify --run runs/new-smoke/run
 
 A regression test may pass by reproducing a failed physical hypothesis. The corresponding physical result stays failed. No research label, channel name or successful replay can promote it.
 
-The automated suite covers engine, tensor algebra, 48 channels, declared 2O
+The automated suite covers engine, tensor algebra, 48 channels, mandatory 2O
 symmetry and bundle/replay integrity. Research unit tests and research CI jobs
 are removed; source research programs and historical evidence remain. A green
 CI run certifies software checks, not those physical results.

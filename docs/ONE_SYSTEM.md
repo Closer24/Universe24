@@ -2,6 +2,14 @@
 
 ## Reviewed execution and acceptance
 
+**Current admission boundary:** bundle schema 3 requires 48 explicitly supplied
+node channels and exact 2O covariance for every model. There is no research
+exemption or automatic padding. Research constructions and commands documented
+below record the pre-schema-3 snapshot at commit
+`e281f7e7b251641a741d185116656fedaa5396f8`; their smaller or non-equivariant
+bundles cannot execute through the current supported runtime. Historical
+receipts remain evidence of their original source version.
+
 The installed interface remains `python -m universe24`, with one fixed Rule3
 Engine, one saved-bundle runtime and one passive canonical decoder. The
 source-only command `python -m validation.system_acceptance --out NEW_DIRECTORY`
@@ -45,21 +53,21 @@ failures. This source integration changes no production law or physical status.
 
 ## Question and scope
 
-### Candidate algebra contract
+### Mandatory algebra contract
 
-The sealed model metadata distinguishes `role: universe-candidate` from
-`role: research` (the default when omitted). A candidate must declare
-`symmetry: 2O-left-regular-cube/1` and pass exact coefficient covariance under
-all 48 joint channel/cube actions, at every preparation/load/run boundary.
-The action permutes all of `(a,b,r)` and uses one regular orbit of 48 node
-channels. Research models may declare the same contract voluntarily; undeclared
-research retains no implied symmetry certificate. These are static claims,
-not alternate engines or runtime modes. Candidate status is not physical
-acceptance. See [the exact action and limitations](COUPLING_ALGEBRA.md).
+Every supported model must pass exact coefficient covariance under all 48
+joint channel/cube actions of `2O-left-regular-cube/1`, at preparation, save,
+load and execution boundaries. Roles are descriptive only: `research`,
+`universe-candidate` and an omitted role all face the same check. Omitted
+symmetry selects the mandatory action; explicit null or an unknown action
+fails. The action permutes all of `(a,b,r)` and uses one regular orbit of 48
+node channels with invariant passive labels. No invariant seed is required.
+This algebra certificate is not physical acceptance. See
+[the exact action and limitations](COUPLING_ALGEBRA.md).
 
 The automated suite and CI cover engine, tensor algebra and supported
 input/output contracts only: exact arithmetic, scalar-oracle agreement,
-locality, invertibility, 48-channel allocation, declared 2O covariance,
+locality, invertibility, 48-channel allocation, mandatory 2O covariance,
 ownership, decoding and complete saved-run replay. Research unit tests and
 research CI jobs are removed. The source research programs and their saved
 historical evidence remain available, but their physical claims are not
@@ -683,30 +691,42 @@ Run `python -m validation.gauge_loop.audit --out runs/gauge-loop` in a fresh
 directory. This extends mathematical validation, not physical acceptance
 or the supported runtime interface.
 
-## Exact 48-channel preparation (bundle schema 2)
+## Exact allocation and symmetry (bundle schema 3)
 
-`create_bundle` accepts 1..48 fully declared source channels and appends
-disconnected `audit` channels, each owned by `system-padding` and initialized
-with `(a,b,r)=(0,0,0)`. They have no input monomials and no outgoing references.
-The unchanged Rule3 therefore keeps them zero in both forward and inverse
-evolution. Original indices, coefficients and all three original integer banks
-are preserved. Idle channels are real counted state in seeds, traces and hashes.
-They are not extra physical degrees of freedom derived from 2O.
+`create_bundle` requires exactly 48 source channels and every integer in their
+complete seed. It neither adds idle channels nor changes a polynomial. The
+same strict support, degree, remainder, ownership and acyclic-dependency checks
+remain. Every role passes the exact 2O coefficient certificate before a bundle
+is returned. Save, load and execution repeat validation even for directly
+constructed dataclasses or rehashed input files.
 
-`validate_bundle`, `save_bundle`, `load_bundle` and the supported runtime require
-exactly 48 channels and fail explicitly on any other count. Padding occurs only
-during preparation; a malformed sealed bundle is never repaired. The CLI status
-reports `required_channels_per_node=48`. The `test_exact_48_channels` suite checks
-every source size, scalar-oracle projection, idle invariance, inverse, complete
-saved replay, ownership, name collisions and rejection before output. CI runs
-this gate explicitly before the full suite.
+The manifest records `law.symmetry`; CLI status reports the required action.
+The tests reject every allocation 1..47 and 49, test all 144 retained registers
+against a scalar oracle, reject asymmetric research and omitted-declaration
+bypasses, and exercise saved replay and the full nonlinear symmetry action.
+The lower-level Tensor/Engine algebra primitives remain generic so independent
+oracle, integer-boundary and inverse tests can exercise them directly.
 
-Schema-1 evidence remains pinned historical evidence. It is not overwritten or
-automatically upgraded: prepare a new schema-2 bundle and run it into a new
-directory. Padding changes the tensor, seed and bundle hashes. Source-only
-research sector builders and algebraic unit fixtures may remain smaller; their
-prepared public bundles always contain 48 channels. Research adapters compare
-the original sector through a passive view that first checks every idle integer
-is zero, while execution/replay retains and checks all 48 channels. Apparatus
-preparation may reclaim only verified disconnected zero idle tail slots before
-sealing a new 48-channel law. It may never discard live registers.
+Schema-1/2 evidence remains pinned historical evidence. Compatible tensor and
+seed inputs must be freshly prepared as schema 3 and run in a new directory.
+A non-equivariant law requires a new mathematical construction; changing its
+role or adding zero channels is not a migration. Padding helpers remain pure
+construction utilities for historical source code and are never an admission
+exception. The old research acceptance collector is not a supported schema-3
+smoke; use `python -m validation.system_smoke --out NEW_DIRECTORY`.
+
+## GitHub merge policy
+
+`.github/main-protection.json` records the intended main-branch policy:
+require both `universe24 (3.11)` and `universe24 (3.12)` checks, a branch up to
+date with main, pull requests, and enforcement for administrators. No approving
+human review is required. Force pushes and branch deletion are disabled.
+This file is a configuration payload, not evidence that GitHub has applied it.
+An authenticated repository administrator can apply it with:
+
+```bash
+gh api --method PUT repos/Closer24/Universe24/branches/main/protection --input .github/main-protection.json
+```
+
+Verify the live branch protection after applying it. CI alone does not enforce
+the merge policy.

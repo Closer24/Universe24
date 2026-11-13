@@ -115,7 +115,7 @@ class PolynomialCertificateTests(unittest.TestCase):
                 require_equivariant(Tensor(gears, []))
 
 
-class CandidateBoundaryTests(unittest.TestCase):
+class MandatoryBoundaryTests(unittest.TestCase):
     def test_candidate_certificate_survives_saved_run_and_replay(self):
         candidate = bundle()
         with tempfile.TemporaryDirectory() as tmp:
@@ -129,23 +129,35 @@ class CandidateBoundaryTests(unittest.TestCase):
             for file in ("core/symmetry.py", "algebra/group_2o.py"):
                 self.assertIn(file, report["source_hashes"])
 
-    def test_research_is_not_automatically_a_candidate(self):
-        tensor = Tensor(reference().gears, [(0, 1, ())])
-        research = bundle(tensor, dict(role="research", symmetry=None))
-        self.assertEqual(research.model_contract, dict(role="research", symmetry=None, status="not_declared"))
-        with self.assertRaisesRegex(BundleError, "covariance failed"):
-            bundle(tensor)
-        # A research law may voluntarily declare and satisfy the same action.
-        self.assertEqual(bundle(model=dict(role="research")).model_contract["status"], "passed")
+    def test_no_role_or_omitted_declaration_can_bypass_symmetry(self):
+        valid = bundle()
+        invalid = Tensor(valid.tensor.gears, [(0, 1, ())])
+        for role in (None, "research", "universe-candidate"):
+            for declared in (False, True):
+                model = dict(id="test", version="1", domain="test")
+                if role is not None:
+                    model["role"] = role
+                if declared:
+                    model["symmetry"] = CONTRACT
+                kwargs = dict(channels=valid.channels, protocol=valid.protocol, model=model)
+                with self.subTest(role=role, declared=declared):
+                    accepted = create_bundle(valid.tensor, valid.seed, **kwargs)
+                    self.assertEqual(accepted.model_contract,
+                                     dict(role=role or "research", symmetry=CONTRACT, status="passed"))
+                    self.assertEqual(accepted.manifest["law"]["symmetry"], CONTRACT)
+                    with self.assertRaisesRegex(BundleError, "covariance failed"):
+                        create_bundle(invalid, valid.seed, **kwargs)
 
-    def test_missing_or_unknown_contract_fails(self):
+    def test_null_or_unknown_contract_fails(self):
         for model in (dict(symmetry=None), dict(symmetry="2O"), dict(role="universe")):
             with self.subTest(model=model), self.assertRaises(BundleError):
                 bundle(model=model)
 
-    def test_forged_candidate_is_rejected_before_any_output(self):
+    def test_forged_research_is_rejected_before_any_output(self):
         candidate = bundle()
-        forged = replace(candidate, tensor=Tensor(candidate.tensor.gears, [(0, 1, ())]))
+        model = dict(id="test", version="1", domain="test", role="research")
+        forged = replace(candidate, tensor=Tensor(candidate.tensor.gears, [(0, 1, ())]),
+                         _model_bytes=canonical_bytes(model))
         with tempfile.TemporaryDirectory() as tmp:
             for operation in (validate_bundle, lambda b: save_bundle(b, Path(tmp) / "bundle"),
                               lambda b: run_bundle(b, Path(tmp) / "run", 1)):
@@ -153,15 +165,18 @@ class CandidateBoundaryTests(unittest.TestCase):
                     operation(forged)
             self.assertEqual(list(Path(tmp).iterdir()), [])
 
-    def test_rehashed_model_cannot_promote_asymmetric_research(self):
-        research = bundle(Tensor(reference().gears, [(0, 1, ())]), dict(role="research", symmetry=None))
+    def test_rehashed_asymmetric_research_cannot_bypass_load(self):
+        research = bundle(model=dict(role="research"))
         with tempfile.TemporaryDirectory() as tmp:
             path = save_bundle(research, Path(tmp) / "bundle")
-            model = dict(research.model, role="universe-candidate", symmetry=CONTRACT)
-            data = canonical_bytes(model)
-            (path / "model.json").write_bytes(data)
+            model = dict(id="test", version="1", domain="test", role="research")
+            tensor = Tensor(research.tensor.gears, [(0, 1, ())])
             manifest = read_json(path / "bundle.json")
-            manifest["files"]["model.json"] = hashlib.sha256(data).hexdigest()
+            for name, value in (("model.json", model), ("tensor.json", tensor.to_dict())):
+                data = canonical_bytes(value)
+                (path / name).write_bytes(data)
+                manifest["files"][name] = hashlib.sha256(data).hexdigest()
+            manifest["tensor_hash"] = tensor.fingerprint
             (path / "bundle.json").write_bytes(canonical_bytes(manifest))
             with self.assertRaisesRegex(BundleError, "covariance failed"):
                 load_bundle(path)
