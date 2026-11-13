@@ -1,0 +1,125 @@
+"""Positive integer encoding of frozen native passage delays, not dynamic gravity."""
+import hashlib
+import json
+from pathlib import Path
+
+import numpy as np
+from universe24.core import CubicNetwork, Engine, Tensor
+from universe24.system.bundle import create_bundle
+from universe24.system.decoder import default_protocol
+from universe24.system.runtime import run_bundle, verify_run
+from validation.link_propagation import LAYOUT, build_tensor, prepare, successor_map, lengths_from_seed
+from validation.system_smoke import scalar_step
+
+
+def shifted_tensor(original, shifts):
+    # Exact affine conjugacy: A=a+K, B=b+K, u_new(A,B)=u_old(A-K,B-K)+6K.
+    terms = [(g, 6 * int(shifts[g]), ()) for g in range(original.G)]
+    for term in original.monomials:
+        for mask in range(1 << len(term.factors)):
+            coefficient, factors = term.coeff, []
+            for k, factor in enumerate(term.factors):
+                if mask & (1 << k):
+                    factors.append((factor.gear, factor.offset, factor.field))
+                else:
+                    coefficient *= -int(shifts[factor.gear])
+            terms.append((term.target, coefficient, tuple(factors)))
+    return Tensor(original.gears, terms, strict_support=True)
+
+
+def run():
+    out = Path(__file__).with_name('time-link-naturals')
+    if out.exists():
+        raise ValueError('output must be fresh')
+    out.mkdir()
+    original = build_tensor()
+    clock = LAYOUT.node_channel('clock')
+    shifts = np.ones(original.G, dtype=np.int64)
+    shifts[clock] = 2
+    shift = shifts[:, None]
+    tensor = shifted_tensor(original, shifts)
+    engine = Engine(tensor)
+    rows = []
+
+    def execute(name, old, steps, axis=0, sense='right', source=0):
+        seed = old.copy()
+        seed.a, seed.b = seed.a + shift, seed.b + shift
+        bundle = create_bundle(tensor, seed, channels=LAYOUT.manifest(), protocol=default_protocol(),
+                               model={'id': 'positive-static-link-ticks', 'version': '1',
+                                      'domain': 'frozen delays N=1,2,4; nonnegative payloads encoded with shift1; clock shifted by2',
+                                      'interpretation': 'N counts actual Engine updates on this prepared sector; c*delta_tau0 converts N to operational distance; no material proper-time claim'})
+        saved = run_bundle(bundle, out / name, steps)
+        assert saved == verify_run(out / name)
+        successors = successor_map(old)
+        delays = lengths_from_seed(old)
+        expected = old.b.copy()
+        current = seed
+        arrivals, phases = {}, []
+        port = LAYOUT.node_channel(f'{sense}{axis}')
+        for tick in range(steps + 1):
+            assert np.array_equal(current.b - shift, expected)
+            assert all(np.all(array >= 1) for array in (current.a, current.b, current.r))
+            assert np.array_equal(current.r, seed.r)
+            for node in np.flatnonzero(current.b[port] > 1):
+                arrivals.setdefault(int(node), tick)
+            if tick < 8:
+                phases.append([int(current.a[clock, source]), int(current.b[clock, source])])
+            if tick == steps:
+                break
+            following = engine.step(current)
+            assert following.same_as(scalar_step(tensor, current))
+            assert engine.inverse_step(following).same_as(current)
+            next_expected = np.empty_like(expected)
+            next_expected.ravel()[successors] = expected.ravel()
+            next_expected[clock] = (1, 0, -1, 0)[(tick + 1) % 4]
+            expected, current = next_expected, following
+        assert engine.rewind(current, steps).same_as(seed)
+        graph = CubicNetwork(seed.L)
+        direction = 2 * axis + (sense == 'left')
+        node = graph.node(source)
+        cumulative = 0
+        targets = {}
+        for _ in range(seed.L - 1):
+            edge = node.link(direction)
+            cumulative += int(delays[edge.axis, edge.storage_node])
+            node = edge.other(node)
+            if cumulative <= steps:
+                targets[node.index] = cumulative
+        assert all(arrivals.get(node) == tick for node, tick in targets.items())
+        first = graph.node(source).neighbour(direction).index
+        first_edge = graph.node(source).link(direction)
+        rows.append({'name': name, 'steps': steps,
+                     'source_link_ticks': int(delays[first_edge.axis, first_edge.storage_node]),
+                     'first_neighbor_arrival': arrivals.get(first),
+                     'cumulative_expected_arrivals': targets, 'measured_arrivals': arrivals,
+                     'reference_clock_pairs': phases, 'strict_naturals': 'passed',
+                     'oracle_and_rewind': 'passed', 'tensor_hash': tensor.fingerprint,
+                     'peak_integer_bits': max(saved['maximum_integer_bits_by_step']),
+                     'bundle_id': saved['bundle_id'], 'run_id': saved['run_id']})
+
+    for ticks in (1, 2, 4):
+        for axis in range(3):
+            for sense in ('right', 'left'):
+                execute(f'N{ticks}-axis{axis}-{sense}', prepare(length=ticks, axis=axis, sense=sense),
+                        ticks + 1, axis, sense)
+    execute('mixed-right', prepare(L=5, mixed=True), 8)
+    execute('mixed-left', prepare(L=5, mixed=True, sense='left', source=75), 8, sense='left', source=75)
+    execute('N4-long', prepare(length=4), 128)
+    result = {'channels': tensor.G, 'retained_integers_per_node': 3*tensor.G,
+              'maximum_degree': tensor.rank - 1, 'strict_support_violations': tensor.support_violations(),
+              'cases': rows, 'total_runs': len(rows), 'total_updates': sum(row['steps'] for row in rows),
+              'supported_delays': [1, 2, 4],
+              'distance_definition': 'operational_length = c * delta_tau0 * N for this static calibrated chart',
+              'clock_scope': 'phase references are retained, not calibrated material proper clocks; counting phases uses the passive audit trace',
+              'gates': {'static_natural_tick_transport': 'passed', 'all_retained_values_strictly_natural': 'passed',
+                        'arbitrary_unbounded_N': 'not_tested', 'dynamic_N_during_transit': 'not_tested',
+                        'einstein_metric_and_source': 'not_tested'},
+              'source_sha256': {str(path.relative_to(Path.cwd())): hashlib.sha256(path.read_bytes()).hexdigest()
+                                for path in (Path(__file__), Path('validation/link_propagation.py').resolve(),
+                                             Path('validation/system_smoke.py').resolve())}}
+    (out / 'results.json').write_text(json.dumps(result, indent=2) + '\n')
+    print(json.dumps({key: result[key] for key in ('channels', 'maximum_degree', 'total_runs', 'total_updates', 'gates')}, indent=2))
+
+
+if __name__ == '__main__':
+    run()
