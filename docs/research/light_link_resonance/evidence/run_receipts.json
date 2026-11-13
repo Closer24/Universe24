@@ -1,0 +1,3089 @@
+{
+  "light-2--1-0": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "4cb6529ae5bbd0efb0de8180a64b6ec21bd416dbdbaaf675384e1319a8567190",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 1000,
+    "files": {
+      "clicks.jsonl.gz": "cf72afc602ca4841124b101165ab1880e3a3272de8c0f5949a4ba0f88a429728",
+      "full_trace.jsonl.gz": "0a416710e7f2af20e282af23e90a1ad5ba4bf890cda2d65629014e640f457846"
+    },
+    "final_state_hash": "6f5b4cb204709a87620d985d84392365ad1f58ad9420843ccdc415a169528688",
+    "maximum_integer_bits_by_step": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "model_contract": {
+      "role": "universe-candidate",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 125,
+    "retained_integers_per_node": 144,
+    "run_id": "39ab125235daa221d4ff07531f635c513030e51ee1805b22a7171b7bb7d9cbd3",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 8,
+    "tensor_hash": "a3b4ab5293de5ca5ce143bf86c17bbe908277ea4ad7fdceeaa8bf86d39129be6",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "light-0--1-1": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "bd035a39fbc6b5b02b50a089ae93ad88a786706e77e7c70c8612a7e5f386e3c6",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 1000,
+    "files": {
+      "clicks.jsonl.gz": "242698a0d28343ec189183e43e27741ebb622bd8ef826b9511ea372c042665e5",
+      "full_trace.jsonl.gz": "6b32a339d78eb87ff33e88c9441e19bac1c4e3f5c63701f1450103fb84b5753c"
+    },
+    "final_state_hash": "3adb6d672246700680d8759b6089eaad7f5e4a47b4d220efd83057e791e522d9",
+    "maximum_integer_bits_by_step": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "model_contract": {
+      "role": "universe-candidate",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 125,
+    "retained_integers_per_node": 144,
+    "run_id": "ffcf570df76c425efc9f237f789221e0df67442f9e84193e3becd52300e924f6",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 8,
+    "tensor_hash": "a3b4ab5293de5ca5ce143bf86c17bbe908277ea4ad7fdceeaa8bf86d39129be6",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "light-0-1-1": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "ed17ac96fc85d0404e808f27d03eb8c648ffe671fcfda16e0c1da7977ed8487f",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 1000,
+    "files": {
+      "clicks.jsonl.gz": "e9f4f7282d2a98a90eb6a2544330844377f0f7ca26517b92b3e8e5f560216845",
+      "full_trace.jsonl.gz": "25bec25945683ce6a3fe0e18d257e942edc9587ae4c2256e8b9f599472e8aa44"
+    },
+    "final_state_hash": "7e78000f7c6fcacb2f894e7e92fbc67f393f04d1e0d5b4d167ac30e0c3c6b194",
+    "maximum_integer_bits_by_step": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "model_contract": {
+      "role": "universe-candidate",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 125,
+    "retained_integers_per_node": 144,
+    "run_id": "75733298e45fd435eaa66e43681dec8b6da9d4ab31dfd21fb38d5c5ec03b0966",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 8,
+    "tensor_hash": "a3b4ab5293de5ca5ce143bf86c17bbe908277ea4ad7fdceeaa8bf86d39129be6",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "phase-textured": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "a45b3c88a593a29d22aa06e3fff919b21b06064f5ff137783637529c9331e609",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 10240,
+    "files": {
+      "clicks.jsonl.gz": "1cf914a92db0995bda02dc1ae98bc5f84550f450ac47a04d30f6887003a4e8bf",
+      "full_trace.jsonl.gz": "c67758c887bbb1348acbf5088f26bcef92f536f0d891749fcd0c41b72916ab8d"
+    },
+    "final_state_hash": "7f818df7009c29e2102a66e9f74f6bf50650e15f79520876d01a2ddd01026f22",
+    "maximum_integer_bits_by_step": [
+      4,
+      4,
+      5,
+      8,
+      13
+    ],
+    "model_contract": {
+      "role": "research",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 64,
+    "retained_integers_per_node": 144,
+    "run_id": "2754f0e163216e57778c37d54f5935c9c34e7f18bbf658ed1b0c24e9557d97f7",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 4,
+    "tensor_hash": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "phase-1--1-2": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "d47d8e84f0cc1d0c5721b3f613fd1691961909ec48b7c18db976a62867cfdec5",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 148480,
+    "files": {
+      "clicks.jsonl.gz": "8372ba007a88ce20f2e01b85b182b8262dc16a332630296f04aed5c7a37903b4",
+      "full_trace.jsonl.gz": "8266cd140e7e76e5c6d3360e97cca626a8947313cfbc17d94b9237943f9ec370"
+    },
+    "final_state_hash": "2809222b975ac025a7c04031a20c50e63410e73a8031ac8241675a66a2294eaf",
+    "maximum_integer_bits_by_step": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "model_contract": {
+      "role": "research",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 64,
+    "retained_integers_per_node": 144,
+    "run_id": "9440c25d9e4ccd36f9d73f383ce95939f7d6982b7a760c04d486f96750ab2bbe",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 64,
+    "tensor_hash": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "reciprocal-small": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "f2daaec38d2c4c4ce5550d26cb2bed3ade8b14ee932679ef85a4433001ab82ee",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 9344,
+    "files": {
+      "clicks.jsonl.gz": "9615e0262242c9a24c3d3f59a89d4b8e899ee4c33eb5b1e273adb6c01f803784",
+      "full_trace.jsonl.gz": "f4c9f89d7e48f2d20d56ac71c67995a6c9f400bb3395f18909b7dbf64835ca9d"
+    },
+    "final_state_hash": "f53f123f1fdfc3c90be6b1b29ccee6544acac0d778e489e764c8d69b79653471",
+    "maximum_integer_bits_by_step": [
+      4,
+      4,
+      5,
+      12,
+      34
+    ],
+    "model_contract": {
+      "role": "research",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 64,
+    "retained_integers_per_node": 144,
+    "run_id": "61322412aa28325a0839308a7d9ea9c9e3c9b2fe2ab2c689c594febf181a4b66",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 4,
+    "tensor_hash": "961246ccc48cad2cba794d115fab3646cd894377dab2aa5d4e3ebdf425ab48e6",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "spring-dark": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "30a058015eb24456963c1ee652b29bd1610f7aceaf860099c9d2244c5a4044af",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 37248,
+    "files": {
+      "clicks.jsonl.gz": "61423ca6b7fb1fd22c179c9586a86ab2d1f9364525943c0aee43cccc9ceab8d7",
+      "full_trace.jsonl.gz": "ecffecb1f5f4d6a298c674048a4cc28dac5bda067089d71c4a76b2b79b0409df"
+    },
+    "final_state_hash": "f4eb1f7f11362ce5bc01b76a4962d4f204f5d80c1a55b961e363346d595643e3",
+    "maximum_integer_bits_by_step": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "model_contract": {
+      "role": "research",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 64,
+    "retained_integers_per_node": 144,
+    "run_id": "b7dcbf2992e6e55be6c53447fd70cab95c99b8340310ec77d9e42d34e9269218",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 16,
+    "tensor_hash": "c359b4af0ec4d1a19ae2974473adfc5405585de6bc6eaf1ade3a4870845acbbf",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "reciprocal-large": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "6b21d88091cd69e16af29fb2309fe129250acb4b3975ee90689098e02bb9b59a",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 7744,
+    "files": {
+      "clicks.jsonl.gz": "22eeb055f87a6060313518a71287635ccf1d02cbaaf0b55650324f7651313342",
+      "full_trace.jsonl.gz": "0f268c21e8c126b1fddc4af7972994c6b17b4611c5d830e135cde815de8a4689"
+    },
+    "final_state_hash": "3e150009db272f2e6289ef9154c6fdadaf5bf30768f2d06ba552bb9460849433",
+    "maximum_integer_bits_by_step": [
+      12,
+      17,
+      43,
+      121
+    ],
+    "model_contract": {
+      "role": "research",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 64,
+    "retained_integers_per_node": 144,
+    "run_id": "7c2af93a69fa82fa2924870cd6810888e3e1e391fc29a2da6720e77eddeac3cb",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 3,
+    "tensor_hash": "961246ccc48cad2cba794d115fab3646cd894377dab2aa5d4e3ebdf425ab48e6",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "spring-textured": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "59079c47eb92209c47ef4318de97e4564a68aa28ce5070c478af0b9163e7d3a4",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 25600,
+    "files": {
+      "clicks.jsonl.gz": "6c23e009ac91621bd5fa1fd515a53fdf0740db7e81df9e885c5426e68ee2cdc0",
+      "full_trace.jsonl.gz": "e7d30bb11c58fccdff46b9edfebc06667748a8820be00e0e477a50ae9808b32d"
+    },
+    "final_state_hash": "094144d28a82fbfafb9580a8f32b73138c4aba610a51c8d6a84b4754e40035b0",
+    "maximum_integer_bits_by_step": [
+      4,
+      4,
+      5,
+      6,
+      7,
+      9,
+      11,
+      13,
+      15,
+      17,
+      19
+    ],
+    "model_contract": {
+      "role": "research",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 64,
+    "retained_integers_per_node": 144,
+    "run_id": "d56c72de3c39755aab92b773aa58681e97809a18cbf875785f1af6c4f802af29",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 10,
+    "tensor_hash": "c359b4af0ec4d1a19ae2974473adfc5405585de6bc6eaf1ade3a4870845acbbf",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "light-2-1-1": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "710a35041806ef32c9843fecdc1fdaf3d77029f6ea43879d6d969352130998c9",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 1000,
+    "files": {
+      "clicks.jsonl.gz": "6dd5afa93d2672d640e2c5e277a60e4d17e9e3dccea8b7d9806cf1d573a8bc83",
+      "full_trace.jsonl.gz": "4d36cb41ad131cab3775d63b40ee18b7038ff6a1070fe8a271eccc892ab585c1"
+    },
+    "final_state_hash": "5ec761a1309d0310ee9db308ee8294fc91224cd5d09aeb07b74bbfcb6dab7ea5",
+    "maximum_integer_bits_by_step": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "model_contract": {
+      "role": "universe-candidate",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 125,
+    "retained_integers_per_node": 144,
+    "run_id": "c122c792b6cedbbb2aaf0da789cda28680dbcc5f5f837c47e3a3d93d45b07c7a",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 8,
+    "tensor_hash": "a3b4ab5293de5ca5ce143bf86c17bbe908277ea4ad7fdceeaa8bf86d39129be6",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "phase-1-1-0": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "b6caee9b417d13bcf0a101096327404bbba4a3eca5d6841b4acb307d03ee59b7",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 148480,
+    "files": {
+      "clicks.jsonl.gz": "1e8541a9720e9514db2403dfa94c2d2fc9325297aa6d8a972bc2150100a6dbfb",
+      "full_trace.jsonl.gz": "f0b8e33f5c9f49fe6a9fa2ee6cf403a199a750e81168172240f21fdb79669d45"
+    },
+    "final_state_hash": "4eb91dff65aab42c148cef979424dc4b5348650714c9dd4f2dc0d0adefe7dc2a",
+    "maximum_integer_bits_by_step": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "model_contract": {
+      "role": "research",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 64,
+    "retained_integers_per_node": 144,
+    "run_id": "f65aeaa299d5a14e7112e2c39e841bc44116ab91fa192aebacb5b7b1b0224496",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 64,
+    "tensor_hash": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "phase-1--1-0": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "53e809cb73f146728fd12ec154d0be51c4b36795f05ca6770f8af684138b02fe",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 148480,
+    "files": {
+      "clicks.jsonl.gz": "875fef5bbd681e438b2e37083b66da23f5963412db912e40267545b3e5f9a9b9",
+      "full_trace.jsonl.gz": "6e4af2b154e07e08b9d49a4e334db8dd4249874a05773b35c30da7db4d21cb1f"
+    },
+    "final_state_hash": "b3be4f93485711016bb5314bcca6c0dcad1da680a21f5f4a90edca97133679c8",
+    "maximum_integer_bits_by_step": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "model_contract": {
+      "role": "research",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 64,
+    "retained_integers_per_node": 144,
+    "run_id": "2d8687a0fd1451d79a1ea31b794dd7d16e68a6e363e95b24f943a9ac8c9ec087",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 64,
+    "tensor_hash": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "phase-0-1-2": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "be9b3e9d29dd8e2fbda2db45b8c333694a1e0c51d0b4ec12469b79e3b5b2eaa7",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 148480,
+    "files": {
+      "clicks.jsonl.gz": "507e0e260853c8b13eb8d7b4015ec872a3c80e374632c156376edb5cc72ae36a",
+      "full_trace.jsonl.gz": "b194198d7b366615b277d6c2af0895216ea6bd7f457aa11c929de1e9c1b47b0e"
+    },
+    "final_state_hash": "cd266882f8cc882ce9f839f59375a95f4da5900d914f412a248497d0d3e14991",
+    "maximum_integer_bits_by_step": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "model_contract": {
+      "role": "research",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 64,
+    "retained_integers_per_node": 144,
+    "run_id": "60a8fa9f5d6fae8696acec10e0123a9d3a8cd9688f512d9c15dba28c531ce139",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 64,
+    "tensor_hash": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "light-1--1-2": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "dce7d9296c2f0b8ab1bdfab2d85473603d1ad35961c3b9ef9a6c65d52b1b34b7",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 1000,
+    "files": {
+      "clicks.jsonl.gz": "d788f0fa9da80a8457e000869877a9befe462744696094a3a2cd5bcf0604326c",
+      "full_trace.jsonl.gz": "3c1986048e5d7a115119d6f3065207f50585efcc75b4a3c852be41a82482b5e5"
+    },
+    "final_state_hash": "135be395a5bdd63ccbf4c3627c32cb97159811a5d8fb0d6c40ee93e1d2dfccf5",
+    "maximum_integer_bits_by_step": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "model_contract": {
+      "role": "universe-candidate",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 125,
+    "retained_integers_per_node": 144,
+    "run_id": "19f4162cb493ae25604961387af1423ff5545e3c6438ff2086c709ea962f7af5",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 8,
+    "tensor_hash": "a3b4ab5293de5ca5ce143bf86c17bbe908277ea4ad7fdceeaa8bf86d39129be6",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "phase-2-1-1": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "27258fab93eeeead3f9f83ac5c0f717c8d0b36d69f2ff34bd9f4cf36a0808812",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 148480,
+    "files": {
+      "clicks.jsonl.gz": "63cd267941aab95e0e5b4628d4622423c87ca4292633b795b187c582bdfff488",
+      "full_trace.jsonl.gz": "586346b9d91a10c72e8aee139d551ae13d305b286d0f7cd7b4acdc2b83909d1b"
+    },
+    "final_state_hash": "1e2567294b5e710309943fc56efb44a87aadc72bff5059d3a00b1d2466a30e4d",
+    "maximum_integer_bits_by_step": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "model_contract": {
+      "role": "research",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 64,
+    "retained_integers_per_node": 144,
+    "run_id": "071f9ba4e530cd340822c6c99ac784183ac264b47a8999692b7dbf6f6a343f67",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 64,
+    "tensor_hash": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "optical-probe": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "9aaeb0cd579380277fad6cebf04c19bfdf1ec17517df3936dff11e922d02c39e",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 28032,
+    "files": {
+      "clicks.jsonl.gz": "07b743faf0c3e0df443d2097da08327eb370443bfa40d44a2995b202eed5d8ed",
+      "full_trace.jsonl.gz": "b514a0df25ba2fd46202419b279deed9e779070127f0b1bafdc319c49ed49023"
+    },
+    "final_state_hash": "124f6e44c13c0ea1df5ef865119c867a738f2286d80af194587e2bf30bd26a8a",
+    "maximum_integer_bits_by_step": [
+      24,
+      24,
+      24,
+      24,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25,
+      25
+    ],
+    "model_contract": {
+      "role": "research",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 64,
+    "retained_integers_per_node": 144,
+    "run_id": "55dc0c142d57ceff480c691f8e578570f3ca142aab3c81e6a52eca9b196ef856",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 12,
+    "tensor_hash": "f4f38563fcb4dcf166791cd4d01b10a890df145725c8fb2bbc20efbab3b332cf",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "light-1-1-0": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "631fba80275d0b399da870aafd1e1a6c830af2d704b3e65963cad1d350cfd6c5",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 1000,
+    "files": {
+      "clicks.jsonl.gz": "785023dc86ee273cd2c0e5d4e33488e88de8eb5be64c31ba5c841109b7363b32",
+      "full_trace.jsonl.gz": "5255ad9df72e115968d66a514420361e678e1a8cbd8af9fae304b44701e73f17"
+    },
+    "final_state_hash": "9f49efba849cc42f13a97a4bfde4ac91b0d593abc5be82aea4e4bdd6739b3a12",
+    "maximum_integer_bits_by_step": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "model_contract": {
+      "role": "universe-candidate",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 125,
+    "retained_integers_per_node": 144,
+    "run_id": "42ada86caa8bac2d70efd72f3f2faec23e60d191da23a54a1ccbfdb99150262a",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 8,
+    "tensor_hash": "a3b4ab5293de5ca5ce143bf86c17bbe908277ea4ad7fdceeaa8bf86d39129be6",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "light-2--1-1": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "c7960e86092e227becf7fe9005b44660efaa7a1bc8e0065954abfe755fb2c005",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 1000,
+    "files": {
+      "clicks.jsonl.gz": "fe8177f1b00730c8ad6ef4665ea390819985fa3c291304a6ff4d682eccd525c5",
+      "full_trace.jsonl.gz": "d32fb50c57bec57267f043b825fa20a1435b44f1065825756de87a054fb302ff"
+    },
+    "final_state_hash": "0dac5517f6d3e3b331fb5140edcb490dd1a3af54ab36427796dc0aa4a2a0ef9c",
+    "maximum_integer_bits_by_step": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "model_contract": {
+      "role": "universe-candidate",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 125,
+    "retained_integers_per_node": 144,
+    "run_id": "da37182f5f3d0585320409b14e8598b597a70a918fe50151197230e6e1248d45",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 8,
+    "tensor_hash": "a3b4ab5293de5ca5ce143bf86c17bbe908277ea4ad7fdceeaa8bf86d39129be6",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "phase-wrong-history": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "fb7b61bc5655003c0727321e41805a1988d6660b45b347a13e9a134aa1c30b77",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 9312,
+    "files": {
+      "clicks.jsonl.gz": "51e6f824c4d701113dad2a558291a158139d668b9e9f5c948091c613ebef6baf",
+      "full_trace.jsonl.gz": "db1bd40b83f872c57babc66e40199cdc3eed0d4d64fc77f47b588bc875e6de1c"
+    },
+    "final_state_hash": "283cf188de2e349f59f5d036ccc45639e5c1feab51172962f209c158f87448c2",
+    "maximum_integer_bits_by_step": [
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "model_contract": {
+      "role": "research",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 64,
+    "retained_integers_per_node": 144,
+    "run_id": "d448d2cd165c55bbb632f0582e3a42e4d7d03b4efdfd2eca10fa8813770dbd08",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 4,
+    "tensor_hash": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "phase-0--1-2": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "6da6016ecec23ff2e6ea151bb756d41aa622a13fa89f7645c77eb917f7c4170e",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 148480,
+    "files": {
+      "clicks.jsonl.gz": "f3f41415d17766d4fbfc3374ce082f328cee105eebfdb010ab4bb60494bcbc1e",
+      "full_trace.jsonl.gz": "27d50ba16d220315ab2559d49b9dcb6b5bcc29f5adf882925a18b8facb48017f"
+    },
+    "final_state_hash": "3eb73afd1604a1274308accc3e1ca9114ea4d7169c15e8b14ce95ba4971fb20d",
+    "maximum_integer_bits_by_step": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "model_contract": {
+      "role": "research",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 64,
+    "retained_integers_per_node": 144,
+    "run_id": "860b69972b2973033ddb782c6c3810a83006a5b9230c872720e276a37328a871",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 64,
+    "tensor_hash": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "light-0-1-2": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "a68747dac4d93be9f366cbdd9bcf027b5a739a9ce0c3c37f5088e7d422b4bdab",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 1000,
+    "files": {
+      "clicks.jsonl.gz": "787e30a3b64a0d045c4f0fe18e2a45252a1e13cbf778d423c065da153e1cd1a9",
+      "full_trace.jsonl.gz": "cc41c2c14d95cd838fef899c4e5593234f38803c66fd1ee33572f2b2ff2732e5"
+    },
+    "final_state_hash": "c2720eb5539d10b58568d25895b6f50c90607eb0445da0b8105897aabb895dec",
+    "maximum_integer_bits_by_step": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "model_contract": {
+      "role": "universe-candidate",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 125,
+    "retained_integers_per_node": 144,
+    "run_id": "ae747940e7ccc231061d6c06810d4c2177cb6bfc63e6291f3bad47821c48d44d",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 8,
+    "tensor_hash": "a3b4ab5293de5ca5ce143bf86c17bbe908277ea4ad7fdceeaa8bf86d39129be6",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "phase-0-1-1": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "0997e4818d55c268d8bf045bddc6ba65a0bb9caf6118053f2583610298bca5ff",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 148480,
+    "files": {
+      "clicks.jsonl.gz": "c5aaaf8a664db7fa827780834fafc1a077e5d35d4d50ba1a68910cc19e199cee",
+      "full_trace.jsonl.gz": "7fc4d6d7a444a292e1a7af1f879abbec7cffe50d872199ced4ccb9d213223b51"
+    },
+    "final_state_hash": "0f8cec3f5bd4aadfa6ff4fa954dcffdceccaae6aae45ef81fa5a19a12499c9c6",
+    "maximum_integer_bits_by_step": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "model_contract": {
+      "role": "research",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 64,
+    "retained_integers_per_node": 144,
+    "run_id": "541de89b1634f39254f01be049e446edb8dc368dc16ac569e803cbf78a71ee6b",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 64,
+    "tensor_hash": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "phase-2--1-0": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "d9ec8c85975b6d4a4750294c805b800d1156c522664f8b2d8446af725b170631",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 148480,
+    "files": {
+      "clicks.jsonl.gz": "d2f9685093969ab803f294576434c05802cbbdc2b1a854867d717256931f2b68",
+      "full_trace.jsonl.gz": "312b92ca13d71247112b9b52cd762e1003a15b456b2ba3cb68fef495de9680a4"
+    },
+    "final_state_hash": "63f482d11c1e1ea24892f36910d335f04b3c15bc2e8725704877c22d0a77edb6",
+    "maximum_integer_bits_by_step": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "model_contract": {
+      "role": "research",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 64,
+    "retained_integers_per_node": 144,
+    "run_id": "688558f428c0f4e95f1691678e02ccc610a7d6a490fd8533d13d754b349c3c8a",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 64,
+    "tensor_hash": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "phase-1-1-2": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "501102b8834babb700c50f5f495449e59dfa0d79e15e6abe98d7f4e1c4a658f4",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 148480,
+    "files": {
+      "clicks.jsonl.gz": "680a5170ec6fd8bb9f03b46d84613331de7b7fd4c68a7a2c81a87b6387e84c89",
+      "full_trace.jsonl.gz": "f779d3a8cdc6b31988ef4b105eaadebf157e5513d7d1da17605cc68642fa2360"
+    },
+    "final_state_hash": "d83b924ac741ea9107824828418cd4eb06d59378effcac5598e5a9009256132a",
+    "maximum_integer_bits_by_step": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "model_contract": {
+      "role": "research",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 64,
+    "retained_integers_per_node": 144,
+    "run_id": "f22e534c48ca8786c7cc893370277a806d2af6786c4c28da529e18d3760a44a6",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 64,
+    "tensor_hash": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "light-2-1-0": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "595b71ba44d8e7d24801e3377225746593514e3aa8fcde6338da0ac825276c50",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 1000,
+    "files": {
+      "clicks.jsonl.gz": "ba32c6d7016e6188da843d7c2d95ca6394c127fd09799f14232e18cefbf82974",
+      "full_trace.jsonl.gz": "7cf47d168e3ce733f20c816c5dbd69392fed8645f151cdd8b25a60b419e2eae6"
+    },
+    "final_state_hash": "025c4258f3fc37453198af19b921466a5bafce6f4c69fce3be309780ff74f022",
+    "maximum_integer_bits_by_step": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "model_contract": {
+      "role": "universe-candidate",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 125,
+    "retained_integers_per_node": 144,
+    "run_id": "dff6784ba5097c14f2243f98ae581e9a2b09582b2b67f4be7636bfd3e96c77f9",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 8,
+    "tensor_hash": "a3b4ab5293de5ca5ce143bf86c17bbe908277ea4ad7fdceeaa8bf86d39129be6",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "phase-2--1-1": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "2c165729d11c05cfac3a4cd598dcf4a8cd9e27e33bbbb7936420bc21eb5baf03",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 148480,
+    "files": {
+      "clicks.jsonl.gz": "9165e3b1c412bebaf8c7ed9dc46ff4442606608ffd8d8cffe0900cbb0be3f931",
+      "full_trace.jsonl.gz": "a9db93ed291b91dab3c2e4c33e6057eae039211d3dd04a06f64e3fcbe7c6d65c"
+    },
+    "final_state_hash": "cf1921fa61b831e0315cc5823006c51d9138b711bb3d8f90df9e9b8ab7f22a0e",
+    "maximum_integer_bits_by_step": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "model_contract": {
+      "role": "research",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 64,
+    "retained_integers_per_node": 144,
+    "run_id": "d814e4f4ef6cd4a80984672305aab268530aa982d9c3895e4c8c87c2a9c0d369",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 64,
+    "tensor_hash": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "phase-0--1-1": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "2ca488ffd66efb13ee45a597c2e4baf67449e83abceea4f8276bb53ad18e4f8f",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 148480,
+    "files": {
+      "clicks.jsonl.gz": "3f522d31dd54d682c9598308bbc15dc5e3b0ef64962901f8cf83b98938780093",
+      "full_trace.jsonl.gz": "493f7a375f7a40a379382c9b13198eb39e796718cf2ffd5c784ea8a9154f992d"
+    },
+    "final_state_hash": "cee79c96714645e915367c1e3cd1d76d280a54ea4071c587921f82acb3998fb2",
+    "maximum_integer_bits_by_step": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "model_contract": {
+      "role": "research",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 64,
+    "retained_integers_per_node": 144,
+    "run_id": "0106919b30a5464693f916d31e07074a5970515fd8b6b85087f967de577d6c44",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 64,
+    "tensor_hash": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "light-1--1-0": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "bed84e1661b87864195056458cc5435464ea02aef135652fdc45c7f97934209a",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 1000,
+    "files": {
+      "clicks.jsonl.gz": "19735890744dc7f35cb0c64ecadcfbfdb8c60827597a774e4a24fea7c49eb067",
+      "full_trace.jsonl.gz": "e60272c4e92d17cce8e804a0a12e7df3dbe0673b028341dc49f89bad01c6213e"
+    },
+    "final_state_hash": "c2b660b24fd8fa63549da2a4e30b6db0bb5d950f1ad4bf5b6bce0ce40b85ab33",
+    "maximum_integer_bits_by_step": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "model_contract": {
+      "role": "universe-candidate",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 125,
+    "retained_integers_per_node": 144,
+    "run_id": "7a711fc8ef4a18f3ae34c654b681e7c90f9b5ab6af7e8bab4650caebc5607e8f",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 8,
+    "tensor_hash": "a3b4ab5293de5ca5ce143bf86c17bbe908277ea4ad7fdceeaa8bf86d39129be6",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "light-0--1-2": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "4ccf0acac18de97bf967e0336bda90d093c84c3d96ad34f687297fcbe87b4cbd",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 1000,
+    "files": {
+      "clicks.jsonl.gz": "96deed765dcdc70a01d939374c6b9683cae49e395eb51b0ae01e8f09975d6e73",
+      "full_trace.jsonl.gz": "c974290345aa2907867b483604d84df6c805c06cbf53ca00c53a3cd92fd71209"
+    },
+    "final_state_hash": "4c927b70654794e323aa56e3312caa91ac254a55186a95aa1e46a52b20ab7913",
+    "maximum_integer_bits_by_step": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "model_contract": {
+      "role": "universe-candidate",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 125,
+    "retained_integers_per_node": 144,
+    "run_id": "848bb071b59ba359ec0cdbe4b983163d2095140306b15437d10f2c5169d71829",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 8,
+    "tensor_hash": "a3b4ab5293de5ca5ce143bf86c17bbe908277ea4ad7fdceeaa8bf86d39129be6",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "light-1-1-2": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "266e9c9d15fbd258a6e1370188c838ee9b6594b4228cbc69d18ecf6c238b3d82",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 1000,
+    "files": {
+      "clicks.jsonl.gz": "1721e2b798184d25f26a2c7ecd805f48a37cd07bbe20fd5ca993e305542df3a0",
+      "full_trace.jsonl.gz": "5651030664264a6cbde7d2ef9b0774a586e81732b549edfdf337d7d3143fa034"
+    },
+    "final_state_hash": "be675e71cb2696b058a66ef28bfe4689f8ba26c28fa52738c910baa0fb76d020",
+    "maximum_integer_bits_by_step": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "model_contract": {
+      "role": "universe-candidate",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 125,
+    "retained_integers_per_node": 144,
+    "run_id": "d54858b66ed2bd12142dbc93e077ca88df2b03399d6a24595d5906e9c5dc5ca6",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 8,
+    "tensor_hash": "a3b4ab5293de5ca5ce143bf86c17bbe908277ea4ad7fdceeaa8bf86d39129be6",
+    "trace_role": "external complete audit record; never fed into evolution"
+  },
+  "phase-2-1-0": {
+    "acceptance_gates": {
+      "A": {
+        "reason": "Run-specific mechanical checks passed; universal claims require the independent oracle and causal tests.",
+        "status": "partial"
+      },
+      "B": {
+        "reason": "Canonical arithmetic click parity checked; an operational physical event map is not established.",
+        "status": "partial"
+      },
+      "C": {
+        "reason": "No independently validated Einstein geometry supplied by the generic executor.",
+        "status": "not_tested"
+      },
+      "D": {
+        "reason": "One execution is not a space/time/quantization convergence study.",
+        "status": "not_tested"
+      },
+      "E": {
+        "reason": "No shared-metric physical clock or motion evidence established.",
+        "status": "not_tested"
+      },
+      "F": {
+        "reason": "Arithmetic clicks do not establish a detector model, Born law or Bell result.",
+        "status": "not_tested"
+      }
+    },
+    "bundle_id": "23671c01b808ab00f923ad6c2a7de264c5a6c11672d4946dce688c5c17c1ccf8",
+    "channels_per_node": 48,
+    "checks": {
+      "2o_equivariance": "passed",
+      "bundle_contract": "passed",
+      "canonical_click_parity": "passed",
+      "complete_state_forward_replay": "passed",
+      "complete_state_rewind_to_seed": "passed",
+      "complete_state_step_inverse": "passed"
+    },
+    "click_count": 148480,
+    "files": {
+      "clicks.jsonl.gz": "fcbad6302ee54c5c385f3168d1d3bfcb7c44a277a195f51dca2b49611bd0fa23",
+      "full_trace.jsonl.gz": "97b3978eafa871ba1bbe0089e04b2cfe3fdbf8636ce2b9136a351c0bb95c32a6"
+    },
+    "final_state_hash": "801b8999db891598aa00a9c12767896b955874a3a595462b883e67d62ccef012",
+    "maximum_integer_bits_by_step": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      5,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "model_contract": {
+      "role": "research",
+      "status": "passed",
+      "symmetry": "2O-left-regular-cube/1"
+    },
+    "nodes": 64,
+    "retained_integers_per_node": 144,
+    "run_id": "0010abe770325a2727a6c32ec1280cdf787f56edec73c8846742423631fe0b12",
+    "schema": "universe24/system/run/1",
+    "source_hashes": {
+      "algebra/group_2o.py": "204867459edc781f2da2d723d6b914f304c69f5881b912fe4af1602cb8cb530e",
+      "core/engine.py": "7dab69a77f4f2c97475f13ba10ac13e9d3daac402dcf425f4145880f5a21e0f0",
+      "core/exact_json.py": "46b00eebd7f6206f8faf96b34047f2d7adfc1d8fbc1fccec00643496ff0b3657",
+      "core/lattice.py": "29308a4c8482a1c867221bafcf73a7a9a70282f3ebb6df9ab6676b4f36809c2e",
+      "core/symmetry.py": "24b337a4f6d91be364f1fc10f3b3d6290f687a06f19ba124ee735c9c377910e8",
+      "core/tensor.py": "e2e61b539a015b64275cb658524cbc0d056690fb957c63a0c6ba445116080ec3",
+      "system/bundle.py": "22b1bfc66002d8f2b2b2f29dd4ee57703115bb1403351734c96876df4649448d",
+      "system/decoder.py": "68f0f753432926fc5cb93784c8ad5311f49ec792c61c3e54e9c11c67fb2bcbe3",
+      "system/runtime.py": "b9e74371d05ca91b55f8bf7b65a3f19262b3fb9d1fd35383d5f0bed4ab2943d5"
+    },
+    "steps": 64,
+    "tensor_hash": "0d9a9a329b36cd43d388364d041fa6e32b6f963ed12e38698218883a6bb15116",
+    "trace_role": "external complete audit record; never fed into evolution"
+  }
+}
