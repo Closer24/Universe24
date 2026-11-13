@@ -1,7 +1,7 @@
 """Versioned, complete input for the single supported Rule3 execution path.
 
 This boundary certifies mechanical admissibility, not Einstein/Born physics.
-Every prepared bundle has exactly 48 complete (a,b,r) channels.
+Every prepared bundle has exactly 48 complete (a,b,r) channels and 2O covariance.
 Model and protocol metadata are passive data; neither can inject an update.
 """
 from __future__ import annotations
@@ -20,7 +20,7 @@ from universe24.core.tensor import FORMAT as TENSOR_FORMAT, Tensor
 from universe24.core.symmetry import CONTRACT, require_equivariant
 from universe24.system.decoder import validate_protocol
 
-FORMAT = "universe24/system-bundle/2"
+FORMAT = "universe24/system-bundle/3"
 MAX_CHANNELS = 48
 _FILES = ("tensor.json", "seed.json.gz", "channels.json", "protocol.json", "model.json")
 
@@ -30,7 +30,7 @@ class BundleError(ValueError):
 
 
 def pad_tensor(tensor: Tensor) -> Tensor:
-    """Embed a preparation in 48 channels; append disconnected zero-input gears."""
+    """Historical construction utility; it does not certify or admit a bundle."""
     if not 1 <= tensor.G <= MAX_CHANNELS:
         raise BundleError(f"at most {MAX_CHANNELS} source channels; got {tensor.G}")
     data = tensor.to_dict()
@@ -45,7 +45,7 @@ def pad_tensor(tensor: Tensor) -> Tensor:
 
 
 def pad_state(seed: State) -> State:
-    """Append (0,0,0) channels without changing any original integer."""
+    """Historical construction utility; append zeros without granting admission."""
     if not 1 <= seed.G <= MAX_CHANNELS:
         raise BundleError(f"at most {MAX_CHANNELS} source channels; got {seed.G}")
     checked = State(seed.L, seed.a, seed.b, seed.r)
@@ -59,7 +59,7 @@ def require_48_channels(tensor: Tensor, seed: State) -> None:
     """Fail loudly at execution/load boundaries; never repair a sealed input."""
     if tensor.G != MAX_CHANNELS or seed.G != MAX_CHANNELS:
         raise BundleError(f"exactly 48 channels required: tensor={tensor.G}, seed={seed.G}; "
-                          "prepare a new bundle to add idle channels")
+                          "supply a complete 48-channel 2O-equivariant tensor and seed")
 
 
 def _exact_json(value, path="metadata"):
@@ -171,26 +171,22 @@ def _check_metadata(tensor, channels, protocol, model):
 
 
 def model_contract(tensor: Tensor, model: dict) -> dict:
-    """A candidate must certify the declared action; unclassified inputs are research.
+    """Require the same action for every supported model, regardless of its role.
 
-This static declaration selects no engine or evolution rule. It cannot grant
-physical acceptance. The model file is already part of the sealed input hash.
-"""
+    Omitted symmetry means the mandatory system contract; null or an alternate
+    action cannot disable it. Model roles are passive descriptions only.
+    """
     role = model.get("role", "research")
     if role not in ("research", "universe-candidate"):
         raise BundleError("model.role must be research or universe-candidate")
-    symmetry = model.get("symmetry")
-    if symmetry is not None and symmetry != CONTRACT:
+    symmetry = model.get("symmetry", CONTRACT)
+    if symmetry != CONTRACT:
         raise BundleError(f"unsupported model.symmetry; expected {CONTRACT}")
-    if role == "universe-candidate" and symmetry != CONTRACT:
-        raise BundleError(f"universe-candidate requires model.symmetry={CONTRACT}")
-    if symmetry is not None:
-        try:
-            require_equivariant(tensor)
-        except ValueError as exc:
-            raise BundleError(str(exc)) from exc
-    return {"role": role, "symmetry": symmetry,
-            "status": "passed" if symmetry else "not_declared"}
+    try:
+        require_equivariant(tensor)
+    except ValueError as exc:
+        raise BundleError(str(exc)) from exc
+    return {"role": role, "symmetry": CONTRACT, "status": "passed"}
 
 
 @dataclass(frozen=True)
@@ -243,7 +239,8 @@ class SystemBundle:
             "channel_count": self.tensor.G,
             "retained_integers_per_node": 3 * self.tensor.G,
             "lattice": {"kind": "periodic-cube", "L": self.seed.L},
-            "law": {"divisor": 6, "max_degree": 3, "strict_face_support": True},
+            "law": {"divisor": 6, "max_degree": 3, "strict_face_support": True,
+                    "symmetry": CONTRACT},
             "tensor_hash": self.tensor.fingerprint,
             "inverse_stages": [list(stage) for stage in self.tensor.stages],
             "files": {name: _digest(data) for name, data in self._files().items()},
@@ -255,11 +252,10 @@ class SystemBundle:
 
 
 def create_bundle(tensor: Tensor, seed: State, *, channels, protocol, model) -> SystemBundle:
-    """Validate source data, append idle channels to 48 and detach caller mutation."""
+    """Validate a complete 48-channel equivariant input and detach caller mutation."""
     if not isinstance(tensor, Tensor) or not isinstance(seed, State):
         raise BundleError("tensor and seed must be Tensor and State instances")
-    if not 1 <= tensor.G <= MAX_CHANNELS:
-        raise BundleError(f"at most {MAX_CHANNELS} total retained channels per node; got {tensor.G}")
+    require_48_channels(tensor, seed)
     try:
         tensor = Tensor.from_dict(tensor.to_dict(), strict_support=True)
         # Revalidate raw arrays, rather than coercing them through State.to_dict().
@@ -272,14 +268,6 @@ def create_bundle(tensor: Tensor, seed: State, *, channels, protocol, model) -> 
         raise BundleError("every retained remainder must be an integer in 0..5")
     _check_metadata(tensor, channels, protocol, model)
     model_contract(tensor, model)
-    source_count = tensor.G
-    tensor, seed = pad_tensor(tensor), pad_state(seed)
-    channels = list(channels) + [
-        dict(index=i, name=tensor.names[i], label="audit", owner="system-padding",
-             purpose="Disconnected zero-initialized idle channel; full (a,b,r) retained")
-        for i in range(source_count, MAX_CHANNELS)
-    ]
-    require_48_channels(tensor, seed)
     return SystemBundle(tensor, canonical_bytes(seed.to_dict()), canonical_bytes(channels),
                         canonical_bytes(protocol), canonical_bytes(model))
 

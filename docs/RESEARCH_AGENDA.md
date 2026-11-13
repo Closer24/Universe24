@@ -71,26 +71,24 @@ These discussions are administratively closed at the owner's request. Their
 closure does not certify the unresolved claims. New research must update this
 single agenda, the algebra and the same-law acceptance evidence together.
 
-## Fixed allocation contract
+## Mandatory allocation and symmetry contract
 
-Universe candidates now require the explicit `2O-left-regular-cube/1` symmetry
-declaration and exact polynomial covariance, independently of the 48-channel
-budget. Existing undeclared physical-sector experiments remain research; none
-has been automatically promoted. The implemented action is one regular orbit
-of node channels with invariant passive labels; it is not yet a representation
-for Yee links or several differently transforming physical sectors. Its
-transitivity together with the acyclic inverse rule excludes old-a reads;
-alternative representations require a new explicit contract and review.
-See `COUPLING_ALGEBRA.md` and `ONE_SYSTEM.md` for the full definition.
+Every supported run now supplies exactly 48 node channels (144 retained
+integers per node) and must satisfy `2O-left-regular-cube/1`, independent of
+model role. Omitted metadata and `research` cannot waive the coefficient check.
+Schema 3 does not automatically pad or upgrade earlier bundles. The implemented
+action is one regular orbit of node channels with invariant passive labels;
+it does not represent Yee links or several differently transforming sectors.
+Its transitivity and the acyclic inverse requirement exclude old-a reads.
+Nonlinear b-only interactions remain allowed.
 
-Automated tests and CI now cover the engine and its algebra/input-output
-contracts only. Research unit tests and research CI jobs are removed. Research
-source programs and historical results remain; a green CI run makes no new
-claim about those physical results.
+The 6/8/12-channel constructions above remain historical research results,
+not current supported bundles. Their reproduction source is pinned at
+`e281f7e7b251641a741d185116656fedaa5396f8`. A new compatible encoding needs
+mathematical justification, not a role change or zero padding. Preserve old
+evidence and use fresh hashes and directories for new constructions.
 
-Every newly prepared supported run now retains exactly 48 channels (144 integer
-entries per node), with zero-initialized disconnected padding where needed.
-The 6/8/12-channel research counts above describe active sectors; padding does
-not establish additional physics or a shared coupling. Bundle schema 2 rejects
-non-48 sealed inputs. Preserve old evidence and regenerate new padded evidence
-under fresh hashes and paths; see `ONE_SYSTEM.md`.
+Automated tests and CI cover the engine and its algebra/input-output contracts.
+Research unit tests and workflows are removed. The intended GitHub merge
+policy is stored in `.github/main-protection.json`; it must be applied to
+GitHub separately and verified there. See `ONE_SYSTEM.md`.

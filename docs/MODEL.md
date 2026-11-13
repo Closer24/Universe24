@@ -2,6 +2,12 @@
 
 This is the current algebra of the supported bundle-driven execution system. Historical variable-divisor and oversized default constructions are retained only as research history. There is no accepted default physical universe.
 
+Schema 3 admits only the regular 48-node-channel action defined in
+`COUPLING_ALGEBRA.md`, for every role. The research sectors later in this
+file describe mathematical results from pre-schema-3 source at commit
+`e281f7e7b251641a741d185116656fedaa5396f8`; they are not automatically
+admissible current bundles. Their evidence remains bound to that source.
+
 ## Central postulate: one local integer universe
 
 The research starts from this assumption: the whole universe is one network,
@@ -24,7 +30,7 @@ distant input to change a node in one update.
 
 ## State, tensor and budget
 
-On a periodic cubic lattice of side L at least three, each supported prepared node stores exactly 48 channels (including idle padding). Source research sectors may use fewer active channels. Every channel has two signed integer histories a,b and one remainder r in 0..5. All matter, geometry, apparatus, clocks, workspace and schedules count in G. Integer precision is unbounded and its cost must be measured.
+On a periodic cubic lattice of side L at least three, each supported prepared node stores exactly 48 explicitly supplied node channels, with mandatory 2O covariance. Smaller source research sectors remain historical examples and cannot bypass this boundary. Every channel has two signed integer histories a,b and one remainder r in 0..5. All matter, geometry, apparatus, clocks, workspace and schedules count in G. Integer precision is unbounded and its cost must be measured.
 
 A fixed integer polynomial supplies each local input:
 

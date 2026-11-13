@@ -5,20 +5,17 @@ import argparse
 import json
 from pathlib import Path
 
-from universe24.core import Engine, State, Tensor
+from universe24.core import Engine, State, compose, reference_block
 from universe24.system.bundle import create_bundle, save_bundle, canonical_bytes
 from universe24.system.decoder import default_protocol
 from universe24.system.runtime import run_bundle, verify_run
 
 
 def fixture():
-    tensor = Tensor(["source", "neighbor"], [
-        ("source", 3, [("source", (0, 0, 0), "b")]),
-        ("neighbor", 3, [("source", (1, 0, 0), "a")]),
-    ], strict_support=True)
-    seed = State(3, [[n - 13 for n in range(27)]] * 2,
-                 [[(n % 7) - 3 for n in range(27)]] * 2,
-                 [[n % 6 for n in range(27)]] * 2)
+    tensor = compose(reference_block((1, -1, 1)))
+    seed = State(3, [[n - 13 for n in range(27)]] * 48,
+                 [[(n % 7) - 3 for n in range(27)]] * 48,
+                 [[n % 6 for n in range(27)]] * 48)
     seed.b[0, 0] = -(1 << 30)
     return create_bundle(tensor, seed,
                          channels=[{"index": i, "name": g.name, "label": g.label,

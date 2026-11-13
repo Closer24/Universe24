@@ -113,6 +113,7 @@ def _report(bundle, steps, run_id, final, bit_sizes, click_count, directory):
         "files": {name: _file_hash(directory / name) for name in (TRACE_FILE, CLICK_FILE)},
         "checks": {
             "bundle_contract": "passed",
+            "2o_equivariance": "passed",
             "complete_state_forward_replay": "passed",
             "complete_state_step_inverse": "passed",
             "complete_state_rewind_to_seed": "passed",
